@@ -220,7 +220,7 @@ def test_mapa_dados_cobrem_o_capitulo_13():
         r = dict(zip(d["colunas_secoes"], ln, strict=True))
         r["local"] = locais[r["li"]]
         secoes.append(r)
-    antigas = [r for r in secoes if r["nivel"] != "logs"]
+    antigas = [r for r in secoes if r["nivel"] not in ("logs", "mudanca")]
     fis = ROOT / "analysis/apuracao_2026/dados/fiscais.json"
     if fis.exists():
         f = json.loads(fis.read_text(encoding="utf-8"))

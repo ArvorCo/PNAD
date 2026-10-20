@@ -36,11 +36,11 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261016-mapa2j">
+<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261019-clima">
 <script>document.documentElement.classList.add('js')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
-<script defer src="assets/fiscais_mapa/app.js?v=20261016-mapa2j"></script>
+<script defer src="assets/fiscais_mapa/app.js?v=20261019-clima"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -61,6 +61,7 @@
       <p class="kicker">2º turno · 25 de outubro de 2026</p>
       <h2>Cada ponto é um prédio de votação com ao menos uma seção que pede fiscal atento</h2>
       <p>Duas fontes, lidas no 1º turno: os <strong>critérios históricos</strong> comparam o boletim de cada seção com as vizinhas da zona; os <strong>sinais do log da urna</strong> contam o que a urna fez durante o dia. Atipicidade não é irregularidade: o mapa diz onde vale a pena estar, não acusa ninguém.</p>
+      <p>Para o 2º turno, o mapa marca também as <strong>seções que mudaram de endereço</strong>: <span id="n-mud-secoes">…</span> seções e <span id="n-mud-eleitores">…</span> eleitores, pela união do arquivo de locais e do painel do TSE. Veja o <a href="mudancas_secoes_abstencoes.html">laudo das mudanças de endereço</a>. A ficha de cada prédio traz também a chuva e o vento do dia 4 de outubro e a previsão do tempo para 25 de outubro, quando os dados de clima estão publicados.</p>
     </div>
     <dl class="intro-num" aria-label="Números do acervo">
       <div><dd id="n-cap13">…</dd><dt>seções sinalizadas pelos critérios históricos (capítulo 13 do dossiê)</dt></div>
@@ -74,6 +75,7 @@
         <li><span class="pt pt-log3"></span><span><b>Conferir o arquivo</b>: o log não fecha com o boletim, tem relógio inconsistente, falha de assinatura ou trecho não reconhecido; ou três tipos de sinal juntos.<small>Pede conferência formal à Justiça Eleitoral; não é prova de alteração de voto.</small></span></li>
         <li><span class="pt pt-log2"></span><span><b>Sinais combinados</b>: dois tipos diferentes de ocorrência no mesmo log, fora a rotina.</span></li>
         <li><span class="pt pt-log1"></span><span><b>Um sinal no log</b>: um tipo de ocorrência além da rotina.</span></li>
+        <li><span class="pt pt-mudanca"></span><span><b>Mudou de endereço para o 2º turno</b> (losango): a seção vota em outro endereço em 25/10. O losango fica no endereço novo, com a cor do sinal mais forte do prédio; sem coordenada do endereço novo, fica no prédio do 1º turno e a ficha avisa.<small>Onde só o arquivo de locais ou só o painel do TSE mostra a mudança, as fontes divergem: confira no e-Título.</small></span></li>
         <li><span class="pt pt-log0"></span><span><b>Registro de rotina</b> (ponto vazado): só bateria em algum momento do dia, ou inspeção longa. Um quarto das urnas do país registra bateria, boa parte antes da zerésima; é informação, não suspeita. A passagem para a bateria durante a votação, junto com outras urnas do município ou só nesta urna, conta como sinal de energia.</span></li>
       </ul>
       <p id="sem-ocorrencia"></p>
@@ -110,6 +112,14 @@
       <h2>O que mostrar</h2>
       <div id="niveis"></div>
       <p class="ajuda" id="niveis-aviso" hidden>Com um critério escolhido abaixo, as caixas acima não filtram: o mapa mostra toda seção com aquele critério.</p>
+      <div class="clima-filtros" id="clima-filtros">
+        <p class="rot">Clima</p>
+        <label for="f-risco25" class="rot rot-inline">Risco climático previsto para 25/10</label>
+        <select id="f-risco25"><option value="">Qualquer</option><option value="alto">Alto</option><option value="alto_medio">Alto e médio</option></select>
+        <label class="nv nv-choveu"><input type="checkbox" id="f-choveu"><span class="nv-t">Choveu forte no 1º turno (acima de 20 mm)</span></label>
+        <p class="ajuda">A chuva forte pede um estado escolhido acima. Previsão e chuva são da célula da grade, não do prédio.</p>
+        <p class="ajuda" id="clima-aviso" hidden>Os dados de clima ainda não foram publicados. O mapa funciona sem eles.</p>
+      </div>
       <label for="f-log" class="rot">Um critério só</label>
       <select id="f-log"><option value="">Todos os critérios</option></select>
       <label for="f-camada" class="rot">Fonte</label>
@@ -161,6 +171,7 @@
 <footer class="rodape">
   <p><strong>Atipicidade estatística não é irregularidade.</strong> A lista é de prioridade de fiscalização, não de acusação. O que resolve cada item é a ata da mesa, o log da urna e a presença do fiscal. Toda seção precisa de fiscal: para ver os motivos de qualquer seção do país, inclusive sem sinal, use o <a href="politizesuavizinhanca.html">Politize sua vizinhança</a>.</p>
   <p>Fontes: boletins de urna do TSE por seção e capítulo 13 do <a href="apuracao_1o_turno_2026.html#fiscais">dossiê da apuração do 1º turno</a> (planilha histórica em <a href="assets/fiscais_2026.xlsx">Excel</a> e <a href="assets/fiscais_2026.csv">CSV</a>); logs das urnas publicados pelo TSE, lidos pelo <a href="logs_urnas_2026.html">processo descrito aqui</a>. Resultado por seção: votos válidos do 1º turno; seções com menos de 30 eleitores não mostram voto. Distância em linha reta (fórmula de Vincenty, WGS84), não por estrada. Mapa: © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Coordenada ausente ou inválida não vira ponto no mapa; a linha aparece na lista.</p>
+  <p>Mudanças de endereço do 2º turno: união do arquivo de locais de votação do TSE e do painel de seções alteradas do TSE, com a nota do TRE quando existe; detalhes e limites no <a href="mudancas_secoes_abstencoes.html">laudo</a>. Clima: chuva e vento de 04/10 vêm do Open-Meteo (reanálise ERA5, grade de 0,25 grau, cerca de 28 km); a previsão para 25/10 vem de modelo global em grade de 0,5 grau (cerca de 55 km), atualizada todo dia. O valor é o da célula da grade, não o do prédio; o risco climático é indicativo de atenção, não previsão do que vai acontecer no local, e chuva não prova efeito no comparecimento.</p>
 </footer>
 <noscript><p class="sem-js">Esta página precisa de JavaScript para o mapa e a lista. A planilha completa está em <a href="assets/fiscais_2026.csv">CSV</a> e <a href="assets/fiscais_2026.xlsx">Excel</a>.</p></noscript>
 </body>

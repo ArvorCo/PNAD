@@ -9,28 +9,35 @@
 
   const BASE = 'assets/fiscais_mapa/';
   const POLITIZE = 'assets/politize/dados/';
-  const VERSAO = '20261016-mapa2';
+  const VERSAO = '20261019-clima';
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
   // Chaves de nível na ordem de prioridade: histórico do capítulo 13 primeiro, depois a atenção dos logs.
-  const NIVEIS = ['alta', 'media', 'baixa', 'log3', 'log2', 'log1', 'log0'];
+  const NIVEIS = ['alta', 'media', 'baixa', 'log3', 'log2', 'log1', 'log0', 'mudanca'];
   // Abertura com todos os níveis, inclusive os registros de rotina: o mapa não esconde sinal nenhum.
   const PADRAO_NIVEIS = NIVEIS.slice();
-  const PESO = { alta: 7, media: 6, baixa: 5, log3: 4, log2: 3, log1: 2, log0: 1 };
-  const NOME_NIVEL = { alta: 'Prioridade alta', media: 'Prioridade média', baixa: 'Prioridade baixa', log3: 'Conferir o arquivo', log2: 'Sinais combinados', log1: 'Um sinal no log', log0: 'Registro de rotina' };
+  const PESO = { alta: 7, media: 6, baixa: 5, log3: 4, log2: 3, log1: 2, mudanca: 1.5, log0: 1 };
+  const NOME_NIVEL = { alta: 'Prioridade alta', media: 'Prioridade média', baixa: 'Prioridade baixa', log3: 'Conferir o arquivo', log2: 'Sinais combinados', log1: 'Um sinal no log', log0: 'Registro de rotina', mudanca: 'Mudou de endereço' };
   const NOME_RISCO = { alto: 'alto', medio: 'médio', baixo: 'baixo' };
+  const CRIT_MUDANCA = 'mudanca_endereco';
+  const LIMITE_CHUVA_FORTE = 20; // mm no dia 04/10
+  const CONFERIR_MUDANCA = 'confirme no e-Título onde a seção vota em 25/10 antes de sair de casa, porque o endereço pode ter mudado entre os turnos';
+  const NOME_FONTE_MUDANCA = { ambos: 'o arquivo de locais e o painel do TSE concordam', so_zip: 'só o arquivo de locais do TSE mostra a mudança', so_painel: 'só o painel de seções alteradas do TSE mostra a mudança' };
   const UFS = { AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás', MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais', PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí', RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul', RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo', SE: 'Sergipe', TO: 'Tocantins', ZZ: 'Exterior' };
   const COLS_LISTA = [
     ['nivel', 'Nível'], ['uf', 'UF'], ['municipio', 'Município'], ['zona', 'Zona'], ['secao', 'Seção'],
     ['local', 'Local de votação'], ['votaram', 'Votaram'], ['placar', 'Flávio × Lula'],
-    ['motivos', 'Por que está no mapa'], ['risco', 'Risco do território'], ['dist', 'Distância'], ['coord', 'Mapa'],
+    ['motivos', 'Por que está no mapa'], ['risco', 'Risco do território'], ['mudanca', 'Mudou de endereço'], ['dist', 'Distância'], ['coord', 'Mapa'],
   ];
+  const COL_CHUVA = ['chuva', 'Chuva em 04/10'];
+  const COL_RISCO25 = ['risco25', 'Risco climático 25/10'];
   const ZOOM_ROTULOS = 15;
   const MAX_ROTULO = 5;
 
   const S = {
     meta: null, locais: [], secoes: [], recorte: '',
-    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', camada: 'todas', log: '', niveis: new Set(PADRAO_NIVEIS) },
+    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', camada: 'todas', log: '', risco25: '', choveu: false, niveis: new Set(PADRAO_NIVEIS) },
+    clima: { prev: undefined, ufs: new Map() },
     raio: RAIO_PADRAO, modo: 'mapa', centro: null, abrir: '',
     ordem: { col: 'nivel', dir: 1 }, pagina: 1, porPagina: 50, buscaLista: '',
     mapa: null, cluster: null, circulo: null, alvo: null, marcadores: new Map(),
@@ -132,6 +139,153 @@
   }
   const coordOk = (r) => typeof r.lat === 'number' && typeof r.lon === 'number' && isFinite(r.lat) && isFinite(r.lon);
 
+  /* ------------------------------------------------------------ clima */
+
+  // Chave da célula de 0,5 grau da previsão: "<floor(lat*2)/2>,<floor(lon*2)/2>", sempre com uma casa decimal.
+  const chaveCelula = (lat, lon) => (Math.floor(lat * 2) / 2 + 0).toFixed(1) + ',' + (Math.floor(lon * 2) / 2 + 0).toFixed(1);
+  const id1tDe = (s) => (s.mudanca && s.mudanca.id_1t ? s.mudanca.id_1t : s.local.id);
+
+  // Falha ou 404 viram "sem dado": o clima nunca bloqueia o mapa.
+  function carregarPrevisao() {
+    if (!S.clima.prevPromessa) {
+      S.clima.prevPromessa = buscar(BASE + 'clima/previsao.json')
+        .then((d) => { S.clima.prev = d && d.celulas ? d : null; return S.clima.prev; })
+        .catch(() => { S.clima.prev = null; return null; });
+    }
+    return S.clima.prevPromessa;
+  }
+
+  function carregarClimaUf(uf) {
+    if (!uf || uf === 'ZZ') return Promise.resolve(null);
+    if (!S.clima.ufs.has(uf)) {
+      S.clima.ufs.set(uf, buscar(BASE + 'clima/' + uf + '.json').then((d) => {
+        const cols = d.colunas;
+        return { gerado_em: d.gerado_em, fonte: d.fonte, linhas: new Map(d.linhas.map((ln) => { const r = {}; cols.forEach((c, i) => { r[c] = ln[i]; }); return [r.local_id, r]; })) };
+      }).catch(() => null));
+    }
+    return S.clima.ufs.get(uf);
+  }
+
+  const climaUfPronto = (uf) => S.clima.ufResolvidos && S.clima.ufResolvidos[uf];
+
+  function passaRisco25(l, modo) {
+    const p = S.clima.prev;
+    if (!p || !coordOk(l)) return false;
+    const c = p.celulas[chaveCelula(l.lat, l.lon)];
+    return Boolean(c) && (c.risco === 'alto' || (modo === 'alto_medio' && c.risco === 'medio'));
+  }
+
+  function climaObservado(s) {
+    const d = S.clima.ufResolvidos && S.clima.ufResolvidos[s.local.uf];
+    return d ? d.linhas.get(id1tDe(s)) || null : null;
+  }
+
+  function passaChuvaForte(s) {
+    const c = climaObservado(s);
+    return Boolean(c) && typeof c.chuva_04_10_mm === 'number' && c.chuva_04_10_mm > LIMITE_CHUVA_FORTE;
+  }
+
+  function riscoPrevisto(l) {
+    const p = S.clima.prev;
+    if (!p || !coordOk(l)) return null;
+    return p.celulas[chaveCelula(l.lat, l.lon)] || null;
+  }
+
+  // Carrega o que os filtros de clima pedem; sem o arquivo, o filtro se desliga e o mapa segue.
+  async function prepararClima(f) {
+    const avisos = [];
+    if (f.risco25) {
+      if (!await carregarPrevisao()) {
+        f.risco25 = ''; $('#f-risco25').value = '';
+        avisos.push('A previsão do tempo para 25/10 ainda não foi publicada; o filtro de risco climático ficou desligado.');
+      }
+    }
+    if (f.choveu) {
+      if (!f.uf) {
+        f.choveu = false; $('#f-choveu').checked = false;
+        avisos.push('Escolha o estado para filtrar por chuva forte no 1º turno: o arquivo de chuva é carregado por estado.');
+      } else {
+        const d = await carregarClimaUf(f.uf);
+        if (d) registrarClimaUf(f.uf, d);
+        else {
+          f.choveu = false; $('#f-choveu').checked = false;
+          avisos.push('Os dados de chuva de 04/10 para ' + (UFS[f.uf] || f.uf) + ' ainda não foram publicados; o filtro de chuva forte ficou desligado.');
+        }
+      }
+    }
+    $('#clima-aviso').hidden = !avisos.length;
+    return avisos.join(' ') + (avisos.length ? ' ' : '');
+  }
+
+  function registrarClimaUf(uf, d) {
+    if (!S.clima.ufResolvidos) S.clima.ufResolvidos = {};
+    S.clima.ufResolvidos[uf] = d;
+  }
+
+  function formatarHora(v) {
+    if (v === null || v === undefined || v === '') return '';
+    if (typeof v === 'number') return v + 'h';
+    const t = String(v);
+    if (/^\d{1,2}$/.test(t)) return t + 'h';
+    const m = t.match(/T(\d{2}):(\d{2})/);
+    return m ? m[1] + 'h' + (m[2] === '00' ? '' : m[2]) : t;
+  }
+
+  function formatarCarimbo(iso) {
+    if (!iso) return '';
+    try { return new Date(iso).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Sao_Paulo' }); } catch (e) { return String(iso); }
+  }
+
+  const mm = (v) => (typeof v === 'number' ? nf1.format(v) + ' mm' : 'sem dado');
+  const kmh = (v) => (typeof v === 'number' ? nf0.format(v) + ' km/h' : 'sem dado');
+
+  function blocoObservado(c, doPredioAntigo) {
+    const NOME_FAIXA = { seca: 'seca', fraca: 'fraca', moderada: 'moderada', forte: 'forte', muito_forte: 'muito forte', ate_40: 'até 40 km/h', '40_60': '40 a 60 km/h', '60_80': '60 a 80 km/h', acima_80: 'acima de 80 km/h' };
+    const faixa = (v) => (typeof v === 'string' && v ? ' (' + (NOME_FAIXA[v] || v.replace(/_/g, ' ')) + ')' : '');
+    const itens = [
+      h('li', {}, 'Chuva no dia: ' + mm(c.chuva_04_10_mm) + faixa(c.faixa_chuva) + '; nas horas de votação: ' + mm(c.chuva_votacao_mm) + (c.hora_pico_chuva ? '; pico por volta das ' + formatarHora(c.hora_pico_chuva) : '') + '.'),
+      h('li', {}, 'Rajada de vento: ' + kmh(c.rajada_04_10_kmh) + ' no dia' + faixa(c.faixa_rajada) + '; ' + kmh(c.rajada_votacao_kmh) + ' nas horas de votação.'),
+    ];
+    if (typeof c.urnas === 'number' && c.urnas > 0) {
+      itens.push(h('li', {}, nf0.format(c.urnas_bateria || 0) + ' de ' + plural(c.urnas, 'urna', 'urnas') + ' do prédio passaram para a bateria, ' + nf0.format(c.urnas_bateria_votacao || 0) + ' durante a votação.'));
+    }
+    if (typeof c.abst_pct === 'number') {
+      const dif = typeof c.dif_abst_pp === 'number' ? ' (' + (c.dif_abst_pp > 0 ? '+' : '') + nf1.format(c.dif_abst_pp) + ' pontos)' : '';
+      itens.push(h('li', {}, 'Abstenção de ' + pct(c.abst_pct) + (typeof c.abst22_pct === 'number' ? ', contra ' + pct(c.abst22_pct) + ' no 2º turno de 2022 (mesma seção)' : '') + dif + '.'));
+    }
+    return h('div', { class: 'ficha-clima-bloco' },
+      h('b', {}, 'No dia do 1º turno (04/10)' + (doPredioAntigo ? ', no prédio onde estas seções votaram' : '')),
+      h('ul', {}, itens),
+      h('p', { class: 'ficha-meta' }, 'Valor da grade de 0,25 grau (fonte Open-Meteo), não medido no prédio. Chuva não prova efeito no comparecimento.'));
+  }
+
+  function blocoPrevisao(cel, prev) {
+    const regra = prev.regra_risco;
+    const textoRegra = !regra ? '' : typeof regra === 'string' ? regra : Object.keys(regra).map((k) => k.replace(/_/g, ' ') + ': ' + (typeof regra[k] === 'object' ? JSON.stringify(regra[k]) : regra[k])).join('; ');
+    return h('div', { class: 'ficha-clima-bloco' },
+      h('b', {}, 'Previsão para 25/10'),
+      h('ul', {},
+        h('li', {}, 'Chuva prevista: ' + mm(cel.chuva_mm) + (typeof cel.prob_pct === 'number' ? ', com probabilidade de ' + nf0.format(cel.prob_pct) + '%' : '') + '.'),
+        h('li', {}, 'Rajada prevista: ' + kmh(cel.rajada_kmh) + '.'),
+        h('li', { class: 'risco-' + (cel.risco || 'baixo') }, h('b', {}, 'Risco climático previsto: ' + (NOME_RISCO[cel.risco] || cel.risco || 'sem dado') + '.'))),
+      h('p', { class: 'ficha-meta' }, 'Previsão de modelo global, muda todo dia; indicativo de atenção, não previsão do prédio.' + (prev.gerado_em ? ' Gerada em ' + formatarCarimbo(prev.gerado_em) + '.' : '')),
+      textoRegra ? h('details', {}, h('summary', {}, 'Como o risco é calculado'), h('p', { class: 'ficha-meta' }, textoRegra)) : null);
+  }
+
+  async function preencherClima(l, el) {
+    const alvo = el && el.querySelector('.ficha-clima');
+    if (!alvo) return;
+    const movida = l.secoes.find((x) => x.mudanca && x.mudanca.id_1t && x.mudanca.id_1t !== l.id);
+    const id1t = l.coord_fonte === 'local_2t' && movida ? movida.mudanca.id_1t : l.id;
+    const res = await Promise.all([carregarPrevisao(), carregarClimaUf(l.uf)]);
+    const prev = res[0], ufd = res[1];
+    if (ufd) registrarClimaUf(l.uf, ufd);
+    const c = ufd ? ufd.linhas.get(id1t) : null;
+    const cel = prev ? riscoPrevisto(l) : null;
+    const blocos = [c ? blocoObservado(c, l.coord_fonte === 'local_2t') : null, cel ? blocoPrevisao(cel, prev) : null].filter(Boolean);
+    if (blocos.length) alvo.replaceChildren(...blocos); else alvo.remove();
+  }
+
   /* ------------------------------------------------------------ dados */
 
   const chaveNivel = (s) => (s.nivel === 'logs' ? 'log' + (s.atencao === null || s.atencao === undefined ? 0 : s.atencao) : s.nivel);
@@ -147,6 +301,7 @@
       return l;
     });
     S.locaisPorId = new Map(S.locais.map((l) => [l.id, l]));
+    S.destinoDoId1t = new Map();
     S.secoes = d.secoes.map((ln, i) => {
       const s = { i };
       m.colunas_secoes.forEach((c, j) => { s[c] = ln[j]; });
@@ -159,7 +314,14 @@
       s.logs = s.logs || [];
       s.logNomes = s.logs.map((c) => ((m.logs && m.logs.criterios[c]) || {}).curto || c);
       s.familias = familiasDe(s.logs);
-      s.busca = norm([l.local, l.endereco, l.bairro, l.municipio, l.uf, l.cep, s.explicacao, s.critNomes.join(' '), s.logNomes.join(' '), 'zona ' + l.zona, 'secao ' + s.secao].join(' '));
+      s.mudanca = s.mudanca || null;
+      if (s.mudanca && s.mudanca.id_1t && s.mudanca.id_1t !== l.id) {
+        const lista = S.destinoDoId1t.get(s.mudanca.id_1t) || [];
+        if (lista.indexOf(l) < 0) lista.push(l);
+        S.destinoDoId1t.set(s.mudanca.id_1t, lista);
+      }
+      const mu = s.mudanca || {};
+      s.busca = norm([l.local, l.endereco, l.bairro, l.municipio, l.uf, l.cep, s.explicacao, s.critNomes.join(' '), s.logNomes.join(' '), 'zona ' + l.zona, 'secao ' + s.secao, s.mudanca ? ['mudou de endereco', mu.nome_1t, mu.end_1t, mu.bairro_1t, mu.nome_cat].join(' ') : ''].join(' '));
       l.secoes.push(s);
       return s;
     });
@@ -176,6 +338,7 @@
     if (f.uf && S.meta.partes[f.uf]) return S.meta.partes[f.uf].arquivo;
     if (f.uf) return null;
     if (f.camada === 'originais' || (f.log && f.log.startsWith('historico:'))) return 'originais.json';
+    if (f.log === CRIT_MUDANCA) return 'destaque.json';
     const precisaTudo = f.log || f.camada === 'logs' || f.niveis.has('log1') || f.niveis.has('log0');
     return precisaTudo ? 'dados.json' : 'destaque.json';
   }
@@ -196,13 +359,16 @@
   function passaFiltro(s) {
     const f = S.filtro;
     const l = s.local;
-    if (f.camada === 'originais' && s.nivel === 'logs') return false;
+    if (f.camada === 'originais' && (s.nivel === 'logs' || s.nivel === 'mudanca')) return false;
     if (f.camada === 'logs' && !s.logs.length) return false;
     if (f.log) {
-      if (f.log.startsWith('historico:')) { if (s.crit.indexOf(f.log.slice(10)) < 0) return false; }
+      if (f.log === CRIT_MUDANCA) { if (!s.mudanca) return false; }
+      else if (f.log.startsWith('historico:')) { if (s.crit.indexOf(f.log.slice(10)) < 0) return false; }
       else if (f.log.startsWith('familia:')) { if (s.familias.indexOf(f.log.slice(8)) < 0) return false; }
       else if (s.logs.indexOf(f.log) < 0) return false;
-    } else if (!f.niveis.has(s.chave)) return false;
+    } else if (!f.niveis.has(s.chave) && !(s.mudanca && f.niveis.has('mudanca'))) return false;
+    if (f.risco25 && !passaRisco25(l, f.risco25)) return false;
+    if (f.choveu && !passaChuvaForte(s)) return false;
     if (f.uf && l.uf !== f.uf) return false;
     if (f.mun && l.mun !== f.mun) return false;
     if (f.zona && Number(l.zona) !== Number(f.zona)) return false;
@@ -260,6 +426,8 @@
     f.uf = $('#f-uf').value;
     f.camada = $('#f-camada').value;
     f.log = $('#f-log').value;
+    f.risco25 = $('#f-risco25').value;
+    f.choveu = $('#f-choveu').checked;
     f.mun = $('#f-mun').value;
     f.texto = $('#f-texto').value.trim();
     const zonaTxt = so($('#f-zona').value);
@@ -271,6 +439,9 @@
     let centro = null;
     try {
       if (!await carregarRecorte(seq)) return;
+      const avisoClima = await prepararClima(f);
+      if (seq !== S.requisicao) return;
+      S.avisoLog = (S.avisoLog || '') + avisoClima;
       if (cep) {
         centro = await geocodificarCep(cep);
         if (seq !== S.requisicao) return;
@@ -281,6 +452,7 @@
         if (!centro) { setStatus('A zona ' + f.zona + ' não aparece em ' + (UFS[f.uf] || f.uf) + ' nos dados. Confira o número no título de eleitor.', true); return; }
       }
     } catch (e) {
+      console.error(e);
       if (seq !== S.requisicao) return;
       setStatus('Não foi possível carregar os dados agora. Tente de novo.', true);
       return;
@@ -354,12 +526,18 @@
     return (nums.length === 1 ? 'Seção ' : 'Seções ') + txt;
   }
 
+  // Prédio com seção que mudou de endereço vira losango; os demais, círculo. A cor segue o nível mais forte.
+  function iconePino(nivel, n, mudou) {
+    if (mudou) return L.divIcon({ className: 'pino-losango', iconSize: [24, 24], html: '<span class="losango pino-' + nivel + '"></span>' });
+    return L.divIcon({ className: 'pino pino-' + nivel + (n >= 3 ? ' pino-varias' : ''), iconSize: [18, 18], html: '' });
+  }
+
   function marcador(l, nivel) {
     let m = S.marcadores.get(l.id);
-    const n = l.secoes.filter(passaFiltro).length;
-    const classe = 'pino pino-' + nivel + (n >= 3 ? ' pino-varias' : '');
+    const vis = l.secoes.filter(passaFiltro);
+    const icone = iconePino(nivel, vis.length, vis.some((x) => x.mudanca));
     if (!m) {
-      m = L.marker([l.lat, l.lon], { nivel, uf: l.uf, icon: L.divIcon({ className: classe, iconSize: [18, 18], html: '' }), title: caixa(l.local), keyboard: true });
+      m = L.marker([l.lat, l.lon], { nivel, uf: l.uf, icon: icone, title: caixa(l.local), keyboard: true });
       m.bindTooltip(() => rotuloSecoes(l), { permanent: true, direction: 'bottom', offset: [0, 8], className: 'rotulo-secoes', interactive: false });
       if (telaPequena()) {
         // No celular a ficha é um painel fixo fora do mapa: um popup maior que o mapa empurra o pino
@@ -373,7 +551,7 @@
       S.marcadores.set(l.id, m);
     } else {
       m.options.nivel = nivel;
-      m.setIcon(L.divIcon({ className: classe, iconSize: [18, 18], html: '' }));
+      m.setIcon(icone);
       if (m.getTooltip()) m.setTooltipContent(rotuloSecoes(l));
     }
     return m;
@@ -396,9 +574,14 @@
 
   function abrirPendente() {
     if (!S.abrir) return;
-    const id = S.abrir;
-    const m = S.marcadores.get(id);
+    let id = S.abrir;
+    let m = S.marcadores.get(id);
     S.abrir = '';
+    if (!m) {
+      // Prédio do 1º turno cujas seções mudaram de endereço: abre o prédio novo, onde elas votam em 25/10.
+      const novo = (S.destinoDoId1t.get(id) || []).find((x) => S.marcadores.has(x.id));
+      if (novo) { id = novo.id; m = S.marcadores.get(id); }
+    }
     if (!m) { setStatus('O prédio pedido não está no mapa com os filtros atuais. Marque mais níveis ou use "Limpar".', true); return; }
     const abrir = () => (telaPequena() ? abrirPainel(S.locaisPorId.get(id), m) : m.openPopup());
     if (m._icon) abrir();
@@ -469,12 +652,39 @@
     return itens;
   }
 
+  function distanciaMudanca(m) {
+    if (typeof m.distancia_m !== 'number') return null;
+    return m.distancia_m < 1000 ? nf0.format(m.distancia_m) + ' m' : km(m.distancia_m / 1000);
+  }
+
+  function blocoMudanca(s) {
+    const m = s.mudanca;
+    if (!m) return null;
+    const onde = (nome, end, bairro, cep) => [caixa(nome), caixa(end), caixa(bairro), cep ? 'CEP ' + cepFmt(cep) : ''].filter(Boolean).join(' · ');
+    const dist = distanciaMudanca(m);
+    const graus = { local: 'Nota do TRE sobre este local', zona: 'Nota do TRE sobre a zona', municipio: 'Nota do TRE sobre o município, que pode não se referir a esta seção' };
+    return h('div', { class: 'mud' },
+      h('b', { class: 'mud-t' }, 'Mudou de endereço para o 2º turno'),
+      h('p', {}, h('b', {}, (m.nome_cat || '') + '. '), m.frase || ''),
+      h('p', {}, h('b', {}, 'Votou no 1º turno: '), onde(m.nome_1t, m.end_1t, m.bairro_1t, '')),
+      h('p', {}, h('b', {}, 'Vota em 25/10: '), onde(m.nome_2t, m.end_2t, m.bairro_2t, m.cep_2t)),
+      dist ? h('p', {}, 'Distância em linha reta entre os dois endereços: ' + dist + '.') : null,
+      h('p', { class: 'ficha-meta' }, 'Fonte: ' + (NOME_FONTE_MUDANCA[m.fonte] || m.fonte) + '.' + (m.fonte !== 'ambos' ? ' As duas fontes do TSE divergem: confira no e-Título.' : '')),
+      m.agregada_a ? h('p', { class: 'ficha-meta' }, 'Seção agregada à seção ' + m.agregada_a + ': o resultado do 1º turno aparece na seção ' + m.agregada_a + '.') : null,
+      m.coord_2t ? null : h('p', { class: 'ficha-meta' }, 'O endereço novo não tem coordenada: o ponto no mapa é o prédio do 1º turno. Use o botão para abrir o endereço novo no Google Maps.'),
+      m.motivo_tre ? h('p', { class: 'ficha-meta' }, (graus[m.grau_tre] || 'Nota do TRE') + ': ' + m.motivo_tre + ' ', m.url_tre ? h('a', { href: m.url_tre, target: '_blank', rel: 'noopener' }, 'Ler a nota do TRE') : null) : null,
+      h('p', { class: 'mud-links' },
+        m.maps_novo ? h('a', { class: 'btn-maps', href: m.maps_novo, target: '_blank', rel: 'noopener' }, 'Abrir no Google Maps') : null,
+        h('a', { href: 'mudancas_secoes_abstencoes.html' }, 'Laudo das mudanças de endereço')));
+  }
+
   function cartaoSecao(s, destacar) {
     const atual = destacar === s.secao;
     return h('li', { class: 'sec' + (atual ? ' sec-atual' : ''), id: atual ? 'sec-atual' : null, 'data-secao': String(s.secao) },
-      h('div', { class: 'sec-cab' }, h('b', {}, 'Seção ' + s.secao), ' ', s.nivel !== 'logs' ? chip(s.nivel, s.pontuacao !== null && s.pontuacao !== undefined ? s.pontuacao + ' pontos no cap. 13' : 'cap. 13') : null, s.logs.length ? chip('log' + (s.atencao || 0)) : null),
+      h('div', { class: 'sec-cab' }, h('b', {}, 'Seção ' + s.secao), ' ', s.nivel !== 'logs' && s.nivel !== 'mudanca' ? chip(s.nivel, s.pontuacao !== null && s.pontuacao !== undefined ? s.pontuacao + ' pontos no cap. 13' : 'cap. 13') : null, s.logs.length ? chip('log' + (s.atencao || 0)) : null, s.mudanca ? chip('mudanca') : null),
+      blocoMudanca(s),
       linhaResultado(s),
-      h('ul', { class: 'sec-motivos' }, motivosDe(s)),
+      s.nivel === 'mudanca' ? null : h('ul', { class: 'sec-motivos' }, motivosDe(s)),
       s.explicacao ? h('p', { class: 'sec-expl' }, 'Explicação provável: ' + s.explicacao) : null,
       h('p', { class: 'sec-pol' }),
       h('p', { class: 'sec-links' }, h('a', { href: 'politizesuavizinhanca.html#s=' + encodeURIComponent(s.uf + '-' + s.zona + '-' + s.secao) }, 'Ficha completa da seção no Politize')));
@@ -489,6 +699,7 @@
     todas.forEach((s) => {
       s.crit.forEach((c) => { const t = S.meta.criterios[c] && S.meta.criterios[c].conferir; if (t && conferir.indexOf(t) < 0) conferir.push(t); });
       s.familias.forEach((f) => { const t = S.meta.logs.familias[f].conferir; if (conferir.indexOf(t) < 0) conferir.push(t); });
+      if (s.mudanca && conferir.indexOf(CONFERIR_MUDANCA) < 0) conferir.push(CONFERIR_MUDANCA);
     });
     const gmaps = 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon;
     const link = location.origin + location.pathname + '#uf=' + l.uf + '&l=' + encodeURIComponent(l.id) + (S.filtro.secaoAlvo ? '&s=' + encodeURIComponent(S.filtro.secaoAlvo) : '');
@@ -499,9 +710,11 @@
       h('p', { class: 'ficha-end' }, [caixa(l.endereco), caixa(l.bairro), caixa(l.municipio) + '/' + l.uf, l.cep ? 'CEP ' + cepFmt(l.cep) : ''].filter(Boolean).join(' · ')),
       h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + ' · ' + (total ? plural(total, 'seção no prédio', 'seções no prédio') + ', ' + todas.length + ' no mapa' : plural(todas.length, 'seção no mapa', 'seções no mapa')) + (l.aptos_total ? ' · ' + nf0.format(l.aptos_total) + ' eleitores aptos' : '') + (dist !== null ? ' · ' + km(dist) + ' em linha reta de ' + S.centro.rotulo : '')),
       l.coord_fonte === 'cidade' ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado da cidade, não do prédio. Confira o endereço antes de se deslocar.') : null,
+      l.coord_fonte === 'local_2t' ? h('p', { class: 'ficha-meta' }, 'Prédio onde as seções abaixo votam no 2º turno. Resultado e sinais de cada seção são do prédio onde ela votou no 1º turno.') : null,
       h('ul', { class: 'ficha-secoes' }, todas.map((s) => cartaoSecao(s, Number(S.filtro.secaoAlvo)))),
       vis.length && vis.length < l.secoes.length ? h('p', { class: 'ficha-meta' }, (l.secoes.length - vis.length) + ' seção(ões) deste prédio fora dos filtros.') : null,
-      h('div', { class: 'ficha-extra' }, h('p', { class: 'ficha-meta' }, 'Carregando as outras seções do prédio…')),
+      l.coord_fonte === 'local_2t' ? null : h('div', { class: 'ficha-extra' }, h('p', { class: 'ficha-meta' }, 'Carregando as outras seções do prédio…')),
+      h('div', { class: 'ficha-clima' }),
       l.risco ? h('p', { class: 'ficha-risco' }, h('b', {}, 'Risco do território: ' + (NOME_RISCO[l.risco] || l.risco)), l.risco_motivos && l.risco_motivos.length ? ' (' + l.risco_motivos.join('; ') + ')' : '', '. ', maiuscula(S.meta.risco_validar || ''), '.') : null,
       conferir.length ? h('div', { class: 'ficha-conf' }, h('b', {}, 'O que conferir no dia'), h('ul', {}, conferir.map((t) => h('li', {}, maiuscula(t))))) : null,
       h('p', { class: 'ficha-links' },
@@ -512,25 +725,31 @@
 
   // As demais seções do prédio (sem sinal no mapa) vêm do Politize, para o fiscal ver o prédio inteiro.
   async function carregarResultado(l, el) {
+    preencherClima(l, el);
     const caixaExtra = el && el.querySelector('.ficha-extra');
     if (!caixaExtra || !l.mun) return;
+    // Seção que mudou de endereço traz o id do prédio do 1º turno, que é o que o Politize conhece.
+    const ids = new Set([l.id].concat(l.secoes.filter((x) => x.mudanca && x.mudanca.id_1t).map((x) => x.mudanca.id_1t)));
     buscar(POLITIZE + 'fiscal/' + l.uf + '/' + Number(l.zona) + '.json').then((f) => {
       const cols = f.secoes.colunas;
       const nomes = { maxima: 'Prioridade máxima', alta: 'Prioridade alta', reforcada: 'Atenção reforçada', padrao: 'Atenção padrão' };
       f.secoes.linhas.forEach((ln) => {
         const r = Object.fromEntries(cols.map((c, i) => [c, ln[i]]));
         const alvo = el.querySelector('.sec[data-secao="' + r.secao + '"] .sec-pol');
-        if (alvo && r.local_id === l.id) alvo.replaceChildren('No Politize, que soma todos os motivos numa escala própria: ' + (nomes[r.nivel] || r.nivel) + ' (' + plural(r.pontos, 'ponto', 'pontos') + ').');
+        if (alvo && ids.has(r.local_id)) alvo.replaceChildren('No Politize, que soma todos os motivos numa escala própria: ' + (nomes[r.nivel] || r.nivel) + ' (' + plural(r.pontos, 'ponto', 'pontos') + ').');
       });
     }).catch(() => {});
     try {
       const z = await buscar(POLITIZE + 'zona/' + l.uf + '/' + Number(l.zona) + '.json');
       const cols = z.secoes.colunas;
-      const noMapa = new Set(l.secoes.map((s) => Number(s.secao)));
-      const outras = z.secoes.linhas.map((ln) => Object.fromEntries(cols.map((c, i) => [c, ln[i]]))).filter((r) => r.local_id === l.id && !noMapa.has(Number(r.secao))).sort((a, b) => a.secao - b.secao);
-      if (!outras.length) { caixaExtra.replaceChildren(h('p', { class: 'ficha-meta' }, 'Todas as seções deste prédio estão no mapa.')); return; }
+      // Seção que votava aqui no 1º turno e mudou de endereço aparece no prédio novo, não nesta lista.
+      const foram = S.secoes.filter((x) => x.mudanca && x.mudanca.id_1t === l.id && x.local !== l).map((x) => Number(x.secao)).sort((a, b) => a - b);
+      const noMapa = new Set(l.secoes.map((s) => Number(s.secao)).concat(foram));
+      const avisoForam = foram.length ? h('p', { class: 'ficha-meta' }, (foram.length === 1 ? '1 seção votava aqui no 1º turno e mudou' : nf0.format(foram.length) + ' seções votavam aqui no 1º turno e mudaram') + ' de endereço para o 2º turno (' + foram.join(', ') + '): ' + (foram.length === 1 ? 'ela aparece' : 'elas aparecem') + ' no prédio novo.') : null;
+      const outras = z.secoes.linhas.map((ln) => Object.fromEntries(cols.map((c, i) => [c, ln[i]]))).filter((r) => ids.has(r.local_id) && !noMapa.has(Number(r.secao))).sort((a, b) => a.secao - b.secao);
+      if (!outras.length) { caixaExtra.replaceChildren(avisoForam || h('p', { class: 'ficha-meta' }, 'Todas as seções deste prédio estão no mapa.')); return; }
       const soma = outras.reduce((acc, r) => { acc.aptos += r.aptos || 0; acc.comp += r.comparecimento || 0; acc.f += r.flavio || 0; acc.l += r.lula || 0; acc.v += (r.flavio || 0) + (r.lula || 0) + (r.terceira || 0); return acc; }, { aptos: 0, comp: 0, f: 0, l: 0, v: 0 });
-      caixaExtra.replaceChildren(
+      caixaExtra.replaceChildren(avisoForam,
         h('details', {}, h('summary', {}, 'Mais ' + plural(outras.length, 'seção do prédio sem sinal', 'seções do prédio sem sinal')),
           h('p', { class: 'ficha-meta' }, 'Juntas: ' + nf0.format(soma.aptos) + ' aptos, ' + nf0.format(soma.comp) + ' votaram' + (soma.v ? '; Flávio ' + pct(100 * soma.f / soma.v) + ' × Lula ' + pct(100 * soma.l / soma.v) + ' dos válidos' : '') + '. Toda seção precisa de fiscal, mesmo sem sinal.'),
           h('p', { class: 'sec-outras' }, outras.map((r) => h('a', { href: 'politizesuavizinhanca.html#s=' + encodeURIComponent(l.uf + '-' + l.zona + '-' + r.secao) }, String(r.secao))))));
@@ -562,7 +781,7 @@
       S.circulo = L.circle([S.centro.lat, S.centro.lon], { radius: S.raio * 1000, color: '#151812', weight: 2, dashArray: '6 6', fill: true, fillOpacity: 0.04, interactive: false }).addTo(S.mapa);
       S.alvo = L.marker([S.centro.lat, S.centro.lon], { icon: L.divIcon({ className: 'alvo', iconSize: [22, 22], html: '' }), title: S.centro.rotulo, keyboard: false, interactive: false }).addTo(S.mapa);
     }
-    const alvo = S.abrir ? S.locaisPorId.get(S.abrir) : null;
+    const alvo = S.abrir ? S.locaisPorId.get(S.abrir) || (S.destinoDoId1t.get(S.abrir) || [])[0] || null : null;
     if (enquadrar) {
       // Com um prédio a abrir, o mapa vai direto ao quarteirão, sem animação, para a ficha abrir sem corrida com o enquadramento.
       if (alvo && coordOk(alvo)) S.mapa.setView([alvo.lat, alvo.lon], ZOOM_ROTULOS + 2, { animate: false });
@@ -587,6 +806,9 @@
     if (col === 'votaram') return s.comparecimento === null || s.comparecimento === undefined ? -1 : s.comparecimento;
     if (col === 'placar') return s.flavio_pct === null || s.flavio_pct === undefined ? -1 : s.flavio_pct;
     if (col === 'local') return s.local.local || '';
+    if (col === 'mudanca') return s.mudanca ? 0 : 1;
+    if (col === 'chuva') { const c = climaObservado(s); return c && typeof c.chuva_04_10_mm === 'number' ? -c.chuva_04_10_mm : 1e9; }
+    if (col === 'risco25') { const c = riscoPrevisto(s.local); return c ? { alto: 0, medio: 1, baixo: 2 }[c.risco] ?? 3 : 4; }
     const v = s[col];
     return v === null || v === undefined ? '' : v;
   }
@@ -609,6 +831,39 @@
     return rs.filter((s) => termos.every((t) => s.busca.indexOf(t) >= 0));
   }
 
+  // As colunas de clima só existem depois que os arquivos de clima chegam.
+  function colunasLista() {
+    const cols = COLS_LISTA.slice();
+    const extra = [];
+    if (S.clima.ufResolvidos && Object.keys(S.clima.ufResolvidos).length) extra.push(COL_CHUVA);
+    if (S.clima.prev) extra.push(COL_RISCO25);
+    cols.splice(cols.findIndex((c) => c[0] === 'mudanca') + 1, 0, ...extra);
+    return cols;
+  }
+
+  function celulaMudanca(s) {
+    const m = s.mudanca;
+    if (!m) return h('td', {});
+    const dist = distanciaMudanca(m);
+    return h('td', {}, h('b', {}, m.nome_cat || 'Mudou de endereço'),
+      h('small', {}, 'Antes: ' + [caixa(m.nome_1t), caixa(m.end_1t)].filter(Boolean).join(' · ') + (dist ? ' · a ' + dist : '')),
+      h('small', {}, m.fonte === 'ambos' ? 'Arquivo e painel do TSE concordam' : 'As duas fontes do TSE divergem'));
+  }
+
+  function celulasClima(s, cols) {
+    const out = [];
+    cols.forEach((c) => {
+      if (c[0] === 'chuva') {
+        const o = climaObservado(s);
+        out.push(h('td', { class: 'num' }, o && typeof o.chuva_04_10_mm === 'number' ? [nf1.format(o.chuva_04_10_mm) + ' mm', typeof o.chuva_votacao_mm === 'number' ? h('small', {}, nf1.format(o.chuva_votacao_mm) + ' mm na votação') : null] : ''));
+      } else if (c[0] === 'risco25') {
+        const p = riscoPrevisto(s.local);
+        out.push(h('td', {}, p ? [NOME_RISCO[p.risco] || p.risco, typeof p.chuva_mm === 'number' ? h('small', {}, nf1.format(p.chuva_mm) + ' mm previstos') : null] : ''));
+      }
+    });
+    return out;
+  }
+
   function desenharLista(rs) {
     const caixaRaio = $('#l-raio-caixa');
     caixaRaio.hidden = !S.centro;
@@ -626,7 +881,8 @@
       (semCoord ? ', ' + nf0.format(semCoord) + ' sem coordenada' : '') + (S.centro ? '. A coluna de distância mede a partir de ' + S.centro.rotulo + '.' : '.');
 
     const thead = $('#tabela thead');
-    thead.replaceChildren(h('tr', {}, COLS_LISTA.map((c) => {
+    const cols = colunasLista();
+    thead.replaceChildren(h('tr', {}, cols.map((c) => {
       const ativo = S.ordem.col === c[0];
       return h('th', { scope: 'col', 'aria-sort': ativo ? (S.ordem.dir === 1 ? 'ascending' : 'descending') : 'none' },
         h('button', { type: 'button', class: 'ord', onclick: () => {
@@ -638,7 +894,7 @@
     tbody.replaceChildren(...pag.map((s) => {
       const l = s.local;
       return h('tr', {},
-        h('td', {}, s.nivel !== 'logs' ? chip(s.nivel) : null, s.logs.length ? chip('log' + (s.atencao || 0)) : null),
+        h('td', {}, s.nivel !== 'logs' ? chip(s.nivel) : null, s.logs.length ? chip('log' + (s.atencao || 0)) : null, s.mudanca && s.nivel !== 'mudanca' ? chip('mudanca') : null),
         h('td', {}, l.uf), h('td', {}, caixa(l.municipio)), h('td', { class: 'num' }, String(l.zona)),
         h('td', { class: 'num' }, h('a', { href: 'politizesuavizinhanca.html#s=' + encodeURIComponent(l.uf + '-' + l.zona + '-' + s.secao), title: 'Ficha completa desta seção no Politize' }, String(s.secao))),
         h('td', {}, caixa(l.local), h('small', {}, [caixa(l.endereco), caixa(l.bairro)].filter(Boolean).join(' · '))),
@@ -646,12 +902,14 @@
         h('td', { class: 'num' }, s.flavio_pct === null || s.flavio_pct === undefined ? '' : [h('span', { class: 'tf' }, pct(s.flavio_pct)), ' × ', h('span', { class: 'tl' }, pct(s.lula_pct))]),
         h('td', {}, motivosDaLinha(s)),
         h('td', {}, l.risco ? NOME_RISCO[l.risco] || l.risco : 'sem base'),
+        celulaMudanca(s),
+        celulasClima(s, cols),
         h('td', { class: 'num' }, km(s.dist)),
         h('td', {}, coordOk(l)
           ? h('a', { href: '#', onclick: (ev) => { ev.preventDefault(); S.abrir = l.id; trocarModo('mapa'); } }, 'Ver no mapa')
           : h('span', { class: 'sem' }, 'sem coordenada')));
     }));
-    if (!pag.length) tbody.replaceChildren(h('tr', {}, h('td', { colspan: String(COLS_LISTA.length) }, 'Nenhuma seção com esses filtros.')));
+    if (!pag.length) tbody.replaceChildren(h('tr', {}, h('td', { colspan: String(cols.length) }, 'Nenhuma seção com esses filtros.')));
     desenharPaginas(paginas);
   }
 
@@ -660,6 +918,7 @@
     const f = S.filtro.log;
     const escolhido = f.startsWith('historico:') ? maiuscula((S.meta.criterios[f.slice(10)] || {}).nome || '') : f && !f.startsWith('familia:') ? ((S.meta.logs.criterios[f] || {}).curto || '') : '';
     if (escolhido && nomes.indexOf(escolhido) >= 0) nomes = [escolhido].concat(nomes.filter((n) => n !== escolhido));
+    if (!nomes.length && s.mudanca) nomes = [NOME_NIVEL.mudanca];
     return h('div', { class: 'criterios-linha' }, h('span', {}, nomes[0] || ''), nomes.length > 1
       ? h('details', {}, h('summary', {}, 'Mais ' + (nomes.length - 1) + (nomes.length === 2 ? ' motivo' : ' motivos')), h('ul', {}, nomes.slice(1).map((n) => h('li', {}, n))))
       : null);
@@ -684,12 +943,17 @@
 
   function exportarCsv() {
     const rs = S.listaAtual || [];
-    const cab = ['nivel_historico', 'atencao_log', 'uf', 'municipio', 'zona', 'secao', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'pontuacao', 'aptos', 'votaram', 'flavio_pct_validos', 'lula_pct_validos', 'criterios_historicos', 'diagnosticos_log', 'familias_log', 'explicacao_provavel', 'risco_territorio', 'mediana_votacao_s', 'processo_mediana_s', 'cadencia_mediana_s', 'coordenada_fonte', 'google_maps', 'ficha_secao'];
+    const cab = ['nivel_historico', 'atencao_log', 'uf', 'municipio', 'zona', 'secao', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'pontuacao', 'aptos', 'votaram', 'flavio_pct_validos', 'lula_pct_validos', 'criterios_historicos', 'diagnosticos_log', 'familias_log', 'explicacao_provavel', 'risco_territorio', 'mediana_votacao_s', 'processo_mediana_s', 'cadencia_mediana_s', 'coordenada_fonte', 'google_maps', 'ficha_secao',
+      'mudou_endereco', 'mudanca_categoria', 'mudanca_fonte', 'mudanca_local_1t', 'mudanca_endereco_1t', 'mudanca_bairro_1t', 'mudanca_local_2t', 'mudanca_endereco_2t', 'mudanca_bairro_2t', 'mudanca_cep_2t', 'mudanca_lat_2t', 'mudanca_lon_2t', 'mudanca_distancia_m', 'mudanca_nota_tre', 'mudanca_url_tre', 'mudanca_google_maps_local_novo', 'mudanca_agregada_a',
+      'chuva_04_10_mm', 'chuva_votacao_mm', 'hora_pico_chuva', 'rajada_04_10_kmh', 'rajada_votacao_kmh', 'urnas_bateria_votacao_predio', 'abstencao_1t_2026_pct', 'abstencao_2t_2022_pct', 'variacao_contra_2022_pp', 'risco_climatico_25_10', 'chuva_prevista_25_10_mm', 'prob_chuva_25_10_pct', 'rajada_prevista_25_10_kmh'];
     const dec = (v, c) => (v === null || v === undefined || v === '' ? '' : (typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v)));
     const esc = (v) => { const s = v === null || v === undefined ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const linhas = [cab.join(';')];
     rs.forEach((s) => {
       const l = s.local;
+      const m = s.mudanca || {};
+      const o = climaObservado(s) || {};
+      const pv = riscoPrevisto(l) || {};
       linhas.push([
         s.nivel === 'logs' ? '' : NOME_NIVEL[s.nivel], s.logs.length ? s.atencao : '', l.uf, l.municipio, l.zona, s.secao, l.local, l.endereco, l.bairro, l.cep,
         coordOk(l) ? dec(l.lat, 5) : '', coordOk(l) ? dec(l.lon, 5) : '', s.dist === null || s.dist === undefined ? '' : dec(s.dist, 2),
@@ -697,6 +961,8 @@
         s.crit.join('|'), s.logs.join('|'), s.familias.join('|'), s.explicacao, l.risco || '', dec(s.tempo_voto, 1), dec(s.processo_mediana, 1), dec(s.cadencia_mediana, 1), l.coord_fonte,
         coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : '',
         'https://brasil.arvor.co/politizesuavizinhanca.html#s=' + l.uf + '-' + l.zona + '-' + s.secao,
+        s.mudanca ? 'sim' : '', m.nome_cat, m.fonte, m.nome_1t, m.end_1t, m.bairro_1t, m.nome_2t, m.end_2t, m.bairro_2t, m.cep_2t, dec(m.lat_2t, 6), dec(m.lon_2t, 6), dec(m.distancia_m, 0), m.motivo_tre, m.url_tre, m.maps_novo, m.agregada_a,
+        dec(o.chuva_04_10_mm, 1), dec(o.chuva_votacao_mm, 1), o.hora_pico_chuva, dec(o.rajada_04_10_kmh, 0), dec(o.rajada_votacao_kmh, 0), o.urnas_bateria_votacao, dec(o.abst_pct, 1), dec(o.abst22_pct, 1), dec(o.dif_abst_pp, 1), pv.risco, dec(pv.chuva_mm, 1), dec(pv.prob_pct, 0), dec(pv.rajada_kmh, 0),
       ].map(esc).join(';'));
     });
     const blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
@@ -780,8 +1046,9 @@
     const box = $('#niveis');
     const n = S.meta.niveis || {};
     const at = (S.meta.resumo && S.meta.resumo.atencao) || {};
-    const contagem = { alta: n.alta, media: n.media, baixa: n.baixa, log3: at['3'], log2: at['2'], log1: at['1'], log0: at['0'] };
+    const contagem = { alta: n.alta, media: n.media, baixa: n.baixa, log3: at['3'], log2: at['2'], log1: at['1'], log0: at['0'], mudanca: S.meta.mudancas ? S.meta.mudancas.secoes : 0 };
     const grupos = [['Prioridade histórica (capítulo 13 do dossiê)', ['alta', 'media', 'baixa']], ['Sinais no log da urna', ['log3', 'log2', 'log1', 'log0']]];
+    if (S.meta.mudancas) grupos.push(['Mudança para o 2º turno', ['mudanca']]);
     box.replaceChildren(...grupos.map((g) => h('div', { class: 'niveis-grupo' }, h('p', { class: 'rot' }, g[0]), g[1].map((k) =>
       h('label', { class: 'nv nv-' + k }, h('input', { type: 'checkbox', value: k, checked: S.filtro.niveis.has(k), onchange: (ev) => {
         if (ev.target.checked) S.filtro.niveis.add(k); else S.filtro.niveis.delete(k);
@@ -793,6 +1060,7 @@
   function montarCriterios() {
     const d = S.meta;
     const sel = $('#f-log');
+    if (d.mudancas) sel.appendChild(h('optgroup', { label: 'Mudança de endereço para o 2º turno' }, h('option', { value: CRIT_MUDANCA }, d.mudancas.nome + ' · ' + nf0.format(d.mudancas.secoes))));
     const historicos = h('optgroup', { label: 'Critérios históricos (capítulo 13)' });
     Object.keys(d.criterios).forEach((k) => historicos.appendChild(h('option', { value: 'historico:' + k }, maiuscula(d.criterios[k].nome) + ' · ' + nf0.format(d.criterios[k].secoes))));
     sel.appendChild(historicos);
@@ -822,6 +1090,10 @@
     $('#n-cap13').textContent = nf0.format(r.secoes_originais || 0);
     $('#n-log-forte').textContent = nf0.format((Number(at['3']) || 0) + (Number(at['2']) || 0));
     $('#n-rotina').textContent = nf0.format(Number(at['0']) || 0);
+    if (d.mudancas) {
+      $('#n-mud-secoes').textContent = nf0.format(d.mudancas.secoes);
+      $('#n-mud-eleitores').textContent = nf0.format(d.mudancas.eleitores);
+    }
     const zeros = (d.logs && d.logs.sem_ocorrencia) || [];
     if (zeros.length) $('#sem-ocorrencia').textContent = zeros.length + ' diagnósticos de rapidez foram testados em todas as urnas e não marcaram nenhuma seção (' + zeros.map((k) => d.logs.criterios[k].curto.toLowerCase()).join('; ') + '). Por isso não aparecem no seletor.';
     if (d.logs && d.logs.cobertura) {
@@ -833,11 +1105,13 @@
   function atualizarCriterio(rs) {
     const f = S.filtro;
     let r = null, link = '';
-    if (f.log.startsWith('historico:')) { r = S.meta.criterios[f.log.slice(10)]; link = 'apuracao_1o_turno_2026.html#fiscais'; if (r) r = { nome: maiuscula(r.nome), regra: r.mede, conferir: r.conferir }; }
+    if (f.log === CRIT_MUDANCA && S.meta.mudancas) { const mu = S.meta.mudancas; link = 'mudancas_secoes_abstencoes.html'; r = { nome: mu.nome, regra: mu.frase + ' ' + nf0.format(mu.secoes) + ' seções e ' + nf0.format(mu.eleitores) + ' eleitores.', limite: mu.nota, conferir: maiuscula(CONFERIR_MUDANCA) }; }
+    else if (f.log.startsWith('historico:')) { r = S.meta.criterios[f.log.slice(10)]; link = 'apuracao_1o_turno_2026.html#fiscais'; if (r) r = { nome: maiuscula(r.nome), regra: r.mede, conferir: r.conferir }; }
     else if (f.log.startsWith('familia:')) { const fm = S.meta.logs.familias[f.log.slice(8)]; link = 'logs_urnas_2026.html'; if (fm) r = { nome: fm.nome, regra: fm.explica, conferir: fm.conferir }; }
     else if (f.log) { const c = S.meta.logs.criterios[f.log]; link = 'logs_urnas_2026.html#' + f.log; if (c) r = { nome: c.curto, regra: c.regra, conferir: c.conferir, limite: c.limite }; }
     const exterior = rs.filter((s) => s.uf === 'ZZ').length;
-    $('#recorte-ativo').textContent = (r ? r.nome : f.camada === 'logs' ? 'Só sinais do log' : f.camada === 'originais' ? 'Só critérios históricos' : 'Histórico e logs') + ' · ' + plural(rs.length, 'seção', 'seções') + (exterior ? ', ' + nf0.format(exterior) + ' no exterior' : '') + (S.modo === 'mapa' && S.centro ? ' (antes do raio)' : '');
+    $('#recorte-ativo').textContent = (r ? r.nome : f.camada === 'logs' ? 'Só sinais do log' : f.camada === 'originais' ? 'Só critérios históricos' : 'Histórico e logs') + ' · ' + plural(rs.length, 'seção', 'seções') + (exterior ? ', ' + nf0.format(exterior) + ' no exterior' : '') + (S.modo === 'mapa' && S.centro ? ' (antes do raio)' : '') +
+      (f.risco25 ? ' · risco climático previsto ' + (f.risco25 === 'alto' ? 'alto' : 'alto ou médio') + ' em 25/10' : '') + (f.choveu ? ' · choveu forte no 1º turno' : '');
     $('#criterio-ativo').hidden = !r;
     if (r) $('#criterio-ativo').replaceChildren(...[h('strong', {}, r.nome), h('p', {}, r.regra), r.limite ? h('p', { class: 'ajuda' }, r.limite) : null, h('p', {}, h('b', {}, 'Conferir: '), r.conferir), h('a', { href: link }, 'Ler a regra completa')].filter(Boolean));
     const fixo = Boolean(f.log);
@@ -855,7 +1129,10 @@
     const padrao = PADRAO_NIVEIS.length === f.niveis.size && PADRAO_NIVEIS.every((k) => f.niveis.has(k));
     if (!padrao) p.push('nivel=' + NIVEIS.filter((k) => f.niveis.has(k)).join(','));
     if (f.camada !== 'todas') p.push('camada=' + f.camada);
-    if (f.log) p.push('log=' + encodeURIComponent(f.log));
+    if (f.log === CRIT_MUDANCA) p.push('crit=' + CRIT_MUDANCA);
+    else if (f.log) p.push('log=' + encodeURIComponent(f.log));
+    if (f.risco25) p.push('risco25=' + f.risco25);
+    if (f.choveu) p.push('choveu=1');
     if (S.raio !== RAIO_PADRAO) p.push('raio=' + S.raio);
     if (S.modo === 'lista') p.push('modo=lista');
     const aberto = S.abrir || S.aberto;
@@ -872,14 +1149,18 @@
     const f = S.filtro;
     f.niveis = new Set(PADRAO_NIVEIS);
     $('#f-camada').value = ['todas', 'originais', 'logs'].indexOf(q.get('camada')) >= 0 ? q.get('camada') : 'todas';
-    $('#f-log').value = q.get('log') || '';
+    const pedido = q.get('crit') || q.get('log') || '';
+    $('#f-log').value = pedido;
     S.avisoLog = '';
-    if (q.get('log') && !$('#f-log').value) {
+    if (pedido && !$('#f-log').value) {
       // Critério desconhecido, ou testado sem nenhuma seção: o mapa abre inteiro e avisa.
-      const c = S.meta.logs && S.meta.logs.criterios[q.get('log')];
+      const c = S.meta.logs && S.meta.logs.criterios[pedido];
       S.avisoLog = c ? 'O diagnóstico "' + c.curto + '" foi testado em todas as urnas e não marcou nenhuma seção. ' : 'O critério pedido no link não existe. ';
     }
     f.camada = $('#f-camada').value; f.log = $('#f-log').value;
+    $('#f-risco25').value = ['alto', 'alto_medio'].indexOf(q.get('risco25')) >= 0 ? q.get('risco25') : '';
+    $('#f-choveu').checked = q.get('choveu') === '1';
+    f.risco25 = $('#f-risco25').value; f.choveu = $('#f-choveu').checked;
     // Links antigos: ambito=exterior equivale a uf=ZZ; ambito=brasil/todos não restringe.
     const uf = q.get('uf') && UFS[q.get('uf')] ? q.get('uf') : q.get('ambito') === 'exterior' ? 'ZZ' : '';
     $('#f-uf').value = uf;
@@ -917,9 +1198,10 @@
   function limpar() {
     ['#q-cep', '#f-zona', '#f-texto', '#l-busca'].forEach((s) => { $(s).value = ''; });
     $('#f-uf').value = ''; $('#f-camada').value = 'todas'; $('#f-log').value = '';
+    $('#f-risco25').value = ''; $('#f-choveu').checked = false;
     $('#q-cep').disabled = false;
     montarMunicipios();
-    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', camada: 'todas', log: '', niveis: new Set(PADRAO_NIVEIS) };
+    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', camada: 'todas', log: '', risco25: '', choveu: false, niveis: new Set(PADRAO_NIVEIS) };
     montarNiveis();
     S.centro = null; S.buscaLista = ''; S.pagina = 1; S.abrir = ''; S.ordemManual = false; S.ordem = { col: 'nivel', dir: 1 };
     if (S.modo === 'lista') trocarModo('mapa'); else aplicarBusca();
@@ -963,7 +1245,9 @@
       $('#f-zona').value = ''; montarMunicipios(); aplicarBusca();
     });
     $('#f-camada').addEventListener('change', () => { $('#f-log').value = ''; aplicarBusca(); });
-    $('#f-log').addEventListener('change', function () { if (this.value) $('#f-camada').value = this.value.startsWith('historico:') ? 'originais' : 'logs'; else $('#f-camada').value = 'todas'; aplicarBusca(); });
+    $('#f-log').addEventListener('change', function () { if (this.value) $('#f-camada').value = this.value === CRIT_MUDANCA ? 'todas' : this.value.startsWith('historico:') ? 'originais' : 'logs'; else $('#f-camada').value = 'todas'; aplicarBusca(); });
+    $('#f-risco25').addEventListener('change', () => { S.pagina = 1; aplicarBusca(); });
+    $('#f-choveu').addEventListener('change', () => { S.pagina = 1; aplicarBusca(); });
     $('#f-mun').addEventListener('change', () => aplicarBusca());
     $('#q-cep').addEventListener('input', (ev) => {
       const d = so(ev.target.value).slice(0, 8);

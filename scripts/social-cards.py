@@ -63,6 +63,7 @@ CARDS: list[dict] = [
     importlib.import_module("social-card-projecao-secoes").card(ROOT),
     importlib.import_module("social-card-quaest-141026").card(ROOT),
     *importlib.import_module("social-card-dossies-2t").cards(ROOT),
+    importlib.import_module("social-card-clima").card(ROOT),
     importlib.import_module("social-card-mudancas").card(ROOT),
     importlib.import_module("social-card-mudancas").card_thread(ROOT),
     importlib.import_module("social-card-politize").card(ROOT),

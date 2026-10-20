@@ -14,6 +14,7 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from . import mapa_mudancas
 from .familias import NIVEIS_ATENCAO, NOME_CURTO, atencao, catalogo
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -55,6 +56,7 @@ COLUNAS_SECOES = [
     "tempo_voto",
     "processo_mediana",
     "cadencia_mediana",
+    "mudanca",
 ]
 ATENCAO_DESTAQUE = 2
 
@@ -202,6 +204,9 @@ def integrar(obj: dict) -> dict:
             "cobertura": indice["cobertura"],
             "gerado_em": indice["gerado_em"],
         }
+    mudancas = mapa_mudancas.aplicar(linhas, antigos, cadastro, POLITIZE / "mudancas")
+    if mudancas:
+        obj["mudancas"] = mudancas
     for row in linhas:
         row["logs"] = row.get("logs") or []
         row["atencao"] = atencao(row["logs"]) if row["logs"] else None
@@ -239,6 +244,7 @@ def integrar(obj: dict) -> dict:
                 "coord_fonte",
                 "processo_mediana",
                 "cadencia_mediana",
+                "mudanca",
             ]
         )
     )
@@ -309,6 +315,7 @@ def normalizar(obj: dict, linhas: list[dict]) -> dict:
                 r.get("tempo_voto"),
                 r.get("processo_mediana"),
                 r.get("cadencia_mediana"),
+                r.get("mudanca"),
             ]
         )
     return {"locais": locais, "secoes": secoes}
@@ -345,6 +352,7 @@ def publicar_recortes(obj: dict, destino: Path):
         r
         for r in linhas
         if r.get("originais", True)
+        or r.get("mudanca")
         or (r.get("atencao") is not None and r["atencao"] >= ATENCAO_DESTAQUE)
     ]
     meta["recortes"] = {

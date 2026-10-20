@@ -1,0 +1,50 @@
+name: Previsao do tempo para o 2o turno (mapa de fiscais)
+
+# Baixa da Open-Meteo a previsao diaria das celulas de 0,5 grau dos locais de votacao, aplica a
+# regra de risco declarada em scripts/clima_1t/previsao.py e grava
+# docs/assets/fiscais_mapa/clima/previsao.json. So a biblioteca padrao do Python: nada a instalar.
+# Previsao incompleta mantem o arquivo anterior e falha o job (codigo 2), sem commit.
+on:
+  schedule:
+    # Todo dia as 12:00 UTC (9h de Brasilia) de 20 a 26/10; fora disso, so manual.
+    - cron: '0 12 20-26 10 *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: clima-previsao
+  cancel-in-progress: false
+
+jobs:
+  previsao:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Baixar a previsao e aplicar a regra de risco
+        run: python3 scripts/clima-1t-previsao.py
+      - name: Commitar a previsao se mudou
+        id: commit
+        run: |
+          git config user.name "clima-previsao-bot"
+          git config user.email "clima-previsao-bot@users.noreply.github.com"
+          git add docs/assets/fiscais_mapa/clima/previsao.json
+          if git diff --cached --quiet; then
+            echo "mudou=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "clima: previsao para o 2o turno $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase
+            git push
+            echo "mudou=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publicar no Pages
+        if: steps.commit.outputs.mudou == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
