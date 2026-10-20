@@ -724,6 +724,9 @@ def build(*, update_home: bool = True, refresh_archive: bool = False) -> None:
         globals(), refresh_archive=refresh_archive
     )
     write_csv()
+    from reponderacao_vista.historico_2t import write_assets
+
+    write_assets()
     groups_view.write_group_csv(ASSETS / "reponderacao_grupos_1t.csv", D)
     importlib.import_module("reponderacao-janela-view").write_csv(
         ASSETS / "reponderacao_medias_7d.csv", D

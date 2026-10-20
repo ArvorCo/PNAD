@@ -70,11 +70,15 @@ def test_institute_panels_show_every_version_in_both_turns():
             if panel["data-turno"] == "1t"
             else panel.find("svg")
         )
-        # Every version is plotted; with more than six the axis labels every other one.
-        assert len(svg.select("g.hit")) == 2 * (len(waves) + 1)
-        # Axis labels are thinned as the series grows; inspect the actual points.
+        # Every version is plotted. The inclusive 2T chart has separate targets
+        # for published/PNAD markers; count versions, not SVG implementation nodes.
         keys = {point["data-k"] for point in svg.select("g.hit")}
-        assert {f"{wave['id']}|{turn}" for wave in waves} <= keys
+        assert len(keys) == len(waves) + 1
+        expected = {
+            f"history2t|{wave['id']}" if turn == "2t" else f"{wave['id']}|{turn}"
+            for wave in waves
+        }
+        assert expected <= keys
         assert "fora das médias" in panel.get_text()
     assert "com Marçal" in panels[1].get_text()
     chapter = archive.select_one("#palver-pesos").get_text()

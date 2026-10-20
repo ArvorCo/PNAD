@@ -61,6 +61,12 @@ background:#192e2b0e;padding:16px 18px;line-height:1.6}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:32px 0}
 .split>article,.split>div{min-width:0}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin:30px 0}
+.history-panel{min-width:0;align-self:start}
+.history-panel details{margin-top:16px;border-top:1px solid var(--line);padding-top:10px}
+.history-panel summary{cursor:pointer;font-size:13px;font-weight:600}
+.history-panel .table-scroll{margin:12px 0}
+.history-panel table{font-size:12px;min-width:600px}
+.history-panel caption{text-align:left;line-height:1.5;margin-bottom:10px}
 .metrics{display:grid;gap:28px;margin:34px 0}
 .metrics.three{grid-template-columns:repeat(3,1fr)}
 .metrics article{border-top:3px solid var(--green);padding-top:18px;min-width:0}

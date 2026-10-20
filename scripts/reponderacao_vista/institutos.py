@@ -98,6 +98,11 @@ def _painel_instituto(nome: str, turno: str) -> str:
 def body(turns=("2t", "1t")):
     groups = []
     for turn in turns:
+        if turn == "2t":
+            from reponderacao_vista.historico_2t import section
+
+            groups.append(section())
+            continue
         names = [
             name
             for name in INSTITUTOS

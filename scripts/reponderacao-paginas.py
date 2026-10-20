@@ -72,7 +72,8 @@ def frame(ns, title, slug, description, content, toc, scripts=(), styles=()):
             [
                 key
                 for key in ns["TIPS"]
-                if slug != "reponderacao_pnad" or not key.endswith("|1t")
+                if (slug != "reponderacao_pnad" or not key.endswith("|1t"))
+                and (slug == "reponderacao_pnad" or not key.startswith("history2t|"))
             ]
         )
         + f"<script>{SCRIPT}</script>"
