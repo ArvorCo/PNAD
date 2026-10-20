@@ -1,0 +1,201 @@
+{
+  "id": "realtime_2026-10-19",
+  "instituto": "Real Time Big Data",
+  "registro_tse": "BR-02952/2026",
+  "contratante": "Real Time Big Data, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-15",
+    "fim": "2026-10-19"
+  },
+  "divulgacao": "2026-10-20",
+  "n": 2000,
+  "metodo": "telefônico com entrevistadores, conforme relatório",
+  "publicado": {
+    "2t": {
+      "flavio": 48,
+      "lula": 45,
+      "branco_nulo": 5,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "url": "https://static.poder360.com.br/uploads/2026/10/Presidencial-BR-02952-2026-Out26.pdf",
+    "arquivo": "data/originals/realtime_102026_20/relatorio.pdf",
+    "sha256": "59c23bd15f28c5ef705e352fcdb3ceab1969cff43bb073850bbbc32a343610e0",
+    "bytes": 7660096,
+    "conferido_em": "2026-10-20",
+    "pdf": "data/originals/realtime_102026_20/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 3,
+      "2t_topline": 8,
+      "2t_renda": 11,
+      "sexo": 9,
+      "2t_validos": 16
+    },
+    "total_paginas": 48,
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 48 páginas, campo 15–19/10, 2.000 entrevistas. Estimulada p. 8: 48/45/5/2; não confundir com espontânea 47/44/5/4. Válidos 52/48 na p. 16. Perfil 46/33/21 na p. 3; renda p. 11 e sexo p. 9. O registro atual no PesqEle define renda domiciliar mensal; o PDF abrevia o conceito. Perfil publicado sem etapa pré/pós-pesos explícita: sensibilidade condicional. O PDF descreve entrevistas telefônicas com entrevistadores; o plano registrado também admite IA e mensagens digitais, sem informar a participação efetiva dessas modalidades.",
+    "registro_conferencia": {
+      "arquivo": "data/originals/realtime_102026_20/registro-conferencia.txt",
+      "url": "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml",
+      "bytes": 6751,
+      "sha256": "a37336d6489abb01f53d2062ec885ce0e7b46a78977bf2e833337ad1326bab0f",
+      "tipo": "transcricao_texto_visivel"
+    }
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 52,
+      "lula": 48
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra de 48 páginas, campo 15–19/10, 2.000 entrevistas. Estimulada p. 8: 48/45/5/2; não confundir com espontânea 47/44/5/4. Válidos 52/48 na p. 16. Perfil 46/33/21 na p. 3; renda p. 11 e sexo p. 9. O registro atual no PesqEle define renda domiciliar mensal; o PDF abrevia o conceito. Perfil publicado sem etapa pré/pós-pesos explícita: sensibilidade condicional. O PDF descreve entrevistas telefônicas com entrevistadores; o plano registrado também admite IA e mensagens digitais, sem informar a participação efetiva dessas modalidades."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          39,
+          54,
+          5,
+          2
+        ],
+        [
+          51,
+          41,
+          6,
+          2
+        ],
+        [
+          61,
+          33,
+          3,
+          3
+        ]
+      ],
+      "nota": "Íntegra de 48 páginas, campo 15–19/10, 2.000 entrevistas. Estimulada p. 8: 48/45/5/2; não confundir com espontânea 47/44/5/4. Válidos 52/48 na p. 16. Perfil 46/33/21 na p. 3; renda p. 11 e sexo p. 9. O registro atual no PesqEle define renda domiciliar mensal; o PDF abrevia o conceito. Perfil publicado sem etapa pré/pós-pesos explícita: sensibilidade condicional. O PDF descreve entrevistas telefônicas com entrevistadores; o plano registrado também admite IA e mensagens digitais, sem informar a participação efetiva dessas modalidades."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          46,
+          33,
+          21
+        ],
+        "linhas": [
+          [
+            39,
+            54,
+            5,
+            2
+          ],
+          [
+            51,
+            41,
+            6,
+            2
+          ],
+          [
+            61,
+            33,
+            3,
+            3
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.58,
+          "lula": 45.3,
+          "branco_nulo": 4.91,
+          "indecisos": 2.21
+        },
+        "residuo": {
+          "flavio": -0.4200000000000017,
+          "lula": 0.29999999999999716,
+          "branco_nulo": -0.08999999999999986,
+          "indecisos": 0.20999999999999996
+        },
+        "residuo_max_abs": 0.4200000000000017
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            52,
+            41,
+            6,
+            1
+          ],
+          [
+            45,
+            49,
+            4,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.29,
+          "lula": 45.24,
+          "branco_nulo": 4.94,
+          "indecisos": 1.53
+        },
+        "residuo": {
+          "flavio": 0.28999999999999915,
+          "lula": 0.240000000000002,
+          "branco_nulo": -0.05999999999999961,
+          "indecisos": -0.47
+        },
+        "residuo_max_abs": 0.47
+      }
+    }
+  }
+}

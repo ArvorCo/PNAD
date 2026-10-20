@@ -16,7 +16,18 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_ingestion_matches_archived_sources(name, assert_json_close):
     poll = getattr(M, name)()  # Confere os hashes e tamanhos das fontes.
     saved = ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json")
-    assert_json_close(poll, json.loads(saved.read_text()))
+    if name == "datatrends":
+        audit = json.loads(
+            (
+                ROOT / "analysis/reponderacao/auditoria_20261019_complemento.json"
+            ).read_text()
+        )
+        archived = next(p for p in audit["pesquisas"] if p["id"] == poll["id"])
+        assert_json_close(
+            poll, archived
+        )  # Revisão da íntegra de 20/10 tem contrato próprio.
+    else:
+        assert_json_close(poll, json.loads(saved.read_text()))
     assert poll["fonte"]["conferido_em"] == "2026-10-19"
     assert poll["campo"]["inicio"] > "2026-10-04"
     assert sum(poll["publicado"]["2t"].values()) == pytest.approx(100, abs=0.11)

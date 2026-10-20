@@ -313,9 +313,11 @@ def datatrends():
 def main():
     polls = [ipespe(), atlas(), futura(), vox(), datatrends()]
     for poll in polls:
-        COMMON.write(
-            ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json"), poll
-        )
+        target = ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json")
+        existing = COMMON.read(target) if target.exists() else {}
+        # Reexecutar o inventário histórico não pode apagar revisão posterior.
+        if existing.get("revisao", {}).get("data", DAY) <= DAY:
+            COMMON.write(target, poll)
         if "pdf" not in poll["fonte"]:
             continue
         name = {

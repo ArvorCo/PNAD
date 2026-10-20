@@ -196,7 +196,7 @@ CARDS: list[dict] = [
         "eyebrow": "Arvor Intelligence · acervo aberto",
         "title": "Toda pesquisa",
         "title_em": "deixa rastro",
-        "lede": "<b>Nexus e PoderData de 19/10 nas centrais.</b> Novo dossiê Nexus, renda atual e onze perguntas por segmento. A régua é pública: TSE e IBGE/PNAD.",
+        "lede": "<b>Centrais atualizadas em 20/10.</b> Real Time, Alfa, Gerp, França e Data Ranking; DataTrends revisada com a íntegra. Fontes e limites do ajuste por renda.",
         "stats": [
             ("4", "dossiês do 2º turno"),
             ("128", "páginas na nova íntegra Nexus"),

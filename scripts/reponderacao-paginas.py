@@ -339,7 +339,8 @@ def current_coverage(ns):
             "Os cruzamentos por sexo e renda recompõem o total; isso não resolve a definição da variável.</p>"
             "<p><b>DataTrends de 19/10: 49 × 46 no total, 51,5 × 48,5 nos válidos.</b> "
             "Resultado conferido na divulgação de Edmar Lyra, dirigente do instituto; "
-            "entra pelo publicado na Projeção. A íntegra e a renda atual ainda não foram localizadas. "
+            "entrou inicialmente pelo publicado. Em 20/10, a íntegra foi localizada e a mesma onda "
+            "passou a receber sensibilidade por renda; veja a revisão acima. "
             "Paraná BR-09051/2026 "
             "é estadual, no Tocantins, e não entra como pesquisa nacional.</p>"
             '<p class="note"><a href="fontes/ipespe_17102026.pdf">Ipespe, 39 páginas</a> · '
@@ -348,10 +349,34 @@ def current_coverage(ns):
             '<a href="fontes/vox_18102026.pdf">Vox, 53 páginas</a> · '
             '<a href="assets/reponderacao_20261019_complemento.json">Inventário, controles e SHA-256</a>.</p></aside>'
         )
+    october20_note = ""
+    if latest.get("Real Time Big Data", {}).get("id") == "realtime_2026-10-19":
+        october20_note = (
+            '<aside class="callout" id="rodada-2010"><h3>20/10: Real Time, Alfa, Gerp, França e Data Ranking</h3>'
+            "<p><b>Real Time: 48 × 45; Alfa: 48,8 × 45,9 no total.</b> "
+            "As duas têm campo de 15 a 19/10 e entram com renda atual. A íntegra da "
+            "DataTrends de 19/10 também foi localizada: define renda domiciliar total "
+            "e permite ajustar a mesma onda, sem duplicação. Os três ajustes são "
+            "condicionais aos perfis publicados, cuja etapa antes/depois dos pesos não está explícita.</p>"
+            "<p><b>Gerp: 50 × 45; França: 40,95 × 39,65; Data Ranking: 44,6 × 45,4.</b> "
+            "Entram pelo publicado na Projeção. Gerp e Data Ranking ainda estão sem íntegra "
+            "atual disponível; na Gerp, o código do registro também está pendente. "
+            "A nova Gerp substitui a anterior: fica fora da Média enquanto faltar renda atual, "
+            "e entra pelo publicado na Projeção, sem transportar a renda antiga.</p>"
+            "<p><b>França: os cruzamentos não recompõem o total.</b> Indecisos de 1,2% "
+            "a 4% nas faixas de renda não podem produzir os 8,84% do total. O relatório "
+            "e os resíduos estão preservados; nenhum ajuste PNAD foi calculado para essa casa.</p>"
+            '<p class="note"><a href="fontes/realtime_20102026.pdf">Real Time, 48 páginas</a> · '
+            '<a href="fontes/alfa_20102026.pdf">Alfa, 48 páginas</a> · '
+            '<a href="fontes/datatrends_19102026.pdf">DataTrends, 38 páginas</a> · '
+            '<a href="fontes/franca_20102026.pdf">França, 14 páginas</a> · '
+            '<a href="assets/reponderacao_20261020.json">Inventário, controles e SHA-256</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + october20_note
         + complement_note
         + october19_note
         + verita_note

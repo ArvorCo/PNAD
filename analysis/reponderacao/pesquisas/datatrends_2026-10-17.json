@@ -2,14 +2,14 @@
   "id": "datatrends_2026-10-17",
   "instituto": "DataTrends",
   "registro_tse": "BR-04454/2026",
+  "contratante": "não informado no relatório consultado",
   "campo": {
     "inicio": "2026-10-15",
     "fim": "2026-10-17"
   },
   "divulgacao": "2026-10-19",
   "n": 2000,
-  "metodo": "telefônico automatizado IVR, 27 UFs",
-  "contratante": "não informado na divulgação consultada",
+  "metodo": "telefônico automatizado URA/DTMF, 27 UFs",
   "publicado": {
     "2t": {
       "flavio": 49,
@@ -18,24 +18,187 @@
       "indecisos": 1
     }
   },
+  "fonte": {
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-Brasil-Outubro2026-BR-04454-2026.pdf",
+    "arquivo": "data/originals/datatrends_102026_19_integra/relatorio.pdf",
+    "sha256": "caf872b6f09335000172e556861b9ea67e1e73be0f4bb0221d3508877f4e05aa",
+    "bytes": 1815006,
+    "conferido_em": "2026-10-20",
+    "pdf": "data/originals/datatrends_102026_19_integra/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": "3–4",
+      "perfil_renda": 7,
+      "perfil_sexo": 6,
+      "2t_topline": 12,
+      "2t_validos": 4,
+      "2t_renda": 32,
+      "sexo": 32
+    },
+    "total_paginas": 38,
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Revisão em 20/10 da mesma onda divulgada em 19/10, sem duplicação. Íntegra de 38 páginas, campo 15–17/10, BR-04454/2026. As pp. 4 e 7 definem renda domiciliar total, resolvendo o conceito desta onda, sem revisar a onda anterior. Perfil da amostra 46/35/19 na p. 7; alvos declarados 46,7/34,6/18,7 na p. 3 são distintos. Etapa do perfil antes/depois dos pesos não explicitada: sensibilidade condicional a 46/35/19. Cruzamentos precisos de renda e sexo na p. 32. Topline 49/46/4/1 e válidos publicados 51,5/48,5. O relatório declara ausência de recusas de renda na base final e ponderação por UF, sexo, idade, escolaridade e renda."
+  },
   "publicado_validos": {
     "2t": {
       "flavio": 51.5,
       "lula": 48.5
     }
   },
-  "ignorar": true,
-  "cruzamentos": {},
-  "motivo": "Resultado publicado; íntegra e renda da onda atual ainda não localizadas. Somente publicado na Projeção.",
-  "fonte": {
-    "arquivo": "data/originals/datatrends_102026_19/materia.html",
-    "url": "https://www.edmarlyra.com/datatrends-flavio-bolsonaro-tem-515-dos-votos-validos-contra-485-de-lula-na-disputa-presidencial/",
-    "sha256": "d8c47ece96d629ccde34cd9c565f9b0df84fe8cc93a7e7e827f43129eabcc8ed",
-    "bytes": 131664,
-    "tipo": "divulgacao",
-    "rotulo": "Divulgação de Edmar Lyra/DataTrends",
-    "conferido_em": "2026-10-19",
-    "status": "Resultado conferido na divulgação; íntegra pendente.",
-    "nota": "Resultado divulgado em 19/10 no blog de Edmar Lyra, dirigente da DataTrends, e corroborado pelo Bastidor. Campo 15–17/10, 2.000 entrevistas IVR, BR-04454/2026. Total 49/46/4/1 e válidos publicados 51,5/48,5, separados da normalização dos inteiros. Íntegra desta onda não localizada; sem perfil e voto por renda atuais conferidos. Não transportar o perfil ambíguo de renda da onda de 11/10. Somente publicado na Projeção."
+  "alvos_renda_declarados": [
+    46.7,
+    34.6,
+    18.7
+  ],
+  "revisao": {
+    "data": "2026-10-20",
+    "inventario_inicial": "analysis/reponderacao/auditoria_20261019_complemento.json"
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      35,
+      19
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Revisão em 20/10 da mesma onda divulgada em 19/10, sem duplicação. Íntegra de 38 páginas, campo 15–17/10, BR-04454/2026. As pp. 4 e 7 definem renda domiciliar total, resolvendo o conceito desta onda, sem revisar a onda anterior. Perfil da amostra 46/35/19 na p. 7; alvos declarados 46,7/34,6/18,7 na p. 3 são distintos. Etapa do perfil antes/depois dos pesos não explicitada: sensibilidade condicional a 46/35/19. Cruzamentos precisos de renda e sexo na p. 32. Topline 49/46/4/1 e válidos publicados 51,5/48,5. O relatório declara ausência de recusas de renda na base final e ponderação por UF, sexo, idade, escolaridade e renda."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          46.4,
+          49.3,
+          3.3,
+          1
+        ],
+        [
+          50.6,
+          43.8,
+          4.5,
+          1.1
+        ],
+        [
+          50.1,
+          40.1,
+          7,
+          2.8
+        ]
+      ],
+      "nota": "Revisão em 20/10 da mesma onda divulgada em 19/10, sem duplicação. Íntegra de 38 páginas, campo 15–17/10, BR-04454/2026. As pp. 4 e 7 definem renda domiciliar total, resolvendo o conceito desta onda, sem revisar a onda anterior. Perfil da amostra 46/35/19 na p. 7; alvos declarados 46,7/34,6/18,7 na p. 3 são distintos. Etapa do perfil antes/depois dos pesos não explicitada: sensibilidade condicional a 46/35/19. Cruzamentos precisos de renda e sexo na p. 32. Topline 49/46/4/1 e válidos publicados 51,5/48,5. O relatório declara ausência de recusas de renda na base final e ponderação por UF, sexo, idade, escolaridade e renda."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          46,
+          35,
+          19
+        ],
+        "linhas": [
+          [
+            46.4,
+            49.3,
+            3.3,
+            1
+          ],
+          [
+            50.6,
+            43.8,
+            4.5,
+            1.1
+          ],
+          [
+            50.1,
+            40.1,
+            7,
+            2.8
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.573,
+          "lula": 45.626999999999995,
+          "branco_nulo": 4.422999999999999,
+          "indecisos": 1.3769999999999998
+        },
+        "residuo": {
+          "flavio": -0.4269999999999996,
+          "lula": -0.37300000000000466,
+          "branco_nulo": 0.42299999999999915,
+          "indecisos": 0.3769999999999998
+        },
+        "residuo_max_abs": 0.4269999999999996
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            51.5,
+            43.3,
+            3.9,
+            1.3
+          ],
+          [
+            45.9,
+            47.8,
+            4.8,
+            1.5
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.532,
+          "lula": 45.685,
+          "branco_nulo": 4.376999999999999,
+          "indecisos": 1.406
+        },
+        "residuo": {
+          "flavio": -0.4680000000000035,
+          "lula": -0.3149999999999977,
+          "branco_nulo": 0.3769999999999989,
+          "indecisos": 0.4059999999999999
+        },
+        "residuo_max_abs": 0.4680000000000035
+      }
+    }
   }
 }

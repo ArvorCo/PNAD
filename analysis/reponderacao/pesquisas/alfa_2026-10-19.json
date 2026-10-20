@@ -1,0 +1,199 @@
+{
+  "id": "alfa_2026-10-19",
+  "instituto": "Alfa Inteligência/TMC",
+  "registro_tse": "BR-00820/2026",
+  "contratante": "Alfa Inteligência, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-15",
+    "fim": "2026-10-19"
+  },
+  "divulgacao": "2026-10-20",
+  "n": 2700,
+  "metodo": "entrevistas pessoais; municípios por PPT e cotas de entrevistados",
+  "publicado": {
+    "2t": {
+      "flavio": 48.8,
+      "lula": 45.9,
+      "branco_nulo": 3.5,
+      "indecisos": 1.8
+    }
+  },
+  "fonte": {
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/1291026_NACIONAL_2700E_15a1910.pdf",
+    "arquivo": "data/originals/alfa_102026_20/relatorio.pdf",
+    "sha256": "bd980f53216a1f2de0613edad9d7bbf82ef40f1a4d579bc84c8cf8e21c93e560",
+    "bytes": 33474119,
+    "conferido_em": "2026-10-20",
+    "pdf": "data/originals/alfa_102026_20/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 5,
+      "perfil_renda": 6,
+      "2t_topline": 13,
+      "2t_validos": 14,
+      "sexo": 15,
+      "2t_renda": 16
+    },
+    "total_paginas": 48,
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 48 páginas, campo 15–19/10, n=2.700. Estimulada 48,8/45,9/3,5/1,8 na p. 13 e válidos 51,5/48,5 na p. 14. Perfil familiar publicado 40/37/23 na p. 6; bases 1.115/982/603 não reproduzem esses percentuais. A etapa do perfil antes/depois dos pesos não está explícita: sensibilidade condicional aos percentuais publicados, sem tratar contagens como pesos. Cruzamentos p. 16 e sexo p. 15."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 51.5,
+      "lula": 48.5
+    }
+  },
+  "bases_renda_publicadas": [
+    1115,
+    982,
+    603
+  ],
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      40,
+      37,
+      23
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra de 48 páginas, campo 15–19/10, n=2.700. Estimulada 48,8/45,9/3,5/1,8 na p. 13 e válidos 51,5/48,5 na p. 14. Perfil familiar publicado 40/37/23 na p. 6; bases 1.115/982/603 não reproduzem esses percentuais. A etapa do perfil antes/depois dos pesos não está explícita: sensibilidade condicional aos percentuais publicados, sem tratar contagens como pesos. Cruzamentos p. 16 e sexo p. 15."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          43,
+          52,
+          3,
+          2
+        ],
+        [
+          51,
+          44,
+          4,
+          1
+        ],
+        [
+          56,
+          40,
+          3,
+          1
+        ]
+      ],
+      "nota": "Íntegra de 48 páginas, campo 15–19/10, n=2.700. Estimulada 48,8/45,9/3,5/1,8 na p. 13 e válidos 51,5/48,5 na p. 14. Perfil familiar publicado 40/37/23 na p. 6; bases 1.115/982/603 não reproduzem esses percentuais. A etapa do perfil antes/depois dos pesos não está explícita: sensibilidade condicional aos percentuais publicados, sem tratar contagens como pesos. Cruzamentos p. 16 e sexo p. 15."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          40,
+          37,
+          23
+        ],
+        "linhas": [
+          [
+            43,
+            52,
+            3,
+            2
+          ],
+          [
+            51,
+            44,
+            4,
+            1
+          ],
+          [
+            56,
+            40,
+            3,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.95,
+          "lula": 46.28,
+          "branco_nulo": 3.37,
+          "indecisos": 1.4
+        },
+        "residuo": {
+          "flavio": 0.15000000000000568,
+          "lula": 0.38000000000000256,
+          "branco_nulo": -0.1299999999999999,
+          "indecisos": -0.40000000000000013
+        },
+        "residuo_max_abs": 0.40000000000000013
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            52,
+            44,
+            4,
+            0
+          ],
+          [
+            46,
+            49,
+            3,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.82,
+          "lula": 46.65,
+          "branco_nulo": 3.47,
+          "indecisos": 1.06
+        },
+        "residuo": {
+          "flavio": 0.020000000000003126,
+          "lula": 0.75,
+          "branco_nulo": -0.029999999999999805,
+          "indecisos": -0.74
+        },
+        "residuo_max_abs": 0.75
+      }
+    }
+  }
+}

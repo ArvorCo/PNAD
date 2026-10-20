@@ -1,0 +1,140 @@
+{
+  "id": "franca_2026-10-20",
+  "instituto": "Instituto França",
+  "registro_tse": "BR-07896/2026",
+  "contratante": "não informado no relatório consultado",
+  "campo": {
+    "inicio": "2026-10-16",
+    "fim": "2026-10-20"
+  },
+  "divulgacao": "2026-10-20",
+  "n": 3000,
+  "metodo": "telefônico CATI; consolidação e ponderação territorial por UF/DDD",
+  "publicado": {
+    "2t": {
+      "flavio": 40.95,
+      "lula": 39.65,
+      "branco_nulo": 10.56,
+      "indecisos": 8.84
+    }
+  },
+  "fonte": {
+    "url": "https://static.poder360.com.br/uploads/2026/10/Pesquisa_Presidente_2T_Brasil_Out2026_Instituto_Franca.pdf",
+    "arquivo": "data/originals/franca_102026_20/relatorio.pdf",
+    "sha256": "a4bf23dd891d7b13a0afd2bb1f95811f03d7e4ae895fc1b34eda2919e74cb545",
+    "bytes": 506012,
+    "conferido_em": "2026-10-20",
+    "pdf": "data/originals/franca_102026_20/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": "3–4",
+      "perfil_renda": 3,
+      "2t_topline": 6,
+      "2t_validos": 6,
+      "sexo": 8,
+      "2t_renda": 11
+    },
+    "total_paginas": 14,
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 14 páginas, campo 16–20/10, n=3.000. Total p. 6: 40,95/39,65/10,56/8,84; válidos 50,81/49,19 na tabela (p. 5 arredonda para 50,8/49,2). Perfil ponderado familiar 41,9/34,9/23,2 na p. 3. Os cruzamentos por renda da p. 11 e sexo da p. 8 NÃO recompõem o total. Indecisos por renda variam de 1,2% a 4%, impossíveis de produzir os 8,84% do total com qualquer combinação de pesos. Transcrições e resíduos preservados no inventário de auditoria; sem ajuste PNAD. Somente publicado na Projeção."
+  },
+  "ignorar": true,
+  "cruzamentos": {},
+  "motivo": "Cruzamentos incompatíveis com o total; somente publicado na Projeção.",
+  "publicado_validos": {
+    "2t": {
+      "flavio": 50.81,
+      "lula": 49.19
+    }
+  },
+  "auditoria_cruzamentos": {
+    "renda": {
+      "pesos": [
+        41.9,
+        34.9,
+        23.2
+      ],
+      "linhas": [
+        [
+          33.4,
+          52.9,
+          9.7,
+          4
+        ],
+        [
+          54.1,
+          37.3,
+          7.3,
+          1.3
+        ],
+        [
+          53.8,
+          34.3,
+          10.7,
+          1.2
+        ]
+      ],
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "recomposto": {
+        "flavio": 45.35709999999999,
+        "lula": 43.14039999999999,
+        "branco_nulo": 9.0944,
+        "indecisos": 2.4081
+      },
+      "residuo": {
+        "flavio": 4.407099999999986,
+        "lula": 3.490399999999994,
+        "branco_nulo": -1.4656000000000002,
+        "indecisos": -6.4319
+      },
+      "residuo_max_abs": 6.4319,
+      "aprovado": false
+    },
+    "sexo": {
+      "pesos": [
+        47.3,
+        52.7
+      ],
+      "linhas": [
+        [
+          46.5,
+          37.8,
+          12.5,
+          3.2
+        ],
+        [
+          36,
+          45.3,
+          9.5,
+          9.2
+        ]
+      ],
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "recomposto": {
+        "flavio": 40.966499999999996,
+        "lula": 41.7525,
+        "branco_nulo": 10.919,
+        "indecisos": 6.361999999999999
+      },
+      "residuo": {
+        "flavio": 0.01649999999999352,
+        "lula": 2.102499999999999,
+        "branco_nulo": 0.359,
+        "indecisos": -2.4780000000000006
+      },
+      "residuo_max_abs": 2.4780000000000006,
+      "aprovado": false
+    }
+  }
+}
