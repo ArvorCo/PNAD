@@ -1,92 +1,106 @@
-"""Referência de primeiro turno e comparação da última onda realmente comparável."""
+"""Urna e comparação com autoria e denominadores visíveis em cada instituto."""
 
-import json
 from html import escape
 
-from apuracao_2026.pesquisas import NAO_ESCOLHA, validos
-from reponderacao_vista.context import D, curto, sinal
-from reponderacao_vista.urna_dados import AUDIT, OFFICIAL, RESIDUAL, URNA
+from reponderacao_vista.avaliacao_1t import (
+    FROZEN,
+    OFF,
+    evaluate,
+    latest_comparison,
+    urna,
+)
+from reponderacao_vista.context import curto, sinal
 from svgkit import br
 
-PAIR = ("flavio", "lula")
-OFF = json.loads(OFFICIAL.read_text(encoding="utf-8"))["nacional"]
-
-
-def urna(mode):
-    # Counted presidential ballots, including blank/null; never registered voters.
-    denominator = (
-        OFF["validos"]
-        if mode == "validos"
-        else (OFF["validos"] + OFF["brancos"] + OFF["nulos"])
-    )
-    return {c: 100 * OFF["votos"][c] / denominator for c in PAIR}
+__all__ = ["OFF", "comparison_html", "latest_comparison", "reference", "urna"]
+LABELS = {
+    "validos_instituto": "Válidos publicados · instituto",
+    "conversao_arvor": "Conversão dos totais · Arvor",
+    "pnad_validos": "PNAD em válidos · Arvor",
+    "arvor_pre_urna": "PNAD + presença · Arvor pré-urna",
+    "total_publicado": "Totais publicados · instituto",
+    "pnad_total": "Totais reponderados · Arvor",
+}
 
 
 def reference(projected=False):
-    # Keep ALL first-round candidates in the valid denominator, not just F + L.
     return urna("validos" if projected else "total")
 
 
-def latest_comparison(name):
-    rows = [
-        p
-        for p in AUDIT["pesquisas"]
-        if p["instituto"] == name and p["ultima_onda_da_casa"]
-    ]
-    if rows:
-        return max(rows, key=lambda p: (p["campo"]["fim"], p["divulgacao"]))
-    # Older comparable ballots remain informative, with their date explicit.
-    for poll in D["pesquisas"] + D.get("nao_reponderaveis", []):
-        values = poll.get("publicado", {}).get("1t")
-        if (
-            poll["instituto"] != name
-            or not values
-            or poll.get("substituida")
-            or poll.get("primeiro_turno_com_marcal")
-            or poll["divulgacao"] > "2026-10-04"
-            or poll["campo"]["fim"] > "2026-10-04"
-        ):
-            continue
-        if any(
-            v > 0 and k not in URNA.keys() | RESIDUAL | NAO_ESCOLHA
-            for k, v in values.items()
-        ):
-            continue
-        normalized, _ = validos(values)
-        rows.append({**poll, "publicado": {"total": values, "validos": normalized}})
+def result_row(label, row):
+    values, errors = row["valores"], row["erro_pp"]
     return (
-        max(rows, key=lambda p: (p["campo"]["fim"], p["divulgacao"])) if rows else None
+        f'<tr><th>{escape(label)}</th><td>{br(values["flavio"], 2)} / {br(values["lula"], 2)}</td>'
+        f'<td>{sinal(errors["flavio"], 2)} / {sinal(errors["lula"], 2)}</td>'
+        f'<td>{br(row["eam_fl_pp"], 2)}</td><td>{sinal(row["erro_vantagem_fl_pp"], 2)}</td></tr>'
     )
 
 
 def comparison_html(name):
-    poll = latest_comparison(name)
-    if poll is None:
-        return '<p class="note history-urna-empty">Urna do 1º turno: sem última onda comparável divulgada até 04/10 no acervo. Não há resultado do 2º turno.</p>'
-    body, gaps = [], {}
-    for mode, label in (("total", "Totais"), ("validos", "Válidos")):
-        actual = urna(mode)
-        values = poll["publicado"][mode]
-        errors = {c: values[c] - actual[c] for c in PAIR}
-        gap = errors["flavio"] - errors["lula"]
-        gaps[mode] = gap
-        body.append(
-            f'<tr><th>{label}</th><td>{br(values["flavio"], 2)} / {br(values["lula"], 2)}</td>'
-            f'<td>{sinal(errors["flavio"], 2)} / {sinal(errors["lula"], 2)}</td>'
-            f"<td>{sinal(gap, 2)}</td></tr>"
+    row = evaluate(name)
+    if row["id"] is None:
+        return '<p class="note history-urna-empty">Urna do 1º turno: sem última onda comparável divulgada antes da votação no acervo. Sem score eleitoral; não significa erro zero. Não há resultado do 2º turno.</p>'
+    reads = row["leituras"]
+    official, model = reads.get("validos_instituto"), reads.get("arvor_pre_urna")
+    title = (
+        f'Instituto: {br(official["eam_fl_pp"], 2)} pp'
+        if official
+        else "Instituto: válidos publicados não disponíveis"
+    )
+    title += (
+        f' · Arvor: {br(model["eam_fl_pp"], 2)} pp'
+        if model
+        else " · Arvor: sem projeção pré-urna desta onda"
+    )
+    body = "".join(
+        result_row(label, reads[key]) for key, label in LABELS.items() if key in reads
+    )
+    evidence = row.get("evidencia")
+    source = (
+        f'<p class="note"><a href="{escape(evidence["fonte"]["url"], quote=True)}">Fonte: {escape(str(evidence["fonte"]["pagina"]))} ↗</a>. '
+        f'{escape(evidence["metodo"])}</p>'
+        if evidence
+        else '<p class="note">Não localizamos válidos publicados para esta onda. A conversão abaixo é nossa.</p>'
+    )
+    delta = row["delta_pnad_total"]
+    difference = (
+        f'<p class="note"><b>Δ PNAD − publicado, nos totais:</b> Flávio {sinal(delta["flavio"], 2)} pp; Lula {sinal(delta["lula"], 2)} pp. '
+        "O ajuste parte dos totais, não é aplicado por cima do likely voter do instituto.</p>"
+        if delta
+        else ""
+    )
+    sensitivity = ""
+    if model:
+        labels = {
+            "idosos60": "60+ com presença de 60%",
+            "idosos80": "60+ com presença de 80%",
+            "flavio95": "Presença relativa F −5%",
+            "flavio105": "Presença relativa F +5%",
+        }
+        sensitivity = (
+            '<details><summary>Sensibilidades Arvor preservadas antes da urna</summary><div class="table-scroll"><table>'
+            "<caption>Mesmas colunas da tabela acima. Não escolhemos retrospectivamente o cenário com menor erro.</caption><tbody>"
+            + "".join(
+                result_row(labels[k], v)
+                for k, v in row["sensibilidades_pre_urna"].items()
+            )
+            + "</tbody></table></div></details>"
         )
     return (
-        f'<div class="history-error"><span>Último 1º turno × urna · erro da vantagem F−L</span>'
-        f'<b>Totais {sinal(gaps["total"], 2)} pp · válidos {sinal(gaps["validos"], 2)} pp</b>'
-        "<small>Positivo: mais favorável a Flávio que a urna; negativo: a Lula.</small></div>"
-        '<details class="history-urna"><summary>Conferir último 1º turno × urna, por candidato</summary>'
-        f'<p class="note">{escape(name)} · campo até {curto(poll["campo"]["fim"])} · '
-        f'divulgada {curto(poll["divulgacao"])}. Erro = publicado − urna, em pp.</p>'
-        '<div class="table-scroll"><table><caption>Flávio / Lula. Comparação da cédula de primeiro turno.</caption>'
-        "<thead><tr><th>Base</th><th>Pesquisa F / L</th><th>Erro F / L</th><th>Erro da vantagem F−L</th></tr></thead>"
-        f'<tbody>{"".join(body)}</tbody></table></div>'
-        '<p class="note">Totais: intenção sobre entrevistados versus votos depositados (válidos + brancos + nulos); '
-        "universos distintos, com indecisos apenas na pesquisa. Válidos: todas as candidaturas, sem filtro de presença retrospectivo. "
-        "Não usamos o cenário hipotético de 2º turno para medir erro contra a urna do 1º. "
-        '<a href="apuracao_1o_turno_2026.html#pesquisas">Auditoria e fontes →</a></p></details>'
+        '<div class="history-error"><span>Último 1º turno × urna · erro médio absoluto F/L</span>'
+        f"<b>{title}</b><small>Mesmos candidatos, todas as candidaturas no denominador dos válidos.</small></div>"
+        '<details class="history-urna"><summary>Instituto × Arvor × urna: valores, erros e fontes</summary>'
+        f'<p class="note">{escape(name)} · campo até {curto(row["campo"]["fim"])} · divulgação {curto(row["divulgacao"])}. '
+        "Erro = estimativa − urna. Erro positivo na vantagem F−L favorece Flávio; negativo, Lula.</p>"
+        f'{source}<div class="table-scroll" tabindex="0"><table><caption>Flávio / Lula, em %. EAM e erro da vantagem em pp.</caption>'
+        "<thead><tr><th>Autoria e base</th><th>F / L</th><th>Erro F / L</th><th>EAM F/L</th><th>Erro vantagem F−L</th></tr></thead>"
+        f"<tbody>{body}</tbody></table></div>{difference}"
+        '<p class="note">PNAD + presença reproduz o cenário central congelado em 04/10, antes da votação, '
+        f'no <a href="https://github.com/ArvorCo/PNAD/tree/{FROZEN["commit"]}">commit {FROZEN["commit"][:8]}</a>. '
+        "Transportava propensões Nexus entre casas, com indecisos proporcionais; era hipótese, não presença observada. "
+        "Sem cruzamento completo, não fabricamos projeção. A distribuição proporcional de indecisos não muda a razão dos válidos. "
+        "Totais comparam entrevistados com votos depositados, incluindo brancos/nulos: universos diferentes. "
+        "Arredondamentos publicados são preservados, mesmo quando não somam 100%. "
+        "A comparação usa a cédula do 1º turno, nunca a simulação binária de 2º turno.</p>"
+        f"{sensitivity}</details>"
     )

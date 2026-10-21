@@ -162,10 +162,12 @@ def panel(name, rows):
 
 
 def section():
+    from reponderacao_vista.avaliacao_1t import order_key
     from reponderacao_vista.historico_controles import controls
+    from reponderacao_vista.score_view import section as score_section
 
     rows = history()
-    names = sorted({p["instituto"] for p in rows})
+    names = sorted({p["instituto"] for p in rows}, key=order_key)
     panels = "".join(
         panel(name, [p for p in rows if p["instituto"] == name]) for name in names
     )
@@ -182,7 +184,7 @@ def section():
         "podem afetar a comparação. Cobertura do acervo verificado, não garantia de todas as pesquisas publicadas. "
         '<a href="assets/reponderacao_historico_2t.csv">Baixar histórico (CSV)</a> · '
         '<a href="assets/reponderacao_historico_2t.json">Dados e fontes (JSON)</a>.</p>'
-        f'</header>{controls(rows)}<div class="grid-3 history-grid">{panels}</div></div>'
+        f'</header>{score_section(names)}{controls(rows)}<div class="grid-3 history-grid">{panels}</div></div>'
     )
 
 

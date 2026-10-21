@@ -1,0 +1,930 @@
+{
+  "commit": "1688f007f86eac5e07bf4234b5f6d2b2f4eade6a",
+  "arquivo_original": "docs/assets/reponderacao_validos.json",
+  "sha256_original": "4e3f015c63e40e96f95ac2885d8d5fd3a9b9e3681bb1e476a85d2be7f8baf563",
+  "referencia": "2026-10-04",
+  "cenario_padrao": "central",
+  "prova_padrao": "docs/reponderacao_pnad.html no mesmo commit: primeira opção de #vf-scenario é central, sem outra selected; JS inicia mode=modelo.",
+  "metodo": {
+    "version": 2,
+    "candidate_partition": "Only candidates individually identified in every eligible poll are shown separately; the remainder is pooled, never imputed as zero. The same partition is retained in leave-one-house-out checks.",
+    "grouped_turnout": "An Others category pools Nexus candidate attendance rates, weighted by the Nexus PNAD population candidate mass, for candidates not separately reported in that poll.",
+    "income_scenario": "pessoas16_efetivo",
+    "window_days": 7,
+    "house_weight": "equal; normalize each poll before averaging",
+    "turnout_source": "nexus_2026-09-27",
+    "turnout_source_release": "2026-09-28",
+    "conditional_forecast": "Vote preferences held fixed until election; no late swing, useful-vote or campaign model.",
+    "transport": "Candidate-conditional attendance rates from the Nexus synthetic income-age-region table are transported to every eligible poll; not directly measured candidate turnout.",
+    "undecided": "Allocated among expected attending candidates proportionally, separately inside each poll; cancels in the valid denominator.",
+    "nonchoice": "Blank/null/absence are not candidates; no subtraction of national abstention from candidate percentages.",
+    "missing_undecided": "No imputation if unpublished by income; the proportional-allocation identity makes the valid share independent of its size.",
+    "negative_mass": "Floor negative adjusted candidate shares at zero, disclose amount and renormalize candidate mass.",
+    "turnout_anchor": {
+      "1t": 79.22387053311112,
+      "2t": 79.57830228837078
+    }
+  },
+  "excluidas": [
+    {
+      "id": "atlas_2026-10-02",
+      "instituto": "AtlasIntel",
+      "reason": "Candidatos positivos sem cruzamento: clariana, rui, samara, zema"
+    },
+    {
+      "id": "futura_2026-10-03",
+      "instituto": "Futura",
+      "reason": "A íntegra de 10 páginas (painel com \"Filtro Mestre: Sem cruzamento\") publica o perfil de renda (p. 3), mas nenhum voto por renda nem por qualquer outro recorte. Sem esse cruzamento não há reponderação; participa da central da previsão com o placar publicado."
+    },
+    {
+      "id": "mda_2026-10-02",
+      "instituto": "MDA",
+      "reason": "Candidatos positivos sem cruzamento: caiado, cury, renan_santos, zema"
+    },
+    {
+      "id": "meio_ideia_2026-09-28",
+      "instituto": "Meio/Ideia",
+      "reason": "Íntegra de 30/09, campo 25–28/09: o voto por renda do 2º turno está na p. 37, mas faltam bases ou percentuais da amostra nas quatro faixas. A metodologia da p. 69 chama condição de atividade de nível econômico (62% ativos, 38% não ativos); isso não informa a distribuição de renda. A p. 9 descreve somente os indecisos da pergunta espontânea, não a amostra inteira. O PDF não traz voto por renda do 1º turno. Os placares ficam documentados, fora das médias comparáveis e do modelo de válidos por renda. Essa falta documental não prova erro de ponderação."
+    },
+    {
+      "id": "realtime_2026-09-30",
+      "instituto": "Real Time Big Data",
+      "reason": "Candidatos positivos sem cruzamento: outros"
+    },
+    {
+      "id": "vox_brasil_2026-10-01",
+      "instituto": "Vox Brasil",
+      "reason": "Íntegra de 14 páginas: perfil econômico da p. 6 é 83,9/12,4/2,8/0,9%, mas não há voto por renda. Sem esse cruzamento não há reponderação nem propensão de comparecimento por candidato."
+    }
+  ],
+  "ondas": {
+    "datafolha_2026-10-03": {
+      "instituto": "Datafolha",
+      "campo": {
+        "inicio": "2026-10-02",
+        "fim": "2026-10-03"
+      },
+      "divulgacao": "2026-10-03",
+      "publicado": {
+        "caiado": 4.3478260869565215,
+        "clariana": 0.0,
+        "cury": 3.260869565217391,
+        "edmilson": 0.0,
+        "flavio": 43.47826086956522,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 45.65217391304348,
+        "renan_santos": 3.260869565217391,
+        "rui": 0.0,
+        "samara": 0.0,
+        "zema": 0.0
+      },
+      "pnad": {
+        "caiado": 4.189119282665862,
+        "clariana": 0.0,
+        "cury": 3.5166185282579647,
+        "edmilson": 0.0,
+        "flavio": 45.776393499159376,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 42.83959132646463,
+        "renan_santos": 3.67827736345217,
+        "rui": 0.0,
+        "samara": 0.0,
+        "zema": 0.0
+      },
+      "modelo": {
+        "caiado": 4.2274373822708196,
+        "clariana": 0.0,
+        "cury": 3.459421068972024,
+        "edmilson": 0.0,
+        "flavio": 45.8254751406512,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 42.87238085098909,
+        "renan_santos": 3.615285557116878,
+        "rui": 0.0,
+        "samara": 0.0,
+        "zema": 0.0
+      },
+      "adjusted": {
+        "caiado": 3.887,
+        "clariana": 0,
+        "cury": 3.263,
+        "edmilson": 0,
+        "flavio": 42.475,
+        "grassi": 0,
+        "hertz": 0,
+        "lula": 39.75,
+        "renan_santos": 3.413,
+        "rui": 0,
+        "samara": 0,
+        "zema": 0
+      },
+      "allocated_undecided": {
+        "caiado": 0.08586852999722705,
+        "clariana": 0.0,
+        "cury": 0.07026843332555682,
+        "edmilson": 0.0,
+        "flavio": 0.9308159603391867,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 0.8708321349938476,
+        "renan_santos": 0.07343438311156633,
+        "rui": 0.0,
+        "samara": 0.0,
+        "zema": 0.0
+      },
+      "cenarios": {
+        "idosos60": {
+          "caiado": 4.191017470000926,
+          "clariana": 0.0,
+          "cury": 3.56415293081632,
+          "edmilson": 0.0,
+          "flavio": 46.020578730844825,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 42.391558226858905,
+          "renan_santos": 3.8326926414790377,
+          "rui": 0.0,
+          "samara": 0.0,
+          "zema": 0.0
+        },
+        "idosos80": {
+          "caiado": 4.228704650703277,
+          "clariana": 0.0,
+          "cury": 3.4556660419725933,
+          "edmilson": 0.0,
+          "flavio": 45.81822531848255,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 42.89002600721811,
+          "renan_santos": 3.6073779816234586,
+          "rui": 0.0,
+          "samara": 0.0,
+          "zema": 0.0
+        },
+        "flavio95": {
+          "caiado": 4.326570967426861,
+          "clariana": 0.0,
+          "cury": 3.5405446391447706,
+          "edmilson": 0.0,
+          "flavio": 44.55508024469001,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 43.87773999261895,
+          "renan_santos": 3.7000641561194105,
+          "rui": 0.0,
+          "samara": 0.0,
+          "zema": 0.0
+        },
+        "flavio105": {
+          "caiado": 4.132744883314332,
+          "clariana": 0.0,
+          "cury": 3.381931754207125,
+          "edmilson": 0.0,
+          "flavio": 47.038957606465154,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 41.91206080082818,
+          "renan_santos": 3.534304955185218,
+          "rui": 0.0,
+          "samara": 0.0,
+          "zema": 0.0
+        }
+      }
+    },
+    "gerp_2026-10-02": {
+      "instituto": "Gerp",
+      "campo": {
+        "inicio": "2026-09-30",
+        "fim": "2026-10-02"
+      },
+      "divulgacao": "2026-10-03",
+      "publicado": {
+        "caiado": 3.1914893617021276,
+        "cury": 4.25531914893617,
+        "flavio": 45.744680851063826,
+        "lula": 43.61702127659574,
+        "renan_santos": 2.127659574468085,
+        "samara": 1.0638297872340425
+      },
+      "pnad": {
+        "caiado": 3.1251323311454584,
+        "cury": 4.447385136565742,
+        "flavio": 47.06754181664197,
+        "lula": 41.99978827016727,
+        "renan_santos": 2.384077916578446,
+        "samara": 0.9760745289011222
+      },
+      "modelo": {
+        "caiado": 3.154248693159476,
+        "cury": 4.375784944074656,
+        "flavio": 47.125935366904116,
+        "lula": 42.03900681744293,
+        "renan_santos": 2.343643983709142,
+        "samara": 0.961380194709672
+      },
+      "adjusted": {
+        "caiado": 2.952,
+        "cury": 4.201,
+        "flavio": 44.46,
+        "lula": 39.673,
+        "renan_santos": 2.252,
+        "samara": 0.922
+      },
+      "allocated_undecided": {
+        "caiado": 0.03596027168003875,
+        "cury": 0.04988649618642867,
+        "flavio": 0.5372631025083658,
+        "lula": 0.47926915515339713,
+        "renan_santos": 0.026718906013416244,
+        "samara": 0.010960293988404434
+      },
+      "cenarios": {
+        "idosos60": {
+          "caiado": 3.12899849276779,
+          "cury": 4.51103304522128,
+          "flavio": 47.3556952331335,
+          "lula": 41.59310669900232,
+          "renan_santos": 2.4861089730190002,
+          "samara": 0.9250575568561304
+        },
+        "idosos80": {
+          "caiado": 3.1551214656685325,
+          "cury": 4.370934419691076,
+          "flavio": 47.11739288057908,
+          "lula": 42.05533882753484,
+          "renan_santos": 2.3384638763617183,
+          "samara": 0.9627485301647422
+        },
+        "flavio95": {
+          "caiado": 3.230365695651853,
+          "cury": 4.4813795454821355,
+          "flavio": 45.85000068293721,
+          "lula": 43.05347444443755,
+          "renan_santos": 2.4001998143689454,
+          "samara": 0.9845798171223039
+        },
+        "flavio105": {
+          "caiado": 3.081636198990507,
+          "cury": 4.2750520312179905,
+          "flavio": 48.34312465137196,
+          "lula": 41.07124636658793,
+          "renan_santos": 2.289692044069671,
+          "samara": 0.9392487077619528
+        }
+      }
+    },
+    "indexa_2026-09-29": {
+      "instituto": "Indexa/Broadcast",
+      "campo": {
+        "inicio": "2026-09-27",
+        "fim": "2026-09-29"
+      },
+      "divulgacao": "2026-09-30",
+      "publicado": {
+        "caiado": 4.705882352941177,
+        "cury": 4.705882352941177,
+        "edmilson": 0.0,
+        "flavio": 40.0,
+        "hertz": 0.0,
+        "lula": 45.88235294117647,
+        "renan_santos": 3.5294117647058822,
+        "rui": 0.0,
+        "zema": 1.1764705882352942
+      },
+      "pnad": {
+        "caiado": 4.54970869697466,
+        "cury": 4.7743278972367165,
+        "edmilson": 0.0,
+        "flavio": 40.76838484756311,
+        "hertz": 0.0,
+        "lula": 45.082945319263445,
+        "renan_santos": 3.6547415709305326,
+        "rui": 0.0,
+        "zema": 1.1698916680315403
+      },
+      "modelo": {
+        "caiado": 4.592384668346939,
+        "cury": 4.697757769391635,
+        "edmilson": 0.0,
+        "flavio": 40.82151509657109,
+        "hertz": 0.0,
+        "lula": 45.12786367528699,
+        "renan_santos": 3.592981785199131,
+        "rui": 0.0,
+        "zema": 1.1674970052041966
+      },
+      "adjusted": {
+        "caiado": 3.889,
+        "cury": 4.081,
+        "edmilson": 0,
+        "flavio": 34.848,
+        "hertz": 0,
+        "lula": 38.536,
+        "renan_santos": 3.124,
+        "rui": 0,
+        "zema": 1.0
+      },
+      "allocated_undecided": {
+        "caiado": 0.24165906893028208,
+        "cury": 0.24720398019703016,
+        "edmilson": 0.0,
+        "flavio": 2.1480973487597153,
+        "hertz": 0.0,
+        "lula": 2.374704713598847,
+        "renan_santos": 0.1890687944499273,
+        "rui": 0.0,
+        "zema": 0.061435672233897565
+      },
+      "cenarios": {
+        "idosos60": {
+          "caiado": 4.549450516347239,
+          "cury": 4.836396780900674,
+          "edmilson": 0.0,
+          "flavio": 40.96496784668664,
+          "hertz": 0.0,
+          "lula": 44.588714618948174,
+          "renan_santos": 3.8062280176048278,
+          "rui": 0.0,
+          "zema": 1.25424221951245
+        },
+        "idosos80": {
+          "caiado": 4.59388409480148,
+          "cury": 4.692783990130365,
+          "edmilson": 0.0,
+          "flavio": 40.81614760803279,
+          "hertz": 0.0,
+          "lula": 45.14764355682893,
+          "renan_santos": 3.5852187974682916,
+          "rui": 0.0,
+          "zema": 1.1643219527381365
+        },
+        "flavio95": {
+          "caiado": 4.688071764501135,
+          "cury": 4.795640423361627,
+          "edmilson": 0.0,
+          "flavio": 39.58847000471638,
+          "hertz": 0.0,
+          "lula": 46.0681495055428,
+          "renan_santos": 3.6678452860574717,
+          "rui": 0.0,
+          "zema": 1.1918230158205771
+        },
+        "flavio105": {
+          "caiado": 4.500525532855948,
+          "cury": 4.603790909338134,
+          "edmilson": 0.0,
+          "flavio": 42.005232240381794,
+          "hertz": 0.0,
+          "lula": 44.22519396376666,
+          "renan_santos": 3.5211131974263927,
+          "rui": 0.0,
+          "zema": 1.1441441562310768
+        }
+      }
+    },
+    "nexus_2026-09-27": {
+      "instituto": "Nexus",
+      "campo": {
+        "inicio": "2026-09-25",
+        "fim": "2026-09-27"
+      },
+      "divulgacao": "2026-09-28",
+      "publicado": {
+        "caiado": 5.2631578947368425,
+        "cury": 5.2631578947368425,
+        "flavio": 38.94736842105263,
+        "lula": 44.21052631578947,
+        "outros": 1.0526315789473684,
+        "renan_santos": 4.2105263157894735,
+        "zema": 1.0526315789473684
+      },
+      "pnad": {
+        "caiado": 5.181646974654644,
+        "cury": 5.3710269656064895,
+        "flavio": 39.19324123854514,
+        "lula": 43.8877607920292,
+        "outros": 1.005818174166465,
+        "renan_santos": 4.270518795964102,
+        "zema": 1.0899870590339515
+      },
+      "modelo": {
+        "caiado": 5.231935597868251,
+        "cury": 5.286589761020939,
+        "flavio": 39.2569626845044,
+        "lula": 43.945642424442916,
+        "outros": 0.9910571935950553,
+        "renan_santos": 4.199705925408785,
+        "zema": 1.088106413159641
+      },
+      "adjusted": {
+        "caiado": 4.925,
+        "cury": 5.105,
+        "flavio": 37.252,
+        "lula": 41.714,
+        "outros": 0.956,
+        "renan_santos": 4.059,
+        "zema": 1.036
+      },
+      "allocated_undecided": {
+        "caiado": 0.08141912965384364,
+        "cury": 0.08226965510711264,
+        "flavio": 0.6109149615542062,
+        "lula": 0.6838799697257416,
+        "outros": 0.015422784288967116,
+        "renan_santos": 0.06535562123283684,
+        "zema": 0.016933059567155337
+      },
+      "cenarios": {
+        "idosos60": {
+          "caiado": 5.182431521563804,
+          "cury": 5.441985872102651,
+          "flavio": 39.39042706798801,
+          "lula": 43.415668376950734,
+          "outros": 0.9522129051653323,
+          "renan_santos": 4.448454601749225,
+          "zema": 1.1688196544802634
+        },
+        "idosos80": {
+          "caiado": 5.233662788616045,
+          "cury": 5.281011672907266,
+          "flavio": 39.251943030402366,
+          "lula": 43.965063310484965,
+          "outros": 0.9925207785109773,
+          "renan_santos": 4.190647223728997,
+          "zema": 1.0851511953493742
+        },
+        "flavio95": {
+          "caiado": 5.336686652251414,
+          "cury": 5.392435072225425,
+          "flavio": 38.04079763694026,
+          "lula": 44.82549889312375,
+          "outros": 1.010899617883573,
+          "renan_santos": 4.2837902218525405,
+          "zema": 1.1098919057230427
+        },
+        "flavio105": {
+          "caiado": 5.131217589156457,
+          "cury": 5.1848196257342725,
+          "flavio": 40.42630386752961,
+          "lula": 43.09966152239324,
+          "outros": 0.9719787272815436,
+          "renan_santos": 4.118858978792194,
+          "zema": 1.0671596891126889
+        }
+      }
+    },
+    "palver_2026-10-03": {
+      "instituto": "Palver",
+      "campo": {
+        "inicio": "2026-09-30",
+        "fim": "2026-10-03"
+      },
+      "divulgacao": "2026-10-03",
+      "publicado": {
+        "caiado": 0.8863195572883078,
+        "cury": 1.265778295663565,
+        "flavio": 46.8477402350594,
+        "lula": 43.2813597298385,
+        "outros": 0.41521042542023706,
+        "renan_santos": 6.98039504835642,
+        "zema": 0.3231967083735924
+      },
+      "pnad": {
+        "caiado": 0.8129917694645122,
+        "cury": 1.2677841949570363,
+        "flavio": 46.48441430382549,
+        "lula": 43.23244722596744,
+        "outros": 0.4014649950697282,
+        "renan_santos": 7.460809369528908,
+        "zema": 0.34008814118688757
+      },
+      "modelo": {
+        "caiado": 0.8209611079610316,
+        "cury": 1.2479738269952259,
+        "flavio": 46.56447856875384,
+        "lula": 43.29363792816524,
+        "outros": 0.39561139259398087,
+        "renan_santos": 7.337803087138273,
+        "zema": 0.33953408839239313
+      },
+      "adjusted": {
+        "caiado": 0.808,
+        "cury": 1.26,
+        "flavio": 46.199,
+        "lula": 42.967,
+        "outros": 0.399,
+        "renan_santos": 7.415,
+        "zema": 0.338
+      },
+      "allocated_undecided": {
+        "caiado": 0.0012247194087777918,
+        "cury": 0.0018617419908767468,
+        "flavio": 0.06946543521946878,
+        "lula": 0.06458595679265615,
+        "outros": 0.0005901777150525593,
+        "renan_santos": 0.010946620700373557,
+        "zema": 0.0005065209349912061
+      },
+      "cenarios": {
+        "idosos60": {
+          "caiado": 0.8123045020408881,
+          "cury": 1.283253243804137,
+          "flavio": 46.67172279956196,
+          "lula": 42.72478130950351,
+          "outros": 0.3796900606881952,
+          "renan_santos": 7.763926742523981,
+          "zema": 0.3643213418773166
+        },
+        "idosos80": {
+          "caiado": 0.8212652450026732,
+          "cury": 1.2467073144288214,
+          "flavio": 46.56040207838506,
+          "lula": 43.31451733444324,
+          "outros": 0.39621160542220263,
+          "renan_santos": 7.322270828696988,
+          "zema": 0.33862559362103295
+        },
+        "flavio95": {
+          "caiado": 0.8405305411458155,
+          "cury": 1.2777220576810835,
+          "flavio": 45.290724116560625,
+          "lula": 44.32563803943198,
+          "outros": 0.405041669667319,
+          "renan_santos": 7.512715937265237,
+          "zema": 0.3476276382479447
+        },
+        "flavio105": {
+          "caiado": 0.8022821822209709,
+          "cury": 1.2195792901360087,
+          "flavio": 47.78027079936832,
+          "lula": 42.30859900240451,
+          "outros": 0.3866102404656687,
+          "renan_santos": 7.170849649721174,
+          "zema": 0.3318088356833431
+        }
+      }
+    },
+    "poderdata_2026-10-02": {
+      "instituto": "PoderData",
+      "campo": {
+        "inicio": "2026-09-30",
+        "fim": "2026-10-02"
+      },
+      "divulgacao": "2026-10-03",
+      "publicado": {
+        "caiado": 2.150537634408602,
+        "cury": 3.225806451612903,
+        "flavio": 44.086021505376344,
+        "lula": 45.16129032258065,
+        "renan_santos": 3.225806451612903,
+        "rui": 1.075268817204301,
+        "zema": 1.075268817204301
+      },
+      "pnad": {
+        "caiado": 2.0907340038519155,
+        "cury": 3.1607104643697843,
+        "flavio": 45.20864540980099,
+        "lula": 44.2574363364006,
+        "renan_santos": 3.325486839289536,
+        "rui": 0.9544190027819389,
+        "zema": 1.002567943505243
+      },
+      "modelo": {
+        "caiado": 2.110358142377411,
+        "cury": 3.1100387870646475,
+        "flavio": 45.26784522618164,
+        "lula": 44.30180908240467,
+        "renan_santos": 3.269311409943099,
+        "rui": 0.9401153215264217,
+        "zema": 1.0005220305021127
+      },
+      "adjusted": {
+        "caiado": 1.954,
+        "cury": 2.954,
+        "flavio": 42.252,
+        "lula": 41.363,
+        "renan_santos": 3.108,
+        "rui": 0.892,
+        "zema": 0.937
+      },
+      "allocated_undecided": {
+        "caiado": 0.0,
+        "cury": 0.0,
+        "flavio": 0.0,
+        "lula": 0.0,
+        "renan_santos": 0.0,
+        "rui": 0.0,
+        "zema": 0.0
+      },
+      "cenarios": {
+        "idosos60": {
+          "caiado": 2.0920200165489953,
+          "cury": 3.2039526805270784,
+          "flavio": 45.45716062525783,
+          "lula": 43.80166539893689,
+          "renan_santos": 3.4656528703449245,
+          "rui": 0.9039719694392526,
+          "zema": 1.0755764389450382
+        },
+        "idosos80": {
+          "caiado": 2.1109952015927367,
+          "cury": 3.1066695198897962,
+          "flavio": 45.26077865669655,
+          "lula": 44.32013561185943,
+          "renan_santos": 3.2621674199204755,
+          "rui": 0.9414770852753955,
+          "zema": 0.9977765047656237
+        },
+        "flavio95": {
+          "caiado": 2.1592299868025657,
+          "cury": 3.1820613166559486,
+          "flavio": 44.00035356235146,
+          "lula": 45.32775395770867,
+          "renan_santos": 3.3450223878077976,
+          "rui": 0.9618865881246041,
+          "zema": 1.0236922005489628
+        },
+        "flavio105": {
+          "caiado": 2.0636496557682222,
+          "cury": 3.0412044019796496,
+          "flavio": 46.479230188292874,
+          "lula": 43.32127861473854,
+          "renan_santos": 3.196951849190739,
+          "rui": 0.9193077803679612,
+          "zema": 0.978377509662034
+        }
+      }
+    },
+    "quaest_2026-10-03": {
+      "instituto": "Quaest",
+      "campo": {
+        "inicio": "2026-10-02",
+        "fim": "2026-10-03"
+      },
+      "divulgacao": "2026-10-03",
+      "publicado": {
+        "caiado": 3.4482758620689653,
+        "clariana": 0.0,
+        "cury": 3.4482758620689653,
+        "edmilson": 0.0,
+        "flavio": 43.67816091954023,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 45.97701149425287,
+        "renan_santos": 3.4482758620689653,
+        "rui": 0.0,
+        "samara": 0.0,
+        "zema": 0.0
+      },
+      "pnad": {
+        "caiado": 3.3845304883656757,
+        "clariana": 0.0,
+        "cury": 3.40062540237285,
+        "edmilson": 0.0,
+        "flavio": 42.99411386002023,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 46.82010484686838,
+        "renan_santos": 3.352340660351328,
+        "rui": 0.0,
+        "samara": 0.04828474202152119,
+        "zema": 0.0
+      },
+      "modelo": {
+        "caiado": 3.415508186587195,
+        "clariana": 0.0,
+        "cury": 3.3453333808601884,
+        "edmilson": 0.0,
+        "flavio": 43.04045447499789,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 46.85620467865771,
+        "renan_santos": 3.294949173195571,
+        "rui": 0.0,
+        "samara": 0.04755010570145018,
+        "zema": 0.0
+      },
+      "adjusted": {
+        "caiado": 2.944,
+        "clariana": 0,
+        "cury": 2.958,
+        "edmilson": 0,
+        "flavio": 37.398,
+        "grassi": 0,
+        "hertz": 0,
+        "lula": 40.726,
+        "renan_santos": 2.916,
+        "rui": 0,
+        "samara": 0.042,
+        "zema": 0
+      },
+      "allocated_undecided": {
+        "caiado": 0.08045202897694131,
+        "clariana": 0.0,
+        "cury": 0.07879906690061805,
+        "edmilson": 0.0,
+        "flavio": 1.0138145486523356,
+        "grassi": 0.0,
+        "hertz": 0.0,
+        "lula": 1.1036942471285827,
+        "renan_santos": 0.0776122708182862,
+        "rui": 0.0,
+        "samara": 0.0011200390316066459,
+        "zema": 0.0
+      },
+      "cenarios": {
+        "idosos60": {
+          "caiado": 3.3885935553012065,
+          "clariana": 0.0,
+          "cury": 3.449166589923312,
+          "edmilson": 0.0,
+          "flavio": 43.25574635011951,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 46.365051754688984,
+          "renan_santos": 3.4956824050347377,
+          "rui": 0.0,
+          "samara": 0.04575934493227459,
+          "zema": 0.0
+        },
+        "idosos80": {
+          "caiado": 3.4164387882502916,
+          "clariana": 0.0,
+          "cury": 3.3416109602552213,
+          "edmilson": 0.0,
+          "flavio": 43.03247041854144,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 46.87420975029539,
+          "renan_santos": 3.2876525002909873,
+          "rui": 0.0,
+          "samara": 0.04761758236668884,
+          "zema": 0.0
+        },
+        "flavio95": {
+          "caiado": 3.4906272788290083,
+          "clariana": 0.0,
+          "cury": 3.418909081191785,
+          "edmilson": 0.0,
+          "flavio": 41.787712827020826,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 47.88673816564501,
+          "renan_santos": 3.3674167467898486,
+          "rui": 0.0,
+          "samara": 0.048595900523527386,
+          "zema": 0.0
+        },
+        "flavio105": {
+          "caiado": 3.3435541416774153,
+          "clariana": 0.0,
+          "cury": 3.2748576990070823,
+          "edmilson": 0.0,
+          "flavio": 44.24041344826031,
+          "grassi": 0.0,
+          "hertz": 0.0,
+          "lula": 45.869091408371936,
+          "renan_santos": 3.2255349285702493,
+          "rui": 0.0,
+          "samara": 0.04654837411300225,
+          "zema": 0.0
+        }
+      }
+    }
+  },
+  "agregados": {
+    "central": {
+      "publicado": {
+        "lula": 44.82596228475388,
+        "flavio": 43.254604685951094,
+        "cury": 3.6321556530252876,
+        "caiado": 3.4276412500146485,
+        "renan_santos": 3.8261349403170173,
+        "demais": 1.033501185938072
+      },
+      "pnad": {
+        "lula": 44.017153445308715,
+        "flavio": 43.927533567936614,
+        "cury": 3.7054969413380836,
+        "caiado": 3.3334090781603902,
+        "renan_santos": 4.018036073727861,
+        "demais": 0.9983708935283425
+      },
+      "modelo": {
+        "lula": 44.06236363676993,
+        "flavio": 43.986095222652025,
+        "cury": 3.6461285054827592,
+        "caiado": 3.3646905397958746,
+        "renan_santos": 3.950525845958697,
+        "demais": 0.9901962493407035
+      }
+    },
+    "idosos60": {
+      "publicado": {
+        "lula": 44.82596228475388,
+        "flavio": 43.254604685951094,
+        "cury": 3.6321556530252876,
+        "caiado": 3.4276412500146485,
+        "renan_santos": 3.8261349403170173,
+        "demais": 1.033501185938072
+      },
+      "pnad": {
+        "lula": 44.017153445308715,
+        "flavio": 43.927533567936614,
+        "cury": 3.7054969413380836,
+        "caiado": 3.3334090781603902,
+        "renan_santos": 4.018036073727861,
+        "demais": 0.9983708935283425
+      },
+      "modelo": {
+        "lula": 43.554363769269926,
+        "flavio": 44.159471236227475,
+        "cury": 3.755705877613636,
+        "caiado": 3.334973724938693,
+        "renan_santos": 4.1855351788222475,
+        "demais": 1.0099502131280362
+      }
+    },
+    "idosos80": {
+      "publicado": {
+        "lula": 44.82596228475388,
+        "flavio": 43.254604685951094,
+        "cury": 3.6321556530252876,
+        "caiado": 3.4276412500146485,
+        "renan_santos": 3.8261349403170173,
+        "demais": 1.033501185938072
+      },
+      "pnad": {
+        "lula": 44.017153445308715,
+        "flavio": 43.927533567936614,
+        "cury": 3.7054969413380836,
+        "caiado": 3.3334090781603902,
+        "renan_santos": 4.018036073727861,
+        "demais": 0.9983708935283425
+      },
+      "modelo": {
+        "lula": 44.0809906283807,
+        "flavio": 43.97962285587426,
+        "cury": 3.6421977027535912,
+        "caiado": 3.365724604947862,
+        "renan_santos": 3.941971232584417,
+        "demais": 0.9894929754591678
+      }
+    },
+    "flavio95": {
+      "publicado": {
+        "lula": 44.82596228475388,
+        "flavio": 43.254604685951094,
+        "cury": 3.6321556530252876,
+        "caiado": 3.4276412500146485,
+        "renan_santos": 3.8261349403170173,
+        "demais": 1.033501185938072
+      },
+      "pnad": {
+        "lula": 44.017153445308715,
+        "flavio": 43.927533567936614,
+        "cury": 3.7054969413380836,
+        "caiado": 3.3334090781603902,
+        "renan_santos": 4.018036073727861,
+        "demais": 0.9983708935283425
+      },
+      "modelo": {
+        "lula": 45.05214185692982,
+        "flavio": 42.730448439316675,
+        "cury": 3.726956019391825,
+        "caiado": 3.4388689838012363,
+        "renan_santos": 4.039579221465893,
+        "demais": 1.0120054790945507
+      }
+    },
+    "flavio105": {
+      "publicado": {
+        "lula": 44.82596228475388,
+        "flavio": 43.254604685951094,
+        "cury": 3.6321556530252876,
+        "caiado": 3.4276412500146485,
+        "renan_santos": 3.8261349403170173,
+        "demais": 1.033501185938072
+      },
+      "pnad": {
+        "lula": 44.017153445308715,
+        "flavio": 43.927533567936614,
+        "cury": 3.7054969413380836,
+        "caiado": 3.3334090781603902,
+        "renan_santos": 4.018036073727861,
+        "demais": 0.9983708935283425
+      },
+      "modelo": {
+        "lula": 43.11530452558443,
+        "flavio": 45.187647543095714,
+        "cury": 3.568747958802894,
+        "caiado": 3.2936585977119788,
+        "renan_santos": 3.8653293718508053,
+        "demais": 0.9693120029541816
+      }
+    }
+  }
+}

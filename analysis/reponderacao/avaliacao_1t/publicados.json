@@ -1,0 +1,277 @@
+{
+  "conferido_em": "2026-10-21",
+  "regra": "Válidos de primeiro turno, na última onda comparável publicada antes da votação. Transcrição preservada, sem ajustar pela urna ou renormalizar arredondamentos.",
+  "ondas": {
+    "atlas_2026-10-02": {
+      "instituto": "AtlasIntel",
+      "validos": {
+        "flavio": 44.1,
+        "lula": 47,
+        "renan_santos": 4.6,
+        "cury": 2.1,
+        "caiado": 1.4,
+        "outros": 0.9
+      },
+      "status": "publicado",
+      "metodo": "Válidos transcritos da lâmina da casa; não se infere filtro de presença apenas pelo nome da base.",
+      "fonte": {
+        "arquivo": "data/originals/atlas_102026_04/relatorio.pdf",
+        "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261003_1_2c124be0d65430b5.pdf",
+        "pagina": 15,
+        "sha256": "66fe57ab1887967ec122751dccac4b151409a6d645296706bfa8eaa2eb1161e8"
+      }
+    },
+    "gerp_2026-10-02": {
+      "instituto": "Gerp",
+      "validos": {
+        "flavio": 46,
+        "lula": 44,
+        "cury": 4,
+        "caiado": 3,
+        "renan_santos": 2,
+        "samara": 1
+      },
+      "status": "publicado",
+      "metodo": "Exclui Nenhum deles e Não sabe/Não respondeu; base publicada de 2.300 entrevistas.",
+      "fonte": {
+        "arquivo": "data/originals/gerp_102026_03/relatorio.pdf",
+        "url": "https://gerp.com.br/relatorios/20261003%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+        "pagina": 16,
+        "sha256": "500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961"
+      }
+    },
+    "mda_2026-10-02": {
+      "instituto": "MDA",
+      "validos": {
+        "flavio": 42.1,
+        "lula": 47.8,
+        "cury": 3.6,
+        "caiado": 3.4,
+        "renan_santos": 1.7,
+        "zema": 0.9,
+        "outros": 0.6
+      },
+      "status": "publicado",
+      "metodo": "Exclui branco/nulo e indecisos; preserva os décimos publicados.",
+      "fonte": {
+        "arquivo": "data/originals/mda_102026_03/relatorio.pdf",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
+        "pagina": 9,
+        "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841"
+      }
+    },
+    "nexus_2026-09-27": {
+      "instituto": "Nexus",
+      "validos": {
+        "flavio": 39,
+        "lula": 44,
+        "cury": 5,
+        "caiado": 5,
+        "renan_santos": 4,
+        "zema": 1,
+        "samara": 1
+      },
+      "status": "publicado",
+      "metodo": "Lâmina rotulada amostra total; não aplicar retrospectivamente nosso filtro à estimativa publicada.",
+      "fonte": {
+        "arquivo": "docs/fontes/nexus_btg_28092026.pdf",
+        "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+        "pagina": 22,
+        "sha256": "b43fc320543a3094f2b0abfc63f07ffdbcf711637e3d74a689cf4ef173e6b409"
+      }
+    },
+    "futura_2026-10-03": {
+      "instituto": "Futura",
+      "validos": {
+        "flavio": 44.8,
+        "lula": 42.6,
+        "cury": 4.1,
+        "caiado": 3.9,
+        "renan_santos": 2.8,
+        "zema": 0.8,
+        "samara": 0.4,
+        "edmilson": 0.2,
+        "rui": 0.1,
+        "clariana": 0.1,
+        "grassi": 0.1,
+        "hertz": 0.1
+      },
+      "status": "publicado",
+      "metodo": "Válidos da casa na p. 5, distintos dos totais na p. 4.",
+      "fonte": {
+        "arquivo": "data/originals/futura_102026_03/relatorio.pdf",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio_Tracking_Nacional_1_Turno_Final_Votos_Validos-3-1.pdf",
+        "pagina": 5,
+        "sha256": "b6d58bcd9282fff88e3bcafcba74ececa2aa35f1d8020d12a64c31bde5a8f83b"
+      }
+    },
+    "datafolha_2026-10-03": {
+      "instituto": "Datafolha",
+      "validos": {
+        "flavio": 42,
+        "lula": 45,
+        "caiado": 4,
+        "renan_santos": 3,
+        "cury": 3,
+        "zema": 1
+      },
+      "status": "publicado",
+      "metodo": "A divulgação informa exclusão de brancos, nulos e indecisos. Soma das candidaturas informadas: 98%; não renormalizamos nem corrigimos a discrepância com os totais do painel G1. Preservamos exatamente os percentuais atribuídos à casa.",
+      "fonte": {
+        "arquivo": "data/originals/datafolha_102026_03/materia_folha.html",
+        "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-lula-tem-45-e-flavio-bolsonaro-42-em-votos-validos-na-vespera-do-1o-turno.shtml",
+        "pagina": "matéria de 03/10, 18h32",
+        "sha256": "6076b85a6dbdb52534c86055549ea5173e7d7aa46f69e0b2a6e9dd2938aa3868"
+      }
+    },
+    "quaest_2026-10-03": {
+      "instituto": "Quaest",
+      "validos": {
+        "lula": 46,
+        "flavio": 45,
+        "cury": 3,
+        "renan_santos": 3,
+        "caiado": 3,
+        "clariana": 0,
+        "edmilson": 0,
+        "hertz": 0,
+        "avalanche": 0,
+        "zema": 0,
+        "samara": 0,
+        "rui": 0,
+        "grassi": 0
+      },
+      "status": "publicado",
+      "metodo": "Modelo próprio de eleitor provável (likely voter), com perfil de comparecimento. Coeficientes e implementação não reproduzidos; preservamos a estimativa oficial.",
+      "fonte": {
+        "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
+        "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
+        "pagina": "matéria de 03/10, 19h16",
+        "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe"
+      }
+    },
+    "poderdata_2026-10-02": {
+      "instituto": "PoderData",
+      "validos": {
+        "flavio": 43,
+        "lula": 45,
+        "cury": 4,
+        "renan_santos": 3,
+        "caiado": 3,
+        "zema": 1,
+        "samara": 1,
+        "rui": 1
+      },
+      "status": "publicado",
+      "metodo": "Exclusão de brancos, nulos e indecisos declarada na matéria. Percentuais arredondados preservados, inclusive soma de 101%.",
+      "fonte": {
+        "arquivo": "data/originals/poderdata_102026_03/materia_1t.html",
+        "url": "https://www.poder360.com.br/poderdata/na-vespera-do-1o-turno-lula-tem-45-e-flavio-43-dos-votos-validos/",
+        "pagina": "matéria de 03/10, 7h30",
+        "sha256": "03a48d70e9b1f454b6ca6c402a503f01f91105ece9709fa0e34b2a4005df177a"
+      }
+    },
+    "realtime_2026-09-30": {
+      "instituto": "Real Time Big Data",
+      "validos": {
+        "flavio": 41,
+        "lula": 46,
+        "renan_santos": 5,
+        "cury": 3,
+        "caiado": 3,
+        "zema": 1,
+        "outros": 1
+      },
+      "status": "publicado",
+      "metodo": "Exclusão de brancos, nulos e indecisos; valores da divulgação R7, parceiro do instituto.",
+      "fonte": {
+        "arquivo": "data/originals/auditoria_validos_102026_21/realtime_r7.html",
+        "url": "https://noticias.r7.com/eleicoes/2026/real-time-lula-tem-46-dos-votos-validos-e-flavio-bolsonaro-41-no-1-turno-para-presidente-01102026/",
+        "pagina": "matéria R7 de 01/10, 7h00",
+        "sha256": "a3560e2cf1d1b7931d0fa9f7e060e2f545de4062ca69d0bc534b49925150dc29"
+      }
+    },
+    "palver_2026-10-03": {
+      "instituto": "Palver",
+      "validos": null,
+      "status": "nao_publica_declarado",
+      "metodo": "O release da Onda 6 declara expressamente não publicar votos válidos. Conversão Arvor mostrada apenas como diagnóstico, sem atribuição de previsão à Palver.",
+      "fonte": {
+        "arquivo": "data/originals/auditoria_validos_102026_21/palver_release.pdf",
+        "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w6/press-release",
+        "pagina": "pp. 1–2",
+        "sha256": "2562a1e99eb77ef481c3aab11de937e92fac7655febd096910337f0b4fd3a1c7"
+      }
+    },
+    "indexa_2026-09-29": {
+      "instituto": "Indexa/Broadcast",
+      "validos": null,
+      "status": "nao_localizado",
+      "metodo": "Não localizamos uma lâmina de válidos no relatório arquivado e na busca de divulgação. Isso não prova inexistência de outra publicação. Conversão dos totais identificada como cálculo Arvor.",
+      "fonte": {
+        "arquivo": "data/originals/indexa_092026_30/relatorio.pdf",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/09/Relatorio-Pesquisa-Nacional-6a-Rodada-Imprensa.pdf",
+        "pagina": "relatório completo",
+        "sha256": "ff9b529d8a6993614337eaaa78698d09325372f1431bd649c61882b8e4f098a7"
+      }
+    },
+    "vox_brasil_2026-10-01": {
+      "instituto": "Vox Brasil",
+      "validos": null,
+      "status": "nao_localizado",
+      "metodo": "Não localizamos uma lâmina de válidos no relatório arquivado e na busca de divulgação. Isso não prova inexistência de outra publicação. Conversão dos totais identificada como cálculo Arvor.",
+      "fonte": {
+        "arquivo": "data/originals/vox_102026_02/relatorio.pdf",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/RELATORIO-VOX-BRASIL-NACIONAL-8-02-10-2026.pdf",
+        "pagina": "relatório completo",
+        "sha256": "8773b252d2e72e8bd8f48c1da99d17a5c70140d836b111df68da344cab730093"
+      }
+    },
+    "meio_ideia_2026-09-28": {
+      "instituto": "Meio/Ideia",
+      "validos": null,
+      "status": "nao_localizado",
+      "metodo": "Não localizamos uma lâmina de válidos no relatório arquivado e na busca de divulgação. Isso não prova inexistência de outra publicação. Conversão dos totais identificada como cálculo Arvor.",
+      "fonte": {
+        "arquivo": "data/originals/meio_ideia_092026_30/relatorio.pdf",
+        "url": "https://www.canalmeio.com.br/wp-content/uploads/2026/09/Pesquisa-Meio_Ideia-Setembro2.pdf",
+        "pagina": "relatório completo",
+        "sha256": "1c3c2fa4069877ef5b02a4fb8c7777643b1605baba406b62f0f28170991c87f0"
+      }
+    },
+    "verita_2026-09-25": {
+      "instituto": "Veritá",
+      "validos": {
+        "flavio": 45.14,
+        "lula": 44.65,
+        "outros": 10.21
+      },
+      "status": "publicado",
+      "metodo": "Consolidação de 27 pesquisas estaduais ponderadas pelo eleitorado, excluindo NS/NR e branco/nulo. Campo 20–25/09, publicação no catálogo em 01/10 (created_at). Última onda nacional de 1º turno com publicação pré-urna confirmada nesta auditoria; não confundir com divulgação de 2º turno em 05/10. Perfil e totais equivalentes não são microdados de uma amostra nacional única. Brasil sem exterior; comparação nacional inclui exterior, diferença de cobertura explícita.",
+      "campo": {
+        "inicio": "2026-09-20",
+        "fim": "2026-09-25"
+      },
+      "divulgacao": "2026-10-01",
+      "total": {
+        "flavio": 44.27,
+        "lula": 43.79,
+        "outros": 10.01,
+        "ns_nr": 1.93
+      },
+      "fonte": {
+        "arquivo": "data/originals/auditoria_validos_102026_21/verita_pre_urna.pdf",
+        "url": "https://lgjdbpskgjfbmlffbntx.supabase.co/storage/v1/object/public/pesquisas/pdfs/1790855512625_Relatorio_Nacional_Verita_Imprensa_27_UFs_20_a_25_Setembro_2026.pdf",
+        "pagina": "3, 4 e 7",
+        "sha256": "e7661f834b3cf33cfcbe85122682b511d31b46fd6a7fc30c2f9cc66f1550a0dd"
+      },
+      "prova_divulgacao": {
+        "arquivo": "data/originals/auditoria_validos_102026_21/verita_catalogo.json",
+        "url": "https://eleicoes26.institutoverita.com.br/",
+        "sha256": "486c9483065cb56733f124167dd68ff6e70c5f9cfacab375e825eec94e54341a",
+        "id": "d0841135-eb7c-4cc6-95a4-f06ed72d63cb",
+        "created_at": "2026-10-01T11:52:03.545339+00:00"
+      }
+    }
+  }
+}

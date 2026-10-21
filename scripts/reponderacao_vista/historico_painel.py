@@ -5,6 +5,7 @@ from html import escape as esc
 from reponderacao_vista.historico_controles import method, summary
 from reponderacao_vista.historico_projecao import projected_row
 from reponderacao_vista.historico_urna import comparison_html
+from reponderacao_vista.score_view import badge
 
 
 def figures(rows, projected=False):
@@ -48,6 +49,7 @@ def panel(name, rows):
     return (
         f'<article class="panel reveal history-panel" data-instituto="{esc(name)}" data-turno="2t">'
         f"<h3>{esc(name)} <small>Flávio × Lula</small></h3>"
+        f"{badge(name)}"
         f'<p class="note"><b>{wave_count(rows)} ondas · {len(rows)} versões</b> · '
         f'{sum(p["pnad"] is not None for p in rows)} com PNAD</p>'
         f'<label class="history-switch history-switch-local"><input type="checkbox" aria-label="Votos válidos projetados: {esc(name, quote=True)}" data-history-toggle disabled>'

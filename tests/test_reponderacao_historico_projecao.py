@@ -113,7 +113,9 @@ def test_urna_keeps_all_candidates_and_correct_total_denominator():
         * poll["publicado"]["total"]["flavio"]
         / sum(poll["publicado"]["total"][c] for c in ("flavio", "lula"))
     )
-    assert latest_comparison("Veritá") is None  # Release after the election.
+    # The 05/10 runoff release remains ineligible; the official catalogue now
+    # supplies a distinct first-round consolidation published on 01/10.
+    assert latest_comparison("Veritá")["id"] == "verita_2026-09-25"
 
 
 def test_generated_controls_cover_every_wave_with_distinct_tooltips(polls):
