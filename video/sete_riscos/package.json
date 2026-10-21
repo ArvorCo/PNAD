@@ -1,0 +1,30 @@
+{
+  "name": "sete-riscos-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sete riscos, um fiscal: vídeo de fiscalização do 2º turno de 2026 (16:9 e 9:16), Arvor Intelligence",
+  "scripts": {
+    "studio": "remotion studio",
+    "render:wide": "remotion render SeteRiscosWide out/sete_riscos_16x9.mp4",
+    "render:vertical": "remotion render SeteRiscosVertical out/sete_riscos_9x16.mp4",
+    "render": "npm run render:wide && npm run render:vertical",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "stills": "node stills.mjs",
+    "verificar": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON src/verificar.ts"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.436",
+    "@remotion/google-fonts": "4.0.436",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.436"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.436",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "eslint": "9.30.0",
+    "typescript": "5.8.3"
+  }
+}

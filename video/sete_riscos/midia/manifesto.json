@@ -1,0 +1,441 @@
+{
+  "versao": 1,
+  "nota": "Prompt final = prompt do item + enquadramento do formato + estilo (o do item, se houver, senão o comum) + 'Avoid: ' + negativo. Chave de cache = sha256 de [prompt final, negativo, segundos, modelo, formato], 12 primeiros caracteres. Gerador: scripts/video-sete-riscos-midia.py. Plano B local (--mflux): prompt do item + enquadramento + estilo_mflux, sem a lista de proibições; o vídeo vira Ken Burns do still.",
+  "estilo": "Documentary realism, natural light, shallow depth of field, slow deliberate camera, muted palette with warm highlights, no on-screen text, no logos, no flags, no recognizable faces, no political colors.",
+  "enquadramento": {
+    "16x9": "Wide horizontal 16:9 composition.",
+    "9x16": "Vertical 9:16 composition for phone screens, main subject centered with comfortable headroom."
+  },
+  "negativo_padrao": "on-screen text, captions, subtitles, readable writing, logos, brand names, watermarks, flags, recognizable faces, party colors, saturated red, green and yellow color schemes, cartoon look",
+  "provedores": {
+    "video": [
+      "openai/sora-2",
+      "google/veo-3.1-fast-generate-preview",
+      "openrouter/google/veo-3.1-fast"
+    ],
+    "imagem": [
+      "openai/gpt-image-2",
+      "google/gemini-3-pro-image-preview",
+      "openrouter/google/gemini-3-pro-image-preview"
+    ]
+  },
+  "itens": [
+    {
+      "id": "fila_secao",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "A long, calm queue of voters seen strictly from behind in the corridor of a Brazilian public school early in the morning: pale painted walls, a tiled floor, a row of classroom doors, a bulletin board with blurred papers. Only backs, shoulders and the backs of heads are visible: people of many ages and body types in everyday clothes, some holding small papers, standing patiently. Slow forward tracking shot at shoulder height along the line. Soft daylight from high windows.",
+      "negativo": "faces, profiles, on-screen text, readable signs, logos, brand names, watermarks, flags, party colors, campaign t-shirts, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-pianista",
+        "risco-mesario",
+        "fecha-ultimos"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "urna_mesa_lacre",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Macro shot of a generic electronic voting terminal: a plain light-grey plastic box with a small numeric keypad and a small dark screen, resting on a worn wooden school desk. A hand presses a narrow strip of plain white paper seal across a seam of the device and smooths it down with the thumb. Extremely shallow depth of field, the keypad soft in the foreground, the screen switched off. Cool morning light from a window, slow push-in.",
+      "negativo": "on-screen text, readable writing on the seal, logos, coats of arms, brand names, watermarks, flags, faces, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "abertura",
+        "risco-totalizacao"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "boletim_impressora",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Macro shot in a dim classroom at dusk: a small thermal receipt printer steadily feeds out a long, continuous strip of white paper that curls down over the edge of the desk and piles up softly. Faint rows of tiny printing pass by, deliberately out of focus and unreadable. The camera slowly pans along the moving paper. A single warm lamp lights the printer against cool blue ambient shadow.",
+      "negativo": "readable text, legible numbers, QR codes in focus, logos, brand names, watermarks, flags, faces, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-totalizacao",
+        "fecha-totalizacao"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "maos_boletim_porta",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Over-the-shoulder medium shot in a school corridor at dusk: two hands tape a long printed paper receipt vertically onto a painted classroom door, pressing the tape at the top and then at the bottom. A moment later another hand raises a smartphone into frame and photographs the receipt. The printed rows stay soft and unreadable, faces are never visible. Warm overhead fluorescent light, calm civic mood, slow handheld movement.",
+      "negativo": "faces, readable text, legible phone screen interface, logos, brand names, watermarks, flags, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "fecha-ultimos"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "fiscal_cadeira",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "A person seen from behind, seated on a white plastic chair at the side of a classroom set up for voting, a notebook open on their lap and a pen in hand, quietly watching a table where a generic light-grey electronic voting terminal and a few sheets of paper sit. Slow push-in over their shoulder. Soft window light, school chairs stacked against the wall, a clean chalkboard. Patient, attentive mood.",
+      "negativo": "faces, profiles, on-screen text, readable writing in the notebook, badges with text, logos, brand names, watermarks, flags, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "lei-poderes",
+        "lei-postura",
+        "fecho-chamada"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "escola_bangu_aerea",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Slow aerial drone push-in on an early morning over a large public school complex with several long two-storey wings around a central courtyard and a roofed sports court, set in a dense working-class suburb of Rio de Janeiro: unplastered terracotta-toned brick houses, blue water tanks on flat rooftops, narrow streets, green granite hills on the horizon softened by morning haze. Tiny figures walk in through the gate, far too distant to identify. Gentle, steady camera.",
+      "negativo": "on-screen text, readable signs, logos, brand names, watermarks, flags, banners, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "mapa-fiscais"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "rio_amazonia_escola",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "A small riverside town in the Brazilian Amazon at dusk, seen from the water in a slow drifting shot: wooden stilt houses on the bank, a few moored wooden boats, and a simple one-storey school building with a single generator-powered light glowing in its window. Calm dark river reflecting the last violet light of the sky, dense rainforest behind. Quiet, remote, dignified.",
+      "negativo": "on-screen text, readable signs, logos, brand names, watermarks, flags, faces, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-medo",
+        "abertura"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "qr_celular",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Close-up of a smartphone held in one hand, its camera viewfinder framing a square code printed on a long paper receipt taped to a painted door. The code drifts in and out of focus as the hand steadies, reflections of the corridor lights slide across the phone glass. The code and every line of print remain blurred and unreadable. Shallow depth of field, cool white light, slow and steady.",
+      "negativo": "readable text, scannable or sharp QR code, app interface text, logos, brand names, watermarks, flags, faces, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "fecha-totalizacao"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "atas_mesa_lampada",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "A stack of printed tally sheets on a wooden table under a single warm desk lamp in a dark room, a modest civic office somewhere in Latin America. A hand slides the top sheet into the pool of light, flattens it, and photographs it with a smartphone. The printed tables, stamps and signatures remain soft and unreadable. Slow push-in, deep shadows around a warm circle of light.",
+      "negativo": "readable text, legible numbers, logos, coats of arms, brand names, watermarks, flags, faces, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "lei-postura"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "teclado_urna_macro",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Extreme macro of the numeric keypad of a generic light-grey electronic voting terminal: worn rubber keys with faded, unreadable markings. A fingertip presses one key, which sinks and does not spring back, visibly stuck and slightly tilted, with a hairline crack along its edge. Dramatic hard side light rakes across the keys, deep shadows, fine dust particles drifting in the beam. Slow push-in.",
+      "negativo": "readable text, legible numbers, logos, brand names, watermarks, flags, faces, party colors, cartoon look",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-pianista"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "secao_vazia",
+      "tipo": "imagem",
+      "motor": "openclaw",
+      "modelo": "openai/gpt-image-2",
+      "prompt": "Photograph of an empty public school classroom set up as a polling section at dawn: the teacher's desk holds a generic light-grey electronic voting terminal, a plain cardboard privacy booth stands on a small table in the corner, student desks are pushed against the walls, the chalkboard is wiped clean. First blue and gold light comes through the windows, chairs are still, nobody is present. Eye-level wide shot.",
+      "negativo": "people, on-screen text, readable writing, posters with text, logos, coats of arms, brand names, watermarks, flags, party colors, cartoon look",
+      "segundos": 0,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "cap-riscos"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "boletim_porta",
+      "tipo": "imagem",
+      "motor": "openclaw",
+      "modelo": "openai/gpt-image-2",
+      "prompt": "Photograph of a long printed paper receipt, like a supermarket receipt but much longer, taped vertically to a painted classroom door in a school corridor, its lower end curling slightly. The printed rows are soft and unreadable. Shot straight on at eye level, shallow depth of field, the corridor softly blurred behind, late afternoon light.",
+      "negativo": "readable text, legible numbers, sharp QR codes, logos, coats of arms, brand names, watermarks, flags, faces, party colors, cartoon look",
+      "segundos": 0,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "cap-fechamento"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "mapa_fundo_textura",
+      "tipo": "imagem",
+      "motor": "openclaw",
+      "modelo": "openai/gpt-image-2",
+      "prompt": "Dark abstract topographic map texture: fine, thin contour lines in deep navy and muted teal flowing across the whole frame, subtle relief shading, very low contrast, wide calm dark areas, the lines slightly brighter toward the center. No place names, no roads, no borders, no grid labels.",
+      "estilo": "Minimal, elegant, understated background plate for overlaid data graphics, flat and evenly lit, no vignette, no text, no logos, no flags.",
+      "negativo": "text, labels, numbers, legend, compass rose, logos, watermarks, flags, bright colors, red, green and yellow",
+      "segundos": 0,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "cap-mapa",
+        "mapa-fiscais"
+      ],
+      "reaproveitado_de": "video/masterclass/midia/manifesto.json"
+    },
+    {
+      "id": "santinhos_calcada",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Dozens of small blank paper campaign leaflets scattered across a cracked concrete sidewalk at dawn, in front of the closed iron gate of a Brazilian public school. The leaflets are plain white and pale grey with no printing visible, some damp, some curled, a few lifting gently in a light breeze. Low camera close to the ground, very slow lateral dolly along the curb. Cool blue early light with the first warm sun touching the gate. Nobody in frame.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-boca-de-urna"
+      ]
+    },
+    {
+      "id": "van_eleitores",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "A plain unbranded white passenger van with no badges or markings, parked on a red dirt road on the edge of a small Brazilian town on a sunny morning, seen from the side and far away, side door open, a small group of adults in everyday clothes walking away from the camera toward a low school building. Long lens, figures small and seen from behind, dust hanging in the air. Static camera with a very slow push-in. Warm morning light, dry vegetation.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-transporte"
+      ]
+    },
+    {
+      "id": "envelope_mao",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Extreme close-up of one hand passing a plain unmarked brown paper envelope to another open hand, against a blurred dim background. Very shallow depth of field, only the fingers and the edge of the envelope in focus, no wrists or faces visible. Slow motion, the envelope changes hands and the receiving hand closes. Soft side light from a window, muted tones, abstract and quiet.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-compra"
+      ]
+    },
+    {
+      "id": "viela_noite",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "A narrow alley between unplastered brick houses in a Brazilian hillside neighborhood at night, a single warm yellow street lamp lighting the wet concrete steps, electric wires overhead, closed metal doors, empty. Static camera at eye level with almost imperceptible drift, a light haze in the air, a moth circling the lamp. Quiet, tense atmosphere, deep shadows.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-medo"
+      ]
+    },
+    {
+      "id": "cabine_mesario",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Inside a public school classroom used as a polling station, seen from behind the poll workers' table: an empty plastic chair in the foreground, and across the room a plain cardboard voting booth on a small desk with a generic light-grey voting terminal. The long soft shadow of a person standing out of frame falls across the floor toward the booth. Slow rack focus from the chair to the booth. Daylight through windows, still and silent.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-mesario"
+      ]
+    },
+    {
+      "id": "caderno_assinatura",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Macro shot of a ballpoint pen signing on a ruled line of a large open register book with many lined pages, the handwriting abstract and unreadable, out-of-focus columns of lines around it. The pen moves in slow motion, ink catching the light. Very shallow depth of field, warm desk light, paper texture visible.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-pianista"
+      ]
+    },
+    {
+      "id": "fita_impressora_antiga",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "Close view of a vintage beige dot matrix printer from the nineteen eighties, with round tractor-feed sprockets and continuous perforated fanfold paper with green and white stripes, the paper completely blank, slowly feeding out and folding into a pile. Shallow depth of field, metal office desk, warm late afternoon window light, dust in the air, nostalgic documentary feel.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "risco-totalizacao"
+      ]
+    },
+    {
+      "id": "entardecer_escola",
+      "tipo": "video",
+      "motor": "openclaw",
+      "modelo": "openai/sora-2",
+      "prompt": "The plain painted wall and open iron gate of a modest Brazilian public school at sunset, blank facade with no signage, the last short queue of three or four people seen from behind walking in, long golden shadows on the sidewalk, trees moving slightly in the wind. Wide static shot with a very slow push-in, warm orange sky fading to blue. Calm, closing-time feeling.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 8,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "fecha-ultimos",
+        "cap-fechamento"
+      ]
+    },
+    {
+      "id": "ata_mesa_still",
+      "tipo": "imagem",
+      "motor": "openclaw",
+      "modelo": "openai/gpt-image-2",
+      "prompt": "Overhead photograph of a blank printed form with empty boxes and ruled lines lying on a worn wooden school desk, a ballpoint pen resting diagonally across it, a paper clip beside it. The form has only empty lines and boxes, no words. Soft morning window light from the side, gentle shadows, calm and orderly.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 0,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "lei-postura",
+        "cap-lei"
+      ]
+    },
+    {
+      "id": "rua_escola_amanhecer_still",
+      "tipo": "imagem",
+      "motor": "openclaw",
+      "modelo": "openai/gpt-image-2",
+      "prompt": "Photograph of a quiet residential street in a Brazilian city at sunrise leading to the open iron gate of a public school with a plain blank wall and no signage, low-rise houses with muted painted walls, wet asphalt reflecting the first light, empty sidewalk, trees, no cars. Eye-level wide view down the street, golden sun rising at the end, soft mist.",
+      "negativo": "text, logos, watermark, faces, flags, party colors",
+      "segundos": 0,
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "som": false,
+      "cenas": [
+        "abertura",
+        "cap-riscos"
+      ]
+    }
+  ],
+  "estilo_mflux": "Documentary photograph, natural light, shallow depth of field, muted palette with warm highlights, subtle film grain, realistic textures, people only as distant silhouettes or seen from behind."
+}

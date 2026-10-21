@@ -1,0 +1,50 @@
+{
+  "em": "2026-10-21T20:25:41+00:00",
+  "epoca": 1792614341.633962,
+  "video": [
+    {
+      "modelo": "openai/sora-2",
+      "ok": false,
+      "tipo_erro": "indisponivel",
+      "erro": "ProviderHttpError: OpenAI video generation failed (HTTP 404)",
+      "segundos": 4.7
+    },
+    {
+      "modelo": "google/veo-3.1-fast-generate-preview",
+      "ok": false,
+      "tipo_erro": "cota",
+      "erro": "ApiError: {\"error\":{\"code\":429,\"message\":\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\"status\":\"RESOUR",
+      "segundos": 4.0
+    },
+    {
+      "modelo": "openrouter/google/veo-3.1-fast",
+      "ok": false,
+      "tipo_erro": "creditos",
+      "erro": "ProviderHttpError: OpenRouter video generation failed (HTTP 402): Insufficient credits. This account never purchased credits. Make sure your key is on the correct account or org, and if so, purchase more at https://openrouter.ai/settings/credits",
+      "segundos": 4.2
+    }
+  ],
+  "imagem": [
+    {
+      "modelo": "openai/gpt-image-2",
+      "ok": false,
+      "tipo_erro": "indisponivel",
+      "erro": "ProviderHttpError: OpenAI Codex image generation failed (HTTP 400): The 'gpt-5.5' model is not supported when using Codex with a ChatGPT account.",
+      "segundos": 7.0
+    },
+    {
+      "modelo": "google/gemini-3-pro-image-preview",
+      "ok": false,
+      "tipo_erro": "cota",
+      "erro": "ProviderHttpError: Google image generation failed (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https:… [code=RESOURCE_EX",
+      "segundos": 6.5
+    },
+    {
+      "modelo": "openrouter/google/gemini-3-pro-image-preview",
+      "ok": false,
+      "tipo_erro": "creditos",
+      "erro": "ProviderHttpError: OpenRouter image generation failed (HTTP 402): Insufficient credits. This account never purchased credits. Make sure your key is on the correct account or org, and if so, purchase more at https://openrouter.ai/settings/credits",
+      "segundos": 4.1
+    }
+  ]
+}

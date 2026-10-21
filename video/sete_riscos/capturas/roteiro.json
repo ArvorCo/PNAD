@@ -1,0 +1,266 @@
+{
+  "descricao": "Tomadas de tela do vídeo Sete riscos, um fiscal. Lido por scripts/video-sete-riscos-capturas.py; esquema em video/sete_riscos/CONTRATO.md, seção 5. 'tomadas' usa o motor da masterclass (ações ir, digitar, clicar, selecionar, esperar_sel, esperar_js, pausa, still, mover, rolar, zoom_mapa, tiles, tecla, js). 'materias' é regravada pelo script a partir de analysis/apuracao_2026/fontes_fiscais.json (primeira fonte do caso com URL). 'paginas' são quadros parados isolados, sem gravação. 'reaproveitadas' vêm da masterclass por hard link e só são registradas.",
+  "reaproveitadas": [
+    "totalizacao_ler",
+    "totalizacao_conferir",
+    "totalizacao_painel",
+    "mapa_busca_rj",
+    "mapa_predio_rj",
+    "mapa_zoom",
+    "politize_bangu"
+  ],
+  "casos": [
+    "paulista_pe_2020",
+    "jackson_lago_2009",
+    "hornung_reserva_2004",
+    "anchieta_sc_2012",
+    "santa_quiteria_ce_faccao_2024",
+    "trerj_locais_votacao_milicia_2024",
+    "itumbiara_2018",
+    "pescaria_brava_2016",
+    "doppelganger_macapa_2024",
+    "proconsult_rj_1982",
+    "rj_1994_proporcional_anulada",
+    "mj_1t_2024"
+  ],
+  "materias": [
+    {
+      "id": "materia_paulista_pe_2020",
+      "caso": "paulista_pe_2020",
+      "fonte": "dol_paulista_2020",
+      "veiculo": "DOL",
+      "url": "https://dol.com.br/noticias/brasil/617833/mesaria-e-presa-por-induzir-votos-de-eleitores"
+    },
+    {
+      "id": "materia_jackson_lago_2009",
+      "caso": "jackson_lago_2009",
+      "fonte": "conjur_lago_2009",
+      "veiculo": "Consultor Jurídico",
+      "url": "https://www.conjur.com.br/2009-mar-04/tse-cassa-mandato-governador-maranhao-jackson-lago/"
+    },
+    {
+      "id": "materia_hornung_reserva_2004",
+      "caso": "hornung_reserva_2004",
+      "fonte": "sedep_hornung",
+      "veiculo": "SEDEP / Conjur",
+      "url": "https://www.sedep.com.br/noticias/transporte-de-eleitor-atenuante-no-reduz-pena-abaixo-do-previsto-em-lei/"
+    },
+    {
+      "id": "materia_anchieta_sc_2012",
+      "caso": "anchieta_sc_2012",
+      "fonte": "tresc_ac_29296",
+      "veiculo": "TRE-SC",
+      "url": "https://ejesc.tre-sc.jus.br/site/fileadmin/arquivos/legjurisp/acordaos/2014/29296_.pdf"
+    },
+    {
+      "id": "materia_santa_quiteria_ce_faccao_2024",
+      "caso": "santa_quiteria_ce_faccao_2024",
+      "fonte": "mpf_santa_quiteria",
+      "veiculo": "MPF (Procuradoria Regional Eleitoral no Ceará)",
+      "url": "https://www.mpf.mp.br/o-mpf/unidades/pr-ce/prefeito-e-vice-de-santa-quiteria-ce-sao-cassados-por-envolvimento-com-faccao-criminosa-nas-eleicoes-2024"
+    },
+    {
+      "id": "materia_trerj_locais_votacao_milicia_2024",
+      "caso": "trerj_locais_votacao_milicia_2024",
+      "fonte": "poder360_trerj_50_secoes",
+      "veiculo": "Poder360",
+      "url": "https://www.poder360.com.br/justica/tre-rj-quer-tirar-50-zonas-eleitorais-de-locais-onde-ha-milicias/"
+    },
+    {
+      "id": "materia_itumbiara_2018",
+      "caso": "itumbiara_2018",
+      "fonte": "ohoje_itumbiara_2018",
+      "veiculo": "O Hoje",
+      "url": "https://ohoje.com/2018/10/08/denuncias-sao-100-vezes-mais-nestas-eleicoes/"
+    },
+    {
+      "id": "materia_pescaria_brava_2016",
+      "caso": "pescaria_brava_2016",
+      "fonte": "conjur_pescaria_brava_2026",
+      "veiculo": "Consultor Jurídico",
+      "url": "https://conjur.com.br/2026-mai-23/mesario-que-fraudou-eleicao-tera-de-pagar-por-danos-morais-coletivos-2/"
+    },
+    {
+      "id": "materia_doppelganger_macapa_2024",
+      "caso": "doppelganger_macapa_2024",
+      "fonte": "metropoles_doppelganger_2026",
+      "veiculo": "Metrópoles",
+      "url": "https://www.metropoles.com/colunas/mirelle-pinheiro/policia-federal-investiga-votos-fantasmas-em-eleicao-de-macapa"
+    },
+    {
+      "id": "materia_proconsult_rj_1982",
+      "caso": "proconsult_rj_1982",
+      "fonte": "memoriaglobo_proconsult",
+      "veiculo": "Memória Globo (Grupo Globo)",
+      "url": "https://memoriaglobo.globo.com/acusacoes-falsas/proconsult/"
+    },
+    {
+      "id": "materia_rj_1994_proporcional_anulada",
+      "caso": "rj_1994_proporcional_anulada",
+      "fonte": "wiki_eleicao_rj_1994",
+      "veiculo": "Wikipédia",
+      "url": "https://pt.wikipedia.org/wiki/Elei%C3%A7%C3%B5es_estaduais_no_Rio_de_Janeiro_em_1994"
+    },
+    {
+      "id": "materia_mj_1t_2024",
+      "caso": "mj_1t_2024",
+      "fonte": "atarde_mj_final_1t_2024",
+      "veiculo": "A Tarde",
+      "url": "https://atarde.com.br/eleicoes/ministerio-da-justica-registrou-3-mil-crimes-eleitorais-no-1-turno-1291099"
+    }
+  ],
+  "paginas": [
+    {
+      "id": "fiscaisdopl",
+      "url": "https://fiscaisdopl.com.br",
+      "externa": true,
+      "nota": "Tela inicial do cadastro de fiscais, sem preencher nem clicar em nada."
+    },
+    {
+      "id": "totalizacao_painel_hoje",
+      "pagina": "totalizacao_painel.html",
+      "externa": false,
+      "nota": "Painel da totalização como está no dia da captura."
+    }
+  ],
+  "tomadas": [
+    {
+      "id": "mapa_cep",
+      "pagina": "fiscais_mapa.html#uf=RJ",
+      "formatos": [
+        "16x9",
+        "9x16"
+      ],
+      "css": "@media (min-width:980px){body:not(.modo-lista) .app{height:100vh!important}}",
+      "nota": "Busca pelo CEP 21810-000 (Bangu, Rio de Janeiro; três locais de votação com o CEP exato no índice do app), raio 2 km, e a ficha do prédio mais perto do centro da busca.",
+      "passos": [
+        {
+          "acao": "esperar_js",
+          "js": "() => { const S = window.fiscaisMapa && window.fiscaisMapa.estado; return Boolean(S && S.recorte && S.cluster && S.cluster.getLayers().length > 0 && !S.loteMapa); }",
+          "tempo": 60
+        },
+        {
+          "acao": "tiles"
+        },
+        {
+          "acao": "pausa",
+          "s": 1.2
+        },
+        {
+          "acao": "still",
+          "nome": "inicio"
+        },
+        {
+          "acao": "clicar",
+          "sel": "#filtros-toggle",
+          "formatos": [
+            "9x16"
+          ]
+        },
+        {
+          "acao": "pausa",
+          "s": 0.8,
+          "formatos": [
+            "9x16"
+          ]
+        },
+        {
+          "acao": "digitar",
+          "sel": "#q-cep",
+          "texto": "21810000"
+        },
+        {
+          "acao": "pausa",
+          "s": 0.5
+        },
+        {
+          "acao": "clicar",
+          "sel": "#raios button[data-r='2']"
+        },
+        {
+          "acao": "pausa",
+          "s": 0.5
+        },
+        {
+          "acao": "clicar",
+          "sel": "#f-busca button[type=submit]"
+        },
+        {
+          "acao": "esperar_js",
+          "js": "() => { const S = window.fiscaisMapa.estado; return Boolean(S.centro) && S.raio === 2 && !S.loteMapa; }",
+          "tempo": 30
+        },
+        {
+          "acao": "rolar",
+          "ate": "main.app",
+          "duracao": 1.0,
+          "margem": 0,
+          "formatos": [
+            "16x9"
+          ]
+        },
+        {
+          "acao": "rolar",
+          "ate": "#palco",
+          "duracao": 1.0,
+          "margem": 0,
+          "formatos": [
+            "9x16"
+          ]
+        },
+        {
+          "acao": "pausa",
+          "s": 1.0
+        },
+        {
+          "acao": "tiles"
+        },
+        {
+          "acao": "pausa",
+          "s": 1.0
+        },
+        {
+          "acao": "still",
+          "nome": "resultado"
+        },
+        {
+          "acao": "js",
+          "js": "() => { const S = window.fiscaisMapa.estado; S.mapa.setView([S.centro.lat, S.centro.lon], 16, { animate: true }); }"
+        },
+        {
+          "acao": "pausa",
+          "s": 1.2
+        },
+        {
+          "acao": "tiles"
+        },
+        {
+          "acao": "esperar_js",
+          "js": "() => { const S = window.fiscaisMapa.estado; const c = S.centro; let melhor = null; let d = Infinity; S.marcadores.forEach((m) => { if (!m._icon || S.cluster.getVisibleParent(m) !== m) return; const p = m.getLatLng(); const r = m._icon.getBoundingClientRect(); if (r.top < 60 || r.bottom > innerHeight - 40) return; const dd = (p.lat - c.lat) ** 2 + (p.lng - c.lon) ** 2; if (dd < d) { d = dd; melhor = m; } }); document.querySelectorAll('#__alvo').forEach((e) => e.removeAttribute('id')); if (melhor) melhor._icon.id = '__alvo'; return Boolean(melhor); }",
+          "tempo": 15
+        },
+        {
+          "acao": "clicar",
+          "sel": "#__alvo"
+        },
+        {
+          "acao": "esperar_js",
+          "js": "() => Boolean(window.fiscaisMapa.estado.aberto)",
+          "tempo": 20
+        },
+        {
+          "acao": "pausa",
+          "s": 2.0
+        },
+        {
+          "acao": "still",
+          "nome": "ficha"
+        },
+        {
+          "acao": "pausa",
+          "s": 1.0
+        }
+      ]
+    }
+  ]
+}
