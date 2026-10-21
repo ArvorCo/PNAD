@@ -1,0 +1,203 @@
+A session-scoped Stop hook is now active with condition: "sua meta é fazer um vídeo explicando detalhadamente as fraudes do tipo boca de urna, compra de votos, transporte em massa de eleitores, voto amedrontado por criminosos, mesário mal intencionado, mesário pianista e possíveis trocas na totalização de votos que não condizam com o BU. Vamos explicar com casos reais documentados todas essas situação e explicar como o fiscal de urna pode auxiliar emcada uma delas com sabedoria, coragem e contando apenas com a lei, e vamos falar também que os últimos eleitores do dia tÊm odireito de observar o fechamento da seção e tirar votos dos BUs e falar do nosso app de totalização, além de convidar o pessoal para mais cadastros de fiscais do PL, falando do mapa de fiscais. Procure, nesse vídeo, trazer elementos que mostrem o Lula em vantagem em exemplos de seções e tudo o mais para poder motivar o pessoal a fiscalizar. Seja bastante educativo e didático e sucinto, mas o vídeo final deve ter a qualidae do nosso úiltimo vídeo. Use subagentes opus, haiku e sonnet para as tarefas de acordo com a complexidade e use a skill remotion e imagens ricas e bonitas para ilustrar as coisas, prints das matérias, coisa fina mesmo. E use o sag do elevenlabs com v4 para o áudio ficar bonito e faça duas versões: 16:9 e 9:16 para postar como reel. E produza também os captions para postar no X, Youtube e Instagram. No meu canal, YouTube normal, com links, no canal da Arvor, algo mais profissional, sem links. Qualquer dúvida me pergunte aqui. Use o fable como driver principal para os subagentes.". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<task-notification>
+<task-id>a13dd8b59a19a7f74</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Dados JSON do vídeo sete_riscos" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O JSON está gerado em `/Users/leonardodias/arvor/PNAD/video/sete_riscos/src/dados/sete_riscos.json` (134 KB, 38 fontes com SHA-256). Lint zero (ruff e black) nos dois arquivos. Rodei o script por último, depois dos testes.
+
+**Arquivos**
+- `/Users/leonardodias/arvor/PNAD/scripts/video-sete-riscos-dados.py`
+- `/Users/leonardodias/arvor/PNAD/tests/test_video_sete_riscos.py`
+
+**Riscos, com o caso principal e a fonte**
+1. `boca_urna`: `paulista_pe_2020`, https://dol.com.br/noticias/brasil/617833/mesaria-e-presa-por-induzir-votos-de-eleitores
+2. `compra`: `jackson_lago_2009`, https://www.conjur.com.br/2009-mar-04/tse-cassa-mandato-governador-maranhao-jackson-lago/
+3. `transporte`: `hornung_reserva_2004`, https://www.sedep.com.br/noticias/transporte-de-eleitor-atenuante-no-reduz-pena-abaixo-do-previsto-em-lei/
+4. `medo`: `santa_quiteria_ce_faccao_2024`, https://www.mpf.mp.br/o-mpf/unidades/pr-ce/prefeito-e-vice-de-santa-quiteria-ce-sao-cassados-por-envolvimento-com-faccao-criminosa-nas-eleicoes-2024
+5. `mesario`: `itumbiara_2018`, https://ohoje.com/2018/10/08/denuncias-sao-100-vezes-mais-nestas-eleicoes/
+6. `pianista`: `pescaria_brava_2016`, https://conjur.com.br/2026-mai-23/mesario-que-fraudou-eleicao-tera-de-pagar-por-danos-morais-coletivos-2/
+7. `totalizacao` (cenário `apuracao_papel`): `proconsult_rj_1982`, https://memoriaglobo.globo.com/acusacoes-falsas/proconsult/
+
+**`balanco_mj`**
+- `1t_2024`: boca de urna 1170, compra 498, veículos de transporte 53, presos 536, apreendido R$ 638000.
+- `1t_2022`: boca de urna 456, compra 95, transporte 57, presos 352, crimes 1378.
+
+`numeros.mj_1t_2024` vale 1170 em boca de urna, 498 em compra e 53 em transporte.
+
+**`lula_frente`**
+- `secoes_lula_90`: 2883.
+- `secoes_flavio_90`: 156.
+- `secoes_lula_80_comp_95`: 90.
+- Os três primeiros da lista, todos de nível `media`:
+
+| UF | Município | Zona | Seção | Lula | Comparecimento |
+|---|---|---|---|---|---|
+| PA | Barcarena | 65 | 327 | 98,21% | 99,13% |
+| CE | Tamboril | 61 | 104 | 98,20% | 95,80% |
+| PA | Bagre | 15 | 345 | 97,58% | 96,24% |
+
+**`exemplos`** (Lula / Flávio / comparecimento)
+
+| Chave | Lula | Flávio | Comparecimento |
+|---|---|---|---|
+| `tabatinga_am` | 94,05 | 3,27 | 93,26 |
+| `baiao_pa` | 79,59 | 20,41 | 100,00 |
+| `puc_sp` | 70,77 | 21,15 | 73,63 |
+| `sao_joao_missoes_mg` | 83,05 | 15,93 | 74,70 |
+| `marau_rs` | 6,49 | 90,84 | 87,42 |
+| `porto_acre_ac` (nível null) | 22,20 | 74,30 | 74,58 |
+| `frente_1` | 98,21 | 1,79 | 99,13 |
+| `frente_2` | 98,20 | 1,80 | 95,80 |
+| `frente_3` | 97,58 | 2,42 | 96,24 |
+
+O prédio `RJ-60011-233-1414` (Getúlio Vargas, Bangu) tem 21 seções: Lula 37,07%, Flávio 55,96%, e por atenção {0: 5, 1: 6, 2: 0, 3: 1}.
+
+**pytest:** 11 passaram e 8 foram pulados. Seis pulos são porque o `roteiro.md` ainda é a cópia da masterclass, sem os ids novos; dois são porque o `voz.json` ainda está vazio. O teste da masterclass continua verde: os dois juntos dão 27 aprovados.
+
+**Desvios do contrato**
+1. **Fonte da contagem do país.** O mapa de fiscais só traz as 177.770 seções que têm algum sinal, então não serve para contar o país inteiro. As contagens e a lista de `lula_frente` usam o voto do Politize (`docs/assets/politize/dados/zona`, 499.187 seções). O percentual é calculado das contagens, sobre Flávio + Lula + terceira via. Nível, critérios e explicação vêm do mapa ou do capítulo 13 quando a seção está lá; o voto bate com o mapa em todas as 177.618 seções que estão nas duas fontes. Como os ~2.700 arquivos da pasta não cabem um a um em `fontes`, ela entra com um SHA-256 só, calculado sobre a lista de hashes dos arquivos; o teste recalcula esse valor.
+2. **Exclusão extra.** Além das exclusões por explicação e do exterior, também tirei as seções cujo nome de local indica aldeia, escola indígena ou unidade prisional (`EXCLUI_LOCAL`). Fora do capítulo 13 essas seções não têm explicação escrita, e sem isso escolas indígenas, como "E. M. INDÍGENA TICUNA", entravam na lista de motivação. Com a exclusão, `secoes_lula_90` passou de 2975 para 2883. É só tirar a regra se você não concordar.
+3. **`comparecimento` do mapa** é a contagem de votantes, não percentual. Calculo `comparecimento_pct` como 100 × votantes / aptos.
+4. **Texto da lei.** Na `base_legal` o texto se chama `conteudo`; nos riscos ele vira `resumo`. Em `lei_fiscal` e `fechamento`, o `texto` é a frase curta declarada no script, e o texto longo da base legal vai num campo novo, `base_legal_conteudo`. `pena` fica null quando a entrada não tem esse campo, o que acontece em ce_299, ce_301, ce_309, l9504_68 e outras.
+5. **Caso sem resumo curto.** `paulista_pe_2020` não tem `resultado_curto` na fonte, então o campo fica null. Por isso acrescentei `resultado` (o texto completo) e `rotulo` em todos os casos.
+6. **Chaves a mais.** `exemplos` traz, além das chaves do contrato, os campos que a função de exemplo da masterclass já gera (reaproveitada por import). `predios` ganhou `votantes_total` e as seções do prédio.
+7. **Referência fora da posse:** `cadastro.fonte` aponta para `fontes.md#fiscaisdopl`, mas o `fontes.md` atual ainda é o da masterclass, onde essa seção existe. O agente de fontes precisa mantê-la quando reescrever o arquivo.</result>
+<usage><subagent_tokens>267482</subagent_tokens><tool_uses>21</tool_uses><duration_ms>371041</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>acd8011563f5b493b</task-id>
+<tool-use-id>toolu_0117gy5G8NLY4UzUe2LQY8qz</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Fontes legais e casos (fontes.md)" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>`roteiro/fontes.md` está reescrito para o vídeo "Sete riscos, um fiscal", com 33 itens e o "Resumo para o roteiro" no fim. Não há travessão, e a palavra "fraude" só aparece em URLs de terceiros. Os trechos têm até 15 palavras. Reabri hoje as leis no Planalto, a Res. 23.751 no TSE, o Manual do Mesário, as matérias dos casos e a página do PL. Não commitei nada.
+
+**Ids no `fontes.md`**
+- **Herdados:** `lei-9504-art-39`, `lei-9504-art-65-66-68`, `codigo-eleitoral-art-131-132`, `res-tse-23751-fiscais`, `denuncia-onde`, `tse-mesario-fila-17h`, `tse-bu-qrcode`.
+- **PL:** `fiscaisdopl` está reconferido hoje. O prazo de 24 de outubro continua na página, sem aviso de mudança.
+- **Leis e resoluções novas:**
+  - `lei-9504-art-41a`
+  - `codigo-eleitoral-art-299`
+  - `lei-6091-transporte`
+  - `codigo-eleitoral-art-301`
+  - `codigo-eleitoral-art-23-xiv`
+  - `codigo-eleitoral-art-309`
+  - `codigo-eleitoral-art-312`
+  - `res-tse-23751-art-137`
+  - `res-tse-23751-art-181`
+  - `res-tse-23751-art-165`
+  - `res-tse-23751-art-263`
+  - `manual-mesario-ata`
+- **Casos:** `caso-paulista-pe-2020`, `caso-jackson-lago-2009`, `caso-hornung-reserva-2004`, `caso-anchieta-sc-2012`, `caso-santa-quiteria-ce`, `caso-trerj-locais-2024`, `caso-itumbiara-2018`, `caso-pescaria-brava-2016`, `caso-doppelganger-macapa-2024`, `caso-proconsult-1982`, `caso-rj-1994`, `caso-mj-1t-2024`.
+- **Apps da Arvor:** `totalizacao-arvor` e `mapa-fiscais-arvor`. Li o HTML, o README e o AGENTS.md; não executei os apps.
+- Apaguei `milei-fiscales-2023`, `venezuela-actas-2024` e `aapor-house-effect`.
+
+**Confirmações dos itens pedidos**
+- **Art. 11, III da Lei 6.091:** é o tipo do transporte, com reclusão de quatro a seis anos. O inciso V trata de veículo público em campanha, então a memória da casa estava certa.
+- **Celular na cabine:** é o art. 137 da Res. 23.751, e a Lei 9.504 traz a mesma vedação no art. 91-A, parágrafo único. Quem recusar entregar o aparelho não vota.
+- **Arts. 165, 181 e 263:** já estavam cobertos em `res-tse-23751-fiscais`; criei itens próprios só para apontar.
+
+**`[NÃO VERIFICADO]`**
+- **Doppelgänger, mesária:** a ficha do JSON diz "casa de uma mesária", mas a única fonte lida (Metrópoles) não menciona mesária. A PF em gov.br exigiu login e a busca na web não achou segunda fonte.
+- **Hornung:** a página atual do Sedep não abre por curl. Usei a cópia arquivada no repositório (SHA-256 no item). Também não há data da decisão.
+- **Fiscal "não pode ser expulso":** nenhum dispositivo diz isso. Está marcado no item `res-tse-23751-art-181`.
+- **Herdados de `denuncia-onde` e `fiscaisdopl`:**
+  - uso do Pardal no dia da eleição;
+  - número 190 em fonte eleitoral;
+  - Disque 127;
+  - contagem pública de fiscais cadastrados.
+
+**Ressalvas dos casos**
+- **Jackson Lago:** a cassação foi por 5 a 2, mas por abuso de poder político o placar foi 4 a 3. A compra de votos em Imperatriz foi vista pela maior parte dos ministros, não por todos.
+- **TRE-RJ 2024:** a Agência Brasil diz "por motivos de segurança" e não cita milícia. A fala sobre milícia é do Poder360, em janeiro de 2024, sobre o plano de 50 seções.
+- **RJ 1994:** as fontes divergem sobre o alcance da anulação ("parcialmente", "proporcionais", "deputados e senadores").
+- **Balanço do MJ:** a discriminação por tipo (1.170, 498 e outros) vem de levantamento da CNN reproduzido pelo A Tarde, não de documento do Ministério.
+- **Proconsult:** a Memória Globo é página de parte interessada no caso.
+- **Anchieta:** confirmei o ano do acórdão (04/06/2014) na imagem do PDF.
+
+**Três alertas para o roteirista (o que o vídeo NÃO pode dizer)**
+1. **Pescaria Brava:** não dizer que o mesário "mudou o resultado". A seção foi anulada, a diferença passou de um voto para 76 e o vencedor se manteve. Também não dizer que a urna foi manipulada; foi uso do acesso de mesário. A condenação é pelo art. 309.
+2. **Caso não é condenação:** Itumbiara (preso em flagrante, ele nega, sem desfecho), Paulista (detida, sem desfecho) e Doppelgänger (investigação em curso, sem mesária confirmada) não são crimes provados. Santa Quitéria é cassação por abuso de poder com ameaças na campanha, não coação do art. 301 no dia do voto. Proconsult e RJ 1994 não têm irregularidade provada: o tribunal concluiu que os erros não foram intencionais, e o TSE reverteu a anulação por falta de prova.
+3. **Totalização e credencial:**
+   - **Totalização:** não dizer que a totalização da Arvor é projeção, nem que prova a urna, nem que as autoridades certificadoras vieram do site do TSE. Elas foram recuperadas de dois repositórios independentes e validam as urnas dos dez exemplos oficiais. Rótulo fixo: "soma dos BUs recebidos, não projeção; prova transmissão e totalização, não o interior da urna".
+   - **Credencial do fiscal:** não repetir que ela é emitida pela Justiça Eleitoral, como diz o site do PL; a lei diz que é expedida só pelos partidos. O prazo de 24/10 é interno do PL, não da Justiça Eleitoral.</result>
+<usage><subagent_tokens>324622</subagent_tokens><tool_uses>63</tool_uses><duration_ms>500244</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a2c0b5fa4c093a66e</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Roteiro narrado sete_riscos" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O roteiro está escrito em `/Users/leonardodias/arvor/PNAD/video/sete_riscos/roteiro/roteiro.md`, com os 20 ids na ordem de `src/ordem.ts`. O `pytest` passou (17 passaram, 2 foram pulados por voz ausente). O `verificar` estimou 659 s (10:59) e o portão de 560 a 670 s está OK.
+
+**Palavras narradas por cena:** o total é 1.545, dentro do alvo de 1.350 a 1.650.
+
+| Cena | Palavras |
+|---|---|
+| abertura | 72 |
+| tese | 56 |
+| cap-lei | 7 |
+| lei-poderes | 95 |
+| lei-postura | 105 |
+| cap-riscos | 4 |
+| risco-boca-de-urna | 122 |
+| risco-compra | 120 |
+| risco-transporte | 112 |
+| risco-medo | 127 |
+| risco-mesario | 113 |
+| risco-pianista | 132 |
+| risco-totalizacao | 110 |
+| cap-fechamento | 6 |
+| fecha-ultimos | 90 |
+| fecha-totalizacao | 74 |
+| cap-mapa | 6 |
+| mapa-fiscais | 72 |
+| mapa-cadastro | 51 |
+| fecho-chamada | 71 |
+
+**Fora da faixa pedida:**
+- `risco-pianista` (132), `risco-medo` (127) e `risco-boca-de-urna` (122) passam do teto de 125 palavras por cena `risco-*`.
+- `tese` ficou em 56, um pouco acima dos 55 pedidos.
+- Aparei o que deu sem perder os avisos (como o "sem trocar o vencedor"). Se quiser cortar mais, o primeiro candidato é o pianista.
+
+**Números do JSON:** não faltou nenhum. Alguns números narrados vêm só do `fontes.md`, sem campo no JSON, e por isso ficaram sem comentário `dado:`:
+- dezessete mil reais (Jackson Lago);
+- cinco votos a dois (Jackson Lago);
+- três eleitoras e quatro anos (Reserva);
+- cinquenta e três locais trocados no Rio (TRE-RJ);
+- setenta e três anos da eleitora (Itumbiara);
+- cinco ausentes, o morto desde dois mil e nove e a diferença de um voto para setenta e seis (Pescaria Brava);
+- os anos de 1982 e 2026 que não têm campo `ano` próprio.
+
+**Desvios do pedido, por prudência com o `fontes.md`:**
+- **Proconsult:** o "O que podemos afirmar" do `fontes.md` não sustenta "apuração paralela do Jornal do Brasil divergiu". Escrevi que o Jornal do Brasil "denunciou pressão" sobre a empresa que somava os mapas, e o resto segue a auditoria do Serpro e a conclusão do tribunal.
+- **Força federal:** o pedido dizia "do juiz", mas o `fontes.md` diz que quem requisita é o TSE (art. 23, XIV). Narrei "só o TSE requisita".
+- **Santa Quitéria:** as ameaças foram na campanha, não no dia da votação, e o texto diz isso.
+- **Vocabulário:** troquei "aptos" por "eleitores" na narração.</result>
+<usage><subagent_tokens>232304</subagent_tokens><tool_uses>18</tool_uses><duration_ms>177912</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>b58tnqjg2</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Background command "Generate the v4 narration for the 20 scenes and the six chapter music tracks" completed (exit code 0)</summary>
+</task-notification>
