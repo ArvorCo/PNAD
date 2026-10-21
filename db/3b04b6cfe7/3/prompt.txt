@@ -355,3 +355,119 @@ Goal check-in: «sua meta é fazer um vídeo explicando detalhadamente as fraude
 - bqabubz1b · shell · REDACTED… [+142 chars]
 - adeed59194091a406 · subagent · Cenas B: fechamento, mapa, fecho, capa
 Check on their progress (e.g. read their output). If they are progressing, say so briefly and keep waiting; if they are stuck or no longer needed, fix or stop them and continue toward the goal.
+
+---
+
+<task-notification>
+<task-id>a11e5e4591e15c175</task-id>
+<tool-use-id>toolu_01UnvTuQJNjvK11B2MZeVovA</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Mídia nova: clipes e stills" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>All 23 items are on disk in both formats: 46 of 46 files, and `--faltando` reports nothing missing. The 13 reused items are manual from the masterclass. All 10 new items came from local mflux, because every openclaw provider refused again.
+
+## Origin by item and format
+
+| id | 16x9 | 9x16 |
+|---|---|---|
+| fila_secao, urna_mesa_lacre, boletim_impressora, maos_boletim_porta, fiscal_cadeira, escola_bangu_aerea, rio_amazonia_escola, qr_celular, atas_mesa_lampada, teclado_urna_macro | manual | manual (masterclass center crop) |
+| secao_vazia, boletim_porta, mapa_fundo_textura | manual | manual |
+| santinhos_calcada | mflux | mflux |
+| van_eleitores | mflux | mflux |
+| envelope_mao | mflux | mflux |
+| viela_noite | mflux | mflux |
+| cabine_mesario | mflux | mflux |
+| caderno_assinatura | mflux | mflux (center crop of the 16x9) |
+| fita_impressora_antiga | mflux | mflux |
+| entardecer_escola | mflux | mflux |
+| ata_mesa_still | mflux | mflux |
+| rua_escola_amanhecer_still | mflux | mflux |
+
+Nothing is pending, so there are no prompts to hand over. Each new item is one FLUX2 Klein 9B still per format (2048×1152 or 1152×2048, about 130 s each). Each video is a Ken Burns zoom from 1.0 to 1.08: 8.0 s, 240 frames at 30 fps, h264 crf 18, yuv420p, no audio. I checked the output specs with ffprobe.
+
+## What the provider check returned (`midia/sondagem.json`)
+
+It was the same as on 17/10, one attempt per provider:
+- **Sora 2:** HTTP 404.
+- **gpt-image-2:** HTTP 400, because openclaw routes it through Codex with the `gpt-5.5` model, which a ChatGPT account doesn't support.
+- **Veo 3.1 and Gemini 3 Pro Image:** HTTP 429, quota used up.
+- **OpenRouter (Veo and Gemini):** HTTP 402, no credits.
+
+## Visual review (I looked at every PNG)
+
+- **Rejected and redone with rewritten prompts:**
+  - The 16x9 street to the school had a sign with letters over the gate.
+  - The sunset school facade had large gibberish lettering.
+  - The printer paper was covered in pseudo-text, and the printer wasn't a dot-matrix one.
+  - The 16x9 van had a carmaker-style badge on the back. It passed on the second try with seed 9090.
+- **caderno_assinatura 9x16:** both attempts produced handwriting that was close to readable. Instead of a third try, the 9x16 is a center crop of the approved 16x9, which shows only the signature. `midia.json` marks it with `recorte_9x16`.
+- **Accepted as is:** distant people seen from behind in the leaflets, alley and booth shots. The booth scene came out as a busy classroom with seated people, not the empty chair with a shadow the prompt asked for. There are no sharp faces, but you may want a better take of it.
+
+## Two things to watch
+
+1. Seven of the reused clips are 5.03 s long, not 8 s (they came from the CapCut renders). `midia.json` records the real length so the scenes can allow for it.
+2. `.gitattributes` only covers `video/masterclass/midia/entrada/` for LFS, not `video/sete_riscos/midia/entrada/`. I left it unchanged as instructed. The folder is empty today because the mflux originals sit in `brutos/`, which git ignores.
+
+## Script changes
+
+`scripts/video-sete-riscos-midia.py` is the masterclass script pointed at `video/sete_riscos`, with this video's scene list. I added a `--mflux` mode (plus `--semente` for a fixed seed) for the local fallback. Its prompt uses a separate `estilo_mflux` style line and leaves out the list of banned things, because FLUX tends to draw what you tell it to avoid. The cache records the seed, prompt and raw file for each image. `ruff` and `black` pass, there are no em dashes, and nothing is committed.
+
+## Files
+- /Users/leonardodias/arvor/PNAD/scripts/video-sete-riscos-midia.py
+- /Users/leonardodias/arvor/PNAD/video/sete_riscos/midia/manifesto.json
+- /Users/leonardodias/arvor/PNAD/video/sete_riscos/midia/cache.json
+- /Users/leonardodias/arvor/PNAD/video/sete_riscos/midia/sondagem.json
+- /Users/leonardodias/arvor/PNAD/video/sete_riscos/midia/README.md
+- /Users/leonardodias/arvor/PNAD/video/sete_riscos/src/dados/midia.json
+- /Users/leonardodias/arvor/PNAD/video/sete_riscos/public/midia/ (the 20 new files)</result>
+<usage><subagent_tokens>269833</subagent_tokens><tool_uses>72</tool_uses><duration_ms>4409604</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>abdb280850490f821</task-id>
+<tool-use-id>toolu_01Hp1M5qVVn5CqgyJ6M6Xp93</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Cenas A: abertura, lei, riscos" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I made both changes to `Risco` and added the field to the type. Typecheck and lint are both clean, and nothing was committed.
+
+**1. Print in 9:16**
+- **While the caso is narrated:** the print is now tall enough to show the top 45% of the page. It is cut only from the bottom and not distorted, so every risk's headline appears whole. That includes the coordinator's example: on frame 7900 the full "Transporte de eleitor – Atenuante não reduz pena abaixo do previsto em lei" headline is visible.
+- **Chips:** the year, place and extra-case chips now sit on a dark strip at the bottom of the print in 9:16, with the fonte line under them. They no longer take a row of their own.
+- **From the sinal trigger on:** the print shrinks smoothly to the compact height so the sinal card has room. It is still fitted from the top rather than cropped.
+- **Smaller cards in 9:16:**
+  - "O caso" shows the case title in two lines at most. The resultado text is dropped and the fonte line moved to the print.
+  - The law card shows only the article reference, without the summary line under it.
+  - Everything sits above the subtitle in all seven risks.
+- **Ministério da Justiça number:** in 9:16 it now sits at the top of the print so it doesn't clash with the chips.
+- **16:9:** unchanged apart from the fonte line below.
+
+**2. `data_e_acesso`**
+- Added `data_e_acesso: boolean` to `FonteCaso` in `src/tipos.ts`.
+- When it is true, the fonte line reads "Fonte: SEDEP / Conjur, acesso em 06/10/2026" and "Fonte: Memória Globo (Grupo Globo), acesso em 06/10/2026". Otherwise it is unchanged.
+- Both formats use the same wording.
+
+**Frames checked** (in `video/sete_riscos/out/stills/`)
+
+| Risk | 9:16, print on screen | 9:16, final frame |
+|---|---|---|
+| boca de urna | 4456 | 5662 |
+| compra | 6073 | 7100 |
+| transporte | 7434 and 7900 | 8501 |
+| medo | 8887 | 10051 |
+| mesário | 10340 | 11402 |
+| pianista | 11728 | 12959 |
+| totalização | 13171 | 14317 |
+
+- 9:16 after the print shrinks: 6580 and 8191.
+- 16:9: 7434 (transporte, "acesso em" line), 13400 (totalização, "acesso em" line) and 5022 (boca de urna).
+
+Two things to know:
+- **Pianista print:** with the full headline now visible, the real Conjur headline in the Pescaria Brava print contains "fraudou". It is the page's own text, not ours, but it breaks the no-"fraude" rule on screen. I left it as is; the scene would need a different crop or a different source to avoid it.
+- **Media test still failing:** `test_midia_do_registro_existe` still fails. Eight background ids I use (`santinhos_calcada`, `envelope_mao`, `van_eleitores`, `viela_noite`, `cabine_mesario`, `caderno_assinatura`, `fita_impressora_antiga`, `rua_escola_amanhecer_still`) have files in `public/midia` but are not yet in `midia.json`. Until the mídia agent registers them, those scenes show their fallback backgrounds.</result>
+<usage><subagent_tokens>449554</subagent_tokens><tool_uses>10</tool_uses><duration_ms>169230</duration_ms></usage>
+</task-notification>
