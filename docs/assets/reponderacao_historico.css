@@ -28,3 +28,4 @@
 .history-error{padding:14px 0 0;margin-top:20px;border-top:1px solid var(--ink)}
 .history-error span,.history-error small{display:block;font-size:11px;color:var(--muted);line-height:1.6}
 .history-error b{display:block;font-size:13px;font-weight:600;margin:5px 0;font-variant-numeric:tabular-nums}
+@media(max-width:380px){.history-scores{grid-template-columns:1fr;gap:8px}.history-scores>div{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.history-scores strong{font-size:24px}}

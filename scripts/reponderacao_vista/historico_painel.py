@@ -50,7 +50,7 @@ def panel(name, rows):
         f"<h3>{esc(name)} <small>Flávio × Lula</small></h3>"
         f'<p class="note"><b>{wave_count(rows)} ondas · {len(rows)} versões</b> · '
         f'{sum(p["pnad"] is not None for p in rows)} com PNAD</p>'
-        '<label class="history-switch history-switch-local"><input type="checkbox" data-history-toggle disabled>'
+        f'<label class="history-switch history-switch-local"><input type="checkbox" aria-label="Votos válidos projetados: {esc(name, quote=True)}" data-history-toggle disabled>'
         "<span>Votos válidos · projeção</span></label>"
         '<div data-history-view="total">'
         f"{summary(total_latest)}{figures(total)}{special}{table(rows)}</div>"
