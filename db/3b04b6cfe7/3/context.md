@@ -114,3 +114,15 @@ Goal check-in: «sua meta é fazer um vídeo explicando detalhadamente as fraude
 
 o link brasil.arvor.co/fiscais não existe, precisa criar um redirecionador para o fiscais_mapa.html
 
+### Prompt 14
+
+Aproveitando, cria agora no formato 1:1 uma imagem de um mapa da abstenção no 1o turno do Brasil muito bonito, muito elegante, mostrando claramente onde teve mais e onde teve menos abstenção de uma forma linda, agrupando por estado, região e cores, com um heatmap da abstenção sei lá, seja criativo e fodástico
+
+### Prompt 15
+
+[Image: original 2160x2160, displayed at 1932x1932. Multiply coordinates by 1.12 to map to original image.]
+
+### Prompt 16
+
+[Image: original 2160x2160, displayed at 1932x1932. Multiply coordinates by 1.12 to map to original image.]
+
