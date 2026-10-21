@@ -5,13 +5,14 @@ from math import ceil, floor
 
 from reponderacao_vista.context import COR, INK, LINE, MUTED, PANEL
 from reponderacao_vista.historico_2t import CUTOFF, tip
+from reponderacao_vista.historico_urna import reference
 from reponderacao_vista.markers import (
     abre_alvo,
     area_alvo,
     fecha_alvo,
     registra_tip,
 )
-from svgkit import Canvas
+from svgkit import Canvas, br
 
 
 def ordinal(value):
@@ -29,7 +30,9 @@ def segments(rows, key):
                 result.append(current)
             current = []
             continue
-        if current and current[-1]["fase"] != row["fase"]:
+        if current and (current[-1]["campo"]["fim"] <= CUTOFF) != (
+            row["campo"]["fim"] <= CUTOFF
+        ):
             result.append(current)
             current = []
         current.append(row)
@@ -41,9 +44,15 @@ def segments(rows, key):
 def chart(rows):
     if not rows:
         return ""
-    cv = Canvas(380, 270, f'{rows[0]["instituto"]}: histórico Flávio versus Lula')
+    cv = Canvas(380, 294, f'{rows[0]["instituto"]}: histórico Flávio versus Lula')
     left, right, top, bottom = 34, 362, 38, 210
     first, last = ordinal(rows[0]["campo"]["fim"]), ordinal(rows[-1]["campo"]["fim"])
+    cutoff = ordinal(CUTOFF)
+    projected = bool(rows[0].get("modo_projecao"))
+    actual = reference(projected or rows[0]["denominador"] == "validos")
+    show_urna = last > cutoff
+    if show_urna:
+        first = min(first, cutoff)
     low_x, high_x = (first - 1, last + 1) if first == last else (first, last)
 
     def x(day):
@@ -57,6 +66,8 @@ def chart(rows):
         for c in COR
         if c in ("flavio", "lula")
     ]
+    if show_urna:
+        values.extend(actual.values())
     low, high = floor(min(values) / 5) * 5 - 2, ceil(max(values) / 5) * 5 + 2
 
     def y(value):
@@ -68,7 +79,12 @@ def chart(rows):
         cv.rect(left, top, boundary - left, bottom - top, "#eeede4")
         cv.line(boundary, top, boundary, bottom, MUTED, 1, stroke_dasharray="3 3")
         cv.text(
-            boundary - 4, top - 8, "04/10 · 1º turno", size=10, anchor="end", fill=MUTED
+            boundary + 4 if boundary - left < 130 else boundary - 4,
+            top - 8,
+            "04/10 · 1º turno",
+            size=10,
+            anchor="start" if boundary - left < 130 else "end",
+            fill=MUTED,
         )
     else:
         cv.text(
@@ -110,7 +126,8 @@ def chart(rows):
                     stroke_dasharray="4 3" if key == "placar" else None,
                 )
     for poll in rows:
-        key = registra_tip(f'history2t|{poll["id"]}', tip(poll))
+        suffix = "|validos" if projected else ""
+        key = registra_tip(f'history2t|{poll["id"]}{suffix}', tip(poll))
         for candidate in ("flavio", "lula"):
             color = COR[candidate]
             for kind in ("placar", "pnad"):
@@ -129,6 +146,37 @@ def chart(rows):
                 )
                 area_alvo(cv, px, py, 5)
                 fecha_alvo(cv)
+    if show_urna:
+        boundary = x(CUTOFF)
+        for candidate in ("flavio", "lula"):
+            py = y(actual[candidate])
+            key = registra_tip(
+                "history2t|urna|"
+                + ("validos" if projected else rows[0]["denominador"]),
+                '<p class="tip-head"><b>Urna do primeiro turno · 04/10</b></p>'
+                + f'<p>Flávio {br(actual["flavio"], 2)}% × Lula {br(actual["lula"], 2)}%.</p>'
+                + "<p>Referência de outra cédula, incluindo exterior. Válidos incluem todas as candidaturas; totais incluem brancos/nulos. Não é resultado do segundo turno.</p>",
+            )
+            abre_alvo(
+                cv,
+                key,
+                f"Urna do primeiro turno: {candidate}, {actual[candidate]:.2f}%",
+            )
+            cv.path(
+                d=f"M{boundary},{py-5}L{boundary+5},{py}L{boundary},{py+5}L{boundary-5},{py}Z",
+                fill=COR[candidate],
+                stroke=PANEL,
+                stroke_width=1,
+            )
+            area_alvo(cv, boundary, py, 6)
+            fecha_alvo(cv)
+        cv.text(
+            left,
+            276,
+            f'◆ Urna 1ºT: F {br(actual["flavio"], 2)} · L {br(actual["lula"], 2)}',
+            size=11,
+            fill=MUTED,
+        )
     base = (
         "votos válidos"
         if rows[0]["denominador"] == "validos"
@@ -137,7 +185,11 @@ def chart(rows):
     cv.text(
         left,
         250,
-        f"% do {base}" if base.startswith("total") else f"% dos {base}",
+        (
+            "Projeção de válidos · seleção + indecisos proporcionais"
+            if projected
+            else (f"% do {base}" if base.startswith("total") else f"% dos {base}")
+        ),
         size=11,
         fill=INK,
     )

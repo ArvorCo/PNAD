@@ -68,11 +68,15 @@ def test_institute_panels_show_every_version_in_both_turns():
         svg = (
             panel.select_one("details svg")
             if panel["data-turno"] == "1t"
-            else panel.find("svg")
+            else panel.select_one('[data-history-view="total"] details svg')
         )
         # Every version is plotted. The inclusive 2T chart has separate targets
         # for published/PNAD markers; count versions, not SVG implementation nodes.
-        keys = {point["data-k"] for point in svg.select("g.hit")}
+        keys = {
+            point["data-k"]
+            for point in svg.select("g.hit")
+            if not point["data-k"].startswith("history2t|urna|")
+        }
         assert len(keys) == len(waves) + 1
         expected = {
             f"history2t|{wave['id']}" if turn == "2t" else f"{wave['id']}|{turn}"

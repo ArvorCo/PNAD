@@ -480,7 +480,9 @@ def current_html(ns):
             "reponderacao_contagem",
             "reponderacao_simulador",
             "reponderacao_rotas",
+            "reponderacao_historico",
         ],
+        styles=["reponderacao_historico"],
     )
 
 

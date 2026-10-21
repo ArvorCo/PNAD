@@ -1,0 +1,405 @@
+{
+  "versao": 1,
+  "conferido_em": "2026-10-21",
+  "escopo": "Séries documentais; não modifica as centrais. Toda onda sem entrada própria usa presença igual, explicitamente. Cobertura auditada não equivale a ausência da pergunta em todas as versões da íntegra.",
+  "metodo": "Primeiro selecionar massas por presença declarada/proxy; depois converter 100% dos indecisos identificados proporcionalmente entre os candidatos presentes e normalizar. BN permanece fora; BN+NS inseparáveis não são desagregados. Distribuição proporcional não altera a razão F/L. Não há ajuste extra de 3,8%, tendência ou transporte entre ondas. Não é modelo de comparecimento validado.",
+  "referencia_metodologica": "https://www.pewresearch.org/methods/2016/01/07/measuring-the-likelihood-to-vote/",
+  "ondas": {
+    "ipespe_2026-10-08": {
+      "tipo": "direto",
+      "regra": "Seleção pela nota 10 de chance de comparecer (p. 12), por voto atual. Autodeclaração, não probabilidade calibrada. Aplicar as mesmas taxas à PNAD supõe estabilidade dentro de cada eleitorado; renda × voto × presença não foi publicada. A p. 13 traz outro placar arredondado do subconjunto, preservado como referência, não substituído pelo nosso cálculo.",
+      "taxas": {
+        "flavio": 0.91,
+        "lula": 0.9,
+        "indecisos": 0.48
+      },
+      "fonte": {
+        "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+        "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+        "paginas": [
+          12,
+          13
+        ]
+      },
+      "subconjunto_publicado": {
+        "flavio": 51,
+        "lula": 45
+      }
+    },
+    "ipespe_2026-10-15": {
+      "tipo": "direto",
+      "regra": "Seleção pela nota 10 de chance de comparecer (p. 12), por voto atual. Autodeclaração, não probabilidade calibrada. Aplicar as mesmas taxas à PNAD supõe estabilidade dentro de cada eleitorado; renda × voto × presença não foi publicada. A p. 13 traz outro placar arredondado do subconjunto, preservado como referência, não substituído pelo nosso cálculo.",
+      "taxas": {
+        "flavio": 0.92,
+        "lula": 0.88,
+        "indecisos": 0.6
+      },
+      "fonte": {
+        "arquivo": "data/originals/ipespe_102026_17/relatorio.pdf",
+        "sha256": "7e82a6377a81f20ce3d31d070f73a8edff6e3f8d26a3c4f120ffd4f6938cb7bf",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-17out2026.pdf",
+        "paginas": [
+          12,
+          13
+        ]
+      },
+      "subconjunto_publicado": {
+        "flavio": 50,
+        "lula": 46
+      }
+    },
+    "nexus_2026-10-12": {
+      "tipo": "proxy_renda",
+      "regra": "Seleção de quem declara ida certa ou provável por renda. Aproximação ecológica: supõe presença independente do voto dentro de cada faixa. Não identifica presença real por candidato. Perfil publicado e PNAD geram taxas próprias; conserva o topline antes da seleção.",
+      "presenca_renda": [
+        0.92,
+        0.96,
+        0.96,
+        0.96
+      ],
+      "perfil": [
+        19.0,
+        18.0,
+        40.0,
+        23.0
+      ],
+      "pnad": [
+        13.441,
+        21.746,
+        39.259,
+        25.554
+      ],
+      "voto_renda": {
+        "flavio": [
+          32,
+          47,
+          50,
+          57
+        ],
+        "lula": [
+          58,
+          44,
+          43,
+          40
+        ],
+        "indecisos": [
+          7,
+          4,
+          1,
+          0
+        ]
+      },
+      "fonte": {
+        "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+        "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+        "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+        "paginas": [
+          18,
+          41,
+          99
+        ]
+      }
+    },
+    "nexus_2026-10-18": {
+      "tipo": "proxy_renda",
+      "regra": "Seleção de quem declara ida certa ou provável por renda. Aproximação ecológica: supõe presença independente do voto dentro de cada faixa. Não identifica presença real por candidato. Perfil publicado e PNAD geram taxas próprias; conserva o topline antes da seleção.",
+      "presenca_renda": [
+        0.931,
+        0.918,
+        0.909,
+        0.976
+      ],
+      "perfil": [
+        21.0,
+        16.0,
+        40.0,
+        23.0
+      ],
+      "pnad": [
+        13.441,
+        21.746,
+        39.259,
+        25.554
+      ],
+      "voto_renda": {
+        "flavio": [
+          31.4,
+          36.5,
+          52,
+          56.9
+        ],
+        "lula": [
+          59,
+          55.4,
+          39.7,
+          38.9
+        ],
+        "indecisos": [
+          7.2,
+          2.7,
+          1.8,
+          1.1
+        ]
+      },
+      "fonte": {
+        "arquivo": "data/originals/nexus_102026_19/relatorio.pdf",
+        "sha256": "f6ee08157b9906a8abd4fca2a7a418b329e8895043019bc871b81f12b1eabb45",
+        "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-18-19.out_.2026.pdf",
+        "paginas": [
+          18,
+          43,
+          125
+        ]
+      }
+    },
+    "verita_2026-10-19": {
+      "tipo": "proxy_renda",
+      "regra": "Seleção de quem declara certeza de ir votar por renda. Aproximação ecológica: supõe presença independente do voto dentro de cada faixa. Não identifica presença real por candidato. Perfil publicado e PNAD geram taxas próprias; conserva o topline antes da seleção.",
+      "presenca_renda": [
+        0.965,
+        0.982,
+        0.975
+      ],
+      "perfil": [
+        41.2,
+        40.1,
+        18.7
+      ],
+      "pnad": [
+        35.187,
+        39.259,
+        25.554
+      ],
+      "voto_renda": {
+        "flavio": [
+          44.5,
+          54.6,
+          50.7
+        ],
+        "lula": [
+          53,
+          43.7,
+          47.4
+        ],
+        "indecisos": [
+          1.1,
+          0.5,
+          0.3
+        ]
+      },
+      "fonte": {
+        "arquivo": "data/originals/verita_102026_21/relatorio.pdf",
+        "sha256": "28021fbbb5a30b59ff90640f28794ae86f2cda3d905da016bc8589b978a82b56",
+        "url": "https://brasil.arvor.co/fontes/verita_21102026.pdf",
+        "paginas": [
+          6,
+          12,
+          4
+        ]
+      }
+    },
+    "vox_brasil_2026-10-07": {
+      "tipo": "neutro",
+      "regra": "Presença certa/provável de 88,8% apenas no total. Sem cruzamento com voto; dificuldades lembradas no 1º turno não identificam presença futura por candidato. Projeção por normalização proporcional, sem filtro diferencial.",
+      "fonte": {
+        "arquivo": "data/originals/vox_102026_09/relatorio.pdf",
+        "sha256": "80b45422c790c532f23770a39ba52ed9a8a04342b22ebb68a58f09177512ac79",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-vox-brasil-9out2026.pdf",
+        "paginas": [
+          10,
+          11,
+          12
+        ]
+      }
+    },
+    "vox_brasil_2026-10-17": {
+      "tipo": "neutro",
+      "regra": "Presença certa/provável de 89,3% apenas no total. Sem cruzamento com voto: conserva presença igual entre candidatos. Projeção por normalização proporcional, sem filtro diferencial.",
+      "fonte": {
+        "arquivo": "data/originals/vox_102026_18/relatorio.pdf",
+        "sha256": "df9445445768fe30e629a68e13f7eadc38430ee3fd71e471eb2f4314fa9d4cac",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/RELATORIO-VOX-BRASIL-NACIONAL-10-2-TURNO-18-10-2026.pdf",
+        "paginas": [
+          25
+        ]
+      }
+    },
+    "verita_2026-10-16": {
+      "tipo": "neutro",
+      "regra": "Pp. 5–6 medem comparecimento lembrado no primeiro turno. A versão recebida não contém o cruzamento de presença futura; não transportar o da onda de 21/10. Projeção por normalização proporcional, sem filtro diferencial.",
+      "fonte": {
+        "arquivo": "data/originals/verita_102026_17/relatorio.pdf",
+        "sha256": "1a085a6368bee4704617274dd4f88b3e4caf6419363287211a0c3c9d0b217ab4",
+        "url": "https://brasil.arvor.co/fontes/verita_17102026.pdf",
+        "paginas": [
+          5,
+          6
+        ]
+      }
+    }
+  },
+  "auditoria_ultima_onda": [
+    {
+      "instituto": "Meio/Ideia",
+      "id": "ideia_2026-10-19",
+      "tipo": "neutro",
+      "fonte": "https://www.canalmeio.com.br/wp-content/uploads/2026/10/Pesquisa-Meio_Ideia-Outubro.pdf",
+      "arquivo": "data/originals/ideia_102026_21/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "Paraná Pesquisas",
+      "id": "parana_2026-03-28",
+      "tipo": "neutro",
+      "fonte": "https://paranapesquisas.com.br/wp-content/uploads/2026/03/Nacional_Mar26-3.pdf",
+      "arquivo": "docs/fontes/historico_2t/parana_2026-03-28.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "Real Time Big Data",
+      "id": "realtime_2026-10-19",
+      "tipo": "neutro",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/Presidencial-BR-02952-2026-Out26.pdf",
+      "arquivo": "data/originals/realtime_102026_20/relatorio.pdf",
+      "nota": "P. 20 mede voto definido e possibilidade de mudar: não é probabilidade de comparecimento."
+    },
+    {
+      "instituto": "Futura",
+      "id": "futura_2026-10-20",
+      "tipo": "neutro",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/pesquisaFutura-presidente-21out2026.pdf",
+      "arquivo": "data/originals/futura_102026_21/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "Quaest",
+      "id": "quaest_2026-10-20",
+      "tipo": "neutro",
+      "fonte": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Quaest",
+      "arquivo": "data/originals/quaest_102026_21/g1-estimulada.json",
+      "nota": "Painel G1 atual tem intenção por perfil, sem cruzamento de presença identificado. Íntegra atual ainda pendente; não reutiliza a onda de 14/10."
+    },
+    {
+      "instituto": "Gerp",
+      "id": "gerp_2026-10-19",
+      "tipo": "neutro",
+      "fonte": "https://timesbrasil.com.br/eleicoes-2026/bolsonaro-lula-2-gerp-segundo-turno-votos-validos/",
+      "arquivo": "data/originals/gerp_102026_20/divulgacao.html",
+      "nota": "Íntegra atual pendente. Onda anterior não transportada."
+    },
+    {
+      "instituto": "Vox Brasil",
+      "id": "vox_brasil_2026-10-17",
+      "tipo": "neutro",
+      "fonte": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/RELATORIO-VOX-BRASIL-NACIONAL-10-2-TURNO-18-10-2026.pdf",
+      "arquivo": "data/originals/vox_102026_18/relatorio.pdf",
+      "nota": "P. 25: 76,5% presença certa + 12,8% provável. Só agregado: não identifica diferencial por candidato. Pp. 26–28 medem firmeza, não presença."
+    },
+    {
+      "instituto": "AtlasIntel",
+      "id": "atlas_2026-10-18",
+      "tipo": "neutro",
+      "fonte": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
+      "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "Datafolha",
+      "id": "datafolha_2026-10-14",
+      "tipo": "neutro",
+      "fonte": "https://media.folha.uol.com.br/datafolha/2026/10/16/2sq1uhzy7x0w7caugz-gotqrxffgtdsqnx7qkfqfhs0.pdf",
+      "arquivo": "data/originals/datafolha_102026_15_integra/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "Nexus",
+      "id": "nexus_2026-10-18",
+      "tipo": "proxy_renda",
+      "fonte": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-18-19.out_.2026.pdf",
+      "arquivo": "data/originals/nexus_102026_19/relatorio.pdf",
+      "nota": "Pp. 15–18: presença por perfil; p. 59: presença × interesse. Proxy de renda incorporada, sem tratar interesse como taxa de comparecimento."
+    },
+    {
+      "instituto": "PoderData",
+      "id": "poderdata_2026-10-18",
+      "tipo": "neutro",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-18out26.pdf",
+      "arquivo": "data/originals/poderdata_102026_19/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "MDA",
+      "id": "mda_2026-10-15",
+      "tipo": "neutro",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R172-OUTUBRO26.pdf",
+      "arquivo": "data/originals/mda_102026_16/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "Alfa Inteligência/TMC",
+      "id": "alfa_2026-10-19",
+      "tipo": "neutro",
+      "fonte": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/1291026_NACIONAL_2700E_15a1910.pdf",
+      "arquivo": "data/originals/alfa_102026_20/relatorio.pdf",
+      "nota": "Pp. 17–25: potencial de voto em candidato, não presença nas urnas."
+    },
+    {
+      "instituto": "Palver",
+      "id": "palver_2026-10-20",
+      "tipo": "neutro",
+      "fonte": "https://www.palver.com/api/surveys/voting-intention-2026-october-w8/report",
+      "arquivo": "data/originals/palver_102026_21/relatorio.pdf",
+      "nota": "Pp. 27–40 conferidas visualmente: transferência, motivo, possibilidade de mudar, potencial/rejeição e medo do resultado; não identificam comparecimento por voto."
+    },
+    {
+      "instituto": "Veritá",
+      "id": "verita_2026-10-19",
+      "tipo": "proxy_renda",
+      "fonte": "https://brasil.arvor.co/fontes/verita_21102026.pdf",
+      "arquivo": "data/originals/verita_102026_21/relatorio.pdf",
+      "nota": "Pp. 5–6: presença futura por renda incorporada como proxy. Voto lembrado e presença no 1º turno não viram automaticamente presença futura."
+    },
+    {
+      "instituto": "Indexa/Broadcast",
+      "id": "indexa_2026-10-14",
+      "tipo": "neutro",
+      "fonte": "https://www.broadcast.com.br/news/indexa-broadcast-flavio-bolsonaro-tem-44-e-lula-42-em-empate-tecnico/",
+      "arquivo": "data/originals/indexa_102026_15/broadcast.html",
+      "nota": "8% declaram que não votarão, separados no total; sem voto futuro desses ausentes nem cruzamento para diferenciar os candidatos."
+    },
+    {
+      "instituto": "Ipespe",
+      "id": "ipespe_2026-10-15",
+      "tipo": "direto",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-17out2026.pdf",
+      "arquivo": "data/originals/ipespe_102026_17/relatorio.pdf",
+      "nota": "Pp. 12–13: chance de comparecer por voto; seleção pela nota máxima incorporada."
+    },
+    {
+      "instituto": "DataTrends",
+      "id": "datatrends_2026-10-17",
+      "tipo": "neutro",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/Relatorio-Brasil-Outubro2026-BR-04454-2026.pdf",
+      "arquivo": "data/originals/datatrends_102026_19_integra/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    },
+    {
+      "instituto": "Data Ranking",
+      "id": "ranking_2026-10-16",
+      "tipo": "neutro",
+      "fonte": "https://fonte83.com.br/politica/pesquisa-nacional-data-ranking-lula-tem-504-e-flavio-496-no-2o-turno/",
+      "arquivo": "data/originals/ranking_102026_20/divulgacao.html",
+      "nota": "Divulgação disponível; sem cruzamento de presença identificado."
+    },
+    {
+      "instituto": "Instituto França",
+      "id": "franca_2026-10-20",
+      "tipo": "neutro",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/Pesquisa_Presidente_2T_Brasil_Out2026_Instituto_Franca.pdf",
+      "arquivo": "data/originals/franca_102026_20/relatorio.pdf",
+      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
+    }
+  ],
+  "revisao_acervo": "155 versões e 152 referências indexadas em presenca_acervo.json. Busca textual não é prova de ausência em páginas gráficas. Presença de Nexus pré-urna refere-se ao 1º turno e não é aplicada aos cenários de 2º turno; idem MDA de agosto. Veritá de 17/10 traz presença lembrada no 1º turno, não a futura. Vox de 09/10 e 18/10 traz presença futura apenas agregada."
+}

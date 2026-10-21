@@ -1,0 +1,30 @@
+/* Documentary series; scoped so the frozen first-round archive stays intact. */
+#institutos-2t .history-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:start}
+#institutos-2t .history-panel{padding:24px;border-top:3px solid var(--ink)}
+#institutos-2t .history-panel h3{font-family:Georgia,serif;font-size:29px;font-weight:400;letter-spacing:-.035em}
+#institutos-2t .history-panel h3 small{display:block;font:11px "IBM Plex Mono",monospace;letter-spacing:.05em;margin-top:8px;color:var(--muted)}
+.history-controls{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;background:var(--ink);color:var(--paper);padding:24px 28px;margin:28px 0 12px}
+.history-controls .note,.history-controls .kicker{color:#e0e2d8}
+.history-controls .note{margin-bottom:0}
+.history-switch{display:flex;gap:12px;align-items:center;font-weight:600;font-size:16px;cursor:pointer;line-height:1.4}
+.history-switch input{width:21px;height:21px;flex:none;accent-color:var(--green);cursor:pointer}
+.history-switch-local{border-block:1px solid var(--line);padding:13px 0;margin:20px 0;font-size:13px}
+.history-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+.history-scores span{display:block;font-size:11px;color:var(--muted)}
+.history-scores strong{font-family:Georgia,serif;font-size:29px;font-weight:400;letter-spacing:-.04em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.history-delta{font-size:12px;line-height:1.6;margin:12px 0 22px;padding:10px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.history-delta b{font-weight:600;color:var(--green)}
+.history-badge{font:10px "IBM Plex Mono",monospace;display:inline-block;padding:6px 8px;border:1px solid var(--line);color:var(--green);max-width:100%}
+.history-method{padding:18px 0;border-bottom:1px solid var(--line);font-size:14px}
+.history-method summary{cursor:pointer;font-weight:600}
+.history-method p,.history-method ol{margin:18px 0}
+.history-method table{min-width:800px;font-size:12px}
+.history-urna-reference{padding:22px 0;border-bottom:1px solid var(--line);font-size:15px}
+.history-urna-reference p{margin-bottom:6px}
+#institutos-2t .history-urna table{min-width:430px;font-variant-numeric:tabular-nums}
+#institutos-2t [data-history-view][hidden]{display:none!important}
+@media(max-width:800px){#institutos-2t .history-grid{grid-template-columns:1fr}.history-controls{grid-template-columns:1fr;gap:8px}.history-scores strong{font-size:27px}#institutos-2t .history-panel{padding:18px}}
+@media print{.history-controls,.history-switch{display:none}#institutos-2t .history-grid{grid-template-columns:1fr 1fr}.history-panel{break-inside:avoid}}
+.history-error{padding:14px 0 0;margin-top:20px;border-top:1px solid var(--ink)}
+.history-error span,.history-error small{display:block;font-size:11px;color:var(--muted);line-height:1.6}
+.history-error b{display:block;font-size:13px;font-weight:600;margin:5px 0;font-variant-numeric:tabular-nums}
