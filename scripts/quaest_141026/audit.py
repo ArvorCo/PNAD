@@ -66,7 +66,12 @@ def aas(poll):
 
 def build():
     poll = read(POLL)
-    archived = [read(p) for p in sorted(POLL.parent.glob("quaest_*.json"))]
+    # O dossiê é da onda de 14/10. Novas divulgações não reescrevem sua série.
+    archived = [
+        row
+        for p in sorted(POLL.parent.glob("quaest_*.json"))
+        if (row := read(p))["divulgacao"] <= poll["divulgacao"]
+    ]
     series = sorted(
         [wave(p) for p in archived if "2t" in p["publicado"]],
         key=lambda p: p["divulgacao"],

@@ -115,4 +115,6 @@ def test_no_js_fallback_has_every_topic_and_page_with_reviewable_sources():
     central = BeautifulSoup(
         Path("docs/reponderacao_pnad.html").read_text(), "html.parser"
     )
-    assert "perfil publicado, etapa da ponderação não informada" in central.get_text()
+    # A nota da cobertura atual muda quando chega outra onda; a de 14/10
+    # continua acessível no histórico, sem impor sua presença na central atual.
+    assert central.select_one('[data-history-id="quaest_2026-10-13"]')

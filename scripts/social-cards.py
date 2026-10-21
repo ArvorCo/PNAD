@@ -196,7 +196,7 @@ CARDS: list[dict] = [
         "eyebrow": "Arvor Intelligence · acervo aberto",
         "title": "Toda pesquisa",
         "title_em": "deixa rastro",
-        "lede": "<b>Centrais atualizadas em 20/10.</b> Real Time, Alfa, Gerp, França e Data Ranking; DataTrends revisada com a íntegra. Fontes e limites do ajuste por renda.",
+        "lede": "<b>Centrais atualizadas em 21/10.</b> Veritá, Palver, Quaest, Meio/Ideia e Futura. Quatro íntegras arquivadas; perfil atual da Quaest ainda pendente.",
         "stats": [
             ("4", "dossiês do 2º turno"),
             ("128", "páginas na nova íntegra Nexus"),

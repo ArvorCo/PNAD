@@ -373,10 +373,36 @@ def current_coverage(ns):
             '<a href="fontes/franca_20102026.pdf">França, 14 páginas</a> · '
             '<a href="assets/reponderacao_20261020.json">Inventário, controles e SHA-256</a>.</p></aside>'
         )
+    october21_note = ""
+    if latest.get("Veritá", {}).get("id") == "verita_2026-10-19":
+        october21_note = (
+            '<aside class="callout" id="rodada-2110"><h3>21/10: Veritá, Palver, Quaest, Meio/Ideia e Futura</h3>'
+            "<p><b>Veritá: 49,7 × 48,2; Palver: 50 × 48 no total.</b> "
+            "Entram com perfil e voto por renda da própria onda. A Veritá muda o perfil "
+            "para 41,2/40,1/18,7; como a etapa antes/depois dos pesos não está explícita, "
+            "o ajuste é condicional. A Palver publica perfil ponderado 36/41/23 e mantém "
+            "o método v3 da onda anterior. Seus 0% de indecisos são arredondados.</p>"
+            "<p><b>Quaest: 45 × 44; Meio/Ideia: 48 × 46; Futura: 48,9 × 46,8.</b> "
+            "Entram pelo publicado na Projeção. Quaest tem voto por renda atual no G1, "
+            "mas falta o perfil desta onda e a íntegra ainda não foi localizada. "
+            "A nova onda substitui a antiga e fica fora da Média até essa conferência; "
+            "não carregamos o perfil de 14/10. Meio/Ideia não fornece perfil e voto por "
+            "renda na íntegra pública; Futura tem perfil, mas não voto por renda.</p>"
+            "<p>Os grupos que juntam branco/nulo, indecisos ou não comparecimento "
+            "não identificam abstenção. A presença certa de 97,4% da Veritá é declarada "
+            "e não altera a âncora de comparecimento das centrais. Os históricos "
+            "conservam as ondas anteriores, inclusive os cenários anteriores ao primeiro turno.</p>"
+            '<p class="note"><a href="fontes/verita_21102026.pdf">Veritá, 17 páginas</a> · '
+            '<a href="fontes/palver_21102026.pdf">Palver, 112 páginas</a> · '
+            '<a href="fontes/ideia_21102026.pdf">Meio/Ideia, 59 páginas</a> · '
+            '<a href="fontes/futura_21102026.pdf">Futura, 18 páginas</a> · '
+            '<a href="assets/reponderacao_20261021.json">Inventário, controles e SHA-256</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + october21_note
         + october20_note
         + complement_note
         + october19_note
