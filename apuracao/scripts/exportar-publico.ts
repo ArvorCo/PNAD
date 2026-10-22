@@ -84,7 +84,7 @@ function sha256(texto: string): string {
 }
 
 /** Campos que mudam a cada leitura sem que nenhum dado tenha mudado. */
-const VOLATEIS = new Set(["at", "min", "agora", "gerado_em", "atualizado_em", "consultado_em", "idade_s", "lido_em", "ultima_leitura_em", "latencias", "db"]);
+const VOLATEIS = new Set(["at", "min", "agora", "gerado_em", "atualizado_em", "consultado_em", "idade_s", "lido_em", "ultima_leitura_em", "latencias", "db", "coletor"]);
 
 /** Hash de conteúdo: o JSON com os campos voláteis removidos em qualquer nível; igual = nada a publicar. */
 function hashConteudo(texto: string): string {
