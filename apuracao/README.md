@@ -203,6 +203,8 @@ APURACAO_DB=data/apuracao-2t.sqlite scripts/start-serve.sh
 nohup scripts/publicar-loop.sh >/dev/null 2>&1 &   # página pública: exporta e dá push a cada 5 min
 ```
 
+Ou tudo de uma vez, no horário: `nohup scripts/ligar-2t-agendado.sh >/dev/null 2>&1 &` fica esperando (sem sondar o TSE) e às 16:40 de Brasília de 25/10 roda preflight, coletor, servidor e publicação; `--agora` liga na hora, `kill $(cat data/logs/agendado-2t.pid)` cancela. Ligado em 22/10 nesta máquina.
+
 Varredura de conferência feita em 21/10 com as mesmas variáveis: 13.105 arquivos ok, 35 inexistentes (os agregados `-e`). Governador em 2º turno em seis UFs: AC, AM, DF, ES, RN e TO. O telão troca sozinho pelo `turno` de `/api/config`; `APURACAO_TURNO=2` força.
 
 ### Régua do 1º turno
