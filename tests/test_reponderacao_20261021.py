@@ -16,8 +16,13 @@ ROOT = Path(__file__).resolve().parents[1]
 @pytest.mark.parametrize("name", ["verita", "palver", "quaest", "futura", "ideia"])
 def test_archived_sources_and_transcriptions(name, assert_json_close):
     poll = getattr(M, name)()
-    saved = ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json")
-    assert_json_close(poll, json.loads(saved.read_text()))
+    # The original inventory freezes what was available on 21/10; a later
+    # complete report may legitimately revise the same live poll record.
+    archive = json.loads(
+        (ROOT / "analysis/reponderacao/auditoria_20261021.json").read_text()
+    )
+    saved = next(p for p in archive["pesquisas"] if p["id"] == poll["id"])
+    assert_json_close(poll, saved)
     assert poll["divulgacao"] == "2026-10-21"
     assert poll["campo"]["inicio"] <= poll["campo"]["fim"] < poll["divulgacao"]
     assert 99 <= sum(poll["publicado"]["2t"].values()) <= 101

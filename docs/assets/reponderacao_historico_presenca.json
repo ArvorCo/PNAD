@@ -1,6 +1,6 @@
 {
   "versao": 1,
-  "conferido_em": "2026-10-21",
+  "conferido_em": "2026-10-22",
   "escopo": "Séries documentais; não modifica as centrais. Toda onda sem entrada própria usa presença igual, explicitamente. Cobertura auditada não equivale a ausência da pergunta em todas as versões da íntegra.",
   "metodo": "Primeiro selecionar massas por presença declarada/proxy; depois converter 100% dos indecisos identificados proporcionalmente entre os candidatos presentes e normalizar. BN permanece fora; BN+NS inseparáveis não são desagregados. Distribuição proporcional não altera a razão F/L. Não há ajuste extra de 3,8%, tendência ou transporte entre ondas. Não é modelo de comparecimento validado.",
   "referencia_metodologica": "https://www.pewresearch.org/methods/2016/01/07/measuring-the-likelihood-to-vote/",
@@ -235,6 +235,24 @@
         "paginas": [
           5,
           6
+        ]
+      }
+    },
+    "poderdata_2026-10-21": {
+      "tipo": "direto",
+      "taxas": {
+        "flavio": 0.97,
+        "lula": 0.95,
+        "indecisos": 0.72
+      },
+      "regra": "Seleção pela resposta 'Com certeza vai votar', por voto atual (p. 19). Autodeclaração, não probabilidade calibrada. Aplicar as mesmas taxas à PNAD supõe estabilidade dentro de cada eleitorado; renda × voto × presença não publicada. Não muda as centrais.",
+      "fonte": {
+        "arquivo": "data/originals/poderdata_102026_22/relatorio.pdf",
+        "sha256": "89e3196b1ca7232168b1e60bcc09980030a026af07eb79571ad470a8ecb70afb",
+        "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-21out26-2.pdf",
+        "paginas": [
+          15,
+          19
         ]
       }
     }

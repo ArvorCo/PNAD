@@ -383,10 +383,10 @@ def current_coverage(ns):
             "o ajuste é condicional. A Palver publica perfil ponderado 36/41/23 e mantém "
             "o método v3 da onda anterior. Seus 0% de indecisos são arredondados.</p>"
             "<p><b>Quaest: 45 × 44; Meio/Ideia: 48 × 46; Futura: 48,9 × 46,8.</b> "
-            "Entram pelo publicado na Projeção. Quaest tem voto por renda atual no G1, "
-            "mas falta o perfil desta onda e a íntegra ainda não foi localizada. "
-            "A nova onda substitui a antiga e fica fora da Média até essa conferência; "
-            "não carregamos o perfil de 14/10. Meio/Ideia não fornece perfil e voto por "
+            "Meio/Ideia e Futura entram pelo publicado na Projeção. A Quaest entrou "
+            "inicialmente sem ajuste; em 22/10, sua íntegra de 207 páginas confirmou "
+            "o perfil atual e permitiu incluir a mesma onda na Média e na Projeção "
+            "com sensibilidade por renda. Meio/Ideia não fornece perfil e voto por "
             "renda na íntegra pública; Futura tem perfil, mas não voto por renda.</p>"
             "<p>Os grupos que juntam branco/nulo, indecisos ou não comparecimento "
             "não identificam abstenção. A presença certa de 97,4% da Veritá é declarada "
@@ -398,10 +398,43 @@ def current_coverage(ns):
             '<a href="fontes/futura_21102026.pdf">Futura, 18 páginas</a> · '
             '<a href="assets/reponderacao_20261021.json">Inventário, controles e SHA-256</a>.</p></aside>'
         )
+    october22_note = ""
+    if latest.get("PoderData", {}).get("id") == "poderdata_2026-10-21":
+        october22_note = (
+            '<aside class="callout" id="rodada-2210"><h3>22/10: PoderData, Indexa e novas íntegras</h3>'
+            "<p><b>PoderData: 49 × 48 no total; 51 × 49 nos válidos divulgados.</b> "
+            "Íntegra de 42 páginas, campo 19–21/10. Perfil e cruzamentos de renda "
+            "atuais conferidos; ajuste condicional ao perfil publicado. A série do "
+            "instituto usa, em sua projeção de válidos, a presença certa declarada "
+            "por candidato nesta onda: 97% de Flávio e 95% de Lula. Isso não muda "
+            "a hipótese de comparecimento das centrais.</p>"
+            "<p><b>Indexa/Broadcast: 45,2 × 44,1; válidos oficiais 50,6 × 49,4.</b> "
+            "Caderno digital completo arquivado. O perfil de renda 42/38/20 recompõe "
+            "Flávio em 43,806%, 1,394 pp abaixo do publicado: diferença maior que o "
+            "arredondamento esperado. A onda entra pelo publicado na Projeção, "
+            "sem ajuste PNAD até reconciliar perfil e cruzamentos. Os 4,8% que dizem "
+            "não votar ficam separados na ficha e não substituem a previsão de comparecimento.</p>"
+            "<p><b>Gerp de 21/10: 50 × 45; válidos 53 × 47.</b> "
+            "Íntegra de 59 páginas confirma campo 19–21/10, BR-03835/2026 e perfil "
+            "ponderado de renda novo. Entra nas duas centrais; é outra onda, "
+            "distinta do tracking divulgado em 20/10, que permanece no histórico.</p>"
+            "<p><b>Quaest de 21/10: íntegra localizada, mesma onda revisada.</b> "
+            "As 207 páginas confirmam perfil atual 31/42/27 e cruzamentos de renda. "
+            "Volta à Média e recebe ajuste na Projeção, sem duplicação. "
+            "Datafolha de 22/10 estava anunciada para 19h e ainda não havia sido "
+            "divulgada nesta consulta; registro agendado não entra como resultado.</p>"
+            '<p class="note"><a href="fontes/poderdata_22102026.pdf">PoderData, 42 páginas</a> · '
+            '<a href="fontes/gerp_21102026.pdf">Gerp, 59 páginas</a> · '
+            '<a href="fontes/quaest_21102026.pdf">Quaest, 207 páginas</a> · '
+            '<a href="https://sistema.indexapesquisas.com.br/pesquisaspublicadas/nacional?r=8&amp;embed=1">Indexa, caderno digital</a> · '
+            '<a href="fontes/indexa_22102026.json.gz">Baixar caderno Indexa (JSON.gz)</a> · '
+            '<a href="assets/reponderacao_20261022.json">Inventário, controles e SHA-256</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + october22_note
         + october21_note
         + october20_note
         + complement_note

@@ -71,7 +71,7 @@ def test_valid_only_is_preserved_and_missing_income_remains_missing(polls):
     assert converted["base_original"] == "validos"
     assert converted["pnad"] is None
     assert converted["projecao"]["modos"]["placar"]["indecisos"] is None
-    assert projected_row(polls["quaest_2026-10-20"])["pnad"] is None
+    assert projected_row(polls["indexa_2026-10-21"])["pnad"] is None
 
 
 def test_all_projections_are_finite_conserved_and_documented(polls):

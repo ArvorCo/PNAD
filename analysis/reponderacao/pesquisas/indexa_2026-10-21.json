@@ -1,0 +1,139 @@
+{
+  "id": "indexa_2026-10-21",
+  "instituto": "Indexa/Broadcast",
+  "registro_tse": "BR-02348/2026",
+  "contratante": "Agência Estado / Broadcast",
+  "campo": {
+    "inicio": "2026-10-20",
+    "fim": "2026-10-21"
+  },
+  "divulgacao": "2026-10-22",
+  "n": 2000,
+  "metodo": "telefônico CATI",
+  "publicado": {
+    "2t": {
+      "flavio": 45.2,
+      "lula": 44.1,
+      "branco_nulo": 4.3,
+      "indecisos": 1.6,
+      "nao_vai_votar": 4.8
+    }
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 50.6,
+      "lula": 49.4
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/indexa_102026_22/relatorio.json.gz",
+    "url": "https://sistema.indexapesquisas.com.br/pesquisaspublicadas/nacional?r=8&embed=1",
+    "bytes": 581161,
+    "sha256": "a47cdfd47c9bf068c6f609269660fbd0a347021f2a50dc9b1151ad05924073ef",
+    "compressao": "gzip",
+    "sha256_descompactado": "a17d0a2d094ea40cd3260ca740cee556658df5f71c068a7ab7ba9609fa287926",
+    "bytes_descompactado": 898477,
+    "tipo": "relatorio_digital",
+    "rotulo": "Caderno digital oficial completo",
+    "paginas": {
+      "metodologia": "Ficha técnica",
+      "perfil_renda": "Propriedades da amostra",
+      "2t_topline": "Pergunta 2",
+      "2t_renda": "Pergunta 2, renda domiciliar"
+    },
+    "conferido_em": "2026-10-22",
+    "status": "Caderno digital completo arquivado; perfil incompatível.",
+    "nota": "Caderno digital completo oficial, rodada 8, arquivado em JSON/HTML e respostas da API; sem PDF disponibilizado. BR-02348/2026, CATI, n=2.000, campo 20–21/10. Placar divulgado pelo Broadcast: F/L/BN/NS/não votaria 45,2/44,1/4,3/1,6/4,8; válidos 50,6/49,4 preservados. A API guarda 45,2/44,15/4,35/1,55/4,75, e a tela arredonda para inteiros; as três precisões estão documentadas. Perfil publicado 42/38/20 e cruzamentos da pergunta 2 recompõem Flávio em 43,806%, resíduo −1,394 pp contra a divulgação, incompatível com arredondamento de décimos e pesos inteiros. Não ajustar PNAD até reconciliar a base/etapa desse perfil. Decisão definitiva de voto não é probabilidade de comparecimento."
+  },
+  "ignorar": true,
+  "motivo": "Perfil de renda não recompõe o total; sem PNAD até reconciliação.",
+  "cruzamentos": {},
+  "perfil_documental": {
+    "renda": [
+      42,
+      38,
+      20
+    ],
+    "sexo": [
+      47,
+      53
+    ]
+  },
+  "cruzamentos_documentais": {
+    "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos",
+      "nao_vai_votar"
+    ],
+    "renda": [
+      [
+        38.9,
+        47.6,
+        5.7,
+        2.8,
+        5
+      ],
+      [
+        44.6,
+        44.2,
+        4.3,
+        1.1,
+        5.9
+      ],
+      [
+        52.6,
+        40.6,
+        3.1,
+        0.9,
+        2.9
+      ]
+    ],
+    "sexo": [
+      {
+        "label": "Masculino",
+        "vals": {
+          "flaviobolsonaro": 48.4,
+          "lula": 40.7,
+          "naoiriavotar": 4.4,
+          "nulobranco": 5.1,
+          "indecisonaosabe": 1.4
+        }
+      },
+      {
+        "label": "Feminino",
+        "vals": {
+          "flaviobolsonaro": 42.3,
+          "lula": 47.3,
+          "naoiriavotar": 5.1,
+          "nulobranco": 3.6,
+          "indecisonaosabe": 1.7
+        }
+      }
+    ]
+  },
+  "controle_documental": {
+    "recomposto": {
+      "flavio": 43.806000000000004,
+      "lula": 44.908,
+      "branco_nulo": 4.648,
+      "indecisos": 1.774,
+      "nao_vai_votar": 4.922000000000001
+    },
+    "residuo": {
+      "flavio": -1.3939999999999984,
+      "lula": 0.8079999999999998,
+      "branco_nulo": 0.34799999999999986,
+      "indecisos": 0.17399999999999993,
+      "nao_vai_votar": 0.12200000000000077
+    }
+  },
+  "api_sem_arredondar": {
+    "flavio": 45.2,
+    "lula": 44.15,
+    "branco_nulo": 4.35,
+    "indecisos": 1.55,
+    "nao_vai_votar": 4.75
+  }
+}
