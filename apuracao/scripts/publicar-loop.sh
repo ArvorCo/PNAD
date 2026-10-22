@@ -35,8 +35,13 @@ ciclo() {
     return 1
   fi
   cd "$REPO" || return 1
-  if [ -z "$(git status --porcelain -- "$PASTA")" ]; then
-    log "sem mudança"
+  # Só commita quando algum dado mudou: estado.json (traz o relógio `agora`) e manifest.json
+  # (gerado_em e hashes) mudam em todo ciclo e não justificam commit sozinhos.
+  local mudados
+  mudados="$(git status --porcelain -- "$PASTA" | awk '{print $2}' | grep -v -E '/(estado|manifest)\.json$' || true)"
+  if [ -z "$mudados" ]; then
+    log "sem mudança de dados"
+    git checkout -q -- "$PASTA/estado.json" "$PASTA/manifest.json" 2>/dev/null || true
     return 0
   fi
   local hora
