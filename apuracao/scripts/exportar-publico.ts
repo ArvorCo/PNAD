@@ -83,6 +83,27 @@ function sha256(texto: string): string {
   return createHash("sha256").update(texto).digest("hex");
 }
 
+/** Campos que mudam a cada leitura sem que nenhum dado tenha mudado. */
+const VOLATEIS = new Set(["at", "min", "agora", "gerado_em", "atualizado_em", "consultado_em", "idade_s", "lido_em", "ultima_leitura_em", "latencias", "db"]);
+
+/** Hash de conteúdo: o JSON com os campos voláteis removidos em qualquer nível; igual = nada a publicar. */
+function hashConteudo(texto: string): string {
+  const podar = (v: unknown): unknown => {
+    if (Array.isArray(v)) return v.map(podar);
+    if (v && typeof v === "object") {
+      const o: Record<string, unknown> = {};
+      for (const [k, x] of Object.entries(v as Record<string, unknown>)) if (!VOLATEIS.has(k)) o[k] = podar(x);
+      return o;
+    }
+    return v;
+  };
+  try {
+    return sha256(JSON.stringify(podar(JSON.parse(texto))));
+  } catch {
+    return sha256(texto);
+  }
+}
+
 async function main(): Promise<void> {
   const saida = resolve(argumento("--saida", PADRAO_SAIDA));
   const porta = process.env["APURACAO_PORT"] ?? "4180";
@@ -91,7 +112,7 @@ async function main(): Promise<void> {
 
   const pendentes: string[] = [];
   const erros: Record<string, string> = {};
-  const arquivos: Record<string, { sha256: string; bytes: number }> = {};
+  const arquivos: Record<string, { sha256: string; bytes: number; conteudo: string }> = {};
   let turno: number | null = null;
 
   for (const rota of ROTAS) {
@@ -124,7 +145,7 @@ async function main(): Promise<void> {
       texto = JSON.stringify({ pendente: true });
       gravarAtomico(destino, texto);
     }
-    arquivos[rota.arquivo] = { sha256: sha256(texto), bytes: Buffer.byteLength(texto) };
+    arquivos[rota.arquivo] = { sha256: sha256(texto), bytes: Buffer.byteLength(texto), conteudo: hashConteudo(texto) };
   }
 
   const total = Object.values(arquivos).reduce((s, a) => s + a.bytes, 0);

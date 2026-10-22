@@ -37,11 +37,13 @@ ciclo() {
   cd "$REPO" || return 1
   # Só commita quando algum dado mudou: estado.json (traz o relógio `agora`) e manifest.json
   # (gerado_em e hashes) mudam em todo ciclo e não justificam commit sozinhos.
-  local mudados
-  mudados="$(git status --porcelain -- "$PASTA" | awk '{print $2}' | grep -v -E '/(estado|manifest)\.json$' || true)"
-  if [ -z "$mudados" ]; then
+  # Compara o hash de conteúdo (sem carimbos de hora) de cada arquivo com o do último commit.
+  local antes depois
+  antes="$(git show "HEAD:$PASTA/manifest.json" 2>/dev/null | python3 -c 'import json,sys; m=json.load(sys.stdin); print(json.dumps({k: v.get("conteudo") for k, v in sorted(m.get("arquivos", {}).items())}))' 2>/dev/null || echo "?")"
+  depois="$(python3 -c 'import json,sys; m=json.load(open(sys.argv[1])); print(json.dumps({k: v.get("conteudo") for k, v in sorted(m.get("arquivos", {}).items())}))' "$PASTA/manifest.json" 2>/dev/null || echo "!")"
+  if [ "$antes" = "$depois" ]; then
     log "sem mudança de dados"
-    git checkout -q -- "$PASTA/estado.json" "$PASTA/manifest.json" 2>/dev/null || true
+    git checkout -q -- "$PASTA" 2>/dev/null || true
     return 0
   fi
   local hora
