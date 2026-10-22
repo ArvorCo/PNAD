@@ -443,3 +443,102 @@ Nenhum defeito de UI, servidor ou script apareceu. O único ajuste foi o `secoes
 
 Stop hook feedback:
 [Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos a dinâmica da apuiração e procurar entender o que está sendo lerdo demais, o que está chegando por último e comparar com o horário do encerramento vs horário de envio e que também leve em consideração os resultados apurados da nossa apuração paralela.  A ideia é continuarmos mantendo isso online e vamos transmitir por vídeo a nossa apuração. Temos apuração também em 6 estados do 2o turno, o que é muito relevante também para irmos mostrando o que está rolando nesses estados, mas o principal é o acompanhamento da apuração, precisamos de vários indicadores importantes tendo em consideração os pontos que falamos, e também acompanhar a abstenção que está sendo medida nos estados sei lá, pense bem no que podemos auditar, e ter um sistema que acompanha a nacional e as estaduais, que apura as pausas, se houver, e alertas se houver diferença o totalizado pelo TSE e o que alguém mandou pelo totalização paralela, gerando alertas sempre que tivermos algo assim... entendeu tudo?]: Parte do objetivo foi entregue e comprovada no transcript (coletor, rotas /api/2t, telão, página pública, runbook, commit 30645efa7). Mas o usuário pediu uma apuração que mostrasse "como está por região... total de cada estado", acompanhamento por estado e região, e alertas de divergência com a totalização paralela, e o transcript mostra limites: a totalização paralela nunca foi consultada em tempo real ("totalização paralela ainda não consultada", fonte com erro nas telas), as telas pausas e secoes ficaram vazias no ensaio porque o coletor não rodou, e nenhuma apuração real do 2º turno foi observada (o 2º turno ocorre em 25/10 e a sessão é de 22/10). Também faltam o pacote de indicadores e motor serem integrados e validados ao vivo, e o usuário pediu que os alertas de divergência funcionassem, o que não foi demonstrado com dados reais. A condição de sistema "online" e "transmitindo" não foi atingida; o estado é de código pronto e ensaiado.
+
+---
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos a dinâmica da apuiração e procurar… [+946 chars]]: Condition not met: the transcript shows the 2º turno system built, tested and committed, but the 2º turno itself is on 25/10 and the system was only exercised against zeroed TSE data on 22/10. The user asked for live-running real-time monitoring of an actual apuração with working divergence alerts. Evidence of the gap: the last assistant message says "pausas, seções recebidas, abstenção por município fechado e divergências dependem de o TSE publicar resultados" and that the paralela had 0 BUs, so no real parallel-tally divergence alert was ever observed. The user's request for alerts on TSE vs parallel-tally differences is therefore unverified with live data. Also the 'sistema online e transmitindo' goal was not reached: the collector and server were shut down and the public page only shows the empty pleito snapshot.
+
+---
+
+<task-notification>
+<task-id>a83649c226ea361db</task-id>
+<tool-use-id>toolu_01KfWLs4LecNevpyGytf1drH</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Demonstração com dados reais do 1T" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Entreguei as duas partes. O replay real revelou três defeitos do motor, todos corrigidos e testados. `bun run typecheck`, `bun run lint` e `bun test` estão em zero: 507 testes passam. Uma ressalva: um teste do telão, fora do meu pacote, falha de vez em quando (detalhe no fim).
+
+## Arquivos
+- Script: `/Users/leonardodias/arvor/PNAD/apuracao/scripts/demonstrar-2t.ts` (com `// Uso:`) e os módulos em `/Users/leonardodias/arvor/PNAD/apuracao/scripts/demonstrar_2t/` (`replay.ts`, `analise.ts`, `bu-real.ts`, `relatorio.ts`).
+- Saídas: `/Users/leonardodias/arvor/PNAD/analysis/apuracao_2t_2026/demonstracao_1t.md` e `demonstracao_1t.json`.
+- Teste: `/Users/leonardodias/arvor/PNAD/apuracao/tests/demonstracao-2t.test.ts`. Reaproveita o BU de SP que os testes já usavam. Acrescentei só `tests/fixtures/2t-motor/bu-zz2917300010494-busa.json`, com 849 bytes em base64 e o SHA-256 conferido: é o único boletim do Sistema de Apuração, que não traz comparecimento nem aptos no QR.
+- Bancos da demonstração, fora do git: `apuracao/data/demo-replay-1t-l5.sqlite`, `-l7.sqlite`, `-anterior-l5.sqlite` e `demo-paralela-1t.sqlite`. Os três bancos de origem ficaram com a data de modificação intacta.
+- Tempo de execução: entre 81 e 136 s; uma vez, com a máquina carregada, 218 s.
+
+## (a) A noite de 04/10 pelo motor novo
+O replay passa 104.683 leituras reais pelo próprio `processar()`, com `instalarTurno2` ligado e a configuração de 1º turno. Nada é editado em `comum.ts`.
+- **Limiar de 5 min: 14 pausas. Limiar de 7 min: 9.** A diferença são 4 pausas nacionais de cadência, entre 18:26:58 e 18:48:59, de 4,8 a 6,3 min, mais uma pausa geral na madrugada. Confere com o relatório do motor.
+- **Parada nacional de 18:48:59 a 19:14:08:** detectada com 0 s de diferença no início e no fim, nos dois limiares.
+- **Travamento das 18:00:33:** sai como pausa geral de 18:00:33 a 18:09:11. Ninguém publicava; o nacional voltou 1,6 min depois das UFs.
+- **Pausa geral de 19:32:47 a 20:01:55:** o motor marca de 19:32:18 a 20:02:12, olhando só os arquivos de presidente.
+- **Limite do detector:** o arquivo nacional ficou parado de 19:14:08 a 20:04:39 e nunca vira pausa nacional. Só 38,8 dos 50,5 min ficam cobertos por duas pausas gerais. Entre 19:26 e 19:32 as UFs publicavam a cada cerca de 6 min, e o critério de "o país publica" exige idade mediana de até 3 min.
+- **Cauda depois das 23:00:** 6 pausas gerais, com 1 a 15 seções pendentes no país; 4 delas viram `error`.
+- **Viradas:** 3 (RR e TO de Lula para Flávio, AM de Flávio para Lula). O líder inicial mais as viradas dá o líder final em 28 de 28 UFs.
+- **Fechamentos:** 28, todos no mesmo segundo do `conclusao_ufs` do dossiê.
+- **Régua do 1º turno:**
+  - `abstencao_atipica_*`: zero. Nos 5.717 municípios fechados com par na régua, a maior diferença é de 0,005 pp, que é o arredondamento da régua.
+  - `uf_atrasada_1t`: 9 alertas, contra 51 pela regra anterior. Os 9 vêm da construção da régua: ela data versões pelo `totalizado_em`, e as versões publicadas às 20:02 trazem carimbo de 19:31.
+  - Contraprova, com a mesma noite atrasada 30 min: 51 alertas, sendo 28 no patamar de 20 min, um por UF.
+
+## (b) Conferência com BU real
+Usei quatro seções reais: SP 61000 zona 330 seção 17; AC Bujari zona 9 seção 1; exterior, Katmandu, seção 494 (boletim do Sistema de Apuração); e AC zona 9 seção 2 como "sem aux.json". Hash, arquivo e SHA-256 batem com o banco nas quatro.
+- **Comparação direta:** 9 de 9 como esperado. O BU idêntico dá `igual`. O voto movido dá `divergente` com duas diferenças nominais. O comparecimento mais 1 dá `divergente`; no exterior a alteração vai para o comparecimento do cargo, porque o QR do Sistema de Apuração não traz o do boletim.
+- **Pela `PonteParalela` real:** no 1º ciclo os 10 casos ficam `tse_ainda_nao_publicou`. No 2º ciclo: 3 `igual`, 6 `divergente` e 1 `tse_ainda_nao_publicou`.
+- **Texto do evento,** via `/api/anomalias`: "BU da totalização paralela difere do oficial na seção 17 da zona 330 de Euclides da Cunha Paulista (SP)", severidade `error`. O `detalhe` gravado traz `campos` com "presidente: votos no 13" 122 contra 123 e "votos no 22" 71 contra 70.
+- **Contraprova da conversão:** o registro montado a partir do BU decodificado reproduz exatamente as views da fixture que a paralela já usava (BU 101).
+
+## Defeitos que o replay revelou, todos corrigidos
+1. **Regra de versão regressiva** (`src/collector/processar-corpo.ts`, nova função `versaoRegressiva`). O coletor descartava como cópia antiga toda versão com idg menor, mesmo gerada depois: na noite do 1º turno foram 2.213 versões novas de presidente jogadas fora.
+   - Agora vale a hora de geração (dg/hg); o idg só desempata.
+   - Resultado no replay: 7.400 versões aceitas contra 5.187 antes, e nenhuma delas com menos seções que a anterior.
+   - A rodada que emula a regra antiga mostra o efeito: ela criava 3 pausas falsas de UF (RN, SP, MG, todas fechando com o mesmo número de seções) e travou MT por 30,7 min.
+2. **Atraso contra o 1º turno** (`src/collector/regua.ts`, `atrasoEmDegrau`). A interpolação atravessava o platô de 19:32 a 20:02 e acusava atraso de UF que estava no mesmo ponto do 1º turno na mesma hora. Agora a curva é lida em degraus, com tolerância para o arredondamento da régua.
+3. **Hora do fechamento no telão** (`src/server/textos.ts`). Fora da janela de 15 min antes da geração, o texto passa a usar a geração do arquivo. Antes, o telão escreveria "Exterior fechou às 09:19", horário do dia seguinte, e o AM com carimbo parado duas horas antes.
+
+Os testes de `pausas-regua` foram reescritos para a leitura em degraus, e `pausas-eventos` ganhou casos para a regra de versão e para o texto de fechamento.
+
+## Pendências para você decidir
+- **Régua de referência:** os 9 alertas residuais só somem se a curva da régua usar `gerado_em`. A mudança fica em `scripts/referencia-1t.ts`, que é do orquestrador; não editei.
+- **Atraso nas telas `ufs` e `atraso`:** `src/server/indicadores/regua.ts` ainda calcula `atraso_min` por interpolação, com o mesmo artefato. Recomendo que o pacote de indicadores passe a usar `atrasoEmDegrau`.
+- **Replay e ensaio:** `src/replay/sequenciador.ts`, que não tem dono no contrato, ainda descarta versões só pelo idg. Isso afeta apenas `bun run replay` e o ensaio.
+- **Parada nacional de 19:14 a 20:04:** testei uma regra alternativa e voltei atrás. Ela reproduz as três paradas nacionais do dossiê, mas abre uma pausa falsa desde 03/10 sobre o arquivo zerado e duplica pausas na cauda. Mudar isso é decisão de desenho, arriscada a 3 dias da eleição.
+- **Coletor:** não havia coletor rodando. Ele precisa partir com este código no dia 25. O servidor que está no ar em modo de desenvolvimento recarrega o `textos.ts` sozinho.
+- **Teste instável do telão:** `tests/ui/doist.test.ts`, caso "é determinístico", falhou 1 vez em 3 rodadas completas. O mock usa `Date.now()`; não tem relação com estas mudanças.
+- **Commit:** não fiz commit.</result>
+<usage><subagent_tokens>667940</subagent_tokens><tool_uses>151</tool_uses><duration_ms>3736515</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>afb909c429865069a</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Telão: telas novas do 2º turno" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O caso "é determinístico" estava instável porque o helper `mockEm` criava o mock sem relógio injetado, e cada chamada lia `Date.now()` sozinha. Em `tests/ui/doist.test.ts`, o helper agora injeta `agoraReal: () =&gt; 0`, então o instante simulado fica fixo em `inicioMin`. Os casos que passam o próprio `agoraReal` continuam funcionando, porque o `...opcoes` vem depois e o sobrescreve.
+
+Nenhum arquivo de `src/ui/**` foi alterado, então o telão se comporta como antes.
+
+- **Typecheck, lint e testes:** `bun run typecheck` e `bun run lint` ficaram em zero, e `bun test tests/ui` passou com 213 testes.
+- **Prova de estabilidade:** rodei os casos de "mock do 2º turno" 20 vezes seguidas e deu 0 falhas nas 20.</result>
+<usage><subagent_tokens>685711</subagent_tokens><tool_uses>2</tool_uses><duration_ms>37449</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bc6upghko</task-id>
+<tool-use-id>toolu_013Z1dYZ2ukS1nrKVE7StQ8j</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Background command "Re-run the real-data demonstration with the publication-dated reference" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos a dinâmica da apuiração e procurar… [+946 chars]]: The condition requires a live, running 2º turno apuração that is online and transmitted, with real-time monitoring of the actual election. The transcript shows the system built and tested, but the 2º turno happens on 25/10 and today is 22/10. The collector and server were shut down after a dry run against zeroed TSE data ("Coletor e servidor foram desligados após a demonstração"), and the public page only shows the empty pleito snapshot ("turno 2 ... pendentes []", "arquivos 13", zeroed data). No real 2º turno data was observed, and the parallel-tally divergence alerts were proven only on the 1º turno replay and fixtures, not live. The last message itself says the 2º turno events "só existem quando o TSE e as pessoas começam a publicar". The condition is not met yet, though it is not impossible: it becomes achievable on 25/10 by running the documented runbook.
