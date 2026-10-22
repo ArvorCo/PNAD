@@ -401,7 +401,14 @@ def current_coverage(ns):
     october22_note = ""
     if latest.get("PoderData", {}).get("id") == "poderdata_2026-10-21":
         october22_note = (
-            '<aside class="callout" id="rodada-2210"><h3>22/10: PoderData, Indexa e novas íntegras</h3>'
+            '<aside class="callout" id="rodada-2210"><h3>22/10: Datafolha, PoderData, Indexa e novas íntegras</h3>'
+            '<p id="datafolha-2210"><b>Datafolha: 47 × 46 no total; 50 × 50 nos válidos divulgados.</b> '
+            "G1 e registro BR-09709/2026 confirmam 2.520 entrevistas, campo 20–22/10. "
+            "Os cruzamentos atuais estão arquivados, mas faltam as bases efetivas por renda. "
+            "A referência 49/47/4 do TSE é do plano amostral; não substitui o perfil observado. "
+            "A íntegra ainda não foi anexada ao registro consultado. A onda entra pelo publicado "
+            "na Projeção, sem PNAD nem transporte dos pesos anteriores. A troca de base "
+            "em relação à onda anterior também pode afetar a tendência.</p>"
             "<p><b>PoderData: 49 × 48 no total; 51 × 49 nos válidos divulgados.</b> "
             "Íntegra de 42 páginas, campo 19–21/10. Perfil e cruzamentos de renda "
             "atuais conferidos; ajuste condicional ao perfil publicado. A série do "
@@ -420,10 +427,10 @@ def current_coverage(ns):
             "distinta do tracking divulgado em 20/10, que permanece no histórico.</p>"
             "<p><b>Quaest de 21/10: íntegra localizada, mesma onda revisada.</b> "
             "As 207 páginas confirmam perfil atual 31/42/27 e cruzamentos de renda. "
-            "Volta à Média e recebe ajuste na Projeção, sem duplicação. "
-            "Datafolha de 22/10 estava anunciada para 19h e ainda não havia sido "
-            "divulgada nesta consulta; registro agendado não entra como resultado.</p>"
-            '<p class="note"><a href="fontes/poderdata_22102026.pdf">PoderData, 42 páginas</a> · '
+            "Volta à Média e recebe ajuste na Projeção, sem duplicação.</p>"
+            '<p class="note"><a href="fontes/datafolha_22102026_registro.txt">Datafolha, registro transcrito</a> · '
+            '<a href="assets/reponderacao_datafolha_20261022.json">Datafolha, dados e fontes</a> · '
+            '<a href="fontes/poderdata_22102026.pdf">PoderData, 42 páginas</a> · '
             '<a href="fontes/gerp_21102026.pdf">Gerp, 59 páginas</a> · '
             '<a href="fontes/quaest_21102026.pdf">Quaest, 207 páginas</a> · '
             '<a href="https://sistema.indexapesquisas.com.br/pesquisaspublicadas/nacional?r=8&amp;embed=1">Indexa, caderno digital</a> · '

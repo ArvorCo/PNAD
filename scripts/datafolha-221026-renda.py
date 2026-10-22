@@ -1,0 +1,173 @@
+#!/usr/bin/env python3
+"""Integra a divulgação de 22/10; não transforma metas do registro em bases."""
+
+import hashlib
+import importlib
+import shutil
+from pathlib import Path
+
+COMMON = importlib.import_module("pesquisas-081026-renda")
+ROOT = Path(__file__).resolve().parents[1]
+FOLDER = ROOT / "data/originals/datafolha_102026_22"
+DAY = "2026-10-22"
+PAGE = "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Datafolha/internal/"
+API = "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/"
+TSE = "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml"
+OPTIONS = ["flavio", "lula", "branco_nulo", "indecisos"]
+NAMES = {
+    "Flavio Bolsonaro": "flavio",
+    "Lula": "lula",
+    "Em Branco/Nulo/Nenhum": "branco_nulo",
+    "Indecisos": "indecisos",
+}
+
+
+def current(chart):
+    """Seleciona por data, nunca pela posição da onda na API."""
+    result = {}
+    for item in chart["data"]:
+        values = [v for v in item["values"] if v["date"] == DAY + "T00:00:00Z"]
+        if len(values) != 1:
+            raise ValueError("Onda atual ausente ou duplicada no painel")
+        result[NAMES[item["option"]]] = round(100 * values[0]["value"], 6)
+    return result
+
+
+def record(name, url):
+    path = FOLDER / name
+    raw = path.read_bytes()
+    return {
+        "arquivo": str(path.relative_to(ROOT)),
+        "url": url,
+        "rotulo": {
+            "g1_painel.html": "Painel G1",
+            "g1_estimulada.json": "G1: estimulada e cruzamentos",
+            "g1_validos.json": "G1: votos válidos divulgados",
+            "registro-tse.txt": "TSE: registro BR-09709/2026",
+            "registro-plano-amostral.txt": "TSE: detalhamento do plano amostral",
+        }[name],
+        "bytes": len(raw),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+    }
+
+
+def datafolha():
+    raw = COMMON.read(FOLDER / "g1_estimulada.json")["resultado"]
+    valid = COMMON.read(FOLDER / "g1_validos.json")["resultado"]
+    strata = [
+        {
+            "dimensao": row["bandeira"],
+            "recorte": row["variavel_cruzamento"],
+            "valores_pct": current(row),
+            "base": None,
+            "margem_publicada_pp": row["margem"],
+        }
+        for row in raw["estratos"]
+    ]
+    income = {
+        r["recorte"]: r["valores_pct"] for r in strata if r["dimensao"] == "Renda"
+    }
+    bands = ["Até 2 s.m.", "Mais de 2 a 5 s.m", "Mais de 5 s.m."]
+    note = (
+        "Divulgação de 22/10: F/L/BN/NS 47/46/5/2; válidos oficiais 50/50. "
+        "Campo 20–22/10 e n=2.520 confirmados no painel G1 e no registro "
+        "BR-09709/2026. O registro descreve 2.520 como amostra prevista; o G1 "
+        "informa 2.520 ouvidos. Cruzamentos atuais de renda: 39/54/5/2, "
+        "54/39/6/1 e 54/40/5/1. As bases efetivas dos recortes não estão no painel. "
+        "O TSE traz referência 49/47/4 (até 2 SM, mais de 2 SM, NS/recusa), "
+        "fator previsto de renda 1; não é perfil observado nem separa as duas "
+        "faixas superiores. Relatório completo não fornecido pela empresa no "
+        "TSE na consulta. Entra pelo publicado na Projeção; sem ajuste PNAD "
+        "até obter as bases atuais, sem transportar pesos da onda anterior. "
+        "A passagem de PNAD na onda anterior a publicado nesta pode afetar a tendência. "
+        "Válidos divulgados preservados separadamente da normalização 47/93."
+    )
+    sources = [
+        record("g1_painel.html", PAGE),
+        record(
+            "g1_estimulada.json",
+            API + "?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Datafolha",
+        ),
+        record(
+            "g1_validos.json",
+            API + "?tipo_pergunta=VTSVALIDOS-PRE-201&instituto=Datafolha",
+        ),
+        record("registro-tse.txt", TSE),
+        record(
+            "registro-plano-amostral.txt",
+            "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/metodologia/registroDetalhamento.xhtml?id=457618",
+        ),
+    ]
+    return {
+        "id": "datafolha_2026-10-22",
+        "instituto": "Datafolha",
+        "registro_tse": "BR-09709/2026",
+        "divulgacao": DAY,
+        "campo": {"inicio": "2026-10-20", "fim": DAY},
+        "n": 2520,
+        "contratante": "Folha de S.Paulo e TV Globo",
+        "metodo": "presencial, pontos de fluxo",
+        "publicado": {"2t": current(raw["cenarios"][0])},
+        "publicado_validos": {"2t": current(valid["cenarios"][0])},
+        "fonte": {
+            **sources[0],
+            "tipo": "painel_contratante",
+            "rotulo": "Painel G1 e registro TSE conferidos",
+            "conferido_em": DAY,
+            "status": "Cruzamentos atuais arquivados; bases de renda pendentes.",
+            "paginas": {},
+            "nota": note,
+            "complementos": sources[1:],
+        },
+        "ignorar": True,
+        "motivo": "Bases atuais de renda ausentes no painel; referências do TSE são metas, não perfil realizado. Publicado disponível na Projeção.",
+        "cruzamentos": {},
+        "cruzamentos_documentais": {
+            "opcoes": OPTIONS,
+            "faixas": bands,
+            "linhas": [[income[b][c] for c in OPTIONS] for b in bands],
+            "bases": [None, None, None],
+            "nota": note,
+        },
+        "registro_conferido": {
+            "n_previsto": 2520,
+            "n_divulgado_g1": 2520,
+            "renda_referencia_pct": [49, 47, 4],
+            "renda_referencia_faixas": ["Até 2 SM", "Mais de 2 SM", "NS/recusa"],
+            "fator_renda_previsto": 1,
+            "usado_como_perfil": False,
+            "integra_anexada": False,
+        },
+        "painel_recortes": strata,
+    }
+
+
+def main():
+    poll = datafolha()
+    sources = [
+        {k: poll["fonte"][k] for k in ("arquivo", "url", "bytes", "sha256")},
+        *poll["fonte"]["complementos"],
+    ]
+    COMMON.write(FOLDER / "fonte.json", {"conferido_em": DAY, "arquivos": sources})
+    COMMON.write(
+        ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json"), poll
+    )
+    audit = {
+        "referencia": DAY,
+        "pesquisa": poll,
+        "fontes": sources,
+        "pendencias": ["Íntegra e bases ponderadas atuais de renda."],
+    }
+    COMMON.write(
+        ROOT / "analysis/reponderacao/auditoria_datafolha_20261022.json", audit
+    )
+    COMMON.write(ROOT / "docs/assets/reponderacao_datafolha_20261022.json", audit)
+    shutil.copyfile(
+        FOLDER / "registro-tse.txt",
+        ROOT / "docs/fontes/datafolha_22102026_registro.txt",
+    )
+    print("Datafolha 22/10: 2.520 entrevistas; publicado integrado, renda pendente.")
+
+
+if __name__ == "__main__":
+    main()
