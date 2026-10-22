@@ -3,10 +3,14 @@
   "checkpoint_id": "db3b04b6cfe7",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 8,
+  "checkpoints_count": 16,
   "files_touched": [
     "analysis/clima_1t_2026/CONTRATO.md",
     "analysis/clima_1t_2026/literatura.json",
+    "apuracao/scripts/exportar-publico.ts",
+    "apuracao/scripts/publicar-loop.sh",
+    "apuracao/src/server/indicadores/base.ts",
+    "apuracao/src/server/indicadores/linha-tempo.ts",
     "docs/fontes/historico_2t/meio_ideia_2026-01-12.pdf",
     "scripts/abstencao-1t-mapa.py",
     "scripts/clima_1t/pagina/cap_a.py",
@@ -57,13 +61,20 @@
       "context": "/db/3b04b6cfe7/3/context.md",
       "content_hash": "/db/3b04b6cfe7/3/content_hash.txt",
       "prompt": "/db/3b04b6cfe7/3/prompt.txt"
+    },
+    {
+      "metadata": "/db/3b04b6cfe7/4/metadata.json",
+      "transcript": "/db/3b04b6cfe7/4/full.jsonl",
+      "context": "/db/3b04b6cfe7/4/context.md",
+      "content_hash": "/db/3b04b6cfe7/4/content_hash.txt",
+      "prompt": "/db/3b04b6cfe7/4/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 5224,
-    "cache_creation_tokens": 1505578,
-    "cache_read_tokens": 114683486,
-    "output_tokens": 170795,
-    "api_call_count": 212
+    "input_tokens": 6706,
+    "cache_creation_tokens": 1830769,
+    "cache_read_tokens": 131693161,
+    "output_tokens": 246277,
+    "api_call_count": 271
   }
 }

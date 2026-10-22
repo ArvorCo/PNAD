@@ -1,0 +1,440 @@
+A session-scoped Stop hook is now active with condition: "Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos a dinâmica da apuiração e procurar entender o que está sendo lerdo demais, o que está chegando por último e comparar com o horário do encerramento vs horário de envio e que também leve em consideração os resultados apurados da nossa apuração paralela.  A ideia é continuarmos mantendo isso online e vamos transmitir por vídeo a nossa apuração. Temos apuração também em 6 estados do 2o turno, o que é muito relevante também para irmos mostrando o que está rolando nesses estados, mas o principal é o acompanhamento da apuração, precisamos de vários indicadores importantes tendo em consideração os pontos que falamos, e também acompanhar a abstenção que está sendo medida nos estados sei lá, pense bem no que podemos auditar, e ter um sistema que acompanha a nacional e as estaduais, que apura as pausas, se houver, e alertas se houver diferença o totalizado pelo TSE e o que alguém mandou pelo totalização paralela, gerando alertas sempre que tivermos algo assim... entendeu tudo?". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<task-notification>
+<task-id>a1429ef311da0e31b</task-id>
+<tool-use-id>toolu_01QLYCP8VuYgcA2PwUKLRqPK</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Página pública ao vivo e exportador" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O pacote público está pronto: exportador, laço de publicação, página, JSON de exemplo e testes. Não testei contra a API real nem commitei nada.
+
+**Criados**
+- `apuracao/scripts/exportar-publico.ts`
+- `apuracao/scripts/publicar-loop.sh` (executável)
+- `docs/apuracao_2t_ao_vivo.html`
+- `docs/assets/apuracao_2t/ap2t.css`, `ap2t.js`
+- `docs/assets/apuracao_2t/exemplo/*.json`: 13 arquivos mais `manifest.json`, 91 KB no total.
+- `tests/test_apuracao_2t_publico.py`
+- `docs/img/og/apuracao_2t_ao_vivo.png` e `docs/assets/og/apuracao_2t_ao_vivo.html`, gerados pelo `social-cards.py`.
+
+**Alterados:** só `scripts/social-cards.py` (uma entrada no manifesto, slug `apuracao_2t_ao_vivo`) e `docs/sitemap.xml` (regenerado).
+
+**Exportador**
+- Lê as 13 rotas e grava os JSON compactos mais `manifest.json`, com `gerado_em`, `turno`, `sha256` e bytes de cada arquivo, `pendentes` e `erros`.
+- Rota com erro ou `{pendente:true}` mantém o arquivo anterior. Sem arquivo anterior, grava `{"pendente":true}`.
+- Chaves de identificação pessoal (cpf, email, telefone, título e similares) são removidas antes de gravar.
+- Do `/api/config` ele tira `municipios`: são 5.570 municípios, a página não usa, e isso protege o teto de 2 MB.
+- Passa em `eslint` e `tsc` sem erros. Só consegui rodar sem API: a porta 4180 estava fora do ar, então todas as rotas saíram como pendentes.
+
+**Laço de publicação**
+- `INTERVALO_S` (padrão 300), `PUSH=0` para só commitar, pidfile e log em `apuracao/data/logs/publicar-*.log`.
+- Só `git add` e commit em `docs/assets/apuracao_2t`.
+- Falha de push é logada e o laço segue. Como ligar e desligar está no cabeçalho do script.
+- Como `estado.json` traz `agora`, quase todo ciclo gera um commit.
+
+**Página**
+- Mobile first, 16 px de margem, modo escuro, sem rolagem lateral (medido em 390 e 1280 px). Gráficos em SVG gerados por JS.
+- Os blocos seguem a ordem pedida, com o gráfico nacional da noite dentro de Regiões e um índice de âncoras no topo.
+- Recarrega a cada 60 s. Confere o manifest e só rebaixa o arquivo cujo SHA mudou. Avisa quando os dados têm mais de 10 min.
+- `?fonte=exemplo` carrega os dados sintéticos e mostra um banner "Dados de exemplo".
+- Sem JS, mostra o aviso com o link do painel da totalização.
+- Os rótulos obrigatórios estão no texto: "Soma dos BUs recebidos, não projeção", "Base: municípios fechados" e "pede explicação, não indica irregularidade".
+- Os candidatos dos seis governos nos exemplos são fictícios ("Candidato AC1 (exemplo)").
+
+**Auditorias**
+- `contrast-audit.py`: 0 abaixo do mínimo WCAG AA.
+- `render-audit.py`: 0 problemas.
+- `pytest` em `test_apuracao_2t_publico.py`, `test_ga_tag.py` e `test_sitemap.py`: 128 passaram.
+- `ruff` e `black` no teste: limpos.
+- GA tag: 0 de 82 páginas sem tag.
+- Travessão: zero.
+- Capturas em 390 px (claro e escuro) e 1280 px, sem erros de console.
+
+**Pendências**
+- A página ainda não entrou no `sitemap.xml`, porque o `sitemap-build.py` só lê arquivos rastreados pelo git. Depois do commit, rode `python3 scripts/sitemap-build.py` de novo, senão `test_sitemap.py` reprova.
+- Falta commitar o PNG do card e os arquivos novos.
+
+**Campos que o contrato precisa fechar**
+1. `Agregado.est` não está definido. Usei "eleitorado das seções totalizadas", e a página não o usa. Se for outra coisa, avise.
+2. O formato de `resultado.s`, `resultado.e` e `resultado.v` não está no contrato. A página só usa `resultado.cand` (`nmu`, `n`, `sg`, `sqcand`) para nomes e cores. O candidato 22 vira azul e o 13 vermelho, pelo número, e são os únicos números que a página assume.
+3. Em `paralela.placar_bus.presidente.votos` a chave é o número da urna ("22", "13"), como no contrato. Nos exemplos usei isso. O placar dos BUs só aparece se vier assim.
+4. O exportador depende de `/api/config` trazer `turno` numérico; sem isso `manifest.turno` fica `null`.
+5. Os arquivos `anomalias.json` e `paralela.json` carregam `uf`, `mun`, `zona` e `secao`. Não identificam pessoas, mas o `publicar-loop` os publica como estão.</result>
+<usage><subagent_tokens>275520</subagent_tokens><tool_uses>23</tool_uses><duration_ms>458727</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>afb909c429865069a</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Telão: telas novas do 2º turno" is waiting on its own background work</summary>
+<note>This agent stopped with background work of its own still running. It may resume on its own when that work completes or reports, and the same task-id notifies again if it does; the result below may be interim.</note>
+<result>As dez telas novas do telão estão prontas e rodam contra o `#mock=1` e contra o servidor real. `typecheck`, `lint` e `bun test tests/ui` estão em zero, com 213 testes. Na suíte inteira, 7 testes de `tests/pausas*.test.ts` falham; é código do pacote do motor, ainda em construção, e não toquei nele.
+
+## O que foi feito
+
+- **Telas e tecla `Shift+letra`:** cada tela abre pela tecla da tabela abaixo, pela busca `/` e pelo diretor. Todas cabem em 1920×1080 sem rolagem, com texto mínimo de 22 px. Cada uma trata `ref_1t: null`, dados zerados antes das 17h e fonte em `pendente` ou `erro` ("fonte indisponível", nunca branco).
+- **Mock em 2º turno:** `#mock=1` agora é 2º turno por padrão (duelo Flávio Bolsonaro 22 × Lula 13, governador em AC, AM, DF, ES, RN e TO com nomes rotulados "ENSAIO"). Todas as rotas `/api/2t/*` são sintetizadas e passam pelos mesmos normalizadores da API real. Para o 1º turno use `&amp;turno=1`.
+- **Parâmetros novos do mock:** `t0=&lt;min após 17h&gt;`, `falha=rota[:erro|pendente|fonte]`, `sem1t=1`, `congelar=1`.
+- **Correções do duelo:** `mov`, `lotes` e `acumulado` leem `config.eleicoes.federal`. O título de `pres` no 2º turno é "Presidente, 2º turno". A tela `espera` também diz "segundo turno".
+- **Anomalias:** o telão agora aceita `pausa`, `divergencia`, `abstencao` e `paralela`. O ticker usa cor própria para elas e o ponto do HUD acende com divergência recente.
+- **Playlist do 2º turno:** o telão lê `public/playlist-2t.json` e usa a do contrato como reserva. Na playlist, `secoes` fica de fora, como no contrato.
+- **Diretor:** tem uma seção "telas do 2º turno" com o atalho de cada botão.
+- **Redesenho:** cada tela só redesenha quando seus dados mudam. Antes, cada batimento da rede apagava o texto na tela.
+
+## Telas e atalhos
+
+| Tela | Atalho | Print |
+|---|---|---|
+| `regioes` | Shift+N | `qa/2t-regioes.png` |
+| `ufs` | Shift+U | `qa/2t-ufs.png` |
+| `atraso` | Shift+D | `qa/2t-atraso.png` |
+| `abstencao` (mapa divergente ±5 pp) | Shift+B | `qa/2t-abstencao.png` |
+| `secoes` | Shift+S | `qa/2t-secoes.png` |
+| `pausas` | Shift+P | `qa/2t-pausas.png` |
+| `gov-2t` | `3` ou Shift+G | `qa/2t-gov-2t.png` |
+| `paralela` | Shift+T | `qa/2t-paralela.png` |
+| `alertas` | Shift+L | `qa/2t-alertas.png` |
+| `evolucao` (`m` troca para 27 UFs em 7×4) | Shift+E | `qa/2t-evolucao.png`, `qa/2t-evolucao-m1.png` |
+
+Fui por `Shift+letra` porque g, p, t, e, b e n começam sigla de UF, e a tecla `s` colide com `sc`. Sem Shift, tudo segue como antes (`a m r` esperam 900 ms; duas letras formam UF). Na tela `gov-2t`, a tecla de UF leva a `gov-uf`, e o Backspace de lá volta a `gov-2t`.
+
+## Verificação
+
+- **Navegador:** 11 vistas (as dez telas mais `evolucao` com `m`) em quatro instantes da noite (antes das 17h, 17h15, 19h10 e 22h): nenhum erro de console, nenhuma requisição fora de 127.0.0.1, `scrollHeight` 1080 e nenhum estouro de painel.
+- **Também testados:** `sem1t`, falhas simuladas, rotação automática, atalhos, busca e diretor.
+- **Contraste:** `contrast-audit.py --width 1920` zerado em todas as telas e nos estados extras. Primeiro tive de congelar o relógio do mock (`congelar=1`), porque o auditor lia 0 itens quando o DOM se refazia. Validei o guarda corrompendo uma cor de propósito (ele acusou 1,58). Corrigi também a etiqueta do Δ da abstenção, que reprovava.
+- **Servidor real:** contra o `ensaio.sqlite`, `regioes`, `ufs`, `abstencao`, `estaduais` e `evolucao` renderizam. `secoes`, `pausas` e `paralela` mostram "fonte indisponível" porque o servidor ainda devolve `pendente`.
+
+## Pedidos de forma para as rotas (para o servidor)
+
+1. `/api/2t/secoes`: acrescentar `lag_recebimento_totalizacao_min {p50,p90,p99}` em `por_uf` e `brasil`. O contrato cita a totalização do município na amostra, mas não fixa campo; sem ele o 4º passo da cadeia mostra "sem medida".
+2. `/api/2t/regioes` e `/api/2t/ufs`: `ref_1t.atraso_min` deve ser `null` enquanto `st === 0`. Os valores gigantes que vi no ensaio vêm de o banco ser de 04/10 contra o relógio de 25/10.
+3. Os nomes das candidaturas de governador vêm de `estaduais`; `paralela` só traz números de urna. Está funcionando, só registro a dependência.
+
+## README (fora da minha área)
+
+Falta documentar no README, seção Teclado: as dez teclas `Shift+letra`, `3` indo para `gov-2t` no 2º turno, `m` na evolução, o `playlist-2t.json` e os parâmetros do mock (`turno`, `t0`, `falha`, `sem1t`, `congelar`).
+
+## Arquivos
+
+Novos:
+- `src/ui/data/doist.ts`
+- `src/ui/data/categorias.ts`
+- `src/ui/data/mock2t.ts`
+- `src/ui/data/mock-hash.ts`
+- `src/ui/styles/doist.css`
+- `src/ui/views/{regioes,ufs,atraso,abstencao,secoes,pausas,gov2t,paralela,alertas,evolucao}.ts`
+- `src/ui/views/{doist-ui,doist-util,meta-2t,registrar-2t}.ts`
+- `public/playlist-2t.json`
+- `tests/ui/doist.test.ts`
+
+Alterados: `main.ts`, `dados.ts`, `mock.ts`, `types.ts`, `api.ts`, `rotation.ts`, `navegacao.ts`, `keyboard.ts`, `search.ts`, `ticker.ts`, `hud.ts`, `foto.ts`, `paleta.ts`, `espera.ts`, `index.ts`, `presidente.ts`, `acumulado.ts`, `lotes.ts`, `movimento.ts`, `src/director/main.ts` e `director.css`.
+
+Os scripts de QA estão em `qa/2t.ts`, `qa/2t-nav.ts` e `qa/2t-real.ts`; a pasta `qa/` é ignorada pelo git.</result>
+<usage><subagent_tokens>685064</subagent_tokens><tool_uses>135</tool_uses><duration_ms>2540467</duration_ms></usage>
+</task-notification>
+
+---
+
+Goal check-in: «Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos a dinâmica da apuiração e procurar entender o que está sendo lerdo demais, o que está chegando por último e comparar com o horário do encerramento vs horário de envio e que também leve em consideração os resultados apurados da nossa apuração paralela. A ideia é continuarmos mantendo isso online e vamos transmitir por vídeo a nossa apuração. Temos apuração também em 6 estados do 2o turno, o que é muito relevante também para irmos mostrando o que está rolando nesses estados, mas o principal é o acompanhamento da apuração, precisamos de vários indicadores importantes tendo em consideração os pontos que falamos, e também acompanhar a abstenção que está sendo medida nos estados sei lá, pense bem no que podemos auditar, e ter um sistema que acompanha a nacional e as estaduais, que apura as pausas, se houver, e alertas se houver diferença o totalizado pelo TSE e o que alguém mandou pelo totalização paralela, gerando alertas sempre que tivermos algo assim... entendeu tudo?» is still active, and evaluation has been deferred for 41 min because background work is still running:
+- a49611cf74c30b6f0 · subagent · Motor de pausas, seções e paralela
+- a308cefa6b2292e5a · subagent · Indicadores: regiões, UFs, abstenção
+- bqcq8geqx · shell · REDACTED… [+89 chars]
+- bmt7wbqib · shell · REDACTED… [+89 chars]
+- bml2e3pwk · monitor · QA output: overflow check per screen and time
+Check on their progress (e.g. read their output). If they are progressing, say so briefly and keep waiting; if they are stuck or no longer needed, fix or stop them and continue toward the goal.
+
+---
+
+<task-notification>
+<task-id>afb909c429865069a</task-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Telão: telas novas do 2º turno" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Esse aviso é só o monitor de QA em segundo plano sendo encerrado. Ele já tinha entregado o resultado (nenhum estouro nem erro em nenhuma tela), então não muda nada no relatório.
+
+O trabalho está concluído e nada ficou pendente da minha parte. O servidor de ensaio que subi na porta 4180 já foi parado.</result>
+<usage><subagent_tokens>684188</subagent_tokens><tool_uses>135</tool_uses><duration_ms>2658811</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a308cefa6b2292e5a</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Indicadores: regiões, UFs, abstenção" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Six indicator items are done: the five `/api/2t/*` routes plus the 2º turno additions to `/api/config` and `/api/estado`. Typecheck and lint have zero findings and `bun test` passes 498 of 498. The real blocker is elsewhere: `data/referencia_1t.json` has timestamp errors in 8 UFs (AC, AM, RO, RR, MT, MS, PE and ZZ). Until it is regenerated, every comparison with the 1º turno is wrong for those UFs, and through them for NE, CO, N and Brasil. The fix is a diff in `scripts/referencia-1t.ts` (orchestrator's file), at the end of this report.
+
+## Rotas
+- **`/api/2t/regioes`**: soma dos arquivos de UF por região e Brasil. Regiões e Brasil somam exatamente, campo a campo. `pvapn` é recalculado sobre o `vv` de cada região.
+- **`/api/2t/ufs`**: 27 UFs + ZZ, mais lentas primeiro. Traz `munnr/munpt/munf`, os 3 maiores municípios abertos e `parada`. `parada` só acende se a UF ficou sem versão nova por mais que o limiar **e** outras UFs totalizaram dentro dessa mesma janela. Assim, a pausa geral de 19:32–20:02 não marca as 28 UFs.
+- **`/api/2t/abstencao`**: municípios fechados no 2º turno contra os mesmos municípios na régua, mais os destaques pelos limiares do contrato.
+- **`/api/2t/estaduais`**: as 6 UFs, com viradas (reaproveita `viradasDe`), `campo` e régua do governador.
+- **`/api/2t/evolucao`**: uma varredura única por UF. Passo mínimo de 30 s. O passo cresce para caber em 12 mil células: no nível `uf`, uma noite de 10 h vai para 90 s, cerca de 400 KB.
+- **`/api/config`**: com 6258/6260, devolve `ufs_governador_2t` e `regioes`. Esses dois campos só aparecem no 2º turno, porque o esquema estrito do 1º turno quebraria.
+- **`/api/estado`**: sai `turno: 2` também quando `APURACAO_ELEICOES` contém 6258 ou 6260, mesmo antes de o banco existir.
+- **`nacional-serie.ts`**: a grade nacional começava fixa em 04/10. Agora começa às 17:00 de 25/10 para 6258/6260.
+
+**Pedido do telão:** feito. `atraso_min` e `pst_mesmo_relogio` vêm `null` quando `st = 0` e quando `at` cai fora do dia da eleição. Defini essa janela como de 00:00 do dia da eleição até 24:00 do dia seguinte. Há testes para os dois casos.
+
+**Relógio dos arquivos:** toda leitura de `totalizado_em` passa por `corrigirTotalizadoEm`, mas a regra simples falha em três casos reais do 1º turno:
+- **Versão regerada nas UFs com fuso:** sem nova totalização, a correção de fuso deixa de valer e o carimbo cai duas horas antes.
+- **PE:** ficou uma hora adiantado entre 18:09 e 20:15.
+- **Exterior:** veio com carimbo de 05/10 09:19 em todas as versões.
+
+`RelogioArquivo`, em `indicadores/base.ts`, resolve os três:
+- contagens iguais às da versão anterior herdam o instante dela;
+- cada carimbo é corrigido uma vez, na primeira versão em que aparece;
+- o instante nunca passa da geração do arquivo nem volta no tempo.
+
+## Validação contra 04/10 (banco real, só leitura)
+- **Soma das regiões = soma das 28 UFs** às 21:30Z, 22:30Z, 23:30Z e 00:30Z.
+- **Soma das UFs contra o arquivo nacional às 22:30Z:** 411.267 seções contra 323.539 do arquivo nacional. O arquivo nacional estava parado desde 22:14; o `-ab` nacional marcava 419.862.
+- **Abstenção:** 2.465 municípios fechados às 22:30Z (19,51% do eleitorado). O delta contra `referencia.municipios` é 0 em todas as UFs. No final, 5.757 municípios e pa de 21,08%, igual à régua em todas as UFs.
+- **Pausa geral:** 22:45Z e 23:00Z dão velocidade 0, ETA `null`, `atualizado_em` 22:32:07Z e nenhuma UF parada.
+- **Régua atual:** o atraso coincide com a idade da última versão, exceto em PE, errado em 54,5 min às 21:30Z e 46,4 min às 22:30Z. Na evolução, a diferença média de % de seções em PE é de 10,3 pontos.
+- **Régua refeita com o diff do final deste relatório:** |atraso − idade da última versão| fica em no máximo 0,05 min nas 28 UFs às 21:30Z e às 22:30Z. Na evolução, a diferença média fica em 0,012 ponto no Brasil e 0,011 em PE.
+- **Spearman pedido (atraso × p99):** não sai alto, porque comparando o 1º turno com ele mesmo o atraso é só a idade da última versão: ρ = −0,46 às 22:30Z. A ordem "mais lentas primeiro" (pst crescente) é que acompanha o p99: ρ = −0,94 às 22:30Z e às 23:30Z.
+- **Desempenho no banco de 18 GB, sem cache:** regiões ~25 ms, ufs e abstenção ~125 ms, evolução ~35 ms. Todas as leituras têm cache de 3 a 4 s, e a idade e o ritmo seguem o relógio mesmo com cache.
+
+## Testes
+- **`tests/api-2t-indicadores.test.ts`:** banco zerado, parcial com virada nacional e viradas no AC e no DF, AC em hora local inclusive na versão regerada, RJ parado, pausa geral e final. Cobre régua presente, ausente e fora do dia.
+- **`tests/api-2t-indicadores-unidades.test.ts`:** cobre `RelogioArquivo`, o saneamento das curvas, o atraso, a grade e o turno.
+- **Fixtures em `tests/fixtures/2t/`:** arquivos reais zerados da varredura de 21/10. O cm do 6258 tem os mesmos municípios, nomes e zonas do 6257 (conferi), então reaproveitei a fixture existente.
+- **`semear2t()` e helpers:** acrescentados em `tests/server-helpers.ts`, sem mudar o `semear()` existente.
+- **Contratos zod:** em `tests/api-schemas-2t.ts`.
+- **Prova de que o teste pega o problema:** tirei as três defesas de `RelogioArquivo` e o teste do arquivo regerado falhou.
+
+## Limites
+- **Campos que podem vir `null`:**
+  - `pa_2t`, `pa_1t_mesmos` e `delta_pp` quando não há município fechado;
+  - `pa_corrente` e `pa_final_1t` sem dados;
+  - `idade_s` e `ultima_versao_em` sem versão;
+  - `atraso_min` também quando o 1º turno nunca chegou ao pst atual.
+
+  `margem_pp` é 0 quando não há líder.
+- **Campo a mais:** `UfLinha` traz também `est`.
+- **Régua atual tratada em memória:** pontos adiantados (AC e as outras UFs com fuso) são descartados. A curva do exterior, que cai inteira num minuto, é tratada como ausente: ZZ fica com régua `null` e sai das curvas agregadas. O erro de PE não dá para corrigir no servidor, porque o arquivo da régua não tem a hora de geração.
+- **Marcos p50–p100:** recalculados das curvas saneadas.
+- **Municípios:** vêm só dos arquivos de município. Pelo intervalo do coletor, um município pode aparecer fechado até 5 min depois do `-ab` da UF.
+
+## Mudanças necessárias em arquivos de outros pacotes
+1. **`scripts/referencia-1t.ts` (orquestrador): urgente.** Rodei uma cópia com este diff: termina em 22,5 s e as curvas e os marcos saem idênticos aos que validei. Mudam os marcos de AC (p50 de 28,1 para 78,6), MS, MT, RO, RR, PE (p50 de 179,5 para 127,6) e ZZ (p100 de 979,8 para 354,9), e o `fechou_min` de 93 municípios (92 do exterior e 1 de PE). Os números de abstenção não mudam. A função `minutosBrt` fica sem uso e deve ser removida.
+   ```ts
+   import { RelogioArquivo } from "../src/server/indicadores/base.ts";
+   // SnapRow ganha capturado_em: string; tv: number | null
+   // SQL_SNAPS e a consulta de municípios: + s.capturado_em AS capturado_em, t.tv AS tv
+   // construirSerie: const relogio = new RelogioArquivo(uf); pular versão sem totalizado_em; então
+   const t = r1((relogio.instante(`${r.st}|${r.tv}|${r.comparecimento}|${r.abstencao}`, r.totalizado_em, r.gerado_em, r.capturado_em) - BASE_MS) / 60000);
+   // municípios: um RelogioArquivo por arquivo (acc.relogio), mesma chamada no lugar de minutosBrt
+   ```
+2. **Telão:** `pst_mesmo_relogio` passou a poder vir `null`. Os demais campos que podem vir `null` estão na lista de Limites.
+3. **`README.md`:** falta acrescentar as rotas `/api/2t/*` e os campos novos do `/api/config` à tabela de API.
+
+Os arquivos que criei e alterei estão todos em `/Users/leonardodias/arvor/PNAD/apuracao`:
+- `src/server/api-2t-indicadores.ts`
+- `src/server/indicadores/` (base, linha-tempo, regua, agregados, regioes, ufs, municipios, abstencao, estaduais, evolucao)
+- `src/server/api-config.ts`
+- `src/server/nacional-serie.ts`
+- `tests/api-2t-indicadores.test.ts`
+- `tests/api-2t-indicadores-unidades.test.ts`
+- `tests/api-schemas-2t.ts`
+- `tests/server-helpers.ts`
+- `tests/fixtures/2t/`</result>
+<usage><subagent_tokens>590420</subagent_tokens><tool_uses>126</tool_uses><duration_ms>2828537</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a308cefa6b2292e5a</task-id>
+<tool-use-id>toolu_01W2sMaL35RERLuxroxsMhrJ</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Indicadores: regiões, UFs, abstenção" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>`data/referencia_1t.json` is regenerated with the clock fix: AC, PE and ZZ milestones now match the report and abstention is unchanged. The 1º turno no longer disagrees with itself in any UF. Typecheck and lint are at zero and all 498 tests pass, mine included.
+
+**Milestones before → after (p50 / p90 / p99 / p100, minutes after 17:00):**
+
+| UF | Antes | Depois |
+|---|---|---|
+| AC | 28,1 / 28,1 / 114,4 / 114,4 | 78,6 / 122 / 191,1 / 234,4 |
+| PE | 179,5 / 223,7 / 246,5 / 339,3 | 127,6 / 223,7 / 246,5 / 339,3 |
+| ZZ | 979,8 / 979,8 / 979,8 / 979,8 | 21,7 / 250,3 / 354,9 / 354,9 |
+| MS | 72,1 / 91,9 / 91,9 / 182,6 | 72,1 / 105,1 / 149,9 / 242,6 |
+| MT | 86,5 / 105 / 188,9 / 201,5 | 86,5 / 146 / 230,3 / 261,5 |
+| RO | 81,7 / 90,7 / 143,2 / 169,7 | 81,7 / 128,2 / 189,1 / 229,7 |
+| RR | 88,5 / 88,5 / 143,4 / 185,3 | 102,1 / 134,5 / 188,7 / 245,3 |
+| AM, governador | 91,9 / 196,9 / 286,3 / 478,7 | 96,9 / 196,9 / 286,3 / 478,7 |
+
+- **Exterior (ZZ), first section:** 979,8 → 20,3.
+- **Brasil:** milestones and curve unchanged (p50 126,6, p100 598,7).
+- **Municipal closing time:** changed in 93 municipalities (92 abroad, 1 in PE).
+- **Abstention:** unchanged everywhere: by UF, by municipality (te, comparecimento, abstenção, pa), the final governor figures and the section lag.
+- **Curves:** identical to the version I validated earlier. The in-memory cleanup in the server now changes no curve.
+- **1º turno against itself, regenerated reference:**
+  - |atraso − idade da última versão|: at most 0,05 min across the 28 UFs at 21:30Z and 22:30Z; 0,95 at 23:30Z.
+  - At 00:30Z, PR shows 1,07 min. That is the one-decimal minute rounding.
+  - PE is off by 0,01 pp on average, against 10,3 pp before.
+
+In `scripts/referencia-1t.ts` the time now comes from `RelogioArquivo`. `minutosBrt`, `minutos` and the two old counters in `ignorados` are removed. `meta.convencoes` has `fuso_totalizado_em` updated and a new `relogio` entry describing the three rules: inherited time for regenerated versions, one correction per stamp, never after generation.
+
+Files are in /Users/leonardodias/arvor/PNAD/apuracao:
+- data/referencia_1t.json
+- scripts/referencia-1t.ts</result>
+<usage><subagent_tokens>603412</subagent_tokens><tool_uses>7</tool_uses><duration_ms>122576</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a49611cf74c30b6f0</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Motor de pausas, seções e paralela" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O motor e os alertas do 2º turno estão prontos e ligados no coletor. Typecheck e lint estão em zero e os 498 testes passam, inclusive os dos outros pacotes. O pedido do telão (`lag_recebimento_totalizacao_min`) já está em `/api/2t/secoes`.
+
+## O que ficou pronto
+
+**1. Pausas** (`src/collector/pausas.ts`)
+- Avalia a cada 30 s e, a cada versão nova de `-u` de presidente, fecha a pausa daquele arquivo na hora. Grava a tabela `pausa`, que volta do banco depois de reinício.
+- Eventos: `pausa_nacional_inicio/fim`, `pausa_uf_inicio/fim` e `soma_ufs_adiante`, todos com `detalhe` numérico. Arquivo que o coletor não leu nos últimos 180 s não entra em pausa: cegueira nossa não vira pausa do TSE.
+- Rodei o detector sobre o 1º turno real (só leitura) e ele reproduz a régua: pausa geral de 19:32:18 a 20:02:12 (29,9 min, a régua diz 29,6) e o travamento de 18:00:33 a 18:09:11.
+- A regra literal ("parado enquanto outro nível avança") gerava dezenas de pausas de UF falsas em cada travamento geral do 1º turno. Por isso ajustei três pontos, todos com teste:
+  - "país avança" passou a ser: em toda a janela do limiar as UFs vinham publicando (idade mediana da última versão até metade do limiar, no mínimo 3 min) e a soma andou;
+  - a detecção espera 1 min além do limiar, porque o CDN entregou versões com até 2 min de atraso;
+  - versão que já chega velha não encerra a pausa.
+- O que acrescentei além do contrato:
+  - `pausa_geral_inicio/fim`: nenhum arquivo do TSE publica. A regra do contrato não pega esse caso, que é justamente o de 19:32 no 1º turno.
+  - `pausa_nacional_longa` e `pausa_geral_longa` (error ao passar de 15 min).
+- `/api/2t/pausas` segue o contrato à risca, sem chave nova: as pausas gerais entram no bloco `nacional`, unidas às nacionais, porque nelas o arquivo nacional também ficou sem versão.
+
+**2. Régua do 1º turno** (`regua.ts`, `viradas.ts`)
+- `uf_atrasada_1t` por patamar de 20 min, `abstencao_atipica_mun` e `abstencao_atipica_uf` (uma vez por UF e sentido). O estado volta da tabela `evento` no reinício.
+- `virada` e `uf_fechou` agora são gravados pelo coletor, com `totalizado_em` corrigido do fuso. Em `api-anomalias.ts` a derivação ficou só como reserva: some quando o mesmo snapshot (virada) ou a mesma UF (fechamento) já tem linha gravada.
+- `textos.ts` tem frases sem travessão e as categorias `pausa`, `divergencia`, `abstencao` e `paralela`. O rótulo obrigatório de cada tipo vai em `detalhe.rotulo`.
+- O SSE continua entregando warn e error e agora manda também `categoria` e `uf`.
+
+**3. Amostra de seções** (`src/secoes2t/`)
+- Desenho: alocação proporcional por município com restos sorteados, o que dá a mesma chance a toda seção (há teste de equiprobabilidade com 4.000 sorteios). Semente fixa; seções agregadas ficam fora.
+- Balde de fichas próprio, parado durante a pausa global do coletor principal; seções da paralela furam a fila.
+- O decodificador do BU foi movido para `src/secoes2t/bu-decode.ts`; `scripts/bu-decode.ts` reexporta e os scripts antigos seguem funcionando.
+- Evento `secao_tardia` para encerramento depois das 18:00.
+- A totalização do município é a primeira versão do arquivo `mu` com `totalizado_em` corrigido igual ou posterior ao `dr_hr`, junto com o totalizado_em do município no `-ab` da UF (lido a cada minuto); vale o mais cedo. O exterior fica fora dos tempos (fuso do país desconhecido).
+
+**4. Totalização paralela** (`src/paralela/`)
+- Porte fiel das regras de `totalizacao-conferir-tse.py`: mesmas situações e ausente conta como zero.
+- Leitura incremental por id, com janela de 2.000 ids para commits fora de ordem.
+- Eventos `divergencia_paralela` (error, com os campos) e `paralela_conferida` (info).
+- Com o Supabase fora do ar, a rota devolve `erro` preenchido e os últimos dados. O rótulo fica em `placar_bus.rotulo`.
+- Um ciclo contra o Supabase real (só leitura) faz 6 requisições em cerca de 3,8 s.
+
+**5. Operação**
+- `scripts/start-collect.sh 2t` e `scripts/preflight.sh 2t`. Rodei o preflight: régua com 28 UFs, `-cs.json` do 3221 com 200, Supabase lido.
+- Teste ponta a ponta num banco temporário: 7.539 seções na amostra e desligamento limpo por SIGTERM em 0,5 s. Se a instalação do motor falhar, o coletor principal segue rodando.
+
+## Variáveis novas
+`APURACAO_PAUSA_MIN` (5), `APURACAO_PAUSA_UF_MIN` (10), `APURACAO_SECOES` (padrão 1 só no 2º turno), `_AMOSTRA_UF` (150), `_AMOSTRA_ESTADUAL` (600), `_INTERVALO_S` (900), `_INTERVALO_PARALELA_S` (300), `_RPS` (15), `_CONCORRENCIA` (4), `_SEMENTE`, `_INICIO` (16:55 de Brasília), `_DIR_CS`, `_TIMEOUT_MS`, `APURACAO_PARALELA` (padrão 1 só no 2º turno), `_INTERVALO_S` (60), `_URL`, `_CHAVE`, `_JANELA` (2000), `APURACAO_REFERENCIA_1T`.
+
+## Tabelas novas
+`pausa` (com `detectado_em` e nível `geral`), `secao_2t` (mais `hash`, `bu_nome`, `erro`), `paralela_bu`, `paralela_conferencia`. Também guardo na `meta` as chaves `turno2_config`, `turno2_estado` e `paralela_estado`.
+
+## Limites medidos (decisões para você)
+- **Concorrência 4 não chega a 15 req/s.** Os 404 do arquivo-urna levam cerca de 1 s e os 200 de 0,55 a 0,85 s. Com 4, a amostra faz uns 4 req/s em 404 e 6,8 req/s com aux mais BU. Uma rodada das 7.539 seções leva então uns 30 min em vez de 15; os lags não mudam, porque saem dos carimbos do TSE. Com `APURACAO_SECOES_CONCORRENCIA=12` medi 12,6 req/s. Mantive o 4 que você pediu; para cumprir os 900 s é preciso subir para 12.
+- **Limiar de 5 min gera alarme falso.** No replay do 1º turno saíram 5 pausas nacionais, 4 delas de 4,8 a 6,3 min, que eram só a cadência do arquivo nacional. Com `APURACAO_PAUSA_MIN=7` sobra apenas a parada real de 25,2 min (18:48 a 19:14). Mantive o 5 do contrato; recomendo 7 na noite.
+- **`APURACAO_SECOES=0` não zera o tráfego no arquivo-urna.** Desliga a amostra, mas as seções da paralela continuam sendo buscadas, porque a conferência depende delas.
+
+## Mudanças necessárias em arquivos de outros pacotes
+1. `tests/api-schemas.ts`, `AnomaliasSchema`: o enum de `categoria` precisa ganhar `"pausa", "divergencia", "abstencao", "paralela"`. Hoje passa porque o banco de teste não tem eventos novos.
+2. `src/turno2/referencia.ts` e `scripts/referencia-1t.ts`: falta um agregado nacional em `secoes_lag` (`br?: SecoesLagUf`). Sem ele, `/api/2t/secoes` devolve `brasil.ref_1t: null`; a leitura já está pronta para quando o campo existir.
+3. Telão: mapear os tipos `pausa_geral_*`, `pausa_nacional_longa` e `pausa_geral_longa` (categoria `pausa`, frases já prontas em `textos.ts`). O evento `secoes2t_pausa` é operacional e fica fora do ar.
+4. `README.md`: documentar `start-collect.sh 2t`, `preflight.sh 2t` e as variáveis acima.
+
+Arquivos principais, todos em `/Users/leonardodias/arvor/PNAD/apuracao/`:
+- `src/collector/pausas.ts`, `regua.ts`, `viradas.ts`, `turno2.ts`, `turno2-config.ts`
+- `src/secoes2t/coletor.ts`, `amostra.ts`, `boletim.ts`, `resumo.ts`
+- `src/paralela/ponte.ts`, `conferir.ts`, `supabase.ts`, `resumo.ts`
+- `src/server/api-2t-auditoria.ts`
+- `tests/helpers-2t.ts` (contratos zod das três rotas)
+- `tests/pausas*.test.ts`, `tests/secoes2t*.test.ts`, `tests/paralela.test.ts`
+- `tests/fixtures/2t-motor/`</result>
+<usage><subagent_tokens>720406</subagent_tokens><tool_uses>146</tool_uses><duration_ms>3164494</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>acdc63dacaaaec8bd</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Ensaio ponta a ponta do 2º turno" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>As três tarefas estão feitas e `bun run check` está em zero: tipos, lint e 498 testes passando.
+
+## O que mudou
+- **`scripts/referencia-1t.ts`**: grupo nacional acumulado junto com as UFs, excluindo ZZ, e emitido como `secoes_lag.br`. Os campos são os mesmos de uma UF, com 497.877 seções e lag p50/p90/p99 de 91, 156,9 e 235,1 min.
+- **`src/turno2/referencia.ts`**: `br?: SecoesLagUf` adicionado ao tipo.
+- **`data/referencia_1t.json`**: regenerado em 27 s. Comparei com a cópia anterior em `json` e só mudaram `meta.gerado_em` e o bloco novo, `secoes_lag.br`.
+- **`scripts/semear-ensaio.ts`**: nova opção `--turno 2`, que delega a `scripts/semear-ensaio-2t.ts`. Funcionam `--passos`, `--mais` e `--db`. O gerador recusa escrever em `apuracao.sqlite` e em `apuracao-2t.sqlite`, e eu confirmei que os dois não foram tocados.
+- **`scripts/semear-ensaio-2t.ts`** (novo): gera `data/ensaio-2t.sqlite` em 6 s, com 15.213 snapshots, 50 passos de 6 min a partir de 17:00 de 25/10. Cobre o presidente em br e nas 28 UFs (27 mais o exterior), os governadores em AC, AM, DF, ES, RN e TO (nomes "ENSAIO GOV ..."), os 645 municípios de SP, Rio Branco e o Rio.
+  - O duelo é Flávio 22 × Lula 13. Há viradas em MG, GO e PR (alertas do 1T) e, nos governadores, em AC e DF.
+  - AM, PA e BA são lentas. O RJ fica parado 24 min (passos 10 a 12).
+  - O passo 25 é a pausa geral de 12 min.
+  - A abstenção de cada município é a da régua ±6 pp.
+- **`tests/server-helpers.ts`**: `VersaoU2t` ganhou os campos opcionais `ts`, `te` e `cdabr`, para clonar municípios.
+
+Os arquivos de `qa/` (`2t-rotas.ts`, `2t-ensaio.ts`, `2t-publico.ts`, `proxy-at.ts`) ficam fora do git e do lint.
+
+## Rotas
+As 11 rotas passaram nos contratos zod nos três instantes: regioes, ufs, abstencao, estaduais, evolucao, pausas, secoes, paralela, `/api/estado`, `/api/config` e `/api/anomalias`. Os dois últimos não aceitam `at`, então foram checados uma vez.
+- **abstencao**: sem municípios fechados às 17:30; 200 às 19:10; 647 às 22:00, com 20 destaques de subida e 20 de queda.
+- **ufs**: RJ aparece com `parada: true` às 18:16.
+- **pausas**: vazio, com `historico` 0 e nenhuma UF em pausa, dentro do contrato. O detector de pausas depende do coletor, que não rodou.
+- **secoes**: vazio, 0 recebidas, pelo mesmo motivo.
+- **paralela**: devolve `erro: "totalização paralela ainda não consultada"` sem quebrar.
+
+## Telas por instante
+Teste com `#v=&lt;id&gt;&amp;auto=0&amp;replay=&lt;instante&gt;,1`, viewport 1920×1080.
+
+| tela | 17:30 | 19:10 | 22:00 |
+|---|---|---|---|
+| regioes, ufs, atraso, abstencao | ok | ok | ok |
+| gov-2t, alertas, evolucao, pres | ok | ok | ok |
+| secoes | ok, sem amostra | ok, sem amostra | ok, sem amostra |
+| pausas | ok, sem pausas | ok, sem pausas | ok, sem pausas |
+| paralela | ok, "fonte com erro" | ok, "fonte com erro" | ok, "fonte com erro" |
+
+Nas 33 combinações não houve erro de console, requisição fora de 127.0.0.1 nem `scrollHeight` acima de 1080. A razão do "fonte indisponível" na paralela está escrita na tela: a paralela não foi consultada. Prints em `qa/2t-real-&lt;tela&gt;-&lt;hhmm&gt;.png`.
+
+## Exportação pública
+O servidor usa o relógio do sistema, hoje 22/10, antes de qualquer dado do ensaio. Para o exportador ver o ensaio, usei um proxy em 4181 que acrescenta `at=22:00` de 25/10.
+- Manifesto: 13 arquivos, 121 KiB, `pendentes` vazio. A paralela não entrou como pendente porque a resposta veio com 200 e campo `erro`.
+- `docs/apuracao_2t_ao_vivo.html` abriu com esses dados sem erro de console nem resposta HTTP 400 ou mais.
+- Servidores derrubados. Em `docs/assets/apuracao_2t/` removi só os 14 arquivos que eu gerei.
+- Essa pasta inteira está **não rastreada** no git, então `git checkout` não restaura nada ali. Preservei `ap2t.css`, `ap2t.js` e `exemplo/`, que são trabalho de outra pessoa.
+
+## Defeitos corrigidos
+Nenhum defeito de UI, servidor ou script apareceu. O único ajuste foi o `secoes_lag.br` da tarefa 1.
+
+## Pendências
+- **Pausas e seções no ensaio.** Mostrar pausas de UF e pausa geral, e seções, exige o coletor rodando sobre o banco de ensaio. Sem ele, só a `parada` do RJ aparece na tela de UFs, e as telas `pausas` e `secoes` ficam vazias. Isso é decisão de desenho, não defeito.
+- **Fotos de candidatos reais com nomes ENSAIO.** Nos governadores, as fotos vêm do `sqcand` das fixtures. Em RN e TO aparecem rostos reais sob "Ensaio Gov ...". Trocar por avatares exigiria ocultar a foto no ensaio, em `src/ui/views/gov-2t`.
+- **AM empatado.** O AM tem `lean` 0,5 exato e fica branco no mapa do `pres`. Se quiser cor ali, basta mudar para 0,47 em `scripts/semear-ensaio-2t.ts`.
+- **Detector do QA.** `qa/2t-ensaio.ts` só vê avisos `.d2-aviso`. O aviso da paralela usa outro elemento (`views/paralela.ts:100`) e foi conferido pelo print.</result>
+<usage><subagent_tokens>285934</subagent_tokens><tool_uses>44</tool_uses><duration_ms>574435</duration_ms></usage>
+</task-notification>
