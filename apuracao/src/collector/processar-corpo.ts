@@ -31,6 +31,18 @@ function drift(c: CtxCorpo, json: unknown, snapRef: string | null): void {
   }
 }
 
+/**
+ * Cópia mais velha que a versão atual do arquivo (CDN entregando arquivo antigo). A ordem é a
+ * hora de geração do TSE (dg/hg); o idg só desempata versões sem hora ou com a mesma hora.
+ * O idg não acompanha a geração: no 1º turno, versões de presidente br/UF geradas depois da atual
+ * chegaram com idg menor e eram descartadas como regressivas (contagem e efeito no replay da noite
+ * em ../analysis/apuracao_2t_2026/demonstracao_1t.md).
+ */
+export function versaoRegressiva(nova: { idg: number | null; gerado_em: string | null }, atual: { idg: number | null; geradoEm: string | null }): boolean {
+  if (nova.gerado_em !== null && atual.geradoEm !== null && nova.gerado_em !== atual.geradoEm) return nova.gerado_em < atual.geradoEm;
+  return nova.idg !== null && atual.idg !== null && nova.idg < atual.idg;
+}
+
 export function processarCorpo(c: CtxCorpo): void {
   const { ctx, fs, r, grupo, saida } = c;
   const body = r.body;
@@ -47,9 +59,7 @@ export function processarCorpo(c: CtxCorpo): void {
     return;
   }
   const meta = metaDe(p.parsed.data);
-  const regressivo =
-    (meta.idg !== null && fs.idg !== null && meta.idg < fs.idg) ||
-    (meta.gerado_em !== null && fs.geradoEm !== null && meta.gerado_em < fs.geradoEm);
+  const regressivo = versaoRegressiva(meta, fs);
   const snapRef = ctx.lote.ref("s");
   grupo.push({
     k: "snapshot", ref: snapRef,

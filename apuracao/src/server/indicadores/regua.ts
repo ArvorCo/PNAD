@@ -11,7 +11,8 @@
 // 3. PE teve carimbo uma hora adiantado entre 18:09 e 20:15: a curva fica até 55 min atrasada
 //    nesse trecho e o arquivo da régua não tem a geração para corrigir aqui.
 import type { PontoCurva, Referencia1T } from "../../turno2/referencia.ts";
-import { atrasoVsReferencia, carregarReferencia, pstNoMinuto } from "../../turno2/referencia.ts";
+import { atrasoEmDegrau } from "../../collector/regua.ts";
+import { carregarReferencia, pstNoMinuto } from "../../turno2/referencia.ts";
 import { paOuNull } from "./base.ts";
 
 export interface MarcosRegua {
@@ -199,7 +200,7 @@ export function atrasoMin(curva: readonly PontoCurva[], st: number, ts: number, 
   if (curva.length === 0 || st <= 0 || ts <= 0) return null;
   const relogio = st >= ts && minFechou !== null ? minFechou : minAgora;
   const pst = st >= ts ? 100 : (100 * st) / ts;
-  return atrasoVsReferencia(curva, pst, relogio);
+  return atrasoEmDegrau(curva, pst, relogio);
 }
 
 /** pst do 1º turno no mesmo relógio (2 casas, truncado como o do 2º turno). */

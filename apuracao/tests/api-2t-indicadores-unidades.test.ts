@@ -6,6 +6,7 @@ import { liderMargem } from "../src/server/indicadores/agregados.ts";
 import { CorretorTotalizacao, RelogioArquivo, paDe, paOuNull, pstDe, t0De, turnoDe } from "../src/server/indicadores/base.ts";
 import { MAX_CELULAS, MAX_PONTOS, grade } from "../src/server/indicadores/evolucao.ts";
 import { agregarCurvas, atrasoMin, comparar, dentroDaJanela, marcosDe, sanearCurva } from "../src/server/indicadores/regua.ts";
+import { atrasoEmDegrau, minutoQueFechou, minutoQuePassou } from "../src/collector/regua.ts";
 import { gradeSoma, inicioGrade } from "../src/server/nacional-serie.ts";
 import { T0_1T_MS, T0_2T_MS, corrigirTotalizadoEm } from "../src/turno2/comum.ts";
 import type { PontoCurva } from "../src/turno2/referencia.ts";
@@ -113,24 +114,48 @@ describe("régua: saneamento, soma e marcos", () => {
     expect(s[2]?.[6]).toBe(20);
   });
 
-  test("atraso: antes da primeira seção, durante e depois do fechamento", () => {
+  test("atraso em degraus: antes da primeira seção, durante e depois do fechamento", () => {
     const c = [ponto(20, 10, 100), ponto(60, 50, 100), ponto(180, 100, 100)];
     expect(atrasoMin(c, 0, 100, 35, null)).toBeNull();
-    expect(atrasoMin(c, 30, 100, 50, null)).toBe(10);
-    expect(atrasoMin(c, 30, 100, 30, null)).toBe(-10);
+    // o 1º turno só passou de 30% no degrau dos 60 min: aos 50 o 2º turno está 10 min à frente
+    expect(atrasoMin(c, 30, 100, 50, null)).toBe(-10);
+    expect(atrasoMin(c, 30, 100, 75, null)).toBe(15);
+    // no mesmo degrau do 1º turno, na mesma hora: atraso zero ou negativo, nunca alarme
+    expect(atrasoMin(c, 10, 100, 60, null)).toBe(0);
+    // tudo totalizado: minuto do fechamento do 2º turno contra o do 1º (180), não o relógio
     expect(atrasoMin(c, 100, 100, 400, 150)).toBe(-30);
+    expect(atrasoMin(c, 100, 100, 900, 150)).toBe(-30);
     expect(atrasoMin([], 30, 100, 30, null)).toBeNull();
   });
 
   test("comparação só com seção totalizada e dentro do dia da eleição", () => {
     const c = [ponto(20, 10, 100), ponto(60, 50, 100), ponto(180, 100, 100)];
     expect(comparar(c, 0, 100, 35, null)).toEqual({ pst_mesmo_relogio: null, atraso_min: null });
-    expect(comparar(c, 30, 100, 50, null)).toEqual({ pst_mesmo_relogio: 10, atraso_min: 10 });
+    expect(comparar(c, 30, 100, 50, null)).toEqual({ pst_mesmo_relogio: 10, atraso_min: -10 });
     expect(comparar(c, 30, 100, -30_000, null)).toEqual({ pst_mesmo_relogio: null, atraso_min: null });
     expect(dentroDaJanela(-17 * 60)).toBe(true);
     expect(dentroDaJanela(-17 * 60 - 1)).toBe(false);
     expect(dentroDaJanela(31 * 60)).toBe(true);
     expect(dentroDaJanela(31 * 60 + 1)).toBe(false);
+  });
+});
+
+describe("degrau no ponto final (src/collector/regua.ts)", () => {
+  test("pst 100: vale o minuto em que o 1º turno fechou", () => {
+    const c = [ponto(20, 10, 100), ponto(60, 50, 100), ponto(180, 100, 100)];
+    expect(minutoQuePassou(c, 100)).toBeNull();
+    expect(minutoQueFechou(c)).toBe(180);
+    expect(atrasoEmDegrau(c, 100, 200)).toBe(20);
+    expect(atrasoEmDegrau(c.slice(0, 2), 100, 200)).toBeNull();
+  });
+
+  test("Brasil a uma seção do fim: o fechamento do 1º turno é o degrau seguinte", () => {
+    // 499.247 de 499.248 seções = 99,9998%, a menos da tolerância de 100; a régua grava 100,000
+    // já com uma seção faltando (como no 1º turno, 536,4 min) e fecha aos 598,7
+    const c = [ponto(300, 499_000, 499_248), ponto(536.4, 499_247, 499_248), ponto(598.7, 499_248, 499_248)];
+    const pst = (100 * 499_247) / 499_248;
+    expect(minutoQuePassou(c, pst)).toBeNull();
+    expect(atrasoEmDegrau(c, pst, 600)).toBe(1.3);
   });
 });
 

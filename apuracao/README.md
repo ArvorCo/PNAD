@@ -249,6 +249,10 @@ Amostra equiprovável por município (150 seções por UF, 600 nas seis UFs com 
 
 Playlist do 2º turno em `public/playlist-2t.json` (a do contrato é reserva). Ensaio sem banco: `#mock=1` já é 2º turno (`&turno=1` volta ao 1º), com `t0=<min após 17h>`, `falha=rota[:erro|pendente|fonte]`, `sem1t=1` e `congelar=1` (relógio parado, necessário para o auditor de contraste). Banco de ensaio: `bun run scripts/semear-ensaio.ts --turno 2` gera `data/ensaio-2t.sqlite`.
 
+### Demonstração com dados reais do 1º turno
+
+`bun run scripts/demonstrar-2t.ts` (cerca de 90 s, só leitura dos bancos do 1T) repassa as 104.683 leituras reais da noite de 04/10 pelo `processar()` do coletor com o motor ligado e grava `../analysis/apuracao_2t_2026/demonstracao_1t.{md,json}`: parada nacional de 18:48:59 a 19:14:08 detectada ao segundo, pausa geral de 19:32 a 20:02 e travamento das 18:00 como pausas gerais, 3 viradas (RR, TO, AM), 28 fechamentos no mesmo segundo do dossiê, zero alerta de atraso ou abstenção contra a própria noite (40 pela interpolação antiga; 28 quando a noite é atrasada em 30 min), e conferência de três BUs oficiais reais (SP, AC, exterior) contra cópias adulteradas: 3 iguais, 6 divergentes com os campos, 1 à espera do TSE. O replay revelou e corrigiu a regra de versão regressiva (o `idg` menor descartava 2.213 versões reais; agora vale a hora de geração), o atraso por interpolação (platô de 19:32) e a hora de fechamento no texto do telão. A régua data a curva pela publicação (`gerado_em`), por isso dispensa fuso.
+
 ### Página pública
 
 `scripts/exportar-publico.ts` grava `../docs/assets/apuracao_2t/*.json` + `manifest.json` (sem municípios do config, sem identificador pessoal, abaixo de 2 MB); `scripts/publicar-loop.sh` exporta e dá commit + push só dessa pasta a cada `INTERVALO_S` (300; `PUSH=0` só commita). `../docs/apuracao_2t_ao_vivo.html` lê os JSON, recarrega a cada 60 s, avisa dados com mais de 10 min e aceita `?fonte=exemplo`. Card em `img/og/apuracao_2t_ao_vivo.png`; depois do primeiro commit da página rode `python3 ../scripts/sitemap-build.py`.

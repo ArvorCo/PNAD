@@ -105,9 +105,10 @@ describe("parcial (17:25): virada, fuso, arquivo parado", () => {
     const r = RegioesSchema.parse((await get(`/api/2t/regioes?${em(1500)}`)).body);
     // curva sintética: 10% aos 20 min e 50% aos 60 min em todas as UFs (exterior degenerado fica fora)
     expect(r.brasil.ref_1t?.pst_mesmo_relogio).toBeCloseTo(10, 1);
-    const pst = (100 * 78_000) / 499_248;
-    expect(r.brasil.ref_1t?.atraso_min ?? Number.NaN).toBeCloseTo(25 - (20 + ((pst - 10) / 40) * 40), 0);
-    expect(r.regioes.find((x) => x.sigla === "SE")?.ref_1t?.atraso_min ?? Number.NaN).toBeCloseTo(25 - (20 + (((100 * 65_000) / 203_237 - 10) / 40) * 40), 0);
+    // degrau: o 1º turno passou de 15,62% (Brasil) e de 31,98% (Sudeste) só aos 60 min; às 17:25 o
+    // 2º turno está 35 min à frente
+    expect(r.brasil.ref_1t?.atraso_min).toBe(25 - 60);
+    expect(r.regioes.find((x) => x.sigla === "SE")?.ref_1t?.atraso_min).toBe(25 - 60);
   });
 
   test("UFs: fuso do AC corrigido, RJ parado, marcos saneados, municípios abertos", async () => {
@@ -120,7 +121,8 @@ describe("parcial (17:25): virada, fuso, arquivo parado", () => {
     expect(ac?.ref_1t).toMatchObject({ p50_min: 60, p90_min: 120, p99_min: 180, p100_min: 180, pa_final: 20 });
     const sp = uf("SP");
     expect(sp).toMatchObject({ st: 60_000, pst: 57.88, munnr: 400, munpt: 230, munf: 15, lider: F, parada: false, vel_10min_spm: 4_000 });
-    expect(sp?.ref_1t?.atraso_min ?? Number.NaN).toBeCloseTo(25 - (60 + ((100 * 60_000) / 103_656 - 50) / 40 * 60), 0);
+    // 57,88% só foi passado no degrau de 90% (120 min)
+    expect(sp?.ref_1t?.atraso_min).toBe(25 - 120);
     expect(sp?.pendentes_maiores.map((p) => p.nm)).toEqual(["São Paulo", "Guarulhos", "Campinas"]);
     expect(sp?.pendentes_maiores[0]).toMatchObject({ cd: "71072", te: 9_145_969, pst: 56.21 });
     const rj = uf("RJ");

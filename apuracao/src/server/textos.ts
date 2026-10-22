@@ -75,6 +75,23 @@ const txt = (d: Detalhe, ...k: string[]): string | null => {
   return null;
 };
 
+/** Folga entre a totalização impressa e a geração do arquivo além da qual o carimbo não é a hora do fechamento. */
+const FECHAMENTO_MAX_MS = 15 * 60_000;
+
+/**
+ * Hora do fechamento de UF: a totalização (já corrigida do fuso pelo coletor) quando fica entre
+ * 15 min antes da geração do arquivo e a própria geração; fora disso, a geração. No replay do
+ * 1º turno o exterior trouxe a totalização na hora da cidade (09:19 do dia seguinte num arquivo
+ * gerado às 22:54) e o AM um carimbo parado duas horas antes da versão final.
+ */
+function horaFechamento(d: Detalhe): string | null {
+  const t = txt(d, "totalizado_em");
+  const g = txt(d, "gerado_em");
+  if (t === null || g === null) return t ?? g;
+  const dif = Date.parse(g) - Date.parse(t);
+  return Number.isFinite(dif) && (dif < 0 || dif > FECHAMENTO_MAX_MS) ? g : t;
+}
+
 function campoContagem(d: Detalhe): string {
   const c = txt(d, "campo", "campos");
   if (c && CAMPOS_CONTAGEM[c]) return CAMPOS_CONTAGEM[c];
@@ -104,7 +121,7 @@ export function textoEvento(tipo: string, em: string, e: EscopoEvento, detalhe: 
       return `${onde} terminou a apuração às ${horaBrt(txt(d, "totalizado_em") ?? em)}`;
     case "fechou":
     case "uf_fechou":
-      return `${onde} fechou às ${horaBrt(txt(d, "totalizado_em") ?? em)}`;
+      return `${onde} fechou às ${horaBrt(horaFechamento(d) ?? em)}`;
     case "candidato_novo":
       return `Candidatura nova em ${onde}${cargo}`;
     case "candidato_sumiu":

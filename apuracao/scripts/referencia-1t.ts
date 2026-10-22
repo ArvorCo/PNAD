@@ -104,6 +104,10 @@ function hhmm(min: number | null): string | null {
  * 20:15 e o exterior com carimbo do dia seguinte (curva inteira num só minuto).
  */
 function instanteVersao(relogio: RelogioArquivo, r: SnapRow): number {
+  // Curva datada pela publicação (gerado_em, Brasília real em toda UF): é o que a noite do 2º turno
+  // observa, e dispensa a correção de fuso. Versões publicadas às 20:02 com carimbo 19:31 contam às 20:02.
+  const g = r.gerado_em ? Date.parse(r.gerado_em) : NaN;
+  if (Number.isFinite(g)) return g;
   return relogio.instante(`${r.st}|${r.tv}|${r.comparecimento}|${r.abstencao}`, r.totalizado_em, r.gerado_em, r.capturado_em);
 }
 function num(v: unknown): number | null {
@@ -599,7 +603,7 @@ function main(): void {
         fuso_totalizado_em:
           "totalizado_em de AC (+120 min), AM/RO/RR/MT/MS (+60 min) vem em hora local rotulada como Brasília; corrigido quando gerado_em - totalizado_em fica a até 10 min do deslocamento, decidido uma única vez por carimbo, na primeira versão que o traz",
         relogio:
-          "instante de cada versão pelo RelogioArquivo (src/server/indicadores/base.ts), em ordem de id: versão regerada com as mesmas contagens (st, tv, comparecimento, abstencao) herda o instante da anterior; contagens novas usam totalizado_em com correção única por carimbo; o instante nunca passa de gerado_em nem fica antes do instante da versão anterior",
+          "instante de cada versão = gerado_em (publicação, Brasília real); sem gerado_em, RelogioArquivo (src/server/indicadores/base.ts), em ordem de id: versão regerada com as mesmas contagens (st, tv, comparecimento, abstencao) herda o instante da anterior; contagens novas usam totalizado_em com correção única por carimbo; o instante nunca passa de gerado_em nem fica antes do instante da versão anterior",
         tempo: "minutos após 17:00 de Brasília em 04/10/2026 (UTC-3); negativos = antes das 17:00",
         curva: "[min, pst, st, ts, comparecimento, abstencao, pa]; um ponto por estado distinto (pst, comparecimento, abstencao)",
         marcos: "primeiro ponto com pst >= 50/90/99; p100 = st >= ts; primeira_secao_min = primeiro st > 0",

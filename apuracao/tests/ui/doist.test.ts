@@ -616,7 +616,7 @@ describe("parâmetros do ensaio no hash", () => {
 
 describe("mock do 2º turno", () => {
   const mockEm = (min: number, opcoes: Parameters<typeof criarMock>[0] extends infer O ? Partial<O> : never = {}) =>
-    criarMock({ speed: 1, turno: 2, inicioMin: min, ...opcoes });
+    criarMock({ speed: 1, turno: 2, inicioMin: min, agoraReal: () => 0, ...opcoes });
 
   test("config de 2º turno, duelo de duas candidaturas e governador só nas seis UFs", async () => {
     const m = mockEm(60);

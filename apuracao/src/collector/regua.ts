@@ -6,7 +6,8 @@ import type { Database } from "bun:sqlite";
 import type { EventoNovo } from "../db/escrita.ts";
 import { minutosDesde17h, T0_2T_MS } from "../turno2/comum.ts";
 import type { Referencia1T } from "../turno2/referencia.ts";
-import { atrasoVsReferencia, pstNoMinuto } from "../turno2/referencia.ts";
+import { pstNoMinuto } from "../turno2/referencia.ts";
+import type { PontoCurva } from "../turno2/referencia.ts";
 import { isoDe } from "./relogio.ts";
 
 export const ROTULO_REGUA = "pede explicação, não indica irregularidade";
@@ -52,6 +53,39 @@ export interface MunAb {
 }
 
 const r2 = (x: number): number => Math.round(x * 100) / 100;
+
+/** Meia unidade da 3ª casa decimal em que a régua grava o pst: abaixo de uma seção em qualquer UF. */
+const TOLERANCIA_PST = 0.0005;
+
+/**
+ * Minuto em que a curva do 1º turno passou de `pst`, lida em degraus (sem interpolar entre
+ * versões); null se nunca passou. Ler a curva em degraus evita o alarme no platô: entre 19:32 e
+ * 20:02 de 04/10 nenhuma versão nova saiu, e a interpolação linear fazia a UF que estava no mesmo
+ * pst do 1º turno, no mesmo relógio, aparecer 20 minutos atrás dele.
+ */
+export function minutoQuePassou(curva: readonly PontoCurva[], pst: number): number | null {
+  for (const p of curva) if (p[1] > pst + TOLERANCIA_PST) return p[0];
+  return null;
+}
+
+/** Minuto em que a curva do 1º turno totalizou todas as seções (st >= ts); null se não fechou. */
+export function minutoQueFechou(curva: readonly PontoCurva[]): number | null {
+  for (const p of curva) if (p[3] > 0 && p[2] >= p[3]) return p[0];
+  return null;
+}
+
+/**
+ * Atraso em minutos contra o 1º turno: há quanto tempo, no mesmo relógio, o 1º turno já tinha
+ * passado do pst em que a UF está agora. Zero ou negativo = a UF tem pelo menos o que o 1º turno
+ * tinha publicado na mesma hora. Com tudo totalizado (pst 100) nada passa do pst: vale o minuto
+ * em que o 1º turno fechou. O fechamento também é o degrau seguinte quando o pst fica a menos da
+ * tolerância de 100 (no Brasil uma seção vale 0,0002 ponto, abaixo dela).
+ */
+export function atrasoEmDegrau(curva: readonly PontoCurva[], pst: number, minAgora: number): number | null {
+  const m = pst >= 100 ? minutoQueFechou(curva) : (minutoQuePassou(curva, pst) ?? minutoQueFechou(curva));
+  return m === null ? null : Math.round((minAgora - m) * 10) / 10;
+}
+
 const paDe = (c: number, a: number): number | null => (c + a > 0 ? (100 * a) / (c + a) : null);
 
 export class AlertasRegua {
@@ -90,7 +124,7 @@ export class AlertasRegua {
     return { em, tipo, severidade: "warn", eleicao_cd: this.o.ele, cargo_cd: 1, nivel, uf, municipio_cd: mun, detalhe };
   }
 
-  /** UF aberta (st < ts) atrás da curva do 1º turno: um evento por patamar novo. */
+  /** UF aberta (st < ts) atrás da curva do 1º turno (atrasoEmDegrau): um evento por patamar novo. */
   avaliarAtraso(agora: number, ufs: readonly UfAndamento[]): EventoNovo[] {
     const ref = this.ref;
     if (!ref) return [];
@@ -101,7 +135,7 @@ export class AlertasRegua {
       if (u.ts <= 0 || u.st >= u.ts) continue;
       const curva = ref.curvas.uf[u.uf.toUpperCase()];
       if (!curva || curva.length === 0) continue;
-      const atraso = atrasoVsReferencia(curva, u.pst, min);
+      const atraso = atrasoEmDegrau(curva, u.pst, min);
       if (atraso === null || atraso < this.o.patamarMin) continue;
       const patamar = Math.floor(atraso / this.o.patamarMin) * this.o.patamarMin;
       if (patamar <= (this.patamar.get(u.uf) ?? 0)) continue;

@@ -1,6 +1,6 @@
 // Alertas contra a régua do 1º turno: atraso por patamar e abstenção atípica (município e UF).
 import { describe, expect, test } from "bun:test";
-import { AlertasRegua, REGUA_PADRAO } from "../src/collector/regua.ts";
+import { AlertasRegua, atrasoEmDegrau, minutoQuePassou, REGUA_PADRAO } from "../src/collector/regua.ts";
 import type { MunAb } from "../src/collector/regua.ts";
 import { abrirEscrita } from "../src/db/abrir.ts";
 import { Escritor } from "../src/db/escrita.ts";
@@ -31,17 +31,37 @@ describe("UF atrasada contra a curva do 1º turno", () => {
   test("um evento por patamar novo, pulando o patamar já ultrapassado", () => {
     const r = regua();
     const ba = (pst: number) => [{ uf: "ba", pst, st: pst * 10, ts: 1000 }];
-    expect(r.avaliarAtraso(m(75), ba(50))).toEqual([]); // 15 min atrás
-    const e40 = r.avaliarAtraso(m(100), ba(50));
+    // o 1º turno passou de 49 no minuto 60 (ponto de 50)
+    expect(r.avaliarAtraso(m(75), ba(49))).toEqual([]); // 15 min atrás
+    const e40 = r.avaliarAtraso(m(100), ba(49));
     expect(tipos(e40)).toEqual([["uf_atrasada_1t", 40]]);
     expect(e40[0]).toMatchObject({ severidade: "warn", nivel: "uf", uf: "ba", eleicao_cd: 6258 });
-    expect(e40[0]?.detalhe).toMatchObject({ atraso_min: 40, min: 100, pst: 50, pst_1t_mesmo_relogio: 50, rotulo: "pede explicação, não indica irregularidade" });
-    expect(r.avaliarAtraso(m(105), ba(50))).toEqual([]);
-    expect(tipos(r.avaliarAtraso(m(121), ba(50)))).toEqual([["uf_atrasada_1t", 60]]);
+    expect(e40[0]?.detalhe).toMatchObject({ atraso_min: 40, min: 100, pst: 49, pst_1t_mesmo_relogio: 50, rotulo: "pede explicação, não indica irregularidade" });
+    expect(r.avaliarAtraso(m(105), ba(49))).toEqual([]);
+    expect(tipos(r.avaliarAtraso(m(121), ba(49)))).toEqual([["uf_atrasada_1t", 60]]);
   });
 
-  test("interpolação da curva: pst 25,5 foi alcançado no minuto 40 do 1º turno", () => {
-    expect(tipos(regua().avaliarAtraso(m(61), [{ uf: "ba", pst: 25.5, st: 255, ts: 1000 }]))).toEqual([["uf_atrasada_1t", 20]]);
+  test("platô do 1º turno: mesmo pst na mesma hora não é atraso (pausa geral de 19:32 a 20:02 no replay)", () => {
+    const r = regua();
+    const ba = (pst: number) => [{ uf: "ba", pst, st: pst * 10, ts: 1000 }];
+    // de 60 a 120 o 1º turno ficou em 50; a interpolação dizia 40 min de atraso no minuto 100
+    expect(r.avaliarAtraso(m(100), ba(50))).toEqual([]);
+    expect(r.avaliarAtraso(m(121), ba(50))).toEqual([]);
+    expect(tipos(r.avaliarAtraso(m(141), ba(50)))).toEqual([["uf_atrasada_1t", 20]]);
+  });
+
+  test("degrau: o 1º turno passou de 25,5 no minuto 60, não no 40 da interpolação", () => {
+    const ba = [{ uf: "ba", pst: 25.5, st: 255, ts: 1000 }];
+    expect(regua().avaliarAtraso(m(79), ba)).toEqual([]);
+    expect(tipos(regua().avaliarAtraso(m(81), ba))).toEqual([["uf_atrasada_1t", 20]]);
+    expect(atrasoEmDegrau(REF.curvas.uf.BA ?? [], 25.5, 81)).toBe(21);
+  });
+
+  test("arredondamento da régua (3 casas) não vira atraso", () => {
+    // a régua grava 50,000 para um pst exato de 49,9997
+    expect(minutoQuePassou(REF.curvas.uf.BA ?? [], 49.9997)).toBe(120);
+    expect(regua().avaliarAtraso(m(100), [{ uf: "ba", pst: 49.9997, st: 499, ts: 1000 }])).toEqual([]);
+    expect(minutoQuePassou(REF.curvas.uf.BA ?? [], 100)).toBeNull();
   });
 
   test("UF fechada, antes das 17h ou sem curva: nada", () => {
@@ -82,12 +102,12 @@ describe("abstenção atípica", () => {
     const db = abrirEscrita(":memory:");
     const w = new Escritor(db);
     const r1 = regua();
-    const evs = [...r1.avaliarAtraso(m(100), [{ uf: "ba", pst: 50, st: 500, ts: 1000 }]), ...r1.avaliarAbstencao(m(120), muns())];
+    const evs = [...r1.avaliarAtraso(m(100), [{ uf: "ba", pst: 49, st: 490, ts: 1000 }]), ...r1.avaliarAbstencao(m(120), muns())];
     w.gravarLote(evs.map((row) => ({ k: "evento", row })));
     const r2 = regua();
     r2.carregar(db);
-    expect(r2.avaliarAtraso(m(105), [{ uf: "ba", pst: 50, st: 500, ts: 1000 }])).toEqual([]);
+    expect(r2.avaliarAtraso(m(105), [{ uf: "ba", pst: 49, st: 490, ts: 1000 }])).toEqual([]);
     expect(r2.avaliarAbstencao(m(130), muns())).toEqual([]);
-    expect(tipos(r2.avaliarAtraso(m(121), [{ uf: "ba", pst: 50, st: 500, ts: 1000 }]))).toEqual([["uf_atrasada_1t", 60]]);
+    expect(tipos(r2.avaliarAtraso(m(121), [{ uf: "ba", pst: 49, st: 490, ts: 1000 }]))).toEqual([["uf_atrasada_1t", 60]]);
   });
 });
