@@ -129,3 +129,53 @@ Stop hook feedback:
 Stop hook feedback:
 [Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
 
+### Prompt 17
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 18
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 19
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 20
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 21
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 22
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 23
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 24
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 25
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
+### Prompt 26
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
