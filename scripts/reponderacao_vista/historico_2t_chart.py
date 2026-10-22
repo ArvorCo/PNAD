@@ -138,6 +138,11 @@ def chart(rows):
                     continue
                 px, py = x(poll["campo"]["fim"]), y(poll[kind][candidate])
                 isolated = kind == "pnad" and poll["id"] in isolated_pnad
+                preview = (
+                    kind == "pnad"
+                    and poll.get("renda", {}).get("perfil_tipo")
+                    == "hipotese_onda_anterior"
+                )
                 label = f"{poll['campo']['fim']}: {candidate}, {kind}, {poll[kind][candidate]:.2f}%"
                 abre_alvo(cv, key, label)
                 cv.circle(
@@ -150,13 +155,13 @@ def chart(rows):
                 )
                 area_alvo(cv, px, py, 5)
                 fecha_alvo(cv)
-                if isolated and poll is rows[-1]:
+                if (isolated or preview) and poll is rows[-1]:
                     cv.text(
                         px - 9,
                         py - 10
                         if poll[kind][candidate] >= poll["placar"][candidate]
                         else py + 16,
-                        f"PNAD {candidate[0].upper()} {br(poll[kind][candidate], 2)}",
+                        f"{'Prévia' if preview else 'PNAD'} {candidate[0].upper()} {br(poll[kind][candidate], 2)}",
                         size=11,
                         anchor="end",
                         fill=color,

@@ -134,6 +134,8 @@ def table(rows):
             else ("Válidos" if poll["denominador"] == "validos" else "Total")
         )
         note = " · versão substituída" if poll.get("substituida") else ""
+        if poll.get("renda", {}).get("perfil_tipo") == "hipotese_onda_anterior":
+            note += " · PRÉVIA PNAD com perfil da onda anterior"
         version = poll.get("rotulo_historico", "")
         body.append(
             f'<tr data-history-id="{esc(poll["id"])}"><th scope="row">'
@@ -203,7 +205,9 @@ def write_assets():
         "fase",
         "denominador",
         "placar",
+        "publicado_validos",
         "pnad",
+        "renda",
         "fonte_historico",
         "substituida",
         "rotulo_historico",

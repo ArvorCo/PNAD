@@ -2,7 +2,7 @@
 
 from html import escape as esc
 
-from reponderacao_vista.context import curto
+from reponderacao_vista.context import CEN, curto
 from reponderacao_vista.historico_controles import method, summary
 from reponderacao_vista.historico_projecao import projected_row
 from reponderacao_vista.historico_urna import comparison_html
@@ -34,7 +34,7 @@ def figures(rows, projected=False):
 
 
 def panel(name, rows):
-    from reponderacao_vista.historico_2t import table, wave_count
+    from reponderacao_vista.historico_2t import score, table, wave_count
 
     total = [p for p in rows if p["denominador"] == "total"]
     valid_only = [p for p in rows if p["denominador"] == "validos"]
@@ -57,6 +57,15 @@ def panel(name, rows):
         if name == "Palver"
         else ""
     )
+    if latest.get("renda", {}).get("perfil_tipo") == "hipotese_onda_anterior":
+        direct = latest["turnos"]["2t"]["cenarios"][CEN]["contrafactual"]
+        note += (
+            '<p class="note"><b>Conferência pela soma direta:</b> votos atuais por faixa × '
+            f'pesos PNAD 2025, pessoas 16+: <b>{score(direct)}</b> no total. '
+            'A prévia do gráfico mantém o método do relatório: publicado + parcela ajustável × '
+            '(soma PNAD − recomposição com o perfil de referência).</p>'
+        )
+        note += f'<p class="note history-preview">{esc(latest["renda"]["nota"])}</p>'
     return (
         f'<article class="panel reveal history-panel" data-instituto="{esc(name)}" data-turno="2t">'
         f"<h3>{esc(name)} <small>Flávio × Lula</small></h3>"

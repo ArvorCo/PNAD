@@ -32,9 +32,9 @@
     "sha256": "22df64ddbff66b7df3fdbb007485d71625bea7f363e503a38f121d55801ac7a1",
     "tipo": "painel_contratante",
     "conferido_em": "2026-10-22",
-    "status": "Cruzamentos atuais arquivados; bases de renda pendentes.",
+    "status": "Prévia PNAD · perfil da onda de 15/10",
     "paginas": {},
-    "nota": "Divulgação de 22/10: F/L/BN/NS 47/46/5/2; válidos oficiais 50/50. Campo 20–22/10 e n=2.520 confirmados no painel G1 e no registro BR-09709/2026. O registro descreve 2.520 como amostra prevista; o G1 informa 2.520 ouvidos. Cruzamentos atuais de renda: 39/54/5/2, 54/39/6/1 e 54/40/5/1. As bases efetivas dos recortes não estão no painel. O TSE traz referência 49/47/4 (até 2 SM, mais de 2 SM, NS/recusa), fator previsto de renda 1; não é perfil observado nem separa as duas faixas superiores. Relatório completo não fornecido pela empresa no TSE na consulta. Entra pelo publicado na Projeção; sem ajuste PNAD até obter as bases atuais, sem transportar pesos da onda anterior. A passagem de PNAD na onda anterior a publicado nesta pode afetar a tendência. Válidos divulgados preservados separadamente da normalização 47/93.",
+    "nota": "PRÉVIA PNAD: cruzamentos atuais de 22/10 com perfil de renda emprestado da Datafolha divulgada em 15/10 (campo 13–14/10). Bases de referência 1.172/918/335; cobertura assumida 2.425/2.520 (96,23%). Os 95/2.520 restantes conservam o topline atual. Essas bases e essa cobertura não foram observadas na onda de 22/10: sua estabilidade é hipótese provisória. Votos por renda de 22/10: 39/54/5/2, 54/39/6/1 e 54/40/5/1 (F/L/BN/NS). Total atual 47/46/5/2, n=2.520, campo 20–22/10, BR-09709/2026. Válidos oficiais 50/50 preservados. Prévia incluída nas duas centrais e na tendência; substituir o perfil quando saírem as bases atuais. Não é ajuste confirmado pela íntegra atual nem provável eleitor medido.",
     "complementos": [
       {
         "arquivo": "data/originals/datafolha_102026_22/g1_estimulada.json",
@@ -63,12 +63,47 @@
         "rotulo": "TSE: detalhamento do plano amostral",
         "bytes": 8165,
         "sha256": "5c66681e9096416ad0b1cd3a92720109097d99a07de5bb03774d4138793e580e"
+      },
+      {
+        "arquivo": "data/originals/datafolha_102026_15_integra/relatorio.pdf",
+        "url": "https://media.folha.uol.com.br/datafolha/2026/10/16/2sq1uhzy7x0w7caugz-gotqrxffgtdsqnx7qkfqfhs0.pdf",
+        "bytes": 1459345,
+        "sha256": "b86d9106bbdb9deb074f03e57522365ff9d5a7222f16ff0c8f7b36480cdd9b81",
+        "rotulo": "Perfil emprestado: Datafolha de 15/10, anexo p. 8"
       }
     ]
   },
-  "ignorar": true,
-  "motivo": "Bases atuais de renda ausentes no painel; referências do TSE são metas, não perfil realizado. Publicado disponível na Projeção.",
-  "cruzamentos": {},
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          39.0,
+          54.0,
+          5.0,
+          2.0
+        ],
+        [
+          54.0,
+          39.0,
+          6.0,
+          1.0
+        ],
+        [
+          54.0,
+          40.0,
+          5.0,
+          1.0
+        ]
+      ],
+      "nota": "PRÉVIA PNAD: cruzamentos atuais de 22/10 com perfil de renda emprestado da Datafolha divulgada em 15/10 (campo 13–14/10). Bases de referência 1.172/918/335; cobertura assumida 2.425/2.520 (96,23%). Os 95/2.520 restantes conservam o topline atual. Essas bases e essa cobertura não foram observadas na onda de 22/10: sua estabilidade é hipótese provisória. Votos por renda de 22/10: 39/54/5/2, 54/39/6/1 e 54/40/5/1 (F/L/BN/NS). Total atual 47/46/5/2, n=2.520, campo 20–22/10, BR-09709/2026. Válidos oficiais 50/50 preservados. Prévia incluída nas duas centrais e na tendência; substituir o perfil quando saírem as bases atuais. Não é ajuste confirmado pela íntegra atual nem provável eleitor medido."
+    }
+  },
   "cruzamentos_documentais": {
     "opcoes": [
       "flavio",
@@ -426,5 +461,39 @@
       "base": null,
       "margem_publicada_pp": 3
     }
-  ]
+  ],
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      1172,
+      918,
+      335
+    ],
+    "perfil_tipo": "hipotese_onda_anterior",
+    "nota": "PRÉVIA PNAD: cruzamentos atuais de 22/10 com perfil de renda emprestado da Datafolha divulgada em 15/10 (campo 13–14/10). Bases de referência 1.172/918/335; cobertura assumida 2.425/2.520 (96,23%). Os 95/2.520 restantes conservam o topline atual. Essas bases e essa cobertura não foram observadas na onda de 22/10: sua estabilidade é hipótese provisória. Votos por renda de 22/10: 39/54/5/2, 54/39/6/1 e 54/40/5/1 (F/L/BN/NS). Total atual 47/46/5/2, n=2.520, campo 20–22/10, BR-09709/2026. Válidos oficiais 50/50 preservados. Prévia incluída nas duas centrais e na tendência; substituir o perfil quando saírem as bases atuais. Não é ajuste confirmado pela íntegra atual nem provável eleitor medido.",
+    "parcela_ajustada_pct": 96.23015873015873,
+    "bases_referencia": [
+      1172,
+      918,
+      335
+    ],
+    "referencia_id": "datafolha_2026-10-14",
+    "referencia_divulgacao": "2026-10-15"
+  }
 }

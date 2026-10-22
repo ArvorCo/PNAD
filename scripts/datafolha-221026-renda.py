@@ -4,6 +4,7 @@
 import hashlib
 import importlib
 import shutil
+from copy import deepcopy
 from pathlib import Path
 
 COMMON = importlib.import_module("pesquisas-081026-renda")
@@ -142,13 +143,56 @@ def datafolha():
     }
 
 
-def main():
+def previa():
+    """Hipótese solicitada: perfil e cobertura de 15/10, votos de 22/10."""
     poll = datafolha()
+    old = COMMON.read(
+        ROOT / "analysis/reponderacao/pesquisas/datafolha_2026-10-14.json"
+    )
+    note = (
+        "PRÉVIA PNAD: cruzamentos atuais de 22/10 com perfil de renda emprestado "
+        "da Datafolha divulgada em 15/10 (campo 13–14/10). Bases de referência "
+        "1.172/918/335; cobertura assumida 2.425/2.520 (96,23%). Os 95/2.520 "
+        "restantes conservam o topline atual. Essas bases e essa cobertura não "
+        "foram observadas na onda de 22/10: sua estabilidade é hipótese provisória. "
+        "Votos por renda de 22/10: 39/54/5/2, 54/39/6/1 e 54/40/5/1 (F/L/BN/NS). "
+        "Total atual 47/46/5/2, n=2.520, campo 20–22/10, BR-09709/2026. "
+        "Válidos oficiais 50/50 preservados. Prévia incluída nas duas centrais e "
+        "na tendência; substituir o perfil quando saírem as bases atuais. "
+        "Não é ajuste confirmado pela íntegra atual nem provável eleitor medido."
+    )
+    poll.pop("ignorar")
+    poll.pop("motivo")
+    poll["renda"] = deepcopy(old["renda"])
+    poll["renda"].pop("bases", None)
+    poll["renda"].pop("nao_publicada_n", None)
+    poll["renda"].update(
+        perfil_tipo="hipotese_onda_anterior",
+        nota=note,
+        bases_referencia=old["renda"]["bases"],
+        referencia_id=old["id"],
+        referencia_divulgacao=old["divulgacao"],
+    )
+    poll["cruzamentos"] = {
+        "2t": {
+            "opcoes": OPTIONS,
+            "linhas": poll["cruzamentos_documentais"]["linhas"],
+            "nota": note,
+        }
+    }
+    poll["fonte"].update(status="Prévia PNAD · perfil da onda de 15/10", nota=note)
+    ref = {k: old["fonte"][k] for k in ("arquivo", "url", "bytes", "sha256")}
+    ref["rotulo"] = "Perfil emprestado: Datafolha de 15/10, anexo p. 8"
+    poll["fonte"]["complementos"].append(ref)
+    return poll
+
+
+def main():
+    poll = previa()
     sources = [
         {k: poll["fonte"][k] for k in ("arquivo", "url", "bytes", "sha256")},
         *poll["fonte"]["complementos"],
     ]
-    COMMON.write(FOLDER / "fonte.json", {"conferido_em": DAY, "arquivos": sources})
     COMMON.write(
         ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json"), poll
     )
@@ -159,14 +203,16 @@ def main():
         "pendencias": ["Íntegra e bases ponderadas atuais de renda."],
     }
     COMMON.write(
-        ROOT / "analysis/reponderacao/auditoria_datafolha_20261022.json", audit
+        ROOT / "analysis/reponderacao/auditoria_datafolha_20261022_previa.json", audit
     )
-    COMMON.write(ROOT / "docs/assets/reponderacao_datafolha_20261022.json", audit)
+    COMMON.write(
+        ROOT / "docs/assets/reponderacao_datafolha_20261022_previa.json", audit
+    )
     shutil.copyfile(
         FOLDER / "registro-tse.txt",
         ROOT / "docs/fontes/datafolha_22102026_registro.txt",
     )
-    print("Datafolha 22/10: 2.520 entrevistas; publicado integrado, renda pendente.")
+    print("Datafolha 22/10: prévia PNAD com perfil e cobertura de 15/10.")
 
 
 if __name__ == "__main__":

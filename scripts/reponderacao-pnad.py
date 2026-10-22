@@ -253,6 +253,7 @@ def process_poll(
             "fonte",
             "dossie",
             "publicado",
+            "publicado_validos",
             "sem_cruzamento",
             "selecao_1t",
             "grupos_1t_fonte",

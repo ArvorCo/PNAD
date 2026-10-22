@@ -19,8 +19,8 @@ def delta(poll):
         return "PNAD indisponível"
     differences = {c: poll["pnad"][c] - poll["placar"][c] for c in ("flavio", "lula")}
     return (
-        f'F {sinal(differences["flavio"], 2)} · L {sinal(differences["lula"], 2)} pp'
-        f' · vantagem F−L {sinal(differences["flavio"] - differences["lula"], 2)} pp'
+        f"F {sinal(differences['flavio'], 2)} · L {sinal(differences['lula'], 2)} pp"
+        f" · vantagem F−L {sinal(differences['flavio'] - differences['lula'], 2)} pp"
     )
 
 
@@ -48,11 +48,11 @@ def method(poll):
             (
                 '<p class="note">Sem filtro diferencial: normalização simples. '
                 if entry["tipo"] == "neutro"
-                else f'<p class="note">Seleção F {br(100*q["flavio"], 2)}% / L {br(100*q["lula"], 2)}%; '
+                else f'<p class="note">Seleção F {br(100 * q["flavio"], 2)}% / L {br(100 * q["lula"], 2)}%; '
             )
-            + f'efeito sobre válidos simples: F {sinal(effect["flavio"], 2)} / L {sinal(effect["lula"], 2)} pp. '
+            + f"efeito sobre válidos simples: F {sinal(effect['flavio'], 2)} / L {sinal(effect['lula'], 2)} pp. "
             + (
-                f'Indecisos identificados: {br(model["indecisos"], 2)}% da base.'
+                f"Indecisos identificados: {br(model['indecisos'], 2)}% da base."
                 if model["indecisos"] is not None
                 else "Indecisos não separados: nenhuma massa inventada."
             )
@@ -69,11 +69,17 @@ def summary(poll):
 
     projected = poll.get("modo_projecao")
     title = "Projeção do publicado" if projected else "Publicado"
+    preview = poll.get("renda", {}).get("perfil_tipo") == "hipotese_onda_anterior"
     return (
-        f'<p class="kicker">Última onda · campo até {curto(poll["campo"]["fim"])} · divulgação {curto(poll["divulgacao"])}</p>'
+        (
+            '<p class="history-badge">PRÉVIA PNAD · perfil da onda anterior</p>'
+            if preview
+            else ""
+        )
+        + f'<p class="kicker">Última onda · campo até {curto(poll["campo"]["fim"])} · divulgação {curto(poll["divulgacao"])}</p>'
         '<div class="history-scores">'
-        f'<div><span>{title}</span><strong>{score(poll["placar"])}</strong></div>'
-        f'<div><span>{"Projeção PNAD" if projected else "PNAD"}</span><strong>{score(poll["pnad"]) if poll["pnad"] else "s/r"}</strong></div></div>'
+        f"<div><span>{title}</span><strong>{score(poll['placar'])}</strong></div>"
+        f"<div><span>{'Prévia PNAD' if preview else ('Projeção PNAD' if projected else 'PNAD')}</span><strong>{score(poll['pnad']) if poll['pnad'] else 's/r'}</strong></div></div>"
         f'<p class="history-delta"><b>Δ PNAD − publicado</b><br>{delta(poll)}</p>'
         + (
             f'<span class="history-badge">{LABELS[poll["projecao"]["evidencia"]["tipo"]]}</span>'
@@ -89,8 +95,8 @@ def controls(rows):
         counts[project(poll)["evidencia"]["tipo"]] += 1
     totals, valids = urna("total"), urna("validos")
     audit = "".join(
-        f'<tr><th>{esc(p["instituto"])}</th><td>{esc(p["id"].split("_", 1)[-1])}</td>'
-        f'<td>{LABELS[p["tipo"]]}</td><td>{esc(p["nota"])} '
+        f"<tr><th>{esc(p['instituto'])}</th><td>{esc(p['id'].split('_', 1)[-1])}</td>"
+        f"<td>{LABELS[p['tipo']]}</td><td>{esc(p['nota'])} "
         + (f'<a href="{esc(p["fonte"], quote=True)}">Fonte</a>' if p["fonte"] else "")
         + "</td></tr>"
         for p in evidence()["auditoria_ultima_onda"]
@@ -104,8 +110,8 @@ def controls(rows):
         "Azul: Flávio; vermelho: Lula. Valores e deltas estão nas fichas e tabelas.</p></div>"
         '<details class="history-method"><summary>Como funciona a projeção e o nosso likely voter</summary>'
         "<p>É um cenário de seleção de eleitores prováveis, não um modelo validado de comparecimento. "
-        f'{counts["direto"]} versões têm presença por voto, {counts["proxy_renda"]} usam aproximação por renda '
-        f'e {counts["neutro"]} conservam presença igual por falta de cruzamento incorporado na própria onda. '
+        f"{counts['direto']} versões têm presença por voto, {counts['proxy_renda']} usam aproximação por renda "
+        f"e {counts['neutro']} conservam presença igual por falta de cruzamento incorporado na própria onda. "
         "As regras de seleção diferem entre pesquisas: mudanças na série também podem refletir essa cobertura.</p>"
         "<ol><li>Selecionamos a massa de cada candidato usando respostas da própria onda. Ipespe: nota máxima de chance de comparecer. "
         "Nexus: ida certa/provável por renda. Veritá: ida certa por renda. "
@@ -126,8 +132,8 @@ def controls(rows):
         "<thead><tr><th>Instituto</th><th>Campo até</th><th>Tratamento</th><th>Evidência e limite</th></tr></thead>"
         f"<tbody>{audit}</tbody></table></div></details>"
         '<div class="history-urna-reference"><p class="kicker">◆ Urna de 04/10 · primeiro turno</p>'
-        f'<p><b>Totais: F {br(totals["flavio"], 2)}% · L {br(totals["lula"], 2)}%</b> '
-        f'&nbsp; Válidos: F {br(valids["flavio"], 2)}% · L {br(valids["lula"], 2)}%.</p>'
+        f"<p><b>Totais: F {br(totals['flavio'], 2)}% · L {br(totals['lula'], 2)}%</b> "
+        f"&nbsp; Válidos: F {br(valids['flavio'], 2)}% · L {br(valids['lula'], 2)}%.</p>"
         '<p class="note">O losango na linha de 04/10 marca a urna do 1º turno, incluindo exterior. '
         "Totais usam válidos + brancos + nulos; válidos incluem todas as candidaturas. "
         "É uma referência de outra cédula, não resultado nem previsão do 2º turno. "
