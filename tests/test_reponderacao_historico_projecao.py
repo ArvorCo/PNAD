@@ -8,8 +8,10 @@ from bs4 import BeautifulSoup
 from reponderacao_vista.context import ROOT
 from reponderacao_vista.historico_2t import history
 from reponderacao_vista.historico_2t_chart import chart, segments
+from reponderacao_vista.historico_painel import panel
 from reponderacao_vista.historico_projecao import evidence, project, projected_row
 from reponderacao_vista.historico_urna import OFF, latest_comparison, reference, urna
+from svgkit import br
 
 
 @pytest.fixture(scope="module")
@@ -24,6 +26,30 @@ def test_atlas_crossing_field_connects_to_next_post_election_wave(polls):
     assert post[0]["fase"] == "Campo atravessa o 1º turno"
     assert len(segments(rows, "placar")) == 2
     assert len(segments(rows, "pnad")[-1]) == 2
+
+
+def test_single_real_time_adjustment_is_visible_in_both_chart_modes(polls):
+    rows = [p for p in polls.values() if p["instituto"] == "Real Time Big Data"]
+    latest = rows[-1]
+    soup = BeautifulSoup(panel("Real Time Big Data", rows), "html.parser")
+    for mode, poll in (("total", latest), ("validos", projected_row(latest))):
+        view = soup.select_one(f'[data-history-view="{mode}"]')
+        graph = view.select_one(".fig svg")
+        # The recent single wave must not be lost in six months of history.
+        assert "19/10" in graph.get_text()
+        assert "04/05" not in graph.get_text()
+        assert view.select_one("details .fig svg") is not None
+        assert "PNAD em uma única onda" in view.get_text()
+        for candidate in ("flavio", "lula"):
+            assert (
+                f"PNAD {candidate[0].upper()} {br(poll['pnad'][candidate], 2)}"
+                in graph.get_text()
+            )
+            point = graph.select_one(f'g[aria-label*="{candidate}, pnad"] circle')
+            assert float(point["r"]) == 4
+        # No fabricated PNAD line across missing income waves or the first round.
+        assert not graph.select('path[fill="none"]')
+    assert [len(s) for s in segments(rows, "pnad")] == [1]
 
 
 def test_proportional_undecideds_conserve_mass_without_changing_valid_share(polls):

@@ -44,7 +44,7 @@ def segments(rows, key):
 def chart(rows):
     if not rows:
         return ""
-    cv = Canvas(380, 294, f'{rows[0]["instituto"]}: histórico Flávio versus Lula')
+    cv = Canvas(380, 294, f"{rows[0]['instituto']}: histórico Flávio versus Lula")
     left, right, top, bottom = 34, 362, 38, 210
     first, last = ordinal(rows[0]["campo"]["fim"]), ordinal(rows[-1]["campo"]["fim"])
     cutoff = ordinal(CUTOFF)
@@ -54,6 +54,9 @@ def chart(rows):
     if show_urna:
         first = min(first, cutoff)
     low_x, high_x = (first - 1, last + 1) if first == last else (first, last)
+    isolated_pnad = {
+        group[0]["id"] for group in segments(rows, "pnad") if len(group) == 1
+    }
 
     def x(day):
         return left + (ordinal(day) - low_x) / (high_x - low_x) * (right - left)
@@ -115,7 +118,7 @@ def chart(rows):
                 if len(segment) < 2:
                     continue
                 path = "M" + "L".join(
-                    f'{x(p["campo"]["fim"]):.2f},{y(p[key][candidate]):.2f}'
+                    f"{x(p['campo']['fim']):.2f},{y(p[key][candidate]):.2f}"
                     for p in segment
                 )
                 cv.path(
@@ -127,25 +130,37 @@ def chart(rows):
                 )
     for poll in rows:
         suffix = "|validos" if projected else ""
-        key = registra_tip(f'history2t|{poll["id"]}{suffix}', tip(poll))
+        key = registra_tip(f"history2t|{poll['id']}{suffix}", tip(poll))
         for candidate in ("flavio", "lula"):
             color = COR[candidate]
             for kind in ("placar", "pnad"):
                 if poll[kind] is None:
                     continue
                 px, py = x(poll["campo"]["fim"]), y(poll[kind][candidate])
-                label = f'{poll["campo"]["fim"]}: {candidate}, {kind}, {poll[kind][candidate]:.2f}%'
+                isolated = kind == "pnad" and poll["id"] in isolated_pnad
+                label = f"{poll['campo']['fim']}: {candidate}, {kind}, {poll[kind][candidate]:.2f}%"
                 abre_alvo(cv, key, label)
                 cv.circle(
                     px,
                     py,
-                    3.5 if kind == "placar" else 2.5,
+                    4 if isolated else (3.5 if kind == "placar" else 2.5),
                     PANEL if kind == "placar" else color,
                     stroke=color,
                     stroke_width=1.5,
                 )
                 area_alvo(cv, px, py, 5)
                 fecha_alvo(cv)
+                if isolated and poll is rows[-1]:
+                    cv.text(
+                        px - 9,
+                        py - 10
+                        if poll[kind][candidate] >= poll["placar"][candidate]
+                        else py + 16,
+                        f"PNAD {candidate[0].upper()} {br(poll[kind][candidate], 2)}",
+                        size=11,
+                        anchor="end",
+                        fill=color,
+                    )
     if show_urna:
         boundary = x(CUTOFF)
         for candidate in ("flavio", "lula"):
@@ -154,7 +169,7 @@ def chart(rows):
                 "history2t|urna|"
                 + ("validos" if projected else rows[0]["denominador"]),
                 '<p class="tip-head"><b>Urna do primeiro turno · 04/10</b></p>'
-                + f'<p>Flávio {br(actual["flavio"], 2)}% × Lula {br(actual["lula"], 2)}%.</p>'
+                + f"<p>Flávio {br(actual['flavio'], 2)}% × Lula {br(actual['lula'], 2)}%.</p>"
                 + "<p>Referência de outra cédula, incluindo exterior. Válidos incluem todas as candidaturas; totais incluem brancos/nulos. Não é resultado do segundo turno.</p>",
             )
             abre_alvo(
@@ -163,7 +178,7 @@ def chart(rows):
                 f"Urna do primeiro turno: {candidate}, {actual[candidate]:.2f}%",
             )
             cv.path(
-                d=f"M{boundary},{py-5}L{boundary+5},{py}L{boundary},{py+5}L{boundary-5},{py}Z",
+                d=f"M{boundary},{py - 5}L{boundary + 5},{py}L{boundary},{py + 5}L{boundary - 5},{py}Z",
                 fill=COR[candidate],
                 stroke=PANEL,
                 stroke_width=1,
@@ -173,7 +188,7 @@ def chart(rows):
         cv.text(
             left,
             276,
-            f'◆ Urna 1ºT: F {br(actual["flavio"], 2)} · L {br(actual["lula"], 2)}',
+            f"◆ Urna 1ºT: F {br(actual['flavio'], 2)} · L {br(actual['lula'], 2)}",
             size=11,
             fill=MUTED,
         )

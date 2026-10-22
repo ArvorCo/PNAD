@@ -2,6 +2,7 @@
 
 from html import escape as esc
 
+from reponderacao_vista.context import curto
 from reponderacao_vista.historico_controles import method, summary
 from reponderacao_vista.historico_projecao import projected_row
 from reponderacao_vista.historico_urna import comparison_html
@@ -12,14 +13,24 @@ def figures(rows, projected=False):
     from reponderacao_vista.historico_2t_chart import chart
 
     recent = [p for p in rows if p["campo"]["fim"] >= "2026-10-01"]
-    if len(recent) >= 2 and len(recent) < len(rows):
+    adjusted = [p for p in rows if p["pnad"] is not None and not p.get("substituida")]
+    note = (
+        '<p class="note history-pnad-coverage"><b>PNAD em uma única onda</b> · '
+        f"campo até {curto(adjusted[0]['campo']['fim'])}. "
+        "Os pontos cheios mostram o reponderado; não há linha PNAD porque falta "
+        "outro ajuste comparável nesta série. As demais ondas conservam apenas o publicado.</p>"
+        if len(adjusted) == 1
+        else ""
+    )
+    if recent and len(recent) < len(rows):
         return (
             '<p class="kicker">Outubro em detalhe</p>'
             f'<div class="fig">{chart(recent)}</div>'
+            f"{note}"
             "<details><summary>Ver toda a série desde a primeira onda</summary>"
             f'<div class="fig">{chart(rows)}</div></details>'
         )
-    return f'<div class="fig">{chart(rows)}</div>'
+    return f'<div class="fig">{chart(rows)}</div>{note}'
 
 
 def panel(name, rows):
@@ -51,7 +62,7 @@ def panel(name, rows):
         f"<h3>{esc(name)} <small>Flávio × Lula</small></h3>"
         f"{badge(name)}"
         f'<p class="note"><b>{wave_count(rows)} ondas · {len(rows)} versões</b> · '
-        f'{sum(p["pnad"] is not None for p in rows)} com PNAD</p>'
+        f"{sum(p['pnad'] is not None for p in rows)} com PNAD</p>"
         f'<label class="history-switch history-switch-local"><input type="checkbox" aria-label="Votos válidos projetados: {esc(name, quote=True)}" data-history-toggle disabled>'
         "<span>Votos válidos · projeção</span></label>"
         '<div data-history-view="total">'
