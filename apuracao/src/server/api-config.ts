@@ -1,5 +1,6 @@
 // /api/config e /api/estado.
 import type { Database } from "bun:sqlite";
+import { ELEICAO_ESTADUAL_2T, ELEICAO_FEDERAL_2T, ORDEM_REGIOES, REGIOES, UFS_GOVERNADOR_2T } from "../turno2/comum.ts";
 import { chave, keyAb, keyU } from "../tse/urls.ts";
 import { arquivoPorChave, lerMeta, maxSnapshotId, ultimoSnapshotPorChave } from "../db/leitura.ts";
 import { UFS, nomeUf, titulo } from "./abr.ts";
@@ -22,22 +23,45 @@ export interface Eleicoes {
   estadual: number;
 }
 
+/** APURACAO_ELEICOES com 6258 ou 6260 (o coletor do 2º turno) indica 2º turno mesmo antes do banco existir. */
+function eleicoesDoAmbiente(): boolean {
+  const v = process.env.APURACAO_ELEICOES;
+  if (v === undefined) return false;
+  return v.split(",").some((x) => {
+    const n = Number.parseInt(x.trim(), 10);
+    return n === ELEICAO_FEDERAL_2T || n === ELEICAO_ESTADUAL_2T;
+  });
+}
+
 /** Turno pelo registro: arquivos de 6258/6260 indicam 2º turno. APURACAO_TURNO força. */
 export function eleicoes(db: Database | null): Eleicoes {
   const forca = process.env.APURACAO_TURNO;
   let turno = forca === "2" ? 2 : 1;
-  if (forca === undefined && db) {
-    const r = db.query<{ x: number }, []>("SELECT 1 AS x FROM arquivo WHERE eleicao_cd IN (6258, 6260) LIMIT 1").get();
-    if (r) turno = 2;
+  if (forca === undefined) {
+    if (eleicoesDoAmbiente()) turno = 2;
+    else if (db) {
+      const r = db.query<{ x: number }, []>("SELECT 1 AS x FROM arquivo WHERE eleicao_cd IN (6258, 6260) LIMIT 1").get();
+      if (r) turno = 2;
+    }
   }
-  return turno === 2 ? { turno, federal: 6258, estadual: 6260 } : { turno, federal: 6257, estadual: 6259 };
+  return turno === 2
+    ? { turno, federal: ELEICAO_FEDERAL_2T, estadual: ELEICAO_ESTADUAL_2T }
+    : { turno, federal: 6257, estadual: 6259 };
+}
+
+/** Campos do 2º turno acrescentados ao /api/config (só quando turno = 2, para não mudar o contrato do 1º). */
+export function extras2t(): { ufs_governador_2t: string[]; regioes: Record<string, string[]> } {
+  return {
+    ufs_governador_2t: [...UFS_GOVERNADOR_2T],
+    regioes: Object.fromEntries(ORDEM_REGIOES.map((r) => [r, [...REGIOES[r]]])),
+  };
 }
 
 const cacheConfig = new CacheCurto<unknown>(30_000, 4);
 
 export function config(_ctx: Contexto, db: Database | null): unknown {
   const el = eleicoes(db);
-  const base = { turno: el.turno, eleicoes: { federal: el.federal, estadual: el.estadual } };
+  const base = { turno: el.turno, eleicoes: { federal: el.federal, estadual: el.estadual }, ...(el.turno === 2 ? extras2t() : {}) };
   if (!db) return { ...base, ufs: [], municipios: {} };
   return cacheConfig.obter(db.filename, maxSnapshotId(db), () => {
     const teAb = new Map<string, number>();

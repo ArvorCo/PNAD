@@ -274,6 +274,97 @@ CREATE TABLE IF NOT EXISTS evento (
 CREATE INDEX IF NOT EXISTS evento_tempo ON evento (em);
 CREATE INDEX IF NOT EXISTS evento_tipo ON evento (tipo, em);
 
+-- ---------------------------------------------------------------- 2º turno: pausas detectadas
+-- Intervalo sem versão nova (gerado_em) de um arquivo -u de presidente com st < ts enquanto
+-- outro nível avança ('geral': nenhum arquivo publica). `de` = geração da última versão antes
+-- da pausa; `ate` nulo = em curso.
+CREATE TABLE IF NOT EXISTS pausa (
+  id INTEGER PRIMARY KEY,
+  nivel TEXT NOT NULL CHECK (nivel IN ('nacional', 'uf', 'geral')),
+  uf TEXT,
+  de TEXT NOT NULL,
+  ate TEXT,
+  minutos REAL,
+  st_antes INTEGER,
+  st_depois INTEGER,
+  detectado_em TEXT NOT NULL
+);
+CREATE UNIQUE INDEX IF NOT EXISTS pausa_unica ON pausa (nivel, IFNULL(uf, ''), de);
+
+-- ---------------------------------------------------------------- 2º turno: amostra de seções
+-- aux.json -> hash -> BU do arquivo-urna. Horas *_iso em UTC; encerramento_local como na urna;
+-- dr_hr como publicado (Brasília). votos_json no esqueleto da conferência (eleição, cargo).
+CREATE TABLE IF NOT EXISTS secao_2t (
+  uf TEXT NOT NULL,
+  mun TEXT NOT NULL,
+  zona INTEGER NOT NULL,
+  secao INTEGER NOT NULL,
+  origem TEXT NOT NULL CHECK (origem IN ('amostra', 'paralela')),
+  status_aux TEXT,
+  hash TEXT,
+  bu_nome TEXT,
+  dr_hr TEXT,
+  encerramento_local TEXT,
+  encerramento_iso TEXT,
+  emissao_iso TEXT,
+  recebido_iso TEXT,
+  bu_sha256 TEXT,
+  aptos INTEGER,
+  comparecimento INTEGER,
+  votos_json TEXT,
+  totalizado_mun_iso TEXT,
+  lag_encerr_recebimento_min REAL,
+  lag_encerr_emissao_min REAL,
+  lag_recebimento_totalizacao_min REAL,
+  erro TEXT,
+  tentativas INTEGER NOT NULL DEFAULT 0,
+  atualizado_em TEXT NOT NULL,
+  PRIMARY KEY (uf, mun, zona, secao)
+);
+CREATE INDEX IF NOT EXISTS secao_2t_recebido ON secao_2t (recebido_iso);
+
+-- ---------------------------------------------------------------- 2º turno: totalização paralela
+-- Cópia local dos BUs aceitos (views públicas do Supabase, imutáveis) e a conferência de cada
+-- um contra o BU oficial da mesma seção.
+CREATE TABLE IF NOT EXISTS paralela_bu (
+  id INTEGER PRIMARY KEY,
+  recebido_em TEXT NOT NULL,
+  uf TEXT NOT NULL,
+  mun TEXT NOT NULL,
+  zona INTEGER NOT NULL,
+  secao INTEGER NOT NULL,
+  fase TEXT,
+  pleito INTEGER,
+  turno INTEGER,
+  orig TEXT,
+  aptos INTEGER,
+  comparecimento INTEGER,
+  hash_final TEXT NOT NULL,
+  cargos_json TEXT NOT NULL,
+  lido_em TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS paralela_bu_secao ON paralela_bu (uf, mun, zona, secao);
+CREATE INDEX IF NOT EXISTS paralela_bu_recebido ON paralela_bu (recebido_em);
+
+CREATE TABLE IF NOT EXISTS paralela_conferencia (
+  bu_id INTEGER PRIMARY KEY,
+  uf TEXT NOT NULL,
+  mun TEXT NOT NULL,
+  zona INTEGER NOT NULL,
+  secao INTEGER NOT NULL,
+  hash_final TEXT,
+  situacao TEXT NOT NULL CHECK (situacao IN ('igual', 'divergente', 'tse_ainda_nao_publicou', 'erro', 'fora_do_oficial')),
+  diferencas_json TEXT,
+  erro TEXT,
+  tse_hash TEXT,
+  tse_arquivo TEXT,
+  tse_sha256 TEXT,
+  tse_recebido_iso TEXT,
+  primeira_em TEXT NOT NULL,
+  conferido_em TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS paralela_conferencia_situacao ON paralela_conferencia (situacao, conferido_em);
+
 -- ---------------------------------------------------------------- views
 DROP VIEW IF EXISTS v_atual;
 CREATE VIEW v_atual AS

@@ -10,6 +10,7 @@ import { AMOSTRA_CONFIG } from "../ui/data/amostra.ts";
 import { ufsPorEleitorado } from "../ui/state/selectors.ts";
 import type { Config } from "../ui/state/types.ts";
 import { pct } from "../ui/data/format.ts";
+import { IDS_2T, TELAS_2T } from "../ui/views/meta-2t.ts";
 
 const TELAS_PADRAO = [
   { id: "pres", titulo: "Presidente" },
@@ -18,6 +19,7 @@ const TELAS_PADRAO = [
   { id: "ritmo", titulo: "Ritmo da apuração" },
   { id: "mov", titulo: "Movimento da apuração" },
   { id: "espera", titulo: "Espera" },
+  ...TELAS_2T.map(t => ({ id: t.id, titulo: t.rotulo })),
 ];
 
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, attrs: Record<string, string> = {}, texto = ""): HTMLElementTagNameMap[K] {
@@ -51,6 +53,7 @@ async function iniciar(): Promise<void> {
   const config = await carregarConfig();
   const indice = criarIndice();
   indice.adicionarConfig(config);
+  indice.adicionarTelas(TELAS_2T.map(t => ({ id: t.id, rotulo: t.titulo, atalho: t.atalho, busca: t.busca })));
 
   // ---------- topo ----------
   const topo = el("header", { class: "dir-topo" });
@@ -94,24 +97,32 @@ async function iniciar(): Promise<void> {
   const telasSec = el("section");
   telasSec.append(el("h2", {}, "telas"));
   const telasGrade = el("div", { class: "grade" });
-  telasSec.append(telasGrade);
+  const telas2tTitulo = el("h2", {}, "telas do 2º turno (Shift + letra, ou a tecla indicada)");
+  const telas2tGrade = el("div", { class: "grade" });
+  telasSec.append(telasGrade, telas2tTitulo, telas2tGrade);
   let telasDesenhadas = "";
+  const atalhoDe = (id: string): string => TELAS_2T.find(t => t.id === id)?.atalho ?? "";
   const desenharTelas = (lista: { id: string; titulo: string }[]): void => {
     const chave = lista.map(t => t.id).join(",");
     if (chave === telasDesenhadas) return;
     telasDesenhadas = chave;
-    telasGrade.replaceChildren(
-      ...lista.map(t => {
-        const b = el("button", { type: "button", "data-v": t.id }, t.titulo);
-        b.addEventListener("click", () => {
-          const uf = espelho?.uf ?? null;
-          const precisaUf = t.id.endsWith("-uf") || t.id === "mun";
-          if (t.id === "dis-df") enviar({ tipo: "nav", v: t.id, uf: "DF" });
-          else enviar({ tipo: "nav", v: t.id, uf: precisaUf ? (uf ?? "SP") : null });
-        });
-        return b;
-      }),
-    );
+    const botaoTela = (t: { id: string; titulo: string }): HTMLButtonElement => {
+      const atalho = atalhoDe(t.id);
+      const b = el("button", { type: "button", "data-v": t.id, ...(atalho ? { title: `atalho: ${atalho}` } : {}) }, t.titulo);
+      if (atalho) b.append(el("small", {}, atalho));
+      b.addEventListener("click", () => {
+        const uf = espelho?.uf ?? null;
+        const precisaUf = t.id.endsWith("-uf") || t.id === "mun";
+        if (t.id === "dis-df") enviar({ tipo: "nav", v: t.id, uf: "DF" });
+        else enviar({ tipo: "nav", v: t.id, uf: precisaUf ? (uf ?? "SP") : null });
+      });
+      return b;
+    };
+    telasGrade.replaceChildren(...lista.filter(t => !IDS_2T.has(t.id)).map(botaoTela));
+    const doisT = lista.filter(t => IDS_2T.has(t.id));
+    telas2tTitulo.hidden = doisT.length === 0;
+    telas2tGrade.hidden = doisT.length === 0;
+    telas2tGrade.replaceChildren(...doisT.map(botaoTela));
   };
   desenharTelas(TELAS_PADRAO);
 
@@ -129,7 +140,7 @@ async function iniciar(): Promise<void> {
   // ---------- busca ----------
   const buscaSec = el("section");
   buscaSec.append(el("h2", {}, "busca"));
-  const campo = el("input", { type: "search", placeholder: "município, estado ou candidatura", autocomplete: "off" });
+  const campo = el("input", { type: "search", placeholder: "município, estado, candidatura ou tela", autocomplete: "off" });
   const achados = el("ul", { class: "achados" });
   campo.addEventListener("input", () => {
     achados.replaceChildren(
@@ -138,7 +149,8 @@ async function iniciar(): Promise<void> {
         const b = el("button", { type: "button" }, a.rotulo);
         b.append(el("small", {}, a.detalhe));
         b.addEventListener("click", () => {
-          if (a.tipo === "uf") enviar({ tipo: "uf", uf: a.uf });
+          if (a.tipo === "tela") enviar({ tipo: "nav", v: a.v, uf: null });
+          else if (a.tipo === "uf") enviar({ tipo: "uf", uf: a.uf });
           else if (a.tipo === "mun") enviar({ tipo: "nav", v: "mun", uf: a.uf, mun: a.cd });
         });
         li.append(b);
@@ -172,7 +184,9 @@ async function iniciar(): Promise<void> {
       dwellRot.textContent = `${seg} s`;
     }
     if (e.telas.length > 0) desenharTelas(e.telas);
-    for (const b of telasGrade.querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.v === e.v));
+    for (const b of [...telasGrade.querySelectorAll<HTMLButtonElement>("button"), ...telas2tGrade.querySelectorAll<HTMLButtonElement>("button")]) {
+      b.setAttribute("aria-pressed", String(b.dataset.v === e.v));
+    }
     for (const b of ufsGrade.querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.uf === e.uf));
     pl.replaceChildren(
       ...e.playlist.map((p, i) => {

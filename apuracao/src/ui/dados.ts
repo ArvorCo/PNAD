@@ -2,8 +2,9 @@
 // deduplica requisições em voo e limita a 1 busca por segundo por chave.
 
 import type { Fonte } from "./data/api.ts";
+import { ler, partesDoCaminho } from "./state/store.ts";
 import type { Store } from "./state/store.ts";
-import type { EventoSse, Need } from "./state/types.ts";
+import type { EventoSse, Need, State } from "./state/types.ts";
 import { chaveLotes, chaveMapa, chaveResultado, chaveSerie } from "./state/types.ts";
 
 export function chaveNeed(n: Need): string {
@@ -20,11 +21,20 @@ export function chaveNeed(n: Need): string {
       return "estado";
     case "anomalias":
       return "anomalias";
+    case "doist":
+      return `doist.${n.rota}`;
   }
 }
 
+/** Rotas /api/2t/* são mais pesadas no servidor: no máximo uma busca a cada 4 s. */
+export const INTERVALO_DOIST_MS = 4000;
+export const INTERVALO_PADRAO_MS = 1000;
+export const intervaloDe = (n: Need): number => (n.tipo === "doist" ? INTERVALO_DOIST_MS : INTERVALO_PADRAO_MS);
+
 /** O evento do SSE invalida esta necessidade? */
 export function eventoAfeta(e: EventoSse, n: Need): boolean {
+  // As rotas do 2º turno derivam de qualquer arquivo novo (resultado, -ab) e das anomalias gravadas.
+  if (n.tipo === "doist") return e.kind === "resultado" || e.kind === "ab" || e.kind === "anomalia";
   if (e.kind === "estado" || e.kind === "config") return n.tipo === "estado";
   if (e.kind === "anomalia") return n.tipo === "anomalias";
   if (e.kind === "ab") {
@@ -48,6 +58,21 @@ export function eventoAfeta(e: EventoSse, n: Need): boolean {
   return false;
 }
 
+/** Compara por conteúdo (JSON); valor não serializável conta como diferente. */
+export function mesmoConteudo(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  if (a === undefined || b === undefined) return false;
+  try {
+    return JSON.stringify(a) === JSON.stringify(b);
+  } catch {
+    return false;
+  }
+}
+
+function lerEstado(s: State, chave: string): unknown {
+  return ler(s, partesDoCaminho(chave));
+}
+
 export interface Carregador {
   carregar(n: Need): void;
   carregarTodas(ns: readonly Need[]): void;
@@ -59,7 +84,6 @@ export function criarCarregador(store: Store, fonteInicial: Fonte, aoErro: (n: N
   const emVoo = new Set<string>();
   const ultimo = new Map<string, number>();
   const adiados = new Map<string, ReturnType<typeof setTimeout>>();
-  const INTERVALO = 1000;
 
   const buscar = async (n: Need): Promise<unknown> => {
     switch (n.tipo) {
@@ -75,6 +99,8 @@ export function criarCarregador(store: Store, fonteInicial: Fonte, aoErro: (n: N
         return fonte.estado();
       case "anomalias":
         return fonte.anomalias();
+      case "doist":
+        return fonte.doisT(n.rota);
     }
   };
 
@@ -85,7 +111,12 @@ export function criarCarregador(store: Store, fonteInicial: Fonte, aoErro: (n: N
     ultimo.set(k, performance.now());
     buscar(n)
       .then(v => {
+        // Rotas do 2º turno e alertas chegam como objetos novos a cada leitura; sem mudança de
+        // conteúdo o estado fica como está e as telas não redesenham à toa.
+        if ((n.tipo === "doist" || n.tipo === "anomalias" || n.tipo === "lotes") && mesmoConteudo(lerEstado(store.get(), k), v)) return;
         store.patch(k, v);
+        // Rota do 2º turno em erro ou pendente não prova que o servidor está vivo para o HUD.
+        if (n.tipo === "doist") return;
         const r = store.get().rede;
         store.patch("rede", { ...r, ultimo_ok_em: Date.now() });
       })
@@ -96,7 +127,8 @@ export function criarCarregador(store: Store, fonteInicial: Fonte, aoErro: (n: N
   const carregar = (n: Need): void => {
     const k = chaveNeed(n);
     const desde = performance.now() - (ultimo.get(k) ?? -Infinity);
-    if (desde >= INTERVALO) {
+    const intervalo = intervaloDe(n);
+    if (desde >= intervalo) {
       executar(n);
       return;
     }
@@ -106,7 +138,7 @@ export function criarCarregador(store: Store, fonteInicial: Fonte, aoErro: (n: N
       setTimeout(() => {
         adiados.delete(k);
         executar(n);
-      }, INTERVALO - desde),
+      }, intervalo - desde),
     );
   };
 

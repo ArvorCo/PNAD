@@ -1,0 +1,146 @@
+<!doctype html>
+<!--
+  Apuração do 2º turno ao vivo. Página ESCRITA À MÃO, não gerada por script.
+  Edite este arquivo, assets/apuracao_2t/ap2t.css e assets/apuracao_2t/ap2t.js diretamente.
+  Todo número vem dos JSON de assets/apuracao_2t/ (apuracao/scripts/exportar-publico.ts, a cada 5 min).
+  Para ensaiar sem a API: apuracao_2t_ao_vivo.html?fonte=exemplo (dados sintéticos em assets/apuracao_2t/exemplo/).
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apuração do 2º turno ao vivo | Arvor</title>
+<meta name="description" content="Apuração do 2º turno de 25/10/2026 em tempo quase real: duelo nacional, regiões, ritmo de cada UF contra o 1º turno, abstenção, pausas do arquivo do TSE e totalização paralela por QR.">
+<link rel="canonical" href="https://brasil.arvor.co/apuracao_2t_ao_vivo.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0d2238">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Apuração do 2º turno ao vivo">
+<meta property="og:description" content="Regiões, ritmo por UF contra o 1º turno, abstenção, pausas do arquivo do TSE e totalização paralela. Atualiza a cada minuto.">
+<meta property="og:url" content="https://brasil.arvor.co/apuracao_2t_ao_vivo.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/apuracao_2t_ao_vivo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Apuração do 2º turno ao vivo">
+<meta name="twitter:description" content="Regiões, ritmo por UF, abstenção, pausas e totalização paralela do 2º turno de 2026.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/apuracao_2t_ao_vivo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/apuracao_2t/ap2t.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer src="assets/apuracao_2t/ap2t.js"></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><a href="https://arvor.co" target="_blank" rel="noopener"><span class="logo-chip"><img src="img/arvor_logo.png" alt="" width="26" height="26"></span>Arvor Intelligence</a><a class="brand-sec" href="index.html">Biblioteca brasil.arvor.co</a></div>
+    <p class="eyebrow">Ao vivo · 2º turno de 25/10/2026</p>
+    <h1>Apuração do 2º turno ao vivo</h1>
+    <p class="lede">Os arquivos públicos do TSE, lidos a cada poucos segundos, comparados com o ritmo do 1º turno. Parcial de apuração, não é projeção. Veja também a <a href="totalizacao_painel.html">totalização paralela por QR</a> e o <a href="apuracao_1o_turno_2026.html">dossiê do 1º turno</a>.</p>
+    <p class="meta" id="meta" aria-live="polite"><span class="ponto velho"></span>Carregando os dados...</p>
+  </div>
+</header>
+
+<nav class="indice" aria-label="Seções da página"><div class="wrap">
+  <a href="#placar">Placar</a><a href="#regioes">Regiões</a><a href="#ufs">UFs</a><a href="#estaduais">Governadores</a><a href="#abstencao">Abstenção</a><a href="#pausas">Pausas</a><a href="#paralela">Paralela</a><a href="#alertas">Alertas</a><a href="#metodo">Método</a>
+</div></nav>
+
+<main id="conteudo" class="wrap">
+  <noscript><p class="aviso erro"><strong>Esta página precisa de JavaScript</strong>Os números chegam em arquivos JSON lidos pelo navegador. Sem JavaScript, veja o <a href="totalizacao_painel.html">painel da totalização paralela</a> ou os <a href="apuracao_1o_turno_2026.html">resultados do 1º turno</a>.</p></noscript>
+  <div id="avisos" class="avisos" role="status"></div>
+
+  <section class="bloco" id="placar" aria-labelledby="t-placar">
+    <h2 id="t-placar">Placar nacional do duelo</h2>
+    <p class="nota">Percentuais sobre votos válidos já apurados. Ainda faltam seções, e o que falta pode pender para outro lado.</p>
+    <div id="placar-corpo"><p class="vazio">Carregando...</p></div>
+  </section>
+
+  <section class="bloco" id="regioes" aria-labelledby="t-reg">
+    <h2 id="t-reg">Regiões</h2>
+    <p class="nota">Barra do duelo em votos válidos apurados na região. O atraso compara a região com o 1º turno no mesmo horário da apuração.</p>
+    <div id="regioes-corpo"><p class="vazio">Carregando...</p></div>
+    <div id="evolucao-corpo"></div>
+  </section>
+
+  <section class="bloco" id="ufs" aria-labelledby="t-ufs">
+    <h2 id="t-ufs">Ritmo por UF</h2>
+    <p class="nota">As mais lentas primeiro. Clique no cabeçalho para ordenar. "Parada" é UF sem versão nova do arquivo do TSE por mais de 10 minutos, com o país avançando.</p>
+    <div id="ufs-corpo"><p class="vazio">Carregando...</p></div>
+  </section>
+
+  <section class="bloco" id="estaduais" aria-labelledby="t-est">
+    <h2 id="t-est">Governadores: seis estados em 2º turno</h2>
+    <p class="nota">Acre, Amazonas, Distrito Federal, Espírito Santo, Rio Grande do Norte e Tocantins. Votos válidos apurados no cargo de governador.</p>
+    <div id="estaduais-corpo"><p class="vazio">Carregando...</p></div>
+  </section>
+
+  <section class="bloco" id="abstencao" aria-labelledby="t-abs">
+    <h2 id="t-abs">Abstenção contra o 1º turno</h2>
+    <span class="rotulo">Base: municípios fechados</span>
+    <p class="nota">Só entram municípios com todas as seções apuradas, comparados com os mesmos municípios no 1º turno. Diferença grande pede explicação, não indica irregularidade.</p>
+    <div id="abstencao-corpo"><p class="vazio">Carregando...</p></div>
+  </section>
+
+  <section class="bloco" id="pausas" aria-labelledby="t-pau">
+    <h2 id="t-pau">Pausas do arquivo nacional</h2>
+    <p class="nota">Pausa é intervalo sem versão nova publicada pelo TSE, enquanto outros níveis seguem avançando. Não é acusação: o arquivo tem ciclo próprio.</p>
+    <div id="pausas-corpo"><p class="vazio">Carregando...</p></div>
+  </section>
+
+  <section class="bloco" id="paralela" aria-labelledby="t-par">
+    <h2 id="t-par">Totalização paralela</h2>
+    <span class="rotulo">Soma dos BUs recebidos, não projeção</span>
+    <div id="paralela-corpo"><p class="vazio">Carregando...</p></div>
+  </section>
+
+  <section class="bloco" id="alertas" aria-labelledby="t-ale">
+    <h2 id="t-ale">Alertas</h2>
+    <p class="nota">Eventos detectados pelo monitor: atraso, pausa, abstenção atípica, virada e divergência. Alerta pede explicação, não indica irregularidade.</p>
+    <div id="alertas-corpo"><p class="vazio">Carregando...</p></div>
+  </section>
+
+  <section class="bloco" id="metodo" aria-labelledby="t-met">
+    <h2 id="t-met">Como ler</h2>
+    <ul>
+      <li><strong>Placar</strong> é a soma dos arquivos de UF publicados pelo TSE, em votos válidos. Não é projeção: o que falta apurar pode mudar o resultado.</li>
+      <li><strong>Atraso contra o 1º turno</strong> compara a fração de seções apuradas hoje com a do 1º turno no mesmo minuto desde as 17h de Brasília. Pede explicação, não indica irregularidade.</li>
+      <li><strong>Parada</strong> é UF sem versão nova do arquivo por mais de 10 minutos enquanto o país avança. O arquivo pode demorar por motivo técnico.</li>
+      <li><strong>Abstenção</strong> compara só municípios fechados, contra os mesmos municípios no 1º turno. Municípios que fecham cedo não representam o estado inteiro.</li>
+      <li><strong>Pausa</strong> é intervalo sem versão nova publicada. Não diz o que ocorreu dentro do sistema do TSE.</li>
+      <li><strong>Totalização paralela</strong> é a soma dos BUs enviados por quem leu o QR code, com amostra de quem enviou. Prova transmissão e soma, nunca o interior da urna.</li>
+      <li>Horários em Brasília. Arquivos de AC, AM, RO, RR, MT e MS chegam em hora local; a correção é feita antes de publicar.</li>
+    </ul>
+    <details class="met" id="det-arquivos"><summary>Arquivos de dados desta página</summary>
+      <p class="nota">Cada arquivo tem o SHA-256 no <a href="assets/apuracao_2t/manifest.json">manifest.json</a>. Confira com <code>shasum -a 256 arquivo</code>.</p>
+      <ul class="arquivos">
+        <li><a href="assets/apuracao_2t/manifest.json">manifest.json</a></li>
+        <li><a href="assets/apuracao_2t/estado.json">estado.json</a></li>
+        <li><a href="assets/apuracao_2t/config.json">config.json</a></li>
+        <li><a href="assets/apuracao_2t/regioes.json">regioes.json</a></li>
+        <li><a href="assets/apuracao_2t/ufs.json">ufs.json</a></li>
+        <li><a href="assets/apuracao_2t/abstencao.json">abstencao.json</a></li>
+        <li><a href="assets/apuracao_2t/estaduais.json">estaduais.json</a></li>
+        <li><a href="assets/apuracao_2t/evolucao.json">evolucao.json</a></li>
+        <li><a href="assets/apuracao_2t/pausas.json">pausas.json</a></li>
+        <li><a href="assets/apuracao_2t/secoes.json">secoes.json</a></li>
+        <li><a href="assets/apuracao_2t/paralela.json">paralela.json</a></li>
+        <li><a href="assets/apuracao_2t/anomalias.json">anomalias.json</a></li>
+        <li><a href="assets/apuracao_2t/resultado.json">resultado.json</a></li>
+        <li><a href="assets/apuracao_2t/mapa.json">mapa.json</a></li>
+      </ul>
+    </details>
+  </section>
+</main>
+
+<footer class="rodape"><div class="wrap"><p class="rodape-marca"><img src="img/arvor_logo.png" alt="" width="22" height="22"><b>Uma iniciativa da <a href="https://arvor.co" target="_blank" rel="noopener">Arvor</a></b> · <a href="https://arvor.co">arvor.co</a> · <a href="index.html">Biblioteca brasil.arvor.co</a></p><p>Fonte: arquivos públicos de resultado do TSE e BUs enviados pelo público. Parcial de apuração, não projeção.</p></div></footer>
+</body>
+</html>

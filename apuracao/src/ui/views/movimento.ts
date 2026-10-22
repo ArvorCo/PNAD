@@ -12,9 +12,9 @@ import { ranking } from "../state/selectors.ts";
 import type { Cores, Need, Resultado, Serie, State } from "../state/types.ts";
 import { chaveResultado, chaveSerie } from "../state/types.ts";
 import type { View } from "./registry.ts";
+import { eleicaoDe } from "./executivo.ts";
 import { nomeUf, partes } from "./registry.ts";
 
-const ELE = 6257;
 const CARGO = 1;
 const MIN = 60_000;
 export const UFS_SPARK = ["SP", "MG", "RJ", "BA", "RS", "PR"] as const;
@@ -54,12 +54,12 @@ export function criarMovimento(): View {
     id: "mov",
     dwell: 25,
     titulo: () => "Movimento da apuração",
-    needs: (): Need[] => [
+    needs: (s): Need[] => [
       { tipo: "estado" },
       { tipo: "anomalias" },
-      { tipo: "resultado", ele: ELE, cargo: CARGO, abr: "br" },
-      { tipo: "serie", ele: ELE, cargo: CARGO, abr: "br" },
-      ...UFS_SPARK.map((uf): Need => ({ tipo: "serie", ele: ELE, cargo: CARGO, abr: uf.toLowerCase() })),
+      { tipo: "resultado", ele: eleicaoDe(s, CARGO), cargo: CARGO, abr: "br" },
+      { tipo: "serie", ele: eleicaoDe(s, CARGO), cargo: CARGO, abr: "br" },
+      ...UFS_SPARK.map((uf): Need => ({ tipo: "serie", ele: eleicaoDe(s, CARGO), cargo: CARGO, abr: uf.toLowerCase() })),
     ],
     mount(el) {
       raiz = el;
@@ -93,6 +93,7 @@ export function criarMovimento(): View {
     update(s: State) {
       if (!raiz) return;
       const p = partes(raiz);
+      const ELE = eleicaoDe(s, CARGO);
       const fonte = s.series[chaveSerie(ELE, CARGO, "br")]?.fonte;
       trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false), fonte === "soma_ufs" ? chip("soma das 27 UFs e exterior", "aviso") : null]);
       const r = s.resultados[chaveResultado(ELE, CARGO, "br")];
@@ -172,7 +173,7 @@ function desenharSpark(raiz: HTMLElement, s: State, uf: string, g: Linhas | unde
     cab.textContent = uf;
     cab.title = nomeUf(s, uf);
   }
-  const serie = s.series[chaveSerie(ELE, CARGO, uf.toLowerCase())];
+  const serie = s.series[chaveSerie(eleicaoDe(s, CARGO), CARGO, uf.toLowerCase())];
   const pontos = (serie?.pontos ?? []).filter(q => q.pst > 0);
   if (!serie || pontos.length === 0) {
     margem.textContent = "aguardando seções";

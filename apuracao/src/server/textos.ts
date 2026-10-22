@@ -42,6 +42,30 @@ const CAMPOS_CONTAGEM: Readonly<Record<string, string>> = {
 
 type Detalhe = Record<string, unknown>;
 
+const num = (d: Detalhe, k: string): number | null => {
+  const v = d[k];
+  return typeof v === "number" && Number.isFinite(v) ? v : null;
+};
+
+/** 12,3 (vírgula decimal, uma ou duas casas). */
+export function decimal(v: number | null, casas = 1): string {
+  if (v === null) return "";
+  return v.toFixed(casas).replace(".", ",");
+}
+
+/** "29,6 min" ou "7 min" (inteiro quando não há fração). */
+function minutos(v: number | null): string {
+  if (v === null) return "";
+  return Number.isInteger(v) ? `${v} min` : `${decimal(v)} min`;
+}
+
+function secaoTxt(d: Detalhe, e: EscopoEvento, muns: ReadonlyMap<string, MunicipioInfo>): string {
+  const sec = txt(d, "secao");
+  const z = e.zona_cd !== null ? Number(e.zona_cd) : null;
+  const mun = nomeEscopoEvento({ ...e, zona_cd: null }, muns);
+  return `seção ${sec ?? "?"}${z !== null ? ` da zona ${z}` : ""} de ${mun}`;
+}
+
 const txt = (d: Detalhe, ...k: string[]): string | null => {
   for (const c of k) {
     const v = d[c];
@@ -105,17 +129,53 @@ export function textoEvento(tipo: string, em: string, e: EscopoEvento, detalhe: 
       return "Coletor desligado";
     case "atraso":
       return `Atraso na divulgação de ${onde}${cargo}`;
+    case "pausa_nacional_inicio":
+      return `Arquivo nacional sem versão nova desde ${horaBrt(txt(d, "desde"))} (${minutos(num(d, "minutos"))})`;
+    case "pausa_nacional_longa":
+      return `Arquivo nacional segue sem versão nova desde ${horaBrt(txt(d, "desde"))} (${minutos(num(d, "minutos"))})`;
+    case "pausa_nacional_fim":
+      return `Arquivo nacional voltou a publicar às ${horaBrt(txt(d, "ate") ?? em)}, após ${minutos(num(d, "minutos"))} sem versão nova`;
+    case "pausa_geral_inicio":
+      return `Nenhum arquivo do TSE com versão nova desde ${horaBrt(txt(d, "desde"))} (${minutos(num(d, "minutos"))})`;
+    case "pausa_geral_longa":
+      return `Divulgação do TSE segue sem versão nova desde ${horaBrt(txt(d, "desde"))} (${minutos(num(d, "minutos"))})`;
+    case "pausa_geral_fim":
+      return `Divulgação do TSE voltou às ${horaBrt(txt(d, "ate") ?? em)}, após ${minutos(num(d, "minutos"))} sem versão nova`;
+    case "pausa_uf_inicio":
+      return `${onde} sem versão nova desde ${horaBrt(txt(d, "desde"))} (${minutos(num(d, "minutos"))})`;
+    case "pausa_uf_fim":
+      return `${onde} voltou a publicar às ${horaBrt(txt(d, "ate") ?? em)}, após ${minutos(num(d, "minutos"))} sem versão nova`;
+    case "soma_ufs_adiante":
+      return `Soma das UFs ${decimal(num(d, "diferenca_pct"))}% à frente do arquivo nacional`;
+    case "uf_atrasada_1t":
+      return `${onde} ${num(d, "patamar_min") ?? ""} min atrás do ritmo do 1º turno`;
+    case "abstencao_atipica_mun":
+      return `Abstenção em ${onde}: ${decimal(num(d, "pa_2t"))}% contra ${decimal(num(d, "pa_1t"))}% no 1º turno`;
+    case "abstencao_atipica_uf":
+      return `${onde}: abstenção de ${decimal(num(d, "pa_2t"))}% contra ${decimal(num(d, "pa_1t_mesmos"))}% no 1º turno nos municípios fechados`;
+    case "secao_tardia":
+      return `${secaoTxt(d, e, muns)} encerrou às ${txt(d, "encerramento_hhmm") ?? horaBrt(txt(d, "encerramento_iso"))}`.replace(/^s/, "S");
+    case "divergencia_paralela":
+      return `BU da totalização paralela difere do oficial na ${secaoTxt(d, e, muns)}`;
+    case "paralela_conferida": {
+      const n = num(d, "conferidos") ?? 0;
+      return `Totalização paralela: ${n} ${n === 1 ? "BU conferido" : "BUs conferidos"}, ${num(d, "iguais") ?? 0} iguais e ${num(d, "divergentes") ?? 0} com diferença`;
+    }
     default:
       return `${tipo.replaceAll("_", " ")} em ${onde}${cargo}`;
   }
 }
 
-export type Categoria = "virada" | "regressao" | "fechou" | "atraso" | "outro";
+export type Categoria = "virada" | "regressao" | "fechou" | "atraso" | "pausa" | "divergencia" | "abstencao" | "paralela" | "outro";
 
 export function categoria(tipo: string): Categoria {
   if (tipo === "virada") return "virada";
   if (tipo.startsWith("regressao") || tipo === "idg_regressivo") return "regressao";
   if (tipo === "municipio_finalizado" || tipo === "fechou" || tipo === "uf_fechou") return "fechou";
-  if (tipo === "atraso" || tipo === "skew_relogio") return "atraso";
+  if (tipo === "atraso" || tipo === "skew_relogio" || tipo === "uf_atrasada_1t" || tipo === "secao_tardia") return "atraso";
+  if (tipo.startsWith("pausa_nacional_") || tipo.startsWith("pausa_uf_") || tipo.startsWith("pausa_geral_") || tipo === "soma_ufs_adiante") return "pausa";
+  if (tipo === "divergencia_paralela") return "divergencia";
+  if (tipo === "abstencao_atipica_mun" || tipo === "abstencao_atipica_uf") return "abstencao";
+  if (tipo === "paralela_conferida") return "paralela";
   return "outro";
 }

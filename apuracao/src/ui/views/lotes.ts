@@ -16,9 +16,9 @@ import { chaveLotes } from "../state/types.ts";
 import { COR_VALIDOS, comSinalInteiro, infoDosLotes, inicioDoEixo } from "./acumulado.ts";
 import type { InfoCand } from "./acumulado.ts";
 import type { View } from "./registry.ts";
+import { eleicaoDe } from "./executivo.ts";
 import { partes } from "./registry.ts";
 
-const ELE = 6257;
 const CARGO = 1;
 const LISTA = 8;
 
@@ -101,9 +101,9 @@ export function criarLotesView(): View {
     id: "lotes",
     dwell: 30,
     titulo: () => "O que chegou em cada atualização",
-    needs: (): Need[] => [
+    needs: (s): Need[] => [
       { tipo: "estado" },
-      { tipo: "lotes", ele: ELE, cargo: CARGO, abr: "br" },
+      { tipo: "lotes", ele: eleicaoDe(s, CARGO), cargo: CARGO, abr: "br" },
     ],
     mount(el) {
       raiz = el;
@@ -126,7 +126,7 @@ export function criarLotesView(): View {
     update(s: State) {
       if (!raiz) return;
       const p = partes(raiz);
-      const dados = s.lotes[chaveLotes(ELE, CARGO, "br")];
+      const dados = s.lotes[chaveLotes(eleicaoDe(s, CARGO), CARGO, "br")];
       soma = dados?.fonte === "soma_ufs";
       const sub = raiz.querySelector(".lt-sub");
       if (sub) sub.textContent = soma

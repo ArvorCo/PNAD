@@ -37,6 +37,11 @@ export function foto(o: OpcoesFoto): HTMLSpanElement {
     m.textContent = iniciais(o.nome);
     caixa.replaceChildren(m);
   };
+  // sqcand do TSE tem 12 dígitos; outro formato (candidaturas de ensaio) não tem foto e vai direto ao monograma.
+  if (!/^\d{12}$/.test(o.sqcand)) {
+    mono();
+    return caixa;
+  }
   const img = document.createElement("img");
   img.alt = "";
   img.decoding = "async";

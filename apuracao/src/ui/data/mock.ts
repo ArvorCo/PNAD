@@ -9,6 +9,9 @@
 import type { Fonte, ConsultaMapa, ConsultaResultado } from "./api.ts";
 import { ErroApi } from "./api.ts";
 import { AMOSTRA_CONFIG } from "./amostra.ts";
+import { pendente } from "./doist.ts";
+import type { Dados2T, Resposta, Rota2T } from "./doist.ts";
+import { criarRotas2T, DUELO_2T_NUMEROS, emPausaNacionalMin, GOVERNADORES_2T } from "./mock2t.ts";
 import type {
   Anomalia,
   Campo,
@@ -169,21 +172,42 @@ const CARGOS: Readonly<Record<number, Cargo>> = {
 
 const MIN = 60_000;
 export const INICIO_MOCK = Date.parse("2026-10-04T16:59:30-03:00");
-const DEZESSETE = Date.parse("2026-10-04T17:00:00-03:00");
-const REGRESSAO = { uf: "BA", de: Date.parse("2026-10-04T18:40:00-03:00"), ate: Date.parse("2026-10-04T18:46:00-03:00"), fator: 0.96 };
+export const INICIO_MOCK_2T = Date.parse("2026-10-25T16:59:30-03:00");
 
-function progresso(u: Pick<Unidade, "abre" | "fecha" | "uf">, t: number): number {
+interface Regressao {
+  uf: string;
+  de: number;
+  ate: number;
+  fator: number;
+}
+
+/** Regressão de seções da BA: 18:40 a 18:46 (1º turno) ou 100 a 106 min após 17:00 (2º turno). */
+const regressaoDe = (dezessete: number): Regressao => ({ uf: "BA", de: dezessete + 100 * MIN, ate: dezessete + 106 * MIN, fator: 0.96 });
+
+function progresso(u: Pick<Unidade, "abre" | "fecha" | "uf">, t: number, reg: Regressao): number {
   if (t <= u.abre) return 0;
   const f = Math.min(1, (t - u.abre) / (u.fecha - u.abre));
   let p = 1 - (1 - f) ** 1.7;
-  if (u.uf === REGRESSAO.uf && t >= REGRESSAO.de && t < REGRESSAO.ate && p < 1) p *= REGRESSAO.fator;
+  if (u.uf === reg.uf && t >= reg.de && t < reg.ate && p < 1) p *= reg.fator;
   return p;
 }
 
 /** Parcela acumulada quando a marginal anda linearmente de s0 a s1: s0·p + (s1 − s0)·p²/2, sobre p. */
 const acumulada = (s0: number, s1: number, p: number): number => s0 * p + ((s1 - s0) * p * p) / 2;
 
+export type FalhaMock = "erro" | "pendente" | "fonte";
+
 export interface OpcoesMock {
+  /** 2: duelo Flávio × Lula, governador em 6 UFs e rotas /api/2t/*. Padrão 1 (tela de ensaio do 1º turno). */
+  turno?: 1 | 2;
+  /** Rotas /api/2t/* que falham de propósito (ensaio de "fonte indisponível"). "fonte": dados com `erro` embutido (paralela). */
+  falhas?: Partial<Record<Rota2T, FalhaMock>>;
+  /** Régua do 1º turno ausente (`ref_1t: null` em todas as rotas). */
+  sem1t?: boolean;
+  /** Relógio parado no instante inicial: dados idênticos a cada leitura (auditoria de contraste e prints). */
+  congelar?: boolean;
+  /** Minutos após 17:00 em que o relógio simulado começa (padrão: 16:59:30). */
+  inicioMin?: number;
   speed: number;
   config?: Config | null;
   campoDe?: (sg: string) => Campo;
@@ -192,13 +216,19 @@ export interface OpcoesMock {
 }
 
 export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
-  const config = o.config && o.config.ufs.length > 0 ? o.config : AMOSTRA_CONFIG;
+  const turno = o.turno ?? 1;
+  const base = o.config && o.config.ufs.length > 0 ? o.config : AMOSTRA_CONFIG;
+  const config: Config = turno === 2 ? { ...base, turno: 2, eleicoes: { federal: 6258, estadual: 6260 } } : base;
+  const DEZESSETE = Date.parse(`${turno === 2 ? "2026-10-25" : "2026-10-04"}T17:00:00-03:00`);
+  const eleDe = (cargo: number): number => (cargo === 1 ? config.eleicoes.federal : config.eleicoes.estadual);
+  // No 1º turno a regressão da BA é 18:40 a 18:46 (100 a 106 min após 17:00): a mesma conta.
+  const reg = regressaoDe(DEZESSETE);
   const campoDe = o.campoDe ?? ((sg: string) => PARTIDO_CAMPO[sg.toUpperCase()] ?? "indefinido");
   const agoraReal = o.agoraReal ?? (() => Date.now());
   const real0 = agoraReal();
-  const inicio = o.inicio ?? INICIO_MOCK;
+  const inicio = o.inicio ?? (o.inicioMin !== undefined ? DEZESSETE + o.inicioMin * MIN : turno === 2 ? INICIO_MOCK_2T : INICIO_MOCK);
   const speed = Math.max(0.1, o.speed);
-  const agora = (): number => inicio + (agoraReal() - real0) * speed;
+  const agora = (): number => (o.congelar ? inicio : inicio + (agoraReal() - real0) * speed);
 
   // Unidades municipais com eleitorado e seções distribuídos pelo peso das zonas.
   const munPorUf = new Map<string, Unidade[]>();
@@ -264,7 +294,8 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     return cargo === 6 ? fed : fed <= 12 ? 3 * fed : fed + 24;
   };
   const candidatos = (cargo: number, uf: string): CandBase[] => {
-    if (cargo === 1) return [...PRESIDENTE_2026];
+    if (cargo === 1) return turno === 2 ? PRESIDENTE_2026.filter(c => DUELO_2T_NUMEROS.includes(c.n)).sort((a, z) => z.n.localeCompare(a.n)) : [...PRESIDENTE_2026];
+    if (turno === 2 && cargo === 3) return GOVERNADORES_2T[uf] ?? [];
     const k = `${cargo}:${uf}`;
     const hit = candCache.get(k);
     if (hit) return hit;
@@ -286,7 +317,7 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     const cands = candidatos(cargo, u.uf);
     if (cargo === 1) {
       const d = duelo(u.uf);
-      const menores = menoresPres(u.uf);
+      const menores = turno === 2 ? {} : menoresPres(u.uf);
       const somaMen = Object.values(menores).reduce((s, x) => s + x, 0);
       // Nas UFs de virada forçada o desvio municipal é amortecido para a virada acontecer em todo município grande.
       const desvio = VIRADAS.has(u.uf) ? u.desvio * 0.3 : u.desvio;
@@ -307,7 +338,7 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
   };
 
   const bruto = (cargo: number, u: Unidade, t: number): Bruto => {
-    const p = progresso(u, t);
+    const p = progresso(u, t, reg);
     const comparecimento = 0.79 + 0.04 * (aleatorio(`c${u.semente}`) - 0.5);
     const comparecem = u.te * comparecimento * p;
     const vb = Math.round(comparecem * (cargo === 1 ? 0.022 : 0.045));
@@ -351,7 +382,7 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     memo(`${cargo}:${uf}`, t, () => somar((munPorUf.get(uf) ?? []).map(u => bruto(cargo, u, t)), candidatos(cargo, uf).length));
 
   const brutoBr = (t: number): Bruto =>
-    memo(`1:br`, t, () => somar([...munPorUf.keys()].map(uf => brutoUf(1, uf, t)), PRESIDENTE_2026.length));
+    memo(`1:br`, t, () => somar([...munPorUf.keys()].map(uf => brutoUf(1, uf, t)), candidatos(1, "BR").length));
 
   interface Escopo {
     tpabr: Resultado["tpabr"];
@@ -384,6 +415,7 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
   };
 
   const montarResultado = (cargo: number, e: Escopo, t: number): Resultado => {
+    if (turno === 2 && cargo === 3 && (e.tpabr === "br" || !(GOVERNADORES_2T[e.uf ?? ""]?.length ?? 0))) throw new ErroApi(404, `2t cargo 3 ${e.uf ?? "br"}`);
     const b = brutoEscopo(cargo, e, t);
     const cands = candidatos(cargo, e.uf ?? "BR");
     const cg = CARGOS[cargo] ?? CARGOS[1];
@@ -468,8 +500,9 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
   const mapa = (q: ConsultaMapa, t = agora()): Mapa => {
     if (q.nivel === "uf") {
       if (q.cargo !== 1 && q.cargo !== 3 && q.cargo !== 5) return { unidades: [] };
+      if (turno === 2 && q.cargo !== 1 && !(q.cargo === 3)) return { unidades: [] };
       return {
-        unidades: config.ufs.map(u =>
+        unidades: config.ufs.filter(u => turno !== 2 || q.cargo !== 3 || u.uf.toUpperCase() in GOVERNADORES_2T).map(u =>
           unidadeMapa(q.cargo, { tpabr: "uf", uf: u.uf.toUpperCase(), mun: null, zona: null, nome: u.nome }, u.uf.toUpperCase(), u.cdi, u.nome, t),
         ),
       };
@@ -520,6 +553,8 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     let ant: Lote | null = null;
     for (let k = 1, s = DEZESSETE + MIN; s <= t; k++, s += MIN) {
       if (aleatorio(`lote${k}`) < 0.25) continue;
+      // 2º turno: o arquivo nacional não ganha versão nova durante as pausas de ensaio.
+      if (turno === 2 && q.abr === "br" && emPausaNacionalMin((s - DEZESSETE) / MIN)) continue;
       const ck = `${q.cargo}:${q.abr}:${s}`;
       let b = lotesCache.get(ck);
       if (!b) {
@@ -589,14 +624,14 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
         saida.push({ at: new Date(v).toISOString(), tipo: "virada", abr: uf.toLowerCase(), cargo: 1, texto: `virada em ${nomeUf(uf)}: ${m ? nomeCurto(m.nmu) : ""} passa à frente às ${horaBr(v)}` });
       }
     }
-    if (REGRESSAO.de <= t && munPorUf.has(REGRESSAO.uf)) {
-      saida.push({ at: new Date(REGRESSAO.de).toISOString(), tipo: "regressao", abr: "ba", cargo: 1, texto: `seções totalizadas recuaram na ${nomeUf(REGRESSAO.uf)} às ${horaBr(REGRESSAO.de)}` });
+    if (reg.de <= t && munPorUf.has(reg.uf)) {
+      saida.push({ at: new Date(reg.de).toISOString(), tipo: "regressao", abr: "ba", cargo: 1, texto: `seções totalizadas recuaram na ${nomeUf(reg.uf)} às ${horaBr(reg.de)}` });
     }
     for (const uf of munPorUf.keys()) {
       const f = fechamentoUf(uf);
       if (f <= t) saida.push({ at: new Date(f).toISOString(), tipo: "fechou", abr: uf.toLowerCase(), cargo: 1, texto: `${nomeUf(uf)} fechou às ${horaBr(f)}` });
     }
-    return saida.sort((a, b) => b.at.localeCompare(a.at));
+    return [...saida, ...(rotas2t?.anomalias(t) ?? [])].sort((a, b) => b.at.localeCompare(a.at));
   };
 
   const estado = (t = agora()): Estado => {
@@ -609,7 +644,7 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
       let munpt = 0;
       let munf = 0;
       for (const u of lista) {
-        const p = progresso(u, t);
+        const p = progresso(u, t, reg);
         if (p <= 0) munnr++;
         else if (p >= 1) munf++;
         else munpt++;
@@ -653,6 +688,30 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     };
   };
 
+  const rotas2t = turno === 2
+    ? criarRotas2T({
+        config,
+        dezessete: DEZESSETE,
+        estado: t => estado(t),
+        resultado: (cargo, abr, t) => resultado({ ele: eleDe(cargo), cargo, abr }, t),
+        stUf: (uf, t) => {
+          const b = brutoUf(1, uf, t);
+          return { st: b.st, ts: b.ts };
+        },
+        municipios: (uf, t) =>
+          (munPorUf.get(uf) ?? []).map(u => ({
+            cd: u.cd,
+            nm: u.nm,
+            te: u.te,
+            p: progresso(u, t, reg),
+            fecha: u.fecha,
+            comp: 0.79 + 0.04 * (aleatorio(`c${u.semente}`) - 0.5),
+          })),
+        falhas: o.falhas ?? {},
+        sem1t: o.sem1t ?? false,
+      })
+    : null;
+
   const eventos = (fn: (e: EventoSse) => void): (() => void) => {
     let ultimoSt = new Map<string, number>();
     let ultimasAnomalias = anomalias().length;
@@ -667,7 +726,7 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
         atual.set(uf, st);
         if (ultimoSt.get(uf) !== st) {
           for (const cargo of [1, 3, 5, 6, uf === "DF" ? 8 : 7]) {
-            fn({ kind: "resultado", ele: CARGOS[cargo]?.ele ?? 6259, cargo, abr: uf.toLowerCase(), snapshot_id: ++id, at });
+            fn({ kind: "resultado", ele: eleDe(cargo), cargo, abr: uf.toLowerCase(), snapshot_id: ++id, at });
           }
         }
       }
@@ -702,6 +761,8 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     serie: q => atrasar(() => serie(q)),
     lotes: q => atrasar(() => lotes(q)),
     anomalias: () => atrasar(() => anomalias()),
+    doisT: <K extends Rota2T>(rota: K) =>
+      atrasar((): Resposta<Dados2T[K]> => (rotas2t ? (rotas2t.dados(rota, agora()) as Resposta<Dados2T[K]>) : pendente())),
     auditoria: caminho => Promise.resolve({ mock: true, caminho }),
     eventos,
   };

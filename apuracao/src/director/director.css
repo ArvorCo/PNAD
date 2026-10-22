@@ -186,3 +186,17 @@ input[type="search"] {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   min-width: 3.5em;
 }
+
+/* atalho de teclado dentro do botão de tela do 2º turno */
+.grade button small {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+section h2[hidden],
+.grade[hidden] {
+  display: none;
+}

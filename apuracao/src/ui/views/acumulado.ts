@@ -16,9 +16,9 @@ import { compacto, dezessete, hora, horaCurta, inteiro, nomeProprio, pct } from 
 import type { Cores, Lote, Lotes, Need, State } from "../state/types.ts";
 import { chaveLotes } from "../state/types.ts";
 import type { View } from "./registry.ts";
+import { eleicaoDe } from "./executivo.ts";
 import { partes } from "./registry.ts";
 
-const ELE = 6257;
 const CARGO = 1;
 const MIN = 60_000;
 const JANELA = 10 * MIN;
@@ -46,6 +46,7 @@ export function infoDosLotes(l: Lotes | undefined, cores: Cores): InfoCand[] {
  * seguinte e todos os lotes ficariam antes do início do eixo (visto em 05/10/2026, 00:05).
  */
 export function inicioDoEixo(s: State, referencia?: string | null): number {
+  const ELE = eleicaoDe(s, CARGO);
   const lotes = s.lotes[chaveLotes(ELE, CARGO, "br")]?.lotes ?? [];
   const primeiro = lotes.find(l => l.st > 0)?.at ?? s.estado?.historico?.find(h => h.st > 0)?.at ?? referencia ?? null;
   const base = Date.parse(primeiro ?? "");
@@ -113,9 +114,9 @@ export function criarAcumuladoView(): View {
     id: "acumulado",
     dwell: 30,
     titulo: () => "Votos acumulados",
-    needs: (): Need[] => [
+    needs: (s): Need[] => [
       { tipo: "estado" },
-      { tipo: "lotes", ele: ELE, cargo: CARGO, abr: "br" },
+      { tipo: "lotes", ele: eleicaoDe(s, CARGO), cargo: CARGO, abr: "br" },
     ],
     mount(el) {
       raiz = el;
@@ -141,7 +142,7 @@ export function criarAcumuladoView(): View {
     update(s: State) {
       if (!raiz) return;
       const p = partes(raiz);
-      const dados = s.lotes[chaveLotes(ELE, CARGO, "br")];
+      const dados = s.lotes[chaveLotes(eleicaoDe(s, CARGO), CARGO, "br")];
       trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false), dados?.fonte === "soma_ufs" ? chip("soma das 27 UFs e exterior", "aviso") : null]);
       const desde = inicioDoEixo(s);
       const sig = [dados?.lotes.length, dados?.lotes[dados.lotes.length - 1]?.snapshot_id, dados?.fonte, s.cores, desde, s.estado?.agora.slice(0, 15)].join("|");

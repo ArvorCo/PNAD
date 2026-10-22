@@ -191,10 +191,67 @@ Por variável de ambiente na partida ou, a quente, em `meta.ajustes` (JSON com o
 
 ## 2º turno (25/10)
 
-1. Banco separado: `APURACAO_ELEICOES=6258,6260 APURACAO_DB=data/apuracao-2t.sqlite scripts/start-collect.sh`. Se o `ele-c.json` trouxer 6258/6260 num pleito novo (como 452 e 453 em 2024), acrescente `APURACAO_PLEITO=<cd desse pleito>` para gravar as linhas de `eleicao` e `cargo`; sem ele o coletor segue pelo `APURACAO_ELEICOES` e só avisa no log.
-2. Servidor no mesmo banco: `APURACAO_DB=data/apuracao-2t.sqlite scripts/start-serve.sh`. O turno é detectado pelos arquivos de 6258/6260 (ou `APURACAO_TURNO=2`).
-3. O telão troca sozinho pelo `turno` de `/api/config`: `pres` vira duelo com barra bipartida e mapa divergente.
-4. Antes, `bun run sweep` com as mesmas variáveis para conferir que os arquivos existem.
+O 2º turno roda sobre o mesmo coletor, servidor e telão, com banco próprio e uma camada nova de indicadores, alertas e amostra de seções. O 1º turno não é tocado: `data/apuracao.sqlite` e `data/secoes_2026.sqlite` viram régua de comparação. Contrato entre as partes em `../analysis/apuracao_2t_2026/CONTRATO.md`.
+
+### Partida
+
+```bash
+bun run scripts/referencia-1t.ts        # régua do 1º turno em data/referencia_1t.json (~25 s, só leitura dos bancos do 1T)
+scripts/preflight.sh 2t                 # régua, -cs.json do pleito 3221, Supabase da totalização paralela, relógio, disco
+scripts/start-collect.sh 2t             # APURACAO_ELEICOES=6258,6260 APURACAO_PLEITO=3221 APURACAO_DB=data/apuracao-2t.sqlite APURACAO_PAUSA_MIN=7
+APURACAO_DB=data/apuracao-2t.sqlite scripts/start-serve.sh
+nohup scripts/publicar-loop.sh >/dev/null 2>&1 &   # página pública: exporta e dá push a cada 5 min
+```
+
+Varredura de conferência feita em 21/10 com as mesmas variáveis: 13.105 arquivos ok, 35 inexistentes (os agregados `-e`). Governador em 2º turno em seis UFs: AC, AM, DF, ES, RN e TO. O telão troca sozinho pelo `turno` de `/api/config`; `APURACAO_TURNO=2` força.
+
+### Régua do 1º turno
+
+`data/referencia_1t.json`: curva de seções totalizadas por minuto (Brasil e 27 UFs + exterior), marcos p50/p90/p99/p100, abstenção final por município e por UF, lag encerramento → recebimento por UF e por município (das seções do 1T), governador das seis UFs. **Convenção de relógio**: minutos após 17:00 de Brasília. O `dt/ht` dos arquivos de AC, AM, RO, RR, MT e MS vem em hora local rotulada como Brasília; `corrigirTotalizadoEm` (`src/turno2/comum.ts`) e `RelogioArquivo` (`src/server/indicadores/base.ts`) corrigem isso, herdam o instante em versão regerada e nunca deixam o carimbo passar da geração. Sem o arquivo, tudo funciona e as comparações saem `null`.
+
+### Rotas novas
+
+| Endpoint | Resposta |
+|---|---|
+| `GET /api/2t/regioes` | soma dos arquivos de UF por região (N, NE, CO, SE, S, exterior) e Brasil: seções, votos do duelo, abstenção, seções/min, ETA, atraso vs 1T no mesmo relógio |
+| `GET /api/2t/ufs` | 27 UFs + exterior, mais lentas primeiro: pst, municípios faltantes, idade da última versão, `parada`, atraso vs 1T, três maiores municípios abertos |
+| `GET /api/2t/abstencao` | abstenção dos municípios já fechados contra os mesmos municípios no 1T (Brasil, regiões, UFs, destaques ±3 pp) |
+| `GET /api/2t/estaduais` | os seis duelos de governador com viradas, campo e régua |
+| `GET /api/2t/evolucao?nivel=regiao\|uf&passo=60` | séries por região ou UF (pst e % válidos dos dois) na grade da noite, com a curva do 1T |
+| `GET /api/2t/pausas` | pausa nacional, geral e por UF (início, fim, minutos), soma das UFs contra o arquivo nacional, pausa do 1T como referência |
+| `GET /api/2t/secoes` | amostra de seções do arquivo-urna: encerramento → emissão → recebimento → totalização, por UF e Brasil, seções tardias |
+| `GET /api/2t/paralela` | totalização paralela por QR: BUs recebidos, cobertura, conferência contra o BU oficial, divergências, placar dos BUs (soma dos BUs recebidos, não projeção) |
+
+`/api/config` ganha `ufs_governador_2t` e `regioes`; `/api/anomalias` ganha as categorias `pausa`, `divergencia`, `abstencao` e `paralela`. Contratos zod em `tests/api-schemas-2t.ts` e `tests/helpers-2t.ts`.
+
+### Alertas gravados pelo coletor
+
+`pausa_nacional_inicio/fim`, `pausa_geral_inicio/fim` (nenhum arquivo publica), `pausa_uf_inicio/fim`, `pausa_nacional_longa`/`pausa_geral_longa` (error ao passar de 15 min), `soma_ufs_adiante`, `uf_atrasada_1t` (patamares de 20 min), `abstencao_atipica_mun` (te ≥ 20 mil e |Δ| ≥ 5 pp), `abstencao_atipica_uf` (≥ 30% do eleitorado fechado e |Δ| ≥ 2 pp), `secao_tardia` (encerramento após 18:00), `divergencia_paralela` (error), `paralela_conferida`, `virada` e `uf_fechou`. Textos e categorias em `src/server/textos.ts`; o telão só mostra o que tem categoria. Regras que o replay do 1º turno exigiu: arquivo que o coletor não leu há 180 s não entra em pausa; a detecção espera 1 min além do limiar (atraso do CDN); versão que chega velha não encerra pausa. Com limiar de 5 min o replay do 1º turno dava quatro pausas falsas de cadência; com 7 sobra só a parada real de 25 min, por isso o `start-collect.sh 2t` exporta `APURACAO_PAUSA_MIN=7`.
+
+### Amostra de seções e totalização paralela
+
+Amostra equiprovável por município (150 seções por UF, 600 nas seis UFs com governador, mais toda seção que chegar pela totalização paralela), aux.json → hash → BU, com balde próprio (`APURACAO_SECOES_RPS` 15, `APURACAO_SECOES_CONCORRENCIA` 12: com 4 a rodada de 7,5 mil seções levava 30 min) e reconsulta a cada `APURACAO_SECOES_INTERVALO_S` (900). A ponte com o Supabase lê as views públicas a cada `APURACAO_PARALELA_INTERVALO_S` (60) e confere cada BU aceito contra o BU oficial da mesma seção com as regras de `../scripts/totalizacao-conferir-tse.py`. Desligar: `APURACAO_SECOES=0` (as seções da paralela continuam, porque a conferência depende delas) e `APURACAO_PARALELA=0`. Tabelas novas: `pausa`, `secao_2t`, `paralela_bu`, `paralela_conferencia`.
+
+### Telas novas e teclado
+
+| Tela | Tecla | Conteúdo |
+|---|---|---|
+| `regioes` | Shift+N | duelo por região, pst, abstenção, atraso vs 1T |
+| `ufs` | Shift+U | ranking das UFs, mais lentas primeiro, chip "parada" |
+| `atraso` | Shift+D | quem está lerdo: UFs atrasadas vs 1T, maiores municípios abertos, quem fecha por último |
+| `abstencao` | Shift+B | mapa divergente Δ abstenção vs 1T (±5 pp), base municípios fechados |
+| `secoes` | Shift+S | cadeia encerramento → emissão → recebimento → totalização |
+| `pausas` | Shift+P | linha do tempo da noite com as pausas e a faixa cinza do 1T (19:32–20:02) |
+| `gov-2t` | `3` ou Shift+G | seis duelos estaduais; tecla de UF leva a `gov-uf` |
+| `paralela` | Shift+T | totalização paralela: cobertura, conferência, divergências |
+| `alertas` | Shift+L | feed das anomalias por categoria |
+| `evolucao` | Shift+E | % válidos na noite, nacional + regiões; `m` troca para 27 UFs |
+
+Playlist do 2º turno em `public/playlist-2t.json` (a do contrato é reserva). Ensaio sem banco: `#mock=1` já é 2º turno (`&turno=1` volta ao 1º), com `t0=<min após 17h>`, `falha=rota[:erro|pendente|fonte]`, `sem1t=1` e `congelar=1` (relógio parado, necessário para o auditor de contraste). Banco de ensaio: `bun run scripts/semear-ensaio.ts --turno 2` gera `data/ensaio-2t.sqlite`.
+
+### Página pública
+
+`scripts/exportar-publico.ts` grava `../docs/assets/apuracao_2t/*.json` + `manifest.json` (sem municípios do config, sem identificador pessoal, abaixo de 2 MB); `scripts/publicar-loop.sh` exporta e dá commit + push só dessa pasta a cada `INTERVALO_S` (300; `PUSH=0` só commita). `../docs/apuracao_2t_ao_vivo.html` lê os JSON, recarrega a cada 60 s, avisa dados com mais de 10 min e aceita `?fonte=exemplo`. Card em `img/og/apuracao_2t_ao_vivo.png`; depois do primeiro commit da página rode `python3 ../scripts/sitemap-build.py`.
 
 ## Verificação
 

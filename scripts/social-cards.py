@@ -106,6 +106,21 @@ CARDS: list[dict] = [
         "logo": True,
     },
     {
+        "slug": "apuracao_2t_ao_vivo",
+        "eyebrow": "Ao vivo · 2º turno de 25/10/2026",
+        "title": "Apuração do 2º turno ao vivo",
+        "title_em": "ritmo, abstenção e pausas.",
+        "lede": "Regiões, ritmo de cada UF contra o 1º turno no mesmo horário, abstenção em municípios fechados, pausas do arquivo do TSE e a totalização paralela por QR. <b>Atualiza a cada minuto e pede explicação, não indica irregularidade.</b>",
+        "stats": [
+            ("6", "regiões com duelo, atraso e abstenção corrente"),
+            ("28", "UFs e exterior ordenadas das mais lentas às mais rápidas"),
+            ("60 s", "entre recargas, com a idade dos dados na tela"),
+        ],
+        "foot": "parcial de apuração, não projeção; soma dos BUs recebidos, não projeção",
+        "accent": "red",
+        "logo": True,
+    },
+    {
         "slug": "senado_2027",
         "eyebrow": "Senado de 2027 diante do STF · 81 fichas",
         "title": "Os 49 votos de uma PEC existem.",

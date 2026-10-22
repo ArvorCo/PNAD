@@ -6,6 +6,7 @@
 //   bun run scripts/semear-ensaio.ts --passos 6       # outro número de passos
 //   bun run scripts/semear-ensaio.ts --mais 1         # acrescenta 1 passo ao banco existente (teste do SSE)
 //   bun run scripts/semear-ensaio.ts --db outro.sqlite
+//   bun run scripts/semear-ensaio.ts --turno 2        # recria data/ensaio-2t.sqlite (25/10/2026, 50 passos)
 //
 // Os números são inventados (lean fixo por UF, deriva para forçar viradas em MG e PR);
 // nomes de senado são de ensaio. Nunca usar este banco como dado.
@@ -29,6 +30,12 @@ function arg(nome: string): string | undefined {
 }
 
 const RAIZ = resolve(import.meta.dir, "..");
+if (arg("turno") === "2") {
+  const { semearEnsaio2t } = await import("./semear-ensaio-2t.ts");
+  const mais = arg("mais");
+  semearEnsaio2t({ db: resolve(RAIZ, arg("db") ?? "data/ensaio-2t.sqlite"), passos: Number(arg("passos") ?? 50), ...(mais === undefined ? {} : { mais: Number(mais) }) });
+  process.exit(0);
+}
 const DB = resolve(RAIZ, arg("db") ?? "data/ensaio.sqlite");
 const MAIS = arg("mais");
 const PASSOS = Number(arg("passos") ?? 10);

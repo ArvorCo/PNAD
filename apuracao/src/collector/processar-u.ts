@@ -1,12 +1,13 @@
 // Resultado -u: normalização com política de candidatos, anomalias e zonas finais.
 import type { ItemLote } from "../db/escrita.ts";
 import { itensDeU } from "../db/itens.ts";
-import { normalizarU, politicaPara } from "../parse/normalizar.ts";
+import { metaDe, normalizarU, politicaPara } from "../parse/normalizar.ts";
 import type { ResultadoU } from "../parse/schemas.ts";
 import { candidatosDe, compararU } from "./anomalias.ts";
 import type { CtxCorpo } from "./contexto.ts";
 import { candidatosSempre, resumoTotais } from "./estado-arquivos.ts";
 import type { FileState } from "./estado-arquivos.ts";
+import { eventosApuracao } from "./viradas.ts";
 
 /** Cópia regressiva: só os totais, para auditoria. */
 export function totaisRegressivo(p: ResultadoU, fs: FileState, snapRef: string): ItemLote[] {
@@ -30,8 +31,21 @@ export function processarU(c: CtxCorpo, p: ResultadoU, snapRef: string, primeiro
   if (an.alerta && !n.incluiuCandidatos) n = normalizarU(p, { ...base, forcarCandidatos: true });
   grupo.push(...itensDeU(n, { ref: snapRef }));
   for (const ev of an.eventos) grupo.push({ k: "evento", row: ev });
+  const meta = metaDe(p);
+  const nomes = new Map(n.candidatos.map((x) => [x.sqcand, x.nome_urna] as const));
+  const apuracao = eventosApuracao(fs.totaisAnteriores, novoT, fs.candidatosAnteriores, novoC, {
+    em: c.em, arquivoId: fs.id, snapshot: { ref: snapRef }, key: k, geradoEm: meta.gerado_em, totalizadoEm: meta.totalizado_em, nomes,
+  });
+  for (const ev of apuracao) grupo.push({ k: "evento", row: ev });
   fs.totaisAnteriores = novoT;
   if (guarda && novoC !== null) fs.candidatosAnteriores = novoC;
+  if (ctx.aoVersaoU) {
+    try {
+      grupo.push(...ctx.aoVersaoU(fs, { em: c.em, snapRef, geradoEm: meta.gerado_em, totalizadoEm: meta.totalizado_em, totais: novoT }));
+    } catch (err) {
+      ctx.aoFalharObservador?.(err);
+    }
+  }
 
   // município finalizado no -u (tf = s ou pst = 100): zonas dele como final, uma vez
   if (n.final && k.nivel === "mu" && k.ele !== null && k.uf !== null && k.mun !== null) {

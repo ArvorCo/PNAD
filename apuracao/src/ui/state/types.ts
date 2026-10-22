@@ -1,6 +1,8 @@
 // Tipos do telão. Espelham os "Contratos de API" do plano: números já convertidos,
 // nunca string com vírgula. Datas em texto ISO-8601 (UTC ou com deslocamento).
 
+import type { Respostas2T, Rota2T } from "../data/doist.ts";
+
 /** Campo político editorial (tucano é centro-esquerda). */
 export type Campo = "esquerda" | "centro-esquerda" | "centro" | "centro-direita" | "direita" | "indefinido";
 
@@ -222,7 +224,7 @@ export interface Lotes {
 export interface Anomalia {
   at: string;
   /** Categoria do servidor; os tipos operacionais ("outro") ficam fora do telão. */
-  tipo: "virada" | "regressao" | "fechou" | "atraso";
+  tipo: "virada" | "regressao" | "fechou" | "atraso" | "pausa" | "divergencia" | "abstencao" | "paralela";
   abr: string;
   cargo: number;
   texto: string;
@@ -230,6 +232,8 @@ export interface Anomalia {
   tipo_bruto?: string; // tipo gravado pelo coletor ("regressao_contagem", "municipio_finalizado")
   severidade?: "info" | "warn" | "error";
   uf?: string | null;
+  /** Números usados pelo coletor (st, ts, minutos, pa_2t, campos divergentes), quando o servidor os manda. */
+  detalhe?: Record<string, unknown> | null;
 }
 
 // ---------- /events ----------
@@ -315,6 +319,8 @@ export interface Rede {
 
 export interface State {
   config: Config | null;
+  /** Rotas /api/2t/* do 2º turno (ver data/doist.ts); cada chave guarda dados, pendente ou erro. */
+  doist: Respostas2T;
   estado: Estado | null;
   resultados: Record<string, Resultado>; // chave chaveResultado()
   mapas: Record<string, Mapa>; // chave chaveMapa()
@@ -360,4 +366,5 @@ export type Need =
   | { tipo: "serie"; ele: number; cargo: number; abr: string }
   | { tipo: "lotes"; ele: number; cargo: number; abr: string }
   | { tipo: "estado" }
-  | { tipo: "anomalias" };
+  | { tipo: "anomalias" }
+  | { tipo: "doist"; rota: Rota2T };

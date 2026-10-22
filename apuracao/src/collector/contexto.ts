@@ -3,7 +3,7 @@ import type { Database } from "bun:sqlite";
 import type { ModoZonas } from "../config.ts";
 import type { EventoNovo, ItemLote, LinhaFetch } from "../db/escrita.ts";
 import type { ClasseFetch, FetchResult, Job, MotivoFetch, Prioridade } from "../types.ts";
-import type { EstadoArquivos, FileState } from "./estado-arquivos.ts";
+import type { EstadoArquivos, FileState, TotaisResumo } from "./estado-arquivos.ts";
 import type { Lote } from "./lote.ts";
 import type { Relogio } from "./relogio.ts";
 
@@ -13,6 +13,15 @@ export interface Knobs {
   minIntervaloMuS: number;
   sweepMin: number;
   concurrency: number;
+}
+
+/** Versão nova (não regressiva) de um -u, entregue aos observadores do 2º turno. */
+export interface VersaoU {
+  em: string;
+  snapRef: string;
+  geradoEm: string | null;
+  totalizadoEm: string | null;
+  totais: TotaisResumo;
 }
 
 export interface CtxProc {
@@ -27,6 +36,10 @@ export interface CtxProc {
   /** caminhos de drift já reportados (tipo + caminho) */
   driftVisto: Set<string>;
   aleatorio?: () => number;
+  /** Observador de versões novas de -u (detector de pausas); devolve itens para o mesmo lote. */
+  aoVersaoU?: (fs: FileState, v: VersaoU) => ItemLote[];
+  /** Falha de um observador: registrada sem derrubar o processamento do arquivo. */
+  aoFalharObservador?: (erro: unknown) => void;
 }
 
 export interface JobNovo {

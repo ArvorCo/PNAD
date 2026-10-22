@@ -72,6 +72,83 @@ export interface EventoNovo {
   detalhe?: unknown;
 }
 
+/** Pausa do 2º turno: abre com `ate` nulo e fecha pela mesma chave (nivel, uf, de). */
+export interface LinhaPausa {
+  nivel: "nacional" | "uf" | "geral";
+  uf: S;
+  de: string;
+  ate: S;
+  minutos: N;
+  st_antes: N;
+  st_depois: N;
+  detectado_em: string;
+}
+
+/** Seção da amostra ao vivo do 2º turno (linha inteira, regravada a cada mudança). */
+export interface LinhaSecao2t {
+  uf: string;
+  mun: string;
+  zona: number;
+  secao: number;
+  origem: "amostra" | "paralela";
+  status_aux: S;
+  hash: S;
+  bu_nome: S;
+  dr_hr: S;
+  encerramento_local: S;
+  encerramento_iso: S;
+  emissao_iso: S;
+  recebido_iso: S;
+  bu_sha256: S;
+  aptos: N;
+  comparecimento: N;
+  votos_json: S;
+  totalizado_mun_iso: S;
+  lag_encerr_recebimento_min: N;
+  lag_encerr_emissao_min: N;
+  lag_recebimento_totalizacao_min: N;
+  erro: S;
+  tentativas: number;
+  atualizado_em: string;
+}
+
+/** BU aceito pela totalização paralela (cópia local, imutável como na origem). */
+export interface LinhaParalelaBu {
+  id: number;
+  recebido_em: string;
+  uf: string;
+  mun: string;
+  zona: number;
+  secao: number;
+  fase: S;
+  pleito: N;
+  turno: N;
+  orig: S;
+  aptos: N;
+  comparecimento: N;
+  hash_final: string;
+  cargos_json: string;
+  lido_em: string;
+}
+
+export interface LinhaParalelaConferencia {
+  bu_id: number;
+  uf: string;
+  mun: string;
+  zona: number;
+  secao: number;
+  hash_final: S;
+  situacao: "igual" | "divergente" | "tse_ainda_nao_publicou" | "erro" | "fora_do_oficial";
+  diferencas_json: S;
+  erro: S;
+  tse_hash: S;
+  tse_arquivo: S;
+  tse_sha256: S;
+  tse_recebido_iso: S;
+  primeira_em: string;
+  conferido_em: string;
+}
+
 export type ItemLote =
   | { k: "arquivo"; ref?: string; row: ArquivoRegistro }
   | { k: "arquivo_estado"; id: IdRef; row: ArquivoEstado }
@@ -93,7 +170,11 @@ export type ItemLote =
   | { k: "eleicao"; rows: readonly LinhaEleicao[] }
   | { k: "cargo"; rows: readonly LinhaCargo[] }
   | { k: "uf"; rows: readonly LinhaUf[] }
-  | { k: "meta"; chave: string; valor: string };
+  | { k: "meta"; chave: string; valor: string }
+  | { k: "pausa"; row: LinhaPausa }
+  | { k: "secao_2t"; row: LinhaSecao2t }
+  | { k: "paralela_bu"; rows: readonly LinhaParalelaBu[] }
+  | { k: "paralela_conferencia"; row: LinhaParalelaConferencia };
 
 export interface ResultadoLote {
   /** ids criados, por ref */
@@ -152,7 +233,27 @@ const COLS = {
   eleicao: ["cd", "cdt2", "nome", "turno", "tipo", "pleito", "ciclo", "data"],
   cargo: ["eleicao_cd", "cd", "nome", "tp", "proporcional"],
   uf: ["sigla", "nome"],
+  pausa: ["nivel", "uf", "de", "ate", "minutos", "st_antes", "st_depois", "detectado_em"],
+  secao_2t: [
+    "uf", "mun", "zona", "secao", "origem", "status_aux", "hash", "bu_nome", "dr_hr", "encerramento_local", "encerramento_iso",
+    "emissao_iso", "recebido_iso", "bu_sha256", "aptos", "comparecimento", "votos_json", "totalizado_mun_iso",
+    "lag_encerr_recebimento_min", "lag_encerr_emissao_min", "lag_recebimento_totalizacao_min", "erro", "tentativas", "atualizado_em",
+  ],
+  paralela_bu: [
+    "id", "recebido_em", "uf", "mun", "zona", "secao", "fase", "pleito", "turno", "orig", "aptos", "comparecimento", "hash_final",
+    "cargos_json", "lido_em",
+  ],
+  paralela_conferencia: [
+    "bu_id", "uf", "mun", "zona", "secao", "hash_final", "situacao", "diferencas_json", "erro", "tse_hash", "tse_arquivo",
+    "tse_sha256", "tse_recebido_iso", "primeira_em", "conferido_em",
+  ],
 } as const;
+
+/** Sobrescreve todas as colunas fora da chave primária (linha inteira). */
+function upsertTudoSql(tabela: string, cols: readonly string[], pk: readonly string[], manter: Readonly<Record<string, string>> = {}): string {
+  const sets = cols.filter((c) => !pk.includes(c)).map((c) => `${c} = ${manter[c] ?? `excluded.${c}`}`);
+  return insertSql(tabela, cols, `ON CONFLICT (${pk.join(", ")}) DO UPDATE SET ${sets.join(", ")}`);
+}
 
 export class Escritor {
   private readonly st: Record<string, Stmt>;
@@ -197,6 +298,20 @@ export class Escritor {
       cargo: q(upsertSql("cargo", COLS.cargo, ["eleicao_cd", "cd"])),
       uf: q(upsertSql("uf", COLS.uf, ["sigla"])),
       meta: q("INSERT INTO meta (chave, valor) VALUES ($chave, $valor) ON CONFLICT (chave) DO UPDATE SET valor = excluded.valor"),
+      pausaFechar: q(
+        `UPDATE pausa SET ate = $ate, minutos = $minutos, st_depois = $st_depois
+         WHERE nivel = $nivel AND IFNULL(uf, '') = IFNULL($uf, '') AND de = $de`,
+      ),
+      pausa: q(insertSql("pausa", COLS.pausa, "ON CONFLICT DO NOTHING")),
+      secao_2t: q(
+        upsertTudoSql("secao_2t", COLS.secao_2t, ["uf", "mun", "zona", "secao"], {
+          origem: "CASE WHEN secao_2t.origem = 'amostra' THEN 'amostra' ELSE excluded.origem END",
+        }),
+      ),
+      paralela_bu: q(insertSql("paralela_bu", COLS.paralela_bu, "ON CONFLICT (id) DO NOTHING")),
+      paralela_conferencia: q(
+        upsertTudoSql("paralela_conferencia", COLS.paralela_conferencia, ["bu_id"], { primeira_em: "paralela_conferencia.primeira_em" }),
+      ),
     };
   }
 
@@ -298,6 +413,23 @@ export class Escritor {
           }
           case "meta":
             this.s("meta").run({ chave: it.chave, valor: it.valor });
+            break;
+          case "pausa": {
+            const r = it.row;
+            const fechou = this.s("pausaFechar").run({ ate: r.ate, minutos: r.minutos, st_depois: r.st_depois, nivel: r.nivel, uf: r.uf, de: r.de });
+            if (fechou.changes === 0) this.s("pausa").run({ ...r });
+            break;
+          }
+          case "secao_2t":
+            this.s("secao_2t").run({ ...it.row });
+            break;
+          case "paralela_bu": {
+            const st = this.s("paralela_bu");
+            for (const r of it.rows) st.run({ ...r });
+            break;
+          }
+          case "paralela_conferencia":
+            this.s("paralela_conferencia").run({ ...it.row });
             break;
         }
       }

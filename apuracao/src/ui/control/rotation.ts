@@ -25,11 +25,38 @@ export const PLAYLIST_PADRAO: Playlist = {
   ],
 };
 
+/** Playlist do 2º turno (contrato do telão): duelo, regiões, UFs, evolução, governadores, abstenção, atraso, pausas, paralela, alertas e destaques. */
+export const PLAYLIST_2T: Playlist = {
+  dwell: 20,
+  itens: [
+    { v: "pres", dwell: 25 },
+    { v: "regioes", dwell: 22 },
+    { v: "ufs", dwell: 22 },
+    { v: "evolucao", dwell: 24 },
+    { v: "gov-2t", dwell: 24 },
+    { v: "abstencao", dwell: 22 },
+    { v: "atraso", dwell: 20 },
+    { v: "pausas", dwell: 20 },
+    { v: "paralela", dwell: 20 },
+    { v: "alertas", dwell: 16 },
+    { v: "pres-uf", uf: "$destaque", max: 3, dwell: 20 },
+  ],
+  destaque: ["SP", "MG", "RJ", "BA", "RS", "PR", "PE", "CE", "PA", "SC", "GO", "MA"],
+};
+
+/**
+ * Playlist de cada turno: no 2º, a de `playlist-2t.json` se válida, senão a do contrato; no 1º,
+ * a de `playlist.json`. O arquivo do outro turno nunca vale.
+ */
+export function playlistDoTurno(turno: number, bruto1t: unknown, bruto2t: unknown): Playlist {
+  return turno === 2 ? normalizarPlaylist(bruto2t, PLAYLIST_2T) : normalizarPlaylist(bruto1t);
+}
+
 /** Aceita playlist como {dwell, itens, destaque} ou lista; cada item com `v` ou `view`. */
-export function normalizarPlaylist(bruto: unknown): Playlist {
+export function normalizarPlaylist(bruto: unknown, padrao: Playlist = PLAYLIST_PADRAO): Playlist {
   const obj = !Array.isArray(bruto) && typeof bruto === "object" && bruto !== null ? (bruto as Record<string, unknown>) : null;
   const lista: unknown = Array.isArray(bruto) ? bruto : (obj?.itens ?? obj?.telas);
-  if (!Array.isArray(lista)) return PLAYLIST_PADRAO;
+  if (!Array.isArray(lista)) return padrao;
   const itens: ItemPlaylist[] = [];
   for (const x of lista) {
     const r: Record<string, unknown> = typeof x === "string" ? { v: x } : typeof x === "object" && x !== null ? (x as Record<string, unknown>) : {};
@@ -43,9 +70,9 @@ export function normalizarPlaylist(bruto: unknown): Playlist {
       ...(typeof r.max === "number" && r.max > 0 ? { max: r.max } : {}),
     });
   }
-  if (itens.length === 0) return PLAYLIST_PADRAO;
+  if (itens.length === 0) return padrao;
   const destaque = Array.isArray(obj?.destaque) ? obj.destaque.filter((u): u is string => typeof u === "string").map(u => u.toUpperCase()) : [];
-  const dwell = typeof obj?.dwell === "number" && obj.dwell > 0 ? obj.dwell : PLAYLIST_PADRAO.dwell;
+  const dwell = typeof obj?.dwell === "number" && obj.dwell > 0 ? obj.dwell : padrao.dwell;
   return { dwell, itens, ...(destaque.length > 0 ? { destaque } : {}) };
 }
 

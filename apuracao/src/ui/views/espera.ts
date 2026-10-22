@@ -48,7 +48,7 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
   return {
     id: "espera",
     dwell: 30,
-    titulo: () => "Apuração 2026, primeiro turno",
+    titulo: s => ((s.config?.turno ?? s.estado?.turno ?? 1) === 2 ? "Apuração 2026, segundo turno" : "Apuração 2026, primeiro turno"),
     needs: () => [{ tipo: "estado" }],
     mount(el) {
       raiz = el;

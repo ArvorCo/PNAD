@@ -1,6 +1,7 @@
 // /api/anomalias: eventos gravados pelo coletor + viradas e fechamentos derivados das séries
-// quando o coletor ainda não os gravou.
+// só como reserva, quando o coletor não gravou a linha (sem duplicar).
 import type { Database } from "bun:sqlite";
+import { corrigirTotalizadoEm } from "../turno2/comum.ts";
 import { chave, keyAb } from "../tse/urls.ts";
 import { arquivoPorChave, maxSnapshotId } from "../db/leitura.ts";
 import { abrTexto, titulo } from "./abr.ts";
@@ -8,7 +9,7 @@ import { eleicoes } from "./api-config.ts";
 import { serieArquivo, viradasDe } from "./api-resultado.ts";
 import { CacheCurto } from "./cache.ts";
 import type { MunicipioInfo } from "./consultas.ts";
-import { fechamentosAb, municipiosIndex } from "./consultas.ts";
+import { FIM, municipiosIndex } from "./consultas.ts";
 import type { Contexto } from "./contexto.ts";
 import type { Params } from "./http.ts";
 import type { Categoria } from "./textos.ts";
@@ -76,54 +77,84 @@ function montar(r0: Omit<AnomaliaOut, "texto" | "categoria" | "abr" | "cargo">, 
 
 const cacheDerivadas = new CacheCurto<AnomaliaOut[]>(5000, 16);
 
-/** Viradas (presidente br/uf, governador uf) e fechamentos de UF pelo -ab br, até `at`. */
+/** Fechamento de cada UF pelo -ab br até `at`, com o totalizado_em corrigido do fuso. */
+function fechamentosUf(db: Database, arquivoId: number, at?: string): Map<string, string> {
+  const rows = db
+    .query<{ cdabr: string; em: string | null; gerado_em: string | null }, [number, string]>(
+      `SELECT e.cdabr, MIN(COALESCE(e.totalizado_em, s.capturado_em)) AS em, s.gerado_em
+       FROM snapshot s JOIN ab_estado e ON e.snapshot_id = s.id
+       WHERE s.arquivo_id = ? AND s.regressivo = 0 AND s.capturado_em <= ? AND e.ts > 0 AND e.st = e.ts
+       GROUP BY e.cdabr`,
+    )
+    .all(arquivoId, at ?? FIM);
+  const m = new Map<string, string>();
+  for (const r of rows) {
+    const em = corrigirTotalizadoEm(r.cdabr, r.em, r.gerado_em);
+    if (em) m.set(r.cdabr, em);
+  }
+  return m;
+}
+
+/**
+ * Reserva para viradas (presidente br/uf, governador uf) e fechamentos de UF quando o coletor
+ * não gravou a linha: virada derivada some se o mesmo snapshot já tem virada gravada; fechamento
+ * derivado some se a UF já tem fechamento gravado.
+ */
 function derivadas(db: Database, muns: ReadonlyMap<string, MunicipioInfo>, at?: string): AnomaliaOut[] {
-  const tipos = new Set(db.query<{ tipo: string }, []>("SELECT DISTINCT tipo FROM evento WHERE tipo IN ('virada', 'fechou', 'uf_fechou')").all().map((r) => r.tipo));
+  const viradasGravadas = new Set(
+    db
+      .query<{ s: number }, []>("SELECT DISTINCT snapshot_id AS s FROM evento WHERE tipo = 'virada' AND snapshot_id IS NOT NULL")
+      .all()
+      .map((r) => r.s),
+  );
+  const ufsFechadas = new Set(
+    db
+      .query<{ uf: string }, []>("SELECT DISTINCT uf FROM evento WHERE tipo IN ('fechou', 'uf_fechou') AND uf IS NOT NULL")
+      .all()
+      .map((r) => r.uf),
+  );
   const el = eleicoes(db);
   const out: AnomaliaOut[] = [];
-  if (!tipos.has("virada")) {
-    const arqs = db
-      .query<{ id: number; cargo_cd: number; nivel: string; uf: string | null }, [number, number]>(
-        `SELECT a.id, a.cargo_cd, a.nivel, a.uf FROM arquivo a
-         WHERE a.tipo = 'u' AND ((a.eleicao_cd = ? AND a.cargo_cd = 1 AND a.nivel IN ('br', 'uf'))
-                                 OR (a.eleicao_cd = ? AND a.cargo_cd = 3 AND a.nivel = 'uf'))
-           AND EXISTS (SELECT 1 FROM snapshot s WHERE s.arquivo_id = a.id)`,
-      )
-      .all(el.federal, el.estadual);
-    for (const a of arqs) {
-      const { pontos, ultimo } = serieArquivo(db, a.id, a.uf, 4, at);
-      const nomes = new Map(ultimo.map((c) => [String(c.sqcand), titulo(c.nome_urna)]));
-      for (const v of viradasDe(pontos)) {
-        out.push(
-          montar(
-            {
-              id: -v.snapshot_id, at: v.at, tipo: "virada", severidade: "warn", nivel: a.nivel, uf: a.uf, municipio_cd: null, zona_cd: null,
-              cargo_cd: a.cargo_cd, snapshot_id: v.snapshot_id, derivado: true,
-              detalhe: { de: v.de, para: v.para, de_nome: nomes.get(v.de) ?? v.de, para_nome: nomes.get(v.para) ?? v.para },
-            },
-            muns,
-          ),
-        );
-      }
+  const arqs = db
+    .query<{ id: number; cargo_cd: number; nivel: string; uf: string | null }, [number, number]>(
+      `SELECT a.id, a.cargo_cd, a.nivel, a.uf FROM arquivo a
+       WHERE a.tipo = 'u' AND ((a.eleicao_cd = ? AND a.cargo_cd = 1 AND a.nivel IN ('br', 'uf'))
+                               OR (a.eleicao_cd = ? AND a.cargo_cd = 3 AND a.nivel = 'uf'))
+         AND EXISTS (SELECT 1 FROM snapshot s WHERE s.arquivo_id = a.id)`,
+    )
+    .all(el.federal, el.estadual);
+  for (const a of arqs) {
+    const { pontos, ultimo } = serieArquivo(db, a.id, a.uf, 4, at);
+    const nomes = new Map(ultimo.map((c) => [String(c.sqcand), titulo(c.nome_urna)]));
+    for (const v of viradasDe(pontos)) {
+      if (viradasGravadas.has(v.snapshot_id)) continue;
+      out.push(
+        montar(
+          {
+            id: -v.snapshot_id, at: v.at, tipo: "virada", severidade: "warn", nivel: a.nivel, uf: a.uf, municipio_cd: null, zona_cd: null,
+            cargo_cd: a.cargo_cd, snapshot_id: v.snapshot_id, derivado: true,
+            detalhe: { de: v.de, para: v.para, de_nome: nomes.get(v.de) ?? v.de, para_nome: nomes.get(v.para) ?? v.para },
+          },
+          muns,
+        ),
+      );
     }
   }
-  if (!tipos.has("fechou") && !tipos.has("uf_fechou")) {
-    const abBr = arquivoPorChave(db, chave(keyAb(el.federal, "br")));
-    if (abBr) {
-      let i = 0;
-      for (const [uf, em] of fechamentosAb(db, abBr.id, at)) {
-        if (uf === "br") continue;
-        i += 1;
-        out.push(
-          montar(
-            {
-              id: -(1_000_000_000 + abBr.id * 100 + i), at: em, tipo: "fechou", severidade: "info", nivel: "uf", uf, municipio_cd: null,
-              zona_cd: null, cargo_cd: null, snapshot_id: null, derivado: true, detalhe: { totalizado_em: em },
-            },
-            muns,
-          ),
-        );
-      }
+  const abBr = arquivoPorChave(db, chave(keyAb(el.federal, "br")));
+  if (abBr) {
+    let i = 0;
+    for (const [uf, em] of fechamentosUf(db, abBr.id, at)) {
+      if (uf === "br" || ufsFechadas.has(uf)) continue;
+      i += 1;
+      out.push(
+        montar(
+          {
+            id: -(1_000_000_000 + abBr.id * 100 + i), at: em, tipo: "fechou", severidade: "info", nivel: "uf", uf, municipio_cd: null,
+            zona_cd: null, cargo_cd: null, snapshot_id: null, derivado: true, detalhe: { totalizado_em: em },
+          },
+          muns,
+        ),
+      );
     }
   }
   return out;

@@ -9,14 +9,14 @@ export interface Paleta {
   aberta(): boolean;
 }
 
-const ROTULO_TIPO: Readonly<Record<Achado["tipo"], string>> = { uf: "estado", mun: "município", cand: "candidatura" };
+const ROTULO_TIPO: Readonly<Record<Achado["tipo"], string>> = { uf: "estado", mun: "município", cand: "candidatura", tela: "tela" };
 
 export function criarPaleta(indice: Indice, escolher: (a: Achado) => void, aoFechar: () => void): Paleta {
   const el = document.createElement("div");
   el.className = "paleta";
   el.hidden = true;
   el.innerHTML = `<div class="paleta-caixa" role="dialog" aria-label="busca">
-      <input class="paleta-campo" type="text" autocomplete="off" spellcheck="false" placeholder="município, estado ou candidatura" />
+      <input class="paleta-campo" type="text" autocomplete="off" spellcheck="false" placeholder="município, estado, candidatura ou tela" />
       <ul class="paleta-lista" role="listbox"></ul>
     </div>`;
   const campo = el.querySelector("input") as HTMLInputElement;

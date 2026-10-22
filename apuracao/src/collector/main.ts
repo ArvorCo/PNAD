@@ -9,6 +9,7 @@ import { instalarGanchos } from "./ganchos.ts";
 import { fetchTse } from "./http.ts";
 import { Limitador } from "./limitador.ts";
 import { isoDe, relogioReal } from "./relogio.ts";
+import { instalarTurno2 } from "./turno2.ts";
 
 const log = (o: Record<string, unknown>): void => console.log(JSON.stringify({ em: new Date().toISOString(), ...o }));
 
@@ -52,6 +53,13 @@ async function main(): Promise<void> {
     log,
   });
   instalarGanchos(c, ag, () => ({ ate: limitador.pausadoAte(), nivel: limitador.nivel }));
+  // O motor do 2º turno nunca derruba o coletor principal: falha na instalação só desliga ele.
+  let turno2: { parar(): Promise<void> } = { parar: async () => undefined };
+  try {
+    turno2 = instalarTurno2(c, ag, limitador, log);
+  } catch (err) {
+    log({ t: "turno2_erro", onde: "instalacao", erro: err instanceof Error ? `${err.message}\n${err.stack ?? ""}` : String(err) });
+  }
   ag.semear();
   const resumo = { ...config, userAgent: config.userAgent.slice(0, 40) };
   ag.registrarEvento({
@@ -70,6 +78,7 @@ async function main(): Promise<void> {
     parando = true;
     log({ t: "desligando", sinal, em_voo: ag.emVoo });
     await ag.parar(10_000);
+    await turno2.parar();
     ag.registrarEvento({ em: isoDe(Date.now()), tipo: "shutdown", detalhe: { sinal, total_fetch: ag.metricas.total } });
     c.lote.gravar();
     fecharEscrita(c.db);

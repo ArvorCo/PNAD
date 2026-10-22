@@ -6,7 +6,16 @@ import { nomeProprio } from "../data/format.ts";
 export type Achado =
   | { tipo: "uf"; uf: string; rotulo: string; detalhe: string }
   | { tipo: "mun"; uf: string; cd: string; rotulo: string; detalhe: string; capital: boolean }
-  | { tipo: "cand"; sqcand: string; ele: number; cargo: number; abr: string; rotulo: string; detalhe: string };
+  | { tipo: "cand"; sqcand: string; ele: number; cargo: number; abr: string; rotulo: string; detalhe: string }
+  | { tipo: "tela"; v: string; rotulo: string; detalhe: string };
+
+/** Tela de navegação para a busca: `busca` guarda sinônimos sem acento. */
+export interface TelaBuscavel {
+  id: string;
+  rotulo: string;
+  atalho: string;
+  busca: string;
+}
 
 interface Entrada {
   chave: string; // normalizada
@@ -29,6 +38,7 @@ export function normalizar(s: string): string {
 export interface Indice {
   adicionarConfig(c: Config): void;
   adicionarResultado(ele: number, r: Resultado): void;
+  adicionarTelas(telas: readonly TelaBuscavel[]): void;
   buscar(consulta: string, limite?: number): Achado[];
   tamanho(): number;
 }
@@ -56,6 +66,11 @@ export function criarIndice(): Indice {
           const nome = /[a-z]/.test(m.nm) ? m.nm : nomeProprio(m.nm);
           add(`mun:${uf}:${m.cd}`, nome, m.c ? 2 : 1, { tipo: "mun", uf, cd: m.cd, rotulo: nome, detalhe: uf, capital: m.c });
         }
+      }
+    },
+    adicionarTelas(telas) {
+      for (const t of telas) {
+        add(`tela:${t.id}`, `${t.rotulo} ${t.busca}`, 4, { tipo: "tela", v: t.id, rotulo: t.rotulo, detalhe: t.atalho });
       }
     },
     adicionarResultado(ele, r) {

@@ -194,7 +194,7 @@ export function criarPresidente(): View {
   return {
     id: "pres",
     dwell: 25,
-    titulo: s => (ehDuelo(s) ? "Presidente, Brasil, 2º turno" : "Presidente, Brasil"),
+    titulo: s => (ehDuelo(s) ? "Presidente, 2º turno" : "Presidente, Brasil"),
     needs(s) {
       const ele = eleicaoDe(s, 1);
       return [

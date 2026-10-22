@@ -10,11 +10,13 @@ import "./styles/mapa.css";
 import "./styles/legislativas.css";
 import "./styles/exterior.css";
 import "./styles/evolucao.css";
+import "./styles/doist.css";
 
 import { ativo, criarApi } from "./data/api.ts";
 import type { Fonte } from "./data/api.ts";
 import { campoDoPartido, CORES_PADRAO, normalizarCampos, normalizarCores } from "./data/cores.ts";
 import { criarMock } from "./data/mock.ts";
+import { lerParamsMock } from "./data/mock-hash.ts";
 import { conectarSse } from "./data/sse.ts";
 import { preCarregar } from "./data/geo.ts";
 import { abrirCanal, ehComando } from "./control/broadcast.ts";
@@ -23,7 +25,7 @@ import { ligarTeclado } from "./control/keyboard.ts";
 import { vigiarBundle } from "./control/recarga.ts";
 import { destinoDaUf, subirNivel } from "./control/navegacao.ts";
 import type { Destino } from "./control/navegacao.ts";
-import { criarRotacao, normalizarPlaylist, PLAYLIST_PADRAO } from "./control/rotation.ts";
+import { criarRotacao, PLAYLIST_PADRAO, playlistDoTurno } from "./control/rotation.ts";
 import type { Entrada } from "./control/rotation.ts";
 import { lerHash, ligarRoteador } from "./control/router.ts";
 import type { UiHash } from "./control/router.ts";
@@ -33,7 +35,8 @@ import { criarCarregador, eventoAfeta } from "./dados.ts";
 import { montarShell } from "./shell.ts";
 import { criarStore } from "./state/store.ts";
 import type { Config, EventoSse, Need, Resultado, State } from "./state/types.ts";
-import { registrarTelas } from "./views/index.ts";
+import { aplicarTurno, registrarTelas } from "./views/index.ts";
+import { TELAS_2T } from "./views/meta-2t.ts";
 import { ligarPedidoDeDados, listar } from "./views/registry.ts";
 
 const VIEW_POR_CARGO: Readonly<Record<number, string>> = { 1: "pres-uf", 3: "gov-uf", 5: "sen-uf", 6: "fed-uf", 7: "est-uf", 8: "dis-df" };
@@ -41,6 +44,7 @@ const VIEW_POR_CARGO: Readonly<Record<number, string>> = { 1: "pres-uf", 3: "gov
 function estadoInicial(h: UiHash): State {
   return {
     config: null,
+    doist: {},
     estado: null,
     resultados: {},
     mapas: {},
@@ -63,12 +67,12 @@ async function iniciar(): Promise<void> {
   registrarTelas();
 
   // Ativos estáticos e configuração em paralelo; nada disso bloqueia a casca.
-  const [playlist, campos, cores] = await Promise.all([
+  const [playlist, playlist2t, campos, cores] = await Promise.all([
     ativo<unknown>("/playlist.json"),
+    ativo<unknown>("/playlist-2t.json"),
     ativo<unknown>("/campos.json"),
     ativo<unknown>("/cores.json"),
   ]);
-  store.patch("playlist", normalizarPlaylist(playlist));
   store.patch("campos", normalizarCampos(campos));
   store.patch("cores", normalizarCores(cores));
 
@@ -79,14 +83,30 @@ async function iniciar(): Promise<void> {
   } catch {
     config = null; // sem servidor: o mock usa a amostra embutida
   }
+  // Ensaio: o 2º turno é o padrão (o 1º já passou); `turno=1`, `t0`, `falha` e `sem1t` ajustam o mock.
+  const mockParams = lerParamsMock(location.hash);
   const fonte: Fonte = hash.mock
-    ? criarMock({ speed: hash.speed, config, campoDe: sg => campoDoPartido(sg, store.get().campos) })
+    ? criarMock({
+        speed: hash.speed,
+        config,
+        turno: mockParams.turno,
+        falhas: mockParams.falhas,
+        sem1t: mockParams.sem1t,
+        congelar: mockParams.congelar,
+        ...(mockParams.inicioMin !== null ? { inicioMin: mockParams.inicioMin } : {}),
+        campoDe: sg => campoDoPartido(sg, store.get().campos),
+      })
     : api;
-  if (!config) config = await fonte.config().catch(() => null);
+  if (!config || hash.mock) config = await fonte.config().catch(() => config);
   if (config) store.patch("config", config);
+  // O turno decide a playlist (a do 2º turno vem de playlist-2t.json ou do contrato) e o rótulo do duelo.
+  const turno = config?.turno ?? 1;
+  store.patch("playlist", playlistDoTurno(turno, playlist, playlist2t));
+  aplicarTurno(turno);
 
   const indice = criarIndice();
   if (config) indice.adicionarConfig(config);
+  indice.adicionarTelas(TELAS_2T.map(t => ({ id: t.id, rotulo: t.titulo, atalho: t.atalho, busca: t.busca })));
   const indexados = new Set<string>();
 
   const carregador = criarCarregador(store, fonte, () => {
@@ -133,7 +153,8 @@ async function iniciar(): Promise<void> {
   });
 
   const escolher = (a: Achado): void => {
-    if (a.tipo === "uf") irPara(destinoDaUf(store.get().ui.v, a.uf));
+    if (a.tipo === "tela") irPara({ v: a.v, uf: null, mun: null, zonas: false, zona: null });
+    else if (a.tipo === "uf") irPara(destinoDaUf(store.get().ui.v, a.uf));
     else if (a.tipo === "mun") irPara({ v: "mun", uf: a.uf, mun: a.cd, zonas: false, zona: null });
     else {
       const uf = a.abr.length >= 2 && a.abr !== "br" ? a.abr.slice(0, 2).toUpperCase() : null;
@@ -153,6 +174,7 @@ async function iniciar(): Promise<void> {
   ligarTeclado({
     ufAtual: () => store.get().ui.uf,
     telaAtual: () => store.get().ui.v,
+    turno: () => store.get().config?.turno ?? 1,
     irPara: d => irPara(d),
     irParaUf: uf => irPara(destinoDaUf(store.get().ui.v, uf)),
     proxima: () => rotacao.proxima(true),
@@ -163,7 +185,7 @@ async function iniciar(): Promise<void> {
       rotacao.reiniciarDwell();
     },
     subir: () => {
-      const d = subirNivel(store.get().ui);
+      const d = subirNivel(store.get().ui, store.get().config?.turno ?? 1);
       if (d) irPara(d);
     },
     paleta: abrir => {

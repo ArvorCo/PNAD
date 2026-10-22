@@ -20,7 +20,29 @@ const POR_UF: Readonly<Record<string, string>> = {
   ritmo: "pres-uf",
   mov: "pres-uf",
   espera: "pres-uf",
+  // 2º turno: a tecla de UF desce do quadro de governadores para o mapa municipal da UF.
+  "gov-2t": "gov-uf",
 };
+
+/** Telas do 2º turno por Shift + letra. Letras sem Shift ficam para UF (duas letras) e comandos. */
+export const TECLA_TELA_2T: Readonly<Record<string, string>> = {
+  n: "regioes",
+  u: "ufs",
+  d: "atraso",
+  b: "abstencao",
+  s: "secoes",
+  p: "pausas",
+  g: "gov-2t",
+  t: "paralela",
+  l: "alertas",
+  e: "evolucao",
+};
+
+/** Destino da tela do 2º turno para Shift + `letra`, ou null se a letra não tem tela. */
+export function destinoDaTecla2T(letra: string): Destino | null {
+  const v = TECLA_TELA_2T[letra.toLowerCase()];
+  return v ? { v, uf: null, ...LIMPO } : null;
+}
 
 const ACIMA: Readonly<Record<string, string>> = {
   "pres-uf": "pres",
@@ -32,12 +54,12 @@ const ACIMA: Readonly<Record<string, string>> = {
 };
 
 /** Tecla de cargo (códigos do TSE) mais 9 ritmo e 0 movimento. */
-export function destinoDoDigito(d: string, ufAtual: string | null): Destino | null {
+export function destinoDoDigito(d: string, ufAtual: string | null, turno = 1): Destino | null {
   switch (d) {
     case "1":
       return { v: "pres", uf: null, ...LIMPO };
     case "3":
-      return { v: "gov", uf: null, ...LIMPO };
+      return { v: turno === 2 ? "gov-2t" : "gov", uf: null, ...LIMPO };
     case "5":
       return { v: "sen", uf: null, ...LIMPO };
     case "6":
@@ -65,12 +87,13 @@ export function destinoDaUf(v: string, uf: string): Destino {
 }
 
 /** Backspace: zona → zonas → município → UF → país. Devolve null quando já está no topo. */
-export function subirNivel(ui: Destino): Destino | null {
+export function subirNivel(ui: Destino, turno = 1): Destino | null {
   if (ui.v === "mun") {
     if (ui.zona) return { ...ui, zona: null };
     if (ui.zonas) return { ...ui, zonas: false };
     return { v: "pres-uf", uf: ui.uf, ...LIMPO };
   }
+  if (turno === 2 && ui.v === "gov-uf") return { v: "gov-2t", uf: null, ...LIMPO };
   const acima = ACIMA[ui.v];
   return acima ? { v: acima, uf: null, ...LIMPO } : null;
 }

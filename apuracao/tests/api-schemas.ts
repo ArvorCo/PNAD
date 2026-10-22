@@ -140,7 +140,7 @@ export const LotesSchema = z
 export const AnomaliasSchema = z.array(
   z
     .object({
-      id: z.number(), at: Iso, tipo: z.string(), categoria: z.enum(["virada", "regressao", "fechou", "atraso", "outro"]),
+      id: z.number(), at: Iso, tipo: z.string(), categoria: z.enum(["virada", "regressao", "fechou", "atraso", "pausa", "divergencia", "abstencao", "paralela", "outro"]),
       severidade: z.enum(["info", "warn", "error"]), nivel: z.string().nullable(), uf: z.string().nullable(), municipio_cd: z.string().nullable(),
       zona_cd: z.string().nullable(), cargo_cd: z.number().nullable(), cargo: z.number().nullable(), abr: z.string(),
       snapshot_id: z.number().nullable(), texto: z.string().min(1), detalhe: z.unknown(), derivado: z.boolean(),

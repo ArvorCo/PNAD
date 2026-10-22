@@ -1,4 +1,6 @@
 // GET /events: Server-Sent Events por sondagem leve do banco (snapshot.id e evento.id).
+// Eventos warn e error saem como `event: evento` com a categoria do telão (pausa, divergência,
+// abstenção, paralela, atraso, virada...); info fica só em /api/anomalias.
 // id: = snapshot.id; Last-Event-ID retoma do ponto. Padrão: resultados br/uf + todo -ab + config;
 // tudo=1 inclui município e zona; nivel=br,uf,mun,zona escolhe os níveis.
 import type { Database } from "bun:sqlite";
@@ -7,7 +9,7 @@ import { abrTexto } from "./abr.ts";
 import type { MunicipioInfo } from "./consultas.ts";
 import { municipiosIndex } from "./consultas.ts";
 import type { Contexto } from "./contexto.ts";
-import { textoEvento } from "./textos.ts";
+import { categoria, textoEvento } from "./textos.ts";
 
 export interface OpcoesSse {
   pollMs?: number;
@@ -159,7 +161,8 @@ export function responderSse(ctx: Contexto, req: Request, url: URL, o: OpcoesSse
             muns ??= municipiosIndex(db);
             const nivel = e.nivel === "br" || e.nivel === "uf" || e.nivel === "mu" || e.nivel === "zona" ? e.nivel : null;
             const dado = {
-              kind: "anomalia", id: e.id, at: e.em, tipo: e.tipo, severidade: e.severidade, ele: e.eleicao_cd, cargo: e.cargo_cd,
+              kind: "anomalia", id: e.id, at: e.em, tipo: e.tipo, categoria: categoria(e.tipo), severidade: e.severidade, uf: e.uf,
+              ele: e.eleicao_cd, cargo: e.cargo_cd,
               abr: abrTexto({ nivel, uf: e.uf, municipio_cd: e.municipio_cd, zona_cd: e.zona_cd }), snapshot_id: e.snapshot_id,
               texto: textoEvento(e.tipo, e.em, e, parseDetalhe(e.detalhe), muns),
             };

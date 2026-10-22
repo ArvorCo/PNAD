@@ -86,6 +86,8 @@ export class EstadoArquivos {
   readonly teMunicipio = new Map<string, number>();
   /** códigos TSE de capitais */
   readonly capitais = new Set<string>();
+  /** "ele:uf:mun" → contagens do município no -ab da UF (régua do 2º turno) */
+  readonly abMunicipio = new Map<string, { ele: number; uf: string; mun: string; ts: number; st: number; te: number; c: number; a: number }>();
   private readonly muIdx = new Map<string, number[]>();
   private readonly zonaIdx = new Map<string, number[]>();
   private readonly ufIdx = new Map<string, number[]>();
@@ -131,13 +133,24 @@ export class EstadoArquivos {
   /** Lê um -ab já validado: fingerprints e eleitorado por município. */
   registrarAb(arquivoId: number, uf: string | null, p: AbFile): Map<string, string> {
     const fps = new Map<string, string>();
+    const ele = intBR(p.ele);
     for (const a of p.abr) {
       if (!a.cdabr) continue;
       fps.set(a.cdabr, fingerprintAb(a));
       const te = intBR(a.e?.te);
       if (uf !== null && te !== null && a.tpabr !== "uf") this.teMunicipio.set(`${uf}:${a.cdabr}`, te);
+      if (uf !== null && ele !== null && te !== null && a.tpabr !== "uf") {
+        this.abMunicipio.set(`${ele}:${uf}:${a.cdabr}`, {
+          ele, uf, mun: a.cdabr, ts: intBR(a.s?.ts) ?? 0, st: intBR(a.s?.st) ?? 0, te, c: intBR(a.e?.c) ?? 0, a: intBR(a.e?.a) ?? 0,
+        });
+      }
     }
     return fps;
+  }
+
+  /** Municípios de uma eleição no -ab das UFs. */
+  *municipiosAb(ele: number): Generator<{ uf: string; mun: string; ts: number; st: number; te: number; c: number; a: number }> {
+    for (const m of this.abMunicipio.values()) if (m.ele === ele) yield m;
   }
 
   /** Campos comuns de toda resposta: contadores, validadores, status. `inicio` = relógio do agendador no despacho. */

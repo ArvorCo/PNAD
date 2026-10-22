@@ -1,5 +1,8 @@
 // Cliente dos endpoints de "Contratos de API". O mock implementa a mesma interface.
 
+import { ehCategoria } from "./categorias.ts";
+import { erro as erroResposta, NORMALIZADORES, pedidoDaRota } from "./doist.ts";
+import type { Dados2T, Resposta, Rota2T } from "./doist.ts";
 import type { Anomalia, Config, ConfigUf, Estado, EstadoBr, EstadoUf, EventoSse, Lotes, Mapa, NivelMapa, Resultado, Serie } from "../state/types.ts";
 
 export interface ConsultaResultado {
@@ -26,6 +29,8 @@ export interface Fonte {
   /** O que cada versão do arquivo acrescentou (seções, válidos, votos por candidatura). */
   lotes(q: ConsultaResultado): Promise<Lotes>;
   anomalias(): Promise<Anomalia[]>;
+  /** Rotas /api/2t/*: sempre resolve, com dados, "pendente" ou "erro" (a tela decide o que mostrar). */
+  doisT<K extends Rota2T>(rota: K): Promise<Resposta<Dados2T[K]>>;
   /** Endpoints de auditoria (JSON livre, lido direto das views do servidor). */
   auditoria(caminho: string, params?: Record<string, string | number>): Promise<unknown>;
   /** Eventos ao vivo. Só o mock implementa aqui; a API usa sse.ts. */
@@ -125,7 +130,19 @@ export function normalizarEstado(bruto: unknown): Estado {
   };
 }
 
-const CATEGORIAS = new Set<Anomalia["tipo"]>(["virada", "regressao", "fechou", "atraso"]);
+/** `detalhe` chega como objeto ou como JSON em texto; qualquer outra coisa some. */
+function detalheDe(x: unknown): Record<string, unknown> | null {
+  if (ehBruto(x)) return x;
+  if (typeof x === "string" && x.startsWith("{")) {
+    try {
+      const j: unknown = JSON.parse(x);
+      return ehBruto(j) ? j : null;
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
 
 /**
  * Anomalias do servidor: `tipo` é o tipo bruto do coletor e `categoria` a classe de exibição.
@@ -136,8 +153,8 @@ export function normalizarAnomalias(bruto: unknown): Anomalia[] {
   const out: Anomalia[] = [];
   for (const a of bruto) {
     if (!ehBruto(a)) continue;
-    const cat = txt(a.categoria || a.tipo) as Anomalia["tipo"];
-    if (!CATEGORIAS.has(cat)) continue;
+    const cat = txt(a.categoria || a.tipo);
+    if (!ehCategoria(cat)) continue;
     const sev = a.severidade;
     const item: Anomalia = {
       at: txt(a.at),
@@ -149,6 +166,8 @@ export function normalizarAnomalias(bruto: unknown): Anomalia[] {
       uf: txtOuNulo(a.uf)?.toUpperCase() ?? null,
     };
     if (typeof a.id === "number") item.id = a.id;
+    const det = detalheDe(a.detalhe);
+    if (det) item.detalhe = det;
     if (sev === "info" || sev === "warn" || sev === "error") item.severidade = sev;
     out.push(item);
   }
@@ -170,6 +189,15 @@ export function criarApi(base = "", relogio: Relogio = () => null): Fonte {
     serie: q => obter<Serie>(montarUrl(base, "/api/serie", { ele: q.ele, cargo: q.cargo, abr: q.abr }, at())),
     lotes: q => obter<Lotes>(montarUrl(base, "/api/lotes", { ele: q.ele, cargo: q.cargo, abr: q.abr }, at())),
     anomalias: () => obter<unknown>(montarUrl(base, "/api/anomalias", {}, at())).then(normalizarAnomalias),
+    doisT: async <K extends Rota2T>(rota: K): Promise<Resposta<Dados2T[K]>> => {
+      const { caminho, params } = pedidoDaRota(rota);
+      try {
+        const normalizar = NORMALIZADORES[rota] as (bruto: unknown) => Resposta<Dados2T[K]>;
+        return normalizar(await obter<unknown>(montarUrl(base, caminho, params, at())));
+      } catch (e) {
+        return erroResposta(e instanceof ErroApi ? `HTTP ${e.status}` : "sem resposta do servidor");
+      }
+    },
     auditoria: (caminho, params = {}) => obter<unknown>(montarUrl(base, caminho, params, at())),
   };
 }

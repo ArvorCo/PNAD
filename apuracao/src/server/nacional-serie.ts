@@ -1,8 +1,10 @@
 // Série e lotes nacionais de presidente pela soma das 28 UFs (27 + exterior), numa grade de 60 s
-// a partir das 17:00 de Brasília, usados quando o arquivo nacional do TSE está defasado
-// (mesma regra de nacional.ts). Em cada instante t da grade, cada UF entra com a última versão
-// não regressiva com candidatos e gerado_em <= t; pontos sem as 28 UFs ou sem mudança são omitidos.
+// a partir das 17:00 de Brasília do dia da eleição (04/10 no 1º turno, 25/10 no 2º), usados
+// quando o arquivo nacional do TSE está defasado (mesma regra de nacional.ts). Em cada instante t
+// da grade, cada UF entra com a última versão não regressiva com candidatos e gerado_em <= t;
+// pontos sem as 28 UFs ou sem mudança são omitidos.
 import type { Database } from "bun:sqlite";
+import { ELEICAO_ESTADUAL_2T, ELEICAO_FEDERAL_2T, T0_1T_MS, T0_2T_MS } from "../turno2/comum.ts";
 import { maxSnapshotId, ultimoSnapshotPorChave } from "../db/leitura.ts";
 import type { N, S } from "../db/linhas.ts";
 import { CacheCurto } from "./cache.ts";
@@ -12,9 +14,12 @@ import { UFS_ESPERADAS, somaSeDefasado } from "./nacional.ts";
 import type { Abr } from "./abr.ts";
 import { chaveU } from "./abr.ts";
 
-/** 17:00 de Brasília no dia da eleição. */
-export const INICIO_GRADE = Date.parse("2026-10-04T20:00:00.000Z");
 export const PASSO_GRADE_MS = 60_000;
+
+/** 17:00 de Brasília no dia da eleição de `ele`: 6258/6260 (2º turno) começam em 25/10. */
+export function inicioGrade(ele: number): number {
+  return ele === ELEICAO_FEDERAL_2T || ele === ELEICAO_ESTADUAL_2T ? T0_2T_MS : T0_1T_MS;
+}
 
 export interface PontoSoma {
   t: number; // instante da grade (ms UTC)
@@ -101,10 +106,11 @@ function carregar(db: Database, ele: number, cargo: number, at: string): Map<num
 export function gradeSoma(db: Database, ele: number, cargo: number, at?: string): PontoSoma[] {
   const porUf = carregar(db, ele, cargo, at ?? FIM);
   if (porUf.size < UFS_ESPERADAS) return [];
-  let fim = INICIO_GRADE;
+  const inicio = inicioGrade(ele);
+  let fim = inicio;
   for (const l of porUf.values()) fim = Math.max(fim, l[l.length - 1]?.ger ?? fim);
   const instantes: number[] = [];
-  for (let t = INICIO_GRADE; t < fim; t += PASSO_GRADE_MS) instantes.push(t);
+  for (let t = inicio; t < fim; t += PASSO_GRADE_MS) instantes.push(t);
   instantes.push(fim);
 
   const listas = [...porUf.values()];

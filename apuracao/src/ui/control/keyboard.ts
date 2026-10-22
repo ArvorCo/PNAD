@@ -2,12 +2,14 @@
 // (a de AC/AL/AM/AP, m de MA/MG/MS/MT, r de RJ/RN/RO/RR/RS) esperam a janela de
 // 900 ms: se a segunda letra fechar uma UF, vale a UF; senão, roda o comando.
 
-import { criarLeitorUf, destinoDoDigito, ehUf } from "./navegacao.ts";
+import { criarLeitorUf, destinoDaTecla2T, destinoDoDigito, ehUf } from "./navegacao.ts";
 import type { Destino } from "./navegacao.ts";
 
 export interface AcoesTeclado {
   ufAtual(): string | null;
   telaAtual(): string;
+  /** Turno da eleição (config.turno); o 2º turno troca a tecla 3 para o quadro dos 6 governadores. */
+  turno(): number;
   irPara(d: Destino): void; // sempre passa para o modo manual
   irParaUf(uf: string): void;
   proxima(): void;
@@ -74,7 +76,12 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     else if (k === "ArrowUp" || k === "ArrowDown") tratou = a.teclaDaTela(k);
     else if (k === "," || k === ".") tratou = a.teclaDaTela(k);
     else if (/^[0-9]$/.test(k)) {
-      const d = destinoDoDigito(k, a.ufAtual());
+      const d = destinoDoDigito(k, a.ufAtual(), a.turno());
+      if (d) a.irPara(d);
+    } else if (ev.shiftKey && destinoDaTecla2T(k)) {
+      // Shift + letra abre as telas do 2º turno sem disputar a letra com as siglas de UF.
+      cancelarAdiado();
+      const d = destinoDaTecla2T(k);
       if (d) a.irPara(d);
     } else if (/^[a-z]$/i.test(k)) {
       const letra = k.toLowerCase();
