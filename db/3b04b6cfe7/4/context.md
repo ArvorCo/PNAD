@@ -79,3 +79,8 @@ Goal check-in: «Precisamos preparar o Apuração do 2o turno inspirado no nosso
 <summary>Agent "Ensaio ponta a ponta do 2º turno" finished</summary>
 <note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another messa...
 
+### Prompt 10
+
+Stop hook feedback:
+[Precisamos preparar o Apuração do 2o turno inspirado no nosso @apuracao que já existe aqui nesse projeto. Nesse caso,vamos preparar a análise do 2o turno com mais gráficos que mostrem a apuração em tempo real, que mostre como está por região no total de urna, total de cada estado também de forma inteligente e um gráfico de acompanhamento similar ao que fizemos do 1o turno, mas que tenha mais evoluções por estado, por região e outras coisas mais para entendermos...
+
