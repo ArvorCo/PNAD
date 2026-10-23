@@ -142,3 +142,19 @@ Interessante, vamos fazer uma 2a imagem especificamente com o mapa do Brasil em 
 
 faça um gráfico de correlação pearson entre abstenção e voto no lula x,y com curvas e histogramas para compreendermos a distribuição por seção disso
 
+### Prompt 21
+
+[Image: original 2400x2400, displayed at 1932x1932. Multiply coordinates by 1.24 to map to original image.]
+
+### Prompt 22
+
+[Image: original 2400x2400, displayed at 1932x1932. Multiply coordinates by 1.24 to map to original image.]
+
+### Prompt 23
+
+desculpe, faça o gráfico agora com comparecimento vs voto em lula, que aí faz sentido, quero ver se aparece um R2 positivo e com abstenção não faria sentido, mas com comparecimento faz
+
+### Prompt 24
+
+[Image: original 2400x2400, displayed at 1932x1932. Multiply coordinates by 1.24 to map to original image.]
+
