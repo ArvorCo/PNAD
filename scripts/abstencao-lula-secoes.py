@@ -9,11 +9,12 @@ quadrados, histogramas marginais, Pearson simples e ponderado por aptos, e as cu
 
 Saída: `docs/img/abstencao_lula_secoes_1t.png` (2400×2400) e `analysis/apuracao_2026/abstencao_lula_secoes.json`.
 
-Uso: python3 scripts/abstencao-lula-secoes.py
+Uso: python3 scripts/abstencao-lula-secoes.py [--eixo abstencao|comparecimento]
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 from itertools import pairwise
 from pathlib import Path
@@ -28,8 +29,34 @@ from matplotlib.colors import LinearSegmentedColormap, LogNorm
 
 ROOT = Path(__file__).resolve().parents[1]
 ZONAS = ROOT / "docs" / "assets" / "politize" / "dados" / "zona"
-PNG = ROOT / "docs" / "img" / "abstencao_lula_secoes_1t.png"
-JSON = ROOT / "analysis" / "apuracao_2026" / "abstencao_lula_secoes.json"
+SAIDAS = {
+    "abstencao": (
+        ROOT / "docs" / "img" / "abstencao_lula_secoes_1t.png",
+        ROOT / "analysis" / "apuracao_2026" / "abstencao_lula_secoes.json",
+    ),
+    "comparecimento": (
+        ROOT / "docs" / "img" / "comparecimento_lula_secoes_1t.png",
+        ROOT / "analysis" / "apuracao_2026" / "comparecimento_lula_secoes.json",
+    ),
+}
+EIXO = {
+    "abstencao": {
+        "nome": "abstenção",
+        "titulo": "Abstenção e voto em Lula, seção por seção",
+        "rotulo": "Abstenção na seção, % dos aptos",
+        "xmin": 0.0,
+        "xmax": 60.0,
+        "nota": "o Nordeste tem menos abstenção e mais Lula",
+    },
+    "comparecimento": {
+        "nome": "comparecimento",
+        "titulo": "Comparecimento e voto em Lula, seção por seção",
+        "rotulo": "Comparecimento na seção, % dos aptos",
+        "xmin": 40.0,
+        "xmax": 100.0,
+        "nota": "o Nordeste tem mais comparecimento e mais Lula",
+    },
+}
 APTOS_MIN = 50
 
 REGIAO = {
@@ -58,7 +85,7 @@ LULA, OURO, TEAL = "#ea6a5c", "#f0c86b", "#5fd3e6"
 MONO = "Menlo"
 
 
-def carregar() -> dict[str, np.ndarray]:
+def carregar(eixo: str) -> dict[str, np.ndarray]:
     abst, lula, aptos, uf_l = [], [], [], []
     for pasta in sorted(ZONAS.iterdir()):
         uf = pasta.name
@@ -73,7 +100,9 @@ def carregar() -> dict[str, np.ndarray]:
                 lv = r[col["lula_v"]]
                 if a < APTOS_MIN or comp is None or lv is None:
                     continue
-                abst.append(100.0 * (a - comp) / a)
+                abst.append(
+                    100.0 * (a - comp) / a if eixo == "abstencao" else 100.0 * comp / a
+                )
                 lula.append(float(lv))
                 aptos.append(float(a))
                 uf_l.append(uf)
@@ -126,12 +155,14 @@ def curva(
     }
 
 
-def desenhar(d: dict[str, np.ndarray]) -> dict:
+def desenhar(d: dict[str, np.ndarray], eixo: str) -> dict:
+    e = EIXO[eixo]
+    png = SAIDAS[eixo][0]
     x, y, w, uf = d["abst"], d["lula"], d["aptos"], d["uf"]
     r = pearson(x, y)
     rw = pearson(x, y, w)
     b, a = np.polyfit(x, y, 1)
-    bordas = np.arange(0, 60.01, 2.5)
+    bordas = np.arange(e["xmin"], e["xmax"] + 0.01, 2.5)
     geral = curva(x, y, bordas)
     regioes = {}
     for nome in REGIAO:
@@ -174,7 +205,7 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
     ax_top = fig.add_subplot(gs[0, 0], sharex=ax)
     ax_right = fig.add_subplot(gs[1, 1], sharey=ax)
 
-    xmax, ymax = 60.0, 100.0
+    xmin, xmax, ymax = e["xmin"], e["xmax"], 100.0
     cmap = LinearSegmentedColormap.from_list(
         "arvor",
         [FUNDO1, "#163a63", "#1f6f87", "#2a9ab0", "#5fd3e6", "#f0c86b", "#ff8a7a"],
@@ -183,7 +214,7 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
         x,
         y,
         gridsize=(78, 60),
-        extent=(0, xmax, 0, ymax),
+        extent=(xmin, xmax, 0, ymax),
         norm=LogNorm(vmin=1),
         cmap=cmap,
         linewidths=0.15,
@@ -191,7 +222,7 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
     )
 
     # Contornos de densidade sobre histograma 2D suavizado
-    h, xe, ye = np.histogram2d(x, y, bins=[120, 100], range=[[0, xmax], [0, ymax]])
+    h, xe, ye = np.histogram2d(x, y, bins=[120, 100], range=[[xmin, xmax], [0, ymax]])
     k = np.exp(-0.5 * (np.arange(-6, 7) / 2.2) ** 2)
     k = k / k.sum()
     hs = np.apply_along_axis(lambda m: np.convolve(m, k, mode="same"), 0, h)
@@ -214,7 +245,7 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
         color=OURO,
         alpha=0.16,
         lw=0,
-        label="faixa interquartil por faixa de abstenção",
+        label=f"faixa interquartil por faixa de {e['nome']}",
     )
     ax.plot(
         geral["x"],
@@ -226,7 +257,7 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
         mec=FUNDO,
         label="média de Lula por faixa de 2,5 pontos",
     )
-    xs = np.array([0, xmax])
+    xs = np.array([xmin, xmax])
     ax.plot(
         xs,
         a + b * xs,
@@ -245,9 +276,9 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
         ha="right",
         fontsize=9.5,
     )
-    ax.set_xlim(0, xmax)
+    ax.set_xlim(xmin, xmax)
     ax.set_ylim(0, ymax)
-    ax.set_xlabel("Abstenção na seção, % dos aptos", fontsize=12, labelpad=8)
+    ax.set_xlabel(e["rotulo"], fontsize=12, labelpad=8)
     ax.set_ylabel("Lula na seção, % dos votos válidos", fontsize=12, labelpad=8)
     ax.grid(color=LINHA, lw=0.5, alpha=0.6)
     ax.tick_params(labelsize=10)
@@ -261,7 +292,7 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
     )
 
     # Histogramas marginais
-    ax_top.hist(x, bins=np.arange(0, xmax + 0.5, 0.5), color=TEAL, alpha=0.85, lw=0)
+    ax_top.hist(x, bins=np.arange(xmin, xmax + 0.5, 0.5), color=TEAL, alpha=0.85, lw=0)
     ax_top.axvline(np.average(x, weights=w), color=OURO, lw=1.4, ls="--")
     ax_top.text(
         np.average(x, weights=w) + 0.6,
@@ -308,13 +339,13 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
             lw=2.0,
             label=f"{nome} (r = {pt(info['r'], 2, sinal=True)})",
         )
-    axr.set_xlim(0, xmax)
+    axr.set_xlim(xmin, xmax)
     axr.set_ylim(0, 100)
     axr.set_yticks([0, 50, 100])
     axr.tick_params(labelsize=8.5)
     axr.grid(color=LINHA, lw=0.5, alpha=0.6)
     axr.set_title(
-        "Média de Lula por faixa de abstenção, por região",
+        f"Média de Lula por faixa de {e['nome']}, por região",
         fontsize=10,
         color=TINTA,
         loc="left",
@@ -334,7 +365,11 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
             f"Pearson r = {pt(r, 3, sinal=True)} (seções com peso igual)",
             f"Pearson r = {pt(rw, 3, sinal=True)} (ponderado por aptos)",
             f"n = {milhar(len(x))} seções com {APTOS_MIN}+ aptos, exterior fora",
-            f"r² = {pt(r * r, 3)}: a abstenção explica {pt(100 * r * r, 1)}% da variação",
+            (
+                f"r² = {pt(r * r, 3)}: o {e['nome']} explica {pt(100 * r * r, 1)}% da variação"
+                if eixo == "comparecimento"
+                else f"r² = {pt(r * r, 3)}: a abstenção explica {pt(100 * r * r, 1)}% da variação"
+            ),
             "do voto em Lula entre seções",
         ]
     )
@@ -353,7 +388,7 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
     fig.text(
         0.075,
         0.955,
-        "Abstenção e voto em Lula, seção por seção",
+        e["titulo"],
         fontsize=24,
         fontweight="bold",
         color=TINTA,
@@ -370,8 +405,8 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
     fig.text(
         0.075,
         0.012,
-        "Fonte: TSE, boletins de urna por seção, totalização de 05/10/2026; Lula em % dos válidos; abstenção em % dos aptos; seções com 50+ aptos.\n"
-        "Correlação não é causa: o Nordeste tem menos abstenção e mais Lula, e dentro de cada região o sinal é outro; a leitura por região separa os dois efeitos.",
+        "Fonte: TSE, boletins de urna por seção, totalização de 05/10/2026; Lula em % dos válidos; eixo x em % dos aptos; seções com 50+ aptos.\n"
+        f"Correlação não é causa: {e['nota']}, e dentro de cada região o sinal é outro; a leitura por região separa os dois efeitos.",
         fontsize=8.2,
         color=SUAVE,
         va="bottom",
@@ -388,8 +423,8 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
         family=MONO,
     )
 
-    PNG.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(PNG, dpi=200)
+    png.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(png, dpi=200)
     plt.close(fig)
     return {
         "n": len(x),
@@ -413,18 +448,25 @@ def desenhar(d: dict[str, np.ndarray]) -> dict:
     }
 
 
-def main() -> int:
-    d = carregar()
-    saida = desenhar(d)
-    JSON.write_text(
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=(__doc__ or "").split("\n\n")[0])
+    parser.add_argument("--eixo", choices=sorted(EIXO), default="abstencao")
+    args = parser.parse_args(argv)
+    png, saida_json = SAIDAS[args.eixo]
+    d = carregar(args.eixo)
+    saida = desenhar(d, args.eixo)
+    saida["eixo"] = args.eixo
+    saida_json.write_text(
         json.dumps(saida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
     )
     print(
-        f"{PNG.relative_to(ROOT)}: n={saida['n']} r={saida['pearson']:+.3f} r_pond={saida['pearson_ponderado']:+.3f}"
+        f"{png.relative_to(ROOT)}: n={saida['n']} r={saida['pearson']:+.3f} "
+        f"r_pond={saida['pearson_ponderado']:+.3f}"
     )
     for nome, info in saida["regioes"].items():
         print(
-            f"  {nome}: r={info['r']:+.3f} n={info['n']} abst={info['abst_media']:.1f} lula={info['lula_medio']:.1f}"
+            f"  {nome}: r={info['r']:+.3f} n={info['n']} x={info['abst_media']:.1f} "
+            f"lula={info['lula_medio']:.1f}"
         )
     return 0
 
