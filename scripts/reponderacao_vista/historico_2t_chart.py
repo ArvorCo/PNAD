@@ -158,9 +158,11 @@ def chart(rows):
                 if (isolated or preview) and poll is rows[-1]:
                     cv.text(
                         px - 9,
-                        py - 10
-                        if poll[kind][candidate] >= poll["placar"][candidate]
-                        else py + 16,
+                        (
+                            py - 10
+                            if poll[kind][candidate] >= poll["placar"][candidate]
+                            else py + 16
+                        ),
                         f"{'Prévia' if preview else 'PNAD'} {candidate[0].upper()} {br(poll[kind][candidate], 2)}",
                         size=11,
                         anchor="end",

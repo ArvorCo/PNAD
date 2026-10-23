@@ -61,9 +61,9 @@ def panel(name, rows):
         direct = latest["turnos"]["2t"]["cenarios"][CEN]["contrafactual"]
         note += (
             '<p class="note"><b>Conferência pela soma direta:</b> votos atuais por faixa × '
-            f'pesos PNAD 2025, pessoas 16+: <b>{score(direct)}</b> no total. '
-            'A prévia do gráfico mantém o método do relatório: publicado + parcela ajustável × '
-            '(soma PNAD − recomposição com o perfil de referência).</p>'
+            f"pesos PNAD 2025, pessoas 16+: <b>{score(direct)}</b> no total. "
+            "A prévia do gráfico mantém o método do relatório: publicado + parcela ajustável × "
+            "(soma PNAD − recomposição com o perfil de referência).</p>"
         )
         note += f'<p class="note history-preview">{esc(latest["renda"]["nota"])}</p>'
     return (
