@@ -15,3 +15,6 @@ docs/fontes/projecao_secoes_2t_2026.csv.gz filter=lfs diff=lfs merge=lfs -text
 docs/img/projecao_secoes_2t/*.svg -whitespace
 video/sete_riscos/midia/entrada/*.mp4 filter=lfs diff=lfs merge=lfs -text
 video/sete_riscos/midia/entrada/*.png filter=lfs diff=lfs merge=lfs -text
+
+# Preserve the archived TSE methodology transcript byte-for-byte.
+docs/fontes/datafolha_22102026_plano_amostral.txt -whitespace

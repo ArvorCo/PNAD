@@ -57,12 +57,12 @@ def test_missing_current_date_raises_instead_of_reusing_previous_wave():
         MODULE.current(chart)
 
 
-def test_history_keeps_official_valids_and_identifies_preview():
+def test_history_keeps_official_valids_and_current_weighted_profile():
     rows = [p for p in history() if p["id"] == "datafolha_2026-10-22"]
     assert len(rows) == 1
     row = rows[0]
     assert row["pnad"] is not None
-    assert row["renda"]["perfil_tipo"] == "hipotese_onda_anterior"
+    assert row["renda"]["perfil_tipo"] == "perfil_ponderado"
     projected = project(row)
     assert projected["modos"]["pnad"] is not None
     assert projected["evidencia"]["tipo"] == "neutro"
@@ -73,7 +73,7 @@ def test_history_keeps_official_valids_and_identifies_preview():
 
 
 def test_transcription_reproducible_and_sources_intact(assert_json_close):
-    poll = MODULE.previa()
+    poll = MODULE.completa()
     stored = MODULE.COMMON.read(
         MODULE.ROOT / "analysis/reponderacao/pesquisas/datafolha_2026-10-22.json"
     )
@@ -99,22 +99,20 @@ def test_preview_borrows_only_income_profile_and_coverage():
     assert poll["cruzamentos"]["2t"]["linhas"] != old["cruzamentos"]["2t"]["linhas"]
 
 
-def test_preview_is_explicit_in_total_and_valid_charts():
-    rows = [p for p in history() if p["instituto"] == "Datafolha"]
+def test_current_wave_no_longer_has_preview_labels():
+    rows = [p for p in history() if p["id"] == "datafolha_2026-10-22"]
     rendered = BeautifulSoup(panel("Datafolha", rows), "html.parser")
     for mode in ("total", "validos"):
         view = rendered.select_one(f'[data-history-view="{mode}"]')
-        assert "PRÉVIA PNAD" in view.get_text()
-        assert "Prévia F" in view.select_one("svg").get_text()
-        assert "Prévia L" in view.select_one("svg").get_text()
-    assert "96,23%" in rendered.select_one(".history-preview").get_text()
-    assert "48,72 × 44,53" in rendered.get_text()
+        assert "PRÉVIA PNAD" not in view.get_text()
+        assert "Prévia F" not in view.select_one("svg").get_text()
+    assert rendered.select_one(".history-preview") is None
 
 
-def test_preview_delta_limits_adjustment_and_preserves_old_snapshot():
+def test_current_delta_limits_adjustment_and_preserves_old_snapshot():
     row = next(p for p in history() if p["id"] == "datafolha_2026-10-22")
-    assert row["pnad"]["flavio"] == pytest.approx(48.897, abs=0.001)
-    assert row["pnad"]["lula"] == pytest.approx(44.216, abs=0.001)
+    assert row["pnad"]["flavio"] == pytest.approx(48.891, abs=0.001)
+    assert row["pnad"]["lula"] == pytest.approx(44.219, abs=0.001)
     for key, published, cells in (
         ("flavio", 47, [39, 54, 54]),
         ("lula", 46, [54, 39, 40]),
@@ -123,7 +121,7 @@ def test_preview_delta_limits_adjustment_and_preserves_old_snapshot():
             v * w / 100 for v, w in zip(cells, [35.187, 39.259, 25.554], strict=True)
         )
         reconstructed = (
-            sum(v * n for v, n in zip(cells, [1172, 918, 335], strict=True)) / 2425
+            sum(v * n for v, n in zip(cells, [1171, 913, 341], strict=True)) / 2425
         )
         assert row["pnad"][key] == pytest.approx(
             published + 2425 / 2520 * (direct - reconstructed), abs=0.001

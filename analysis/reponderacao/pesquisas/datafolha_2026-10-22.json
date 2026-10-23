@@ -25,17 +25,41 @@
     }
   },
   "fonte": {
-    "arquivo": "data/originals/datafolha_102026_22/g1_painel.html",
-    "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Datafolha/internal/",
-    "rotulo": "Painel G1 e registro TSE conferidos",
-    "bytes": 141289,
-    "sha256": "22df64ddbff66b7df3fdbb007485d71625bea7f363e503a38f121d55801ac7a1",
-    "tipo": "painel_contratante",
-    "conferido_em": "2026-10-22",
-    "status": "Prévia PNAD · perfil da onda de 15/10",
-    "paginas": {},
-    "nota": "PRÉVIA PNAD: cruzamentos atuais de 22/10 com perfil de renda emprestado da Datafolha divulgada em 15/10 (campo 13–14/10). Bases de referência 1.172/918/335; cobertura assumida 2.425/2.520 (96,23%). Os 95/2.520 restantes conservam o topline atual. Essas bases e essa cobertura não foram observadas na onda de 22/10: sua estabilidade é hipótese provisória. Votos por renda de 22/10: 39/54/5/2, 54/39/6/1 e 54/40/5/1 (F/L/BN/NS). Total atual 47/46/5/2, n=2.520, campo 20–22/10, BR-09709/2026. Válidos oficiais 50/50 preservados. Prévia incluída nas duas centrais e na tendência; substituir o perfil quando saírem as bases atuais. Não é ajuste confirmado pela íntegra atual nem provável eleitor medido.",
+    "arquivo": "data/originals/datafolha_102026_22_integra/relatorio.pdf",
+    "url": "https://media.folha.uol.com.br/datafolha/2026/10/23/xruy9kxbaieozsbhp0lxbvdrv6cvlf5iuxgfkw04tre.pdf",
+    "bytes": 1431549,
+    "sha256": "c548241d08d526ce1ceecc87e64cd1ba989634130ba165b9660fbab4219321d4",
+    "pdf": "data/originals/datafolha_102026_22_integra/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": [
+        2,
+        22
+      ],
+      "perfil_renda": 24,
+      "2t_topline": 8,
+      "2t_renda": 27,
+      "sexo": 27,
+      "regiao": 27,
+      "2t_validos": [
+        9,
+        28
+      ]
+    },
+    "total_paginas": 36,
+    "conferido_em": "2026-10-23",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra oficial de 36 páginas publicada em 23/10, campo 20–22/10, 2.520 entrevistas em 154 municípios, BR-09709/2026. P. 22 declara bases ponderadas. P. 27 (anexo p. 8): renda 1.171/913/341, soma 2.425; 95 sem renda conservam o publicado. Cruzamentos F/L/BN/I atuais 39/54/5/2, 54/39/6/1, 54/40/5/1. Substitui a hipótese de bases emprestadas de 15/10, sem criar nova onda. Válidos oficiais 50/50 preservados separadamente da normalização dos inteiros 47/93. P. 9 indica base de 2.347 entrevistas; p. 28 declara base ponderada 2.351: naturezas distintas, sem converter bases em contagens de voto. Ajuste PNAD é sensibilidade de composição, não correção do voto.",
+    "publicado_em": "2026-10-23",
     "complementos": [
+      {
+        "arquivo": "data/originals/datafolha_102026_22/g1_painel.html",
+        "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Datafolha/internal/",
+        "bytes": 141289,
+        "sha256": "22df64ddbff66b7df3fdbb007485d71625bea7f363e503a38f121d55801ac7a1",
+        "rotulo": "Painel G1 e registro TSE conferidos"
+      },
       {
         "arquivo": "data/originals/datafolha_102026_22/g1_estimulada.json",
         "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Datafolha",
@@ -65,11 +89,11 @@
         "sha256": "5c66681e9096416ad0b1cd3a92720109097d99a07de5bb03774d4138793e580e"
       },
       {
-        "arquivo": "data/originals/datafolha_102026_15_integra/relatorio.pdf",
-        "url": "https://media.folha.uol.com.br/datafolha/2026/10/16/2sq1uhzy7x0w7caugz-gotqrxffgtdsqnx7qkfqfhs0.pdf",
-        "bytes": 1459345,
-        "sha256": "b86d9106bbdb9deb074f03e57522365ff9d5a7222f16ff0c8f7b36480cdd9b81",
-        "rotulo": "Perfil emprestado: Datafolha de 15/10, anexo p. 8"
+        "arquivo": "data/originals/datafolha_102026_22_integra/datafolha.html",
+        "url": "https://datafolha.folha.uol.com.br/eleicoes/2026/10/flavio-bolsonaro-pl-tem-47-e-tem-empate-tecnico-com-lula-pt-que-aparece-com-46.shtml",
+        "bytes": 123294,
+        "sha256": "d9ff7a9457ee9dc03258d8aeb0a2a4b48a4c526a9ac4da2ecf2b60700c7ab71a",
+        "rotulo": "Divulgação oficial e link para a íntegra de 23/10"
       }
     ]
   },
@@ -83,25 +107,25 @@
       ],
       "linhas": [
         [
-          39.0,
-          54.0,
-          5.0,
-          2.0
+          39,
+          54,
+          5,
+          2
         ],
         [
-          54.0,
-          39.0,
-          6.0,
-          1.0
+          54,
+          39,
+          6,
+          1
         ],
         [
-          54.0,
-          40.0,
-          5.0,
-          1.0
+          54,
+          40,
+          5,
+          1
         ]
       ],
-      "nota": "PRÉVIA PNAD: cruzamentos atuais de 22/10 com perfil de renda emprestado da Datafolha divulgada em 15/10 (campo 13–14/10). Bases de referência 1.172/918/335; cobertura assumida 2.425/2.520 (96,23%). Os 95/2.520 restantes conservam o topline atual. Essas bases e essa cobertura não foram observadas na onda de 22/10: sua estabilidade é hipótese provisória. Votos por renda de 22/10: 39/54/5/2, 54/39/6/1 e 54/40/5/1 (F/L/BN/NS). Total atual 47/46/5/2, n=2.520, campo 20–22/10, BR-09709/2026. Válidos oficiais 50/50 preservados. Prévia incluída nas duas centrais e na tendência; substituir o perfil quando saírem as bases atuais. Não é ajuste confirmado pela íntegra atual nem provável eleitor medido."
+      "nota": "Íntegra oficial de 36 páginas publicada em 23/10, campo 20–22/10, 2.520 entrevistas em 154 municípios, BR-09709/2026. P. 22 declara bases ponderadas. P. 27 (anexo p. 8): renda 1.171/913/341, soma 2.425; 95 sem renda conservam o publicado. Cruzamentos F/L/BN/I atuais 39/54/5/2, 54/39/6/1, 54/40/5/1. Substitui a hipótese de bases emprestadas de 15/10, sem criar nova onda. Válidos oficiais 50/50 preservados separadamente da normalização dos inteiros 47/93. P. 9 indica base de 2.347 entrevistas; p. 28 declara base ponderada 2.351: naturezas distintas, sem converter bases em contagens de voto. Ajuste PNAD é sensibilidade de composição, não correção do voto."
     }
   },
   "cruzamentos_documentais": {
@@ -137,11 +161,11 @@
       ]
     ],
     "bases": [
-      null,
-      null,
-      null
+      1171,
+      913,
+      341
     ],
-    "nota": "Divulgação de 22/10: F/L/BN/NS 47/46/5/2; válidos oficiais 50/50. Campo 20–22/10 e n=2.520 confirmados no painel G1 e no registro BR-09709/2026. O registro descreve 2.520 como amostra prevista; o G1 informa 2.520 ouvidos. Cruzamentos atuais de renda: 39/54/5/2, 54/39/6/1 e 54/40/5/1. As bases efetivas dos recortes não estão no painel. O TSE traz referência 49/47/4 (até 2 SM, mais de 2 SM, NS/recusa), fator previsto de renda 1; não é perfil observado nem separa as duas faixas superiores. Relatório completo não fornecido pela empresa no TSE na consulta. Entra pelo publicado na Projeção; sem ajuste PNAD até obter as bases atuais, sem transportar pesos da onda anterior. A passagem de PNAD na onda anterior a publicado nesta pode afetar a tendência. Válidos divulgados preservados separadamente da normalização 47/93."
+    "nota": "Íntegra oficial de 36 páginas publicada em 23/10, campo 20–22/10, 2.520 entrevistas em 154 municípios, BR-09709/2026. P. 22 declara bases ponderadas. P. 27 (anexo p. 8): renda 1.171/913/341, soma 2.425; 95 sem renda conservam o publicado. Cruzamentos F/L/BN/I atuais 39/54/5/2, 54/39/6/1, 54/40/5/1. Substitui a hipótese de bases emprestadas de 15/10, sem criar nova onda. Válidos oficiais 50/50 preservados separadamente da normalização dos inteiros 47/93. P. 9 indica base de 2.347 entrevistas; p. 28 declara base ponderada 2.351: naturezas distintas, sem converter bases em contagens de voto. Ajuste PNAD é sensibilidade de composição, não correção do voto."
   },
   "registro_conferido": {
     "n_previsto": 2520,
@@ -158,7 +182,10 @@
     ],
     "fator_renda_previsto": 1,
     "usado_como_perfil": false,
-    "integra_anexada": false
+    "integra_anexada": false,
+    "consulta_em": "2026-10-22",
+    "integra_oficial_obtida_em": "2026-10-23",
+    "nota": "Anexo no TSE não reconsultado; íntegra obtida no site oficial do Datafolha."
   },
   "painel_recortes": [
     {
@@ -481,19 +508,160 @@
       }
     ],
     "amostra_pct": [
-      1172,
-      918,
-      335
+      1171,
+      913,
+      341
     ],
-    "perfil_tipo": "hipotese_onda_anterior",
-    "nota": "PRÉVIA PNAD: cruzamentos atuais de 22/10 com perfil de renda emprestado da Datafolha divulgada em 15/10 (campo 13–14/10). Bases de referência 1.172/918/335; cobertura assumida 2.425/2.520 (96,23%). Os 95/2.520 restantes conservam o topline atual. Essas bases e essa cobertura não foram observadas na onda de 22/10: sua estabilidade é hipótese provisória. Votos por renda de 22/10: 39/54/5/2, 54/39/6/1 e 54/40/5/1 (F/L/BN/NS). Total atual 47/46/5/2, n=2.520, campo 20–22/10, BR-09709/2026. Válidos oficiais 50/50 preservados. Prévia incluída nas duas centrais e na tendência; substituir o perfil quando saírem as bases atuais. Não é ajuste confirmado pela íntegra atual nem provável eleitor medido.",
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "Íntegra oficial de 36 páginas publicada em 23/10, campo 20–22/10, 2.520 entrevistas em 154 municípios, BR-09709/2026. P. 22 declara bases ponderadas. P. 27 (anexo p. 8): renda 1.171/913/341, soma 2.425; 95 sem renda conservam o publicado. Cruzamentos F/L/BN/I atuais 39/54/5/2, 54/39/6/1, 54/40/5/1. Substitui a hipótese de bases emprestadas de 15/10, sem criar nova onda. Válidos oficiais 50/50 preservados separadamente da normalização dos inteiros 47/93. P. 9 indica base de 2.347 entrevistas; p. 28 declara base ponderada 2.351: naturezas distintas, sem converter bases em contagens de voto. Ajuste PNAD é sensibilidade de composição, não correção do voto.",
     "parcela_ajustada_pct": 96.23015873015873,
-    "bases_referencia": [
-      1172,
-      918,
-      335
+    "bases": [
+      1171,
+      913,
+      341
     ],
-    "referencia_id": "datafolha_2026-10-14",
-    "referencia_divulgacao": "2026-10-15"
+    "nao_publicada_n": 95
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          1171,
+          913,
+          341
+        ],
+        "linhas": [
+          [
+            39,
+            54,
+            5,
+            2
+          ],
+          [
+            54,
+            39,
+            6,
+            1
+          ],
+          [
+            54,
+            40,
+            5,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 46.756701030927836,
+          "lula": 46.38391752577319,
+          "branco_nulo": 5.376494845360825,
+          "indecisos": 1.4828865979381443
+        },
+        "residuo": {
+          "flavio": -0.24329896907216408,
+          "lula": 0.3839175257731924,
+          "branco_nulo": 0.376494845360825,
+          "indecisos": -0.5171134020618557
+        },
+        "residuo_max_abs": 0.5171134020618557
+      },
+      "sexo": {
+        "pesos": [
+          1239,
+          1281
+        ],
+        "linhas": [
+          [
+            50,
+            44,
+            5,
+            1
+          ],
+          [
+            44,
+            49,
+            5,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 46.95,
+          "lula": 46.541666666666664,
+          "branco_nulo": 5.0,
+          "indecisos": 1.5083333333333333
+        },
+        "residuo": {
+          "flavio": -0.04999999999999716,
+          "lula": 0.5416666666666643,
+          "branco_nulo": 0.0,
+          "indecisos": -0.4916666666666667
+        },
+        "residuo_max_abs": 0.5416666666666643
+      },
+      "regiao": {
+        "pesos": [
+          1065,
+          363,
+          679,
+          413
+        ],
+        "linhas": [
+          [
+            51,
+            41,
+            6,
+            2
+          ],
+          [
+            58,
+            33,
+            7,
+            2
+          ],
+          [
+            30,
+            65,
+            4,
+            1
+          ],
+          [
+            53,
+            41,
+            4,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 46.67777777777778,
+          "lula": 46.31428571428572,
+          "branco_nulo": 5.277380952380953,
+          "indecisos": 1.5666666666666667
+        },
+        "residuo": {
+          "flavio": -0.32222222222222285,
+          "lula": 0.3142857142857167,
+          "branco_nulo": 0.27738095238095273,
+          "indecisos": -0.43333333333333335
+        },
+        "residuo_max_abs": 0.43333333333333335
+      }
+    }
   }
 }

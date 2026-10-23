@@ -406,11 +406,11 @@ def current_coverage(ns):
             '<aside class="callout" id="rodada-2210"><h3>22/10: Datafolha, PoderData, Indexa e novas íntegras</h3>'
             '<p id="datafolha-2210"><b>Datafolha: 47 × 46 no total; 50 × 50 nos válidos divulgados.</b> '
             "G1 e registro BR-09709/2026 confirmam 2.520 entrevistas, campo 20–22/10. "
-            "<b>PRÉVIA PNAD com o perfil da onda de 15/10:</b> bases de referência "
-            "1.172/918/335 e cobertura assumida de 2.425/2.520 (96,23%). "
-            "Os votos por renda são os atuais; o perfil e a cobertura são hipóteses "
-            "emprestadas da onda anterior. Os 95/2.520 restantes conservam o topline. "
-            "A prévia entra nas duas centrais e na tendência, até obter as bases atuais. "
+            "<b>Íntegra publicada em 23/10:</b> bases ponderadas atuais "
+            "1.171/913/341 e cobertura de 2.425/2.520 (96,23%). "
+            "A revisão substitui o perfil emprestado de 15/10; "
+            "os 95/2.520 sem renda conservam o topline. "
+            "A mesma onda permanece nas duas centrais e na tendência. "
             "A referência 49/47/4 do TSE não foi usada como amostra observada.</p>"
             "<p><b>PoderData: 49 × 48 no total; 51 × 49 nos válidos divulgados.</b> "
             "Íntegra de 42 páginas, campo 19–21/10. Perfil e cruzamentos de renda "
@@ -432,7 +432,7 @@ def current_coverage(ns):
             "As 207 páginas confirmam perfil atual 31/42/27 e cruzamentos de renda. "
             "Volta à Média e recebe ajuste na Projeção, sem duplicação.</p>"
             '<p class="note"><a href="fontes/datafolha_22102026_registro.txt">Datafolha, registro transcrito</a> · '
-            '<a href="assets/reponderacao_datafolha_20261022_previa.json">Datafolha, prévia e fontes</a> · '
+            '<a href="datafolha_22102026.html">Datafolha, íntegra de 22/10 e auditoria</a> · '
             '<a href="fontes/poderdata_22102026.pdf">PoderData, 42 páginas</a> · '
             '<a href="fontes/gerp_21102026.pdf">Gerp, 59 páginas</a> · '
             '<a href="fontes/quaest_21102026.pdf">Quaest, 207 páginas</a> · '

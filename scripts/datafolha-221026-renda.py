@@ -187,8 +187,90 @@ def previa():
     return poll
 
 
+def completa():
+    """Revisa a mesma onda com bases atuais; mantém a prévia reproduzível."""
+    from datafolha_221026.extract import tables
+
+    helper = importlib.import_module("pesquisas-131026-renda")
+    poll = datafolha()
+    segments = tables()["voto"]["segments"]
+    note = (
+        "Íntegra oficial de 36 páginas publicada em 23/10, campo 20–22/10, "
+        "2.520 entrevistas em 154 municípios, BR-09709/2026. P. 22 declara "
+        "bases ponderadas. P. 27 (anexo p. 8): renda 1.171/913/341, soma 2.425; "
+        "95 sem renda conservam o publicado. Cruzamentos F/L/BN/I atuais "
+        "39/54/5/2, 54/39/6/1, 54/40/5/1. Substitui a hipótese de bases "
+        "emprestadas de 15/10, sem criar nova onda. Válidos oficiais 50/50 "
+        "preservados separadamente da normalização dos inteiros 47/93. "
+        "P. 9 indica base de 2.347 entrevistas; p. 28 declara base ponderada "
+        "2.351: naturezas distintas, sem converter bases em contagens de voto. "
+        "Ajuste PNAD é sensibilidade de composição, não correção do voto."
+    )
+    original = poll["fonte"]
+    poll.pop("ignorar")
+    poll.pop("motivo")
+    labels = list(segments["total"]["responses"])
+
+    def rows(names):
+        return [[segments[n]["responses"][k] for k in labels] for n in names]
+
+    def bases(names):
+        return [segments[n]["base_ponderada"] for n in names]
+
+    bands = ["até 2 SM", "2–5 SM", ">5 SM"]
+    sex = ["homens", "mulheres"]
+    weights = bases(bands)
+    helper.income(
+        poll,
+        [2, 5, None],
+        weights,
+        rows(bands),
+        rows(sex),
+        bases(sex),
+        note,
+        100 * sum(weights) / poll["n"],
+    )
+    poll["renda"].update(bases=weights, nao_publicada_n=poll["n"] - sum(weights))
+    regions = ["Sudeste", "Sul", "Nordeste", "CO/Norte"]
+    poll["controles"]["2t"]["regiao"] = helper.control(
+        poll["publicado"]["2t"], rows(regions), bases(regions)
+    )
+    poll["cruzamentos_documentais"].update(bases=weights, nota=note)
+    poll["fonte"] = helper.source(
+        "datafolha_102026_22_integra",
+        {
+            "metodologia": [2, 22],
+            "perfil_renda": 24,
+            "2t_topline": 8,
+            "2t_renda": 27,
+            "sexo": 27,
+            "regiao": 27,
+            "2t_validos": [9, 28],
+        },
+        36,
+        note,
+    )
+    poll["fonte"].update(conferido_em="2026-10-23", publicado_em="2026-10-23")
+    poll["fonte"]["complementos"] = [
+        {k: original[k] for k in ("arquivo", "url", "bytes", "sha256", "rotulo")},
+        *original["complementos"],
+        {
+            **COMMON.source(
+                COMMON.archive("datafolha_102026_22_integra"), "datafolha.html"
+            ),
+            "rotulo": "Divulgação oficial e link para a íntegra de 23/10",
+        },
+    ]
+    poll["registro_conferido"].update(
+        consulta_em="2026-10-22",
+        integra_oficial_obtida_em="2026-10-23",
+        nota="Anexo no TSE não reconsultado; íntegra obtida no site oficial do Datafolha.",
+    )
+    return poll
+
+
 def main():
-    poll = previa()
+    poll = completa()
     sources = [
         {k: poll["fonte"][k] for k in ("arquivo", "url", "bytes", "sha256")},
         *poll["fonte"]["complementos"],
@@ -200,19 +282,24 @@ def main():
         "referencia": DAY,
         "pesquisa": poll,
         "fontes": sources,
-        "pendencias": ["Íntegra e bases ponderadas atuais de renda."],
+        "revisao_em": "2026-10-23",
+        "pendencias": [
+            "Percentuais não arredondados e pesos individuais não publicados."
+        ],
     }
     COMMON.write(
-        ROOT / "analysis/reponderacao/auditoria_datafolha_20261022_previa.json", audit
+        ROOT / "analysis/reponderacao/auditoria_datafolha_20261022_integra.json", audit
     )
     COMMON.write(
-        ROOT / "docs/assets/reponderacao_datafolha_20261022_previa.json", audit
+        ROOT / "docs/assets/reponderacao_datafolha_20261022_integra.json", audit
     )
     shutil.copyfile(
         FOLDER / "registro-tse.txt",
         ROOT / "docs/fontes/datafolha_22102026_registro.txt",
     )
-    print("Datafolha 22/10: prévia PNAD com perfil e cobertura de 15/10.")
+    print(
+        "Datafolha 22/10: íntegra atual, bases 1.171/913/341; prévia preservada no arquivo."
+    )
 
 
 if __name__ == "__main__":

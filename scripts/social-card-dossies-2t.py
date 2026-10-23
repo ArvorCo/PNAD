@@ -7,6 +7,19 @@ def cards(root):
     output = []
     for slug, name, title, emphasis, description, stats, accent in [
         (
+            "datafolha_22102026",
+            "Datafolha · 22/10/2026",
+            "Dois placares.",
+            "Uma pesquisa.",
+            "<b>A íntegra de 36 páginas.</b> Renda atual, a ordem do arredondamento e as cotas que começam na seleção em campo. Fontes e contas abertas.",
+            [
+                ("47 × 46", "total publicado / Flávio × Lula"),
+                ("50 × 50", "votos válidos oficiais"),
+                ("2.425", "base ponderada com renda / de 2.520"),
+            ],
+            "blue",
+        ),
+        (
             "nexus_btg_13102026",
             "BTG/Nexus · 13/10/2026",
             "Duas lealdades.",
@@ -47,7 +60,7 @@ def cards(root):
         ),
     ]:
         data = json.loads((root / "docs/assets" / (slug + "_data.json")).read_text())
-        if slug.startswith("datafolha"):
+        if slug == "datafolha_08102026":
             stats[1] = (
                 f'{data["denominators"]["certain_all_pct"]:.1f}%'.replace(".", ","),
                 stats[1][1],

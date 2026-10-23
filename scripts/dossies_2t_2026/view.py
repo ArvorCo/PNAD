@@ -23,11 +23,11 @@ def signed(x, digits=1):
     return ("+" if x > 0 else "−" if x < 0 else "") + fmt(abs(x), digits)
 
 
-def ref(house, *pages):
+def ref(house, *pages, pdf=None):
     return (
         '<span class="refs">Fonte: '
         + " · ".join(
-            f'<a href="fontes/{PDF[house]}#page={p}" title="Página física do PDF">p. {p}</a>'
+            f'<a href="fontes/{pdf or PDF[house]}#page={p}" title="Página física do PDF">p. {p}</a>'
             for p in pages
         )
         + "</span>"
@@ -232,7 +232,7 @@ def vote_profiles(data, names):
     )
 
 
-def raw_tables(data, house):
+def raw_tables(data, house, pdf=None):
     groups = []
     for key, t in data["tables"].items():
         total = t["segments"]["total"]
@@ -251,7 +251,7 @@ def raw_tables(data, house):
                 esc(t.get("title", key.replace("_", " ").capitalize())),
                 note(esc(t["universe"]))
                 + table(["Segmento", *options, "Base ponderada"], rows)
-                + ref(house, *pages),
+                + ref(house, *pages, pdf=pdf),
             )
         )
     return details(
@@ -261,7 +261,7 @@ def raw_tables(data, house):
     )
 
 
-def explorer(data, house):
+def explorer(data, house, pdf=None):
     first = data["tables"]["voto"]
     options = '<option value="voto">Intenção de voto</option>' + "".join(
         f'<option value="{key}">{esc(t.get("title",key.replace("_"," ").capitalize()))}</option>'
@@ -269,7 +269,11 @@ def explorer(data, house):
         if key != "voto"
     )
     payload = json.dumps(
-        {"house": house, "tables": data["tables"], "pdf": "fontes/" + PDF[house]},
+        {
+            "house": house,
+            "tables": data["tables"],
+            "pdf": "fontes/" + (pdf or PDF[house]),
+        },
         ensure_ascii=False,
     ).replace("</", "<\\/")
     return (
@@ -277,7 +281,7 @@ def explorer(data, house):
         + options
         + '</select></label><label>Recorte<select id="d-dimension"></select></label></div><div id="d-explorer-chart" aria-live="polite">'
         + vote_profiles(data, ["homens", "mulheres"])
-        + ref(house, *first.get("pages", [first.get("page")]))
+        + ref(house, *first.get("pages", [first.get("page")]), pdf=pdf)
         + '</div><script type="application/json" id="d-explorer-data">'
         + payload
         + "</script></div>"

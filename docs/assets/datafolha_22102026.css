@@ -1,0 +1,11 @@
+.rounding-lab { padding: 28px; margin: 28px 0; border: 1px solid #babeb7; background: #edf1ec; }
+.lab-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 24px 0; }
+.lab-inputs label { display: block; font-weight: 700; }
+.lab-inputs output { float: right; font-variant-numeric: tabular-nums; }
+.lab-inputs input { display: block; width: 100%; margin: 20px 0; accent-color: #386ba6; }
+.lab-inputs label:last-child input { accent-color: #a74247; }
+#round-result { padding-top: 22px; border-top: 1px solid #babeb7; }
+#round-result b { font-size: clamp(25px, 4vw, 40px); font-variant-numeric: tabular-nums; }
+.field-steps { padding-left: 24px; }
+.field-steps li { padding: 12px 0 12px 8px; border-bottom: 1px solid #d1d1c6; }
+@media (max-width: 640px) { .lab-inputs { grid-template-columns: 1fr; gap: 0; } .rounding-lab { padding: 18px; } }
