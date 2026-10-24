@@ -66,6 +66,14 @@ def panel(name, rows):
             "(soma PNAD − recomposição com o perfil de referência).</p>"
         )
         note += f'<p class="note history-preview">{esc(latest["renda"]["nota"])}</p>'
+    if latest.get("eleitor_provavel_oficial"):
+        note += (
+            '<p class="note"><b>24/10: amostra completa 46 × 45; likely voter oficial 51 × 49.</b> '
+            "A normalização dos totais arredondados é 50,55 × 49,45 e não permite isolar o efeito exato do modelo. "
+            "Ative votos válidos para ver o resultado oficial; a linha é interrompida na mudança de universo. "
+            "Sem perfil atual e cruzamentos do eleitor provável, esta onda não tem PNAD. "
+            "Na Central Projeção, entra pelo 51 × 49, sem reaplicar presença.</p>"
+        )
     return (
         f'<article class="panel reveal history-panel" data-instituto="{esc(name)}" data-turno="2t">'
         f"<h3>{esc(name)} <small>Flávio × Lula</small></h3>"

@@ -5153,7 +5153,7 @@
     },
     "2t": {
       "reference": "2026-10-24",
-      "n_houses": 11,
+      "n_houses": 10,
       "excluded": [
         {
           "id": "colectta_2026-10-23",
@@ -5191,6 +5191,11 @@
           "reason": "Sem perfil e cruzamento de renda na íntegra pública."
         },
         {
+          "id": "quaest_2026-10-24",
+          "instituto": "Quaest",
+          "reason": "Perfil atual de renda e cruzamentos likely voter ausentes; sem PNAD nesta onda."
+        },
+        {
           "id": "verita_2026-10-22",
           "instituto": "Veritá",
           "reason": "Perfil de renda soma 104,3% e 16.230 pessoas para n=15.554; sem ajuste PNAD até reconciliar denominadores. Somente publicado na Projeção."
@@ -5210,16 +5215,16 @@
         "central": {
           "aggregate": {
             "publicado": {
-              "lula": 49.02237678990691,
-              "flavio": 50.97762321009309
+              "lula": 49.017433539300285,
+              "flavio": 50.982566460699715
             },
             "pnad": {
-              "lula": 48.25332617260594,
-              "flavio": 51.746673827394055
+              "lula": 48.112495799164705,
+              "flavio": 51.887504200835295
             },
             "modelo": {
-              "lula": 48.248347412436786,
-              "flavio": 51.751652587563214
+              "lula": 48.10751775119255,
+              "flavio": 51.89248224880745
             }
           },
           "polls": [
@@ -5287,30 +5292,30 @@
               "proxy_candidates": []
             },
             {
-              "id": "atlas_2026-10-18",
+              "id": "atlas_2026-10-23",
               "instituto": "AtlasIntel",
-              "divulgacao": "2026-10-19",
+              "divulgacao": "2026-10-24",
               "campo": {
-                "inicio": "2026-10-13",
-                "fim": "2026-10-18"
+                "inicio": "2026-10-18",
+                "fim": "2026-10-23"
               },
               "published": {
-                "flavio": 49.8,
-                "lula": 47.6
+                "flavio": 49.9,
+                "lula": 48.4
               },
               "adjusted": {
-                "flavio": 49.778,
-                "lula": 47.618
+                "flavio": 49.948,
+                "lula": 48.334
               },
               "negative_mass_removed": {},
               "undecided": 0,
               "undecided_known": false,
               "source": {
-                "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
-                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
-                "sha256": "08557d05fbd0ccb40d56937d11bcde76f670fedf3c671827e1494b2213127123",
-                "bytes": 2051532,
-                "pdf": "data/originals/atlas_102026_19/relatorio.pdf",
+                "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+                "sha256": "12a840b19b32253dc06182711b9a001dc004393678cb75247bcbcebb495f5f85",
+                "bytes": 1842966,
+                "pdf": "data/originals/atlas_102026_24/relatorio.pdf",
                 "tipo": "relatorio",
                 "rotulo": "Relatório completo conferido",
                 "paginas": {
@@ -5321,25 +5326,22 @@
                   "2t_renda": 9,
                   "sexo": 9
                 },
-                "total_paginas": 20,
-                "conferido_em": "2026-10-19",
+                "total_paginas": 18,
+                "conferido_em": "2026-10-24",
                 "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação.",
-                "rotulos_opcoes": {
-                  "branco_nulo": "Branco/nulo/não sei (agregado)"
-                }
+                "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
               },
               "publicado": {
-                "flavio": 51.129363449691986,
-                "lula": 48.87063655030801
+                "flavio": 50.76297049847406,
+                "lula": 49.237029501525946
               },
               "pnad": {
-                "flavio": 51.1088751078073,
-                "lula": 48.8911248921927
+                "flavio": 50.82110661158706,
+                "lula": 49.17889338841294
               },
               "modelo": {
-                "flavio": 51.11385964246558,
-                "lula": 48.88614035753441
+                "flavio": 50.82609225699237,
+                "lula": 49.173907743007625
               },
               "allocated_undecided": {
                 "flavio": 0.0,
@@ -5823,69 +5825,6 @@
               "proxy_candidates": []
             },
             {
-              "id": "quaest_2026-10-20",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-21",
-              "campo": {
-                "inicio": "2026-10-17",
-                "fim": "2026-10-20"
-              },
-              "published": {
-                "flavio": 45.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 44.51,
-                "lula": 44.42
-              },
-              "negative_mass_removed": {},
-              "undecided": 2.056,
-              "undecided_known": true,
-              "source": {
-                "arquivo": "data/originals/quaest_102026_22/relatorio.pdf",
-                "url": "https://quaest.com.br/wp-content/uploads/2026/10/QUAEST9PRESIDENCIAL2110.pdf",
-                "bytes": 69889978,
-                "sha256": "70fe5c5bfcb8b2ccfb8e558b143a00d459328cfbde59ce95f4270dfaf50a40dd",
-                "pdf": "data/originals/quaest_102026_22/relatorio.pdf",
-                "tipo": "relatorio",
-                "rotulo": "Relatório completo conferido",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 203,
-                  "2t_topline": 17,
-                  "2t_renda": 25,
-                  "sexo": 22
-                },
-                "total_paginas": 207,
-                "conferido_em": "2026-10-22",
-                "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra oficial de 207 páginas publicada em 22/10, relativa à divulgação de 21/10 e ao campo 17–20/10. BR-08535/2026, n=2.154. Perfil atual conferido na p. 203: renda domiciliar total 31/42/27; sexo 47/53 na p. 200. Etapa antes/depois dos pesos não explicitada: sensibilidade condicional ao perfil publicado. Cruzamentos atuais p. 25 (renda) e p. 22 (sexo), iguais ao painel G1 arquivado. Revisão da mesma onda, sem duplicação; substitui a pendência de perfil. Branco/nulo/não vai votar forma categoria conjunta e não mede abstenção isoladamente. Não foi localizada regra de likely voter para esta onda na íntegra.",
-                "relatorio_completo": "2026-10-22"
-              },
-              "publicado": {
-                "flavio": 50.561797752808985,
-                "lula": 49.438202247191015
-              },
-              "pnad": {
-                "flavio": 50.050601596761496,
-                "lula": 49.9493984032385
-              },
-              "modelo": {
-                "flavio": 50.055588589647705,
-                "lula": 49.944411410352295
-              },
-              "allocated_undecided": {
-                "flavio": 0.8188444724191848,
-                "lula": 0.8170257580400271
-              },
-              "rates": {
-                "flavio": 0.7963802451702287,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
               "id": "realtime_2026-10-22",
               "instituto": "Real Time Big Data",
               "divulgacao": "2026-10-23",
@@ -5953,78 +5892,71 @@
             {
               "without": "Alfa Inteligência/TMC",
               "valid": {
-                "lula": 48.329058838062586,
-                "flavio": 51.670941161937414
+                "lula": 48.18154937286076,
+                "flavio": 51.81845062713924
               }
             },
             {
               "without": "AtlasIntel",
               "valid": {
-                "lula": 48.18456811792702,
-                "flavio": 51.815431882072986
+                "lula": 47.98902997432421,
+                "flavio": 52.01097002567579
               }
             },
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 48.321443453007035,
-                "flavio": 51.678556546992965
+                "lula": 48.173087833910145,
+                "flavio": 51.82691216608986
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 48.23043370427511,
-                "flavio": 51.76956629572489
+                "lula": 48.071965890874665,
+                "flavio": 51.928034109125335
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 48.20784582690817,
-                "flavio": 51.79215417309183
+                "lula": 48.046868249355846,
+                "flavio": 51.953131750644154
               }
             },
             {
               "without": "MDA",
               "valid": {
-                "lula": 48.28342242611925,
-                "flavio": 51.71657757388075
+                "lula": 48.130842248479276,
+                "flavio": 51.86915775152073
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 48.240185414616505,
-                "flavio": 51.759814585383495
+                "lula": 48.082801124587334,
+                "flavio": 51.917198875412666
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 48.114139043950374,
-                "flavio": 51.885860956049626
+                "lula": 47.94274960162496,
+                "flavio": 52.05725039837504
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 48.266849315271365,
-                "flavio": 51.73315068472863
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 48.07874101264523,
-                "flavio": 51.92125898735477
+                "lula": 48.11242768087051,
+                "flavio": 51.88757231912949
               }
             },
             {
               "without": "Real Time Big Data",
               "valid": {
-                "lula": 48.47513438402196,
-                "flavio": 51.52486561597804
+                "lula": 48.34385553503784,
+                "flavio": 51.65614446496216
               }
             }
           ],
@@ -6038,16 +5970,16 @@
         "idosos60": {
           "aggregate": {
             "publicado": {
-              "lula": 49.02237678990691,
-              "flavio": 50.97762321009309
+              "lula": 49.017433539300285,
+              "flavio": 50.982566460699715
             },
             "pnad": {
-              "lula": 48.25332617260594,
-              "flavio": 51.746673827394055
+              "lula": 48.112495799164705,
+              "flavio": 51.887504200835295
             },
             "modelo": {
-              "lula": 47.73733652409669,
-              "flavio": 52.26266347590332
+              "lula": 47.59659484852178,
+              "flavio": 52.40340515147822
             }
           },
           "polls": [
@@ -6115,30 +6047,30 @@
               "proxy_candidates": []
             },
             {
-              "id": "atlas_2026-10-18",
+              "id": "atlas_2026-10-23",
               "instituto": "AtlasIntel",
-              "divulgacao": "2026-10-19",
+              "divulgacao": "2026-10-24",
               "campo": {
-                "inicio": "2026-10-13",
-                "fim": "2026-10-18"
+                "inicio": "2026-10-18",
+                "fim": "2026-10-23"
               },
               "published": {
-                "flavio": 49.8,
-                "lula": 47.6
+                "flavio": 49.9,
+                "lula": 48.4
               },
               "adjusted": {
-                "flavio": 49.778,
-                "lula": 47.618
+                "flavio": 49.948,
+                "lula": 48.334
               },
               "negative_mass_removed": {},
               "undecided": 0,
               "undecided_known": false,
               "source": {
-                "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
-                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
-                "sha256": "08557d05fbd0ccb40d56937d11bcde76f670fedf3c671827e1494b2213127123",
-                "bytes": 2051532,
-                "pdf": "data/originals/atlas_102026_19/relatorio.pdf",
+                "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+                "sha256": "12a840b19b32253dc06182711b9a001dc004393678cb75247bcbcebb495f5f85",
+                "bytes": 1842966,
+                "pdf": "data/originals/atlas_102026_24/relatorio.pdf",
                 "tipo": "relatorio",
                 "rotulo": "Relatório completo conferido",
                 "paginas": {
@@ -6149,25 +6081,22 @@
                   "2t_renda": 9,
                   "sexo": 9
                 },
-                "total_paginas": 20,
-                "conferido_em": "2026-10-19",
+                "total_paginas": 18,
+                "conferido_em": "2026-10-24",
                 "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação.",
-                "rotulos_opcoes": {
-                  "branco_nulo": "Branco/nulo/não sei (agregado)"
-                }
+                "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
               },
               "publicado": {
-                "flavio": 51.129363449691986,
-                "lula": 48.87063655030801
+                "flavio": 50.76297049847406,
+                "lula": 49.237029501525946
               },
               "pnad": {
-                "flavio": 51.1088751078073,
-                "lula": 48.8911248921927
+                "flavio": 50.82110661158706,
+                "lula": 49.17889338841294
               },
               "modelo": {
-                "flavio": 51.62553047959114,
-                "lula": 48.37446952040887
+                "flavio": 51.33790756723464,
+                "lula": 48.662092432765355
               },
               "allocated_undecided": {
                 "flavio": 0.0,
@@ -6651,69 +6580,6 @@
               "proxy_candidates": []
             },
             {
-              "id": "quaest_2026-10-20",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-21",
-              "campo": {
-                "inicio": "2026-10-17",
-                "fim": "2026-10-20"
-              },
-              "published": {
-                "flavio": 45.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 44.51,
-                "lula": 44.42
-              },
-              "negative_mass_removed": {},
-              "undecided": 2.056,
-              "undecided_known": true,
-              "source": {
-                "arquivo": "data/originals/quaest_102026_22/relatorio.pdf",
-                "url": "https://quaest.com.br/wp-content/uploads/2026/10/QUAEST9PRESIDENCIAL2110.pdf",
-                "bytes": 69889978,
-                "sha256": "70fe5c5bfcb8b2ccfb8e558b143a00d459328cfbde59ce95f4270dfaf50a40dd",
-                "pdf": "data/originals/quaest_102026_22/relatorio.pdf",
-                "tipo": "relatorio",
-                "rotulo": "Relatório completo conferido",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 203,
-                  "2t_topline": 17,
-                  "2t_renda": 25,
-                  "sexo": 22
-                },
-                "total_paginas": 207,
-                "conferido_em": "2026-10-22",
-                "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra oficial de 207 páginas publicada em 22/10, relativa à divulgação de 21/10 e ao campo 17–20/10. BR-08535/2026, n=2.154. Perfil atual conferido na p. 203: renda domiciliar total 31/42/27; sexo 47/53 na p. 200. Etapa antes/depois dos pesos não explicitada: sensibilidade condicional ao perfil publicado. Cruzamentos atuais p. 25 (renda) e p. 22 (sexo), iguais ao painel G1 arquivado. Revisão da mesma onda, sem duplicação; substitui a pendência de perfil. Branco/nulo/não vai votar forma categoria conjunta e não mede abstenção isoladamente. Não foi localizada regra de likely voter para esta onda na íntegra.",
-                "relatorio_completo": "2026-10-22"
-              },
-              "publicado": {
-                "flavio": 50.561797752808985,
-                "lula": 49.438202247191015
-              },
-              "pnad": {
-                "flavio": 50.050601596761496,
-                "lula": 49.9493984032385
-              },
-              "modelo": {
-                "flavio": 50.567623807797766,
-                "lula": 49.43237619220223
-              },
-              "allocated_undecided": {
-                "flavio": 0.7972640351184204,
-                "lula": 0.7793653871948315
-              },
-              "rates": {
-                "flavio": 0.8037215950422713,
-                "lula": 0.7872698477571027
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
               "id": "realtime_2026-10-22",
               "instituto": "Real Time Big Data",
               "divulgacao": "2026-10-23",
@@ -6781,78 +6647,71 @@
             {
               "without": "Alfa Inteligência/TMC",
               "valid": {
-                "lula": 47.817990178915025,
-                "flavio": 52.182009821084975
+                "lula": 47.67057205658939,
+                "flavio": 52.329427943410614
               }
             },
             {
               "without": "AtlasIntel",
               "valid": {
-                "lula": 47.673623224465466,
-                "flavio": 52.32637677553453
+                "lula": 47.478206228050276,
+                "flavio": 52.52179377194973
               }
             },
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 47.810383448942325,
-                "flavio": 52.18961655105767
+                "lula": 47.662120134397505,
+                "flavio": 52.337879865602495
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 47.719458777924885,
-                "flavio": 52.280541222075115
+                "lula": 47.561092722155905,
+                "flavio": 52.438907277844095
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 47.69688676706257,
-                "flavio": 52.30311323293743
+                "lula": 47.536012710086666,
+                "flavio": 52.463987289913334
               }
             },
             {
               "without": "MDA",
               "valid": {
-                "lula": 47.772402085643186,
-                "flavio": 52.22759791435681
+                "lula": 47.619918619620684,
+                "flavio": 52.380081380379316
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 47.72920299308008,
-                "flavio": 52.27079700691993
+                "lula": 47.57191962788389,
+                "flavio": 52.42808037211611
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 47.60322350443384,
-                "flavio": 52.39677649556616
+                "lula": 47.431942418276975,
+                "flavio": 52.56805758172303
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 47.75584441338468,
-                "flavio": 52.24415558661532
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 47.56783255728614,
-                "flavio": 52.432167442713876
+                "lula": 47.60152120600012,
+                "flavio": 52.39847879399988
               }
             },
             {
               "without": "Real Time Big Data",
               "valid": {
-                "lula": 47.96385381392535,
-                "flavio": 52.03614618607465
+                "lula": 47.83264276215641,
+                "flavio": 52.16735723784359
               }
             }
           ],
@@ -6866,16 +6725,16 @@
         "idosos80": {
           "aggregate": {
             "publicado": {
-              "lula": 49.02237678990691,
-              "flavio": 50.97762321009309
+              "lula": 49.017433539300285,
+              "flavio": 50.982566460699715
             },
             "pnad": {
-              "lula": 48.25332617260594,
-              "flavio": 51.746673827394055
+              "lula": 48.112495799164705,
+              "flavio": 51.887504200835295
             },
             "modelo": {
-              "lula": 48.257078735930286,
-              "flavio": 51.742921264069714
+              "lula": 48.11624782754542,
+              "flavio": 51.88375217245458
             }
           },
           "polls": [
@@ -6943,30 +6802,30 @@
               "proxy_candidates": []
             },
             {
-              "id": "atlas_2026-10-18",
+              "id": "atlas_2026-10-23",
               "instituto": "AtlasIntel",
-              "divulgacao": "2026-10-19",
+              "divulgacao": "2026-10-24",
               "campo": {
-                "inicio": "2026-10-13",
-                "fim": "2026-10-18"
+                "inicio": "2026-10-18",
+                "fim": "2026-10-23"
               },
               "published": {
-                "flavio": 49.8,
-                "lula": 47.6
+                "flavio": 49.9,
+                "lula": 48.4
               },
               "adjusted": {
-                "flavio": 49.778,
-                "lula": 47.618
+                "flavio": 49.948,
+                "lula": 48.334
               },
               "negative_mass_removed": {},
               "undecided": 0,
               "undecided_known": false,
               "source": {
-                "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
-                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
-                "sha256": "08557d05fbd0ccb40d56937d11bcde76f670fedf3c671827e1494b2213127123",
-                "bytes": 2051532,
-                "pdf": "data/originals/atlas_102026_19/relatorio.pdf",
+                "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+                "sha256": "12a840b19b32253dc06182711b9a001dc004393678cb75247bcbcebb495f5f85",
+                "bytes": 1842966,
+                "pdf": "data/originals/atlas_102026_24/relatorio.pdf",
                 "tipo": "relatorio",
                 "rotulo": "Relatório completo conferido",
                 "paginas": {
@@ -6977,25 +6836,22 @@
                   "2t_renda": 9,
                   "sexo": 9
                 },
-                "total_paginas": 20,
-                "conferido_em": "2026-10-19",
+                "total_paginas": 18,
+                "conferido_em": "2026-10-24",
                 "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação.",
-                "rotulos_opcoes": {
-                  "branco_nulo": "Branco/nulo/não sei (agregado)"
-                }
+                "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
               },
               "publicado": {
-                "flavio": 51.129363449691986,
-                "lula": 48.87063655030801
+                "flavio": 50.76297049847406,
+                "lula": 49.237029501525946
               },
               "pnad": {
-                "flavio": 51.1088751078073,
-                "lula": 48.8911248921927
+                "flavio": 50.82110661158706,
+                "lula": 49.17889338841294
               },
               "modelo": {
-                "flavio": 51.10511820052761,
-                "lula": 48.89488179947239
+                "flavio": 50.817348870906116,
+                "lula": 49.1826511290939
               },
               "allocated_undecided": {
                 "flavio": 0.0,
@@ -7479,69 +7335,6 @@
               "proxy_candidates": []
             },
             {
-              "id": "quaest_2026-10-20",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-21",
-              "campo": {
-                "inicio": "2026-10-17",
-                "fim": "2026-10-20"
-              },
-              "published": {
-                "flavio": 45.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 44.51,
-                "lula": 44.42
-              },
-              "negative_mass_removed": {},
-              "undecided": 2.056,
-              "undecided_known": true,
-              "source": {
-                "arquivo": "data/originals/quaest_102026_22/relatorio.pdf",
-                "url": "https://quaest.com.br/wp-content/uploads/2026/10/QUAEST9PRESIDENCIAL2110.pdf",
-                "bytes": 69889978,
-                "sha256": "70fe5c5bfcb8b2ccfb8e558b143a00d459328cfbde59ce95f4270dfaf50a40dd",
-                "pdf": "data/originals/quaest_102026_22/relatorio.pdf",
-                "tipo": "relatorio",
-                "rotulo": "Relatório completo conferido",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 203,
-                  "2t_topline": 17,
-                  "2t_renda": 25,
-                  "sexo": 22
-                },
-                "total_paginas": 207,
-                "conferido_em": "2026-10-22",
-                "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra oficial de 207 páginas publicada em 22/10, relativa à divulgação de 21/10 e ao campo 17–20/10. BR-08535/2026, n=2.154. Perfil atual conferido na p. 203: renda domiciliar total 31/42/27; sexo 47/53 na p. 200. Etapa antes/depois dos pesos não explicitada: sensibilidade condicional ao perfil publicado. Cruzamentos atuais p. 25 (renda) e p. 22 (sexo), iguais ao painel G1 arquivado. Revisão da mesma onda, sem duplicação; substitui a pendência de perfil. Branco/nulo/não vai votar forma categoria conjunta e não mede abstenção isoladamente. Não foi localizada regra de likely voter para esta onda na íntegra.",
-                "relatorio_completo": "2026-10-22"
-              },
-              "publicado": {
-                "flavio": 50.561797752808985,
-                "lula": 49.438202247191015
-              },
-              "pnad": {
-                "flavio": 50.050601596761496,
-                "lula": 49.9493984032385
-              },
-              "modelo": {
-                "flavio": 50.046842850599596,
-                "lula": 49.953157149400404
-              },
-              "allocated_undecided": {
-                "flavio": 0.8192027440097963,
-                "lula": 0.8176692290241264
-              },
-              "rates": {
-                "flavio": 0.7962543662268092,
-                "lula": 0.7963740920624234
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
               "id": "realtime_2026-10-22",
               "instituto": "Real Time Big Data",
               "divulgacao": "2026-10-23",
@@ -7609,78 +7402,71 @@
             {
               "without": "Alfa Inteligência/TMC",
               "valid": {
-                "lula": 48.33779100171871,
-                "flavio": 51.66220899828128
+                "lula": 48.19028024415647,
+                "flavio": 51.809719755843524
               }
             },
             {
               "without": "AtlasIntel",
               "valid": {
-                "lula": 48.193298429576075,
-                "flavio": 51.806701570423925
+                "lula": 47.99775857181781,
+                "flavio": 52.00224142818218
               }
             },
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 48.33017548258751,
-                "flavio": 51.669824517412486
+                "lula": 48.18181855623291,
+                "flavio": 51.81818144376709
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 48.239164445556995,
-                "flavio": 51.760835554443005
+                "lula": 48.080695181754564,
+                "flavio": 51.919304818245436
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 48.21657633821043,
-                "flavio": 51.78342366178956
+                "lula": 48.05559728470283,
+                "flavio": 51.94440271529717
               }
             },
             {
               "without": "MDA",
               "valid": {
-                "lula": 48.29215384700761,
-                "flavio": 51.707846152992374
+                "lula": 48.139572294477475,
+                "flavio": 51.860427705522525
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 48.248916266218565,
-                "flavio": 51.751083733781435
+                "lula": 48.0915305380452,
+                "flavio": 51.9084694619548
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 48.12286898240729,
-                "flavio": 51.87713101759272
+                "lula": 47.95147800047711,
+                "flavio": 52.04852199952289
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 48.27558050248807,
-                "flavio": 51.72441949751193
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 48.08747089458327,
-                "flavio": 51.91252910541673
+                "lula": 48.12115746723353,
+                "flavio": 51.87884253276647
               }
             },
             {
               "without": "Real Time Big Data",
               "valid": {
-                "lula": 48.48386990487859,
-                "flavio": 51.51613009512141
+                "lula": 48.35259013655634,
+                "flavio": 51.64740986344366
               }
             }
           ],
@@ -7694,16 +7480,16 @@
         "flavio95": {
           "aggregate": {
             "publicado": {
-              "lula": 49.02237678990691,
-              "flavio": 50.97762321009309
+              "lula": 49.017433539300285,
+              "flavio": 50.982566460699715
             },
             "pnad": {
-              "lula": 48.25332617260594,
-              "flavio": 51.746673827394055
+              "lula": 48.112495799164705,
+              "flavio": 51.887504200835295
             },
             "modelo": {
-              "lula": 49.52942635313743,
-              "flavio": 50.47057364686257
+              "lula": 49.388505672918626,
+              "flavio": 50.61149432708138
             }
           },
           "polls": [
@@ -7771,30 +7557,30 @@
               "proxy_candidates": []
             },
             {
-              "id": "atlas_2026-10-18",
+              "id": "atlas_2026-10-23",
               "instituto": "AtlasIntel",
-              "divulgacao": "2026-10-19",
+              "divulgacao": "2026-10-24",
               "campo": {
-                "inicio": "2026-10-13",
-                "fim": "2026-10-18"
+                "inicio": "2026-10-18",
+                "fim": "2026-10-23"
               },
               "published": {
-                "flavio": 49.8,
-                "lula": 47.6
+                "flavio": 49.9,
+                "lula": 48.4
               },
               "adjusted": {
-                "flavio": 49.778,
-                "lula": 47.618
+                "flavio": 49.948,
+                "lula": 48.334
               },
               "negative_mass_removed": {},
               "undecided": 0,
               "undecided_known": false,
               "source": {
-                "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
-                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
-                "sha256": "08557d05fbd0ccb40d56937d11bcde76f670fedf3c671827e1494b2213127123",
-                "bytes": 2051532,
-                "pdf": "data/originals/atlas_102026_19/relatorio.pdf",
+                "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+                "sha256": "12a840b19b32253dc06182711b9a001dc004393678cb75247bcbcebb495f5f85",
+                "bytes": 1842966,
+                "pdf": "data/originals/atlas_102026_24/relatorio.pdf",
                 "tipo": "relatorio",
                 "rotulo": "Relatório completo conferido",
                 "paginas": {
@@ -7805,25 +7591,22 @@
                   "2t_renda": 9,
                   "sexo": 9
                 },
-                "total_paginas": 20,
-                "conferido_em": "2026-10-19",
+                "total_paginas": 18,
+                "conferido_em": "2026-10-24",
                 "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação.",
-                "rotulos_opcoes": {
-                  "branco_nulo": "Branco/nulo/não sei (agregado)"
-                }
+                "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
               },
               "publicado": {
-                "flavio": 51.129363449691986,
-                "lula": 48.87063655030801
+                "flavio": 50.76297049847406,
+                "lula": 49.237029501525946
               },
               "pnad": {
-                "flavio": 51.1088751078073,
-                "lula": 48.8911248921927
+                "flavio": 50.82110661158706,
+                "lula": 49.17889338841294
               },
               "modelo": {
-                "flavio": 49.83171223274647,
-                "lula": 50.16828776725353
+                "flavio": 49.543847731937674,
+                "lula": 50.456152268062326
               },
               "allocated_undecided": {
                 "flavio": 0.0,
@@ -8307,69 +8090,6 @@
               "proxy_candidates": []
             },
             {
-              "id": "quaest_2026-10-20",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-21",
-              "campo": {
-                "inicio": "2026-10-17",
-                "fim": "2026-10-20"
-              },
-              "published": {
-                "flavio": 45.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 44.51,
-                "lula": 44.42
-              },
-              "negative_mass_removed": {},
-              "undecided": 2.056,
-              "undecided_known": true,
-              "source": {
-                "arquivo": "data/originals/quaest_102026_22/relatorio.pdf",
-                "url": "https://quaest.com.br/wp-content/uploads/2026/10/QUAEST9PRESIDENCIAL2110.pdf",
-                "bytes": 69889978,
-                "sha256": "70fe5c5bfcb8b2ccfb8e558b143a00d459328cfbde59ce95f4270dfaf50a40dd",
-                "pdf": "data/originals/quaest_102026_22/relatorio.pdf",
-                "tipo": "relatorio",
-                "rotulo": "Relatório completo conferido",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 203,
-                  "2t_topline": 17,
-                  "2t_renda": 25,
-                  "sexo": 22
-                },
-                "total_paginas": 207,
-                "conferido_em": "2026-10-22",
-                "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra oficial de 207 páginas publicada em 22/10, relativa à divulgação de 21/10 e ao campo 17–20/10. BR-08535/2026, n=2.154. Perfil atual conferido na p. 203: renda domiciliar total 31/42/27; sexo 47/53 na p. 200. Etapa antes/depois dos pesos não explicitada: sensibilidade condicional ao perfil publicado. Cruzamentos atuais p. 25 (renda) e p. 22 (sexo), iguais ao painel G1 arquivado. Revisão da mesma onda, sem duplicação; substitui a pendência de perfil. Branco/nulo/não vai votar forma categoria conjunta e não mede abstenção isoladamente. Não foi localizada regra de likely voter para esta onda na íntegra.",
-                "relatorio_completo": "2026-10-22"
-              },
-              "publicado": {
-                "flavio": 50.561797752808985,
-                "lula": 49.438202247191015
-              },
-              "pnad": {
-                "flavio": 50.050601596761496,
-                "lula": 49.9493984032385
-              },
-              "modelo": {
-                "flavio": 48.7735023438657,
-                "lula": 51.226497656134306
-              },
-              "allocated_undecided": {
-                "flavio": 0.7978712051956249,
-                "lula": 0.837999025263587
-              },
-              "rates": {
-                "flavio": 0.7565612329117172,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
               "id": "realtime_2026-10-22",
               "instituto": "Real Time Big Data",
               "divulgacao": "2026-10-23",
@@ -8437,78 +8157,71 @@
             {
               "without": "Alfa Inteligência/TMC",
               "valid": {
-                "lula": 49.61020829384663,
-                "flavio": 50.389791706153375
+                "lula": 49.462605531460085,
+                "flavio": 50.537394468539915
               }
             },
             {
               "without": "AtlasIntel",
               "valid": {
-                "lula": 49.46554021172582,
-                "flavio": 50.534459788274184
+                "lula": 49.26987827345821,
+                "flavio": 50.73012172654179
               }
             },
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 49.60257820211403,
-                "flavio": 50.39742179788597
+                "lula": 49.454127651757204,
+                "flavio": 50.545872348242796
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 49.51143885330902,
-                "flavio": 50.488561146690984
+                "lula": 49.35286170864052,
+                "flavio": 50.64713829135948
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 49.488831996716996,
-                "flavio": 50.511168003283004
+                "lula": 49.327742979093834,
+                "flavio": 50.67225702090617
               }
             },
             {
               "without": "MDA",
               "valid": {
-                "lula": 49.564492674767834,
-                "flavio": 50.435507325232166
+                "lula": 49.41181039915031,
+                "flavio": 50.58818960084969
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 49.521200377431256,
-                "flavio": 50.478799622568744
+                "lula": 49.363707846554114,
+                "flavio": 50.636292153445886
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 49.395102421453345,
-                "flavio": 50.604897578546655
+                "lula": 49.22359900657867,
+                "flavio": 50.77640099342133
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 49.54789610106725,
-                "flavio": 50.45210389893275
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 49.35971922283774,
-                "flavio": 50.64028077716226
+                "lula": 49.393369761705216,
+                "flavio": 50.606630238294784
               }
             },
             {
               "without": "Real Time Big Data",
               "valid": {
-                "lula": 49.75668152924182,
-                "flavio": 50.24331847075818
+                "lula": 49.62535357078807,
+                "flavio": 50.374646429211936
               }
             }
           ],
@@ -8522,16 +8235,16 @@
         "flavio105": {
           "aggregate": {
             "publicado": {
-              "lula": 49.02237678990691,
-              "flavio": 50.97762321009309
+              "lula": 49.017433539300285,
+              "flavio": 50.982566460699715
             },
             "pnad": {
-              "lula": 48.25332617260594,
-              "flavio": 51.746673827394055
+              "lula": 48.112495799164705,
+              "flavio": 51.887504200835295
             },
             "modelo": {
-              "lula": 47.03189216368728,
-              "flavio": 52.968107836312726
+              "lula": 46.89132042443986,
+              "flavio": 53.108679575560146
             }
           },
           "polls": [
@@ -8599,30 +8312,30 @@
               "proxy_candidates": []
             },
             {
-              "id": "atlas_2026-10-18",
+              "id": "atlas_2026-10-23",
               "instituto": "AtlasIntel",
-              "divulgacao": "2026-10-19",
+              "divulgacao": "2026-10-24",
               "campo": {
-                "inicio": "2026-10-13",
-                "fim": "2026-10-18"
+                "inicio": "2026-10-18",
+                "fim": "2026-10-23"
               },
               "published": {
-                "flavio": 49.8,
-                "lula": 47.6
+                "flavio": 49.9,
+                "lula": 48.4
               },
               "adjusted": {
-                "flavio": 49.778,
-                "lula": 47.618
+                "flavio": 49.948,
+                "lula": 48.334
               },
               "negative_mass_removed": {},
               "undecided": 0,
               "undecided_known": false,
               "source": {
-                "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
-                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
-                "sha256": "08557d05fbd0ccb40d56937d11bcde76f670fedf3c671827e1494b2213127123",
-                "bytes": 2051532,
-                "pdf": "data/originals/atlas_102026_19/relatorio.pdf",
+                "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+                "sha256": "12a840b19b32253dc06182711b9a001dc004393678cb75247bcbcebb495f5f85",
+                "bytes": 1842966,
+                "pdf": "data/originals/atlas_102026_24/relatorio.pdf",
                 "tipo": "relatorio",
                 "rotulo": "Relatório completo conferido",
                 "paginas": {
@@ -8633,25 +8346,22 @@
                   "2t_renda": 9,
                   "sexo": 9
                 },
-                "total_paginas": 20,
-                "conferido_em": "2026-10-19",
+                "total_paginas": 18,
+                "conferido_em": "2026-10-24",
                 "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação.",
-                "rotulos_opcoes": {
-                  "branco_nulo": "Branco/nulo/não sei (agregado)"
-                }
+                "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
               },
               "publicado": {
-                "flavio": 51.129363449691986,
-                "lula": 48.87063655030801
+                "flavio": 50.76297049847406,
+                "lula": 49.237029501525946
               },
               "pnad": {
-                "flavio": 51.1088751078073,
-                "lula": 48.8911248921927
+                "flavio": 50.82110661158706,
+                "lula": 49.17889338841294
               },
               "modelo": {
-                "flavio": 52.332104697439014,
-                "lula": 47.66789530256099
+                "flavio": 52.04478046318365,
+                "lula": 47.95521953681635
               },
               "allocated_undecided": {
                 "flavio": 0.0,
@@ -9135,69 +8845,6 @@
               "proxy_candidates": []
             },
             {
-              "id": "quaest_2026-10-20",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-21",
-              "campo": {
-                "inicio": "2026-10-17",
-                "fim": "2026-10-20"
-              },
-              "published": {
-                "flavio": 45.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 44.51,
-                "lula": 44.42
-              },
-              "negative_mass_removed": {},
-              "undecided": 2.056,
-              "undecided_known": true,
-              "source": {
-                "arquivo": "data/originals/quaest_102026_22/relatorio.pdf",
-                "url": "https://quaest.com.br/wp-content/uploads/2026/10/QUAEST9PRESIDENCIAL2110.pdf",
-                "bytes": 69889978,
-                "sha256": "70fe5c5bfcb8b2ccfb8e558b143a00d459328cfbde59ce95f4270dfaf50a40dd",
-                "pdf": "data/originals/quaest_102026_22/relatorio.pdf",
-                "tipo": "relatorio",
-                "rotulo": "Relatório completo conferido",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 203,
-                  "2t_topline": 17,
-                  "2t_renda": 25,
-                  "sexo": 22
-                },
-                "total_paginas": 207,
-                "conferido_em": "2026-10-22",
-                "status": "Íntegra arquivada e conferida visualmente.",
-                "nota": "Íntegra oficial de 207 páginas publicada em 22/10, relativa à divulgação de 21/10 e ao campo 17–20/10. BR-08535/2026, n=2.154. Perfil atual conferido na p. 203: renda domiciliar total 31/42/27; sexo 47/53 na p. 200. Etapa antes/depois dos pesos não explicitada: sensibilidade condicional ao perfil publicado. Cruzamentos atuais p. 25 (renda) e p. 22 (sexo), iguais ao painel G1 arquivado. Revisão da mesma onda, sem duplicação; substitui a pendência de perfil. Branco/nulo/não vai votar forma categoria conjunta e não mede abstenção isoladamente. Não foi localizada regra de likely voter para esta onda na íntegra.",
-                "relatorio_completo": "2026-10-22"
-              },
-              "publicado": {
-                "flavio": 50.561797752808985,
-                "lula": 49.438202247191015
-              },
-              "pnad": {
-                "flavio": 50.050601596761496,
-                "lula": 49.9493984032385
-              },
-              "modelo": {
-                "flavio": 51.275066209583166,
-                "lula": 48.724933790416834
-              },
-              "allocated_undecided": {
-                "flavio": 0.8387935437708216,
-                "lula": 0.7970766866883902
-              },
-              "rates": {
-                "flavio": 0.8361992574287401,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
               "id": "realtime_2026-10-22",
               "instituto": "Real Time Big Data",
               "divulgacao": "2026-10-23",
@@ -9265,78 +8912,71 @@
             {
               "without": "Alfa Inteligência/TMC",
               "valid": {
-                "lula": 47.11243827501808,
-                "flavio": 52.88756172498192
+                "lula": 46.96519702155771,
+                "flavio": 53.0348029784423
               }
             },
             {
               "without": "AtlasIntel",
               "valid": {
-                "lula": 46.96829184979991,
-                "flavio": 53.031708150200096
+                "lula": 46.773109411953584,
+                "flavio": 53.226890588046416
               }
             },
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 47.10484610245366,
-                "flavio": 52.89515389754634
+                "lula": 46.95676127426391,
+                "flavio": 53.043238725736096
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 47.01407014325743,
-                "flavio": 52.98592985674259
+                "lula": 46.855899097379194,
+                "flavio": 53.144100902620806
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 46.991527814167604,
-                "flavio": 53.00847218583241
+                "lula": 46.83085206505717,
+                "flavio": 53.169147934942835
               }
             },
             {
               "without": "MDA",
               "valid": {
-                "lula": 47.066932537968704,
-                "flavio": 52.933067462031296
+                "lula": 46.914635091502845,
+                "flavio": 53.085364908497155
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 47.02380065533124,
-                "flavio": 52.97619934466876
+                "lula": 46.86671077746122,
+                "flavio": 53.133289222538785
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 46.897956948975654,
-                "flavio": 53.10204305102435
+                "lula": 46.72688443706612,
+                "flavio": 53.27311556293389
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 47.05040187225806,
-                "flavio": 52.94959812774194
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 46.86258800101432,
-                "flavio": 53.137411998985684
+                "lula": 46.896267685157675,
+                "flavio": 53.10373231484233
               }
             },
             {
               "without": "Real Time Big Data",
               "valid": {
-                "lula": 47.25795960031542,
-                "flavio": 52.7420403996846
+                "lula": 47.126887382999186,
+                "flavio": 52.87311261700082
               }
             }
           ],
@@ -9373,7 +9013,7 @@
   },
   "sources_sha256": {
     "nexus_btg_28092026_data.json": "99313b48fee54545d99de437946cc52cfce49be36c7587c41909cf9f192cc181",
-    "reponderacao_pnad.json": "23403911a1f8b545e236bb32a7fa556f4aad64d458232902401519b506ded6c5",
+    "reponderacao_pnad.json": "017146b7a50802b222748e6291996cfbdab8fe19a0c74cea801db5890a9c5142",
     "analysis/apuracao_2026/dados/pesquisas_vs_urna.json": "0f4391d21352041fc6fbf994472d65738ebfe8e04a93ba61e96c0be16a22c7c4",
     "analysis/apuracao_2026/dados/presidente.json": "0bb01ddb79108500a55987b5be1fc437f38ef5f88509ec846a00df8dd7853788"
   }

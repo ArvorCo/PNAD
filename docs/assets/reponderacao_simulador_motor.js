@@ -52,6 +52,20 @@
   function scenarioRows(data,p) {
     return p.centro==='projecao'?[{id:'ancora_projecao',instituto:'Âncora algorítmica (não é pesquisa)',divulgacao:data.reference,...data.projection.anchors}]:data.polls;
   }
+  function officialResult(row,result,data,p,index=null) {
+    const official=data.projection?.official;
+    if(p.centro!=='projecao'||!official) return result;
+    const [weight,share]=index===null?[official.weight,official.flavio]:official.draws[p.modo==='publicado'?'published':'pnad'][index];
+    const base=pollResult(row,data,{...p,nulo_diferencial_pp:0,vies_pp:0});
+    const valid=100*base.validos/p.comparecimento;
+    const mass={flavio:valid*share/100,lula:valid*(1-share/100),indecisos:0,branco_nulo:100-valid};
+    const lv=pollResult({...row,published:mass,pnad:mass},data,{...p,modo:'publicado',presenca_relativa:0,branco_nulo_pp:0});
+    const out={...result};
+    for(const k of ['validos','branco_nulo']) out[k]=(1-weight)*result[k]+weight*lv[k];
+    const f=(1-weight)*result.validos*result.flavio/100+weight*lv.validos*lv.flavio/100;
+    out.flavio=100*f/out.validos;out.lula=100-out.flavio;
+    out.official_valids={weight,flavio:share,lula:100-share};return out;
+  }
   function allocationParameters(data,p) {
     if(p.indecisos_flavio!==null || data.undecided_policy!=='central_proportion') return p;
     const rows=scenarioRows(data,p);
@@ -63,7 +77,7 @@
   }
   function evaluate(data, input = {}) {
     const p = parameters(data,input), effective=allocationParameters(data,p);
-    const polls = scenarioRows(data,p).map(r => pollResult(r,data,effective));
+    const polls = scenarioRows(data,p).map(r => officialResult(r,pollResult(r,data,effective),data,effective));
     if (!polls.length) throw Error('Nenhuma pesquisa elegível');
     const out = Object.fromEntries(['flavio','lula','validos','branco_nulo','comparecimento','abstencao']
       .map(k => [k, polls.reduce((s,r) => s+r[k],0)/polls.length]));
@@ -86,6 +100,10 @@
       pool+=m.indecisos;tf+=converted*share;tl+=converted*(1-share);invalid+=m.indecisos-converted;
       rf+=m.indecisos*ref;survey+=row[p.modo==='publicado'?'published':'pnad'].indecisos;
     }
+    if(p.centro==='projecao' && data.projection.official) {
+      const w=1-data.projection.official.weight;
+      pool*=w;tf*=w;tl*=w;invalid*=w;rf*=w;survey*=w;
+    }
     const chosen=evaluate(data,p), baseline=evaluate(data,{...p,indecisos_flavio:null});
     const total=data.electorate.total;
     return {survey_pct:survey/rows.length,present_electorate_pct:pool/rows.length,
@@ -101,9 +119,10 @@
     const p=parameters(data,{...input,centro:'projecao'});
     const effective=allocationParameters(data,p);
     const draws=data.projection.mc.draws[p.modo==='publicado'?'published':'pnad'];
-    const rows=draws.map(draw=>{
+    const rows=draws.map((draw,index)=>{
       const mass=Object.fromEntries(keys.map((k,i)=>[k,draw[i]]));
-      return pollResult({id:'sorteio',instituto:'Monte Carlo',divulgacao:data.reference,published:mass,pnad:mass},data,effective);
+      const row={id:'sorteio',instituto:'Monte Carlo',divulgacao:data.reference,published:mass,pnad:mass};
+      return officialResult(row,pollResult(row,data,effective),data,effective,data.projection.official?index:null);
     });
     const quantiles=values=>{
       values.sort((a,b)=>a-b);

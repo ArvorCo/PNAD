@@ -1,0 +1,209 @@
+{
+  "id": "atlas_2026-10-23",
+  "instituto": "AtlasIntel",
+  "registro_tse": "BR-06380/2026",
+  "contratante": "Bloomberg",
+  "campo": {
+    "inicio": "2026-10-18",
+    "fim": "2026-10-23"
+  },
+  "divulgacao": "2026-10-24",
+  "n": 4990,
+  "metodo": "recrutamento digital aleatório Atlas RDR; pós-estratificação",
+  "publicado": {
+    "2t": {
+      "flavio": 49.9,
+      "lula": 48.4,
+      "branco_nulo": 1.7
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+    "sha256": "12a840b19b32253dc06182711b9a001dc004393678cb75247bcbcebb495f5f85",
+    "bytes": 1842966,
+    "pdf": "data/originals/atlas_102026_24/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 4,
+      "perfil_renda": 5,
+      "2t_topline": 7,
+      "2t_validos": 8,
+      "2t_renda": 9,
+      "sexo": 9
+    },
+    "total_paginas": 18,
+    "conferido_em": "2026-10-24",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 50.8,
+      "lula": 49.2
+    }
+  },
+  "renda": {
+    "unidade": "reais_nominais",
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "R$0 a R$2.000",
+        "max": 2000
+      },
+      {
+        "rotulo": "R$2.000 a R$3.000",
+        "max": 3000
+      },
+      {
+        "rotulo": "R$3.000 a R$5.000",
+        "max": 5000
+      },
+      {
+        "rotulo": "R$5.000 a R$10.000",
+        "max": 10000
+      },
+      {
+        "rotulo": "Acima de R$10.000",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      19.4,
+      11.5,
+      26,
+      26.7,
+      16.4
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo"
+      ],
+      "linhas": [
+        [
+          45.9,
+          52.7,
+          1.4
+        ],
+        [
+          51.4,
+          45.8,
+          2.8
+        ],
+        [
+          51.6,
+          47,
+          1.4
+        ],
+        [
+          52,
+          46.7,
+          1.4
+        ],
+        [
+          47.6,
+          49.9,
+          2.5
+        ]
+      ],
+      "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          19.4,
+          11.5,
+          26,
+          26.7,
+          16.4
+        ],
+        "linhas": [
+          [
+            45.9,
+            52.7,
+            1.4
+          ],
+          [
+            51.4,
+            45.8,
+            2.8
+          ],
+          [
+            51.6,
+            47,
+            1.4
+          ],
+          [
+            52,
+            46.7,
+            1.4
+          ],
+          [
+            47.6,
+            49.9,
+            2.5
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo"
+        ],
+        "recomposto": {
+          "flavio": 49.922,
+          "lula": 48.3633,
+          "branco_nulo": 1.7413999999999998
+        },
+        "residuo": {
+          "flavio": 0.021999999999998465,
+          "lula": -0.03669999999999618,
+          "branco_nulo": 0.04139999999999988
+        },
+        "residuo_max_abs": 0.04139999999999988
+      },
+      "sexo": {
+        "pesos": [
+          47.1,
+          52.9
+        ],
+        "linhas": [
+          [
+            58.9,
+            38.5,
+            2.6
+          ],
+          [
+            41.9,
+            57.1,
+            0.9
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo"
+        ],
+        "recomposto": {
+          "flavio": 49.907,
+          "lula": 48.339400000000005,
+          "branco_nulo": 1.7006999999999999
+        },
+        "residuo": {
+          "flavio": 0.006999999999997897,
+          "lula": -0.06059999999999377,
+          "branco_nulo": 0.0006999999999999229
+        },
+        "residuo_max_abs": 0.06059999999999377
+      }
+    }
+  }
+}

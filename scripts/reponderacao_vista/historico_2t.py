@@ -101,6 +101,8 @@ def tip(poll):
     )
     version = poll.get("rotulo_historico", "")
     pub_label = "Projeção do publicado" if poll.get("modo_projecao") else "Publicado"
+    if poll.get("modo_projecao") and poll.get("eleitor_provavel_oficial"):
+        pub_label = "Publicado oficial · likely voter"
     return (
         f'<p class="tip-head"><b>{esc(poll["instituto"])}</b></p>'
         f'<p class="tip-doc">Campo: {periodo(poll["campo"])}. '
@@ -126,6 +128,8 @@ def table(rows):
 
     projected = bool(rows and rows[0].get("modo_projecao"))
     pub_label = "Projeção do publicado" if projected else "Publicado"
+    if projected and any(p.get("eleitor_provavel_oficial") for p in rows):
+        pub_label = "Projeção / oficial identificado"
     body = []
     for poll in rows:
         base = (
@@ -134,6 +138,8 @@ def table(rows):
             else ("Válidos" if poll["denominador"] == "validos" else "Total")
         )
         note = " · versão substituída" if poll.get("substituida") else ""
+        if projected and poll.get("eleitor_provavel_oficial"):
+            base = "Válidos oficiais · likely voter"
         if poll.get("renda", {}).get("perfil_tipo") == "hipotese_onda_anterior":
             note += " · PRÉVIA PNAD com perfil da onda anterior"
         version = poll.get("rotulo_historico", "")
@@ -206,6 +212,7 @@ def write_assets():
         "denominador",
         "placar",
         "publicado_validos",
+        "eleitor_provavel_oficial",
         "pnad",
         "renda",
         "fonte_historico",

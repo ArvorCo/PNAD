@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-24T18:52:23",
+ "gerado_em": "2026-10-24T20:25:18",
  "referencia": "2026-10-24",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
@@ -28559,6 +28559,165 @@
    "arquivo": "analysis/reponderacao/pesquisas/realtime_2026-10-22.json"
   },
   {
+   "id": "atlas_2026-10-23",
+   "instituto": "AtlasIntel",
+   "contratante": "Bloomberg",
+   "registro_tse": "BR-06380/2026",
+   "campo": {
+    "inicio": "2026-10-18",
+    "fim": "2026-10-23"
+   },
+   "divulgacao": "2026-10-24",
+   "n": 4990,
+   "metodo": "recrutamento digital aleatório Atlas RDR; pós-estratificação",
+   "fonte": {
+    "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+    "sha256": "12a840b19b32253dc06182711b9a001dc004393678cb75247bcbcebb495f5f85",
+    "bytes": 1842966,
+    "pdf": "data/originals/atlas_102026_24/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 4,
+     "perfil_renda": 5,
+     "2t_topline": 7,
+     "2t_validos": 8,
+     "2t_renda": 9,
+     "sexo": 9
+    },
+    "total_paginas": 18,
+    "conferido_em": "2026-10-24",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 49.9,
+     "lula": 48.4,
+     "branco_nulo": 1.7
+    }
+   },
+   "publicado_validos": {
+    "2t": {
+     "flavio": 50.8,
+     "lula": 49.2
+    }
+   },
+   "renda": {
+    "unidade": "reais_nominais",
+    "faixas": [
+     "R$0 a R$2.000",
+     "R$2.000 a R$3.000",
+     "R$3.000 a R$5.000",
+     "R$5.000 a R$10.000",
+     "Acima de R$10.000"
+    ],
+    "cortes_brl_202604": [
+     1983.9,
+     2975.85,
+     4959.75,
+     9919.51,
+     null
+    ],
+    "amostra_pct": [
+     19.4,
+     11.5,
+     26.0,
+     26.7,
+     16.4
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      16.903,
+      10.913,
+      25.958,
+      27.361,
+      18.865
+     ],
+     "pessoas16_habitual": [
+      16.256,
+      11.099,
+      26.883,
+      27.748,
+      18.013
+     ],
+     "domicilios_efetivo": [
+      22.771,
+      12.095,
+      25.45,
+      23.69,
+      15.993
+     ]
+    },
+    "nota": "Íntegra de 18 páginas, n=4.990, campo 18–23/10, BR-06380/2026. Total 49,9/48,4/1,7, com branco/nulo/não sei agregado, sem indecisos separáveis. Válidos oficiais 50,8/49,2 na p. 8. Perfil familiar atual 19,4/11,5/26/26,7/16,4 na p. 5; cruzamentos p. 9. Etapa pré/pós-pesos não explicitada: sensibilidade PNAD condicional ao perfil publicado. Cortes em R$ 2/3/5/10 mil; p. 4 declara pós-estratificação por comportamento eleitoral anterior sem identificar a eleição usada.",
+    "perfil_tipo": "perfil_publicado"
+   },
+   "desvio_ate_primeira_faixa": 2.497,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo"
+     ],
+     "publicado": {
+      "flavio": 49.9,
+      "lula": 48.4,
+      "branco_nulo": 1.7
+     },
+     "recomposto": {
+      "flavio": 49.922,
+      "lula": 48.363,
+      "branco_nulo": 1.741
+     },
+     "residuo_max": 0.037,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 49.97,
+        "lula": 48.298,
+        "branco_nulo": 1.76
+       },
+       "ajustado": {
+        "flavio": 49.948,
+        "lula": 48.334,
+        "branco_nulo": 1.719
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 50.042,
+        "lula": 48.233,
+        "branco_nulo": 1.754
+       },
+       "ajustado": {
+        "flavio": 50.02,
+        "lula": 48.269,
+        "branco_nulo": 1.712
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 49.733,
+        "lula": 48.546,
+        "branco_nulo": 1.745
+       },
+       "ajustado": {
+        "flavio": 49.711,
+        "lula": 48.582,
+        "branco_nulo": 1.704
+       }
+      }
+     },
+     "gap_publicado": -1.5,
+     "gap_ajustado": -1.6139999999999972,
+     "margem_diferenca_95": 2.751
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/atlas_2026-10-23.json"
+  },
+  {
    "id": "mda_2026-10-23",
    "instituto": "MDA",
    "contratante": "Confederação Nacional do Transporte (CNT)",
@@ -29433,6 +29592,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório publica o perfil de renda da amostra mas nenhum cruzamento do voto por renda. Os recortes impressos do voto são gênero, faixa etária, região, religião e escolaridade; o painel de renda que reaparece em toda página é o filtro de caracterização da amostra do Power BI, não uma quebra do voto. Sem o cruzamento por faixa não há o que reponderar.",
@@ -29480,6 +29641,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório de divulgação não traz nenhum cruzamento do voto por renda. As páginas de resultado publicam apenas o resultado geral de cada pergunta; a renda aparece só como perfil da amostra na p. 10. Sem o cruzamento não há como recompor o placar nem trocar a margem.",
@@ -29527,6 +29690,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório de divulgação não traz nenhum cruzamento do voto por renda. As páginas de resultado publicam apenas o resultado geral de cada pergunta; a renda aparece só como perfil da amostra na p. 10. Sem o cruzamento não há como recompor o placar nem trocar a margem.",
@@ -29574,6 +29739,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório publica o perfil de renda da amostra mas nenhum cruzamento do voto por renda. Os recortes impressos do voto são gênero, faixa etária, região, religião e escolaridade; o painel de renda que reaparece em toda página é o filtro de caracterização da amostra do Power BI, não uma quebra do voto. Sem o cruzamento por faixa não há o que reponderar.",
@@ -29623,6 +29790,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório publica cruzamento do voto por renda (1º turno na p. 12 e 2º turno na p. 18), e o cruzamento não passa no controle de recomposição. Com o único perfil de renda publicado pelo próprio relatório (p. 7: 83,5 / 11,8 / 3,2 / 1,5), as linhas de renda do 1º turno devolvem Lula 53,02 contra 42,1 publicado, Flávio 25,45 contra 33,6 e Caiado 3,57 contra 6,9; no 2º turno devolvem Lula 52,63 contra 47,8. O erro não é de transcrição: no mesmo documento a quebra por sexo recompõe o 1º turno em 42,13 contra 42,1 publicado e a quebra por escolaridade recompõe o 2º turno em 47,68 contra 47,8. Caiado é o teste mais duro: seu maior valor em qualquer faixa de renda é 7,0, então nenhuma distribuição de renda produz os 6,9 publicados junto com um Lula de 42,1. A onda de 26 a 28/07 repete o mesmo padrão. Sem margem de renda que feche com o placar, a reponderação não é publicável.",
@@ -29670,6 +29839,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório publica o perfil de renda da amostra mas nenhum cruzamento do voto por renda. Os recortes impressos do voto são gênero, faixa etária, região, religião e escolaridade; o painel de renda que reaparece em toda página é o filtro de caracterização da amostra do Power BI, não uma quebra do voto. Sem o cruzamento por faixa não há o que reponderar.",
@@ -29717,6 +29888,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório publica o perfil de renda da amostra na página de caracterização mas nenhum cruzamento do voto por renda. As páginas de cruzamento quebram o voto por gênero, região, faixa etária e posição no eixo político. Sem o cruzamento por faixa não há o que reponderar.",
@@ -29767,6 +29940,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Esta é a única onda da série em que o instituto publica cruzamento do voto por renda (1º turno na p. 9 e 2º turno na p. 15), e o cruzamento não passa no controle de recomposição. Com o único perfil de renda publicado pelo próprio relatório (p. 6: 83,9 / 12,4 / 2,8 / 0,9), as linhas de renda do 1º turno devolvem Lula 52,99 contra 40,5 publicado e Flávio 25,37 contra 31,2, um erro de 12,5 e 5,8 pontos; no 2º turno devolvem Lula 52,89 contra 47,5, erro de 5,4 pontos. O controle mostra que o problema é da margem de renda e não da transcrição: na mesma página, a quebra por escolaridade recompõe o 2º turno em 47,30 contra 47,5 publicado, e a quebra por faixa etária recompõe o 1º turno em 40,43 contra 40,5. Nenhuma distribuição de renda única reproduz ao mesmo tempo os dois turnos a partir dessas linhas. Sem margem de renda que feche com o placar, a reponderação não é publicável.",
@@ -29815,6 +29990,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório publica o perfil de renda da amostra na página de caracterização mas nenhum cruzamento do voto por renda. As páginas de cruzamento quebram o voto por gênero, região, faixa etária e posição no eixo político. Sem o cruzamento por faixa não há o que reponderar.",
@@ -29862,6 +30039,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório de divulgação não traz nenhum cruzamento do voto por renda: as 25 páginas de resultado (pp. 7 a 31) só publicam resultado geral, e o anexo (pp. 33 a 76) é a lista de setores censitários. A renda aparece apenas como perfil da amostra na p. 6. Sem o cruzamento não há como recompor o placar nem trocar a margem.",
@@ -29914,6 +30093,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O relatório publica o perfil de renda da amostra (p. 5) mas nenhum cruzamento do voto por renda. As três páginas de cruzamento do 1º turno (pp. 23, 24 e 25) quebram por sexo, região, faixa etária e posição no eixo político, e o 2º turno (pp. 26 a 33) não é cruzado por nada. Sem o cruzamento por faixa não há o que reponderar.",
@@ -29966,6 +30147,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O cruzamento do 2º turno por renda existe (p. 22) mas o relatório não publica o perfil de renda da amostra, nem em bases nem em percentuais. Sem os pesos das quatro faixas não há como recompor o placar publicado, que é a prova de leitura exigida antes de trocar a margem. Tentar resolver os pesos a partir das quatro linhas é inviável: as faixas 1 a 3 SM e 3 a 5 SM têm perfil de voto quase idêntico (41,1 × 50,9 e 41,8 × 51,7), o sistema fica malcondicionado e devolve pesos negativos.",
@@ -30016,6 +30199,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Onda 2 original substituída pela versão revisada; disponível no histórico da Palver, fora das médias para não duplicar a amostra.",
@@ -30075,6 +30260,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "O perfil de renda está na p. 7, mas o voto não é cruzado por renda: pp. 23–25 (1º turno) e p. 27 (Lula × Flávio no 2º turno) cruzam sexo, região, idade e posição política. Sem voto por faixa não há reponderação em nenhum turno.",
@@ -30132,6 +30319,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Consolidação nacional de 27 amostras estaduais, ponderadas pelo eleitorado de cada UF. Há cruzamento de renda, mas falta a distribuição ponderada nacional entre as faixas. O 1º turno inclui Marçal e não há alternativa sem ele; o relatório não publica 2º turno. Não integra as médias.",
@@ -30166,6 +30355,8 @@
    },
    "publicado": {},
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Pesquisa anunciada para 21/09. O arquivo vinculado como íntegra pelo Poder360 é uma matéria de quatro páginas que anuncia a divulgação e cita resultados de junho. Não comprova o resultado desta onda. Relatório atual, perfil e cruzamentos pendentes; nenhum placar antigo foi transportado para setembro.",
@@ -30218,6 +30409,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Pesquisa nacional ausente do inventário anterior. Publicações do contratante arquivadas; íntegra e voto por renda não localizados. Apenas placares publicados, sem ajuste imputado.",
@@ -30278,6 +30471,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "A p. 6 publica o perfil de renda, mas as pp. 22–24 e 26 cruzam voto por sexo, região, idade e posição política, sem renda. Não há reponderação de nenhum turno com os dados publicados nesta íntegra.",
@@ -30348,6 +30543,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Íntegra de 30/09, campo 25–28/09: o voto por renda do 2º turno está na p. 37, mas faltam bases ou percentuais da amostra nas quatro faixas. A metodologia da p. 69 chama condição de atividade de nível econômico (62% ativos, 38% não ativos); isso não informa a distribuição de renda. A p. 9 descreve somente os indecisos da pergunta espontânea, não a amostra inteira. O PDF não traz voto por renda do 1º turno. Os placares ficam documentados, fora das médias comparáveis e do modelo de válidos por renda. Essa falta documental não prova erro de ponderação.",
@@ -30409,6 +30606,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "A íntegra de 28 páginas publica perfil econômico (p. 6) e disposição de comparecer (p. 7), mas nenhum cruzamento de voto por renda ou comparecimento por candidato. Sem esses cruzamentos, não há ajuste de renda nem nova propensão de presença identificável para o modelo.",
@@ -30479,6 +30678,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "A íntegra de 46 páginas publica o perfil de renda (p. 7), mas cruza o voto somente por gênero, região, idade e posição política (pp. 23–25 e 30). Falta voto por renda; 10% não declaram renda. A publicação não distingue perfil bruto e ponderado.",
@@ -30539,6 +30740,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "pagina": 6,
     "faixas_sm": [
@@ -30607,6 +30810,8 @@
      "flavio": 51.56
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Divulgada na noite de 05/10 e repercutida em 06/10, com 48,44% Lula × 51,56% Flávio somente em votos válidos. Campo de 26/09 a 02/10, anterior ao 1º turno, conforme as matérias. Não foi localizado relatório nacional desta rodada com perfil ponderado e voto por renda para o 2º turno. O catálogo oficial consultado em 08/10 traz relatórios estaduais novos, mas o nacional mais recente tem campo de 20–25/09 e não documenta esta divulgação. Não se transportam cruzamentos ou pesos antigos nem se convertem válidos em votos totais.",
@@ -30705,6 +30910,8 @@
     },
     "nota": "P. 5, votos válidos publicados pela casa (renormalização dos totais da p. 4). Não entram no motor, que parte dos votos totais."
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "A íntegra de 10 páginas (painel com \"Filtro Mestre: Sem cruzamento\") publica o perfil de renda (p. 3), mas nenhum voto por renda nem por qualquer outro recorte. Sem esse cruzamento não há reponderação; participa da central da previsão com o placar publicado.",
@@ -30769,6 +30976,8 @@
     }
    },
    "publicado_validos": null,
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "pagina": 6,
     "faixas_sm": [
@@ -30845,6 +31054,8 @@
      "lula": 46.9
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "pagina": 3,
     "pct": [
@@ -30907,6 +31118,8 @@
      "lula": 48.2
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "pagina": 7,
     "unidade": "renda familiar em salários mínimos",
@@ -30963,6 +31176,8 @@
      "lula": 49
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Voto por renda publicado, mas perfil ponderado e bases atuais não localizados. Sem ajuste PNAD; publicado preservado na Projeção.",
@@ -31025,6 +31240,8 @@
      "lula": 49.2
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "unidade": "renda familiar em salários mínimos",
     "faixas": [
@@ -31086,6 +31303,8 @@
      "lula": 50.4
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Sem perfil e voto por renda atuais conferidos; somente publicado na Projeção.",
@@ -31138,6 +31357,8 @@
      "lula": 49.6
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "unidade": "renda familiar em salários mínimos",
     "pagina": 7,
@@ -31209,6 +31430,8 @@
      "lula": 51
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "pagina": 6,
     "faixas_sm": [
@@ -31267,6 +31490,8 @@
      "lula": 47
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Sem perfil e voto por renda atuais conferidos; somente publicado na Projeção.",
@@ -31320,6 +31545,8 @@
      "lula": 48.9
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Sem perfil e cruzamento de renda na íntegra pública.",
@@ -31372,6 +31599,8 @@
      "lula": 48.9
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Íntegra sem voto por renda; somente publicado na Projeção.",
@@ -31425,6 +31654,8 @@
      "lula": 49.19
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Cruzamentos incompatíveis com o total; somente publicado na Projeção.",
@@ -31468,6 +31699,8 @@
      "lula": 48.1
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Divulgação de 23/10, campo 19–21/10, n=2.000. Total 50/46/4/1 soma 101 por arredondamento. Válidos publicados 51,9/48,1 preservados. Íntegra atual não localizada; não transportar perfil ou cruzamentos de 19/10. Somente publicado na Projeção até obter documentação atual.",
@@ -31521,6 +31754,8 @@
      "lula": 49.4
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Perfil de renda não recompõe o total; sem PNAD até reconciliação.",
@@ -31573,6 +31808,8 @@
      "lula": 48.7
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "pagina": 4,
     "percentuais": [
@@ -31645,6 +31882,8 @@
      "lula": 50.6
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": {
     "pagina": 6,
     "faixas_sm": [
@@ -31706,6 +31945,8 @@
      "lula": 50.3
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Íntegra e perfil de renda não localizados; somente publicado na Projeção.",
@@ -31758,6 +31999,75 @@
      "lula": 48.6
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": {
+    "paginas": [
+     5,
+     7
+    ],
+    "opcoes": [
+     "flavio",
+     "lula",
+     "branco_nulo",
+     "indecisos"
+    ],
+    "renda": {
+     "faixas": [
+      {
+       "rotulo": "0 a 2 SM",
+       "max": 2
+      },
+      {
+       "rotulo": "2 a 5 SM",
+       "max": 5
+      },
+      {
+       "rotulo": "Mais de 5 SM",
+       "max": null
+      }
+     ],
+     "linhas": [
+      [
+       38.4,
+       49,
+       8.3,
+       4.3
+      ],
+      [
+       55.6,
+       36.6,
+       6.1,
+       1.7
+      ],
+      [
+       52.6,
+       36.8,
+       7.3,
+       3.3
+      ]
+     ]
+    },
+    "sexo": {
+     "rotulos": [
+      "Masculino",
+      "Feminino"
+     ],
+     "linhas": [
+      [
+       48.1,
+       42.1,
+       6.6,
+       3.2
+      ],
+      [
+       40.4,
+       47.5,
+       8,
+       4.1
+      ]
+     ]
+    }
+   },
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Voto por renda publicado sem bases ou pesos atuais; somente publicado na Projeção.",
@@ -31801,9 +32111,147 @@
      "lula": 47.3
     }
    },
+   "eleitor_provavel_oficial": null,
+   "cruzamentos_sem_perfil": null,
    "perfil_economico_publicado": null,
    "comparecimento_publicado": null,
    "motivo": "Divulgação de 23/10, campo 22–23/10, 6.867 entrevistas em 1.559 municípios segundo a divulgação; amostra planejada registrada de 3.000. Release menciona 824 entrevistas adicionais de jovens, 616 classificações de gênero pelo nome e 628 municípios não informados. Totais 50/44,9/3,6/1,5 e válidos oficiais 52,7/47,3. Íntegra não localizada; sem perfil e voto por renda atuais, somente publicado na Projeção.",
+   "selecao_1t": null
+  },
+  {
+   "id": "quaest_2026-10-24",
+   "instituto": "Quaest",
+   "contratante": "TV Globo e O Globo",
+   "registro_tse": "BR-09158/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+   },
+   "divulgacao": "2026-10-24",
+   "n": 3702,
+   "dossie": null,
+   "metodo": "presencial domiciliar; válido oficial por modelo de eleitor provável",
+   "fonte": {
+    "arquivo": "data/originals/quaest_102026_24/g1-estimulada.json",
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Quaest",
+    "sha256": "ce79fdf31204bf9e82f7bf581350ad0b9afaf35d875b7e5e6cb8ba5a64059645",
+    "bytes": 34770,
+    "tipo": "painel",
+    "rotulo": "G1, Quaest de 24/10",
+    "conferido_em": "2026-10-24",
+    "nota": "G1 publica amostra completa 46/45/8/1 (F/L/BN/I) e válidos oficiais 51/49 pelo modelo de eleitor provável. Os 8% reúnem branco, nulo e não vai votar; não identificam abstenção. Campo 23–24/10, n=3.702. Voto por renda atual disponível na API, mas perfil atual e cruzamentos do likely voter não localizados. Não transportar perfil de 21/10. O publicado oficial em válidos entra na Projeção sem novo ajuste de presença. O total permanece documental; são dois resultados da mesma onda, nunca duas casas. Sem microdados ou pesos do modelo, o efeito exato da seleção não é recuperável dos números arredondados.",
+    "status": "Totais e válidos oficiais conferidos; íntegra pendente.",
+    "complementos": [
+     {
+      "arquivo": "data/originals/quaest_102026_24/g1-validos.json",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-201&instituto=Quaest",
+      "sha256": "597760cb6fb1470d27d83abcd96c84c21bf0b4884dbfc70c2ecca11699ece870",
+      "bytes": 2271,
+      "rotulo": "G1: votos válidos oficiais"
+     },
+     {
+      "arquivo": "data/originals/quaest_102026_24/g1-painel.html.gz",
+      "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
+      "sha256": "d0557452af7337fbb1a498ee27c1fd635b92c878ac2d024195fb6ec6a7ecd5d9",
+      "bytes": 14392,
+      "rotulo": "G1: ficha técnica"
+     },
+     {
+      "arquivo": "data/originals/quaest_102026_24/divulgacao.html.gz",
+      "url": "https://rede98.com.br/noticias/quaest-flavio-bolsonaro-tem-51-e-lula-49-dos-votos-validos-empate-tecnico/",
+      "sha256": "b53028b35737db2280d60fcb52f9096041ae046b28da0e3d09527655f6d03347",
+      "bytes": 89791,
+      "rotulo": "Rede 98: divulgação e metodologia likely voter"
+     }
+    ]
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 46,
+     "lula": 45,
+     "branco_nulo": 8,
+     "indecisos": 1
+    }
+   },
+   "publicado_validos": {
+    "2t": {
+     "flavio": 51,
+     "lula": 49
+    }
+   },
+   "eleitor_provavel_oficial": {
+    "usar_na_projecao": true,
+    "validos": {
+     "flavio": 51,
+     "lula": 49
+    },
+    "fonte": {
+     "arquivo": "data/originals/quaest_102026_24/g1-validos.json",
+     "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-201&instituto=Quaest",
+     "sha256": "597760cb6fb1470d27d83abcd96c84c21bf0b4884dbfc70c2ecca11699ece870",
+     "bytes": 2271
+    },
+    "regra": "Publicado oficial da casa; sem reaplicar presença Arvor, renda ou indecisos da amostra completa."
+   },
+   "cruzamentos_sem_perfil": {
+    "universo": "Amostra completa, não eleitor provável",
+    "opcoes": [
+     "flavio",
+     "lula",
+     "branco_nulo",
+     "indecisos"
+    ],
+    "renda": {
+     "rotulos": [
+      "Até 2 SM",
+      "Mais de 2 a 5 SM",
+      "Mais de 5 SM"
+     ],
+     "linhas": [
+      [
+       32,
+       58,
+       9,
+       1
+      ],
+      [
+       49,
+       42,
+       8,
+       1
+      ],
+      [
+       57,
+       36,
+       6,
+       1
+      ]
+     ]
+    },
+    "sexo": {
+     "rotulos": [
+      "Masculino",
+      "Feminino"
+     ],
+     "linhas": [
+      [
+       51,
+       41,
+       7,
+       1
+      ],
+      [
+       41,
+       49,
+       9,
+       1
+      ]
+     ]
+    }
+   },
+   "perfil_economico_publicado": null,
+   "comparecimento_publicado": null,
+   "motivo": "Perfil atual de renda e cruzamentos likely voter ausentes; sem PNAD nesta onda.",
    "selecao_1t": null
   }
  ],
@@ -36451,7 +36899,7 @@
      "n_institutos": 13,
      "ondas": [
       "alfa_2026-10-22",
-      "atlas_2026-10-18",
+      "atlas_2026-10-23",
       "datatrends_2026-10-17",
       "datafolha_2026-10-24",
       "gerp_2026-10-24",
@@ -45820,6 +46268,11 @@
       "id": "atlas_2026-10-18",
       "instituto": "AtlasIntel",
       "motivo": "Não há separação completa de indecisos e branco/nulo/não vai votar por renda."
+     },
+     {
+      "id": "atlas_2026-10-23",
+      "instituto": "AtlasIntel",
+      "motivo": "Não há separação completa de indecisos e branco/nulo/não vai votar por renda."
      }
     ],
     "serie": {
@@ -50924,7 +51377,7 @@
       46.04,
       46.27,
       46.39,
-      46.52
+      46.58
      ],
      "flavio": [
       null,
@@ -51100,7 +51553,7 @@
       48.28,
       48.28,
       48.57,
-      48.44
+      48.45
      ],
      "indecisos": [
       null,
@@ -51630,7 +52083,7 @@
       45.36,
       45.61,
       45.79,
-      45.84
+      45.9
      ],
      "flavio": [
       null,
@@ -51806,7 +52259,7 @@
       49.01,
       48.97,
       49.2,
-      49.14
+      49.15
      ],
      "indecisos": [
       null,
@@ -54301,22 +54754,22 @@
     ],
     "media_simples": {
      "publicado": {
-      "lula": 46.27,
-      "flavio": 47.98
+      "lula": 46.33,
+      "flavio": 47.99
      },
      "ajustado": {
-      "lula": 45.6,
-      "flavio": 48.69
+      "lula": 45.65,
+      "flavio": 48.7
      }
     },
     "kernel": {
      "publicado": {
-      "lula": 46.52,
-      "flavio": 48.44
+      "lula": 46.58,
+      "flavio": 48.45
      },
      "ajustado": {
-      "lula": 45.84,
-      "flavio": 49.14
+      "lula": 45.9,
+      "flavio": 49.15
      }
     },
     "cobertura_movel": {
@@ -54324,7 +54777,7 @@
      "n_institutos": 13,
      "ondas": [
       "alfa_2026-10-22",
-      "atlas_2026-10-18",
+      "atlas_2026-10-23",
       "datatrends_2026-10-17",
       "datafolha_2026-10-24",
       "gerp_2026-10-24",

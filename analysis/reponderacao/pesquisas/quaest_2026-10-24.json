@@ -1,0 +1,134 @@
+{
+  "id": "quaest_2026-10-24",
+  "instituto": "Quaest",
+  "registro_tse": "BR-09158/2026",
+  "divulgacao": "2026-10-24",
+  "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+  },
+  "n": 3702,
+  "metodo": "presencial domiciliar; válido oficial por modelo de eleitor provável",
+  "publicado": {
+    "2t": {
+      "flavio": 46,
+      "lula": 45,
+      "branco_nulo": 8,
+      "indecisos": 1
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/quaest_102026_24/g1-estimulada.json",
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Quaest",
+    "sha256": "ce79fdf31204bf9e82f7bf581350ad0b9afaf35d875b7e5e6cb8ba5a64059645",
+    "bytes": 34770,
+    "tipo": "painel",
+    "rotulo": "G1, Quaest de 24/10",
+    "conferido_em": "2026-10-24",
+    "nota": "G1 publica amostra completa 46/45/8/1 (F/L/BN/I) e válidos oficiais 51/49 pelo modelo de eleitor provável. Os 8% reúnem branco, nulo e não vai votar; não identificam abstenção. Campo 23–24/10, n=3.702. Voto por renda atual disponível na API, mas perfil atual e cruzamentos do likely voter não localizados. Não transportar perfil de 21/10. O publicado oficial em válidos entra na Projeção sem novo ajuste de presença. O total permanece documental; são dois resultados da mesma onda, nunca duas casas. Sem microdados ou pesos do modelo, o efeito exato da seleção não é recuperável dos números arredondados.",
+    "status": "Totais e válidos oficiais conferidos; íntegra pendente.",
+    "complementos": [
+      {
+        "arquivo": "data/originals/quaest_102026_24/g1-validos.json",
+        "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-201&instituto=Quaest",
+        "sha256": "597760cb6fb1470d27d83abcd96c84c21bf0b4884dbfc70c2ecca11699ece870",
+        "bytes": 2271,
+        "rotulo": "G1: votos válidos oficiais"
+      },
+      {
+        "arquivo": "data/originals/quaest_102026_24/g1-painel.html.gz",
+        "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
+        "sha256": "d0557452af7337fbb1a498ee27c1fd635b92c878ac2d024195fb6ec6a7ecd5d9",
+        "bytes": 14392,
+        "rotulo": "G1: ficha técnica"
+      },
+      {
+        "arquivo": "data/originals/quaest_102026_24/divulgacao.html.gz",
+        "url": "https://rede98.com.br/noticias/quaest-flavio-bolsonaro-tem-51-e-lula-49-dos-votos-validos-empate-tecnico/",
+        "sha256": "b53028b35737db2280d60fcb52f9096041ae046b28da0e3d09527655f6d03347",
+        "bytes": 89791,
+        "rotulo": "Rede 98: divulgação e metodologia likely voter"
+      }
+    ]
+  },
+  "contratante": "TV Globo e O Globo",
+  "publicado_validos": {
+    "2t": {
+      "flavio": 51,
+      "lula": 49
+    }
+  },
+  "eleitor_provavel_oficial": {
+    "usar_na_projecao": true,
+    "validos": {
+      "flavio": 51,
+      "lula": 49
+    },
+    "fonte": {
+      "arquivo": "data/originals/quaest_102026_24/g1-validos.json",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-201&instituto=Quaest",
+      "sha256": "597760cb6fb1470d27d83abcd96c84c21bf0b4884dbfc70c2ecca11699ece870",
+      "bytes": 2271
+    },
+    "regra": "Publicado oficial da casa; sem reaplicar presença Arvor, renda ou indecisos da amostra completa."
+  },
+  "cruzamentos_sem_perfil": {
+    "universo": "Amostra completa, não eleitor provável",
+    "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+    ],
+    "renda": {
+      "rotulos": [
+        "Até 2 SM",
+        "Mais de 2 a 5 SM",
+        "Mais de 5 SM"
+      ],
+      "linhas": [
+        [
+          32,
+          58,
+          9,
+          1
+        ],
+        [
+          49,
+          42,
+          8,
+          1
+        ],
+        [
+          57,
+          36,
+          6,
+          1
+        ]
+      ]
+    },
+    "sexo": {
+      "rotulos": [
+        "Masculino",
+        "Feminino"
+      ],
+      "linhas": [
+        [
+          51,
+          41,
+          7,
+          1
+        ],
+        [
+          41,
+          49,
+          9,
+          1
+        ]
+      ]
+    }
+  },
+  "ignorar": true,
+  "cruzamentos": {},
+  "motivo": "Perfil atual de renda e cruzamentos likely voter ausentes; sem PNAD nesta onda."
+}

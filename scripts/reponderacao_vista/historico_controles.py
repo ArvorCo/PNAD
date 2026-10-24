@@ -8,6 +8,7 @@ from reponderacao_vista.historico_urna import urna
 from svgkit import br
 
 LABELS = {
+    "oficial": "Publicado oficial · likely voter",
     "direto": "Presença por voto · declarada",
     "proxy_renda": "Presença por renda · hipótese",
     "neutro": "Presença igual · sem diferencial identificado",
@@ -41,6 +42,12 @@ def method(poll):
         else ""
     )
     details = ""
+    if entry["tipo"] == "oficial":
+        return (
+            f'<span class="history-badge">{label}</span><p class="note">{esc(text)}</p>'
+            '<p class="note">A normalização dos totais arredondados é uma comparação separada; '
+            "não identifica o efeito exato do modelo. Sem pesos ou cruzamentos desse universo, PNAD indisponível.</p>"
+        )
     if poll.get("modo_projecao") and poll.get("base_original") != "validos":
         model = projection["modos"]["placar"]
         q, effect = model["taxas"], model["delta_presenca_pp"]
@@ -69,6 +76,8 @@ def summary(poll):
 
     projected = poll.get("modo_projecao")
     title = "Projeção do publicado" if projected else "Publicado"
+    if projected and poll.get("eleitor_provavel_oficial"):
+        title = "Publicado oficial · likely voter"
     preview = poll.get("renda", {}).get("perfil_tipo") == "hipotese_onda_anterior"
     return (
         (
@@ -112,6 +121,7 @@ def controls(rows):
         "<p>É um cenário de seleção de eleitores prováveis, não um modelo validado de comparecimento. "
         f"{counts['direto']} versões têm presença por voto, {counts['proxy_renda']} usam aproximação por renda "
         f"e {counts['neutro']} conservam presença igual por falta de cruzamento incorporado na própria onda. "
+        f"{counts['oficial']} preservam o likely voter oficial, sem nova seleção. "
         "As regras de seleção diferem entre pesquisas: mudanças na série também podem refletir essa cobertura.</p>"
         "<ol><li>Selecionamos a massa de cada candidato usando respostas da própria onda. Ipespe: nota máxima de chance de comparecer. "
         "Nexus: ida certa/provável por renda. Veritá: ida certa por renda. "

@@ -30,8 +30,15 @@ def segments(rows, key):
                 result.append(current)
             current = []
             continue
-        if current and (current[-1]["campo"]["fim"] <= CUTOFF) != (
-            row["campo"]["fim"] <= CUTOFF
+        if (
+            current
+            and (current[-1]["campo"]["fim"] <= CUTOFF)
+            != (row["campo"]["fim"] <= CUTOFF)
+        ) or (
+            current
+            and row.get("modo_projecao")
+            and bool(current[-1].get("eleitor_provavel_oficial"))
+            != bool(row.get("eleitor_provavel_oficial"))
         ):
             result.append(current)
             current = []
@@ -208,7 +215,11 @@ def chart(rows):
         left,
         250,
         (
-            "Projeção de válidos · seleção + indecisos proporcionais"
+            (
+                "Válidos · inclui modelo oficial identificado"
+                if any(p.get("eleitor_provavel_oficial") for p in rows)
+                else "Projeção de válidos · seleção + indecisos proporcionais"
+            )
             if projected
             else (f"% do {base}" if base.startswith("total") else f"% dos {base}")
         ),

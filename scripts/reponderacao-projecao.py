@@ -63,7 +63,7 @@ def observation(source, preferences, today):
     )
     published = preferences(pub, pub)
     pnad = preferences(adjusted, pub) if adjusted is not None else published
-    return {
+    result = {
         "id": source["id"],
         "instituto": source["instituto"],
         "campo": source["campo"],
@@ -76,6 +76,11 @@ def observation(source, preferences, today):
         "previsao_vetor": five(pnad),
         "peso_recencia": decay(age(source["campo"], today), NATIONAL_HALF_LIFE),
     }
+    official = source.get("eleitor_provavel_oficial") or {}
+    if official.get("usar_na_projecao"):
+        result["official_valids"] = official["validos"]
+        result["income_available"] = False
+    return result
 
 
 def trend(observations, selected, today, kind):
@@ -139,14 +144,27 @@ def build(data, preferences):
         raise ValueError("Nenhuma casa elegível na projeção pós-1º turno")
     for p, w in zip(selected, weights(selected), strict=True):
         p["weight"] = float(w)
+    likely = importlib.import_module("reponderacao-likely")
+    official = (
+        likely.summary(selected)
+        if any(p.get("official_valids") for p in selected)
+        else None
+    )
+    official_houses = {p["instituto"] for p in selected if p.get("official_valids")}
+    regular = [p for p in selected if p["instituto"] not in official_houses]
+    if not regular:
+        raise ValueError(
+            "Projeção exige ao menos uma casa com vetor completo para contabilizar não escolha"
+        )
+    comparable = [p for p in observations if p["instituto"] not in official_houses]
     trends, anchors, draws = {}, {}, {}
     for label, kind in (("pnad", "previsao_vetor"), ("published", "publicado_vetor")):
-        fitted = trend(observations, selected, today, kind)
+        fitted = trend(comparable, regular, today, kind)
         trends[label] = fitted
         anchors[label] = four(fitted["vetor"])
-        polls = [{**p, "previsao_vetor": p[kind]} for p in selected]
+        polls = [{**p, "previsao_vetor": p[kind]} for p in regular]
         inclusive = np.average(
-            [p[kind] for p in selected], axis=0, weights=weights(selected)
+            [p[kind] for p in regular], axis=0, weights=weights(regular)
         ).tolist()
         national = {
             "selecionadas": polls,
@@ -155,9 +173,14 @@ def build(data, preferences):
                 "central_inclinacao": fitted["dp_margem_projecao_pp"]
             },
         }
-        targets, _, _, _ = target_draws(
-            national, "central_inclinacao", RUNS, np.random.default_rng(SEED)
-        )
+        if official:
+            targets, official["draws"][label] = likely.draws(
+                selected, kind, fitted, RUNS, SEED
+            )
+        else:
+            targets, _, _, _ = target_draws(
+                national, "central_inclinacao", RUNS, np.random.default_rng(SEED)
+            )
         draws[label] = [[round(row[k], 8) for k in KEYS] for row in map(four, targets)]
     return {
         "name": "Central Projeção Arvor",
@@ -165,6 +188,7 @@ def build(data, preferences):
         "election_source": "https://www.tse.jus.br/comunicacao/noticias/2026/Marco/eleicoes-2026-confira-as-principais-datas-do-calendario-eleitoral",
         "half_life_days": NATIONAL_HALF_LIFE,
         "selected": selected,
+        **({"official": official} if official else {}),
         "excluded": excluded,
         "anchors": anchors,
         "trend": trends,
@@ -185,10 +209,11 @@ def build(data, preferences):
                 "scripts/predicao_2026/recencia.py",
                 "scripts/predicao_2026/tendencia.py",
                 "scripts/predicao_2026/motor.py",
+                "scripts/reponderacao-likely.py",
             ]
         },
         "adapter_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        "method": "Última onda por casa na semana, peso pelo ponto médio do campo (meia-vida 3 dias); PNAD onde existe e publicado onde falta; âncora projetada a 25/10 por inclinação de 28 dias encolhida, estimada só após 04/10 quando identificável. Monte Carlo: bootstrap bayesiano por casa, Dirichlet com n efetivo e choque comum Student t (dp 2 pp), mais incerteza da inclinação em quadratura.",
+        "method": "Última onda por casa na semana, peso pelo ponto médio do campo (meia-vida 3 dias); PNAD onde existe e publicado onde falta; âncora projetada a 25/10 por inclinação de 28 dias encolhida, estimada só após 04/10 quando identificável. Likely voter oficial entra após presença, sem extrapolação ou novo ajuste; sua casa fica fora da tendência entre universos distintos. Monte Carlo: bootstrap bayesiano conjunto por casa, Dirichlet com n efetivo e choque comum Student t (dp 2 pp) compartilhado; incerteza da inclinação adicional apenas nas casas de amostra completa.",
         "limits": "Adaptação nacional do motor do 1º turno, sem ML supervisionado ou informação nova criada pelo Monte Carlo. Não transfere validação contra pesquisas nem preferências territoriais do 1º turno. Pesos PNAD são sensibilidade de uma margem; propensões Nexus e transporte do resíduo relativo do 1º turno continuam hipóteses. Os intervalos são condicionais, sem cobertura validada contra a urna; com tendência indisponível supõem estabilidade até 25/10.",
     }
 
@@ -209,6 +234,8 @@ def encode(data):
     clone["projection"]["states"] = "__STATES__"
     clone["central_projection"] = "__CENTRAL_PROJECTION__"
     clone["central"] = "__CENTRAL__"
+    if "official" in clone["projection"]:
+        clone["projection"]["official"] = "__OFFICIAL__"
     if "turnout_model" in clone:
         clone["turnout_model"] = "__TURNOUT__"
     if "presence_model" in clone:
@@ -238,6 +265,14 @@ def encode(data):
         .replace('"__SELECTED__"', selected)
         .replace('"__POLLS__"', json.dumps(data["polls"], ensure_ascii=False))
         .replace('"__CENTRAL__"', json.dumps(data["central"], ensure_ascii=False))
+        .replace(
+            '"__OFFICIAL__"',
+            json.dumps(
+                data["projection"].get("official"),
+                ensure_ascii=False,
+                separators=(",", ":"),
+            ),
+        )
         .replace(
             '"__STATES__"', json.dumps(data["projection"]["states"], ensure_ascii=False)
         )

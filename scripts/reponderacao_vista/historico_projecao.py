@@ -39,6 +39,24 @@ def rates(poll, entry, mode):
 
 
 def project(poll):
+    official = poll.get("eleitor_provavel_oficial")
+    if official:
+        total = sum(poll["placar"][c] for c in PAIR)
+        simple = {c: 100 * poll["placar"][c] / total for c in PAIR}
+        return {
+            "evidencia": {"tipo": "oficial", "regra": official["regra"]},
+            "modos": {
+                "placar": {
+                    "validos": official["validos"],
+                    "validos_sem_presenca": simple,
+                    "taxas": None,
+                    "indecisos": None,
+                    "transferidos": None,
+                    "delta_presenca_pp": None,
+                },
+                "pnad": None,
+            },
+        }
     entry = evidence()["ondas"].get(poll["id"])
     if entry is None:
         entry = {

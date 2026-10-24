@@ -131,6 +131,40 @@ def scenario_rows(data, p):
     return rows
 
 
+def official_result(row, result, data, p, draw_index=None):
+    """Válido oficial entra após presença; não inventa o total do subconjunto."""
+    official = data.get("projection", {}).get("official")
+    if p.get("centro") != "projecao" or not official:
+        return result
+    weight, share = official["weight"], official["flavio"]
+    if draw_index is not None:
+        kind = "published" if p["modo"] == "publicado" else "pnad"
+        weight, share = official["draws"][kind][draw_index]
+    base = poll_result(row, data, {**p, "nulo_diferencial_pp": 0, "vies_pp": 0})
+    valid = 100 * base["validos"] / p["comparecimento"]
+    mass = {
+        "flavio": valid * share / 100,
+        "lula": valid * (1 - share / 100),
+        "indecisos": 0,
+        "branco_nulo": 100 - valid,
+    }
+    lv = poll_result(
+        {**row, "published": mass, "pnad": mass},
+        data,
+        {**p, "modo": "publicado", "presenca_relativa": 0, "branco_nulo_pp": 0},
+    )
+    out = dict(result)
+    for key in ("validos", "branco_nulo"):
+        out[key] = (1 - weight) * result[key] + weight * lv[key]
+    flavio = (1 - weight) * result["validos"] * result["flavio"] / 100 + weight * lv[
+        "validos"
+    ] * lv["flavio"] / 100
+    out["flavio"] = 100 * flavio / out["validos"]
+    out["lula"] = 100 - out["flavio"]
+    out["official_valids"] = {"weight": weight, "flavio": share, "lula": 100 - share}
+    return out
+
+
 def allocation_parameters(data, p):
     """A divisão automática acompanha a média antes de converter indecisos."""
     if (
@@ -150,7 +184,10 @@ def allocation_parameters(data, p):
 def evaluate(data, params=None):
     p = parameters(data, params)
     effective = allocation_parameters(data, p)
-    polls = [poll_result(row, data, effective) for row in scenario_rows(data, p)]
+    polls = [
+        official_result(row, poll_result(row, data, effective), data, effective)
+        for row in scenario_rows(data, p)
+    ]
     if not polls:
         raise ValueError("Nenhuma pesquisa elegível no 2º turno")
     out = {
@@ -205,6 +242,19 @@ def undecided(data, params=None):
         invalid += u - converted
         reference_f += u * ref
         survey += row["published" if p["modo"] == "publicado" else "pnad"]["indecisos"]
+    if p.get("centro") == "projecao" and data["projection"].get("official"):
+        weight = 1 - data["projection"]["official"]["weight"]
+        pool, transferred_f, transferred_l, invalid, reference_f, survey = (
+            value * weight
+            for value in (
+                pool,
+                transferred_f,
+                transferred_l,
+                invalid,
+                reference_f,
+                survey,
+            )
+        )
     chosen = evaluate(data, p)
     baseline = evaluate(data, {**p, "indecisos_flavio": None})
     total = (data.get("electorate") or COUNT.electorate())["total"]
@@ -246,7 +296,7 @@ def simulate(data, params=None):
     kind = "published" if p["modo"] == "publicado" else "pnad"
     draws = data["projection"]["mc"]["draws"][kind]
     samples = []
-    for draw in draws:
+    for index, draw in enumerate(draws):
         mass = dict(zip(KEYS, draw, strict=True))
         row = {
             "id": "sorteio",
@@ -255,7 +305,9 @@ def simulate(data, params=None):
             "published": mass,
             "pnad": mass,
         }
-        result = poll_result(row, data, effective)
+        result = official_result(
+            row, poll_result(row, data, effective), data, effective, index
+        )
         result["por_100_eleitores"] = {
             "flavio": result["validos"] * result["flavio"] / 100,
             "lula": result["validos"] * result["lula"] / 100,
@@ -371,6 +423,16 @@ def build(data, forecast, nexus):
         },
     }
     out["central"] = evaluate(out)
+    if out["projection"].get("official"):
+        out["method"][
+            "central"
+        ] += " Exceção: likely voter oficial entra sem nova seleção de presença, PNAD ou indecisos da amostra completa."
+        out["method"][
+            "aggregation"
+        ] += " Resultado oficial em válidos é combinado depois, com o mesmo peso por recência e fração de válidos entre presentes assumida igual à das demais casas."
+        out["method"][
+            "undecided"
+        ] += " Havendo likely voter oficial, a proporção automática usa só a âncora das outras casas; volumes de indecisos são multiplicados pelo peso delas. Não há indecisos identificados no resultado oficial em válidos."
     out["central_projection"] = evaluate(out, {"centro": "projecao"})
     out["projection"]["uncertainty"] = simulate(out)
     out["version"] = hashlib.sha256(

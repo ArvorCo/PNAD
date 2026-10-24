@@ -309,22 +309,6 @@
       "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
     },
     {
-      "instituto": "Quaest",
-      "id": "quaest_2026-10-20",
-      "tipo": "neutro",
-      "fonte": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Quaest",
-      "arquivo": "data/originals/quaest_102026_21/g1-estimulada.json",
-      "nota": "Painel G1 atual tem intenção por perfil, sem cruzamento de presença identificado. Íntegra atual ainda pendente; não reutiliza a onda de 14/10."
-    },
-    {
-      "instituto": "AtlasIntel",
-      "id": "atlas_2026-10-18",
-      "tipo": "neutro",
-      "fonte": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
-      "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
-      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
-    },
-    {
       "instituto": "PoderData",
       "id": "poderdata_2026-10-18",
       "tipo": "neutro",
@@ -459,6 +443,22 @@
       "fonte": "https://brazileconomy.com.br/eleicoes-2026/2026/10/lula-tem-503-dos-votos-validos-e-flavio-497-aponta-pesquisa-brazil-economycolectta/",
       "arquivo": "data/originals/colectta_102026_24/divulgacao.html.gz",
       "nota": "Sem seleção de presença incorporada nesta série; não transportar taxas anteriores. "
+    },
+    {
+      "instituto": "Quaest",
+      "id": "quaest_2026-10-24",
+      "tipo": "oficial",
+      "fonte": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Quaest",
+      "arquivo": "data/originals/quaest_102026_24/g1-estimulada.json",
+      "nota": "Publicado oficial da casa; sem reaplicar presença Arvor, renda ou indecisos da amostra completa."
+    },
+    {
+      "instituto": "AtlasIntel",
+      "id": "atlas_2026-10-23",
+      "tipo": "neutro",
+      "fonte": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Pesquisa-Atlas_Bloomberg-Nacional-2T-2026.pdf",
+      "arquivo": "data/originals/atlas_102026_24/relatorio.pdf",
+      "nota": "Sem cruzamento de presença incorporado nesta onda; não transportar taxas anteriores."
     }
   ],
   "revisao_acervo": "155 versões e 152 referências indexadas em presenca_acervo.json. Busca textual não é prova de ausência em páginas gráficas. Presença de Nexus pré-urna refere-se ao 1º turno e não é aplicada aos cenários de 2º turno; idem MDA de agosto. Veritá de 17/10 traz presença lembrada no 1º turno, não a futura. Vox de 09/10 e 18/10 traz presença futura apenas agregada."

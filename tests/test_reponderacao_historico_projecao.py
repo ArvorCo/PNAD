@@ -20,7 +20,11 @@ def polls():
 
 
 def test_atlas_crossing_field_connects_to_next_post_election_wave(polls):
-    rows = [p for p in polls.values() if p["instituto"] == "AtlasIntel"]
+    rows = [
+        p
+        for p in polls.values()
+        if p["instituto"] == "AtlasIntel" and p["divulgacao"] <= "2026-10-19"
+    ]
     post = segments(rows, "placar")[-1]
     assert [p["id"] for p in post] == ["atlas_2026-10-08", "atlas_2026-10-18"]
     assert post[0]["fase"] == "Campo atravessa o 1º turno"
@@ -115,7 +119,10 @@ def test_all_projections_are_finite_conserved_and_documented(polls):
                 continue
             assert sum(mode["validos"].values()) == pytest.approx(100, abs=0.01)
             assert all(0 <= v <= 100 for v in mode["validos"].values())
-            assert all(0 <= v <= 1 for v in mode["taxas"].values())
+            if result["evidencia"]["tipo"] == "oficial":
+                assert mode["taxas"] is None
+            else:
+                assert all(0 <= v <= 1 for v in mode["taxas"].values())
 
 
 def test_transcribed_sources_match_hash_and_each_own_wave(polls):

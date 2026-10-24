@@ -57,6 +57,7 @@
     $('relative-explanation').textContent=data.presence_model
       ? `as duas centrais usam propensão Nexus + ajuste relativo de Flávio ${extra}, referência residual do 1º turno transportada como hipótese. Não é presença medida por candidato.`
       : `esta versão arquivada usa propensão Nexus + presença relativa de Flávio ${extra}, hipótese declarada sem taxa por candidato medida na urna.`;
+    if(data.projection?.official) $('relative-explanation').textContent += ' O likely voter oficial da Quaest é exceção: entra sem reaplicar presença.';
     $('presence-origin').textContent=data.presence_model
       ? `Referência desta versão: ${extra} extra, a partir do resíduo do 1º turno. `
       : `Referência arquivada: ${extra} extra. A conta abaixo documenta a revisão atual; restaure para usar os novos dados. `;
@@ -104,7 +105,7 @@
     $('indecisos_flavio').value=u.chosen_flavio_pct;
     if(document.activeElement!==$('indecisos_flavio-number')) $('indecisos_flavio-number').value=u.chosen_flavio_pct.toFixed(1);
     $('undecided-proportional').setAttribute('aria-pressed',String(p.indecisos_flavio===null));
-    const rule=u.policy==='central_proportion'?'a proporção Flávio/Lula da central, antes da conversão':'a proporção de cada pesquisa, regra deste link arquivado';
+    const rule=u.policy==='central_proportion'?(p.centro==='projecao' && data.projection.official?'a proporção Flávio/Lula das casas de amostra completa, antes da conversão':'a proporção Flávio/Lula da central, antes da conversão'):'a proporção de cada pesquisa, regra deste link arquivado';
     $('undecided-rule').textContent=p.indecisos_flavio===null?`Automático: acompanha ${rule}. Arraste para criar outra divisão.`:`Divisão livre: ${fmt(u.chosen_flavio_pct)}% para Flávio, ${fmt(100-u.chosen_flavio_pct)}% para Lula. Proporção automática desta base: ${fmt(u.proportional_flavio_pct)}% / ${fmt(100-u.proportional_flavio_pct)}%.`;
     for(const [key,value] of [['flavio',u.to_flavio],['lula',u.to_lula],['invalid',u.to_invalid]]) {
       root.querySelector(`[data-undecided-part="${key}"]`).style.width=(u.present_total?100*value/u.present_total:0)+'%';
@@ -154,7 +155,7 @@
       $('count-'+k).title=totals[k].toLocaleString('pt-BR',{maximumFractionDigits:0})+' no cenário, antes de arredondar em milhões';
     }
     $('count-eleitorado').textContent=`${millions(totals.eleitorado)} milhões de eleitores · TSE 2026 · ${electorate().scope}${data.electorate?'':' · base atual aplicada a esta versão antiga'}`;
-    $('rates').textContent=`Presença efetiva no cenário: Flávio ${fmt(100*result.taxas.flavio)}% · Lula ${fmt(100*result.taxas.lula)}%.`;
+    $('rates').textContent=`Presença efetiva ${p.centro==='projecao' && data.projection.official?'nas casas de amostra completa':'no cenário'}: Flávio ${fmt(100*result.taxas.flavio)}% · Lula ${fmt(100*result.taxas.lula)}%.`;
     for(const [k,v] of Object.entries(result.por_100_eleitores)) {
       $('mass-'+k).textContent=fmt(v);
       const el=root.querySelector(`[data-mass="${k}"]`);el.style.width=v+'%';el.title=`${k}: ${fmt(v)} por 100 eleitores`;

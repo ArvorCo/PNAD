@@ -9,6 +9,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from ga_tag import injetar
 from reponderacao_vista.rodada_241026 import section as october24_evening_section
+from reponderacao_vista.rodada_241026_final import section as october24_final_section
 from reponderacao_vista.style import SCRIPT
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -491,6 +492,7 @@ def current_coverage(ns):
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + (october24_final_section() if data.get("referencia") == "2026-10-24" else "")
         + october24_evening_section(latest)
         + october24_note
         + october23_note
