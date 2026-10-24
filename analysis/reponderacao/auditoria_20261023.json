@@ -1,0 +1,906 @@
+{
+  "data": "2026-10-23",
+  "conferido_em": "2026-10-24",
+  "pesquisas": [
+    {
+      "id": "realtime_2026-10-22",
+      "instituto": "Real Time Big Data",
+      "registro_tse": "BR-09670/2026",
+      "contratante": "Real Time Big Data, recursos próprios",
+      "campo": {
+        "inicio": "2026-10-19",
+        "fim": "2026-10-22"
+      },
+      "divulgacao": "2026-10-23",
+      "n": 2000,
+      "metodo": "entrevistas telefônicas e digitais; método misto declarado no PesqEle",
+      "publicado": {
+        "2t": {
+          "flavio": 49,
+          "lula": 45,
+          "branco_nulo": 5,
+          "indecisos": 1
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/realtime_102026_23/relatorio.pdf",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Presidencial-BR-09670-2026-Out26.pdf",
+        "bytes": 3042253,
+        "sha256": "bde2b746cd00a0847f402e44cdbb059334f16ce15958f7f165c78e065342d5ff",
+        "pdf": "data/originals/realtime_102026_23/relatorio.pdf",
+        "tipo": "relatorio",
+        "rotulo": "Relatório completo conferido",
+        "paginas": {
+          "metodologia": 2,
+          "perfil_renda": 3,
+          "2t_topline": 8,
+          "sexo": 9,
+          "2t_renda": 11,
+          "2t_validos": 16
+        },
+        "total_paginas": 25,
+        "conferido_em": "2026-10-24",
+        "status": "Íntegra arquivada e conferida visualmente.",
+        "nota": "Íntegra de 25 páginas, campo 19–22/10, 2.000 entrevistas. Perfil atual 46/33/21 na p. 3; voto por renda p. 11 e sexo p. 9 conferidos visualmente. Registro BR-09670/2026 define renda domiciliar mensal e fator previsto 1 para renda; etapa do perfil publicado não explicitada. Sensibilidade condicional, sem transportar perfil anterior. Válidos oficiais 52/48 preservados separadamente da normalização dos inteiros 49/45."
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 52,
+          "lula": 48
+        }
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "ano_referencia": 2026,
+        "mes_precos": "202610",
+        "faixas": [
+          {
+            "rotulo": "0 a 2 SM",
+            "max": 2
+          },
+          {
+            "rotulo": "2 a 5 SM",
+            "max": 5
+          },
+          {
+            "rotulo": "Mais de 5 SM",
+            "max": null
+          }
+        ],
+        "amostra_pct": [
+          46,
+          33,
+          21
+        ],
+        "perfil_tipo": "perfil_publicado",
+        "nota": "Íntegra de 25 páginas, campo 19–22/10, 2.000 entrevistas. Perfil atual 46/33/21 na p. 3; voto por renda p. 11 e sexo p. 9 conferidos visualmente. Registro BR-09670/2026 define renda domiciliar mensal e fator previsto 1 para renda; etapa do perfil publicado não explicitada. Sensibilidade condicional, sem transportar perfil anterior. Válidos oficiais 52/48 preservados separadamente da normalização dos inteiros 49/45."
+      },
+      "cruzamentos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "linhas": [
+            [
+              40,
+              54,
+              5,
+              1
+            ],
+            [
+              52,
+              42,
+              5,
+              1
+            ],
+            [
+              63,
+              32,
+              3,
+              2
+            ]
+          ],
+          "nota": "Íntegra de 25 páginas, campo 19–22/10, 2.000 entrevistas. Perfil atual 46/33/21 na p. 3; voto por renda p. 11 e sexo p. 9 conferidos visualmente. Registro BR-09670/2026 define renda domiciliar mensal e fator previsto 1 para renda; etapa do perfil publicado não explicitada. Sensibilidade condicional, sem transportar perfil anterior. Válidos oficiais 52/48 preservados separadamente da normalização dos inteiros 49/45."
+        }
+      },
+      "controles": {
+        "2t": {
+          "renda": {
+            "pesos": [
+              46,
+              33,
+              21
+            ],
+            "linhas": [
+              [
+                40,
+                54,
+                5,
+                1
+              ],
+              [
+                52,
+                42,
+                5,
+                1
+              ],
+              [
+                63,
+                32,
+                3,
+                2
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 48.79,
+              "lula": 45.42,
+              "branco_nulo": 4.58,
+              "indecisos": 1.21
+            },
+            "residuo": {
+              "flavio": -0.21000000000000085,
+              "lula": 0.4200000000000017,
+              "branco_nulo": -0.41999999999999993,
+              "indecisos": 0.20999999999999996
+            },
+            "residuo_max_abs": 0.4200000000000017
+          },
+          "sexo": {
+            "pesos": [
+              47,
+              53
+            ],
+            "linhas": [
+              [
+                52,
+                40,
+                7,
+                1
+              ],
+              [
+                47,
+                49,
+                3,
+                1
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 49.35,
+              "lula": 44.77,
+              "branco_nulo": 4.88,
+              "indecisos": 1.0
+            },
+            "residuo": {
+              "flavio": 0.3500000000000014,
+              "lula": -0.22999999999999687,
+              "branco_nulo": -0.1200000000000001,
+              "indecisos": 0.0
+            },
+            "residuo_max_abs": 0.3500000000000014
+          }
+        }
+      }
+    },
+    {
+      "id": "alfa_2026-10-22",
+      "instituto": "Alfa Inteligência/TMC",
+      "registro_tse": "BR-08496/2026",
+      "contratante": "Alfa Inteligência, recursos próprios",
+      "campo": {
+        "inicio": "2026-10-18",
+        "fim": "2026-10-22"
+      },
+      "divulgacao": "2026-10-23",
+      "n": 2700,
+      "metodo": "entrevistas pessoais; municípios por PPT e cotas de entrevistados",
+      "publicado": {
+        "2t": {
+          "flavio": 49.9,
+          "lula": 46,
+          "branco_nulo": 2,
+          "indecisos": 2.1
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/alfa_102026_23/relatorio.pdf",
+        "url": "https://static.poder360.com.br/uploads/2026/10/PesquisaAlfaInteligencia-presidente-23out2026-1.pdf",
+        "bytes": 19286313,
+        "sha256": "b7e6d61f9e3168bece4908d9f9bd165280aab2d8f682da73d980f4330d1ede8a",
+        "pdf": "data/originals/alfa_102026_23/relatorio.pdf",
+        "tipo": "relatorio",
+        "rotulo": "Relatório completo conferido",
+        "paginas": {
+          "metodologia": 5,
+          "perfil_renda": 6,
+          "2t_topline": 13,
+          "2t_validos": 14,
+          "sexo": 15,
+          "2t_renda": 16
+        },
+        "total_paginas": 29,
+        "conferido_em": "2026-10-24",
+        "status": "Íntegra arquivada e conferida visualmente.",
+        "nota": "Íntegra de 29 páginas, campo 18–22/10, n=2.700. Perfil de renda domiciliar 40/37/23 na p. 6, cruzamentos de renda familiar p. 16 e sexo p. 15. Etapa do perfil não explicitada; ajuste condicional ao perfil publicado. Totais 49,9/46/2/2,1 e válidos oficiais 52/48 nas pp. 13–14. Registro BR-08496/2026 tem cabeçalho n=1.200, plano n=2.700 e texto telefônico divergente das entrevistas pessoais da íntegra; ficha efetiva do relatório prevalece, sem apagar a divergência arquivada."
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 52,
+          "lula": 48
+        }
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "ano_referencia": 2026,
+        "mes_precos": "202610",
+        "faixas": [
+          {
+            "rotulo": "0 a 2 SM",
+            "max": 2
+          },
+          {
+            "rotulo": "2 a 5 SM",
+            "max": 5
+          },
+          {
+            "rotulo": "Mais de 5 SM",
+            "max": null
+          }
+        ],
+        "amostra_pct": [
+          40,
+          37,
+          23
+        ],
+        "perfil_tipo": "perfil_publicado",
+        "nota": "Íntegra de 29 páginas, campo 18–22/10, n=2.700. Perfil de renda domiciliar 40/37/23 na p. 6, cruzamentos de renda familiar p. 16 e sexo p. 15. Etapa do perfil não explicitada; ajuste condicional ao perfil publicado. Totais 49,9/46/2/2,1 e válidos oficiais 52/48 nas pp. 13–14. Registro BR-08496/2026 tem cabeçalho n=1.200, plano n=2.700 e texto telefônico divergente das entrevistas pessoais da íntegra; ficha efetiva do relatório prevalece, sem apagar a divergência arquivada."
+      },
+      "cruzamentos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "linhas": [
+            [
+              44,
+              52,
+              2,
+              2
+            ],
+            [
+              52,
+              43,
+              2,
+              3
+            ],
+            [
+              56,
+              40,
+              2,
+              2
+            ]
+          ],
+          "nota": "Íntegra de 29 páginas, campo 18–22/10, n=2.700. Perfil de renda domiciliar 40/37/23 na p. 6, cruzamentos de renda familiar p. 16 e sexo p. 15. Etapa do perfil não explicitada; ajuste condicional ao perfil publicado. Totais 49,9/46/2/2,1 e válidos oficiais 52/48 nas pp. 13–14. Registro BR-08496/2026 tem cabeçalho n=1.200, plano n=2.700 e texto telefônico divergente das entrevistas pessoais da íntegra; ficha efetiva do relatório prevalece, sem apagar a divergência arquivada."
+        }
+      },
+      "controles": {
+        "2t": {
+          "renda": {
+            "pesos": [
+              40,
+              37,
+              23
+            ],
+            "linhas": [
+              [
+                44,
+                52,
+                2,
+                2
+              ],
+              [
+                52,
+                43,
+                2,
+                3
+              ],
+              [
+                56,
+                40,
+                2,
+                2
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 49.72,
+              "lula": 45.91,
+              "branco_nulo": 2.0,
+              "indecisos": 2.37
+            },
+            "residuo": {
+              "flavio": -0.17999999999999972,
+              "lula": -0.09000000000000341,
+              "branco_nulo": 0.0,
+              "indecisos": 0.27
+            },
+            "residuo_max_abs": 0.27
+          },
+          "sexo": {
+            "pesos": [
+              47,
+              53
+            ],
+            "linhas": [
+              [
+                53,
+                43,
+                2,
+                2
+              ],
+              [
+                47,
+                49,
+                2,
+                2
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 49.82,
+              "lula": 46.18,
+              "branco_nulo": 2.0,
+              "indecisos": 2.0
+            },
+            "residuo": {
+              "flavio": -0.0799999999999983,
+              "lula": 0.17999999999999972,
+              "branco_nulo": 0.0,
+              "indecisos": -0.10000000000000009
+            },
+            "residuo_max_abs": 0.17999999999999972
+          }
+        }
+      }
+    },
+    {
+      "id": "ipespe_2026-10-22",
+      "instituto": "Ipespe",
+      "registro_tse": "BR-04350/2026",
+      "contratante": "Abrapel",
+      "campo": {
+        "inicio": "2026-10-20",
+        "fim": "2026-10-22"
+      },
+      "divulgacao": "2026-10-23",
+      "n": 1500,
+      "metodo": "telefônico CATI",
+      "publicado": {
+        "2t": {
+          "flavio": 48,
+          "lula": 47,
+          "branco_nulo": 3,
+          "indecisos": 2
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/ipespe_102026_23/relatorio.pdf",
+        "url": "https://ipespe.org.br/wp-content/uploads/2026/10/TRK-CAMPANHA-03_-IPESPE-ABRAPEL_2T_-20-a-22-OUT-2026_-VF_.pdf",
+        "bytes": 1527720,
+        "sha256": "f366ff06fd1f3cc4be1b9999d8bc4ee1e10b9ce2e264ddc36e3e5add1b280f55",
+        "pdf": "data/originals/ipespe_102026_23/relatorio.pdf",
+        "tipo": "relatorio",
+        "rotulo": "Relatório completo conferido",
+        "paginas": {
+          "metodologia": 39,
+          "perfil_renda": 40,
+          "2t_topline": 5,
+          "2t_validos": 5,
+          "sexo": 6,
+          "2t_renda": 6,
+          "presenca_por_voto": 12,
+          "subconjunto_presenca": 13
+        },
+        "total_paginas": 41,
+        "conferido_em": "2026-10-24",
+        "status": "Íntegra arquivada e conferida visualmente.",
+        "nota": "Tracking Ipespe/Abrapel, terceira rodada do 2º turno, íntegra oficial de 41 páginas. Campo 20–22/10, CATI, n=1.500. Perfil de renda familiar 41/37/22 p. 40; cruzamentos atuais p. 6. P. 39 declara controle por renda e recall do 1º turno. Etapa do perfil não explícita: sensibilidade condicional. Geral 48/47/3/2 e válidos oficiais 50,5/49,5. P. 12: certeza máxima de comparecer entre F/L/BN/NS = 94/90/66/61%. P. 13: subconjunto com certeza máxima tem total 50/47/2/1 e válidos 51,5/48,5. Preservar ambos os publicados; a seleção Arvor usa as taxas arredondadas e não substitui o resultado oficial do subconjunto."
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 50.5,
+          "lula": 49.5
+        }
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "ano_referencia": 2026,
+        "mes_precos": "202610",
+        "faixas": [
+          {
+            "rotulo": "0 a 2 SM",
+            "max": 2
+          },
+          {
+            "rotulo": "2 a 5 SM",
+            "max": 5
+          },
+          {
+            "rotulo": "Mais de 5 SM",
+            "max": null
+          }
+        ],
+        "amostra_pct": [
+          41,
+          37,
+          22
+        ],
+        "perfil_tipo": "perfil_publicado",
+        "nota": "Tracking Ipespe/Abrapel, terceira rodada do 2º turno, íntegra oficial de 41 páginas. Campo 20–22/10, CATI, n=1.500. Perfil de renda familiar 41/37/22 p. 40; cruzamentos atuais p. 6. P. 39 declara controle por renda e recall do 1º turno. Etapa do perfil não explícita: sensibilidade condicional. Geral 48/47/3/2 e válidos oficiais 50,5/49,5. P. 12: certeza máxima de comparecer entre F/L/BN/NS = 94/90/66/61%. P. 13: subconjunto com certeza máxima tem total 50/47/2/1 e válidos 51,5/48,5. Preservar ambos os publicados; a seleção Arvor usa as taxas arredondadas e não substitui o resultado oficial do subconjunto."
+      },
+      "cruzamentos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "linhas": [
+            [
+              40,
+              54,
+              2,
+              3
+            ],
+            [
+              53,
+              44,
+              2,
+              1
+            ],
+            [
+              54,
+              39,
+              5,
+              2
+            ]
+          ],
+          "nota": "Tracking Ipespe/Abrapel, terceira rodada do 2º turno, íntegra oficial de 41 páginas. Campo 20–22/10, CATI, n=1.500. Perfil de renda familiar 41/37/22 p. 40; cruzamentos atuais p. 6. P. 39 declara controle por renda e recall do 1º turno. Etapa do perfil não explícita: sensibilidade condicional. Geral 48/47/3/2 e válidos oficiais 50,5/49,5. P. 12: certeza máxima de comparecer entre F/L/BN/NS = 94/90/66/61%. P. 13: subconjunto com certeza máxima tem total 50/47/2/1 e válidos 51,5/48,5. Preservar ambos os publicados; a seleção Arvor usa as taxas arredondadas e não substitui o resultado oficial do subconjunto."
+        }
+      },
+      "controles": {
+        "2t": {
+          "renda": {
+            "pesos": [
+              41,
+              37,
+              22
+            ],
+            "linhas": [
+              [
+                40,
+                54,
+                2,
+                3
+              ],
+              [
+                53,
+                44,
+                2,
+                1
+              ],
+              [
+                54,
+                39,
+                5,
+                2
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 47.89,
+              "lula": 47.0,
+              "branco_nulo": 2.66,
+              "indecisos": 2.04
+            },
+            "residuo": {
+              "flavio": -0.10999999999999943,
+              "lula": 0.0,
+              "branco_nulo": -0.33999999999999986,
+              "indecisos": 0.040000000000000036
+            },
+            "residuo_max_abs": 0.33999999999999986
+          },
+          "sexo": {
+            "pesos": [
+              47,
+              53
+            ],
+            "linhas": [
+              [
+                53,
+                44,
+                2,
+                1
+              ],
+              [
+                43,
+                50,
+                4,
+                3
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 47.7,
+              "lula": 47.18,
+              "branco_nulo": 3.06,
+              "indecisos": 2.06
+            },
+            "residuo": {
+              "flavio": -0.29999999999999716,
+              "lula": 0.17999999999999972,
+              "branco_nulo": 0.06000000000000005,
+              "indecisos": 0.06000000000000005
+            },
+            "residuo_max_abs": 0.29999999999999716
+          }
+        }
+      },
+      "subconjunto_presenca_publicado": {
+        "criterio": "Nota 10 de chance de comparecer",
+        "pagina": 13,
+        "total": {
+          "flavio": 50,
+          "lula": 47,
+          "branco_nulo": 2,
+          "indecisos": 1
+        },
+        "validos": {
+          "flavio": 51.5,
+          "lula": 48.5
+        }
+      }
+    },
+    {
+      "id": "vox_brasil_2026-10-22",
+      "instituto": "Vox Brasil",
+      "registro_tse": "BR-03259/2026",
+      "contratante": "Vox Brasil, recursos próprios",
+      "campo": {
+        "inicio": "2026-10-20",
+        "fim": "2026-10-22"
+      },
+      "divulgacao": "2026-10-23",
+      "n": 2100,
+      "metodo": "presencial domiciliar",
+      "publicado": {
+        "2t": {
+          "flavio": 44.3,
+          "lula": 45.4,
+          "branco_nulo": 6,
+          "indecisos": 4.3
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/vox_102026_23/relatorio.pdf",
+        "url": "https://static.poder360.com.br/uploads/2026/10/RELATORIO-VOX-BRASIL-NACIONAL-11-2-TURNO-23-10-2026.pdf",
+        "bytes": 3356314,
+        "sha256": "8c8d9d2e938116547acc7f825cf6cefd4a3f7a9f0e11c7eb7626945ad3459e7b",
+        "pdf": "data/originals/vox_102026_23/relatorio.pdf",
+        "tipo": "relatorio",
+        "rotulo": "Relatório completo conferido",
+        "paginas": {
+          "metodologia": 2,
+          "perfil_renda": 6,
+          "2t_topline": 13,
+          "2t_validos": 13,
+          "2t_renda": 18
+        },
+        "total_paginas": 38,
+        "conferido_em": "2026-10-24",
+        "status": "Íntegra arquivada e conferida visualmente.",
+        "nota": "Íntegra de 38 páginas, campo 20–22/10, n=2.100. Estimulada p. 13: 44,3/45,4/6/4,3; válidos oficiais 49,4/50,6. Perfil econômico p. 6 84,1/12,3/2,5/1,1; voto por renda p. 18. O conceito de renda não identifica familiar, individual ou per capita; não substituir pela renda familiar PNAD. Cruzamentos preservados como diagnóstico."
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 49.4,
+          "lula": 50.6
+        }
+      },
+      "perfil_economico_publicado": {
+        "pagina": 6,
+        "faixas_sm": [
+          2,
+          5,
+          10,
+          null
+        ],
+        "percentuais": [
+          84.1,
+          12.3,
+          2.5,
+          1.1
+        ],
+        "conceito": "não definido"
+      },
+      "cruzamentos_diagnosticos": {
+        "pagina": 18,
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "linhas": [
+          [
+            43.4,
+            45.6,
+            6.4,
+            4.6
+          ],
+          [
+            46.7,
+            46.3,
+            3.9,
+            3.1
+          ],
+          [
+            48.1,
+            48.1,
+            1.9,
+            1.9
+          ],
+          [
+            82.6,
+            13,
+            4.3,
+            0
+          ]
+        ],
+        "nota": "Última barra NS/NR ausente: zero aritmético, não precisão de zero."
+      },
+      "ignorar": true,
+      "motivo": "Conceito de renda não identificado; somente publicado na Projeção.",
+      "cruzamentos": {}
+    },
+    {
+      "id": "verita_2026-10-22",
+      "instituto": "Veritá",
+      "registro_tse": "BR-06070/2026",
+      "contratante": "Veritá, recursos próprios",
+      "campo": {
+        "inicio": "2026-10-18",
+        "fim": "2026-10-22"
+      },
+      "divulgacao": "2026-10-23",
+      "n": 15554,
+      "metodo": "entrevistas telefônicas automatizadas",
+      "publicado": {
+        "2t": {
+          "flavio": 50.2,
+          "lula": 47.5,
+          "branco_nulo": 1.4,
+          "indecisos": 0.9
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/verita_102026_23/relatorio.pdf",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Brasil-22-de-outubro-de-2026.pdf",
+        "bytes": 1958037,
+        "sha256": "827ddd2b769f183c7554f8f33a97e94e2b221a7df8fb9337e9a5f1de9e3204ef",
+        "pdf": "data/originals/verita_102026_23/relatorio.pdf",
+        "tipo": "relatorio",
+        "rotulo": "Relatório completo conferido",
+        "paginas": {
+          "perfil_renda": 4,
+          "2t_topline": 11,
+          "2t_validos": 11,
+          "2t_renda": 12,
+          "sexo": 12
+        },
+        "total_paginas": 15,
+        "conferido_em": "2026-10-24",
+        "status": "Íntegra arquivada e conferida visualmente.",
+        "nota": "Íntegra de 15 páginas, campo 18–22/10, n=15.554, BR-06070/2026. Totais p. 11: 50,2/47,5/1,4/0,9; válidos publicados 51,3/48,7. Perfil familiar p. 4: 41,2/40,1/18,7 e frequências 6.401/6.244/2.909 já somam 100% e 15.554. A tabela ainda acrescenta NS/NR 4,3% e 676: total 104,3% e 16.230, incompatível com a amostra. Não reinterpretar como perfil condicional nem emprestar a onda anterior. Cruzamentos atuais p. 12 preservados para diagnóstico; somente publicado até reconciliar o denominador. 'Ausente' no voto é BN+NS, não abstenção."
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 51.3,
+          "lula": 48.7
+        }
+      },
+      "perfil_economico_publicado": {
+        "pagina": 4,
+        "percentuais": [
+          41.2,
+          40.1,
+          18.7,
+          4.3
+        ],
+        "frequencias": [
+          6401,
+          6244,
+          2909,
+          676
+        ],
+        "categorias": [
+          "Até 2 SM",
+          "2 a 5 SM",
+          "Mais de 5 SM",
+          "NS/NR"
+        ]
+      },
+      "cruzamentos_diagnosticos": {
+        "pagina": 12,
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "linhas": [
+          [
+            44.8,
+            52.2,
+            1.6,
+            1.4
+          ],
+          [
+            54.3,
+            43.8,
+            1.4,
+            0.6
+          ],
+          [
+            53.1,
+            45.5,
+            0.9,
+            0.5
+          ],
+          [
+            46.2,
+            49.8,
+            2.2,
+            1.8
+          ]
+        ]
+      },
+      "ignorar": true,
+      "motivo": "Perfil de renda soma 104,3% e 16.230 pessoas para n=15.554; sem ajuste PNAD até reconciliar denominadores. Somente publicado na Projeção.",
+      "cruzamentos": {}
+    },
+    {
+      "id": "datatrends_2026-10-21",
+      "instituto": "DataTrends",
+      "registro_tse": "BR-03365/2026",
+      "campo": {
+        "inicio": "2026-10-19",
+        "fim": "2026-10-21"
+      },
+      "divulgacao": "2026-10-23",
+      "n": 2000,
+      "metodo": "telefônico automatizado",
+      "publicado": {
+        "2t": {
+          "flavio": 50,
+          "lula": 46,
+          "branco_nulo": 4,
+          "indecisos": 1
+        }
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 51.9,
+          "lula": 48.1
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/datatrends_102026_23/divulgacao.html",
+        "url": "https://radiofiladelfia.com.br/noticias/13377/datatrends-flavio-bolsonaro-amplia-vantagem-sobre-lula-e-chega-a-51-9-dos-votos-validos",
+        "bytes": 25713,
+        "sha256": "84a6d8e384c8bab8cc8083c9c9526ce68a36a1ae51f8d8d28d654ead5ac3f710",
+        "tipo": "divulgacao",
+        "rotulo": "Divulgação arquivada",
+        "conferido_em": "2026-10-24",
+        "nota": "Divulgação de 23/10, campo 19–21/10, n=2.000. Total 50/46/4/1 soma 101 por arredondamento. Válidos publicados 51,9/48,1 preservados. Íntegra atual não localizada; não transportar perfil ou cruzamentos de 19/10. Somente publicado na Projeção até obter documentação atual.",
+        "status": "Resultado confirmado; íntegra não localizada na consulta."
+      },
+      "ignorar": true,
+      "motivo": "Divulgação de 23/10, campo 19–21/10, n=2.000. Total 50/46/4/1 soma 101 por arredondamento. Válidos publicados 51,9/48,1 preservados. Íntegra atual não localizada; não transportar perfil ou cruzamentos de 19/10. Somente publicado na Projeção até obter documentação atual.",
+      "cruzamentos": {}
+    },
+    {
+      "id": "vetor_2026-10-23",
+      "instituto": "Vetor/Arrow",
+      "registro_tse": "BR-06957/2026",
+      "campo": {
+        "inicio": "2026-10-22",
+        "fim": "2026-10-23"
+      },
+      "divulgacao": "2026-10-23",
+      "n": 6867,
+      "metodo": "telefônico automatizado URA",
+      "publicado": {
+        "2t": {
+          "flavio": 50,
+          "lula": 44.9,
+          "branco_nulo": 3.6,
+          "indecisos": 1.5
+        }
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 52.7,
+          "lula": 47.3
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/vetor_102026_23/divulgacao.html",
+        "url": "https://radiocorredor.com.br/posts/vetor-arrow-flavio-52-7-lula-47-3-validos-2-turno-2310",
+        "bytes": 59238,
+        "sha256": "02f0dc543fd6d532d7132ba6a11ad1dfd8f4b98645e72042615dc9ed125d7b86",
+        "tipo": "divulgacao",
+        "rotulo": "Divulgação arquivada",
+        "conferido_em": "2026-10-24",
+        "nota": "Divulgação de 23/10, campo 22–23/10, 6.867 entrevistas em 1.559 municípios segundo a divulgação; amostra planejada registrada de 3.000. Release menciona 824 entrevistas adicionais de jovens, 616 classificações de gênero pelo nome e 628 municípios não informados. Totais 50/44,9/3,6/1,5 e válidos oficiais 52,7/47,3. Íntegra não localizada; sem perfil e voto por renda atuais, somente publicado na Projeção.",
+        "status": "Resultado confirmado; íntegra não localizada na consulta."
+      },
+      "ignorar": true,
+      "motivo": "Divulgação de 23/10, campo 22–23/10, 6.867 entrevistas em 1.559 municípios segundo a divulgação; amostra planejada registrada de 3.000. Release menciona 824 entrevistas adicionais de jovens, 616 classificações de gênero pelo nome e 628 municípios não informados. Totais 50/44,9/3,6/1,5 e válidos oficiais 52,7/47,3. Íntegra não localizada; sem perfil e voto por renda atuais, somente publicado na Projeção.",
+      "cruzamentos": {}
+    }
+  ],
+  "regra": "Uma onda por casa em cada central; sem imputar renda ausente ou contraditória.",
+  "pendencias": [
+    "Conceito de renda não identificado; somente publicado na Projeção.",
+    "Perfil de renda soma 104,3% e 16.230 pessoas para n=15.554; sem ajuste PNAD até reconciliar denominadores. Somente publicado na Projeção.",
+    "Divulgação de 23/10, campo 19–21/10, n=2.000. Total 50/46/4/1 soma 101 por arredondamento. Válidos publicados 51,9/48,1 preservados. Íntegra atual não localizada; não transportar perfil ou cruzamentos de 19/10. Somente publicado na Projeção até obter documentação atual.",
+    "Divulgação de 23/10, campo 22–23/10, 6.867 entrevistas em 1.559 municípios segundo a divulgação; amostra planejada registrada de 3.000. Release menciona 824 entrevistas adicionais de jovens, 616 classificações de gênero pelo nome e 628 municípios não informados. Totais 50/44,9/3,6/1,5 e válidos oficiais 52,7/47,3. Íntegra não localizada; sem perfil e voto por renda atuais, somente publicado na Projeção."
+  ],
+  "integra_baixada": [
+    "realtime_2026-10-22",
+    "alfa_2026-10-22",
+    "ipespe_2026-10-22",
+    "vox_brasil_2026-10-22",
+    "verita_2026-10-22"
+  ]
+}

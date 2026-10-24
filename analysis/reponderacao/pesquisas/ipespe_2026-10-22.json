@@ -1,0 +1,210 @@
+{
+  "id": "ipespe_2026-10-22",
+  "instituto": "Ipespe",
+  "registro_tse": "BR-04350/2026",
+  "contratante": "Abrapel",
+  "campo": {
+    "inicio": "2026-10-20",
+    "fim": "2026-10-22"
+  },
+  "divulgacao": "2026-10-23",
+  "n": 1500,
+  "metodo": "telefônico CATI",
+  "publicado": {
+    "2t": {
+      "flavio": 48,
+      "lula": 47,
+      "branco_nulo": 3,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/ipespe_102026_23/relatorio.pdf",
+    "url": "https://ipespe.org.br/wp-content/uploads/2026/10/TRK-CAMPANHA-03_-IPESPE-ABRAPEL_2T_-20-a-22-OUT-2026_-VF_.pdf",
+    "bytes": 1527720,
+    "sha256": "f366ff06fd1f3cc4be1b9999d8bc4ee1e10b9ce2e264ddc36e3e5add1b280f55",
+    "pdf": "data/originals/ipespe_102026_23/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 39,
+      "perfil_renda": 40,
+      "2t_topline": 5,
+      "2t_validos": 5,
+      "sexo": 6,
+      "2t_renda": 6,
+      "presenca_por_voto": 12,
+      "subconjunto_presenca": 13
+    },
+    "total_paginas": 41,
+    "conferido_em": "2026-10-24",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Tracking Ipespe/Abrapel, terceira rodada do 2º turno, íntegra oficial de 41 páginas. Campo 20–22/10, CATI, n=1.500. Perfil de renda familiar 41/37/22 p. 40; cruzamentos atuais p. 6. P. 39 declara controle por renda e recall do 1º turno. Etapa do perfil não explícita: sensibilidade condicional. Geral 48/47/3/2 e válidos oficiais 50,5/49,5. P. 12: certeza máxima de comparecer entre F/L/BN/NS = 94/90/66/61%. P. 13: subconjunto com certeza máxima tem total 50/47/2/1 e válidos 51,5/48,5. Preservar ambos os publicados; a seleção Arvor usa as taxas arredondadas e não substitui o resultado oficial do subconjunto."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 50.5,
+      "lula": 49.5
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      41,
+      37,
+      22
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Tracking Ipespe/Abrapel, terceira rodada do 2º turno, íntegra oficial de 41 páginas. Campo 20–22/10, CATI, n=1.500. Perfil de renda familiar 41/37/22 p. 40; cruzamentos atuais p. 6. P. 39 declara controle por renda e recall do 1º turno. Etapa do perfil não explícita: sensibilidade condicional. Geral 48/47/3/2 e válidos oficiais 50,5/49,5. P. 12: certeza máxima de comparecer entre F/L/BN/NS = 94/90/66/61%. P. 13: subconjunto com certeza máxima tem total 50/47/2/1 e válidos 51,5/48,5. Preservar ambos os publicados; a seleção Arvor usa as taxas arredondadas e não substitui o resultado oficial do subconjunto."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          40,
+          54,
+          2,
+          3
+        ],
+        [
+          53,
+          44,
+          2,
+          1
+        ],
+        [
+          54,
+          39,
+          5,
+          2
+        ]
+      ],
+      "nota": "Tracking Ipespe/Abrapel, terceira rodada do 2º turno, íntegra oficial de 41 páginas. Campo 20–22/10, CATI, n=1.500. Perfil de renda familiar 41/37/22 p. 40; cruzamentos atuais p. 6. P. 39 declara controle por renda e recall do 1º turno. Etapa do perfil não explícita: sensibilidade condicional. Geral 48/47/3/2 e válidos oficiais 50,5/49,5. P. 12: certeza máxima de comparecer entre F/L/BN/NS = 94/90/66/61%. P. 13: subconjunto com certeza máxima tem total 50/47/2/1 e válidos 51,5/48,5. Preservar ambos os publicados; a seleção Arvor usa as taxas arredondadas e não substitui o resultado oficial do subconjunto."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          41,
+          37,
+          22
+        ],
+        "linhas": [
+          [
+            40,
+            54,
+            2,
+            3
+          ],
+          [
+            53,
+            44,
+            2,
+            1
+          ],
+          [
+            54,
+            39,
+            5,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.89,
+          "lula": 47.0,
+          "branco_nulo": 2.66,
+          "indecisos": 2.04
+        },
+        "residuo": {
+          "flavio": -0.10999999999999943,
+          "lula": 0.0,
+          "branco_nulo": -0.33999999999999986,
+          "indecisos": 0.040000000000000036
+        },
+        "residuo_max_abs": 0.33999999999999986
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            53,
+            44,
+            2,
+            1
+          ],
+          [
+            43,
+            50,
+            4,
+            3
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.7,
+          "lula": 47.18,
+          "branco_nulo": 3.06,
+          "indecisos": 2.06
+        },
+        "residuo": {
+          "flavio": -0.29999999999999716,
+          "lula": 0.17999999999999972,
+          "branco_nulo": 0.06000000000000005,
+          "indecisos": 0.06000000000000005
+        },
+        "residuo_max_abs": 0.29999999999999716
+      }
+    }
+  },
+  "subconjunto_presenca_publicado": {
+    "criterio": "Nota 10 de chance de comparecer",
+    "pagina": 13,
+    "total": {
+      "flavio": 50,
+      "lula": 47,
+      "branco_nulo": 2,
+      "indecisos": 1
+    },
+    "validos": {
+      "flavio": 51.5,
+      "lula": 48.5
+    }
+  }
+}

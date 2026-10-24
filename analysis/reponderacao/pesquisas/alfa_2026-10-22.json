@@ -1,0 +1,194 @@
+{
+  "id": "alfa_2026-10-22",
+  "instituto": "Alfa Inteligência/TMC",
+  "registro_tse": "BR-08496/2026",
+  "contratante": "Alfa Inteligência, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-18",
+    "fim": "2026-10-22"
+  },
+  "divulgacao": "2026-10-23",
+  "n": 2700,
+  "metodo": "entrevistas pessoais; municípios por PPT e cotas de entrevistados",
+  "publicado": {
+    "2t": {
+      "flavio": 49.9,
+      "lula": 46,
+      "branco_nulo": 2,
+      "indecisos": 2.1
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/alfa_102026_23/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/PesquisaAlfaInteligencia-presidente-23out2026-1.pdf",
+    "bytes": 19286313,
+    "sha256": "b7e6d61f9e3168bece4908d9f9bd165280aab2d8f682da73d980f4330d1ede8a",
+    "pdf": "data/originals/alfa_102026_23/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 5,
+      "perfil_renda": 6,
+      "2t_topline": 13,
+      "2t_validos": 14,
+      "sexo": 15,
+      "2t_renda": 16
+    },
+    "total_paginas": 29,
+    "conferido_em": "2026-10-24",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 29 páginas, campo 18–22/10, n=2.700. Perfil de renda domiciliar 40/37/23 na p. 6, cruzamentos de renda familiar p. 16 e sexo p. 15. Etapa do perfil não explicitada; ajuste condicional ao perfil publicado. Totais 49,9/46/2/2,1 e válidos oficiais 52/48 nas pp. 13–14. Registro BR-08496/2026 tem cabeçalho n=1.200, plano n=2.700 e texto telefônico divergente das entrevistas pessoais da íntegra; ficha efetiva do relatório prevalece, sem apagar a divergência arquivada."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 52,
+      "lula": 48
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      40,
+      37,
+      23
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra de 29 páginas, campo 18–22/10, n=2.700. Perfil de renda domiciliar 40/37/23 na p. 6, cruzamentos de renda familiar p. 16 e sexo p. 15. Etapa do perfil não explicitada; ajuste condicional ao perfil publicado. Totais 49,9/46/2/2,1 e válidos oficiais 52/48 nas pp. 13–14. Registro BR-08496/2026 tem cabeçalho n=1.200, plano n=2.700 e texto telefônico divergente das entrevistas pessoais da íntegra; ficha efetiva do relatório prevalece, sem apagar a divergência arquivada."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          44,
+          52,
+          2,
+          2
+        ],
+        [
+          52,
+          43,
+          2,
+          3
+        ],
+        [
+          56,
+          40,
+          2,
+          2
+        ]
+      ],
+      "nota": "Íntegra de 29 páginas, campo 18–22/10, n=2.700. Perfil de renda domiciliar 40/37/23 na p. 6, cruzamentos de renda familiar p. 16 e sexo p. 15. Etapa do perfil não explicitada; ajuste condicional ao perfil publicado. Totais 49,9/46/2/2,1 e válidos oficiais 52/48 nas pp. 13–14. Registro BR-08496/2026 tem cabeçalho n=1.200, plano n=2.700 e texto telefônico divergente das entrevistas pessoais da íntegra; ficha efetiva do relatório prevalece, sem apagar a divergência arquivada."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          40,
+          37,
+          23
+        ],
+        "linhas": [
+          [
+            44,
+            52,
+            2,
+            2
+          ],
+          [
+            52,
+            43,
+            2,
+            3
+          ],
+          [
+            56,
+            40,
+            2,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 49.72,
+          "lula": 45.91,
+          "branco_nulo": 2.0,
+          "indecisos": 2.37
+        },
+        "residuo": {
+          "flavio": -0.17999999999999972,
+          "lula": -0.09000000000000341,
+          "branco_nulo": 0.0,
+          "indecisos": 0.27
+        },
+        "residuo_max_abs": 0.27
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            53,
+            43,
+            2,
+            2
+          ],
+          [
+            47,
+            49,
+            2,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 49.82,
+          "lula": 46.18,
+          "branco_nulo": 2.0,
+          "indecisos": 2.0
+        },
+        "residuo": {
+          "flavio": -0.0799999999999983,
+          "lula": 0.17999999999999972,
+          "branco_nulo": 0.0,
+          "indecisos": -0.10000000000000009
+        },
+        "residuo_max_abs": 0.17999999999999972
+      }
+    }
+  }
+}

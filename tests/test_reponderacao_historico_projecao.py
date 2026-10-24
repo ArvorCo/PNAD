@@ -29,7 +29,12 @@ def test_atlas_crossing_field_connects_to_next_post_election_wave(polls):
 
 
 def test_single_real_time_adjustment_is_visible_in_both_chart_modes(polls):
-    rows = [p for p in polls.values() if p["instituto"] == "Real Time Big Data"]
+    # Contrato da correção de 20/10: ainda havia só uma onda PNAD pós-urna.
+    rows = [
+        p
+        for p in polls.values()
+        if p["instituto"] == "Real Time Big Data" and p["divulgacao"] <= "2026-10-20"
+    ]
     latest = rows[-1]
     soup = BeautifulSoup(panel("Real Time Big Data", rows), "html.parser")
     for mode, poll in (("total", latest), ("validos", projected_row(latest))):

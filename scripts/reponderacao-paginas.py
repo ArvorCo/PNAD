@@ -440,10 +440,58 @@ def current_coverage(ns):
             '<a href="fontes/indexa_22102026.json.gz">Baixar caderno Indexa (JSON.gz)</a> · '
             '<a href="assets/reponderacao_20261022.json">Inventário, controles e SHA-256</a>.</p></aside>'
         )
+    october23_note = ""
+    if latest.get("Real Time Big Data", {}).get("id") == "realtime_2026-10-22":
+        october23_note = (
+            '<aside class="callout" id="rodada-2310"><h3>23/10: sete novas ondas, cinco íntegras arquivadas</h3>'
+            "<p><b>Real Time Big Data, Alfa e Ipespe:</b> perfis e cruzamentos atuais de renda "
+            "conferidos, com ajuste PNAD condicional à etapa do perfil publicado. "
+            "Substituem as ondas anteriores de suas casas nas centrais.</p>"
+            "<p><b>Veritá:</b> a tabela de renda soma 104,3% e 16.230 pessoas para uma amostra "
+            "de 15.554. A onda nova entra pelo publicado na Projeção até reconciliar o denominador. "
+            "<b>Vox:</b> íntegra arquivada, mas o conceito de renda continua indefinido. "
+            "<b>DataTrends e Vetor/Arrow:</b> resultados e fichas de divulgação arquivados; "
+            "íntegras atuais ainda não localizadas. As três também entram pelo publicado.</p>"
+            "<p>A Média exige renda elegível na última onda de cada casa dentro da janela; "
+            "Veritá e DataTrends saem desta central enquanto suas novas ondas não permitem ajuste. "
+            "A Projeção usa a última onda publicada, com PNAD onde disponível. "
+            "Essa diferença de cobertura está nas fichas e nos pesos; não equivale a reponderar todas as sete.</p>"
+            "<p><b>Ipespe e comparecimento:</b> válidos gerais oficiais 50,5 × 49,5; "
+            "entre quem declara certeza máxima de votar, 51,5 × 48,5. Ambos são preservados. "
+            "A projeção documental Arvor usa as taxas declaradas de 94% para Flávio e 90% "
+            "para Lula, sem alterar a hipótese de presença das centrais.</p>"
+            '<p class="note"><a href="fontes/realtime_23102026.pdf">Real Time, 25 páginas</a> · '
+            '<a href="fontes/alfa_23102026.pdf">Alfa, 29 páginas</a> · '
+            '<a href="fontes/ipespe_23102026.pdf">Ipespe, 41 páginas</a> · '
+            '<a href="fontes/vox_23102026.pdf">Vox, 38 páginas</a> · '
+            '<a href="fontes/verita_23102026.pdf">Veritá, 15 páginas</a> · '
+            '<a href="assets/reponderacao_20261023.json">Inventário, controles e SHA-256</a>.</p></aside>'
+        )
+    october24_note = ""
+    if latest.get("MDA", {}).get("id") == "mda_2026-10-23":
+        october24_note = (
+            '<aside class="callout" id="rodada-2410"><h3>24/10: CNT/MDA e Instituto França</h3>'
+            "<p><b>CNT/MDA:</b> 46,3 × 45,0 no total e 50,7 × 49,3 nos válidos oficiais. "
+            "Campo 21–23/10, 2.032 entrevistas, BR-02136/2026. Perfil e voto por renda "
+            "conferidos nas pp. 22 e 7. O ajuste PNAD alcança os 99% que declararam renda, "
+            "condicionado ao perfil publicado, cuja etapa antes/depois dos pesos não está explícita. "
+            "Entra nas duas centrais.</p>"
+            "<p><b>Instituto França:</b> 45,6 × 43,1 no total e 51,4 × 48,6 nos válidos oficiais. "
+            "Campo 21–23/10, 1.537 entrevistas, BR-04863/2026. O material para imprensa "
+            "publica voto por renda, mas não as bases ou pesos atuais das faixas. "
+            "Entra pelo publicado na Projeção, sem tomar emprestado o perfil anterior.</p>"
+            "<p>Resultados na ordem Flávio × Lula. As sete divulgações de 23/10 continuam "
+            "incorporadas. Outras pesquisas anunciadas para 24/10 só entram após resultado confirmado.</p>"
+            '<p class="note"><a href="fontes/mda_24102026.pdf">CNT/MDA, 39 páginas</a> · '
+            '<a href="fontes/franca_24102026.pdf">França, material para imprensa, 7 páginas</a> · '
+            '<a href="assets/reponderacao_20261024.json">Inventário, controles e SHA-256</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + october24_note
+        + october23_note
         + october22_note
         + october21_note
         + october20_note

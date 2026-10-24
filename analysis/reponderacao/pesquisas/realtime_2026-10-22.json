@@ -1,0 +1,194 @@
+{
+  "id": "realtime_2026-10-22",
+  "instituto": "Real Time Big Data",
+  "registro_tse": "BR-09670/2026",
+  "contratante": "Real Time Big Data, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-19",
+    "fim": "2026-10-22"
+  },
+  "divulgacao": "2026-10-23",
+  "n": 2000,
+  "metodo": "entrevistas telefônicas e digitais; método misto declarado no PesqEle",
+  "publicado": {
+    "2t": {
+      "flavio": 49,
+      "lula": 45,
+      "branco_nulo": 5,
+      "indecisos": 1
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/realtime_102026_23/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Presidencial-BR-09670-2026-Out26.pdf",
+    "bytes": 3042253,
+    "sha256": "bde2b746cd00a0847f402e44cdbb059334f16ce15958f7f165c78e065342d5ff",
+    "pdf": "data/originals/realtime_102026_23/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 3,
+      "2t_topline": 8,
+      "sexo": 9,
+      "2t_renda": 11,
+      "2t_validos": 16
+    },
+    "total_paginas": 25,
+    "conferido_em": "2026-10-24",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 25 páginas, campo 19–22/10, 2.000 entrevistas. Perfil atual 46/33/21 na p. 3; voto por renda p. 11 e sexo p. 9 conferidos visualmente. Registro BR-09670/2026 define renda domiciliar mensal e fator previsto 1 para renda; etapa do perfil publicado não explicitada. Sensibilidade condicional, sem transportar perfil anterior. Válidos oficiais 52/48 preservados separadamente da normalização dos inteiros 49/45."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 52,
+      "lula": 48
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra de 25 páginas, campo 19–22/10, 2.000 entrevistas. Perfil atual 46/33/21 na p. 3; voto por renda p. 11 e sexo p. 9 conferidos visualmente. Registro BR-09670/2026 define renda domiciliar mensal e fator previsto 1 para renda; etapa do perfil publicado não explicitada. Sensibilidade condicional, sem transportar perfil anterior. Válidos oficiais 52/48 preservados separadamente da normalização dos inteiros 49/45."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          40,
+          54,
+          5,
+          1
+        ],
+        [
+          52,
+          42,
+          5,
+          1
+        ],
+        [
+          63,
+          32,
+          3,
+          2
+        ]
+      ],
+      "nota": "Íntegra de 25 páginas, campo 19–22/10, 2.000 entrevistas. Perfil atual 46/33/21 na p. 3; voto por renda p. 11 e sexo p. 9 conferidos visualmente. Registro BR-09670/2026 define renda domiciliar mensal e fator previsto 1 para renda; etapa do perfil publicado não explicitada. Sensibilidade condicional, sem transportar perfil anterior. Válidos oficiais 52/48 preservados separadamente da normalização dos inteiros 49/45."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          46,
+          33,
+          21
+        ],
+        "linhas": [
+          [
+            40,
+            54,
+            5,
+            1
+          ],
+          [
+            52,
+            42,
+            5,
+            1
+          ],
+          [
+            63,
+            32,
+            3,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.79,
+          "lula": 45.42,
+          "branco_nulo": 4.58,
+          "indecisos": 1.21
+        },
+        "residuo": {
+          "flavio": -0.21000000000000085,
+          "lula": 0.4200000000000017,
+          "branco_nulo": -0.41999999999999993,
+          "indecisos": 0.20999999999999996
+        },
+        "residuo_max_abs": 0.4200000000000017
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            52,
+            40,
+            7,
+            1
+          ],
+          [
+            47,
+            49,
+            3,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 49.35,
+          "lula": 44.77,
+          "branco_nulo": 4.88,
+          "indecisos": 1.0
+        },
+        "residuo": {
+          "flavio": 0.3500000000000014,
+          "lula": -0.22999999999999687,
+          "branco_nulo": -0.1200000000000001,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.3500000000000014
+      }
+    }
+  }
+}
