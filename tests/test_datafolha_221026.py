@@ -132,7 +132,7 @@ def test_current_delta_limits_adjustment_and_preserves_old_snapshot():
     selected = next(p for p in old["projection"]["selected"] if p["id"] == row["id"])
     assert not selected["income_available"]
     current = MODULE.COMMON.read(
-        MODULE.ROOT / "docs/assets/reponderacao_simulador.json"
+        MODULE.ROOT / "docs/assets/reponderacao_cenarios/c5814a4b880da16d.json"
     )
     selected = next(
         p for p in current["projection"]["selected"] if p["id"] == row["id"]

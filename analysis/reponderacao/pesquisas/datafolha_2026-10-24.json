@@ -1,0 +1,216 @@
+{
+  "id": "datafolha_2026-10-24",
+  "instituto": "Datafolha",
+  "registro_tse": "BR-09540/2026",
+  "divulgacao": "2026-10-24",
+  "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+  },
+  "n": 4050,
+  "metodo": "presencial, 124 municípios",
+  "publicado": {
+    "2t": {
+      "flavio": 48,
+      "lula": 47,
+      "branco_nulo": 3,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/datafolha_102026_24/divulgacao.html.gz",
+    "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-flavio-bolsonaro-tem-51-dos-votos-validos-e-lula-49-em-empate-tecnico.shtml",
+    "bytes": 68906,
+    "sha256": "58eaa137eb9da730a09a344120a129ad5a7ecd89ce0156200a564d3081aa7918",
+    "compressao": "gzip",
+    "sha256_descompactado": "62e8b41fdc849c33c8d695177f4f9a8851ac68be33b4f7f2ac565396ad4ff9b9",
+    "bytes_descompactado": 372502,
+    "tipo": "divulgacao",
+    "rotulo": "Divulgação do contratante",
+    "status": "Prévia PNAD · perfil da onda de 22/10",
+    "nota": "PRÉVIA PNAD solicitada: voto por renda de 24/10 no G1, com perfil e cobertura emprestados da íntegra Datafolha de 22/10, p. 27. Bases de referência 1.171/913/341, soma 2.425 de 2.520 (96,23%). Essa composição e essa fração, não as contagens, são transportadas à amostra atual de 4.050 por hipótese. A massa restante conserva o topline atual. Não são bases observadas em 24/10. Cruzamentos atuais F/L/BN/I: 41/53/3/3, 55/41/4/1 e 57/39/3/0. Total 48/47/3/2; válidos oficiais 51/49. A prévia entra nas duas centrais e na tendência sob estabilidade provisória do perfil; substituir quando saírem as bases atuais. Não é resultado confirmado pela íntegra nem previsão de comparecimento.",
+    "conferido_em": "2026-10-24",
+    "complementos": [
+      {
+        "arquivo": "data/originals/datafolha_102026_24/g1-estimulada.json",
+        "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Datafolha",
+        "bytes": 37495,
+        "sha256": "3085ab882f77b00e60e07e522e08d63c95ee9fa9ee1710dd6c3dbf10732b674b",
+        "rotulo": "G1: voto estimulado por renda, onda de 24/10"
+      },
+      {
+        "arquivo": "data/originals/datafolha_102026_22_integra/relatorio.pdf",
+        "url": "https://media.folha.uol.com.br/datafolha/2026/10/23/xruy9kxbaieozsbhp0lxbvdrv6cvlf5iuxgfkw04tre.pdf",
+        "bytes": 1431549,
+        "sha256": "c548241d08d526ce1ceecc87e64cd1ba989634130ba165b9660fbab4219321d4",
+        "rotulo": "Perfil de referência: Datafolha de 22/10, p. 27; hipótese para 24/10"
+      }
+    ]
+  },
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "publicado_validos": {
+    "2t": {
+      "flavio": 51,
+      "lula": 49
+    }
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          41.0,
+          53.0,
+          3.0,
+          3.0
+        ],
+        [
+          55.0,
+          41.0,
+          4.0,
+          1.0
+        ],
+        [
+          57.0,
+          39.0,
+          3.0,
+          0.0
+        ]
+      ],
+      "nota": "PRÉVIA PNAD solicitada: voto por renda de 24/10 no G1, com perfil e cobertura emprestados da íntegra Datafolha de 22/10, p. 27. Bases de referência 1.171/913/341, soma 2.425 de 2.520 (96,23%). Essa composição e essa fração, não as contagens, são transportadas à amostra atual de 4.050 por hipótese. A massa restante conserva o topline atual. Não são bases observadas em 24/10. Cruzamentos atuais F/L/BN/I: 41/53/3/3, 55/41/4/1 e 57/39/3/0. Total 48/47/3/2; válidos oficiais 51/49. A prévia entra nas duas centrais e na tendência sob estabilidade provisória do perfil; substituir quando saírem as bases atuais. Não é resultado confirmado pela íntegra nem previsão de comparecimento."
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      1171,
+      913,
+      341
+    ],
+    "perfil_tipo": "hipotese_onda_anterior",
+    "nota": "PRÉVIA PNAD solicitada: voto por renda de 24/10 no G1, com perfil e cobertura emprestados da íntegra Datafolha de 22/10, p. 27. Bases de referência 1.171/913/341, soma 2.425 de 2.520 (96,23%). Essa composição e essa fração, não as contagens, são transportadas à amostra atual de 4.050 por hipótese. A massa restante conserva o topline atual. Não são bases observadas em 24/10. Cruzamentos atuais F/L/BN/I: 41/53/3/3, 55/41/4/1 e 57/39/3/0. Total 48/47/3/2; válidos oficiais 51/49. A prévia entra nas duas centrais e na tendência sob estabilidade provisória do perfil; substituir quando saírem as bases atuais. Não é resultado confirmado pela íntegra nem previsão de comparecimento.",
+    "parcela_ajustada_pct": 96.23015873015873,
+    "bases_referencia": [
+      1171,
+      913,
+      341
+    ],
+    "referencia_id": "datafolha_2026-10-22",
+    "referencia_divulgacao": "2026-10-22",
+    "n_referencia": 2520
+  },
+  "cruzamentos_documentais": {
+    "fonte": {
+      "arquivo": "data/originals/datafolha_102026_24/g1-estimulada.json",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Datafolha",
+      "bytes": 37495,
+      "sha256": "3085ab882f77b00e60e07e522e08d63c95ee9fa9ee1710dd6c3dbf10732b674b",
+      "rotulo": "G1: voto estimulado por renda, onda de 24/10"
+    },
+    "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+    ],
+    "renda": {
+      "rotulos": [
+        "Até 2 s.m.",
+        "Mais de 2 a 5 s.m",
+        "Mais de 5 s.m."
+      ],
+      "linhas": [
+        [
+          41.0,
+          53.0,
+          3.0,
+          3.0
+        ],
+        [
+          55.0,
+          41.0,
+          4.0,
+          1.0
+        ],
+        [
+          57.0,
+          39.0,
+          3.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          1171,
+          913,
+          341
+        ],
+        "linhas": [
+          [
+            41.0,
+            53.0,
+            3.0,
+            3.0
+          ],
+          [
+            55.0,
+            41.0,
+            4.0,
+            1.0
+          ],
+          [
+            57.0,
+            39.0,
+            3.0,
+            0.0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.52082474226804,
+          "lula": 46.51340206185567,
+          "branco_nulo": 3.3764948453608246,
+          "indecisos": 1.8251546391752578
+        },
+        "residuo": {
+          "flavio": 0.5208247422680401,
+          "lula": -0.48659793814432817,
+          "branco_nulo": 0.37649484536082456,
+          "indecisos": -0.17484536082474222
+        },
+        "residuo_max_abs": 0.5208247422680401,
+        "nota": "Recomposição sob perfil emprestado; não valida as bases atuais."
+      }
+    }
+  }
+}

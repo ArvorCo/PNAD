@@ -317,14 +317,6 @@
       "nota": "Painel G1 atual tem intenção por perfil, sem cruzamento de presença identificado. Íntegra atual ainda pendente; não reutiliza a onda de 14/10."
     },
     {
-      "instituto": "Gerp",
-      "id": "gerp_2026-10-19",
-      "tipo": "neutro",
-      "fonte": "https://timesbrasil.com.br/eleicoes-2026/bolsonaro-lula-2-gerp-segundo-turno-votos-validos/",
-      "arquivo": "data/originals/gerp_102026_20/divulgacao.html",
-      "nota": "Íntegra atual pendente. Onda anterior não transportada."
-    },
-    {
       "instituto": "AtlasIntel",
       "id": "atlas_2026-10-18",
       "tipo": "neutro",
@@ -333,36 +325,12 @@
       "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
     },
     {
-      "instituto": "Datafolha",
-      "id": "datafolha_2026-10-22",
-      "tipo": "neutro",
-      "fonte": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Datafolha/internal/",
-      "arquivo": "data/originals/datafolha_102026_22/g1_painel.html",
-      "nota": "Painel G1 e registro atual conferidos. Sem cruzamento de presença utilizável incorporado; bases efetivas de renda pendentes. Presença igual é hipótese neutra, não likely voter medido."
-    },
-    {
-      "instituto": "Nexus",
-      "id": "nexus_2026-10-18",
-      "tipo": "proxy_renda",
-      "fonte": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-18-19.out_.2026.pdf",
-      "arquivo": "data/originals/nexus_102026_19/relatorio.pdf",
-      "nota": "Pp. 15–18: presença por perfil; p. 59: presença × interesse. Proxy de renda incorporada, sem tratar interesse como taxa de comparecimento."
-    },
-    {
       "instituto": "PoderData",
       "id": "poderdata_2026-10-18",
       "tipo": "neutro",
       "fonte": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-18out26.pdf",
       "arquivo": "data/originals/poderdata_102026_19/relatorio.pdf",
       "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
-    },
-    {
-      "instituto": "Palver",
-      "id": "palver_2026-10-20",
-      "tipo": "neutro",
-      "fonte": "https://www.palver.com/api/surveys/voting-intention-2026-october-w8/report",
-      "arquivo": "data/originals/palver_102026_21/relatorio.pdf",
-      "nota": "Pp. 27–40 conferidas visualmente: transferência, motivo, possibilidade de mudar, potencial/rejeição e medo do resultado; não identificam comparecimento por voto."
     },
     {
       "instituto": "Indexa/Broadcast",
@@ -451,6 +419,46 @@
       "fonte": "https://static.poder360.com.br/uploads/2026/10/Pesquisa-presidencial-Instituto-Franca-24out2026.pdf",
       "arquivo": "data/originals/franca_102026_24/relatorio.pdf",
       "nota": "Sem cruzamento de presença incorporado nesta onda; não transportar taxas anteriores."
+    },
+    {
+      "instituto": "Palver",
+      "id": "palver_2026-10-24",
+      "tipo": "neutro",
+      "fonte": "https://www.palver.com/api/surveys/voting-intention-2026-october-w9/report",
+      "arquivo": "data/originals/palver_102026_24/relatorio.pdf",
+      "nota": "Sem seleção de presença incorporada nesta série; não transportar taxas anteriores. "
+    },
+    {
+      "instituto": "Gerp",
+      "id": "gerp_2026-10-24",
+      "tipo": "neutro",
+      "fonte": "https://gerp.com.br/relatorios/20261024%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%202%C2%BA%20Turno%20-%20DIVULGA%C3%87%C3%83O.pdf",
+      "arquivo": "data/originals/gerp_102026_24/relatorio.pdf",
+      "nota": "Sem seleção de presença incorporada nesta série; não transportar taxas anteriores. "
+    },
+    {
+      "instituto": "Nexus",
+      "id": "nexus_2026-10-24",
+      "tipo": "neutro",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/BTG-Nexus-2oturno-24.out_.2026.pdf",
+      "arquivo": "data/originals/nexus_102026_24/relatorio.pdf",
+      "nota": "Sem seleção de presença incorporada nesta série; não transportar taxas anteriores. LVM Nexus de 24/10 preservado na ficha documental, separado das centrais."
+    },
+    {
+      "instituto": "Datafolha",
+      "id": "datafolha_2026-10-24",
+      "tipo": "neutro",
+      "fonte": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-flavio-bolsonaro-tem-51-dos-votos-validos-e-lula-49-em-empate-tecnico.shtml",
+      "arquivo": "data/originals/datafolha_102026_24/divulgacao.html.gz",
+      "nota": "Sem seleção de presença incorporada nesta série; não transportar taxas anteriores. "
+    },
+    {
+      "instituto": "Colectta",
+      "id": "colectta_2026-10-23",
+      "tipo": "neutro",
+      "fonte": "https://brazileconomy.com.br/eleicoes-2026/2026/10/lula-tem-503-dos-votos-validos-e-flavio-497-aponta-pesquisa-brazil-economycolectta/",
+      "arquivo": "data/originals/colectta_102026_24/divulgacao.html.gz",
+      "nota": "Sem seleção de presença incorporada nesta série; não transportar taxas anteriores. "
     }
   ],
   "revisao_acervo": "155 versões e 152 referências indexadas em presenca_acervo.json. Busca textual não é prova de ausência em páginas gráficas. Presença de Nexus pré-urna refere-se ao 1º turno e não é aplicada aos cenários de 2º turno; idem MDA de agosto. Veritá de 17/10 traz presença lembrada no 1º turno, não a futura. Vox de 09/10 e 18/10 traz presença futura apenas agregada."

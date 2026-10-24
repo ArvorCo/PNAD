@@ -1,0 +1,202 @@
+{
+  "id": "palver_2026-10-24",
+  "instituto": "Palver",
+  "registro_tse": "BR-01794/2026",
+  "contratante": "Palver, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-22",
+    "fim": "2026-10-24"
+  },
+  "divulgacao": "2026-10-24",
+  "n": 5000,
+  "metodo": "online, recrutamento por anúncios; não probabilística, raking v3",
+  "publicado": {
+    "2t": {
+      "flavio": 50,
+      "lula": 49,
+      "branco_nulo": 1,
+      "indecisos": 0
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/palver_102026_24/relatorio.pdf",
+    "url": "https://www.palver.com/api/surveys/voting-intention-2026-october-w9/report",
+    "bytes": 21249316,
+    "sha256": "f37b5ed5b6c5643a009edf5fd30ecb5f5a2b65e4b2c450719742c81486ed6b18",
+    "pdf": "data/originals/palver_102026_24/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": [
+        12,
+        14,
+        16,
+        18
+      ],
+      "perfil_renda": 20,
+      "2t_topline": [
+        23,
+        24
+      ],
+      "2t_renda": 25,
+      "sexo": 25
+    },
+    "total_paginas": 112,
+    "conferido_em": "2026-10-24",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Onda 9, 112 páginas, campo 22–24/10, n=5.000, BR-01794/2026. P. 20 distingue perfil ponderado 36/41/23 de renda familiar e 48/52 por sexo das contagens brutas. Renda e sexo p. 25 conferidos visualmente; total 50/49/1/0 nas pp. 23–24. Zero de indecisos é arredondado. O 1% reúne branco/nulo ou não votaria, sem identificar abstenção. Método v3 e questionário iguais à onda 8: PNADC 2025 primeira entrevista, voto no 2T/2022, voto no 1T/2026 por região e filiação partidária."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      36,
+      41,
+      23
+    ],
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "Onda 9, 112 páginas, campo 22–24/10, n=5.000, BR-01794/2026. P. 20 distingue perfil ponderado 36/41/23 de renda familiar e 48/52 por sexo das contagens brutas. Renda e sexo p. 25 conferidos visualmente; total 50/49/1/0 nas pp. 23–24. Zero de indecisos é arredondado. O 1% reúne branco/nulo ou não votaria, sem identificar abstenção. Método v3 e questionário iguais à onda 8: PNADC 2025 primeira entrevista, voto no 2T/2022, voto no 1T/2026 por região e filiação partidária."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          48,
+          50,
+          1,
+          0
+        ],
+        [
+          54,
+          46,
+          1,
+          0
+        ],
+        [
+          48,
+          51,
+          1,
+          0
+        ]
+      ],
+      "nota": "Onda 9, 112 páginas, campo 22–24/10, n=5.000, BR-01794/2026. P. 20 distingue perfil ponderado 36/41/23 de renda familiar e 48/52 por sexo das contagens brutas. Renda e sexo p. 25 conferidos visualmente; total 50/49/1/0 nas pp. 23–24. Zero de indecisos é arredondado. O 1% reúne branco/nulo ou não votaria, sem identificar abstenção. Método v3 e questionário iguais à onda 8: PNADC 2025 primeira entrevista, voto no 2T/2022, voto no 1T/2026 por região e filiação partidária."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          36,
+          41,
+          23
+        ],
+        "linhas": [
+          [
+            48,
+            50,
+            1,
+            0
+          ],
+          [
+            54,
+            46,
+            1,
+            0
+          ],
+          [
+            48,
+            51,
+            1,
+            0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 50.46,
+          "lula": 48.59,
+          "branco_nulo": 1.0,
+          "indecisos": 0.0
+        },
+        "residuo": {
+          "flavio": 0.46000000000000085,
+          "lula": -0.4099999999999966,
+          "branco_nulo": 0.0,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.46000000000000085
+      },
+      "sexo": {
+        "pesos": [
+          48,
+          52
+        ],
+        "linhas": [
+          [
+            59,
+            40,
+            1,
+            0
+          ],
+          [
+            43,
+            57,
+            1,
+            0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 50.68,
+          "lula": 48.84,
+          "branco_nulo": 1.0,
+          "indecisos": 0.0
+        },
+        "residuo": {
+          "flavio": 0.6799999999999997,
+          "lula": -0.1599999999999966,
+          "branco_nulo": 0.0,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.6799999999999997
+      }
+    }
+  },
+  "metodologia_onda": {
+    "versao": "v3",
+    "comparavel_onda_anterior": true,
+    "n_efetivo": 1943,
+    "efeito_pesos": 2.57,
+    "margem_publicada_pp": 2.2
+  }
+}
