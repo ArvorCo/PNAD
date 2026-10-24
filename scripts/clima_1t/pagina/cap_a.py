@@ -76,8 +76,11 @@ def hero(dados: Dados) -> str:
     mun = _grupo_mais(_binario(dados), "mun")["abst_vs_ref_pp"]
     return (
         '<section class="hero"><div>'
-        f'<p class="eyebrow">Relatório · 1º turno de 2026 · {data_br(d["gerado_em"])}</p>'
-        "<h1>Chuva derruba a urna para a bateria.<br><em>Não derruba o eleitor.</em></h1>"
+        f'<p class="eyebrow">2º turno · previsão consultada em {hora_br(d["previsao_25_10"]["gerado_em"])}</p>'
+        "<h1>Chuva no domingo.<br><em>Onde olhar, e o que podemos prever.</em></h1>"
+        '<p class="deck">Mapa meteorológico para 25/10, abstenção observada no primeiro turno '
+        "e um cenário de persistência por município. Tempo ruim merece atenção no deslocamento; "
+        "os dados ainda não sustentam converter chuva em faltas adicionais.</p>"
         f'<p class="deck">Cruzamos a chuva de 4 de outubro, célula por célula, com o log e o boletim de '
         f"<b>{inteiro(d['cobertura']['urnas_amostra'])} urnas</b>. Onde choveu forte, mais urnas passaram a operar "
         "com a bateria interna, quase todas junto com outras urnas do mesmo município. A abstenção não acompanha: "
@@ -88,7 +91,7 @@ def hero(dados: Dados) -> str:
         f"<span>previsão de {data_br(d['previsao_25_10']['alvo'])}: "
         f"{dec(dados.previsao_pais()['eleitores']['alto'] / 1e6, 1)} milhões de eleitores em risco alto "
         f"({hora_br(d['previsao_25_10']['gerado_em'])})</span>"
-        "<span>clima: ERA5 pela Open-Meteo</span></div></div>"
+        "<span>histórico: ERA5 · previsão: Open-Meteo Forecast</span></div></div>"
         '<aside class="placar" aria-label="Placar do relatório">'
         '<p class="eyebrow">Bateria na chuva forte</p>'
         f"<b>{dec(forte['razao_vs_ref']['valor'], 2)}×</b>"

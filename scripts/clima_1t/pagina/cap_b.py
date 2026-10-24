@@ -21,7 +21,12 @@ from .comum import (
 from .util import Dados, dec, esc, hora_br, inteiro, pct, pp, titulo_pt
 
 VISIVEIS = 10
-NOME_NIVEL = {"alto": "Alto", "medio": "Médio", "baixo": "Baixo"}
+NOME_NIVEL = {
+    "alto": "Alto",
+    "medio": "Médio",
+    "baixo": "Baixo",
+    "sem_dado": "Sem dado",
+}
 INDIGENA = re.compile(r"IND[IÍ]GENA|ALDEIA")
 LISTAS = [
     (
@@ -353,7 +358,7 @@ def cap7_previsao(dados: Dados) -> str:
     ]
     graf = figs.barras_h(
         "Eleitores em área de risco climático previsto para 25 de outubro, por UF",
-        "Barras por estado com a parcela do eleitorado em risco alto e em risco médio ou alto. São Paulo, Paraná e Mato Grosso do Sul têm a maior parcela em risco alto.",
+        "Barras por estado com a parcela do cadastro mapeado em risco alto e em risco médio ou alto na consulta indicada.",
         [
             {
                 "rotulo": uf,
@@ -395,7 +400,7 @@ def cap7_previsao(dados: Dados) -> str:
                 inteiro(pais["celulas"][n]),
                 regra[n].replace(">=", "≥"),
             ]
-            for n in ("alto", "medio", "baixo")
+            for n in NOME_NIVEL
         ],
         numericas=(1, 2, 3, 4),
         rotulo="Eleitores e locais por nível de risco",
@@ -427,7 +432,6 @@ def cap7_previsao(dados: Dados) -> str:
         largura=720,
         atributos_linha=[f'data-uf="{esc(c["uf"])}"' for c in cidades],
     )
-    sp = pv["por_uf"]["SP"]
     top3 = sorted(
         pv["por_uf"].items(), key=lambda kv: -kv[1]["eleitores_risco_alto_pct"]
     )[:3]
@@ -449,7 +453,7 @@ def cap7_previsao(dados: Dados) -> str:
                 f"em risco baixo ({pct(dados.pct_eleitores('baixo'), 2)}), em {inteiro(pais['locais']['baixo'])} locais",
             ),
         ]
-    ) + f"<p>Estados com mais eleitores em risco alto: {top3_txt}. Em São Paulo, {inteiro(sp['eleitores']['alto'])} de {inteiro(sp['eleitores_total'])} eleitores.</p>" + figura(
+    ) + f"<p>Maiores parcelas do cadastro mapeado em risco alto: {top3_txt}.</p>" + figura(
         graf, "Estados com mais da metade do eleitorado em risco médio ou alto.", 600
     ) + figura(
         mapa,
@@ -469,11 +473,12 @@ def cap7_previsao(dados: Dados) -> str:
             "Quem mora em área de risco alto deve planejar o deslocamento como em qualquer dia de chuva forte; este relatório não mede horário de chegada.",
         ]
     ) + caixa(
-        "O arquivo é atualizado todo dia.",
-        "O workflow do repositório baixa a previsão da Open-Meteo todos os dias, de 20 a 26/10, às 9h de Brasília, e grava "
-        "<code>docs/assets/fiscais_mapa/clima/previsao.json</code>. O "
-        '<a href="fiscais_mapa.html">mapa de fiscais</a> lê esse arquivo e tem o filtro “Risco climático previsto para 25/10”. '
-        f"Os números desta página são os do retrato de {gerado} e não mudam sozinhos.",
+        "Uma mesma consulta para os mapas e as contas.",
+        f"Esta página, suas tabelas e os dados para download usam a consulta de {gerado}. "
+        'O <a href="fiscais_mapa.html">mapa de fiscais</a> usa a mesma previsão. '
+        "A rotina diária de atualização também reconstrói este relatório. "
+        'A previsão é da <a href="https://open-meteo.com/en/docs">Open-Meteo Forecast API</a>; '
+        "os cortes de risco são regras de atenção da Arvor, não alertas oficiais da Defesa Civil.",
     ) + limite(
         "Previsão de modelo global, com célula de 0,5° e chuva diária. Não vê o telhado, não vê o horário da pancada e muda a cada rodada do modelo. "
         f"As {inteiro(cel['alto'])} células de risco alto são uma regra de atenção, não uma probabilidade de problema."

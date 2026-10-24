@@ -23,8 +23,18 @@ COR_FAIXA = {
     "forte": "#0c6b64",
     "muito_forte": "#0a2f2c",
 }
-COR_RISCO = {"baixo": "#e3e0d4", "medio": "#e0b25a", "alto": "#a8321f"}
-ROTULO_RISCO = {"baixo": "risco baixo", "medio": "risco médio", "alto": "risco alto"}
+COR_RISCO = {
+    "baixo": "#e3e0d4",
+    "medio": "#e0b25a",
+    "alto": "#a8321f",
+    "sem_dado": "#8f9692",
+}
+ROTULO_RISCO = {
+    "baixo": "baixo",
+    "medio": "médio",
+    "alto": "alto",
+    "sem_dado": "sem dado",
+}
 CONTORNO = "#192e2b"
 
 
@@ -144,7 +154,7 @@ def mapa_risco(dados: Dados) -> tuple[str, dict[str, int]]:
     leg = _legenda(
         [
             (ROTULO_RISCO[k], COR_RISCO[k], f" {inteiro(len(grupos[k]))}")
-            for k in ("baixo", "medio", "alto")
+            for k in COR_RISCO
         ],
         H + 22,
     )
@@ -152,10 +162,76 @@ def mapa_risco(dados: Dados) -> tuple[str, dict[str, int]]:
     svg = _svg(
         "Risco climático previsto para 25 de outubro, por célula de 0,5°",
         "Mapa do Brasil com uma célula por quadrado de 0,5 grau, colorida pelo nível "
-        "de risco da regra declarada. Risco alto concentra-se em São Paulo, Paraná e "
-        "Mato Grosso do Sul.",
+        "de risco da regra declarada, na data de consulta indicada. Não mede abstenção.",
         "maprk",
         corpo,
         H + 34,
     )
     return svg, {k: len(v) for k, v in grupos.items()}
+
+
+def mapa_chuva_prevista(dados: Dados) -> str:
+    """Acumulado diário previsto, separado da regra que também considera vento."""
+    f, _ = geo._proj(W, H, PAD)
+    grupos = {k: [] for k in COR_FAIXA}
+    for chave, cel in dados.previsao["celulas"].items():
+        faixa = variaveis.faixa_chuva(cel.get("chuva_mm"))
+        if faixa in grupos:
+            grupos[faixa].append(tuple(float(v) for v in chave.split(",")))
+    partes = [
+        f'<path d="{_caminho(f, cs, 0.5)}" fill="{COR_FAIXA[k]}"/>'
+        for k, cs in grupos.items()
+        if cs
+    ]
+    legenda = _legenda(
+        [
+            (rot, COR_FAIXA[k], "")
+            for k, rot in zip(
+                COR_FAIXA, ["<0,1", "0,1–5", ">5–20", ">20–50", ">50 mm"], strict=True
+            )
+        ],
+        H + 22,
+    )
+    return _svg(
+        "Chuva prevista para 25/10, acumulado diário em mm",
+        "Células de 0,5 grau com locais de votação. Áreas sem célula não têm dado; "
+        "não representam ausência de chuva. Acumulado do dia inteiro em Brasília.",
+        "mapchuva2t",
+        "".join(partes) + _contorno(W, H) + legenda,
+        H + 34,
+    )
+
+
+def mapa_abstencao(dados: Dados) -> str:
+    """Abstenção observada nas 27 UFs, mesma fonte do cenário de persistência."""
+    valores = {u["uf"]: u["abstencao_pct"] for u in dados.territorio["ufs"]}
+
+    def cor(_uf, v):
+        return (
+            "#bcd8d3"
+            if v < 18
+            else "#5fa9a1" if v < 20 else "#e0b25a" if v < 22 else "#a8321f"
+        )
+
+    from .util import pct
+
+    return geo.choropleth(
+        valores,
+        cor,
+        lambda uf, v: uf if uf in geo.FORA else f"{uf} {pct(v, 1)}",
+        lambda uf, v: f"{uf}: {pct(v, 2)} de abstenção observada no 1º turno",
+        label="Abstenção observada no primeiro turno de 04/10/2026, por UF",
+        escuro=lambda uf, v: v >= 22,
+        legend=_legenda(
+            [
+                (r, c, "")
+                for r, c in [
+                    ("<18%", "#bcd8d3"),
+                    ("18–<20%", "#5fa9a1"),
+                    ("20–<22%", "#e0b25a"),
+                    ("≥22%", "#a8321f"),
+                ]
+            ],
+            610,
+        ),
+    )

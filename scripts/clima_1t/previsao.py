@@ -235,7 +235,11 @@ def gerar(
     )
     celulas = {c: _celula(respostas[c]) for c in sorted(respostas)}
     dias = sorted({s["data"] for cel in celulas.values() for s in cel["serie"]})
-    completa = len(celulas) == len(centros)
+    # Responder não basta: após o dia alvo a API pode entregar somente datas
+    # futuras. Nunca promover uma rodada sem a previsão do dia da eleição.
+    completa = len(celulas) == len(centros) and all(
+        c["risco"] != "sem_dado" for c in celulas.values()
+    )
     exemplo = coleta.params_lote(PARAMS, [next(iter(centros.values()))])
     doc = {
         "gerado_em": coleta.agora(),

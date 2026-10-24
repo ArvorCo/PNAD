@@ -31,5 +31,12 @@ footer{max-width:var(--wrap);margin:40px auto 0;padding:24px 16px 48px;border-to
 .tag.fato{background:#e3e9df}
 tr.extra{display:none}tr.extra.mostra{display:table-row}
 .chapter-nav a:focus-visible{outline-offset:1px}
+.mapas-comparados{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:24px 0}
+.mapas-comparados figure{margin:0;padding:18px;background:var(--painel,#fffdf8);border:1px solid #d3d1c6;min-width:0}
+.mapas-comparados h3{margin:0 0 12px;font-size:22px}
+.mapas-comparados svg{display:block;width:100%;height:auto}
+.mapas-comparados figcaption{font-size:16px;line-height:1.5;margin-top:12px;color:#535b54}
+.mapas-comparados .tm{font-size:15px;fill:#192e2b}
+@media(max-width:760px){.mapas-comparados{grid-template-columns:1fr}.mapas-comparados figure{padding:12px}}
 @media(max-width:860px){.chapter-nav{gap:16px}.table-scroll{margin-left:-4px;margin-right:-4px}}
 @media print{.chapter-nav,.filtro,.skip{display:none}details{display:block}details>*{display:block}body{background:#fff}}

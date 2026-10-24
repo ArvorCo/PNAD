@@ -6,9 +6,9 @@ Formatação em pt-BR reaproveitada do laudo irmão (mudanças de local de vota�
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
 
+from clima_1t import territorio, texto
 from mudancas_secoes_2t.pagina.util import (
     CORES,
     data_br,
@@ -75,13 +75,23 @@ class Dados:
         self.lit = json.loads(LITERATURA_JSON.read_text(encoding="utf-8"))["itens"]
         self.celulas = json.loads(CELULAS_JSON.read_text(encoding="utf-8"))
         self.previsao = json.loads(PREVISAO_JSON.read_text(encoding="utf-8"))
-        if self.previsao["gerado_em"] != self.d["previsao_25_10"]["gerado_em"]:
-            print(
-                "aviso: previsao.json (mapa) é de "
-                f"{self.previsao['gerado_em']} e o relatório lê a previsão de "
-                f"{self.d['previsao_25_10']['gerado_em']}; o mapa da página usa a primeira",
-                file=sys.stderr,
-            )
+        # A análise de 04/10 fica arquivada. Todas as saídas da página usam uma
+        # única previsão, inclusive tabelas, texto alternativo, metadados e hashes.
+        p = self.previsao
+        self.d["previsao_25_10"] = {
+            **{
+                k: p[k]
+                for k in ("gerado_em", "alvo", "regra_risco", "rotulo", "coleta")
+            },
+            **p["resumo"],
+            "arquivo": str(PREVISAO_JSON.relative_to(ROOT)),
+        }
+        for f in self.d["fontes"]:
+            if f["chave"] == "previsao":
+                f.update(territorio.fonte(PREVISAO_JSON))
+        self.d["achados"] = texto.achados(self.d)
+        self.territorio = territorio.carregar(p)
+        self.territorio["fontes"].append(territorio.fonte(PREVISAO_JSON))
 
     # ---- atalhos ----
     def faixas(self, exposicao: str, desfecho: str) -> list[dict]:

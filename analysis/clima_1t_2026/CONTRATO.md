@@ -86,3 +86,11 @@ seções que não estavam no acervo do mapa (nível `mudanca`, sem pontuação h
 critério `mudanca_endereco` (nome "Mudou de endereço para o 2º turno", contagem, frase) para o seletor "Um critério só"
 e para a caixa "O que mostrar". O ponto da seção que mudou fica no local do 2º turno quando há coordenada, com o
 local do 1º turno na ficha.
+
+## Atualização de 24/10: cenário territorial e rodada única
+- `clima-1t-build.py` preserva a análise original de 04/10 em `clima.json` e carrega a previsão corrente uma só vez. Mapa, tabelas, metadados e JSON público usam a mesma rodada, inclusive SHA-256. A rodada integral fica em `analysis/clima_1t_2026/previsoes/`. O workflow diário reconstrói o relatório e os downloads. Respostas sem o dia alvo não substituem previsão completa.
+- `territorio.py` cruza totalização municipal de `analysis/apuracao_2026/dados/presidente.json` com o índice de células por `(UF, código TSE)`, sem exterior. O mapa estadual usa aptos e presentes completos do TSE, não o subconjunto das urnas com clima/log.
+- Cenário de persistência: A₂(m) = A₁(m), sem incremento climático, validação preditiva municipal, IC de previsão ou probabilidade de ranking. O estudo observacional não identificou um acréscimo causal transportável; não identificar efeito não prova efeito zero.
+- Atenção conjunta: pelo menos 10 mil aptos, abstenção anterior acima da média brasileira sem exterior e pelo menos 50% do cadastro mapeado em risco climático alto. Exige previsão para todas as células mapeadas e ordena por eleitores expostos, não por faltas esperadas. Cortes editoriais, não ajustados ao resultado de 25/10. Todos os 5.571 municípios ficam no JSON; tabela mostra até 25 destaques.
+- Abstenção usa totalização; exposição e chuva média usam eleitores do cadastro georreferenciado. Denominadores distintos, cobertura explicitada, nenhuma imputação aos sem clima e nenhum deslocamento automático dos prédios realocados. Chuva prevista diária não é chuva nas horas da votação.
+- `docs/assets/clima_1t/cenario_2t.json` guarda taxas, exposição, regra, universos e hashes das fontes. A análise original, centrais eleitorais e snapshots das pesquisas não são recalculados por este build.

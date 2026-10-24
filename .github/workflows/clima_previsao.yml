@@ -2,7 +2,7 @@ name: Previsao do tempo para o 2o turno (mapa de fiscais)
 
 # Baixa da Open-Meteo a previsao diaria das celulas de 0,5 grau dos locais de votacao, aplica a
 # regra de risco declarada em scripts/clima_1t/previsao.py e grava
-# docs/assets/fiscais_mapa/clima/previsao.json. So a biblioteca padrao do Python: nada a instalar.
+# docs/assets/fiscais_mapa/clima/previsao.json. Reconstroi o relatorio com a mesma rodada.
 # Previsao incompleta mantem o arquivo anterior e falha o job (codigo 2), sem commit.
 on:
   schedule:
@@ -29,12 +29,18 @@ jobs:
           python-version: "3.12"
       - name: Baixar a previsao e aplicar a regra de risco
         run: python3 scripts/clima-1t-previsao.py
+      - name: Instalar dependencias da renderizacao do relatorio
+        run: python3 -m pip install 'numpy>=1.24' 'pandas>=2'
+      - name: Sincronizar relatorio, mapas, tabelas e downloads
+        run: python3 scripts/clima-1t-build.py
       - name: Commitar a previsao se mudou
         id: commit
         run: |
           git config user.name "clima-previsao-bot"
           git config user.email "clima-previsao-bot@users.noreply.github.com"
           git add docs/assets/fiscais_mapa/clima/previsao.json
+          git add docs/clima_abstencao_1t_2026.html docs/assets/clima_abstencao_1t_2026.css docs/assets/clima_abstencao_1t_2026.js
+          git add docs/assets/clima_1t/dados.json docs/assets/clima_1t/cenario_2t.json analysis/clima_1t_2026/previsoes/
           if git diff --cached --quiet; then
             echo "mudou=false" >> "$GITHUB_OUTPUT"
           else

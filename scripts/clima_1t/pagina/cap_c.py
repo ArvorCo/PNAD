@@ -73,7 +73,7 @@ def cap8_veredito(dados: Dados) -> str:
         ),
         _item(
             "fato",
-            f"A abstenção é {pp(pais['valor'])} maior onde choveu mais de 5 mm ({ic(pais['ic95'])}). Dentro da UF a diferença é de {pp(uf['valor'])} e dentro do município, {pp(mun['valor'])} ({ic(mun['ic95'])}): a diferença bruta é geografia.",
+            f"A abstenção é {pp(pais['valor'])} maior onde choveu mais de 5 mm ({ic(pais['ic95'])}). Dentro da UF a diferença é de {pp(uf['valor'])} e dentro do município, {pp(mun['valor'])} ({ic(mun['ic95'])}): controlar a geografia reduz muito a associação bruta.",
         ),
         _item(
             "fato",
@@ -112,7 +112,7 @@ def cap8_veredito(dados: Dados) -> str:
         8,
         "veredito",
         "O que isto diz <em>e o que não diz</em>",
-        "A chuva explica parte das baterias simultâneas e nada da abstenção agregada. O alerta de que a tempestade derrubou a eleição não se sustenta no 1º turno.",
+        "A chuva se associa às baterias simultâneas. Para a abstenção, a associação dentro do município não se separa de zero; isso não prova que o efeito seja nulo.",
         corpo,
     )
 
