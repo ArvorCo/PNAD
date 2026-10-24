@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 from .comum import (
     TAG,
     caixa,
@@ -157,8 +159,16 @@ def cap9_uso(dados: Dados) -> str:
     )
 
 
-def _tamanho(caminho) -> str:
-    n = caminho.stat().st_size
+def _tamanho(caminho, payload=None) -> str:
+    n = (
+        len(
+            json.dumps(
+                payload, ensure_ascii=False, separators=(",", ":"), allow_nan=False
+            ).encode("utf-8")
+        )
+        if payload is not None
+        else caminho.stat().st_size
+    )
     return (
         f"{dec(n / 1_000_000, 1)} MB" if n >= 1_000_000 else f"{inteiro(n / 1000)} KB"
     )
@@ -207,7 +217,7 @@ def cap10_fontes(dados: Dados) -> str:
         for x in dados.lit
     )
     botoes = "".join(
-        f'<a class="botao" href="assets/clima_1t/{n}">{rot} ({_tamanho(ROOT / "docs" / "assets" / "clima_1t" / n)})</a>'
+        f'<a class="botao" href="assets/clima_1t/{n}">{rot} ({_tamanho(ROOT / "docs" / "assets" / "clima_1t" / n, {k: v for k, v in dados.d.items() if k != "_interno"} if n == "dados.json" else None)})</a>'
         for n, rot in (
             ("dados.json", "Dados (JSON)"),
             ("locais.csv.gz", "Locais (CSV comprimido)"),

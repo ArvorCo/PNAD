@@ -1,6 +1,6 @@
 name: Previsao do tempo para o 2o turno (mapa de fiscais)
 
-# Baixa da Open-Meteo a previsao diaria das celulas de 0,5 grau dos locais de votacao, aplica a
+# Baixa da Open-Meteo a previsao horaria das celulas de 0,5 grau dos locais de votacao, aplica a
 # regra de risco declarada em scripts/clima_1t/previsao.py e grava
 # docs/assets/fiscais_mapa/clima/previsao.json. Reconstroi o relatorio com a mesma rodada.
 # Previsao incompleta mantem o arquivo anterior e falha o job (codigo 2), sem commit.

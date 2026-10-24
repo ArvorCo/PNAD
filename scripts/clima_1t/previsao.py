@@ -1,7 +1,7 @@
 """Previsão para o 2º turno (25/10/2026) por célula de 0,5°, com regra de risco.
 
-Fonte: Open-Meteo Forecast API (modelos globais combinados pela própria API), diário,
-oito dias a partir do dia da consulta, relógio de Brasília. Regra de risco declarada
+Fonte: Open-Meteo Forecast API, previsão horária durante a votação (8h–17h de
+Brasília). O acumulado diário é preservado separadamente para comparação. Regra de risco declarada
 (``REGRA``), aplicada ao dia alvo de cada célula; o resumo soma locais e eleitores do
 cadastro do 1º turno por nível. Só biblioteca padrão: roda no workflow sem instalar nada.
 
@@ -17,7 +17,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from clima_1t import coleta, grade
+from clima_1t import coleta, grade, horaria
 
 ROOT = Path(__file__).resolve().parents[2]
 SAIDA = ROOT / "docs/assets/fiscais_mapa/clima/previsao.json"
@@ -32,19 +32,23 @@ DIARIAS = [
 ]
 PARAMS = {
     "daily": ",".join(DIARIAS),
-    "forecast_days": 8,
+    "hourly": ",".join(horaria.VARIAVEIS.values()),
+    "start_date": ALVO,
+    "end_date": ALVO,
     "timezone": "America/Sao_Paulo",
 }
 REGRA = {
     "alto": "chuva >= 30 mm ou rajada >= 70 km/h ou (probabilidade >= 80% e chuva >= 15 mm)",
     "medio": "chuva >= 10 mm ou rajada >= 50 km/h ou probabilidade >= 60%",
     "baixo": "o resto",
-    "sem_dado": "a previsão ainda não alcança o dia alvo ou a célula não respondeu",
+    "sem_dado": "alguma variável horária está ausente na janela de votação",
+    "janela": "08h–17h de Brasília (UTC−3), nove intervalos horários",
+    "natureza": "cortes editoriais de atenção, não calibrados para prever abstenção",
     "dia": ALVO,
     "variaveis": {
-        "chuva": "precipitation_sum do dia (mm)",
-        "probabilidade": "precipitation_probability_max do dia (%)",
-        "rajada": "wind_gusts_10m_max do dia (km/h)",
+        "chuva": "soma de precipitation das 08h às 17h de Brasília (mm)",
+        "probabilidade": "máximo horário de precipitation_probability na votação (%), não probabilidade da janela",
+        "rajada": "máximo de wind_gusts_10m na votação (km/h)",
     },
 }
 ROTULO = (
@@ -119,13 +123,13 @@ def _celula(resposta: dict[str, Any]) -> dict[str, Any]:
             }
         )
     alvo = next((s for s in serie if s["data"] == ALVO), None)
-    base = alvo or {"chuva_mm": None, "prob_pct": None, "rajada_kmh": None}
+    horas = horaria.extrair(resposta, ALVO, risco)
+    base = horas["periodos"]["votacao"]
     return {
-        "chuva_mm": base["chuva_mm"],
-        "prob_pct": base["prob_pct"],
-        "rajada_kmh": base["rajada_kmh"],
+        **{k: base[k] for k in ("chuva_mm", "prob_pct", "rajada_kmh", "risco")},
         "codigo_wmo": alvo["codigo_wmo"] if alvo else None,
-        "risco": risco(base["chuva_mm"], base["prob_pct"], base["rajada_kmh"]),
+        "diario": alvo,
+        **horas,
         "serie": [
             {k: s[k] for k in ("data", "chuva_mm", "prob_pct", "rajada_kmh")}
             for s in serie
@@ -245,7 +249,10 @@ def gerar(
         "gerado_em": coleta.agora(),
         "alvo": ALVO,
         "fonte": "Open-Meteo Forecast API (modelos globais combinados pela API), "
-        "célula de 0,5°, consulta diária",
+        "célula de 0,5°, previsão horária na votação",
+        "versao": 2,
+        "janela_brasilia": [8, 17],
+        "convencao_horaria": "chuva, probabilidade e rajada referem-se à hora anterior ao carimbo; somamos 09:00 a 17:00 para cobrir 08h–17h",
         "rotulo": ROTULO,
         "fonte_detalhe": {
             "url": coleta.FORECAST,
@@ -266,6 +273,7 @@ def gerar(
         },
         "celulas": celulas,
         "resumo": resumir(celulas, indice),
+        "resumo_periodos": horaria.resumir(celulas, indice),
     }
     if not completa and not aceitar_parcial and SAIDA.exists():
         anterior = json.loads(SAIDA.read_text())

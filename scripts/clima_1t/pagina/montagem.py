@@ -18,12 +18,14 @@ from .cap_b import cap5_curiosos, cap6_uf, cap7_previsao
 from .cap_c import cap8_veredito, cap9_uso, cap10_fontes
 from .cenario import secao_cenario
 from .estilo import CSS, JS
+from .horaria import secao_horaria
 from .util import ROOT, SITE, SLUG, Dados, dec, esc, ic, inteiro, limpa, pp
 
 sys.path.insert(0, str(ROOT / "scripts"))
 from ga_tag import injetar
 
 NAV = [
+    ("previsao-horaria", "Chuva por horário"),
     ("cenario-abstencao", "Mapas e cenário"),
     ("previsao", "Previsão 25/10"),
     ("metodo", "Método"),
@@ -63,6 +65,7 @@ def resumo(dados: Dados) -> str:
 def pagina(dados: Dados) -> str:
     figs.reset_ids()
     capitulos = [
+        secao_horaria(dados),
         secao_cenario(dados),
         cap7_previsao(dados),
         cap1_metodo(dados),

@@ -27,6 +27,17 @@ code{font-family:var(--mono);font-size:12px;overflow-wrap:anywhere}pre{overflow-
 footer{max-width:var(--wrap);margin:40px auto 0;padding:24px 16px 48px;border-top:1px solid var(--tinta);font-size:15px;display:flex;flex-wrap:wrap;gap:12px 28px}footer p{margin:0;max-width:640px}
 @media(max-width:860px){.hero{grid-template-columns:minmax(0,1fr);gap:28px;padding:36px 0 28px}.guia,.stats{grid-template-columns:minmax(0,1fr)}.section-heading{gap:14px}.chapter{padding:40px 0}body{font-size:17px}.lead{font-size:19px}}
 
+[hidden]{display:none!important}
+#controles-horarios{margin:26px 0}#fuso-horario{font:inherit;max-width:100%;padding:10px;border:1px solid #80958c;background:#fffdf8;color:#192e2b}
+.botoes-periodos{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.botoes-periodos button{font:inherit;color:#192e2b;background:#f4f0e5;border:1px solid #a6b1a5;padding:12px 18px;text-align:left;cursor:pointer}
+.botoes-periodos button[aria-pressed=true]{background:#193c35;color:#fffdf8;border-color:#193c35}
+.botoes-periodos small{display:block;margin-top:5px;font-family:monospace}
+.botoes-periodos button:focus-visible,#fuso-horario:focus-visible{outline:3px solid #ba7b37;outline-offset:3px}
+.numero-chuva{font-size:64px!important;line-height:1.1!important;margin:12px 0!important;color:#193c35}.numero-chuva small{font-size:28px}
+.leitura-periodo{padding:12px 20px}.painel-periodo h3{margin-top:24px}
+@media print{.painel-periodo[hidden]{display:block!important}#controles-horarios{display:none!important}}
+.regressao-clima{margin:24px 0}.regressao-clima img{width:100%;height:auto;display:block}.regressao-clima figcaption{font-size:16px;margin-top:12px}
 .rotulo{font-size:19px;max-width:880px;border-left:4px solid var(--dourado);padding:4px 0 4px 14px;margin:20px 0}
 .tag.fato{background:#e3e9df}
 tr.extra{display:none}tr.extra.mostra{display:table-row}

@@ -13,7 +13,7 @@ def _tabela(municipios, ident, rotulo):
             "Aptos 1º turno",
             "Cadastro em risco alto",
             "% do cadastro mapeado",
-            "Chuva média diária",
+            "Chuva média 8h–17h",
         ],
         [
             [
@@ -81,8 +81,8 @@ def secao_cenario(dados: Dados) -> str:
         '<a href="img/abstencao_1t_2026.png">Abrir também o mapa por município</a> '
         "(o card municipal usa o total nacional com exterior; este mapa e a tabela usam Brasil sem exterior).</figcaption></figure>"
         f"<figure><h3>25/10 · Chuva prevista</h3>{mapas.mapa_chuva_prevista(dados)}"
-        "<figcaption>Acumulado no dia inteiro, em mm, no relógio de Brasília. "
-        "A previsão não informa, nesta consulta diária, quanto cairá durante a votação. "
+        "<figcaption>Acumulado durante a votação, das 8h às 17h de Brasília, em mm. "
+        "Os períodos e a conversão para hora local estão no painel acima. "
         "Branco fora da grade significa ausência de dado.</figcaption></figure></div>"
         f'<p>No 1º turno, a abstenção no Brasil sem exterior foi de <b>{pct(t["brasil"]["abstencao_pct"], 2)}</b>. '
         f"As maiores taxas estaduais foram {estados}. <b>Se a distribuição territorial persistir</b>, "
@@ -127,6 +127,37 @@ def secao_cenario(dados: Dados) -> str:
         "estão detalhadas abaixo. Esses testes medem associação no primeiro turno; "
         "não validam uma previsão de abstenção para 25/10. Por isso não multiplicamos "
         "os milímetros previstos por um coeficiente causal inventado.</p>"
+        + "<h3>Regressão: quanto muda a associação por milímetro?</h3>"
+        + '<figure class="regressao-clima"><img src="img/clima_regressao_abstencao.svg" '
+        'alt="Reta da associação entre chuva adicional e abstenção, com intervalo de 95% que inclui zero em toda a faixa de 0 a 30 mm." '
+        'width="900" height="530" loading="lazy"><figcaption>'
+        "Visualização do coeficiente já estimado, sem novo ajuste: Δabstenção = β × Δchuva / 10. "
+        "O eixo vertical é uma diferença em pontos percentuais, não a taxa de abstenção. "
+        "A banda representa incerteza sobre a associação média; não inclui o erro de previsão "
+        "de um município nem o da previsão meteorológica.</figcaption></figure>"
+        + tabela(
+            ["Chuva adicional", "Diferença associada", "IC 95% da associação"],
+            [
+                [
+                    f"{mm} mm",
+                    pp(reg["coef"] * mm / 10),
+                    ic([lim * mm / 10 for lim in reg["ic95"]]),
+                ]
+                for mm in [1, 10, 20, 30]
+            ],
+            numericas=(0, 1),
+            largura=550,
+            rotulo="Reescala da associação por milímetro",
+        )
+        + "<p><b>Por que ainda não é um mapa de previsão de abstenção:</b> "
+        "o sinal da associação é incerto e o resultado de uma eleição não valida o transporte ao segundo turno. "
+        "Aplicar a reta a cada município produziria números precisos na aparência, sem precisão preditiva demonstrada. "
+        "Para validar esse uso, seria necessário prever eleições não usadas no ajuste, comparar com a persistência "
+        "da abstenção e avaliar erro e cobertura dos intervalos, preservando blocos geográficos.</p>"
+        + '<p><a href="img/clima_regressao_abstencao.png">Baixar gráfico (PNG)</a> · '
+        '<a href="img/clima_regressao_abstencao.svg">Gráfico vetorial (SVG)</a> · '
+        '<a href="assets/clima_1t/regressao_curva.csv">Pontos da reta e intervalo (CSV)</a> · '
+        '<a href="assets/clima_1t/regressao_curva.json">Coeficiente e fonte (JSON)</a>.</p>'
         + '<p><a class="botao" href="#abstencao">Ver todas as especificações e limites</a> '
         '<a class="botao" href="#metodo">Ver a chuva observada no primeiro turno</a></p></section>'
     )

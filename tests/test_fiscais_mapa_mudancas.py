@@ -67,7 +67,8 @@ def test_interface_sem_jargao_e_com_crit():
     assert TRAVESSAO not in js and TRAVESSAO not in html
     assert "fraude" not in html.lower() and "fraude" not in js.lower()
     assert "'crit='" in js and "mudanca_endereco" in js
-    assert "20261019-clima" in html and html.count("20261019-clima") == 2
+    assert "app.js?v=20261024-clima-horario" in html
+    assert "20261024-clima-horario" in js
     interface = "\n".join(
         ln for ln in js.splitlines() if not ln.strip().startswith("//")
     )

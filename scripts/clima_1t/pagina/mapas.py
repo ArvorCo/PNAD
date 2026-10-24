@@ -170,12 +170,16 @@ def mapa_risco(dados: Dados) -> tuple[str, dict[str, int]]:
     return svg, {k: len(v) for k, v in grupos.items()}
 
 
-def mapa_chuva_prevista(dados: Dados) -> str:
-    """Acumulado diário previsto, separado da regra que também considera vento."""
+def mapa_chuva_prevista(
+    dados: Dados, periodo: str = "votacao", ident: str = "mapchuva2t"
+) -> str:
+    """Chuva na janela selecionada, com escala comum entre os períodos."""
     f, _ = geo._proj(W, H, PAD)
     grupos = {k: [] for k in COR_FAIXA}
     for chave, cel in dados.previsao["celulas"].items():
-        faixa = variaveis.faixa_chuva(cel.get("chuva_mm"))
+        faixa = variaveis.faixa_chuva(
+            cel.get("periodos", {}).get(periodo, cel).get("chuva_mm")
+        )
         if faixa in grupos:
             grupos[faixa].append(tuple(float(v) for v in chave.split(",")))
     partes = [
@@ -193,10 +197,10 @@ def mapa_chuva_prevista(dados: Dados) -> str:
         H + 22,
     )
     return _svg(
-        "Chuva prevista para 25/10, acumulado diário em mm",
+        f"Chuva prevista para 25/10, {periodo}, acumulado em mm",
         "Células de 0,5 grau com locais de votação. Áreas sem célula não têm dado; "
-        "não representam ausência de chuva. Acumulado do dia inteiro em Brasília.",
-        "mapchuva2t",
+        "não representam ausência de chuva. Janela horária indicada em Brasília.",
+        ident + periodo,
         "".join(partes) + _contorno(W, H) + legenda,
         H + 34,
     )

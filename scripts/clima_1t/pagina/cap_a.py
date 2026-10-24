@@ -78,7 +78,7 @@ def hero(dados: Dados) -> str:
         '<section class="hero"><div>'
         f'<p class="eyebrow">2º turno · previsão consultada em {hora_br(d["previsao_25_10"]["gerado_em"])}</p>'
         "<h1>Chuva no domingo.<br><em>Onde olhar, e o que podemos prever.</em></h1>"
-        '<p class="deck">Mapa meteorológico para 25/10, abstenção observada no primeiro turno '
+        '<p class="deck">Previsão por hora para 25/10, das 8h às 17h de Brasília, abstenção observada no primeiro turno '
         "e um cenário de persistência por município. Tempo ruim merece atenção no deslocamento; "
         "os dados ainda não sustentam converter chuva em faltas adicionais.</p>"
         f'<p class="deck">Cruzamos a chuva de 4 de outubro, célula por célula, com o log e o boletim de '

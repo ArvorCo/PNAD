@@ -43,4 +43,21 @@ function filtrar(){
 }
 document.querySelectorAll('table[data-sortable]').forEach(ordenar);
 filtrar();
+var controles=document.getElementById('controles-horarios');
+if(controles){
+  controles.hidden=false;
+  var botoes=controles.querySelectorAll('[data-periodo]');
+  function periodo(chave){
+    document.querySelectorAll('.painel-periodo').forEach(function(p){p.hidden=p.id!=='periodo-'+chave});
+    botoes.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.periodo===chave))});
+  }
+  botoes.forEach(function(b){b.addEventListener('click',function(){periodo(b.dataset.periodo)})});
+  periodo('votacao');
+  document.getElementById('fuso-horario').addEventListener('change',function(){
+    var delta=Number(this.value)+3;
+    document.querySelectorAll('.hora-local').forEach(function(el){
+      el.textContent=String(Number(el.dataset.inicio)+delta).padStart(2,'0')+'h–'+String(Number(el.dataset.fim)+delta).padStart(2,'0')+'h';
+    });
+  });
+}
 })();

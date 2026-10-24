@@ -6,7 +6,9 @@ Formatação em pt-BR reaproveitada do laudo irmão (mudanças de local de vota�
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from clima_1t import territorio, texto
 from mudancas_secoes_2t.pagina.util import (
@@ -59,8 +61,9 @@ __all__ = [
 
 
 def hora_br(iso: str) -> str:
-    """Instante ISO em UTC vira 'DD/MM/AAAA, HHhMM UTC' sem converter fuso."""
-    return f"{data_br(iso)}, {iso[11:13]}h{iso[14:16]} UTC"
+    """Carimbo da coleta convertido explicitamente para Brasília."""
+    dt = datetime.fromisoformat(iso).astimezone(ZoneInfo("America/Sao_Paulo"))
+    return dt.strftime("%d/%m/%Y, %Hh%M") + " de Brasília (UTC−3)"
 
 
 def razao(x: float) -> str:
@@ -81,7 +84,15 @@ class Dados:
         self.d["previsao_25_10"] = {
             **{
                 k: p[k]
-                for k in ("gerado_em", "alvo", "regra_risco", "rotulo", "coleta")
+                for k in (
+                    "gerado_em",
+                    "alvo",
+                    "regra_risco",
+                    "rotulo",
+                    "coleta",
+                    "janela_brasilia",
+                    "resumo_periodos",
+                )
             },
             **p["resumo"],
             "arquivo": str(PREVISAO_JSON.relative_to(ROOT)),

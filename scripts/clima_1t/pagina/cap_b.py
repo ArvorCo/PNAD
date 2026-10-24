@@ -412,7 +412,7 @@ def cap7_previsao(dados: Dados) -> str:
             "Município",
             "Eleitores em risco alto",
             "Locais em risco alto",
-            "Chuva máxima (mm)",
+            "Chuva máxima 8h–17h (mm)",
             "Rajada máxima (km/h)",
         ],
         [
@@ -457,10 +457,10 @@ def cap7_previsao(dados: Dados) -> str:
         graf, "Estados com mais da metade do eleitorado em risco médio ou alto.", 600
     ) + figura(
         mapa,
-        f"Células de 0,5° da previsão para {alvo}, geradas em {gerado}. Cada célula usa a regra declarada abaixo.",
+        f"Células de 0,5° da previsão para {alvo}, geradas em {gerado}. Cada célula usa a regra declarada abaixo, somente entre 8h e 17h de Brasília.",
         560,
     ) + tab_nivel + f"<h3>As {len(cidades)} cidades com mais eleitores em risco alto</h3>" + tab_cid + nota(
-        "Chuva e rajada são o máximo entre as células do município no dia. Município com muitas células, como São Paulo, aparece com o valor mais alto delas."
+        "Chuva e rajada são o máximo entre as células do município entre 8h e 17h de Brasília. Município com muitas células, como São Paulo, aparece com o valor mais alto delas."
     ) + "<h3>O que isso implica</h3>" + lista(
         [
             '<span class="tag fato">Fato medido</span> No 1º turno, a chuva se associou a mais urnas na bateria, quase todas por coincidência entre urnas do município. '
@@ -478,9 +478,13 @@ def cap7_previsao(dados: Dados) -> str:
         'O <a href="fiscais_mapa.html">mapa de fiscais</a> usa a mesma previsão. '
         "A rotina diária de atualização também reconstrói este relatório. "
         'A previsão é da <a href="https://open-meteo.com/en/docs">Open-Meteo Forecast API</a>; '
-        "os cortes de risco são regras de atenção da Arvor, não alertas oficiais da Defesa Civil.",
+        "os cortes de risco são regras de atenção da Arvor, não alertas oficiais da Defesa Civil. "
+        "Mantivemos os mesmos limiares em mm e km/h, agora aplicados somente à votação; "
+        "a diferença em relação ao relatório diário anterior também reflete a mudança de janela, "
+        "não apenas uma revisão meteorológica. Probabilidade significa o máximo entre as horas, "
+        "nunca a probabilidade conjunta de chover na janela.",
     ) + limite(
-        "Previsão de modelo global, com célula de 0,5° e chuva diária. Não vê o telhado, não vê o horário da pancada e muda a cada rodada do modelo. "
+        "Previsão de modelo global, com célula de 0,5° e resolução horária. Pode errar a intensidade, o lugar e a hora da pancada; não resolve cada prédio e muda a cada rodada do modelo. "
         f"As {inteiro(cel['alto'])} células de risco alto são uma regra de atenção, não uma probabilidade de problema."
     )
     return secao(

@@ -11,6 +11,8 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+from clima_1t.horaria import fuso_local, janela_local
+
 ROOT = Path(__file__).resolve().parents[2]
 PRESIDENTE = ROOT / "analysis/apuracao_2026/dados/presidente.json"
 INDICE = ROOT / "analysis/clima_1t_2026/indice_celulas_05.json"
@@ -83,6 +85,10 @@ def calcular(presidente: dict, indice: dict, previsao: dict) -> dict:
                 "codigo_tse": str(m["cd_tse"]).zfill(5),
                 "ibge": m["ibge"],
                 "municipio": m["nome"],
+                "fuso_utc": fuso_local(m["uf"], m["nome"]),
+                "votacao_hora_local": janela_local(
+                    8, 17, fuso_local(m["uf"], m["nome"])
+                ),
                 "aptos_1t": m["eleitores"],
                 "comparecimento_1t": m["comparecimento"],
                 "abstencao_1t_pct": abst,
@@ -106,11 +112,12 @@ def calcular(presidente: dict, indice: dict, previsao: dict) -> dict:
     return {
         "previsao_gerada_em": previsao["gerado_em"],
         "alvo": previsao["alvo"],
+        "janela_brasilia": previsao.get("janela_brasilia"),
         "metodo": "Cenário de persistência: taxa municipal do 2º turno igual à do 1º. "
         "Sem incremento por chuva, sem validação preditiva municipal e sem IC de previsão.",
         "regra_atencao": "Municípios com pelo menos 10 mil aptos, abstenção do 1º turno "
         "acima da taxa nacional sem exterior e ao menos 50% do cadastro mapeado em risco "
-        "climático alto; exige previsão em todas as células mapeadas. Ordem por eleitores expostos.",
+        "climático alto durante a votação (8h–17h de Brasília); exige previsão em todas as células mapeadas. Ordem por eleitores expostos.",
         "universos": "Abstenção: aptos e presentes da totalização municipal do TSE. "
         "Exposição: cadastro georreferenciado do 1º turno; não desloca locais realocados. "
         "Cadastros e totalização têm denominadores distintos; faltantes não viram risco baixo.",

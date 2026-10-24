@@ -9,7 +9,7 @@
 
   const BASE = 'assets/fiscais_mapa/';
   const POLITIZE = 'assets/politize/dados/';
-  const VERSAO = '20261019-clima';
+  const VERSAO = '20261024-clima-horario';
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
   // Chaves de nível na ordem de prioridade: histórico do capítulo 13 primeiro, depois a atenção dos logs.
@@ -263,12 +263,13 @@
     const regra = prev.regra_risco;
     const textoRegra = !regra ? '' : typeof regra === 'string' ? regra : Object.keys(regra).map((k) => k.replace(/_/g, ' ') + ': ' + (typeof regra[k] === 'object' ? JSON.stringify(regra[k]) : regra[k])).join('; ');
     return h('div', { class: 'ficha-clima-bloco' },
-      h('b', {}, 'Previsão para 25/10'),
+      h('b', {}, 'Previsão para 25/10 · 8h–17h de Brasília'),
       h('ul', {},
-        h('li', {}, 'Chuva prevista: ' + mm(cel.chuva_mm) + (typeof cel.prob_pct === 'number' ? ', com probabilidade de ' + nf0.format(cel.prob_pct) + '%' : '') + '.'),
-        h('li', {}, 'Rajada prevista: ' + kmh(cel.rajada_kmh) + '.'),
+        h('li', {}, 'Chuva acumulada na votação: ' + mm(cel.chuva_mm) + (typeof cel.prob_pct === 'number' ? '; maior probabilidade horária de ' + nf0.format(cel.prob_pct) + '%' : '') + '.'),
+        h('li', {}, 'Rajada máxima na votação: ' + kmh(cel.rajada_kmh) + '.'),
         h('li', { class: 'risco-' + (cel.risco || 'baixo') }, h('b', {}, 'Risco climático previsto: ' + (NOME_RISCO[cel.risco] || cel.risco || 'sem dado') + '.'))),
-      h('p', { class: 'ficha-meta' }, 'Previsão de modelo global, muda todo dia; indicativo de atenção, não previsão do prédio.' + (prev.gerado_em ? ' Gerada em ' + formatarCarimbo(prev.gerado_em) + '.' : '')),
+      cel.periodos ? h('ul', {}, Object.entries(cel.periodos).filter(([k]) => k !== 'votacao').map(([, p]) => h('li', {}, p.nome + ' (' + p.inicio_brasilia + 'h–' + p.fim_brasilia + 'h Brasília): ' + mm(p.chuva_mm) + '; rajada máxima ' + kmh(p.rajada_kmh) + '.'))) : null,
+      h('p', { class: 'ficha-meta' }, 'A probabilidade indicada é o máximo horário, não a probabilidade de chover no período inteiro. Previsão de modelo global, muda todo dia; indicativo de atenção, não previsão do prédio.' + (prev.gerado_em ? ' Gerada em ' + formatarCarimbo(prev.gerado_em) + '.' : '')),
       textoRegra ? h('details', {}, h('summary', {}, 'Como o risco é calculado'), h('p', { class: 'ficha-meta' }, textoRegra)) : null);
   }
 
@@ -858,7 +859,7 @@
         out.push(h('td', { class: 'num' }, o && typeof o.chuva_04_10_mm === 'number' ? [nf1.format(o.chuva_04_10_mm) + ' mm', typeof o.chuva_votacao_mm === 'number' ? h('small', {}, nf1.format(o.chuva_votacao_mm) + ' mm na votação') : null] : ''));
       } else if (c[0] === 'risco25') {
         const p = riscoPrevisto(s.local);
-        out.push(h('td', {}, p ? [NOME_RISCO[p.risco] || p.risco, typeof p.chuva_mm === 'number' ? h('small', {}, nf1.format(p.chuva_mm) + ' mm previstos') : null] : ''));
+        out.push(h('td', {}, p ? [NOME_RISCO[p.risco] || p.risco, typeof p.chuva_mm === 'number' ? h('small', {}, nf1.format(p.chuva_mm) + ' mm entre 8h–17h BRT') : null] : ''));
       }
     });
     return out;
@@ -945,7 +946,7 @@
     const rs = S.listaAtual || [];
     const cab = ['nivel_historico', 'atencao_log', 'uf', 'municipio', 'zona', 'secao', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'pontuacao', 'aptos', 'votaram', 'flavio_pct_validos', 'lula_pct_validos', 'criterios_historicos', 'diagnosticos_log', 'familias_log', 'explicacao_provavel', 'risco_territorio', 'mediana_votacao_s', 'processo_mediana_s', 'cadencia_mediana_s', 'coordenada_fonte', 'google_maps', 'ficha_secao',
       'mudou_endereco', 'mudanca_categoria', 'mudanca_fonte', 'mudanca_local_1t', 'mudanca_endereco_1t', 'mudanca_bairro_1t', 'mudanca_local_2t', 'mudanca_endereco_2t', 'mudanca_bairro_2t', 'mudanca_cep_2t', 'mudanca_lat_2t', 'mudanca_lon_2t', 'mudanca_distancia_m', 'mudanca_nota_tre', 'mudanca_url_tre', 'mudanca_google_maps_local_novo', 'mudanca_agregada_a',
-      'chuva_04_10_mm', 'chuva_votacao_mm', 'hora_pico_chuva', 'rajada_04_10_kmh', 'rajada_votacao_kmh', 'urnas_bateria_votacao_predio', 'abstencao_1t_2026_pct', 'abstencao_2t_2022_pct', 'variacao_contra_2022_pp', 'risco_climatico_25_10', 'chuva_prevista_25_10_mm', 'prob_chuva_25_10_pct', 'rajada_prevista_25_10_kmh'];
+      'chuva_04_10_mm', 'chuva_votacao_mm', 'hora_pico_chuva', 'rajada_04_10_kmh', 'rajada_votacao_kmh', 'urnas_bateria_votacao_predio', 'abstencao_1t_2026_pct', 'abstencao_2t_2022_pct', 'variacao_contra_2022_pp', 'risco_climatico_25_10_08a17_brt', 'chuva_prevista_25_10_08a17_brt_mm', 'prob_horaria_max_25_10_08a17_brt_pct', 'rajada_max_25_10_08a17_brt_kmh'];
     const dec = (v, c) => (v === null || v === undefined || v === '' ? '' : (typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v)));
     const esc = (v) => { const s = v === null || v === undefined ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const linhas = [cab.join(';')];

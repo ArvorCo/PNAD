@@ -1,0 +1,15 @@
+{
+  "fonte": "analysis/clima_1t_2026/clima.json",
+  "sha256": "b3cf26dc35b202ddde7b2e451ae5b8d1a17723c84ca5dab3481a9695d95def72",
+  "coeficiente_por_10mm": {
+    "coef": -0.1741,
+    "ic95": [
+      -0.5056,
+      0.1575
+    ],
+    "ep": 0.16916,
+    "p": 0.3035
+  },
+  "formula": "delta_abstencao_pp = coeficiente * delta_chuva_mm / 10",
+  "interpretacao": "Associação histórica dentro do município. IC do coeficiente reescalado, não previsão municipal ou efeito causal."
+}

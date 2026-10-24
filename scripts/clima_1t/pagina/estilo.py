@@ -3,6 +3,17 @@
 from mudancas_secoes_2t.pagina.estilo import CSS as BASE
 
 EXTRA = r"""
+[hidden]{display:none!important}
+#controles-horarios{margin:26px 0}#fuso-horario{font:inherit;max-width:100%;padding:10px;border:1px solid #80958c;background:#fffdf8;color:#192e2b}
+.botoes-periodos{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.botoes-periodos button{font:inherit;color:#192e2b;background:#f4f0e5;border:1px solid #a6b1a5;padding:12px 18px;text-align:left;cursor:pointer}
+.botoes-periodos button[aria-pressed=true]{background:#193c35;color:#fffdf8;border-color:#193c35}
+.botoes-periodos small{display:block;margin-top:5px;font-family:monospace}
+.botoes-periodos button:focus-visible,#fuso-horario:focus-visible{outline:3px solid #ba7b37;outline-offset:3px}
+.numero-chuva{font-size:64px!important;line-height:1.1!important;margin:12px 0!important;color:#193c35}.numero-chuva small{font-size:28px}
+.leitura-periodo{padding:12px 20px}.painel-periodo h3{margin-top:24px}
+@media print{.painel-periodo[hidden]{display:block!important}#controles-horarios{display:none!important}}
+.regressao-clima{margin:24px 0}.regressao-clima img{width:100%;height:auto;display:block}.regressao-clima figcaption{font-size:16px;margin-top:12px}
 .rotulo{font-size:19px;max-width:880px;border-left:4px solid var(--dourado);padding:4px 0 4px 14px;margin:20px 0}
 .tag.fato{background:#e3e9df}
 tr.extra{display:none}tr.extra.mostra{display:table-row}
@@ -64,5 +75,22 @@ function filtrar(){
 }
 document.querySelectorAll('table[data-sortable]').forEach(ordenar);
 filtrar();
+var controles=document.getElementById('controles-horarios');
+if(controles){
+  controles.hidden=false;
+  var botoes=controles.querySelectorAll('[data-periodo]');
+  function periodo(chave){
+    document.querySelectorAll('.painel-periodo').forEach(function(p){p.hidden=p.id!=='periodo-'+chave});
+    botoes.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.periodo===chave))});
+  }
+  botoes.forEach(function(b){b.addEventListener('click',function(){periodo(b.dataset.periodo)})});
+  periodo('votacao');
+  document.getElementById('fuso-horario').addEventListener('change',function(){
+    var delta=Number(this.value)+3;
+    document.querySelectorAll('.hora-local').forEach(function(el){
+      el.textContent=String(Number(el.dataset.inicio)+delta).padStart(2,'0')+'h–'+String(Number(el.dataset.fim)+delta).padStart(2,'0')+'h';
+    });
+  });
+}
 })();
 """

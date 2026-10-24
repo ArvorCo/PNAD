@@ -161,8 +161,9 @@ def test_celula_da_previsao_usa_o_dia_alvo():
         }
     }
     cel = previsao._celula(resp)
-    assert cel["risco"] == "alto"
-    assert cel["chuva_mm"] == 31.0
+    assert cel["risco"] == "sem_dado"  # o total diário não substitui horas ausentes
+    assert cel["chuva_mm"] is None
+    assert cel["diario"]["chuva_mm"] == 31.0
     assert len(cel["serie"]) == 8
     assert set(cel["serie"][0]) == {"data", "chuva_mm", "prob_pct", "rajada_kmh"}
     resp["daily"]["time"] = [f"2026-10-{d}" for d in range(10, 18)]
