@@ -12,10 +12,12 @@ export const REGRAS_COMPARECIMENTO = {
   sem_bio_fator: 2,
   /** ... e ≥ este piso, em % do comparecimento */
   sem_bio_min_pct: 10,
-  /** encerramento depois desta hora de Brasília */
+  /** descrição (fora do escore): encerramento depois desta hora de Brasília */
   tarde_hhmm: "17:00",
-  /** contado à parte, fora do escore */
+  /** tardia também quando encerra depois desta hora de Brasília */
   apos_hhmm: "19:00",
+  /** tardia: encerramento ao menos estes minutos depois do da própria seção no 1T */
+  tardia_min_vs_1t: 30,
   /** tipo_arquivo do BU a partir do qual o boletim vem do sistema de apuração (cédula) */
   papel_tipo_min: 3,
   /** camada municipal: só municípios com ao menos esta parcela de seções apuradas */
@@ -25,7 +27,7 @@ export const REGRAS_COMPARECIMENTO = {
 export interface SinaisSecao {
   delta: boolean;
   sem_bio: boolean;
-  tarde: boolean;
+  tardia: boolean;
   papel: boolean;
 }
 
@@ -54,6 +56,11 @@ export interface SecaoComparecimento {
   ano_nasc_pct: number | null;
   /** hora de Brasília do encerramento (último voto), hh:mm */
   encerramento_hhmm: string | null;
+  /** hora de Brasília do encerramento da mesma seção no 1T, hh:mm */
+  enc1_hhmm: string | null;
+  /** encerramento ≥ 30 min depois do da própria seção no 1T, ou depois das 19:00 */
+  tardia: boolean;
+  /** descrição: hh:mm depois de 17:00 (no 1T, 92,38% das seções) */
   encerrou_apos_17h: boolean;
   apos_19h: boolean;
   /** BU do sistema de apuração (tipo_arquivo ≥ 3): votação em cédula */
@@ -100,7 +107,9 @@ export interface Distribuicao {
 export interface ContagemSinais {
   delta: number;
   sem_bio: number;
+  /** descrição: encerradas depois das 17:00 (fora do escore) */
   tarde: number;
+  tardia: number;
   apos_19h: number;
   papel: number;
   contingencia: number;
@@ -108,8 +117,8 @@ export interface ContagemSinais {
 }
 
 /**
- * Votos da prorrogação: seções encerradas depois das 17:00 de Brasília (tardias) contra a própria
- * seção no 1T e contra as encerradas até 17:00 no mesmo município (pontuais). Deltas de fatia só
+ * Votos da prorrogação: seções tardias (encerramento ≥ 30 min depois do da própria seção no 1T, ou
+ * depois das 19:00) contra a própria seção no 1T e contra as demais do mesmo município (pontuais). Deltas de fatia só
  * com n ≥ n_min; abaixo disso ficam null.
  */
 export interface BlocoProrrogacao {

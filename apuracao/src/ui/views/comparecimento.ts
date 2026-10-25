@@ -75,7 +75,7 @@ function contador(n: number, rotulo: string, alerta = false): HTMLElement {
 function linhaSecao(s: SecaoComparecimento): HTMLElement {
   const li = h("li", "cp-item");
   const marcas: string[] = [`zona ${s.zona}, seção ${s.secao}`];
-  if (s.encerramento_hhmm) marcas.push(s.encerramento_hhmm);
+  if (s.encerramento_hhmm) marcas.push(s.enc1_hhmm ? `${s.encerramento_hhmm} (1T ${s.enc1_hhmm})` : s.encerramento_hhmm);
   if (s.sem_bio_pct !== null) marcas.push(`sem biometria ${pct(s.sem_bio_pct, 1)}`);
   if (s.papel) marcas.push("cédula");
   if (s.contingencia) marcas.push("contingência");
@@ -220,8 +220,8 @@ export function criarComparecimento() {
       const pr = r.prorrogacao;
       const b = pr.brasil;
       faixa.replaceChildren(
-        h("h2", "cp-h cp-pr-h", "votos da prorrogação: seções encerradas depois das 17:00"),
-        celulaProrrogacao("seções tardias", inteiro(b.n_tardias), `${inteiro(b.n_apos_19h)} depois das 19:00; ${inteiro(b.n_pontuais)} até 17:00`),
+        h("h2", "cp-h cp-pr-h", `votos da prorrogação: tardias (${r.regras.tardia_min_vs_1t} min depois do 1º turno ou após ${r.regras.apos_hhmm})`),
+        celulaProrrogacao("seções tardias", inteiro(b.n_tardias), `${inteiro(b.n_apos_19h)} depois das 19:00; ${inteiro(b.n_pontuais)} no horário`),
         celulaProrrogacao(
           "comparecimento contra o 1º turno",
           b.delta_comp_tardias === null ? "sem dado" : rotuloPp(b.delta_comp_tardias),
@@ -236,8 +236,8 @@ export function criarComparecimento() {
       grade.append(
         contador(si.delta, `subiu ${r.regras.delta_pp_min} pp ou mais`, true),
         contador(si.sem_bio, "sem biometria alta", true),
+        contador(si.tardia, "encerramento tardio", true),
         contador(si.tarde, `depois das ${r.regras.tarde_hhmm}`),
-        contador(si.apos_19h, `depois das ${r.regras.apos_hhmm}`, true),
         contador(si.papel, "cédula", true),
         contador(si.contingencia, "contingência ou recarga", true),
         contador(si.escore_2_mais, "2 sinais ou mais", true),
@@ -261,7 +261,7 @@ export function criarComparecimento() {
         ),
         h("h2", "cp-h", camada === "secoes" ? "seções de maior escore" : "municípios onde o comparecimento mais subiu"),
         itens.length > 0 ? ol : h("p", "d2-vazio", camada === "secoes" ? "amostra ainda sem boletins" : "nenhum município com 30% das seções apuradas"),
-        h("p", "d2-nota", camada === "secoes" ? `escore: soma de 4 sinais (comparecimento, biometria, encerramento depois das ${r.regras.tarde_hhmm}, cédula)` : `só municípios com ${decimal(r.regras.mun_pst_min, 0)}% das seções apuradas ou mais`),
+        h("p", "d2-nota", camada === "secoes" ? `escore: soma de 4 sinais (comparecimento, biometria, encerramento tardio, cédula)` : `só municípios com ${decimal(r.regras.mun_pst_min, 0)}% das seções apuradas ou mais`),
       );
     },
     desmontar() {

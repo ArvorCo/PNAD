@@ -225,7 +225,7 @@ Varredura de conferência feita em 21/10 com as mesmas variáveis: 13.105 arquiv
 | `GET /api/2t/pausas` | pausa nacional, geral e por UF (início, fim, minutos), soma das UFs contra o arquivo nacional, pausa do 1T como referência |
 | `GET /api/2t/secoes` | amostra de seções do arquivo-urna: encerramento → emissão → recebimento → totalização, por UF e Brasil, seções tardias |
 | `GET /api/2t/paralela` | totalização paralela por QR: BUs recebidos, cobertura, conferência contra o BU oficial, divergências, placar dos BUs (soma dos BUs recebidos, não projeção) |
-| `GET /api/2t/comparecimento` | vigilância de falso comparecimento nas seções recebidas (amostra e paralela) contra a própria seção no 1T: sinais delta ≥ +5 pp, sem biometria ≥ 2× a mediana do município e ≥ 10%, encerramento depois das 17:00 (19:00 à parte), BU do sistema de apuração; contingência; votos da prorrogação; camada municipal (mu com pst ≥ 30%). Cache 10 s. Sinal pede explicação, não prova irregularidade |
+| `GET /api/2t/comparecimento` | vigilância de falso comparecimento nas seções recebidas (amostra e paralela) contra a própria seção no 1T: sinais delta ≥ +5 pp, sem biometria ≥ 2× a mediana do município e ≥ 10%, tardia (30 min além do encerramento da própria seção no 1T, ou depois das 19:00), BU do sistema de apuração; contingência; votos da prorrogação; camada municipal (mu com pst ≥ 30%). Cache 10 s. Sinal pede explicação, não prova irregularidade |
 
 `/api/config` ganha `ufs_governador_2t` e `regioes`; `/api/anomalias` ganha as categorias `pausa`, `divergencia`, `abstencao` e `paralela`. Contratos zod em `tests/api-schemas-2t.ts` e `tests/helpers-2t.ts`.
 

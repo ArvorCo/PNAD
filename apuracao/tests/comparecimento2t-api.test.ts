@@ -86,10 +86,10 @@ beforeAll(() => {
   db.run("UPDATE totais SET comparecimento = 90, abstencao = 10, te = 500 WHERE st = 1");
   new Escritor(db).gravarLote([
     { k: "municipio", rows: [{ cd: "71072", uf: "sp", ibge: "3550308", nome: "SÃO PAULO", capital: 1, eleitores: null, origem: "cm" }] },
-    // +10 pp, 11,1% sem biometria (5× a mediana), encerrada 17:30: escore 3
-    { k: "secao_2t", row: linha("sp", "71072", 1, 1, { aptos: 300, comp: 270, enc: 30, rec: 40, semBio: 30, anoNasc: 30, fl: [150, 100] }) },
-    // encerrada antes das 17:00, BU de cédula, urna de contingência: escore 1
-    { k: "secao_2t", row: linha("sp", "71072", 1, 2, { aptos: 300, comp: 240, enc: -2, rec: 10, tipoArquivo: 4, tipoUrna: 3, fl: [100, 120] }) },
+    // +10 pp, 11,1% sem biometria (5× a mediana), encerrada 17:40 contra 17:03 no 1T (tardia): escore 3
+    { k: "secao_2t", row: linha("sp", "71072", 1, 1, { aptos: 300, comp: 270, enc: 40, rec: 45, semBio: 30, anoNasc: 30, fl: [150, 100] }) },
+    // encerrada 17:20 contra 17:03 no 1T (17 min: não é tardia), BU de cédula, urna de contingência: escore 1
+    { k: "secao_2t", row: linha("sp", "71072", 1, 2, { aptos: 300, comp: 240, enc: 20, rec: 10, tipoArquivo: 4, tipoUrna: 3, fl: [100, 120] }) },
     // sem régua, depois das 19:00, duas cargas
     { k: "secao_2t", row: linha("sp", "71072", 1, 9, { aptos: 200, comp: 150, enc: 130, rec: 140, nCargas: 2, fl: [80, 60] }) },
     // 17:00:30 conta como 17:00 (pontual)
@@ -117,23 +117,24 @@ describe("/api/2t/comparecimento", () => {
     const r = await get();
     expect(r.rotulo).toBe(ROTULO_COMPARECIMENTO);
     expect(r.totais).toEqual({ recebidas: 4, com_ref_1t: 2, com_coord: 2, amostra: 4, paralela: 0 });
-    expect(r.sinais).toEqual({ delta: 1, sem_bio: 1, tarde: 2, apos_19h: 1, papel: 1, contingencia: 2, escore_2_mais: 1 });
+    expect(r.sinais).toEqual({ delta: 1, sem_bio: 1, tarde: 3, tardia: 2, apos_19h: 1, papel: 1, contingencia: 2, escore_2_mais: 1 });
     const s1 = r.top[0];
     expect(s1).toMatchObject({
       uf: "SP", nm: "SÃO PAULO", secao: 1, taxa_comp: 90, taxa_comp_1t: 80, delta_pp: 10, sem_bio_pct: 11.11, sem_bio_mun_p50_1t: 2, ano_nasc_pct: 11.11,
-      encerramento_hhmm: "17:30", encerrou_apos_17h: true, apos_19h: false, papel: false, contingencia: false, fatia_flavio: 60, fatia_flavio_1t: 54.55,
+      encerramento_hhmm: "17:40", enc1_hhmm: "17:03", tardia: true, encerrou_apos_17h: true, apos_19h: false, papel: false, contingencia: false, fatia_flavio: 60, fatia_flavio_1t: 54.55,
       escore: 3, lon: -46.63, lat: -23.55,
     });
     expect(r.contingencia.map((s) => s.secao).sort()).toEqual([2, 9]);
     const s2 = r.top.find((s) => s.secao === 2);
-    expect(s2).toMatchObject({ papel: true, contingencia: true, encerramento_hhmm: "16:58", encerrou_apos_17h: false, escore: 1 });
-    expect(r.top.find((s) => s.secao === 77)).toMatchObject({ encerramento_hhmm: "17:00", encerrou_apos_17h: false, delta_pp: null });
+    expect(s2).toMatchObject({ papel: true, contingencia: true, encerramento_hhmm: "17:20", enc1_hhmm: "17:03", tardia: false, encerrou_apos_17h: true, escore: 1 });
+    expect(r.top.find((s) => s.secao === 9)).toMatchObject({ encerramento_hhmm: "19:10", enc1_hhmm: null, tardia: true, apos_19h: true });
+    expect(r.top.find((s) => s.secao === 77)).toMatchObject({ encerramento_hhmm: "17:00", encerrou_apos_17h: false, tardia: false, delta_pp: null });
     expect(r.delta).toEqual({ n: 2, p50: 0, p90: 10 });
     expect(r.pontos).toHaveLength(2);
     expect(r.referencia.enc_1t_pct.apos_1900).toBe(1.63);
   });
 
-  test("votos da prorrogação: n ao lado, delta de fatia só com n ≥ 20", async () => {
+  test("votos da prorrogação (tardia: 30 min além do 1T ou após 19:00): n ao lado, delta de fatia só com n ≥ 20", async () => {
     const { prorrogacao: p } = await get();
     expect(p.n_min).toBe(20);
     expect(p.brasil).toMatchObject({

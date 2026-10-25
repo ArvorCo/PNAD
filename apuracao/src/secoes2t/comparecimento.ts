@@ -119,6 +119,8 @@ function avaliar(l: Linha, o: OpcoesComparecimento): Avaliada {
   const encHm = encMin === null ? null : Math.floor(encMin);
   const tarde = encHm !== null && encHm >= 1;
   const apos19 = encHm !== null && encHm >= 121;
+  const enc1 = ref?.enc1_min ?? null;
+  const tardia = encMin !== null && (apos19 || (enc1 !== null && encMin - enc1 >= R.tardia_min_vs_1t));
   const papel = l.tipo_arquivo !== null && l.tipo_arquivo >= R.papel_tipo_min;
   const contingencia = (l.tipo_urna !== null && [3, 4, 6].includes(l.tipo_urna)) || (l.n_cargas !== null && l.n_cargas > 1);
   const fl = votosFL(l.votos_json, o.eleFederal);
@@ -128,7 +130,7 @@ function avaliar(l: Linha, o: OpcoesComparecimento): Avaliada {
   const sinais = {
     delta: delta !== null && delta >= R.delta_pp_min,
     sem_bio: semBio !== null && semBio >= R.sem_bio_min_pct && semBioMun !== null && semBio >= R.sem_bio_fator * semBioMun,
-    tarde,
+    tardia,
     papel,
   };
   return {
@@ -136,10 +138,11 @@ function avaliar(l: Linha, o: OpcoesComparecimento): Avaliada {
       uf: l.uf.toUpperCase(), mun: l.mun, nm: o.nome(l.mun) ?? l.mun, zona: l.zona, secao: l.secao, lat: ref?.lat ?? null, lon: ref?.lon ?? null,
       aptos: l.aptos, comp: l.comparecimento, taxa_comp: taxa, taxa_comp_1t: taxa1, delta_pp: delta, sem_bio_pct: semBio, sem_bio_pct_1t: semBio1,
       sem_bio_mun_p50_1t: semBioMun, ano_nasc_pct: pct(l.hab_ano_nascimento, l.comparecimento),
-      encerramento_hhmm: encMin === null ? null : hhmmDeMinutos(Math.floor(encMin)), encerrou_apos_17h: tarde, apos_19h: apos19, papel,
+      encerramento_hhmm: encMin === null ? null : hhmmDeMinutos(Math.floor(encMin)), enc1_hhmm: enc1 === null ? null : hhmmDeMinutos(Math.floor(enc1)),
+      tardia, encerrou_apos_17h: tarde, apos_19h: apos19, papel,
       tipo_arquivo: l.tipo_arquivo, tipo_urna: l.tipo_urna, n_cargas: l.n_cargas, contingencia, fatia_flavio: fatia, fatia_flavio_1t: fatia1,
       recebido_hhmm: recMin === null ? null : hhmmDeMinutos(Math.floor(recMin)), origem: l.origem, sinais,
-      escore: Number(sinais.delta) + Number(sinais.sem_bio) + Number(sinais.tarde) + Number(sinais.papel),
+      escore: Number(sinais.delta) + Number(sinais.sem_bio) + Number(sinais.tardia) + Number(sinais.papel),
     },
     fl,
     fl1,
@@ -151,7 +154,8 @@ function contar(l: readonly SecaoComparecimento[]): ContagemSinais {
   return {
     delta: l.filter((s) => s.sinais.delta).length,
     sem_bio: l.filter((s) => s.sinais.sem_bio).length,
-    tarde: l.filter((s) => s.sinais.tarde).length,
+    tarde: l.filter((s) => s.encerrou_apos_17h).length,
+    tardia: l.filter((s) => s.tardia).length,
     apos_19h: l.filter((s) => s.apos_19h).length,
     papel: l.filter((s) => s.sinais.papel).length,
     contingencia: l.filter((s) => s.contingencia).length,
@@ -164,11 +168,11 @@ const media = (v: readonly (number | null)[]): number | null => {
   return o.length === 0 ? null : r2(o.reduce((a, b) => a + b, 0) / o.length);
 };
 
-/** Tardias (encerradas depois das 17:00 de Brasília) contra o 1T da própria seção e contra as pontuais do município. */
+/** Tardias (≥ 30 min depois do encerramento da própria seção no 1T, ou depois das 19:00) contra o 1T e contra as pontuais do município. */
 export function blocoProrrogacao(uf: string, av: readonly Avaliada[], nMin = N_MIN_PRORROGACAO): BlocoProrrogacao {
   const comHora = av.filter((a) => a.encMin !== null);
-  const tardias = comHora.filter((a) => a.s.encerrou_apos_17h);
-  const pontuais = comHora.filter((a) => !a.s.encerrou_apos_17h);
+  const tardias = comHora.filter((a) => a.s.tardia);
+  const pontuais = comHora.filter((a) => !a.s.tardia);
   // 2T − 1T na própria seção, ponderado pelos votos dos dois no 2T
   let w1 = 0;
   let d1 = 0;
@@ -192,10 +196,10 @@ export function blocoProrrogacao(uf: string, av: readonly Avaliada[], nMin = N_M
       g = { t: [0, 0], p: [0, 0], nt: 0 };
       porMun.set(k, g);
     }
-    const alvo = a.s.encerrou_apos_17h ? g.t : g.p;
+    const alvo = a.s.tardia ? g.t : g.p;
     alvo[0] += a.fl[0];
     alvo[1] += a.fl[1];
-    if (a.s.encerrou_apos_17h) g.nt += 1;
+    if (a.s.tardia) g.nt += 1;
   }
   let w2 = 0;
   let d2 = 0;

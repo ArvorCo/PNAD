@@ -268,6 +268,7 @@ const Contagem = {
   delta: z.number().int().nonnegative(),
   sem_bio: z.number().int().nonnegative(),
   tarde: z.number().int().nonnegative(),
+  tardia: z.number().int().nonnegative(),
   apos_19h: z.number().int().nonnegative(),
   papel: z.number().int().nonnegative(),
   contingencia: z.number().int().nonnegative(),
@@ -279,10 +280,10 @@ export const SecaoComparecimentoSchema = z
     uf: Uf, mun: z.string().regex(/^\d{5}$/), nm: z.string(), zona: z.number().int(), secao: z.number().int(), lat: NumN, lon: NumN,
     aptos: z.number().int().nullable(), comp: z.number().int().nullable(), taxa_comp: NumN, taxa_comp_1t: NumN, delta_pp: NumN,
     sem_bio_pct: NumN, sem_bio_pct_1t: NumN, sem_bio_mun_p50_1t: NumN, ano_nasc_pct: NumN, encerramento_hhmm: Hhmm.nullable(),
-    encerrou_apos_17h: z.boolean(), apos_19h: z.boolean(), papel: z.boolean(), tipo_arquivo: z.number().int().nullable(),
+    enc1_hhmm: Hhmm.nullable(), tardia: z.boolean(), encerrou_apos_17h: z.boolean(), apos_19h: z.boolean(), papel: z.boolean(), tipo_arquivo: z.number().int().nullable(),
     tipo_urna: z.number().int().nullable(), n_cargas: z.number().int().nullable(), contingencia: z.boolean(), fatia_flavio: Pct.nullable(),
     fatia_flavio_1t: Pct.nullable(), recebido_hhmm: Hhmm.nullable(), origem: z.enum(["amostra", "paralela"]),
-    sinais: z.object({ delta: z.boolean(), sem_bio: z.boolean(), tarde: z.boolean(), papel: z.boolean() }).strict(),
+    sinais: z.object({ delta: z.boolean(), sem_bio: z.boolean(), tardia: z.boolean(), papel: z.boolean() }).strict(),
     escore: z.number().int().min(0).max(4),
   })
   .strict();
@@ -306,7 +307,8 @@ export const ComparecimentoSchema = z
     rotulo: z.string().min(20),
     regras: z
       .object({
-        delta_pp_min: z.number(), sem_bio_fator: z.number(), sem_bio_min_pct: z.number(), tarde_hhmm: Hhmm, apos_hhmm: Hhmm, papel_tipo_min: z.number(),
+        delta_pp_min: z.number(), sem_bio_fator: z.number(), sem_bio_min_pct: z.number(), tarde_hhmm: Hhmm, apos_hhmm: Hhmm, tardia_min_vs_1t: z.number(),
+        papel_tipo_min: z.number(),
         mun_pst_min: z.number(),
       })
       .strict(),

@@ -969,6 +969,7 @@ function contagem(x: unknown): ContagemSinais {
     delta: num(c.delta),
     sem_bio: num(c.sem_bio),
     tarde: num(c.tarde),
+    tardia: num(c.tardia),
     apos_19h: num(c.apos_19h),
     papel: num(c.papel),
     contingencia: num(c.contingencia),
@@ -996,6 +997,8 @@ function secaoComparecimento(b: Bruto): SecaoComparecimento {
     sem_bio_mun_p50_1t: numOuNulo(b.sem_bio_mun_p50_1t),
     ano_nasc_pct: numOuNulo(b.ano_nasc_pct),
     encerramento_hhmm: txtOuNulo(b.encerramento_hhmm),
+    enc1_hhmm: txtOuNulo(b.enc1_hhmm),
+    tardia: bool(b.tardia),
     encerrou_apos_17h: bool(b.encerrou_apos_17h),
     apos_19h: bool(b.apos_19h),
     papel: bool(b.papel),
@@ -1007,7 +1010,7 @@ function secaoComparecimento(b: Bruto): SecaoComparecimento {
     fatia_flavio_1t: numOuNulo(b.fatia_flavio_1t),
     recebido_hhmm: txtOuNulo(b.recebido_hhmm),
     origem: b.origem === "paralela" ? "paralela" : "amostra",
-    sinais: { delta: bool(si.delta), sem_bio: bool(si.sem_bio), tarde: bool(si.tarde), papel: bool(si.papel) },
+    sinais: { delta: bool(si.delta), sem_bio: bool(si.sem_bio), tardia: bool(si.tardia), papel: bool(si.papel) },
     escore: num(b.escore),
   };
 }

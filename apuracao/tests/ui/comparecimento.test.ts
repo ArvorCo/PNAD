@@ -45,7 +45,7 @@ describe("rota /api/2t/comparecimento no telão", () => {
     expect(cheio.sinais.escore_2_mais).toBeGreaterThan(0);
     expect(cheio.sinais.contingencia).toBeGreaterThan(0);
     expect(cheio.top[0]?.escore).toBeGreaterThanOrEqual(cheio.top[cheio.top.length - 1]?.escore ?? 0);
-    for (const s of cheio.top) expect(s.escore).toBe([s.sinais.delta, s.sinais.sem_bio, s.sinais.tarde, s.sinais.papel].filter(Boolean).length);
+    for (const s of cheio.top) expect(s.escore).toBe([s.sinais.delta, s.sinais.sem_bio, s.sinais.tardia, s.sinais.papel].filter(Boolean).length);
     expect(cheio.municipios.every(m => m.pst >= 30)).toBe(true);
     expect(cheio.municipios_top.every(m => m.delta_pp > 0)).toBe(true);
     const ns = cheio.prorrogacao.por_uf.map(u => u.n_tardias);

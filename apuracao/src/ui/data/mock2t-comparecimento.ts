@@ -79,6 +79,9 @@ function secao(i: number): SecaoMock {
   const semMun = 2.5 + a01(`cb${uf}`) * 2.5;
   const semBio = raro > 0.955 || a01(`cz${i}`) > 0.96 ? 12 + a01(`ce${i}`) * 14 : semMun * (0.4 + a01(`cg${i}`) * 1.2);
   const enc = a01(`ct${i}`) < 0.45 ? -50 + a01(`ch${i}`) * 50 : a01(`ck${i}`) < 0.7 ? 1 + a01(`cj${i}`) * 100 : 121 + a01(`cl${i}`) * 25;
+  // encerramento da mesma seção no 1T: perto das 17:00, cauda até 18:30
+  const enc1 = Math.round(a01(`cu1${i}`) < 0.8 ? a01(`cu2${i}`) * 20 : 20 + a01(`cu3${i}`) * 70);
+  const tardia = enc > 120 || enc - enc1 >= REGRAS_COMPARECIMENTO.tardia_min_vs_1t;
   const tipoArq = a01(`cp${i}`) > 0.985 ? 4 : 1;
   const tipoUrna = a01(`cq${i}`) > 0.975 ? 4 : 1;
   const cargas = a01(`cw${i}`) > 0.99 ? 2 : 1;
@@ -87,7 +90,7 @@ function secao(i: number): SecaoMock {
   const sinais = {
     delta: delta >= REGRAS_COMPARECIMENTO.delta_pp_min,
     sem_bio: semBio >= Math.max(REGRAS_COMPARECIMENTO.sem_bio_min_pct, REGRAS_COMPARECIMENTO.sem_bio_fator * semMun),
-    tarde: enc > 0,
+    tardia,
     papel: tipoArq >= REGRAS_COMPARECIMENTO.papel_tipo_min,
   };
   return {
@@ -108,6 +111,8 @@ function secao(i: number): SecaoMock {
     sem_bio_mun_p50_1t: r2(semMun),
     ano_nasc_pct: r2(semBio * 0.8),
     encerramento_hhmm: hhmm(enc),
+    enc1_hhmm: hhmm(enc1),
+    tardia,
     encerrou_apos_17h: enc > 0,
     apos_19h: enc > 120,
     papel: sinais.papel,
@@ -120,7 +125,7 @@ function secao(i: number): SecaoMock {
     recebido_hhmm: hhmm(Math.max(enc, 0) + 4),
     origem: a01(`cpa${i}`) > 0.95 ? "paralela" : "amostra",
     sinais,
-    escore: Number(sinais.delta) + Number(sinais.sem_bio) + Number(sinais.tarde) + Number(sinais.papel),
+    escore: Number(sinais.delta) + Number(sinais.sem_bio) + Number(sinais.tardia) + Number(sinais.papel),
     enc,
     votos: Math.round(comp * 0.94),
   };
@@ -135,8 +140,8 @@ const fatia = (l: readonly SecaoMock[], campo: "fatia_flavio" | "fatia_flavio_1t
 };
 
 function prorrogacao(uf: string, l: readonly SecaoMock[], nMin: number): BlocoProrrogacao {
-  const tard = l.filter(x => x.enc > 0);
-  const pont = l.filter(x => x.enc <= 0);
+  const tard = l.filter(x => x.tardia);
+  const pont = l.filter(x => !x.tardia);
   const vs1 = tard.length >= nMin ? r2(fatia(tard, "fatia_flavio") - fatia(tard, "fatia_flavio_1t")) : null;
   const vsP = tard.length >= nMin && pont.length > 0 ? r2(fatia(tard, "fatia_flavio") - fatia(pont, "fatia_flavio")) : null;
   return {
@@ -167,7 +172,8 @@ export function comparecimentoMock(min: number, at: string, municipios: (uf: str
   const conta = (l: readonly SecaoMock[]): Record<string, number> => ({
     delta: l.filter(s => s.sinais.delta).length,
     sem_bio: l.filter(s => s.sinais.sem_bio).length,
-    tarde: l.filter(s => s.sinais.tarde).length,
+    tarde: l.filter(s => s.encerrou_apos_17h).length,
+    tardia: l.filter(s => s.tardia).length,
     apos_19h: l.filter(s => s.apos_19h).length,
     papel: l.filter(s => s.papel).length,
     contingencia: l.filter(s => s.contingencia).length,
