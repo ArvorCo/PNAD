@@ -66,6 +66,8 @@ def panel(name, rows):
             "(soma PNAD − recomposição com o perfil de referência).</p>"
         )
         note += f'<p class="note history-preview">{esc(latest["renda"]["nota"])}</p>'
+    if latest.get("renda", {}).get("perfil_tipo") == "hipotese_perfil_condicional":
+        note += f'<p class="note history-preview">{esc(latest["renda"]["nota"])}</p>'
     if latest.get("eleitor_provavel_oficial"):
         note += (
             '<p class="note"><b>24/10: amostra completa 46 × 45; likely voter oficial 51 × 49.</b> '

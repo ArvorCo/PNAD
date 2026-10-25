@@ -214,7 +214,8 @@ def cartao(pesquisa: dict, turno: str | None = None) -> str:
     )
     perfil_verbo = (
         "O perfil assumido tem"
-        if renda.get("perfil_tipo") == "hipotese_onda_anterior"
+        if renda.get("perfil_tipo")
+        in {"hipotese_onda_anterior", "hipotese_perfil_condicional"}
         else (
             "O registro prevê"
             if renda.get("perfil_tipo") == "cota_registrada"

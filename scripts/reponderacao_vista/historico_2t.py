@@ -142,6 +142,8 @@ def table(rows):
             base = "Válidos oficiais · likely voter"
         if poll.get("renda", {}).get("perfil_tipo") == "hipotese_onda_anterior":
             note += " · PRÉVIA PNAD com perfil da onda anterior"
+        elif poll.get("renda", {}).get("perfil_tipo") == "hipotese_perfil_condicional":
+            note += " · PNAD com hipótese de perfil condicional"
         version = poll.get("rotulo_historico", "")
         body.append(
             f'<tr data-history-id="{esc(poll["id"])}"><th scope="row">'

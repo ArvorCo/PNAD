@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-24T21:17:52",
+ "gerado_em": "2026-10-24T21:56:13",
  "referencia": "2026-10-24",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
@@ -28876,6 +28876,167 @@
    "arquivo": "analysis/reponderacao/pesquisas/mda_2026-10-23.json"
   },
   {
+   "id": "verita_2026-10-23",
+   "instituto": "Veritá",
+   "contratante": "Veritá, recursos próprios",
+   "registro_tse": "BR-03181/2026",
+   "campo": {
+    "inicio": "2026-10-19",
+    "fim": "2026-10-23"
+   },
+   "divulgacao": "2026-10-24",
+   "n": 15554,
+   "metodo": "entrevistas telefônicas automatizadas",
+   "fonte": {
+    "arquivo": "data/originals/verita_102026_24/relatorio.pdf",
+    "url": "https://lgjdbpskgjfbmlffbntx.supabase.co/storage/v1/object/public/pesquisas/pdfs/1792889305750_Relatorio_Brasil_24_de_outubro_de_2026.pdf",
+    "sha256": "095ba17d5939d7a8a95a868cc22df4482fb5261adc05e2433f92a86b06f12552",
+    "bytes": 1033781,
+    "url_publica": "https://brasil.arvor.co/fontes/verita_24102026.pdf",
+    "pagina_oficial": "https://eleicoes26.institutoverita.com.br/pesquisa/7b9ce6dd-df07-45b7-aef6-c8d8abc11eba",
+    "pdf": "data/originals/verita_102026_24/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Veritá: relatório oficial de 24/10",
+    "total_paginas": 13,
+    "paginas": {
+     "metodologia": 3,
+     "perfil_renda": 4,
+     "presenca": 5,
+     "2t_topline": 9,
+     "2t_validos": 9,
+     "2t_renda": 10,
+     "sexo": 10
+    },
+    "conferido_em": "2026-10-24",
+    "status": "Íntegra conferida; PNAD com hipótese de perfil condicional entre declarantes.",
+    "nota": "Publicação oficial de 24/10, 13 páginas, BR-03181/2026, campo 19–23/10, n=15.554 em 905 municípios, URA. Totais F/L/BN/NS na p. 9: 49,44/46,46/1,43/2,67; válidos oficiais 51,56/48,44. Perfil familiar p. 4: 40,4/40,9/18,7 e frequências 6.283/6.362/2.909 já somam 100% e 15.554. NS/NR adicional 1,7% e 260 gera 101,7% e 15.814, incompatível com a amostra. Por solicitação do usuário, a sensibilidade assume 40,4/40,9/18,7 como composição entre declarantes e parcela ajustável (15.554−260)/15.554 = 98,33%. Os sem renda conservam o publicado no ajuste por delta. É hipótese de reconciliação, não perfil identificado nem contagem corrigida pelo instituto. Cruzamentos atuais p. 10 entram nas duas centrais e nos gráficos. 'Ausente' na tabela de voto reúne BN+NS (4,10%), não abstenção. Certeza declarada de votar 97,51% (p. 5) não é comparecimento calibrado nem modelo de eleitor provável. Expectativa de vitória p. 11 não é voto."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 49.44,
+     "lula": 46.46,
+     "branco_nulo": 1.43,
+     "indecisos": 2.67
+    }
+   },
+   "publicado_validos": {
+    "2t": {
+     "flavio": 51.56,
+     "lula": 48.44
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "0 a 2 SM",
+     "2 a 5 SM",
+     "Mais de 5 SM"
+    ],
+    "cortes_brl_202604": [
+     3215.9,
+     8039.76,
+     null
+    ],
+    "amostra_pct": [
+     40.4,
+     40.9,
+     18.7
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      35.187,
+      39.259,
+      25.554
+     ],
+     "pessoas16_habitual": [
+      34.864,
+      40.402,
+      24.734
+     ],
+     "domicilios_efetivo": [
+      42.672,
+      35.771,
+      21.557
+     ]
+    },
+    "nota": "Publicação oficial de 24/10, 13 páginas, BR-03181/2026, campo 19–23/10, n=15.554 em 905 municípios, URA. Totais F/L/BN/NS na p. 9: 49,44/46,46/1,43/2,67; válidos oficiais 51,56/48,44. Perfil familiar p. 4: 40,4/40,9/18,7 e frequências 6.283/6.362/2.909 já somam 100% e 15.554. NS/NR adicional 1,7% e 260 gera 101,7% e 15.814, incompatível com a amostra. Por solicitação do usuário, a sensibilidade assume 40,4/40,9/18,7 como composição entre declarantes e parcela ajustável (15.554−260)/15.554 = 98,33%. Os sem renda conservam o publicado no ajuste por delta. É hipótese de reconciliação, não perfil identificado nem contagem corrigida pelo instituto. Cruzamentos atuais p. 10 entram nas duas centrais e nos gráficos. 'Ausente' na tabela de voto reúne BN+NS (4,10%), não abstenção. Certeza declarada de votar 97,51% (p. 5) não é comparecimento calibrado nem modelo de eleitor provável. Expectativa de vitória p. 11 não é voto. A etapa pré/pós-ponderação do perfil não está explicitada.",
+    "perfil_tipo": "hipotese_perfil_condicional"
+   },
+   "desvio_ate_primeira_faixa": 5.213,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+     ],
+     "publicado": {
+      "flavio": 49.44,
+      "lula": 46.46,
+      "branco_nulo": 1.43,
+      "indecisos": 2.67
+     },
+     "recomposto": {
+      "flavio": 49.46,
+      "lula": 46.472,
+      "branco_nulo": 1.387,
+      "indecisos": 2.68
+     },
+     "residuo_max": 0.02,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 49.981,
+        "lula": 46.01,
+        "branco_nulo": 1.343,
+        "indecisos": 2.666
+       },
+       "ajustado": {
+        "flavio": 49.953,
+        "lula": 46.005,
+        "branco_nulo": 1.386,
+        "indecisos": 2.656
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 50.014,
+        "lula": 45.976,
+        "branco_nulo": 1.346,
+        "indecisos": 2.664
+       },
+       "ajustado": {
+        "flavio": 49.984,
+        "lula": 45.972,
+        "branco_nulo": 1.389,
+        "indecisos": 2.654
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 49.233,
+        "lula": 46.697,
+        "branco_nulo": 1.378,
+        "indecisos": 2.692
+       },
+       "ajustado": {
+        "flavio": 49.217,
+        "lula": 46.681,
+        "branco_nulo": 1.42,
+        "indecisos": 2.682
+       }
+      }
+     },
+     "parcela_ajustada_pct": 98.32840426899833,
+     "gap_publicado": -2.979999999999997,
+     "gap_ajustado": -3.9480000000000004,
+     "margem_diferenca_95": 1.538
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/verita_2026-10-23.json"
+  },
+  {
    "id": "datafolha_2026-10-24",
    "instituto": "Datafolha",
    "contratante": "Folha de S.Paulo e TV Globo",
@@ -36978,7 +37139,7 @@
       "poderdata_2026-10-21",
       "quaest_2026-10-20",
       "realtime_2026-10-22",
-      "verita_2026-10-19"
+      "verita_2026-10-23"
      ],
      "institutos": [
       "Alfa Inteligência/TMC",
@@ -44112,7 +44273,7 @@
        "poderdata_2026-10-21",
        "quaest_2026-10-20",
        "realtime_2026-10-22",
-       "verita_2026-10-19"
+       "verita_2026-10-23"
       ],
       "institutos": [
        "Alfa Inteligência/TMC",
@@ -46211,6 +46372,31 @@
       }
      },
      {
+      "id": "verita_2026-10-23",
+      "instituto": "Veritá",
+      "campo": {
+       "inicio": "2026-10-19",
+       "fim": "2026-10-23"
+      },
+      "divulgacao": "2026-10-24",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 2.67,
+       "branco_nulo": 1.43
+      },
+      "ajustado": {
+       "indecisos": 2.656,
+       "branco_nulo": 1.386
+      }
+     },
+     {
       "id": "datafolha_2026-10-24",
       "instituto": "Datafolha",
       "campo": {
@@ -46519,7 +46705,7 @@
        1.82,
        1.73,
        1.52,
-       1.62
+       1.79
       ],
       "branco_nulo": [
        null,
@@ -46873,7 +47059,7 @@
        1.75,
        1.68,
        1.47,
-       1.56
+       1.73
       ],
       "branco_nulo": [
        null,
@@ -47056,11 +47242,11 @@
     "regra": "Mesma média móvel retrospectiva de 7 dias dos candidatos: divulgações de D-6 a D, última onda elegível de cada instituto e peso igual entre casas. As duas linhas usam as mesmas ondas com ambas as categorias publicadas e cruzadas por renda; os pesos são idênticos antes e depois do ajuste. Não há preenchimento por zero nem por complemento de 100%. Branco/nulo inclui não vai votar quando essa resposta está agregada pelo instituto; parcelas separadas são somadas antes da média. Indecisos inclui não sabe conforme a codificação da fonte. Os rótulos e a oferta dessas respostas variam entre institutos. Não vai votar é declaração de intenção, não estimativa de abstenção. A cobertura difere da dos candidatos; as linhas não formam uma partição que some 100%.",
     "ultimo": {
      "publicado": {
-      "indecisos": 1.62,
+      "indecisos": 1.79,
       "branco_nulo": 3.62
      },
      "ajustado": {
-      "indecisos": 1.56,
+      "indecisos": 1.73,
       "branco_nulo": 3.65
      }
     }
@@ -51445,7 +51631,7 @@
       46.04,
       46.27,
       46.39,
-      46.58
+      46.45
      ],
      "flavio": [
       null,
@@ -51621,7 +51807,7 @@
       48.28,
       48.28,
       48.57,
-      48.45
+      48.43
      ],
      "indecisos": [
       null,
@@ -51797,7 +51983,7 @@
       1.82,
       1.73,
       1.52,
-      1.62
+      1.79
      ],
      "branco_nulo": [
       null,
@@ -52151,7 +52337,7 @@
       45.36,
       45.61,
       45.79,
-      45.9
+      45.75
      ],
      "flavio": [
       null,
@@ -52327,7 +52513,7 @@
       49.01,
       48.97,
       49.2,
-      49.15
+      49.14
      ],
      "indecisos": [
       null,
@@ -52503,7 +52689,7 @@
       1.75,
       1.68,
       1.47,
-      1.56
+      1.73
      ],
      "branco_nulo": [
       null,
@@ -54822,22 +55008,22 @@
     ],
     "media_simples": {
      "publicado": {
-      "lula": 46.33,
-      "flavio": 47.99
+      "lula": 46.2,
+      "flavio": 47.97
      },
      "ajustado": {
-      "lula": 45.65,
+      "lula": 45.52,
       "flavio": 48.7
      }
     },
     "kernel": {
      "publicado": {
-      "lula": 46.58,
-      "flavio": 48.45
+      "lula": 46.45,
+      "flavio": 48.43
      },
      "ajustado": {
-      "lula": 45.9,
-      "flavio": 49.15
+      "lula": 45.75,
+      "flavio": 49.14
      }
     },
     "cobertura_movel": {
@@ -54856,7 +55042,7 @@
       "poderdata_2026-10-21",
       "quaest_2026-10-20",
       "realtime_2026-10-22",
-      "verita_2026-10-19"
+      "verita_2026-10-23"
      ],
      "institutos": [
       "Alfa Inteligência/TMC",

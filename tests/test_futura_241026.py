@@ -42,5 +42,8 @@ def test_futura_replaces_previous_wave_only_in_projection():
     before = json.loads(
         (ROOT / "docs/assets/reponderacao_cenarios/7b8ef4f4a3b871ce.json").read_text()
     )
-    assert data["central"] == before["central"]
+    futura_snapshot = json.loads(
+        (ROOT / "docs/assets/reponderacao_cenarios/1b2c2ca5884932ac.json").read_text()
+    )
+    assert futura_snapshot["central"] == before["central"]
     assert data["projection"]["official"]["flavio"] == 51

@@ -122,6 +122,8 @@ def current_coverage(ns):
             status += " · cotas registradas, ajuste provisório"
         elif p.get("renda", {}).get("perfil_tipo") == "hipotese_onda_anterior":
             status += " · PRÉVIA com perfil da onda anterior"
+        elif p.get("renda", {}).get("perfil_tipo") == "hipotese_perfil_condicional":
+            status += " · hipótese de perfil condicional entre declarantes"
         elif (
             p["id"] == "quaest_2026-10-13"
             and p.get("renda", {}).get("perfil_tipo") == "perfil_publicado"

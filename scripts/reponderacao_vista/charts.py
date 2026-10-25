@@ -607,7 +607,8 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
     renda = pesquisa["renda"]
     perfil = (
         "composição assumida"
-        if renda.get("perfil_tipo") == "hipotese_onda_anterior"
+        if renda.get("perfil_tipo")
+        in {"hipotese_onda_anterior", "hipotese_perfil_condicional"}
         else (
             "cota registrada"
             if renda.get("perfil_tipo") == "cota_registrada"
@@ -661,7 +662,8 @@ def renda_svg(pesquisa: dict) -> str:
     renda = pesquisa["renda"]
     perfil = (
         "composição assumida"
-        if renda.get("perfil_tipo") == "hipotese_onda_anterior"
+        if renda.get("perfil_tipo")
+        in {"hipotese_onda_anterior", "hipotese_perfil_condicional"}
         else (
             "cota registrada"
             if renda.get("perfil_tipo") == "cota_registrada"

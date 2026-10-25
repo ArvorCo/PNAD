@@ -118,7 +118,10 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
         composicao = f"A amostra tem {br(-desvio, 1)} pontos a menos na faixa mais pobre que a PNAD."
     if pesquisa["renda"].get("perfil_tipo") == "cota_registrada":
         composicao = composicao.replace("A amostra tem", "A cota registrada tem")
-    elif pesquisa["renda"].get("perfil_tipo") == "hipotese_onda_anterior":
+    elif pesquisa["renda"].get("perfil_tipo") in {
+        "hipotese_onda_anterior",
+        "hipotese_perfil_condicional",
+    }:
         composicao = composicao.replace("A amostra tem", "O perfil assumido tem")
     corpo.append(f" {composicao} Prova de leitura: {br(t['residuo_max'], 2)}.</p>")
     if pesquisa["fonte"].get("nota"):
