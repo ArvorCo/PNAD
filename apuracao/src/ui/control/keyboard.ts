@@ -26,10 +26,18 @@ export interface AcoesTeclado {
   refetch(): void;
   /** Teclas próprias da tela (↑/↓ entre zonas). Devolve true se tratou. */
   teclaDaTela(tecla: string): boolean;
+  /**
+   * Boletim falado: `b` alterna (toca o escolhido ou o último pronto, pausa, retoma); `[` e `]`
+   * escolhem o item na lista do widget; Shift+B e Ctrl+B param.
+   * Shift+B só para quando há boletim carregado; sem boletim, continua abrindo a abstenção.
+   * Devolve true se tratou.
+   */
+  boletim?(acao: "alternar" | "parar" | "anterior" | "seguinte"): boolean;
 }
 
 const JANELA = 900;
-const PREFIXOS = new Set(["a", "m", "r"]);
+// b também espera a janela: b + a é a Bahia.
+const PREFIXOS = new Set(["a", "b", "m", "r"]);
 
 export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void {
   const lerUf = criarLeitorUf(JANELA);
@@ -48,9 +56,14 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     else if (k === "f") a.tela_cheia();
     else if (k === "h") a.hud();
     else if (k === "x") a.irPara({ v: "exterior", uf: null, mun: null, zonas: false, zona: null });
+    else if (k === "b") a.boletim?.("alternar");
   };
 
   const aoTeclar = (ev: KeyboardEvent): void => {
+    if (ev.ctrlKey && !ev.metaKey && !ev.altKey && ev.code === "KeyB") {
+      if (a.boletim?.("parar")) ev.preventDefault();
+      return;
+    }
     if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
     if (a.paletaAberta()) {
       if (ev.key === "Escape") {
@@ -75,9 +88,13 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     else if (k === "Escape") a.paleta(false);
     else if (k === "ArrowUp" || k === "ArrowDown") tratou = a.teclaDaTela(k);
     else if (k === "," || k === ".") tratou = a.teclaDaTela(k);
+    else if (k === "[") tratou = a.boletim?.("anterior") ?? false;
+    else if (k === "]") tratou = a.boletim?.("seguinte") ?? false;
     else if (/^[0-9]$/.test(k)) {
       const d = destinoDoDigito(k, a.ufAtual(), a.turno());
       if (d) a.irPara(d);
+    } else if (ev.shiftKey && (k === "B" || k === "b") && a.boletim?.("parar")) {
+      cancelarAdiado();
     } else if (ev.shiftKey && destinoDaTecla2T(k)) {
       // Shift + letra abre as telas do 2º turno sem disputar a letra com as siglas de UF.
       cancelarAdiado();

@@ -198,8 +198,10 @@ export class Boletins {
     const c = lerControle(this.dir);
     const agora = new Date(this.agora()).toISOString();
     if (acao === "tocar") {
-      if (!["pronto", "tocado", "no_ar"].includes(it.estado)) return erro(409, `boletim ${id} está ${it.estado}`);
+      // "tocado" e "descartado" são rótulos, nunca bloqueio: qualquer boletim com mp3 toca de novo.
+      if (it.estado === "gerando") return erro(409, `boletim ${id} ainda está gerando`);
       if (!existsSync(caminho(this.dir, `${id}.mp3`))) return erro(409, `boletim ${id} sem áudio`);
+      delete c.descartados[id];
       if (c.no_ar && c.no_ar.id !== id) {
         c.tocados[c.no_ar.id] = agora;
         this.emitir({ kind: "fim", id: c.no_ar.id, motivo: "substituido" });

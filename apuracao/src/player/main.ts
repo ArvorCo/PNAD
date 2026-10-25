@@ -1,7 +1,8 @@
 // Player do boletim falado para a live: browser source do OBS em /boletim.html. Assina o SSE
 // (/events?so=boletim), toca o mp3 quando o diretor manda pôr no ar, mostra uma tarja discreta com
-// barra de progresso e avisa o servidor no fim. Parâmetros: tarja=0 (só áudio), pos=bl|br|tl|tr,
-// vol=0..1. No OBS o autoplay não pede gesto; num Chrome comum aparece "clique para liberar o áudio".
+// barra de progresso e avisa o servidor no fim. Desde 25/10 é a reserva: o telão toca o boletim no
+// próprio widget e, aberto no mesmo navegador, este player cede a vez. Parâmetros: tarja=0 (só
+// áudio), pos=bl|br|tl|tr, vol=0..1, forcar=1 (toca mesmo com o telão tocando). No OBS o autoplay não pede gesto; num Chrome comum aparece "clique para liberar o áudio".
 
 import "./player.css";
 
@@ -36,6 +37,18 @@ const titulo = raiz.querySelector(".tarja-titulo") as HTMLElement;
 const barra = raiz.querySelector(".tarja-barra i") as HTMLElement;
 const gesto = raiz.querySelector(".gesto") as HTMLButtonElement;
 
+// Um player só: se o telão (mesmo navegador) estiver tocando o boletim, este cede, salvo ?forcar=1.
+const forcar = params.get("forcar") === "1";
+let telaoVistoEm = 0;
+if (typeof BroadcastChannel !== "undefined") {
+  const canal = new BroadcastChannel("apuracao");
+  canal.onmessage = ev => {
+    const d = ev.data as { tipo?: unknown; audio?: unknown } | null;
+    if (d && d.tipo === "boletim-telao" && d.audio === true) telaoVistoEm = Date.now();
+  };
+}
+const telaoTocando = (): boolean => !forcar && Date.now() - telaoVistoEm < 5000;
+
 const audio = new Audio();
 audio.preload = "auto";
 audio.volume = vol;
@@ -60,6 +73,7 @@ function parar(id?: string): void {
 
 function tocar(id: string, hora: string | null | undefined, desde: string): void {
   if (atual && atual.id === id && atual.desde === desde) return;
+  if (telaoTocando()) return;
   atual = { id, desde };
   const deslocamento = (Date.now() - Date.parse(desde)) / 1000;
   audio.src = `/boletins/${encodeURIComponent(id)}.mp3?v=${encodeURIComponent(desde)}`;

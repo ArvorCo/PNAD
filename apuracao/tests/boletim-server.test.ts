@@ -89,6 +89,12 @@ describe("rotas do boletim", () => {
     expect((await post("/api/boletins/1710/descartar")).status).toBe(200);
     l = (await (await fetch(`${srv.url}/api/boletins`)).json()) as { itens: { id: string; estado: string }[]; no_ar: unknown };
     expect(l.itens.some(i => i.id === "1710")).toBe(false);
+    // tocado e descartado tocam de novo; tocar um descartado o devolve à lista
+    expect((await post("/api/boletins/1720/tocar")).status).toBe(200);
+    expect((await post("/api/boletins/1710/tocar")).status).toBe(200);
+    l = (await (await fetch(`${srv.url}/api/boletins`)).json()) as { itens: { id: string; estado: string }[]; no_ar: unknown };
+    expect(l.itens.find(i => i.id === "1710")?.estado).toBe("no_ar");
+    expect((await post("/api/boletins/parar")).status).toBe(200);
   });
 
   test("mp3 inteiro e por faixa", async () => {
@@ -122,6 +128,8 @@ describe("rotas do boletim", () => {
     gravarJson(join(d2, "indice.json"), { atualizado_em: "x", itens: [item("1740", "pronto", "2026-10-25T20:40:00Z")] });
     b.observar();
     expect(evs.map(e => e.kind)).toEqual(["pronto"]);
+    // pronto nunca põe no ar sozinho: sem ação humana, controle continua sem nada no ar
+    expect(lerControle(d2).no_ar).toBeNull();
     gravarJson(join(d2, "controle.json"), { atualizado_em: "", no_ar: { id: "1740", desde: "2026-10-25T20:41:00Z", duracao_s: 30 }, tocados: {}, descartados: {} });
     agora = Date.parse("2026-10-25T20:41:59Z");
     b.observar();

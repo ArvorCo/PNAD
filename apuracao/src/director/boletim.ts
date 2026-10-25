@@ -58,7 +58,10 @@ export function criarPainelBoletim(): HTMLElement {
   const bGerar = el("button", { type: "button" }, "gerar agora");
   const bParar = el("button", { type: "button", class: "bol-parar" }, "parar");
   const msg = el("span", { class: "bol-msg", role: "status" });
-  acoes.append(bGerar, bParar, msg);
+  const todosRot = el("label", { class: "bol-todos" });
+  const todos = el("input", { type: "checkbox" });
+  todosRot.append(todos, "mostrar descartados");
+  acoes.append(bGerar, bParar, todosRot, msg);
   const lista = el("ol", { class: "bol-lista" });
   sec.append(status, noAr, acoes, lista);
 
@@ -78,6 +81,10 @@ export function criarPainelBoletim(): HTMLElement {
 
   bGerar.addEventListener("click", () => void acao("/api/boletins/gerar", "pedido de geração enviado"));
   bParar.addEventListener("click", () => void acao("/api/boletins/parar", "boletim parado"));
+  todos.addEventListener("change", () => {
+    assinatura = "";
+    void atualizar();
+  });
 
   const linha = (it: Item): HTMLLIElement => {
     const li = el("li", { "data-estado": it.estado, "data-id": it.id });
@@ -88,8 +95,8 @@ export function criarPainelBoletim(): HTMLElement {
       el("span", { class: "bol-num" }, `${mmss(it.duracao_s)} · ${it.palavras ?? 0} palavras${it.modo ? ` · ${it.modo}` : ""}${it.origem === "manual" ? " · manual" : ""}`),
     );
     const botoes = el("span", { class: "bol-botoes" });
-    if (it.estado === "pronto" || it.estado === "tocado") {
-      const b = el("button", { type: "button", class: "bol-tocar" }, it.estado === "tocado" ? "tocar de novo" : "tocar");
+    if (it.estado !== "gerando" && it.estado !== "erro") {
+      const b = el("button", { type: "button", class: "bol-tocar" }, it.estado === "pronto" ? "tocar" : "tocar de novo");
       b.addEventListener("click", () => void acao(`/api/boletins/${it.id}/tocar`, `boletim das ${it.hora} no ar`));
       botoes.append(b);
     }
@@ -155,7 +162,7 @@ export function criarPainelBoletim(): HTMLElement {
 
   async function atualizar(): Promise<void> {
     try {
-      const r = await fetch("/api/boletins", { cache: "no-store" });
+      const r = await fetch(todos.checked ? "/api/boletins?todos=1" : "/api/boletins", { cache: "no-store" });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       desenhar((await r.json()) as Lista);
     } catch (e) {

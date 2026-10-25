@@ -11,6 +11,9 @@ const PASSO_MS = 7000;
 /** Evento de documento com o boletim falado (disparado pelo main a partir do SSE). */
 export const EVENTO_BOLETIM = "apuracao:boletim";
 
+/** Linha extra no ticker por um tempo (`detail: {texto, ms}`), usada pelo widget do boletim. */
+export const EVENTO_TICKER_EXTRA = "apuracao:ticker-extra";
+
 interface DetalheBoletim {
   kind: string;
   id: string;
@@ -94,6 +97,8 @@ export function criarTicker(): Ticker {
   const marca = el.querySelector(".ticker-marca") as HTMLElement;
   let lista: ItemTicker[] = [];
   let i = 0;
+  let ultimoEstado: State | null = null;
+  const extras: { texto: string; ate: number }[] = [];
 
   const pintar = (item: ItemTicker | undefined): void => {
     texto.textContent = item?.texto ?? "";
@@ -120,19 +125,43 @@ export function criarTicker(): Ticker {
     }
   }, PASSO_MS);
 
+  const comExtras = (s: State): ItemTicker[] => {
+    const agora = Date.now();
+    for (let k = extras.length - 1; k >= 0; k -= 1) if ((extras[k]?.ate ?? 0) < agora) extras.splice(k, 1);
+    return [...extras.map(e => ({ texto: e.texto, categoria: null })), ...itensTicker(s)];
+  };
+
+  const atualizar = (s: State): void => {
+    ultimoEstado = s;
+    const nova = comExtras(s);
+    const mudou = nova.length !== lista.length || nova.some((m, k) => m.texto !== lista[k]?.texto);
+    if (!mudou) return;
+    const atual = lista[i]?.texto;
+    lista = nova;
+    const k = atual ? lista.findIndex(m => m.texto === atual) : -1;
+    i = k >= 0 ? k : 0;
+    if (!texto.textContent) pintar(lista[i]);
+    else mostrar();
+  };
+
+  document.addEventListener(EVENTO_TICKER_EXTRA, ev => {
+    const d = (ev as CustomEvent<{ texto: string; ms: number }>).detail;
+    if (!d?.texto) return;
+    extras.unshift({ texto: d.texto, ate: Date.now() + d.ms });
+    if (ultimoEstado) {
+      atualizar(ultimoEstado);
+      // a linha nova entra já, sem esperar a rotação
+      i = 0;
+      mostrar();
+    }
+    setTimeout(() => {
+      if (ultimoEstado) atualizar(ultimoEstado);
+    }, d.ms + 100);
+  });
+
   return {
     el,
-    atualizar(s) {
-      const nova = itensTicker(s);
-      const mudou = nova.length !== lista.length || nova.some((m, k) => m.texto !== lista[k]?.texto);
-      if (!mudou) return;
-      const atual = lista[i]?.texto;
-      lista = nova;
-      const k = atual ? lista.findIndex(m => m.texto === atual) : -1;
-      i = k >= 0 ? k : 0;
-      if (!texto.textContent) pintar(lista[i]);
-      else mostrar();
-    },
+    atualizar,
     parar: () => clearInterval(timer),
   };
 }

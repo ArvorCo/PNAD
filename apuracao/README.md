@@ -262,7 +262,9 @@ Playlist do 2º turno em `public/playlist-2t.json` (a do contrato é reserva). E
 
 ## Boletim falado (2º turno)
 
-A cada 10 minutos o boletim lê os dados, escreve o roteiro na voz do Leonardo, gera o áudio e deixa o mp3 pronto; a hora de entrar no ar é sempre manual, pelo diretor. Substitui o laço `scripts/boletim-loop.sh` do 1º turno (que tocava sozinho pelo `afplay`).
+A cada 10 minutos o boletim lê os dados, escreve o roteiro na voz do Leonardo, gera o áudio e deixa o mp3 pronto. Substitui o laço `scripts/boletim-loop.sh` do 1º turno (que tocava sozinho pelo `afplay`).
+
+**Regra firme: o boletim nunca dá play automático.** O gerador só deixa o áudio pronto e o widget do telão avisa ("novo boletim das HH:MM", pulsando). O play acontece só por ação do Leonardo: tecla `b` no telão, clique no botão do widget ou "tocar" no diretor. Não há tocar ao ficar pronto, fila automática nem tocar o próximo ao terminar; o servidor só põe no ar por `POST /api/boletins/:id/tocar`, e nada no gerador chama essa rota. A única retomada é a do mesmo boletim que já está no ar quando o telão recarrega no meio dele.
 
 **Arquitetura.** O gerador roda num processo próprio (`bun run boletim`, laço de religar em `scripts/start-boletim.sh`), fora do servidor do telão: uma correção no prompt ou nos dados reinicia só ele. O servidor serve a lista, o controle, o mp3 e os eventos. Estado em arquivos em `data/boletins-2t/`, cada arquivo com um único escritor e gravação atômica; nada vai para o SQLite.
 
@@ -309,7 +311,7 @@ kill $(cat data/boletins-2t/laco.pid); pkill -f src/boletim/main.ts   # desliga 
 | `GET /api/boletins[?todos=1]` | `{agora, gerador:{vivo, relogio_ligado, proximo_ciclo_em, gerando, etapa, ultimo_erro}, no_ar:{id, hora, desde, duracao_s, decorrido_s}\|null, itens:[{id, hora, estado: gerando\|pronto\|no_ar\|tocado\|erro, palavras, duracao_s, resumo, erro, ...}]}`; descartados só com `todos=1` |
 | `GET /api/boletins/:id` | `{item, texto, meta, mp3}` |
 | `POST /api/boletins/gerar` | 202 grava o pedido; 409 se já está gerando; 503 se o gerador está fora do ar |
-| `POST /api/boletins/:id/tocar` | põe no ar (pronto ou tocado; tocar de novo vale); o que estava no ar sai |
+| `POST /api/boletins/:id/tocar` | põe no ar qualquer boletim com mp3 (pronto, tocado, no ar ou descartado, que volta à lista); 409 só se ainda gera ou não tem áudio; o que estava no ar sai |
 | `POST /api/boletins/parar` | tira do ar o que estiver tocando |
 | `POST /api/boletins/:id/descartar` | some da lista (e sai do ar, se estiver); arquivos ficam no disco |
 | `POST /api/boletins/:id/fim` | o player avisa que o áudio terminou; só vale para o que está no ar |
@@ -317,12 +319,25 @@ kill $(cat data/boletins-2t/laco.pid); pkill -f src/boletim/main.ts   # desliga 
 
 POST só nessas rotas, só de 127.0.0.1 e com o cabeçalho `x-apuracao: boletim` (uma página de outra origem não consegue mandar o cabeçalho sem preflight, que o servidor não atende). Sem o `fim` do player, o servidor encerra sozinho 30 s depois da duração. O SSE ganhou `event: boletim` com `{kind: gerando|pronto|erro|no_ar|fim|descartado, id, hora?, desde?, duracao_s?, motivo?}` em todas as assinaturas; `/events?so=boletim` entrega só o boletim e o batimento, sem sondar o banco.
 
+### Widget "Boletim Arvor" no telão (desde 25/10, 15:00)
+
+O player mora no telão (`src/ui/components/boletim.ts`), em todas as telas e na rotação, canto inferior direito, mesma paleta e texto de 22 px no mínimo, **operado com o mouse** (na janela do Chrome que o OBS captura ou no diretor): título, os últimos 4 boletins (hora, duração, estado: gerando, pronto, no ar, tocado), "próximo às HH:MM" e os botões. Boletim novo acende o chip pulsante "novo boletim das HH:MM" por 20 s e põe a linha "novo boletim das HH:MM pronto para ir ao ar" no ticker por 3 min; o áudio não começa.
+
+- **Mouse** (botões de 44 px no mínimo, com hover visível): cada item tem ▶ para tocar, inclusive os já tocados; o item no ar troca para ❚❚ (pausar e retomar) e ■ (parar); a barra de progresso é clicável para avançar ou voltar; ▾ recolhe o cartão.
+- **Formato**: cartão aberto (cerca de 460 × 330 px) nas telas com o canto livre (`regioes`, `pausas`, `paralela`, `alertas`, `espera`) e durante os 20 s do alerta; nas demais (presidente, UFs, evolução, governadores, exterior, abstenção, atraso), pílula na faixa inferior, à esquerda do HUD, com ▶/❚❚, ■, o último boletim e o próximo ciclo e, enquanto toca, tempo e barra. Clicar no texto da pílula abre o cartão até a próxima troca de tela. Assim o widget não cobre dado. `#boletimw=aberto` ou `#boletimw=compacto` fixa um formato.
+- **Teclas (atalho secundário)**: `b` toca o último pronto ainda não tocado ou, se não houver, o mais recente; `b` de novo pausa e retoma; `[` e `]` escolhem o item anterior e o seguinte (contorno no item, cartão aberto por 15 s) e `b` toca o escolhido; `Shift+B` para quando há boletim carregado (sem boletim, continua abrindo a tela de abstenção, como antes); `Ctrl+B` sempre para. O `b` espera 900 ms porque `b` + `a` é a Bahia.
+- **Tocar de novo**: "tocado" é só rótulo. Todo boletim com mp3 toca de novo, inclusive os descartados (o diretor mostra com "mostrar descartados"; tocar um descartado o devolve à lista). A API só recusa boletim ainda gerando ou sem áudio.
+- **Áudio**: um `<audio>` no próprio telão toca o mp3 quando chega o `no_ar` do SSE (vindo do clique, da tecla ou do diretor) e manda o `fim` ao terminar; terminar nunca puxa o próximo. Na fonte de navegador do telão no OBS, marque **"Control audio via OBS"**: o som do boletim passa a sair pelo mixer do OBS. Se o OBS captura a janela do Chrome, capture também o áudio desse Chrome. O OBS não exige gesto para tocar; num Chrome comum o widget mostra "clique para liberar o áudio".
+- **Um player só**: cada telão aberto com som toca o `no_ar`. Deixe som em um único telão e abra os outros (ensaio, segunda tela) com `#boletim=0`, que mostra a lista e o progresso pelo relógio do servidor sem tocar. O telão avisa pelo `BroadcastChannel('apuracao')` que está tocando, e o `boletim.html` aberto no mesmo navegador cede a vez (`?forcar=1` força). `boletim.html` continua como reserva.
+- **Toque de aviso**: desligado por padrão, porque o som do telão vai ao ar pelo OBS; `#som=1` liga um toque discreto quando um boletim fica pronto.
+- Pausa longa: o servidor considera o boletim encerrado 30 s depois da duração, mas o telão segura o áudio pausado e retoma do ponto.
+
 ### Diretor, telão e OBS
 
 - **Diretor** (`/director.html`, painel "boletim falado" no topo): estado do gerador e próximo ciclo, o que está no ar com tempo decorrido, "gerar agora" e "parar", e a lista com hora, estado, duração, palavras, modo e o resumo de uma linha (gerado dos dados, sem LLM). Cada item tem "tocar", "descartar" e, aberto, o roteiro com prévia do áudio para fone. Atualiza a cada 2 s.
-- **Telão**: só o chip "boletim das HH:MM no ar" na faixa inferior enquanto o áudio toca (aparece também com `hud=0`); some no fim.
-- **OBS**: fonte de navegador `http://127.0.0.1:4180/boletim.html`, 1920 × 1080, acima da cena do telão. Marque "Control audio via OBS" (o áudio entra no mixer do OBS como fonte própria, com volume e monitoramento) e desmarque "Shutdown source when not visible" e "Refresh browser when scene becomes active". O navegador do OBS não exige gesto do usuário para tocar som, então o comando "tocar" do diretor basta. A página é transparente; a tarja "Boletim das HH:MM, Arvor Intelligence", com barra de progresso, aparece só enquanto toca. Parâmetros: `?tarja=0` (só áudio), `?pos=bl|br|tl|tr` (canto; padrão inferior esquerdo, acima da faixa), `?vol=0.8`. Recarregar a fonte no meio de um boletim retoma do ponto em que ele está. Num Chrome comum aparece "clique para liberar o áudio" (ou abra com `--autoplay-policy=no-user-gesture-required`).
-- **Abertura**: perto das 16:55, "gerar agora" produz o boletim de abertura (150 a 200 palavras); o relógio começa às 17:10.
+- **Telão**: o widget acima e o chip "boletim das HH:MM no ar" na faixa inferior enquanto o áudio toca (aparecem também com `hud=0`).
+- **OBS (reserva)**: fonte de navegador `http://127.0.0.1:4180/boletim.html`, 1920 × 1080, acima da cena do telão. Marque "Control audio via OBS" (o áudio entra no mixer do OBS como fonte própria, com volume e monitoramento) e desmarque "Shutdown source when not visible" e "Refresh browser when scene becomes active". O navegador do OBS não exige gesto do usuário para tocar som, então o comando "tocar" do diretor basta. A página é transparente; a tarja "Boletim das HH:MM, Arvor Intelligence", com barra de progresso, aparece só enquanto toca. Parâmetros: `?tarja=0` (só áudio), `?pos=bl|br|tl|tr` (canto; padrão inferior esquerdo, acima da faixa), `?vol=0.8`. Recarregar a fonte no meio de um boletim retoma do ponto em que ele está. Num Chrome comum aparece "clique para liberar o áudio" (ou abra com `--autoplay-policy=no-user-gesture-required`).
+- **Abertura**: perto das 16:55, "gerar agora" produz o boletim de abertura (150 a 200 palavras), que fica pronto à espera do play; o relógio começa às 17:10.
 
 ### Reserva
 

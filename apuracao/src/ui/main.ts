@@ -19,7 +19,9 @@ import { criarMock } from "./data/mock.ts";
 import { lerParamsMock } from "./data/mock-hash.ts";
 import { conectarSse } from "./data/sse.ts";
 import type { EventoBoletimTelao } from "./data/sse.ts";
-import { EVENTO_BOLETIM } from "./components/ticker.ts";
+import { EVENTO_BOLETIM, EVENTO_TICKER_EXTRA } from "./components/ticker.ts";
+import { criarBoletimWidget } from "./components/boletim.ts";
+import type { BoletimWidget } from "./components/boletim.ts";
 import { preCarregar } from "./data/geo.ts";
 import { abrirCanal, ehComando } from "./control/broadcast.ts";
 import type { Comando, EspelhoTelao } from "./control/broadcast.ts";
@@ -173,6 +175,8 @@ async function iniciar(): Promise<void> {
     else void document.documentElement.requestFullscreen().catch(() => undefined);
   };
 
+  // Widget do boletim falado (montado só com servidor ao vivo, mais abaixo).
+  let boletimW: BoletimWidget | null = null;
   ligarTeclado({
     ufAtual: () => store.get().ui.uf,
     telaAtual: () => store.get().ui.v,
@@ -205,6 +209,7 @@ async function iniciar(): Promise<void> {
     variante: () => store.ui({ variante: (store.get().ui.variante + 1) % 4 }),
     refetch: recarregar,
     teclaDaTela: tecla => shell.atual()?.keys?.(tecla, store.get()) ?? false,
+    boletim: acao => boletimW?.tecla(acao) ?? false,
   });
 
   // ---------- roteador ----------
@@ -287,6 +292,7 @@ async function iniciar(): Promise<void> {
   store.subscribe((s, diff) => {
     montarSePreciso(s);
     shell.atualizar(s, diff, rotacao.entradas().length);
+    boletimW?.tela(s.ui.v);
     for (const [k, r] of Object.entries(s.resultados)) {
       if (indexados.has(k)) continue;
       indexados.add(k);
@@ -331,6 +337,18 @@ async function iniciar(): Promise<void> {
       aoRede: r => store.patch("rede", { ...store.get().rede, ...r }),
       aoBoletim: avisarBoletim,
     });
+    // Widget "Boletim Arvor" na faixa inferior; #boletim=0 deixa o áudio para o boletim.html.
+    const hp = new URLSearchParams(location.hash.replace(/^#/, ""));
+    const formato = hp.get("boletimw");
+    boletimW = criarBoletimWidget({
+      audio: hp.get("boletim") !== "0",
+      som: hp.get("som") === "1",
+      formato: formato === "aberto" || formato === "compacto" ? formato : "auto",
+      aoNovo: texto => document.dispatchEvent(new CustomEvent(EVENTO_TICKER_EXTRA, { detail: { texto, ms: 180_000 } })),
+    });
+    const baseEl = raiz.querySelector(".base");
+    baseEl?.insertBefore(boletimW.el, baseEl.querySelector(".hud"));
+    boletimW.tela(store.get().ui.v);
     // Boletim já no ar quando o telão carrega: acende o chip sem esperar o próximo evento.
     void fetch("/api/boletins", { cache: "no-store" })
       .then(r => (r.ok ? (r.json() as Promise<{ no_ar: { id: string; hora: string | null; desde: string; duracao_s: number | null } | null }>) : null))
