@@ -38,6 +38,12 @@
       }, 1200);
     });
   </script>
+  <style>
+    .live-embed { margin-top: 1.25rem; }
+    .live-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #192e2b; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(25, 46, 43, 0.18); }
+    .live-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+    .live-embed .tags { margin-top: 1rem; }
+  </style>
 </head>
 <body>
   <a class="skip" href="#cenario-segundo-turno">Ir para o conteúdo</a>
@@ -51,7 +57,7 @@
           <img src="img/arvor_logo.png" alt="Logotipo Arvor" width="44" height="44">
           <span><b>Arvor Intelligence</b><i>Auditoria eleitoral · dados abertos</i></span>
         </div>
-        <div class="stampline">Atualizado em 24/10/2026<br>brasil.arvor.co</div>
+        <div class="stampline">Atualizado em 25/10/2026<br>brasil.arvor.co</div>
       </div>
 
       <div class="masthead-grid">
@@ -78,6 +84,7 @@
     <div class="wrap">
       <span class="nav-brand">Acervo</span>
       <div class="nav-links">
+        <a href="#ao-vivo">Ao vivo</a>
         <a href="#clima-1t">Chuva e abstenção</a>
         <a href="#agregador">Reponderação geral</a>
         <a href="#dossies-segundo-turno">Dossiês do 2º turno</a>
@@ -91,6 +98,16 @@
   </nav>
 
   <main>
+    <section id="ao-vivo" class="sec paper">
+      <div class="wrap">
+        <div class="sec-head"><span class="sec-no">25/10</span><p class="eyebrow">Hoje · apuração do segundo turno ao vivo</p></div>
+        <div class="sec-intro"><h2>A apuração em tempo real, <em>com a conta na tela.</em></h2><p class="deck">Transmissão da Arvor Intelligence a partir das 17h de Brasília: placar por região e por estado, quem está lerdo contra o 1º turno, abstenção, pausas na divulgação do TSE, os seis governos em disputa e a totalização paralela por QR dos boletins de urna. Soma dos BUs recebidos, não projeção.</p></div>
+        <div class="live-embed reveal">
+          <div class="live-frame"><iframe src="https://www.youtube-nocookie.com/embed/kSELqiCudjU?autoplay=0&amp;rel=0" title="Apuração do 2º turno ao vivo, Arvor Intelligence" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+          <div class="tags"><a class="tag primary" href="apuracao_2t_ao_vivo.html">Painel público da apuração</a><a class="tag" href="totalizacao_painel.html">Totalização paralela</a><a class="tag" href="totalizacao.html">Enviar o QR do seu BU</a><a class="tag" href="https://youtube.com/live/kSELqiCudjU" rel="noopener">Abrir no YouTube</a></div>
+        </div>
+      </div>
+    </section>
     <section id="cenario-segundo-turno" class="sec paper">
       <div class="wrap">
         <div class="sec-head"><span class="sec-no">25/10</span><p class="eyebrow">Véspera · cenário do segundo turno</p></div>
