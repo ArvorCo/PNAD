@@ -4,6 +4,17 @@
 // irreconhecível). A tela mostra "fonte indisponível" nos dois últimos casos, nunca fica em branco.
 // Números chegam já convertidos; campo ausente vira 0 ou null, nunca NaN.
 
+import { REGRAS_COMPARECIMENTO, ROTULO_COMPARECIMENTO } from "../../secoes2t/comparecimento-tipos.ts";
+import type {
+  BlocoProrrogacao,
+  ComparecimentoOut,
+  ContagemSinais,
+  Distribuicao,
+  MunicipioComparecimento,
+  PontoSecao,
+  SecaoComparecimento,
+} from "../../secoes2t/comparecimento-tipos.ts";
+
 export type Rota2T =
   | "regioes"
   | "ufs"
@@ -14,7 +25,8 @@ export type Rota2T =
   | "pausas"
   | "secoes"
   | "paralela"
-  | "projecao";
+  | "projecao"
+  | "comparecimento";
 
 export const ROTAS_2T: readonly Rota2T[] = [
   "regioes",
@@ -27,6 +39,7 @@ export const ROTAS_2T: readonly Rota2T[] = [
   "secoes",
   "paralela",
   "projecao",
+  "comparecimento",
 ];
 
 export type Resposta<T> = { situacao: "ok"; dados: T } | { situacao: "pendente" } | { situacao: "erro"; mensagem: string };
@@ -440,6 +453,7 @@ export interface Dados2T {
   secoes: Secoes;
   paralela: Paralela;
   projecao: Projecao;
+  comparecimento: ComparecimentoOut;
 }
 
 export type Respostas2T = { [K in Rota2T]?: Resposta<Dados2T[K]> };
@@ -943,6 +957,146 @@ export function normalizarProjecao(bruto: unknown): Resposta<Projecao> {
   });
 }
 
+// ---------- comparecimento (falso comparecimento) ----------
+
+function distribuicao(x: unknown): Distribuicao {
+  return ehBruto(x) ? { n: num(x.n), p50: numOuNulo(x.p50), p90: numOuNulo(x.p90) } : { n: 0, p50: null, p90: null };
+}
+
+function contagem(x: unknown): ContagemSinais {
+  const c = ehBruto(x) ? x : {};
+  return {
+    delta: num(c.delta),
+    sem_bio: num(c.sem_bio),
+    tarde: num(c.tarde),
+    apos_19h: num(c.apos_19h),
+    papel: num(c.papel),
+    contingencia: num(c.contingencia),
+    escore_2_mais: num(c.escore_2_mais),
+  };
+}
+
+function secaoComparecimento(b: Bruto): SecaoComparecimento {
+  const si = ehBruto(b.sinais) ? b.sinais : {};
+  return {
+    uf: txt(b.uf).toUpperCase(),
+    mun: txt(b.mun),
+    nm: txt(b.nm, txt(b.mun)),
+    zona: num(b.zona),
+    secao: num(b.secao),
+    lat: numOuNulo(b.lat),
+    lon: numOuNulo(b.lon),
+    aptos: numOuNulo(b.aptos),
+    comp: numOuNulo(b.comp),
+    taxa_comp: numOuNulo(b.taxa_comp),
+    taxa_comp_1t: numOuNulo(b.taxa_comp_1t),
+    delta_pp: numOuNulo(b.delta_pp),
+    sem_bio_pct: numOuNulo(b.sem_bio_pct),
+    sem_bio_pct_1t: numOuNulo(b.sem_bio_pct_1t),
+    sem_bio_mun_p50_1t: numOuNulo(b.sem_bio_mun_p50_1t),
+    ano_nasc_pct: numOuNulo(b.ano_nasc_pct),
+    encerramento_hhmm: txtOuNulo(b.encerramento_hhmm),
+    encerrou_apos_17h: bool(b.encerrou_apos_17h),
+    apos_19h: bool(b.apos_19h),
+    papel: bool(b.papel),
+    tipo_arquivo: numOuNulo(b.tipo_arquivo),
+    tipo_urna: numOuNulo(b.tipo_urna),
+    n_cargas: numOuNulo(b.n_cargas),
+    contingencia: bool(b.contingencia),
+    fatia_flavio: numOuNulo(b.fatia_flavio),
+    fatia_flavio_1t: numOuNulo(b.fatia_flavio_1t),
+    recebido_hhmm: txtOuNulo(b.recebido_hhmm),
+    origem: b.origem === "paralela" ? "paralela" : "amostra",
+    sinais: { delta: bool(si.delta), sem_bio: bool(si.sem_bio), tarde: bool(si.tarde), papel: bool(si.papel) },
+    escore: num(b.escore),
+  };
+}
+
+function municipioComparecimento(b: Bruto): MunicipioComparecimento {
+  return {
+    uf: txt(b.uf).toUpperCase(),
+    cd: txt(b.cd),
+    nm: txt(b.nm, txt(b.cd)),
+    lat: numOuNulo(b.lat),
+    lon: numOuNulo(b.lon),
+    te: num(b.te),
+    pst: num(b.pst),
+    taxa_2t: num(b.taxa_2t),
+    taxa_1t: num(b.taxa_1t),
+    delta_pp: num(b.delta_pp),
+  };
+}
+
+function blocoProrrogacao(x: unknown, uf = "BR"): BlocoProrrogacao {
+  const b = ehBruto(x) ? x : {};
+  return {
+    uf: txt(b.uf, uf).toUpperCase(),
+    n_tardias: num(b.n_tardias),
+    n_apos_19h: num(b.n_apos_19h),
+    n_pontuais: num(b.n_pontuais),
+    delta_comp_tardias: numOuNulo(b.delta_comp_tardias),
+    delta_comp_pontuais: numOuNulo(b.delta_comp_pontuais),
+    n_vs_1t: num(b.n_vs_1t),
+    delta_fatia_vs_1t_pp: numOuNulo(b.delta_fatia_vs_1t_pp),
+    n_vs_pontuais: num(b.n_vs_pontuais),
+    delta_fatia_vs_pontuais_pp: numOuNulo(b.delta_fatia_vs_pontuais_pp),
+  };
+}
+
+/** Ponto do mapa: só entra com lon e lat finitos. */
+function ponto(x: unknown): PontoSecao | null {
+  if (!Array.isArray(x)) return null;
+  const lon = numOuNulo(x[0]);
+  const lat = numOuNulo(x[1]);
+  if (lon === null || lat === null) return null;
+  return [lon, lat, numOuNulo(x[2]), num(x[3]), num(x[4]), num(x[5]) > 0 ? 1 : 0];
+}
+
+export function normalizarComparecimento(bruto: unknown): Resposta<ComparecimentoOut> {
+  const sem = corpoSemDados<ComparecimentoOut>(bruto);
+  if (sem) return sem;
+  const b = bruto as Bruto;
+  if (!ehBruto(b.sinais) || !ehBruto(b.totais)) return erro("resposta sem contadores de sinais");
+  const t = b.totais;
+  const ref = ehBruto(b.referencia) ? b.referencia : {};
+  const pr = ehBruto(b.prorrogacao) ? b.prorrogacao : {};
+  const enc: Bruto = ehBruto(ref.enc_1t_pct) ? ref.enc_1t_pct : {};
+  return ok({
+    at: txt(b.at),
+    min: numOuNulo(b.min),
+    rotulo: txt(b.rotulo, ROTULO_COMPARECIMENTO) || ROTULO_COMPARECIMENTO,
+    regras: REGRAS_COMPARECIMENTO,
+    referencia: {
+      secoes: bool(ref.secoes),
+      gerado_em: txtOuNulo(ref.gerado_em),
+      municipios: bool(ref.municipios),
+      enc_1t_pct: {
+        apos_1700: numOuNulo(enc.apos_1700),
+        apos_1800: numOuNulo(enc.apos_1800),
+        apos_1900: numOuNulo(enc.apos_1900),
+      },
+    },
+    totais: { recebidas: num(t.recebidas), com_ref_1t: num(t.com_ref_1t), com_coord: num(t.com_coord), amostra: num(t.amostra), paralela: num(t.paralela) },
+    sinais: contagem(b.sinais),
+    delta: distribuicao(b.delta),
+    // O contrato declara `por_uf` como ContagemSinais & { delta: Distribuicao }, e `delta` já é
+    // número em ContagemSinais: o tipo não tem valor possível. A tela não usa o recorte por UF.
+    por_uf: [],
+    pontos: lista(b.pontos).map(ponto).filter((x): x is PontoSecao => x !== null),
+    top: regs(b.top).map(secaoComparecimento),
+    contingencia: regs(b.contingencia).map(secaoComparecimento),
+    prorrogacao: {
+      n_min: num(pr.n_min, 20),
+      brasil: blocoProrrogacao(pr.brasil),
+      por_uf: regs(pr.por_uf).map(u => blocoProrrogacao(u, txt(u.uf))),
+    },
+    municipios: regs(b.municipios).map(municipioComparecimento),
+    municipios_uf: regs(b.municipios_uf).map(u => ({ uf: txt(u.uf).toUpperCase(), n: num(u.n), delta: distribuicao(u.delta) })),
+    municipios_delta: distribuicao(b.municipios_delta),
+    municipios_top: regs(b.municipios_top).map(municipioComparecimento),
+  });
+}
+
 export const NORMALIZADORES: { [K in Rota2T]: (bruto: unknown) => Resposta<Dados2T[K]> } = {
   regioes: normalizarRegioes,
   ufs: normalizarUfs,
@@ -954,6 +1108,7 @@ export const NORMALIZADORES: { [K in Rota2T]: (bruto: unknown) => Resposta<Dados
   secoes: normalizarSecoes,
   paralela: normalizarParalela,
   projecao: normalizarProjecao,
+  comparecimento: normalizarComparecimento,
 };
 
 /** Dados prontos da rota, ou null quando ela ainda não respondeu, está pendente ou falhou. */

@@ -18,6 +18,7 @@ export const TELAS_2T: readonly Tela2T[] = [
   { id: "ufs", titulo: "UFs, as mais lentas primeiro", rotulo: "27 UFs, ranking de ritmo", atalho: "Shift+U", busca: "ufs estados ranking lentas ritmo parada" },
   { id: "atraso", titulo: "Quem está lerdo", rotulo: "Atraso contra o 1º turno", atalho: "Shift+D", busca: "atraso lerdo lento demora fecha por ultimo previsao" },
   { id: "abstencao", titulo: "Abstenção contra o 1º turno", rotulo: "Abstenção contra o 1º turno", atalho: "Shift+B", busca: "abstencao comparecimento faltou 1 turno mapa" },
+  { id: "comparecimento", titulo: "Comparecimento por seção", rotulo: "Comparecimento e sinais por seção", atalho: "Shift+C", busca: "comparecimento falso pianista biometria ano de nascimento cedula papel prorrogacao 19h contingencia urna substituida" },
   { id: "secoes", titulo: "Cadeia de tempos das seções", rotulo: "Seções, cadeia de tempos", atalho: "Shift+S", busca: "secoes encerramento emissao recebimento boletim urna amostra tardias" },
   { id: "pausas", titulo: "Pausas da noite", rotulo: "Pausas do arquivo", atalho: "Shift+P", busca: "pausas pausa travou parado versao nacional soma ufs" },
   { id: "gov-2t", titulo: "Governadores, 2º turno", rotulo: "Governadores, 6 UFs", atalho: "3 ou Shift+G", busca: "governadores governador acre amazonas distrito federal espirito santo rio grande do norte tocantins" },

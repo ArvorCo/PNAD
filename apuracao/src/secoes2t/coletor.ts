@@ -112,7 +112,8 @@ function linhaVazia(s: SecaoChave, origem: "amostra" | "paralela", em: string): 
     uf: s.uf, mun: s.mun, zona: s.zona, secao: s.secao, origem, status_aux: "pendente", hash: null, bu_nome: null, dr_hr: null,
     encerramento_local: null, encerramento_iso: null, emissao_iso: null, recebido_iso: null, bu_sha256: null, aptos: null,
     comparecimento: null, votos_json: null, totalizado_mun_iso: null, lag_encerr_recebimento_min: null, lag_encerr_emissao_min: null,
-    lag_recebimento_totalizacao_min: null, erro: null, tentativas: 0, atualizado_em: em,
+    lag_recebimento_totalizacao_min: null, erro: null, tentativas: 0, atualizado_em: em, hab_biometria: null, hab_ano_nascimento: null,
+    comp_sem_biometria: null, tipo_arquivo: null, tipo_urna: null, n_cargas: null, abertura_iso: null,
   };
 }
 
@@ -178,7 +179,9 @@ export class AmostraSecoes {
 
   private novoAlvo(s: SecaoChave, linha: LinhaSecao2t, paralela: boolean, due: number): Alvo {
     const votos = linha.votos_json === null ? null : (JSON.parse(linha.votos_json) as BuComparavel);
-    const a: Alvo = { id: ++this.seq, s, chave: chaveSecao(s), linha, due, paralela, feito: linha.bu_sha256 !== null, votos, falhas: 0 };
+    // BU lido antes das colunas do detalhamento (25/10): volta à fila uma vez para preenchê-las
+    const feito = linha.bu_sha256 !== null && linha.tipo_arquivo !== null && linha.tipo_arquivo !== undefined;
+    const a: Alvo = { id: ++this.seq, s, chave: chaveSecao(s), linha, due, paralela, feito, votos, falhas: 0 };
     this.porChave.set(a.chave, a);
     if (!a.feito) this.fila(a).inserir(a);
     return a;
@@ -384,6 +387,13 @@ export class AmostraSecoes {
       l.aptos = r.aptos;
       l.comparecimento = r.comparecimento;
       l.votos_json = JSON.stringify(r.votos);
+      l.hab_biometria = r.habBiometria;
+      l.hab_ano_nascimento = r.habAnoNascimento;
+      l.comp_sem_biometria = r.compSemBiometria;
+      l.tipo_arquivo = r.tipoArquivo;
+      l.tipo_urna = r.tipoUrna;
+      l.n_cargas = r.nCargas;
+      l.abertura_iso = r.aberturaIso;
       l.lag_encerr_recebimento_min = minutosEntre(r.encerramentoIso, l.recebido_iso);
       l.lag_encerr_emissao_min = minutosEntre(r.encerramentoIso, r.emissaoIso);
       l.erro = null;

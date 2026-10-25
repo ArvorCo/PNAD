@@ -1,9 +1,10 @@
-// Telas do 2º turno (25/10/2026): regiões, UFs, atraso, abstenção, seções, pausas, governadores,
+// Telas do 2º turno (25/10/2026): regiões, UFs, atraso, abstenção, comparecimento, seções, pausas, governadores,
 // paralela, alertas, evolução e projeção. Chamado por `registrarTelas()`; a última chamada de `register` vence.
 
 import { criarAbstencao } from "./abstencao.ts";
 import { criarAlertas } from "./alertas.ts";
 import { criarAtraso } from "./atraso.ts";
+import { criarComparecimento } from "./comparecimento.ts";
 import { criarEvolucaoTela } from "./evolucao.ts";
 import { criarGov2T } from "./gov2t.ts";
 import { TELAS_2T } from "./meta-2t.ts";
@@ -21,6 +22,7 @@ const FABRICAS: Readonly<Record<string, FabricaView>> = {
   ufs: criarUfs,
   atraso: criarAtraso,
   abstencao: criarAbstencao,
+  comparecimento: criarComparecimento,
   secoes: criarSecoes,
   pausas: criarPausas,
   "gov-2t": criarGov2T,

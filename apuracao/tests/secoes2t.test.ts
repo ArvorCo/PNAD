@@ -199,6 +199,8 @@ describe("coleta aux → BU", () => {
       encerramento_local: "2026-10-04 17:08:42", encerramento_iso: "2026-10-04T20:08:42.000Z", emissao_iso: "2026-10-04T20:10:28.000Z", aptos: 362,
       comparecimento: 256, lag_encerr_recebimento_min: 22.4, lag_encerr_emissao_min: 1.8, totalizado_mun_iso: "2026-10-04T20:33:00.000Z",
       lag_recebimento_totalizacao_min: 1.9, erro: null,
+      hab_biometria: 212, hab_ano_nascimento: 37, comp_sem_biometria: 7, tipo_arquivo: 1, tipo_urna: 1, n_cargas: 1,
+      abertura_iso: "2026-10-04T11:00:01.000Z",
     });
     expect(l?.bu_sha256).toMatch(/^[0-9a-f]{64}$/);
     expect(db.query<{ status_aux: string }, []>("SELECT status_aux FROM secao_2t WHERE secao <> 1").all().map((x) => x.status_aux)).toEqual(["aux_404", "aux_404"]);

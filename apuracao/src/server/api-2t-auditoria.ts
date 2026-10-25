@@ -3,10 +3,14 @@
 import type { Database } from "bun:sqlite";
 import { resumoParalela } from "../paralela/resumo.ts";
 import type { ParalelaOut } from "../paralela/resumo.ts";
+import { resumoComparecimento } from "../secoes2t/comparecimento.ts";
+import type { ComparecimentoOut } from "../secoes2t/comparecimento-tipos.ts";
 import { resumoSecoes, tabelaExiste } from "../secoes2t/resumo.ts";
 import type { SecoesOut } from "../secoes2t/resumo.ts";
 import { minutosDesde17h, T0_1T_MS, T0_2T_MS } from "../turno2/comum.ts";
-import { carregarReferencia } from "../turno2/referencia.ts";
+import { carregarReferencia, carregarReferenciaSecoes } from "../turno2/referencia.ts";
+import { CacheCurto } from "./cache.ts";
+import { municipios as municipiosMu } from "./indicadores/municipios.ts";
 import { eleicoes } from "./api-config.ts";
 import { FIM, municipiosIndex } from "./consultas.ts";
 import type { Contexto } from "./contexto.ts";
@@ -184,4 +188,26 @@ export function secoes(ctx: Contexto, db: Database, p: Params): SecoesOut {
 
 export function paralela(ctx: Contexto, db: Database, p: Params): ParalelaOut {
   return resumoParalela(db, { at: p.at(), agora: ctx.agora() });
+}
+
+// ---------------------------------------------------------------- /api/2t/comparecimento
+
+const cacheComparecimento = new CacheCurto<ComparecimentoOut>(10_000, 16);
+
+/** Vigilância de falso comparecimento; cache de 10 s (secao_2t muda sem mudar snapshot). */
+export function comparecimento(ctx: Contexto, db: Database, p: Params): ComparecimentoOut {
+  const at = p.at();
+  const janela = Math.floor(Date.now() / 10_000);
+  return cacheComparecimento.obter([db.filename, at ?? ""].join("|"), janela, () => {
+    const ele = eleicoes(db).federal;
+    const muns = municipiosIndex(db);
+    return resumoComparecimento(db, {
+      at, agora: ctx.agora(), t0Ms: t0De(db), eleFederal: ele, refSecoes: carregarReferenciaSecoes(), ref1t: carregarReferencia(),
+      municipios: municipiosMu(db, ele, 1, at), nome: (cd) => muns.get(cd)?.nome ?? null,
+    });
+  });
+}
+
+export function limparCacheComparecimento(): void {
+  cacheComparecimento.limpar();
 }

@@ -8,6 +8,7 @@
 import { minutosDesde17h, NOME_REGIAO, ORDEM_REGIOES, REGIOES } from "../../turno2/comum.ts";
 import type { Anomalia, Config, Estado, Resultado } from "../state/types.ts";
 import { erro, NORMALIZADORES, pendente } from "./doist.ts";
+import { comparecimentoMock } from "./mock2t-comparecimento.ts";
 import type {
   Agregado,
   Dados2T,
@@ -946,6 +947,8 @@ export function criarRotas2T(ctx: CtxMock2T): Rotas2T {
           return paralela(t, falha === "fonte");
         case "projecao":
           return projecao(t);
+        case "comparecimento":
+          return comparecimentoMock(minDe(t), iso(t), uf => ctx.municipios(uf, t), deltaMunicipio);
       }
     })();
     // O mock passa pelo mesmo normalizador da API real.

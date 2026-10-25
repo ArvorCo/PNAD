@@ -110,6 +110,17 @@ export interface LinhaSecao2t {
   erro: S;
   tentativas: number;
   atualizado_em: string;
+  hab_biometria: N;
+  /** habilitados por biografia (ano de nascimento), sem biometria */
+  hab_ano_nascimento: N;
+  comp_sem_biometria: N;
+  /** 1 votacaoUE, 2 votacaoRED, 3 a 6 sistema de apuração (cédula) */
+  tipo_arquivo: N;
+  /** 1 seção, 3 contingência, 4 reserva da seção, 6 reserva encerrando a seção */
+  tipo_urna: N;
+  /** tamanho do historicoCodigosCarga */
+  n_cargas: N;
+  abertura_iso: S;
 }
 
 /** BU aceito pela totalização paralela (cópia local, imutável como na origem). */
@@ -238,6 +249,7 @@ const COLS = {
     "uf", "mun", "zona", "secao", "origem", "status_aux", "hash", "bu_nome", "dr_hr", "encerramento_local", "encerramento_iso",
     "emissao_iso", "recebido_iso", "bu_sha256", "aptos", "comparecimento", "votos_json", "totalizado_mun_iso",
     "lag_encerr_recebimento_min", "lag_encerr_emissao_min", "lag_recebimento_totalizacao_min", "erro", "tentativas", "atualizado_em",
+    "hab_biometria", "hab_ano_nascimento", "comp_sem_biometria", "tipo_arquivo", "tipo_urna", "n_cargas", "abertura_iso",
   ],
   paralela_bu: [
     "id", "recebido_em", "uf", "mun", "zona", "secao", "fase", "pleito", "turno", "orig", "aptos", "comparecimento", "hash_final",

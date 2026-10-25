@@ -40,6 +40,7 @@ const ROTAS: readonly Rota[] = [
   { arquivo: "secoes", caminho: "/api/2t/secoes" },
   { arquivo: "paralela", caminho: "/api/2t/paralela" },
   { arquivo: "projecao", caminho: "/api/2t/projecao" },
+  { arquivo: "comparecimento", caminho: "/api/2t/comparecimento" },
   { arquivo: "anomalias", caminho: "/api/anomalias?limit=60" },
   { arquivo: "resultado", caminho: "/api/resultado?ele=6258&cargo=1&abr=br" },
   { arquivo: "mapa", caminho: "/api/mapa?ele=6258&cargo=1&nivel=uf" },

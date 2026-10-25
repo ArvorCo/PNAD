@@ -1,6 +1,6 @@
 // Roteador da API JSON. Toda resposta com Cache-Control: no-store; erros como {erro}.
 import type { Database } from "bun:sqlite";
-import { pausas, paralela, secoes } from "./api-2t-auditoria.ts";
+import { comparecimento, pausas, paralela, secoes } from "./api-2t-auditoria.ts";
 import { abstencao, estaduais, evolucao, projecao, regioes, ufs } from "./api-2t-indicadores.ts";
 import { andamento, blob, fetches, fim, latencia, snapshots, velocidade } from "./api-auditoria.ts";
 import { anomalias } from "./api-anomalias.ts";
@@ -34,6 +34,7 @@ const COM_BANCO: Readonly<Record<string, Rota>> = {
   "/api/2t/pausas": pausas,
   "/api/2t/secoes": secoes,
   "/api/2t/paralela": paralela,
+  "/api/2t/comparecimento": comparecimento,
 };
 
 const RE_BLOB = /^\/api\/blob\/(\d+)$/;

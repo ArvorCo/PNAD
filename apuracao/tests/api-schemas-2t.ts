@@ -260,3 +260,78 @@ export const ProjecaoSchema = z
     serie: z.array(z.tuple([z.number(), PctOuNulo, PctOuNulo, PctOuNulo, PctOuNulo, Pct])),
   })
   .strict();
+
+// ---------------------------------------------------------------- /api/2t/comparecimento
+const NumN = z.number().nullable();
+const Dist = z.object({ n: z.number().int().nonnegative(), p50: NumN, p90: NumN }).strict();
+const Contagem = {
+  delta: z.number().int().nonnegative(),
+  sem_bio: z.number().int().nonnegative(),
+  tarde: z.number().int().nonnegative(),
+  apos_19h: z.number().int().nonnegative(),
+  papel: z.number().int().nonnegative(),
+  contingencia: z.number().int().nonnegative(),
+  escore_2_mais: z.number().int().nonnegative(),
+};
+const Hhmm = z.string().regex(/^\d{2}:\d{2}$/);
+export const SecaoComparecimentoSchema = z
+  .object({
+    uf: Uf, mun: z.string().regex(/^\d{5}$/), nm: z.string(), zona: z.number().int(), secao: z.number().int(), lat: NumN, lon: NumN,
+    aptos: z.number().int().nullable(), comp: z.number().int().nullable(), taxa_comp: NumN, taxa_comp_1t: NumN, delta_pp: NumN,
+    sem_bio_pct: NumN, sem_bio_pct_1t: NumN, sem_bio_mun_p50_1t: NumN, ano_nasc_pct: NumN, encerramento_hhmm: Hhmm.nullable(),
+    encerrou_apos_17h: z.boolean(), apos_19h: z.boolean(), papel: z.boolean(), tipo_arquivo: z.number().int().nullable(),
+    tipo_urna: z.number().int().nullable(), n_cargas: z.number().int().nullable(), contingencia: z.boolean(), fatia_flavio: Pct.nullable(),
+    fatia_flavio_1t: Pct.nullable(), recebido_hhmm: Hhmm.nullable(), origem: z.enum(["amostra", "paralela"]),
+    sinais: z.object({ delta: z.boolean(), sem_bio: z.boolean(), tarde: z.boolean(), papel: z.boolean() }).strict(),
+    escore: z.number().int().min(0).max(4),
+  })
+  .strict();
+const MunicipioComparecimentoSchema = z
+  .object({
+    uf: Uf, cd: z.string().regex(/^\d{5}$/), nm: z.string(), lat: NumN, lon: NumN, te: z.number().int().nonnegative(), pst: Pct, taxa_2t: Pct,
+    taxa_1t: Pct, delta_pp: z.number(),
+  })
+  .strict();
+const BlocoProrrogacaoSchema = z
+  .object({
+    uf: z.string(), n_tardias: z.number().int().nonnegative(), n_apos_19h: z.number().int().nonnegative(), n_pontuais: z.number().int().nonnegative(),
+    delta_comp_tardias: NumN, delta_comp_pontuais: NumN, n_vs_1t: z.number().int().nonnegative(), delta_fatia_vs_1t_pp: NumN,
+    n_vs_pontuais: z.number().int().nonnegative(), delta_fatia_vs_pontuais_pp: NumN,
+  })
+  .strict();
+export const ComparecimentoSchema = z
+  .object({
+    at: Iso,
+    min: NumN,
+    rotulo: z.string().min(20),
+    regras: z
+      .object({
+        delta_pp_min: z.number(), sem_bio_fator: z.number(), sem_bio_min_pct: z.number(), tarde_hhmm: Hhmm, apos_hhmm: Hhmm, papel_tipo_min: z.number(),
+        mun_pst_min: z.number(),
+      })
+      .strict(),
+    referencia: z
+      .object({
+        secoes: z.boolean(), gerado_em: z.string().nullable(), municipios: z.boolean(),
+        enc_1t_pct: z.object({ apos_1700: Pct.nullable(), apos_1800: Pct.nullable(), apos_1900: Pct.nullable() }).strict(),
+      })
+      .strict(),
+    totais: z
+      .object({
+        recebidas: z.number().int().nonnegative(), com_ref_1t: z.number().int().nonnegative(), com_coord: z.number().int().nonnegative(),
+        amostra: z.number().int().nonnegative(), paralela: z.number().int().nonnegative(),
+      })
+      .strict(),
+    sinais: z.object(Contagem).strict(),
+    delta: Dist,
+    por_uf: z.array(z.object({ uf: Uf, recebidas: z.number().int().nonnegative(), ...Contagem, delta_dist: Dist }).strict()),
+    pontos: z.array(z.tuple([z.number(), z.number(), NumN, z.number().int(), z.number().int(), z.union([z.literal(0), z.literal(1)])])),
+    top: z.array(SecaoComparecimentoSchema).max(30),
+    contingencia: z.array(SecaoComparecimentoSchema).max(50),
+    prorrogacao: z.object({ n_min: z.number().int().positive(), brasil: BlocoProrrogacaoSchema, por_uf: z.array(BlocoProrrogacaoSchema) }).strict(),
+    municipios: z.array(MunicipioComparecimentoSchema),
+    municipios_uf: z.array(z.object({ uf: Uf, n: z.number().int().nonnegative(), delta: Dist }).strict()),
+    municipios_delta: Dist,
+    municipios_top: z.array(MunicipioComparecimentoSchema).max(30),
+  })
+  .strict();

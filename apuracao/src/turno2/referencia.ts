@@ -177,3 +177,78 @@ export function carregarReferenciaVotos(path: string = process.env.APURACAO_REFE
   cacheVotos = { path: abs, mtimeMs, ref };
   return ref;
 }
+
+// ---------------------------------------------------------------- régua por seção (comparecimento)
+// data/referencia_1t_secoes.json, gerada por scripts/referencia-1t-secoes.ts.
+
+export interface MunicipioSecoesRef {
+  n: number;
+  comp_p50: number | null;
+  comp_p90: number | null;
+  sem_bio_p50: number | null;
+  sem_bio_p90: number | null;
+  lon: number | null;
+  lat: number | null;
+}
+
+export interface RefSecoes1T {
+  meta: {
+    gerado_em: string;
+    campos_secao: string[];
+    n_secoes: number;
+    enc_1t_pct?: { apos_1700: number | null; apos_1800: number | null; apos_1900: number | null };
+    [k: string]: unknown;
+  };
+  /** [lon, lat] por índice */
+  locais: [number, number][];
+  /** uf → mun → zona → [secao, aptos1, comp1, sem_bio1, ano_nasc1, enc1_min, local, fl1, lu1][] */
+  secoes: Record<string, Record<string, Record<string, (number | null)[][]>>>;
+  municipios: Record<string, Record<string, MunicipioSecoesRef>>;
+}
+
+export interface SecaoRef1T {
+  aptos1: number | null;
+  comp1: number | null;
+  sem_bio1: number | null;
+  ano_nasc1: number | null;
+  enc1_min: number | null;
+  lon: number | null;
+  lat: number | null;
+  fl1: number | null;
+  lu1: number | null;
+}
+
+export const CAMINHO_SECOES_PADRAO = "data/referencia_1t_secoes.json";
+
+let cacheSecoes: { path: string; mtimeMs: number; ref: RefSecoes1T; zonas: Map<string, Map<number, (number | null)[]>> } | null = null;
+
+/** Lê a régua por seção (cache por mtime); null se o arquivo não existir. */
+export function carregarReferenciaSecoes(path: string = process.env.APURACAO_REFERENCIA_1T_SECOES ?? CAMINHO_SECOES_PADRAO): RefSecoes1T | null {
+  const abs = resolve(path);
+  if (!existsSync(abs)) return null;
+  const mtimeMs = statSync(abs).mtimeMs;
+  if (cacheSecoes && cacheSecoes.path === abs && cacheSecoes.mtimeMs === mtimeMs) return cacheSecoes.ref;
+  const ref = JSON.parse(readFileSync(abs, "utf8")) as RefSecoes1T;
+  cacheSecoes = { path: abs, mtimeMs, ref, zonas: new Map() };
+  return ref;
+}
+
+/** Linha da seção no 1T (uf em caixa baixa, mun com 5 dígitos); null se não houver. */
+export function secaoRef1T(ref: RefSecoes1T, uf: string, mun: string, zona: number, secao: number): SecaoRef1T | null {
+  const u = uf.toLowerCase();
+  const kz = `${u}:${mun}:${zona}`;
+  let z = cacheSecoes?.ref === ref ? cacheSecoes.zonas.get(kz) : undefined;
+  if (z === undefined) {
+    const l = ref.secoes[u]?.[mun]?.[String(zona)] ?? [];
+    z = new Map(l.map((x) => [x[0] ?? -1, x]));
+    if (cacheSecoes?.ref === ref) cacheSecoes.zonas.set(kz, z);
+  }
+  const x = z.get(secao);
+  if (!x) return null;
+  const li = x[6] ?? -1;
+  const c = li >= 0 ? ref.locais[li] : undefined;
+  return {
+    aptos1: x[1] ?? null, comp1: x[2] ?? null, sem_bio1: x[3] ?? null, ano_nasc1: x[4] ?? null, enc1_min: x[5] ?? null,
+    lon: c?.[0] ?? null, lat: c?.[1] ?? null, fl1: x[7] ?? null, lu1: x[8] ?? null,
+  };
+}

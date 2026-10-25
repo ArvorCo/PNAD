@@ -198,6 +198,7 @@ O 2º turno roda sobre o mesmo coletor, servidor e telão, com banco próprio e 
 
 ```bash
 bun run scripts/referencia-1t.ts        # régua do 1º turno em data/referencia_1t.json (~25 s, só leitura dos bancos do 1T)
+bun run scripts/referencia-1t-secoes.ts # régua por seção do 1T em data/referencia_1t_secoes.json (~12 s, 19,6 MB; BU do 1T + coordenadas e votos do Politize)
 scripts/preflight.sh 2t                 # régua, -cs.json do pleito 3221, Supabase da totalização paralela, relógio, disco
 scripts/start-collect.sh 2t             # APURACAO_ELEICOES=6258,6260 APURACAO_PLEITO=3221 APURACAO_DB=data/apuracao-2t.sqlite APURACAO_PAUSA_MIN=7
 APURACAO_DB=data/apuracao-2t.sqlite scripts/start-serve.sh
@@ -224,6 +225,7 @@ Varredura de conferência feita em 21/10 com as mesmas variáveis: 13.105 arquiv
 | `GET /api/2t/pausas` | pausa nacional, geral e por UF (início, fim, minutos), soma das UFs contra o arquivo nacional, pausa do 1T como referência |
 | `GET /api/2t/secoes` | amostra de seções do arquivo-urna: encerramento → emissão → recebimento → totalização, por UF e Brasil, seções tardias |
 | `GET /api/2t/paralela` | totalização paralela por QR: BUs recebidos, cobertura, conferência contra o BU oficial, divergências, placar dos BUs (soma dos BUs recebidos, não projeção) |
+| `GET /api/2t/comparecimento` | vigilância de falso comparecimento nas seções recebidas (amostra e paralela) contra a própria seção no 1T: sinais delta ≥ +5 pp, sem biometria ≥ 2× a mediana do município e ≥ 10%, encerramento depois das 17:00 (19:00 à parte), BU do sistema de apuração; contingência; votos da prorrogação; camada municipal (mu com pst ≥ 30%). Cache 10 s. Sinal pede explicação, não prova irregularidade |
 
 `/api/config` ganha `ufs_governador_2t` e `regioes`; `/api/anomalias` ganha as categorias `pausa`, `divergencia`, `abstencao` e `paralela`. Contratos zod em `tests/api-schemas-2t.ts` e `tests/helpers-2t.ts`.
 

@@ -30,6 +30,7 @@ export const TECLA_TELA_2T: Readonly<Record<string, string>> = {
   u: "ufs",
   d: "atraso",
   b: "abstencao",
+  c: "comparecimento",
   s: "secoes",
   p: "pausas",
   g: "gov-2t",

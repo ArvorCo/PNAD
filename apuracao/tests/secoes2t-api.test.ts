@@ -21,7 +21,8 @@ function linha(uf: string, mun: string, secao: number, enc: number | null, rec: 
     bu_sha256: recebida ? "f".repeat(64) : null, aptos: null, comparecimento: null, votos_json: null, totalizado_mun_iso: tot === null ? null : m(tot),
     lag_encerr_recebimento_min: recebida ? rec - enc : null, lag_encerr_emissao_min: recebida ? 2 : null,
     lag_recebimento_totalizacao_min: tot === null || rec === null ? null : tot - rec, erro: null,
-    tentativas: 1, atualizado_em: m(200),
+    tentativas: 1, atualizado_em: m(200), hab_biometria: null, hab_ano_nascimento: null, comp_sem_biometria: null, tipo_arquivo: null,
+    tipo_urna: null, n_cargas: null, abertura_iso: null,
   };
 }
 

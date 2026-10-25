@@ -105,6 +105,14 @@ Amostra ao vivo de seções do arquivo-urna do pleito 3221 (aux.json → hash �
   ultimas: [{ uf, mun, zona, secao, recebido_em, lag_min }] }                            // 20 últimas recebidas
 ```
 
+### `/api/2t/comparecimento` (motor, 25/10)
+Vigilância de falso comparecimento (mesário "pianista"). Tipos em `apuracao/src/secoes2t/comparecimento-tipos.ts`, cálculo em `comparecimento.ts`, zod em `tests/api-schemas-2t.ts`, teste `tests/comparecimento2t-api.test.ts`. Régua por seção `data/referencia_1t_secoes.json` (`scripts/referencia-1t-secoes.ts`: BU do 1T em `secoes_2026.sqlite`, votos de Flávio e Lula e coordenadas do local no Politize; universo de 497.877 seções em 19,6 MB). `secao_2t` ganhou, por ALTER TABLE aditivo (`COLUNAS_ACRESCIDAS` em `src/db/abrir.ts`), `hab_biometria`, `hab_ano_nascimento`, `comp_sem_biometria`, `tipo_arquivo`, `tipo_urna`, `n_cargas`, `abertura_iso`; BU lido antes disso volta uma vez à fila.
+- Escore 0 a 4 por seção: delta de comparecimento ≥ +5 pp contra a própria seção no 1T; sem biometria ≥ 10% e ≥ 2× a mediana do município no 1T; encerramento (hh:mm de Brasília) depois de 17:00; BU do sistema de apuração (`tipo_arquivo` ≥ 3). Depois das 19:00 e contingência (`tipo_urna` 3, 4 ou 6, ou mais de uma carga) contam à parte.
+- Linha de base do 1T (`referencia.enc_1t_pct`): 92,38% das seções encerraram depois de 17:00, 8,42% depois de 18:00 e 1,63% depois de 19:00. O sinal "depois das 17:00" é quase universal; o discriminante é depois das 19:00.
+- Votos da prorrogação: tardias (depois de 17:00) contra a própria seção no 1T (fatia de Flávio entre os dois, ponderada pelos votos do 2T) e contra as pontuais do mesmo município; deltas de fatia só com n ≥ 20, sempre com o n ao lado.
+- Camada municipal: arquivos mu de presidente com pst ≥ 30%, `taxa_2t` = comparecimento / (comparecimento + abstenção) contra `100 − pa` do município no 1T (parcial contra total: o recorte de 30% limita, não elimina, essa diferença).
+- Rótulo obrigatório: "Sinal pede explicação, não prova irregularidade; a extensão até 19h eleva o comparecimento legitimamente."
+
 ### `/api/2t/paralela` (motor)
 Totalização paralela por QR (Supabase, projeto PNAD, views públicas `v_bu_publico`, `v_bu_voto_publico`, `v_bu_cargo_publico`, `v_totais_br`, `v_totais_uf`, `v_cobertura_uf`, `v_conflito`, `v_estatisticas`; URL e chave publicável em `../scripts/totalizacao_comum.py` e `../docs/assets/totalizacao/config.js`; só leitura).
 ```

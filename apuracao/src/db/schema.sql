@@ -319,6 +319,14 @@ CREATE TABLE IF NOT EXISTS secao_2t (
   erro TEXT,
   tentativas INTEGER NOT NULL DEFAULT 0,
   atualizado_em TEXT NOT NULL,
+  -- detalhamento do comparecimento e tipo da urna (acrescentados em 25/10; ver COLUNAS_ACRESCIDAS em abrir.ts)
+  hab_biometria INTEGER,
+  hab_ano_nascimento INTEGER,
+  comp_sem_biometria INTEGER,
+  tipo_arquivo INTEGER,
+  tipo_urna INTEGER,
+  n_cargas INTEGER,
+  abertura_iso TEXT,
   PRIMARY KEY (uf, mun, zona, secao)
 );
 CREATE INDEX IF NOT EXISTS secao_2t_recebido ON secao_2t (recebido_iso);

@@ -18,9 +18,34 @@ const PRAGMAS_ESCRITA = [
   "PRAGMA journal_size_limit = 268435456",
 ];
 
+/**
+ * Colunas acrescentadas a tabelas que já existiam em bancos vivos: `CREATE TABLE IF NOT EXISTS`
+ * não as cria, então entram por ALTER TABLE (aditivo, sem reescrever linhas).
+ */
+export const COLUNAS_ACRESCIDAS: Readonly<Record<string, readonly (readonly [string, string])[]>> = {
+  secao_2t: [
+    ["hab_biometria", "INTEGER"],
+    ["hab_ano_nascimento", "INTEGER"],
+    ["comp_sem_biometria", "INTEGER"],
+    ["tipo_arquivo", "INTEGER"],
+    ["tipo_urna", "INTEGER"],
+    ["n_cargas", "INTEGER"],
+    ["abertura_iso", "TEXT"],
+  ],
+};
+
+export function migrarColunas(db: Database): void {
+  for (const [tabela, cols] of Object.entries(COLUNAS_ACRESCIDAS)) {
+    const tem = new Set(db.query<{ name: string }, []>(`PRAGMA table_info(${tabela})`).all().map((c) => c.name));
+    if (tem.size === 0) continue;
+    for (const [nome, tipo] of cols) if (!tem.has(nome)) db.run(`ALTER TABLE ${tabela} ADD COLUMN ${nome} ${tipo}`);
+  }
+}
+
 export function aplicarEsquema(db: Database): void {
   db.transaction(() => {
     db.run(schemaSql);
+    migrarColunas(db);
     db.query("INSERT INTO meta (chave, valor) VALUES ('schema_version', $v) ON CONFLICT (chave) DO UPDATE SET valor = excluded.valor").run({
       v: String(SCHEMA_VERSION),
     });

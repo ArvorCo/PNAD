@@ -109,6 +109,13 @@ export interface ResumoBu {
   aptos: number | null;
   comparecimento: number;
   votos: BuComparavel;
+  habBiometria: number | null;
+  habAnoNascimento: number | null;
+  compSemBiometria: number | null;
+  tipoArquivo: number;
+  tipoUrna: number;
+  nCargas: number;
+  aberturaIso: string | null;
 }
 
 /**
@@ -127,6 +134,13 @@ export function resumoBu(bu: BoletimUrna, uf: string, eleFederal: number): Resum
     aptos: fed?.qtdEleitoresAptos ?? null,
     comparecimento: bu.qtdEleitoresCompareceram,
     votos: buComparavel(bu),
+    habBiometria: bu.detalhamentoComparecimento?.qtdEleitoresHabilitadosPorBiometria ?? null,
+    habAnoNascimento: bu.detalhamentoComparecimento?.qtdEleitoresHabilitadosPorBiografia ?? null,
+    compSemBiometria: bu.detalhamentoComparecimento?.qtdEleitoresCompareceramSemBiometria ?? null,
+    tipoArquivo: bu.urna.tipoArquivo,
+    tipoUrna: bu.urna.tipoUrna,
+    nCargas: bu.historicoCodigosCarga.length,
+    aberturaIso: exterior ? null : horaLocalUrnaParaIso(uf, dataHoraJe(bu.dadosSecao?.dataHoraAbertura ?? null)),
   };
 }
 
