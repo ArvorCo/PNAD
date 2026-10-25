@@ -110,7 +110,7 @@ export function criarParalela() {
          <div class="pl-kpis"></div>
          <h2 class="pl-h">conferência contra o boletim oficial do TSE</h2>
          <div class="pl-conf"></div>
-         <h2 class="pl-h">cobertura por UF (BUs recebidos sobre as seções)</h2>
+         <h2 class="pl-h">cobertura por UF (BUs recebidos)</h2>
          <div class="pl-cob"></div>`,
       );
       p.painel.classList.add("painel--2t");
@@ -169,7 +169,7 @@ export function criarParalela() {
               const i = document.createElement("i");
               i.style.width = `${Math.min(100, (100 * u.pct) / maiorCob)}%`;
               b.append(i);
-              c.append(h("b", "", u.uf), b, h("span", "num", `${inteiro(u.bus)} BU${u.bus === 1 ? "" : "s"} · ${decimal(u.pct, 2)}%`));
+              c.append(h("b", "", u.uf), b, h("span", "num", inteiro(u.bus)));
               c.title = `${u.uf}: ${inteiro(u.bus)} BUs de ${inteiro(u.secoes_total)} seções`;
               return c;
             })
