@@ -31,6 +31,43 @@ function kpi(rotulo: string, valor: string, nota = ""): HTMLElement {
   return k;
 }
 
+/** Aptos, comparecimento e abstenção somados dos BUs recebidos. */
+function presencaBus(r: Paralela): HTMLElement {
+  const p = r.placar_bus.presidente;
+  const aptos = p.aptos ?? 0;
+  const comp = p.comparecimento ?? 0;
+  const abst = Math.max(0, aptos - comp);
+  const pc = aptos > 0 ? (100 * comp) / aptos : null;
+  const pa = aptos > 0 ? (100 * abst) / aptos : null;
+  const el = h("div", "pl-presenca");
+  const cel = (rot: string, valor: string, pct: string | null): HTMLElement => {
+    const c = h("div", "pl-presenca-c");
+    c.append(h("span", "pl-presenca-rot", rot), h("b", "num", valor), h("span", "pl-presenca-pct num", pct ?? ""));
+    return c;
+  };
+  el.append(
+    cel("aptos", inteiro(aptos), null),
+    cel("compareceram", inteiro(comp), pc === null ? null : `${pc.toFixed(1).replace(".", ",")}%`),
+    cel("abstenção", inteiro(abst), pa === null ? null : `${pa.toFixed(1).replace(".", ",")}%`),
+  );
+  return el;
+}
+
+/** Chamada com o QR da totalização: a tela é o lugar onde o espectador decide enviar. */
+function chamadaQr(): HTMLElement {
+  const el = h("div", "espera-chamada pl-chamada");
+  const img = document.createElement("img");
+  img.className = "espera-qr";
+  img.src = "img/qr_totalizacao.svg";
+  img.alt = "QR code de brasil.arvor.co/totalizacao";
+  img.width = 112;
+  img.height = 112;
+  const txt = h("div");
+  txt.append(h("p", "espera-chamada-titulo", "TEM UM BU? LEIA-O AGORA!"), h("p", "espera-chamada-link", "brasil.arvor.co/totalizacao"));
+  el.append(img, txt);
+  return el;
+}
+
 /** % dos válidos (soma dos dois do duelo) de cada lado a partir dos votos por número de urna. */
 export function pctPlacar(votos: Record<string, number>, a: string, b: string): { a: number; b: number; total: number } | null {
   const va = votos[a] ?? 0;
@@ -164,7 +201,9 @@ export function criarParalela() {
         h("h2", "pl-h2", "placar dos BUs recebidos"),
         placarPresidente(r, d),
         h("p", "pl-placar-info num", `${inteiro(r.placar_bus.presidente.secoes)} seções; brancos ${inteiro(r.placar_bus.presidente.brancos)}, nulos ${inteiro(r.placar_bus.presidente.nulos)}`),
+        presencaBus(r),
         h("p", "pl-rotulo", ROTULO_PARALELA),
+        chamadaQr(),
         h("h2", "pl-h2", "governadores nos BUs"),
         ...(govLinhas.length > 0 ? govLinhas : [h("p", "d2-vazio", "nenhum BU de governador ainda")]),
         h("h2", "pl-h2", `últimas divergências (${inteiro(r.conferencia.divergentes)})`),
