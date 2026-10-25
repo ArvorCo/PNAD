@@ -36,13 +36,14 @@ export function baseDe(e: Estado): Base {
   return { st: e.br.st, dtHt: e.br.dt_ht, ufs: Object.fromEntries(e.ufs.map(u => [u.uf.toUpperCase(), u.st])) };
 }
 
-/** Seções novas desde a base se houve versão nova do TSE; null se nada mudou. */
+/**
+ * Seções novas desde a base se houve versão nova do TSE; null se nada mudou.
+ * Só o arquivo nacional conta: os arquivos de UF continuam se alinhando ao nacional depois
+ * de uma parada e subiriam sem haver divulgação nova (17:14 de 25/10: UFs somavam 214 contra 1.225).
+ */
 export function versaoNova(base: Base, e: Estado): number | null {
-  const ufsMaiores = e.ufs.filter(u => u.st > (base.ufs[u.uf.toUpperCase()] ?? 0));
-  const mudouHora = e.br.dt_ht !== base.dtHt && e.br.dt_ht !== null;
-  if (e.br.st <= base.st && ufsMaiores.length === 0 && !mudouHora) return null;
-  const porUf = e.ufs.reduce((a, u) => a + Math.max(0, u.st - (base.ufs[u.uf.toUpperCase()] ?? 0)), 0);
-  return Math.max(0, e.br.st - base.st, porUf);
+  if (e.br.st <= base.st) return null;
+  return e.br.st - base.st;
 }
 
 export interface Retomada {
@@ -74,3 +75,15 @@ export function lerRetomada(): Retomada | null {
 
 export const textoRetomada = (hora: string, novas: number): string =>
   `divulgação retomada às ${hora}: ${novas} ${novas === 1 ? "seção nova" : "seções novas"}`;
+
+/** Parada longa do arquivo nacional com apuração aberta: mais de `limiarS` sem versão nova e seções faltando. */
+export function paradaLonga(e: Estado, limiarS = 600): boolean {
+  const idade = e.br.idade_s;
+  return e.br.st > 0 && e.br.st < e.br.ts && typeof idade === "number" && idade > limiarS;
+}
+
+/** Alvo automático da vigília: 19:00 de Brasília enquanto não passou; depois, sem alvo. */
+export function alvoAutomatico(agora: Date): string | null {
+  const alvo = resolverAlvo(ALVO_VIGILIA_PADRAO, agora);
+  return alvo !== null && agora.getTime() < alvo ? ALVO_VIGILIA_PADRAO : null;
+}

@@ -40,7 +40,7 @@ describe("versão nova", () => {
   const base = baseDe(estado(1225, { SP: 100, MG: 50 }));
   test("nada mudou", () => expect(versaoNova(base, estado(1225, { SP: 100, MG: 50 }))).toBeNull());
   test("st nacional maior", () => expect(versaoNova(base, estado(1300, { SP: 100, MG: 50 }))).toBe(75));
-  test("só uma UF maior", () => expect(versaoNova(base, estado(1225, { SP: 100, MG: 80 }))).toBe(30));
-  test("só a hora mudou", () => expect(versaoNova(base, estado(1225, { SP: 100, MG: 50 }, "2026-10-25T22:10:00.000Z"))).toBe(0));
+  test("só uma UF maior não conta: os arquivos de UF se alinham ao nacional depois da parada", () => expect(versaoNova(base, estado(1225, { SP: 100, MG: 80 }))).toBeNull());
+  test("só a hora mudou não conta", () => expect(versaoNova(base, estado(1225, { SP: 100, MG: 50 }, "2026-10-25T22:10:00.000Z"))).toBeNull());
   test("texto", () => expect(textoRetomada("19:04", 75)).toBe("divulgação retomada às 19:04: 75 seções novas"));
 });

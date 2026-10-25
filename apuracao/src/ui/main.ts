@@ -27,7 +27,7 @@ import { preCarregar } from "./data/geo.ts";
 import { abrirCanal, ehComando } from "./control/broadcast.ts";
 import type { Comando, EspelhoTelao } from "./control/broadcast.ts";
 import { ligarTeclado } from "./control/keyboard.ts";
-import { baseDe, registrarRetomada, textoRetomada, versaoNova } from "./control/vigilia.ts";
+import { alvoAutomatico, baseDe, paradaLonga, registrarRetomada, textoRetomada, versaoNova } from "./control/vigilia.ts";
 import type { Base } from "./control/vigilia.ts";
 import { horaCurta } from "./data/format.ts";
 import { vigiarBundle } from "./control/recarga.ts";
@@ -318,9 +318,21 @@ async function iniciar(): Promise<void> {
 
   // ---------- vigília ----------
   let base: Base | null = null;
+  // Vigília automática: sem parâmetro algum, o telão entra na espera (alvo 19:00 enquanto
+  // não passou) quando o arquivo nacional fica mais de 10 min sem versão nova com apuração
+  // aberta, e sai sozinho na primeira versão nova. Uma entrada por parada.
+  let autoVigilia = false;
   const vigiar = (s: State): void => {
     if (!s.ui.vigilia) {
       base = null;
+      if (!s.ui.mock && !s.ui.replay && s.estado && paradaLonga(s.estado)) {
+        if (!autoVigilia) {
+          autoVigilia = true;
+          store.ui({ v: "espera", uf: null, mun: null, zonas: false, zona: null, auto: false, alvo: alvoAutomatico(new Date()), vigilia: true });
+        }
+      } else {
+        autoVigilia = false;
+      }
       return;
     }
     if (!s.estado || s.estado.pronto === false) return;
