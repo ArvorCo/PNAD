@@ -36,6 +36,7 @@ export const TECLA_TELA_2T: Readonly<Record<string, string>> = {
   t: "paralela",
   l: "alertas",
   e: "evolucao",
+  j: "projecao",
 };
 
 /** Destino da tela do 2º turno para Shift + `letra`, ou null se a letra não tem tela. */

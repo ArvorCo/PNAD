@@ -117,6 +117,12 @@ function deps(dir: string, agora: { t: number }, sobre: Partial<Dependencias> = 
       prompts.push(p);
       return { texto: "[calm] Texto do boletim.", palavras: 3, palavras_bruto: 3, enxugado: false, avisos: [], ms_roteiro: 1, ms_enxugar: 0 };
     },
+    noticias: async o => ({
+      buscado_em: new Date(o.agoraMs).toISOString(),
+      janela_desde: new Date(o.agoraMs - 3600_000).toISOString(),
+      feeds: [{ nome: "G1", url: "x", status: 200, itens: 1, erro: null }],
+      itens: [{ titulo: "TSE troca urnas em Salvador", veiculo: "G1", link: "x", pub_iso: new Date(o.agoraMs).toISOString(), hora_brt: "17:05", nova: !o.anteriores.has("tse troca urnas em salvador") }],
+    }),
     audio: async txt => {
       const mp3 = txt.replace(/\.txt$/, ".mp3");
       writeFileSync(mp3, new Uint8Array(2000));
@@ -147,6 +153,12 @@ describe("gerador", () => {
     expect(await g.gerar("manual", T1710)).toBe("1710-2");
     expect(d.anteriores).toEqual([null, 11]);
     expect(d.prompts[1]).toContain("Texto do boletim.");
+    // manchetes: gravadas, no prompt com atribuição pedida, e a do anterior deixa de ser NOVA
+    expect(existsSync(join(dir, "1710.noticias.json"))).toBe(true);
+    expect(d.prompts[0]).toContain("NOVA [17:05, G1] TSE troca urnas em Salvador");
+    expect(d.prompts[0]).toContain("o que está acontecendo fora da urna");
+    expect(d.prompts[1]).toContain("[17:05, G1] TSE troca urnas em Salvador");
+    expect(d.prompts[1]).not.toContain("NOVA [17:05, G1]");
   });
 
   test("relógio: gera no ciclo, pula ciclo ocupado e não gera com o relógio desligado", async () => {

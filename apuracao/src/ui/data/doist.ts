@@ -13,7 +13,8 @@ export type Rota2T =
   | "evolucao-uf"
   | "pausas"
   | "secoes"
-  | "paralela";
+  | "paralela"
+  | "projecao";
 
 export const ROTAS_2T: readonly Rota2T[] = [
   "regioes",
@@ -25,6 +26,7 @@ export const ROTAS_2T: readonly Rota2T[] = [
   "pausas",
   "secoes",
   "paralela",
+  "projecao",
 ];
 
 export type Resposta<T> = { situacao: "ok"; dados: T } | { situacao: "pendente" } | { situacao: "erro"; mensagem: string };
@@ -369,6 +371,64 @@ export interface Paralela {
   ultimos: { uf: string; mun: string; zona: string; secao: string; recebido_em: string | null; situacao: string }[];
 }
 
+/** Projetado de um bloco: votos dos dois, % entre os dois (= % dos válidos do 2º turno) e faixa de 90% de p_f. */
+export interface ProjetadoBloco {
+  f: number;
+  l: number;
+  p_f: number;
+  p_l: number;
+  p_f_validos: number;
+  p_l_validos: number;
+  faixa90: [number, number];
+}
+
+/** Brasil, região ou UF na projeção. `f` = Flávio (22), `l` = Lula (13). */
+export interface BlocoProjecao {
+  sigla: string;
+  nome: string;
+  pst: number;
+  pct_vv_observado: number;
+  /** Flávio entre os dois no 1º turno, em %. */
+  p1_f: number | null;
+  observado: { f: number; l: number; p_f: number | null };
+  projetado: ProjetadoBloco | null;
+  /** p_f observado menos o 1º turno nos mesmos municípios, em pontos. */
+  swing_pp: number | null;
+}
+
+export interface CandProjecao {
+  sqcand: string;
+  n: string;
+  nome_urna: string;
+}
+
+/** Ponto da série: minutos após 17:00, p_f projetado, faixa, p_f observado e pst. */
+export interface PontoProjecao {
+  min: number;
+  proj: number | null;
+  a: number | null;
+  b: number | null;
+  obs: number | null;
+  pst: number;
+}
+
+export interface Projecao {
+  at: string;
+  min: number;
+  rotulo: string;
+  candidatos: { f: CandProjecao; l: CandProjecao };
+  cobertura: { pst: number; st: number; ts: number; pct_vv_observado: number; municipios_observados: number; municipios_fechados: number; municipios_total: number };
+  brasil: BlocoProjecao;
+  regioes: BlocoProjecao[];
+  ufs: BlocoProjecao[];
+  parametros: { K: number; K_uf: number; erro_comum_pp: number; reps: number; nivel_faixa: number; minimo_pst: number; metodo: string };
+  motivo_sem_projecao: string | null;
+  serie: PontoProjecao[];
+}
+
+/** Rótulo obrigatório da projeção (tela e API). */
+export const ROTULO_PROJECAO = "projeção estatística a partir do que já foi totalizado; não é resultado nem previsão de vitória";
+
 export interface Dados2T {
   regioes: Regioes;
   ufs: UfsResp;
@@ -379,6 +439,7 @@ export interface Dados2T {
   pausas: Pausas;
   secoes: Secoes;
   paralela: Paralela;
+  projecao: Projecao;
 }
 
 export type Respostas2T = { [K in Rota2T]?: Resposta<Dados2T[K]> };
@@ -807,6 +868,81 @@ export function normalizarParalela(bruto: unknown): Resposta<Paralela> {
   });
 }
 
+function blocoProjecao(b: Bruto): BlocoProjecao {
+  const o: Bruto = ehBruto(b.observado) ? b.observado : {};
+  const pj = ehBruto(b.projetado) ? b.projetado : null;
+  const fx = pj ? lista(pj.faixa90) : [];
+  const pf = pj ? num(pj.p_f) : 0;
+  return {
+    sigla: txt(b.sigla).toUpperCase(),
+    nome: txt(b.nome, txt(b.sigla)),
+    pst: num(b.pst),
+    pct_vv_observado: num(b.pct_vv_observado),
+    p1_f: numOuNulo(b.p1_f),
+    observado: { f: num(o.f), l: num(o.l), p_f: numOuNulo(o.p_f) },
+    projetado: pj
+      ? {
+          f: num(pj.f),
+          l: num(pj.l),
+          p_f: pf,
+          p_l: num(pj.p_l, 100 - pf),
+          p_f_validos: num(pj.p_f_validos),
+          p_l_validos: num(pj.p_l_validos),
+          faixa90: [num(fx[0], pf), num(fx[1], pf)],
+        }
+      : null,
+    swing_pp: numOuNulo(b.swing_pp),
+  };
+}
+
+function candProjecao(x: unknown, n: string): CandProjecao {
+  const c: Bruto = ehBruto(x) ? x : {};
+  return { sqcand: txt(c.sqcand), n: txt(c.n, n), nome_urna: txt(c.nome_urna) };
+}
+
+/** Projeção ao vivo: blocos com `projetado` null antes da base mínima; série ordenada pelo relógio. */
+export function normalizarProjecao(bruto: unknown): Resposta<Projecao> {
+  const sem = corpoSemDados<Projecao>(bruto);
+  if (sem) return sem;
+  const b = bruto as Bruto;
+  if (!ehBruto(b.brasil)) return erro("resposta sem o bloco do Brasil");
+  const cob: Bruto = ehBruto(b.cobertura) ? b.cobertura : {};
+  const par: Bruto = ehBruto(b.parametros) ? b.parametros : {};
+  const cands: Bruto = ehBruto(b.candidatos) ? b.candidatos : {};
+  return ok({
+    at: txt(b.at),
+    min: num(b.min),
+    rotulo: txt(b.rotulo, ROTULO_PROJECAO) || ROTULO_PROJECAO,
+    candidatos: { f: candProjecao(cands.f, "22"), l: candProjecao(cands.l, "13") },
+    cobertura: {
+      pst: num(cob.pst),
+      st: num(cob.st),
+      ts: num(cob.ts),
+      pct_vv_observado: num(cob.pct_vv_observado),
+      municipios_observados: num(cob.municipios_observados),
+      municipios_fechados: num(cob.municipios_fechados),
+      municipios_total: num(cob.municipios_total),
+    },
+    brasil: blocoProjecao(b.brasil),
+    regioes: regs(b.regioes).map(blocoProjecao),
+    ufs: regs(b.ufs).map(blocoProjecao),
+    parametros: {
+      K: num(par.K),
+      K_uf: num(par.K_uf),
+      erro_comum_pp: num(par.erro_comum_pp),
+      reps: num(par.reps),
+      nivel_faixa: num(par.nivel_faixa, 90),
+      minimo_pst: num(par.minimo_pst, 1),
+      metodo: txt(par.metodo),
+    },
+    motivo_sem_projecao: txtOuNulo(b.motivo_sem_projecao),
+    serie: lista(b.serie)
+      .filter((p): p is unknown[] => Array.isArray(p))
+      .map(p => ({ min: num(p[0]), proj: numOuNulo(p[1]), a: numOuNulo(p[2]), b: numOuNulo(p[3]), obs: numOuNulo(p[4]), pst: num(p[5]) }))
+      .sort((p, q) => p.min - q.min),
+  });
+}
+
 export const NORMALIZADORES: { [K in Rota2T]: (bruto: unknown) => Resposta<Dados2T[K]> } = {
   regioes: normalizarRegioes,
   ufs: normalizarUfs,
@@ -817,6 +953,7 @@ export const NORMALIZADORES: { [K in Rota2T]: (bruto: unknown) => Resposta<Dados
   pausas: normalizarPausas,
   secoes: normalizarSecoes,
   paralela: normalizarParalela,
+  projecao: normalizarProjecao,
 };
 
 /** Dados prontos da rota, ou null quando ela ainda não respondeu, está pendente ou falhou. */

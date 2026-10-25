@@ -24,6 +24,7 @@ export const TELAS_2T: readonly Tela2T[] = [
   { id: "paralela", titulo: "Totalização paralela", rotulo: "Paralela por QR do BU", atalho: "Shift+T", busca: "paralela totalizacao qr bu boletim conferencia divergencia" },
   { id: "alertas", titulo: "Alertas da noite", rotulo: "Alertas", atalho: "Shift+L", busca: "alertas anomalias avisos eventos" },
   { id: "evolucao", titulo: "Evolução da noite", rotulo: "Evolução dos válidos", atalho: "Shift+E", busca: "evolucao curva ao longo da noite validos duelo regioes" },
+  { id: "projecao", titulo: "Projeção do resultado final", rotulo: "Projeção estatística", atalho: "Shift+J", busca: "projecao previsao final tendencia estimativa oscilacao municipios faixa" },
 ];
 
 export const IDS_2T: ReadonlySet<string> = new Set(TELAS_2T.map(t => t.id));

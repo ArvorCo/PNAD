@@ -3,7 +3,9 @@
    e só rebaixa o arquivo cujo SHA-256 mudou. Todo texto entra por textContent. */
 (function () {
   'use strict';
-  var ARQUIVOS = ['estado', 'config', 'regioes', 'ufs', 'abstencao', 'estaduais', 'evolucao', 'pausas', 'secoes', 'paralela', 'anomalias', 'resultado', 'mapa'];
+  var ARQUIVOS = ['estado', 'config', 'regioes', 'ufs', 'abstencao', 'estaduais', 'evolucao', 'pausas', 'secoes', 'paralela', 'anomalias', 'resultado', 'mapa', 'projecao'];
+  /* Arquivos novos na noite: só são pedidos quando o manifesto já os lista. */
+  var OPCIONAIS = { projecao: true };
   var EXEMPLO = new URLSearchParams(location.search).get('fonte') === 'exemplo';
   var BASE = 'assets/apuracao_2t/' + (EXEMPLO ? 'exemplo/' : '');
   var T0 = Date.parse('2026-10-25T20:00:00Z');
@@ -122,6 +124,37 @@
     ]));
     raiz.appendChild(h('p', 'nota', 'Parcial de apuração, não é projeção. Votos válidos excluem brancos e nulos (' + n0(b.vb) + ' brancos e ' + n0(b.vn) + ' nulos até agora).'));
     troca('placar-corpo', raiz);
+  }
+
+  /* projeção estatística do final (rota /api/2t/projecao do telão) */
+  var ROTULO_PROJ = 'projeção estatística a partir do que já foi totalizado; não é resultado nem previsão de vitória';
+  function rProjecao() {
+    if (!ok('projecao')) return troca('projecao-corpo', vazio('A projeção começa quando o país passar de 1% das seções totalizadas.'));
+    var P = D.projecao, b = P.brasil || {}, pj = b.projetado, cand = P.candidatos || {};
+    var raiz = h('div');
+    if (P.rotulo && P.rotulo !== ROTULO_PROJ) raiz.appendChild(h('p', 'nota', String(P.rotulo)));
+    if (!pj) {
+      raiz.appendChild(vazio('Ainda sem base para projetar: ' + (P.motivo_sem_projecao || 'aguardando as primeiras seções') + '.'));
+      return troca('projecao-corpo', raiz);
+    }
+    var pf = pj.p_f, pl = 100 - pf, fx = pj.faixa90 || [pf, pf];
+    var nomeF = titulo((cand.f && cand.f.nome_urna) || 'Flávio Bolsonaro'), nomeL = titulo((cand.l && cand.l.nome_urna) || 'Lula');
+    var duelo = h('div', 'duelo');
+    [[nomeF, pf, 'f', n1(fx[0]) + ' a ' + n1(fx[1])], [nomeL, pl, 'l', n1(100 - fx[1]) + ' a ' + n1(100 - fx[0])]].forEach(function (x) {
+      var c = h('div', 'cand ' + x[2]);
+      add(c, h('div', 'nome', x[0]), h('div', 'pct', n1(x[1]) + '%'), h('div', 'votos', 'faixa de 90%: ' + x[3]));
+      duelo.appendChild(c);
+    });
+    raiz.appendChild(duelo);
+    raiz.appendChild(barraDuelo(pf, pl));
+    var cob = P.cobertura || {}, par = P.parametros || {}, sw = b.swing_pp;
+    raiz.appendChild(dl([
+      ['Seções já totalizadas', n1(cob.pst) + '%', 'base da projeção'],
+      ['Votos esperados já vistos', n1(cob.pct_vv_observado) + '%', n0(cob.municipios_observados) + ' municípios com voto'],
+      ['Oscilação contra o 1º turno', typeof sw === 'number' ? (sw > 0 ? '+' : '') + n2(sw) + ' ponto' : '-', 'Flávio entre os dois, nos municípios já vistos']
+    ]));
+    raiz.appendChild(h('p', 'nota', 'Cada município que falta repete a oscilação já vista nele contra o 1º turno, puxada para a média da UF quando há poucos votos (K = ' + n0(par.K) + ' votos). Faixa de 90% por reamostragem de municípios mais ' + n1(par.erro_comum_pp) + ' ponto de erro comum.'));
+    troca('projecao-corpo', raiz);
   }
 
   /* regiões */
@@ -510,7 +543,7 @@
   }
 
   function renderTudo() {
-    var fns = [rPlacar, rRegioes, rEvolucao, rUfs, rEstaduais, rAbstencao, rPausas, rParalela, rAlertas, atualizarMeta];
+    var fns = [rPlacar, rProjecao, rRegioes, rEvolucao, rUfs, rEstaduais, rAbstencao, rPausas, rParalela, rAlertas, atualizarMeta];
     fns.forEach(function (f) {
       try { f(); } catch (e) { if (window.console) console.error(f.name, e); }
     });
@@ -532,6 +565,7 @@
       var tarefas = ARQUIVOS.map(function (nome) {
         var info = m.arquivos && m.arquivos[nome];
         var sha = info ? info.sha256 : '';
+        if (!info && OPCIONAIS[nome]) return Promise.resolve(false);
         if (D[nome] && SHAS[nome] === sha && sha) return Promise.resolve(false);
         return pegar(BASE + nome + '.json?v=' + (sha ? sha.slice(0, 12) : Date.now())).then(function (j) {
           D[nome] = j; SHAS[nome] = sha; return true;

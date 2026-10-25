@@ -814,6 +814,111 @@ export function criarRotas2T(ctx: CtxMock2T): Rotas2T {
     };
   };
 
+  // ---------- projeção ----------
+  // Ensaio da projeção: o observado vem dos mesmos votos das outras telas; o 1º turno é o
+  // observado final menos uma oscilação sintética por UF; as primeiras seções de cada UF
+  // carregam um viés que some conforme a UF totaliza, e a projeção o corrige.
+  const FIM_MOCK = 900;
+  const VOTOS_POR_SECAO = 300;
+  const swingUf = (uf: string): number => Math.round((aleatorio01(`sw${uf}`) - 0.45) * 6 * 100) / 100;
+  const viesUf = (uf: string): number => (aleatorio01(`vz${uf}`) - 0.5) * 8;
+  const ufsProj = (): string[] => [...ctx.config.ufs.map(u => u.uf.toUpperCase()), "ZZ"];
+  const r2 = (v: number): number => Math.round(v * 100) / 100;
+  interface UfProj {
+    uf: string;
+    st: number;
+    ts: number;
+    f: number;
+    l: number;
+    p1: number;
+    pProj: number;
+    esperado: number;
+  }
+  const ufProj = (uf: string, g: number): UfProj => {
+    const [d0, d1] = duelo(g);
+    const lados = (v: Record<string, number>): [number, number] => [d0 ? (v[d0.sq] ?? 0) : 0, d1 ? (v[d1.sq] ?? 0) : 0];
+    const p = pontoUf(uf, g);
+    const [f, l] = lados(p.votos);
+    const fim = pontoUf(uf, ctx.dezessete + FIM_MOCK * MIN);
+    const [ff, lf] = lados(fim.votos);
+    const pFinal = ff + lf > 0 ? (100 * ff) / (ff + lf) : 50;
+    const p1 = pFinal - swingUf(uf);
+    const frac = p.ts > 0 ? p.st / p.ts : 0;
+    const pObs = f + l > 0 ? (100 * f) / (f + l) : null;
+    const pProj = pObs === null || frac <= 0 ? p1 + 1 : pObs - viesUf(uf) * (1 - frac);
+    return { uf, st: p.st, ts: p.ts, f, l, p1, pProj, esperado: p.ts * VOTOS_POR_SECAO };
+  };
+  /** Meia faixa de 90% em pontos: amostral (cai com a fração totalizada) mais 1 pp de erro comum. */
+  const meiaFaixa = (pst: number): number => 1.645 * Math.sqrt(1 + (30 * (1 - pst / 100)) / Math.max(pst, 1));
+  const blocoProj = (sigla: string, nome: string, us: UfProj[], comBase: boolean): Record<string, unknown> => {
+    const st = us.reduce((a, u) => a + u.st, 0);
+    const ts = us.reduce((a, u) => a + u.ts, 0);
+    const f = us.reduce((a, u) => a + u.f, 0);
+    const l = us.reduce((a, u) => a + u.l, 0);
+    const esp = us.reduce((a, u) => a + u.esperado, 0);
+    const pf = esp > 0 ? us.reduce((a, u) => a + u.pProj * u.esperado, 0) / esp : 50;
+    const p1 = esp > 0 ? us.reduce((a, u) => a + u.p1 * u.esperado, 0) / esp : null;
+    const obsUfs = us.filter(u => u.f + u.l > 0);
+    const espObs = obsUfs.reduce((a, u) => a + u.esperado, 0);
+    const p1Obs = espObs > 0 ? obsUfs.reduce((a, u) => a + u.p1 * u.esperado, 0) / espObs : null;
+    const pObs = f + l > 0 ? (100 * f) / (f + l) : null;
+    const pst = ts > 0 ? (100 * st) / ts : 0;
+    const meia = meiaFaixa(pst);
+    const fp = Math.round((esp * pf) / 100);
+    return {
+      sigla,
+      nome,
+      pst: r2(pst),
+      pct_vv_observado: r2(pst),
+      p1_f: p1 === null ? null : r2(p1),
+      observado: { f, l, p_f: pObs === null ? null : r2(pObs) },
+      projetado: comBase
+        ? { f: fp, l: esp - fp, p_f: r2(pf), p_l: r2(100 - pf), p_f_validos: r2(pf * 0.955), p_l_validos: r2((100 - pf) * 0.955), faixa90: [r2(pf - meia), r2(pf + meia)] }
+        : null,
+      swing_pp: pObs !== null && p1Obs !== null ? r2(pObs - p1Obs) : null,
+    };
+  };
+  const projecao = (t: number): Record<string, unknown> => {
+    const lista = ufsProj();
+    const us = lista.map(u => ufProj(u, t));
+    const st = us.reduce((a, u) => a + u.st, 0);
+    const ts = us.reduce((a, u) => a + u.ts, 0);
+    const pst = ts > 0 ? (100 * st) / ts : 0;
+    const comBase = pst >= 1;
+    const regiaoDe = (uf: string): string => ORDEM_REGIOES.find(r => REGIOES[r].includes(uf)) ?? "SE";
+    const serie: (number | null)[][] = [];
+    for (let m = 0; ctx.dezessete + m * MIN <= t; m += 5) {
+      const g = ctx.dezessete + m * MIN;
+      const b = blocoProj("BR", "Brasil", lista.map(u => ufProj(u, g)), true) as { pst: number; observado: { p_f: number | null }; projetado: { p_f: number; faixa90: [number, number] } };
+      const ok = b.pst >= 1;
+      serie.push([m, ok ? b.projetado.p_f : null, ok ? b.projetado.faixa90[0] : null, ok ? b.projetado.faixa90[1] : null, b.observado.p_f, b.pst]);
+    }
+    const [d0, d1] = duelo(t);
+    return {
+      at: iso(t),
+      min: minDe(t),
+      ele: 6258,
+      cargo: 1,
+      rotulo: "projeção estatística a partir do que já foi totalizado; não é resultado nem previsão de vitória",
+      candidatos: { f: { sqcand: d0?.sq ?? "", n: d0?.n ?? "22", nome_urna: d0?.nome ?? "" }, l: { sqcand: d1?.sq ?? "", n: d1?.n ?? "13", nome_urna: d1?.nome ?? "" } },
+      cobertura: {
+        pst: r2(pst),
+        st,
+        ts,
+        pct_vv_observado: r2(pst),
+        municipios_observados: Math.round(5570 * Math.min(1, pst / 60)),
+        municipios_fechados: Math.round(5570 * Math.max(0, (pst - 20) / 80)),
+        municipios_total: 5757,
+      },
+      brasil: blocoProj("BR", "Brasil", us, comBase),
+      regioes: ORDEM_REGIOES.map(r => blocoProj(r, NOME_REGIAO[r], us.filter(u => regiaoDe(u.uf) === r), comBase)),
+      ufs: us.map(u => blocoProj(u.uf, u.uf, [u], comBase)),
+      parametros: { K: 2000, K_uf: 20000, erro_comum_pp: 1, reps: 200, nivel_faixa: 90, minimo_pst: 1, metodo: "oscilação proporcional por município com pooling parcial na UF (ensaio)" },
+      motivo_sem_projecao: comBase ? null : `menos de 1% das seções totalizadas no país (${r2(pst).toString().replace(".", ",")}%)`,
+      serie,
+    };
+  };
+
   // ---------- despacho ----------
   const dados = (rota: Rota2T, t: number): Resposta<Dados2T[Rota2T]> => {
     const falha = ctx.falhas[rota];
@@ -839,6 +944,8 @@ export function criarRotas2T(ctx: CtxMock2T): Rotas2T {
           return secoes(t);
         case "paralela":
           return paralela(t, falha === "fonte");
+        case "projecao":
+          return projecao(t);
       }
     })();
     // O mock passa pelo mesmo normalizador da API real.

@@ -189,3 +189,74 @@ export const Config2tSchema = ConfigSchema.extend({
   ufs_governador_2t: z.array(Uf),
   regioes: z.record(Regiao, z.array(Uf)),
 }).strict();
+
+// ---------------------------------------------------------------- /api/2t/projecao
+
+const PctOuNulo = Pct.nullable();
+
+const ProjetadoSchema = z
+  .object({
+    f: z.number().int().nonnegative(),
+    l: z.number().int().nonnegative(),
+    p_f: Pct,
+    p_l: Pct,
+    p_f_validos: Pct,
+    p_l_validos: Pct,
+    faixa90: z.tuple([Pct, Pct]),
+  })
+  .strict()
+  .refine((p) => p.faixa90[0] <= p.p_f && p.p_f <= p.faixa90[1], { message: "faixa de 90% não contém a projeção" });
+
+export const BlocoProjecaoSchema = z
+  .object({
+    sigla: z.union([Regiao, Uf, z.literal("BR")]),
+    nome: z.string(),
+    pst: Pct,
+    pct_vv_observado: Pct,
+    p1_f: PctOuNulo,
+    observado: z.object({ f: z.number().int().nonnegative(), l: z.number().int().nonnegative(), p_f: PctOuNulo }).strict(),
+    projetado: ProjetadoSchema.nullable(),
+    swing_pp: z.number().min(-100).max(100).nullable(),
+  })
+  .strict();
+
+const CandProjecao = z.object({ sqcand: Sq, n: z.string(), nome_urna: z.string() }).strict();
+
+export const ProjecaoSchema = z
+  .object({
+    at: Iso,
+    min: z.number(),
+    ele: z.number().int(),
+    cargo: z.number().int(),
+    rotulo: z.literal("projeção estatística a partir do que já foi totalizado; não é resultado nem previsão de vitória"),
+    candidatos: z.object({ f: CandProjecao, l: CandProjecao }).strict().nullable(),
+    cobertura: z
+      .object({
+        pst: Pct,
+        st: z.number().int().nonnegative(),
+        ts: z.number().int().nonnegative(),
+        pct_vv_observado: Pct,
+        municipios_observados: z.number().int().nonnegative(),
+        municipios_fechados: z.number().int().nonnegative(),
+        municipios_total: z.number().int().nonnegative(),
+      })
+      .strict(),
+    brasil: BlocoProjecaoSchema,
+    regioes: z.array(BlocoProjecaoSchema).length(6),
+    ufs: z.array(BlocoProjecaoSchema).length(28),
+    parametros: z
+      .object({
+        K: z.number().positive(),
+        K_uf: z.number().positive(),
+        mesmo_estagio: z.boolean(),
+        erro_comum_pp: z.number().nonnegative(),
+        reps: z.number().int().nonnegative(),
+        nivel_faixa: z.literal(90),
+        minimo_pst: z.number().nonnegative(),
+        metodo: z.string().min(20),
+      })
+      .strict(),
+    motivo_sem_projecao: z.string().nullable(),
+    serie: z.array(z.tuple([z.number(), PctOuNulo, PctOuNulo, PctOuNulo, PctOuNulo, Pct])),
+  })
+  .strict();

@@ -138,3 +138,42 @@ export function atrasoVsReferencia(curva: readonly PontoCurva[], pstAtual: numbe
   if (m === null) return null;
   return Math.round((minAgora - m) * 10) / 10;
 }
+
+// ---------------------------------------------------------------- votos do 1º turno por município
+// data/referencia_1t_votos.json, gerado por scripts/referencia-1t-votos.ts: base da projeção ao vivo.
+
+/** Votos finais do 1º turno de um município: Flávio (22), Lula (13), válidos, comparecimento, eleitorado. */
+export interface MunVotos1T {
+  f1: number;
+  l1: number;
+  vv1: number;
+  comp1: number;
+  te1: number;
+  /** seções do município no 1º turno */
+  ts1?: number;
+  /** trajetória da noite: [st, votos de Flávio, votos de Lula], st crescente */
+  c?: [number, number, number][];
+}
+
+export interface ReferenciaVotos1T {
+  meta: { gerado_em: string; eleicao: number; cargo: number; [k: string]: unknown };
+  brasil: MunVotos1T & { municipios: number };
+  ufs: Record<string, MunVotos1T & { municipios: number }>;
+  /** UF em caixa alta → código TSE de 5 dígitos → votos */
+  municipios: Record<string, Record<string, MunVotos1T>>;
+}
+
+export const CAMINHO_VOTOS_PADRAO = "data/referencia_1t_votos.json";
+
+let cacheVotos: { path: string; mtimeMs: number; ref: ReferenciaVotos1T } | null = null;
+
+/** Lê a régua de votos (cache por mtime); null se o arquivo não existir. */
+export function carregarReferenciaVotos(path: string = process.env.APURACAO_REFERENCIA_1T_VOTOS ?? CAMINHO_VOTOS_PADRAO): ReferenciaVotos1T | null {
+  const abs = resolve(path);
+  if (!existsSync(abs)) return null;
+  const mtimeMs = statSync(abs).mtimeMs;
+  if (cacheVotos && cacheVotos.path === abs && cacheVotos.mtimeMs === mtimeMs) return cacheVotos.ref;
+  const ref = JSON.parse(readFileSync(abs, "utf8")) as ReferenciaVotos1T;
+  cacheVotos = { path: abs, mtimeMs, ref };
+  return ref;
+}
