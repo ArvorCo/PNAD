@@ -65,6 +65,14 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
               <p>municípios<b class="e-mun">aguardando</b></p>
             </div>
             <div class="espera-grade" aria-label="estados"></div>
+            <div class="espera-chamada" aria-label="totalização paralela">
+              <img class="espera-qr" src="img/qr_totalizacao.svg" alt="QR code de brasil.arvor.co/totalizacao" width="176" height="176">
+              <div>
+                <p class="espera-chamada-titulo">TEM UM BU? LEIA-O AGORA NA TOTALIZAÇÃO PARALELA!</p>
+                <p class="espera-chamada-link">brasil.arvor.co/totalizacao</p>
+                <p class="espera-chamada-nota">aponte a câmera para os QR do boletim de urna impresso; soma dos BUs recebidos, não projeção</p>
+              </div>
+            </div>
           </div>
           <aside class="espera-lado">
             <h2>a seguir no telão</h2>

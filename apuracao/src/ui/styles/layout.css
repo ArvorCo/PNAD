@@ -940,3 +940,48 @@
     animation: none;
   }
 }
+
+.espera-chamada {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 2rem;
+  max-width: 62rem;
+  background: var(--dark);
+  color: var(--on-dark);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.espera-qr {
+  width: 11rem;
+  height: 11rem;
+  background: #fff;
+  border-radius: 0.375rem;
+  padding: 0.375rem;
+  display: block;
+}
+
+.espera-chamada-titulo {
+  font-family: var(--font-serif);
+  font-size: var(--t-3);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+}
+
+.espera-chamada-link {
+  font-family: var(--font-mono);
+  font-size: var(--t-3);
+  color: var(--on-dark);
+  margin: 0 0 0.375rem;
+}
+
+.espera-chamada-nota {
+  font-size: var(--t-2);
+  color: var(--on-dark-muted);
+  margin: 0;
+  line-height: 1.3;
+}
