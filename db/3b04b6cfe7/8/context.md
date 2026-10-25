@@ -1,0 +1,16 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+Vamos fazer um mapa de previsão por estado trazendo o resultado por estado com porcentagem de diferença a partir de resultados do 1o turno + pesquisas do 2o turno utilizando nososs métodos de projeção e média arvor e projeção Arvor para tentar prever a votação por estado e colocar isso numa imagem 1:1 muito bonita e clara, um infográfico preditivo e bonito que dê a projeção final para nós!
+
+### Prompt 2
+
+[Image: original 2160x2160, displayed at 1932x1932. Multiply coordinates by 1.12 to map to original image.]
+
+### Prompt 3
+
+[Image: original 2160x600, displayed at 2000x556. Multiply coordinates by 1.08 to map to original image.]
+
