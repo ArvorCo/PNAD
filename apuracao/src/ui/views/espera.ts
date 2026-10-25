@@ -58,7 +58,7 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
     const falta = (alvo - agora) / 1000;
     if (alvoHash !== null) {
       if (falta > 0) {
-        rotulo.textContent = `votação prorrogada pelo STF até as ${horaDoAlvo(alvo)}; a divulgação do TSE retoma depois`;
+        rotulo.textContent = `prorrogada pelo STF até as ${horaDoAlvo(alvo)}; a divulgação do TSE retoma depois`;
         contagem.textContent = regressiva(falta).replace(/^(\d\d:\d\d)$/, "00:$1");
       } else {
         rotulo.textContent = "aguardando a divulgação";
@@ -94,7 +94,7 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
               <p>municípios<b class="e-mun">aguardando</b></p>
             </div>
             <div class="espera-grade" aria-label="estados"></div>
-            <p class="espera-legenda">verde: UF com seções totalizadas no monitor do TSE (os arquivos de votos por UF podem ainda não ter sido publicados); cinza: nenhuma seção</p>
+            <p class="espera-legenda">verde: seção totalizada no monitor do TSE (votos da UF podem faltar); cinza: nenhuma</p>
             <div class="espera-chamada" aria-label="totalização paralela">
               <img class="espera-qr" src="img/qr_totalizacao.svg" alt="QR code de brasil.arvor.co/totalizacao" width="176" height="176">
               <div>
