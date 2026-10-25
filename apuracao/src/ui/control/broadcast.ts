@@ -14,6 +14,7 @@ export type Comando =
   | { tipo: "dwell"; segundos: number | null }
   | { tipo: "hud"; valor?: boolean }
   | { tipo: "refetch" }
+  | { tipo: "vinheta"; valor?: boolean }
   | { tipo: "pedir-estado" };
 
 export interface EspelhoTelao {
@@ -37,7 +38,7 @@ export interface EspelhoTelao {
 
 export type Mensagem = Comando | EspelhoTelao;
 
-const TIPOS_COMANDO = new Set(["nav", "uf", "proxima", "anterior", "pausa", "auto", "dwell", "hud", "refetch", "pedir-estado"]);
+const TIPOS_COMANDO = new Set(["nav", "uf", "proxima", "anterior", "pausa", "auto", "dwell", "hud", "refetch", "vinheta", "pedir-estado"]);
 
 export function ehComando(x: unknown): x is Comando {
   return typeof x === "object" && x !== null && TIPOS_COMANDO.has(String((x as { tipo?: unknown }).tipo));

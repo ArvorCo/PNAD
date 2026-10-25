@@ -985,3 +985,38 @@
   margin: 0;
   line-height: 1.3;
 }
+
+/* Vinheta de abertura: cobre o telão inteiro, acima de HUD e boletim. */
+.vinheta {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  width: 1920px;
+  height: 1080px;
+  background: #000;
+}
+.vinheta[hidden] {
+  display: none;
+}
+.vinheta-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vinheta-tocar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font: 700 56px/1 system-ui, sans-serif;
+  padding: 36px 72px;
+  background: #fff;
+  color: #000;
+  border: 0;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.vinheta-tocar[hidden] {
+  display: none;
+}

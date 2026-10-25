@@ -22,6 +22,7 @@ import type { EventoBoletimTelao } from "./data/sse.ts";
 import { EVENTO_BOLETIM, EVENTO_TICKER_EXTRA } from "./components/ticker.ts";
 import { criarBoletimWidget } from "./components/boletim.ts";
 import type { BoletimWidget } from "./components/boletim.ts";
+import { criarVinheta } from "./components/vinheta.ts";
 import { preCarregar } from "./data/geo.ts";
 import { abrirCanal, ehComando } from "./control/broadcast.ts";
 import type { Comando, EspelhoTelao } from "./control/broadcast.ts";
@@ -177,7 +178,20 @@ async function iniciar(): Promise<void> {
 
   // Widget do boletim falado (montado só com servidor ao vivo, mais abaixo).
   let boletimW: BoletimWidget | null = null;
+  // Vinheta de abertura: pausa a rotação e o boletim enquanto toca e devolve o telão como estava.
+  let pausadoAntes = false;
+  const vinheta = criarVinheta({
+    hash: location.hash,
+    suspender: sim => {
+      if (sim) {
+        pausadoAntes = store.get().ui.pausado;
+        rotacao.pausar(true);
+      } else if (!pausadoAntes) rotacao.pausar(false);
+      boletimW?.suspender(sim);
+    },
+  });
   ligarTeclado({
+    vinheta: () => vinheta.alternar(),
     ufAtual: () => store.get().ui.uf,
     telaAtual: () => store.get().ui.v,
     turno: () => store.get().config?.turno ?? 1,
@@ -279,6 +293,9 @@ async function iniciar(): Promise<void> {
         break;
       case "refetch":
         recarregar();
+        break;
+      case "vinheta":
+        vinheta.alternar(c.valor);
         break;
       case "pedir-estado":
         break;

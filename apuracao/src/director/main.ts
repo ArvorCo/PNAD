@@ -89,6 +89,8 @@ async function iniciar(): Promise<void> {
     bAuto,
     bHud,
     botao("recarregar dados", () => ({ tipo: "refetch" })),
+    botao("Vinheta de abertura", () => ({ tipo: "vinheta", valor: true })),
+    botao("interromper vinheta", () => ({ tipo: "vinheta", valor: false })),
     rotDwell,
     botao("tempo padrão", () => ({ tipo: "dwell", segundos: null })),
   );

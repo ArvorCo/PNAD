@@ -32,6 +32,8 @@ export interface AcoesTeclado {
    * Shift+B só para quando há boletim carregado; sem boletim, continua abrindo a abstenção.
    * Devolve true se tratou.
    */
+  /** Tecla `v`: toca a vinheta de abertura ou interrompe a que está no ar. */
+  vinheta?(): void;
   boletim?(acao: "alternar" | "parar" | "anterior" | "seguinte"): boolean;
 }
 
@@ -56,6 +58,7 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     else if (k === "f") a.tela_cheia();
     else if (k === "h") a.hud();
     else if (k === "x") a.irPara({ v: "exterior", uf: null, mun: null, zonas: false, zona: null });
+    else if (k === "v") a.vinheta?.();
     else if (k === "b") a.boletim?.("alternar");
   };
 

@@ -260,6 +260,10 @@ Playlist do 2º turno em `public/playlist-2t.json` (a do contrato é reserva). E
 
 `scripts/exportar-publico.ts` grava `../docs/assets/apuracao_2t/*.json` + `manifest.json` (sem municípios do config, sem identificador pessoal, abaixo de 2 MB); `scripts/publicar-loop.sh` exporta e dá commit + push só dessa pasta a cada `INTERVALO_S` (300; `PUSH=0` só commita). `../docs/apuracao_2t_ao_vivo.html` lê os JSON, recarrega a cada 60 s, avisa dados com mais de 10 min e aceita `?fonte=exemplo`. Card em `img/og/apuracao_2t_ao_vivo.png`; depois do primeiro commit da página rode `python3 ../scripts/sitemap-build.py`.
 
+**Vinheta de abertura (17:00).** `public/vinheta/abertura.mp4` toca em tela cheia no telão às 17:00:00 (relógio do telão contra `T0_2T_MS`), uma única vez (`localStorage`), só se o arquivo existir e sem `#vinheta=0`; `#vinheta=1` força ao carregar (cai em `teste.mp4` se faltar a abertura); `#vinheta=teste` toca sempre o `teste.mp4`.
+Manual: tecla `v` no telão (de novo interrompe) e botões "Vinheta de abertura" e "interromper vinheta" no diretor (comando `vinheta` no `BroadcastChannel`). Enquanto toca, rotação e boletim ficam suspensos e retomam ao fim; se o navegador recusar o `play()`, aparece o botão "tocar vinheta".
+Teste: `bun run scripts/qa-vinheta.ts` (Playwright contra a porta 4180, grava `qa/2t-vinheta.png`).
+
 ## Boletim falado (2º turno)
 
 A cada 10 minutos o boletim lê os dados, escreve o roteiro na voz do Leonardo, gera o áudio e deixa o mp3 pronto. Substitui o laço `scripts/boletim-loop.sh` do 1º turno (que tocava sozinho pelo `afplay`).

@@ -43,6 +43,8 @@ export interface BoletimWidget {
   tecla(acao: AcaoBoletim): boolean;
   /** Tela atual: decide compacto ou aberto. */
   tela(id: string): void;
+  /** Vinheta no ar: pausa o áudio e impede início; ao devolver, retoma o que estava tocando. */
+  suspender(sim: boolean): void;
 }
 
 export interface OpcoesBoletim {
@@ -305,6 +307,9 @@ export function criarBoletimWidget(o: OpcoesBoletim): BoletimWidget {
     desenhar();
   }
 
+  let suspenso = false;
+  let retomarAoFim = false;
+
   /** Toca o que o servidor pôs no ar (evento no_ar). */
   function tocar(id: string, hora: string, desde: string): void {
     if (!o.audio || desde === solto) return;
@@ -323,6 +328,10 @@ export function criarBoletimWidget(o: OpcoesBoletim): BoletimWidget {
     audio.play().then(
       () => {
         gesto.hidden = true;
+        if (suspenso) {
+          audio.pause();
+          retomarAoFim = true;
+        }
         desenhar();
       },
       (e: unknown) => {
@@ -435,6 +444,7 @@ export function criarBoletimWidget(o: OpcoesBoletim): BoletimWidget {
 
   // ---------- teclas (atalho secundário) ----------
   function tecla(acao: AcaoBoletim): boolean {
+    if (suspenso) return true;
     if (acao === "anterior" || acao === "seguinte") {
       const lista2 = (ultima?.itens ?? []).filter(tocavel);
       if (lista2.length === 0) return true;
@@ -474,6 +484,19 @@ export function criarBoletimWidget(o: OpcoesBoletim): BoletimWidget {
   return {
     el,
     tecla,
+    suspender(sim) {
+      suspenso = sim;
+      if (sim) {
+        if (atual && !audio.paused) {
+          audio.pause();
+          retomarAoFim = true;
+        }
+      } else if (retomarAoFim) {
+        retomarAoFim = false;
+        if (atual) void audio.play().catch(() => undefined);
+      }
+      desenhar();
+    },
     tela(id) {
       if (id === telaAtual) return;
       telaAtual = id;
