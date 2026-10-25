@@ -4,6 +4,7 @@
 
 import { criarFaixa } from "./components/faixa.ts";
 import { criarHud } from "./components/hud.ts";
+import { criarStatus } from "./components/status.ts";
 import { criarTicker } from "./components/ticker.ts";
 import { criarPaleta } from "./components/paleta.ts";
 import type { Paleta } from "./components/paleta.ts";
@@ -30,7 +31,8 @@ export function montarShell(raiz: HTMLElement, indice: Indice, escolher: (a: Ach
   base.className = "base";
   const ticker = criarTicker();
   const hud = criarHud();
-  base.append(ticker.el, hud.el);
+  const status = criarStatus(!location.hash.includes("mock=1"));
+  base.append(ticker.el, status.el, hud.el);
   const dwell = document.createElement("div");
   dwell.className = "dwell";
   dwell.innerHTML = "<i></i>";
@@ -90,6 +92,7 @@ export function montarShell(raiz: HTMLElement, indice: Indice, escolher: (a: Ach
       faixa.atualizar(s, titulo);
       ticker.atualizar(s);
       hud.atualizar(s, totalPlaylist);
+      status.atualizar(s.estado);
       desenharDwell(s);
     },
   };

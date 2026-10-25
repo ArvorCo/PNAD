@@ -19,7 +19,13 @@ function celulaAtraso(u: UfLinha): HTMLElement {
 
 function celulaFecha(u: UfLinha): string {
   if (u.st >= u.ts && u.ts > 0) return "fechou";
+  if (u.st <= 0) return "aguardando";
   return u.eta_100_iso ? horaCurta(u.eta_100_iso) : "sem ETA";
+}
+
+/** Idade da última versão com seção; antes da primeira seção a idade do arquivo zerado não diz nada. */
+function celulaIdade(u: UfLinha): string {
+  return u.st <= 0 ? "sem versão" : idadeCurta(u.idade_s);
 }
 
 function linhaPalco(u: UfLinha): HTMLElement {
@@ -30,7 +36,7 @@ function linhaPalco(u: UfLinha): HTMLElement {
   pst.append(barra(u.pst), h("span", "uf-pct num", pct(u.pst, 1)));
   const idade = h("span", "uf-idade num");
   if (u.parada) idade.append(h("span", "chip chip--atraso", `parada ${idadeCurta(u.idade_s)}`));
-  else idade.textContent = idadeCurta(u.idade_s);
+  else idade.textContent = celulaIdade(u);
   const mun = u.munnr + u.munpt;
   l.append(
     sg,
@@ -91,7 +97,7 @@ export function criarUfs() {
       const ordem = ufsMaisLentas(r.ufs);
       const nota = rodape(`${ROTULO_ATRASO}; parada: sem versão nova há mais de ${r.limiar_parada_min} min enquanto o país avança`);
       esq.replaceChildren(
-        cabecalho(["UF", "seções totalizadas", "atraso", "faltam", "municípios", "versão", "fecha"], "uf-cab--palco"),
+        cabecalho(["UF", "seções totalizadas", "atraso", "faltam", "municípios", "última versão", "fecha"], "uf-cab--palco"),
         ...ordem.slice(0, NO_PALCO).map(linhaPalco),
         nota,
       );

@@ -229,8 +229,8 @@
 }
 
 .ticker {
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 1 1 34rem;
+  min-width: 34rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -1019,4 +1019,60 @@
 }
 .vinheta-tocar[hidden] {
   display: none;
+}
+
+/* ---------- status do coletor (faixa inferior, entre ticker e boletim) ---------- */
+.stt {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  max-width: 44rem;
+  min-width: 0;
+  font-size: 1.125rem; /* 18 px */
+  line-height: 1.5rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.stt-c[hidden] {
+  display: none;
+}
+
+.stt-t {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.stt-l {
+  overflow: hidden;
+  display: flex;
+  gap: 0.625rem;
+  white-space: nowrap;
+}
+
+.stt-c b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.stt-c.aviso b {
+  color: #a8281c;
+}
+
+.stt-ponto {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  background: var(--outros);
+}
+
+.stt[data-saude="aviso"] .stt-ponto {
+  background: #e0a526;
+}
+
+.stt[data-saude="falha"] .stt-ponto {
+  background: #a8281c;
 }
