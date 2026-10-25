@@ -15,6 +15,7 @@ export type Comando =
   | { tipo: "hud"; valor?: boolean }
   | { tipo: "refetch" }
   | { tipo: "vinheta"; valor?: boolean }
+  | { tipo: "vigilia"; alvo: string | null }
   | { tipo: "pedir-estado" };
 
 export interface EspelhoTelao {
@@ -32,13 +33,14 @@ export interface EspelhoTelao {
   playlist: { v: string; uf: string | null }[];
   telas: { id: string; titulo: string }[];
   pst: number | null;
+  vigilia: boolean;
   rede: ModoRede;
   hash: string;
 }
 
 export type Mensagem = Comando | EspelhoTelao;
 
-const TIPOS_COMANDO = new Set(["nav", "uf", "proxima", "anterior", "pausa", "auto", "dwell", "hud", "refetch", "vinheta", "pedir-estado"]);
+const TIPOS_COMANDO = new Set(["nav", "uf", "proxima", "anterior", "pausa", "auto", "dwell", "hud", "refetch", "vinheta", "vigilia", "pedir-estado"]);
 
 export function ehComando(x: unknown): x is Comando {
   return typeof x === "object" && x !== null && TIPOS_COMANDO.has(String((x as { tipo?: unknown }).tipo));

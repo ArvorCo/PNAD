@@ -3,7 +3,7 @@
 
 import type { Replay, UiState } from "../state/types.ts";
 
-export type UiHash = Pick<UiState, "v" | "uf" | "mun" | "zonas" | "zona" | "auto" | "hud" | "mock" | "speed" | "replay" | "dwell" | "variante">;
+export type UiHash = Pick<UiState, "v" | "uf" | "mun" | "zonas" | "zona" | "auto" | "hud" | "mock" | "speed" | "replay" | "dwell" | "variante" | "alvo" | "vigilia">;
 
 export const UI_PADRAO: UiHash = {
   v: "pres",
@@ -18,6 +18,8 @@ export const UI_PADRAO: UiHash = {
   replay: null,
   dwell: null,
   variante: 0,
+  alvo: null,
+  vigilia: false,
 };
 
 const bool = (s: string | null, padrao: boolean): boolean => (s === null ? padrao : !(s === "0" || s === "false" || s === "nao"));
@@ -48,6 +50,7 @@ export function lerHash(hash: string): UiHash {
   const z = p.get("z");
   const mock = bool(p.get("mock"), false);
   const dwell = p.get("dwell");
+  const alvo = p.get("alvo");
   return {
     v: v && ID_TELA.test(v) ? v : UI_PADRAO.v,
     uf: uf && /^[a-z]{2}$/i.test(uf) ? uf.toUpperCase() : null,
@@ -61,6 +64,8 @@ export function lerHash(hash: string): UiHash {
     replay: lerReplay(p.get("replay")),
     dwell: dwell === null ? null : Math.max(3, num(dwell, 20)),
     variante: Math.max(0, Math.floor(num(p.get("m"), 0))),
+    alvo: alvo && alvo.trim() !== "" ? alvo.trim() : null,
+    vigilia: bool(p.get("vigilia"), false),
   };
 }
 
@@ -77,8 +82,10 @@ export function escreverHash(ui: UiHash): string {
   if (ui.replay) p.push(["replay", `${ui.replay.inicio},${ui.replay.speed}`]);
   if (ui.dwell !== null) p.push(["dwell", String(ui.dwell)]);
   if (ui.variante > 0) p.push(["m", String(ui.variante)]);
+  if (ui.alvo) p.push(["alvo", ui.alvo]);
+  if (ui.vigilia) p.push(["vigilia", "1"]);
   // Sem URLSearchParams.toString(): ele codificaria ":" e "," do replay e o hash ficaria ilegível no OBS.
-  return "#" + p.map(([k, v]) => `${k}=${encodeURIComponent(v).replace(/%3A/gi, ":").replace(/%2C/gi, ",")}`).join("&");
+  return "#" + p.map(([k, v]) => `${k}=${encodeURIComponent(v).replace(/%3A/gi, ":").replace(/%2C/gi, ",").replace(/%2B/gi, "+")}`).join("&");
 }
 
 /** Liga o hash ao store: lê na partida e no hashchange, escreve com replaceState. */

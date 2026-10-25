@@ -506,10 +506,16 @@
   color: var(--muted);
 }
 
+.espera-parcial {
+  margin: 0.4em 0 0;
+  font-size: var(--t-3);
+  color: var(--tx-2, inherit);
+}
+
 .espera-contagem {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--t-7);
+  font-size: 4.5rem;
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -525,7 +531,7 @@
   display: block;
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--t-6);
+  font-size: var(--t-4);
   font-weight: 500;
 }
 
@@ -546,7 +552,7 @@
   cursor: pointer;
   display: grid;
   place-items: center;
-  height: 3.25rem;
+  height: 2.5rem;
   border-radius: 0.375rem;
   background: var(--nao-iniciado);
   font-family: var(--font-mono);
@@ -943,10 +949,10 @@
 
 .espera-chamada {
   display: grid;
-  grid-template-columns: 11rem 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 8rem 1fr;
+  gap: 1.25rem;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   max-width: 62rem;
   background: var(--dark);
   color: var(--on-dark);
@@ -955,8 +961,8 @@
 }
 
 .espera-qr {
-  width: 11rem;
-  height: 11rem;
+  width: 8rem;
+  height: 8rem;
   background: #fff;
   border-radius: 0.375rem;
   padding: 0.375rem;
@@ -980,7 +986,7 @@
 }
 
 .espera-chamada-nota {
-  font-size: var(--t-2);
+  font-size: var(--t-1);
   color: var(--on-dark-muted);
   margin: 0;
   line-height: 1.3;

@@ -117,6 +117,8 @@ export interface Rotacao {
   proxima(manual: boolean): void;
   anterior(): void;
   pausar(valor?: boolean): void;
+  /** Sai da espera e recomeça a playlist do início, com a rotação automática ligada. */
+  iniciar(): void;
   /** Reinicia o relógio da tela atual (troca manual ou dwell novo). */
   reiniciarDwell(): void;
   parar(): void;
@@ -157,8 +159,8 @@ export function criarRotacao(o: OpcoesRotacao): Rotacao {
   const tick = (): void => {
     const s = store.get();
     const comecou = apuracaoComecou(s.estado);
-    if (s.ui.auto && !comecou) {
-      // Sem seção totalizada no país: espera, com rotação parada.
+    if (s.ui.auto && (!comecou || s.ui.vigilia)) {
+      // Sem seção totalizada no país, ou em vigília: espera, com rotação parada.
       if (s.ui.v !== "espera") o.espera();
       estavaEsperando = true;
       return;
@@ -196,6 +198,11 @@ export function criarRotacao(o: OpcoesRotacao): Rotacao {
         restanteMs = null;
         store.ui({ pausado: false, dwellInicio: performance.now() - (ui.dwellMs - resto) });
       }
+    },
+    iniciar() {
+      estavaEsperando = false;
+      store.ui({ auto: true, pausado: false });
+      ir(0);
     },
     reiniciarDwell() {
       const s = store.get();

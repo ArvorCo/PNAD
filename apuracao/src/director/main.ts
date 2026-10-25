@@ -5,6 +5,7 @@ import "./director.css";
 
 import { criarPainelBoletim } from "./boletim.ts";
 import { abrirCanal, ehEspelho } from "../ui/control/broadcast.ts";
+import { lerRetomada } from "../ui/control/vigilia.ts";
 import type { Comando, EspelhoTelao } from "../ui/control/broadcast.ts";
 import { criarIndice } from "../ui/control/search.ts";
 import { AMOSTRA_CONFIG } from "../ui/data/amostra.ts";
@@ -89,12 +90,15 @@ async function iniciar(): Promise<void> {
     bAuto,
     bHud,
     botao("recarregar dados", () => ({ tipo: "refetch" })),
+    botao("Vigília até 19h", () => ({ tipo: "vigilia", alvo: "19:00" })),
+    botao("Sair da vigília", () => ({ tipo: "vigilia", alvo: null })),
     botao("Vinheta de abertura", () => ({ tipo: "vinheta", valor: true })),
     botao("interromper vinheta", () => ({ tipo: "vinheta", valor: false })),
     rotDwell,
     botao("tempo padrão", () => ({ tipo: "dwell", segundos: null })),
   );
-  controles.append(linha);
+  const vigiliaInfo = el("p", { class: "dir-meta" });
+  controles.append(linha, vigiliaInfo);
 
   // ---------- telas ----------
   const telasSec = el("section");
@@ -181,6 +185,8 @@ async function iniciar(): Promise<void> {
     bPausa.textContent = e.pausado ? "continuar" : "pausar";
     bAuto.setAttribute("aria-pressed", String(e.auto));
     bHud.setAttribute("aria-pressed", String(e.hud));
+    const ret = lerRetomada();
+    vigiliaInfo.textContent = e.vigilia ? "vigília ativa: aguardando nova versão do TSE" : ret ? `última retomada às ${ret.hora}: ${ret.novas} seções novas` : "";
     const seg = e.dwell ?? e.dwellPadrao;
     if (document.activeElement !== dwell) {
       dwell.value = String(seg);

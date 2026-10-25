@@ -27,6 +27,9 @@ import { preCarregar } from "./data/geo.ts";
 import { abrirCanal, ehComando } from "./control/broadcast.ts";
 import type { Comando, EspelhoTelao } from "./control/broadcast.ts";
 import { ligarTeclado } from "./control/keyboard.ts";
+import { baseDe, registrarRetomada, textoRetomada, versaoNova } from "./control/vigilia.ts";
+import type { Base } from "./control/vigilia.ts";
+import { horaCurta } from "./data/format.ts";
 import { vigiarBundle } from "./control/recarga.ts";
 import { destinoDaUf, subirNivel } from "./control/navegacao.ts";
 import type { Destino } from "./control/navegacao.ts";
@@ -232,7 +235,7 @@ async function iniciar(): Promise<void> {
     h => {
       const ui = store.get().ui;
       // mock, speed e replay só valem na carga da página.
-      store.ui({ v: h.v, uf: h.uf, mun: h.mun, zonas: h.zonas, zona: h.zona, auto: h.auto, hud: h.hud, dwell: h.dwell, variante: h.variante, mock: ui.mock, speed: ui.speed, replay: ui.replay });
+      store.ui({ v: h.v, uf: h.uf, mun: h.mun, zonas: h.zonas, zona: h.zona, auto: h.auto, hud: h.hud, dwell: h.dwell, variante: h.variante, alvo: h.alvo, vigilia: h.vigilia, mock: ui.mock, speed: ui.speed, replay: ui.replay });
       rotacao.reiniciarDwell();
     },
   );
@@ -255,6 +258,7 @@ async function iniciar(): Promise<void> {
       playlist: rotacao.entradas().map(e => ({ v: e.v, uf: e.uf })),
       telas: listar(),
       pst: s.estado?.br.pst ?? null,
+      vigilia: s.ui.vigilia,
       rede: s.rede.modo,
       hash: location.hash,
     };
@@ -297,16 +301,48 @@ async function iniciar(): Promise<void> {
       case "vinheta":
         vinheta.alternar(c.valor);
         break;
+      case "vigilia":
+        if (c.alvo) {
+          base = null;
+          store.ui({ v: "espera", uf: null, mun: null, zonas: false, zona: null, auto: false, alvo: c.alvo, vigilia: true });
+        } else {
+          store.ui({ alvo: null, vigilia: false });
+          rotacao.iniciar();
+        }
+        break;
       case "pedir-estado":
         break;
     }
     canal.enviar(espelho());
   };
 
+  // ---------- vigília ----------
+  let base: Base | null = null;
+  const vigiar = (s: State): void => {
+    if (!s.ui.vigilia) {
+      base = null;
+      return;
+    }
+    if (!s.estado || s.estado.pronto === false) return;
+    if (!base) {
+      base = baseDe(s.estado);
+      return;
+    }
+    const novas = versaoNova(base, s.estado);
+    if (novas === null) return;
+    base = null;
+    const hora = horaCurta(s.estado.agora);
+    registrarRetomada({ em: new Date().toISOString(), hora, novas });
+    store.ui({ vigilia: false, alvo: null });
+    rotacao.iniciar();
+    document.dispatchEvent(new CustomEvent(EVENTO_TICKER_EXTRA, { detail: { texto: textoRetomada(hora, novas), ms: 600_000 } }));
+  };
+
   // ---------- assinatura do store ----------
   let espelhoAgendado = false;
   let hashAgendado = false;
   store.subscribe((s, diff) => {
+    vigiar(s);
     montarSePreciso(s);
     shell.atualizar(s, diff, rotacao.entradas().length);
     boletimW?.tela(s.ui.v);

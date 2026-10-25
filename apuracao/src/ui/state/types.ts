@@ -301,6 +301,8 @@ export interface UiState {
   replay: Replay | null;
   dwell: number | null; // sobrescreve o dwell da playlist, segundos
   variante: number; // tecla m
+  alvo: string | null; // hash alvo: contagem da espera (HH:MM de Brasília ou ISO)
+  vigilia: boolean; // hash vigilia=1: fica na espera até nova versão do TSE
   pausado: boolean;
   paleta: boolean;
   indice: number; // posição na playlist expandida
