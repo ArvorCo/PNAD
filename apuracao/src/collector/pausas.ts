@@ -30,7 +30,15 @@ export interface OpcoesPausas {
   adiantePct: number;
   /** ... por mais que estes minutos */
   adianteMin: number;
+  /**
+   * Pausa geral só abre com pelo menos estas seções faltando no país (soma das UFs). No fim da
+   * noite as últimas seções chegam espaçadas e o TSE deixa de regerar os arquivos: sem o piso, o
+   * silêncio normal da cauda virava pausa geral e, depois de 15 min, error.
+   */
+  minFaltandoGeral?: number;
 }
+
+export const MIN_FALTANDO_GERAL_PADRAO = 100;
 
 export const PAUSAS_PADRAO: Omit<OpcoesPausas, "ele"> = {
   limiarNacionalMin: 5,
@@ -39,6 +47,7 @@ export const PAUSAS_PADRAO: Omit<OpcoesPausas, "ele"> = {
   longaMin: 15,
   adiantePct: 2,
   adianteMin: 5,
+  minFaltandoGeral: MIN_FALTANDO_GERAL_PADRAO,
 };
 
 export interface Versao {
@@ -228,9 +237,14 @@ export class DetectorPausas {
     const somaAgora = this.somaUfs(Number.POSITIVE_INFINITY);
     const somaTs = this.somaTsUfs();
 
-    // geral: nada novo em nenhum arquivo, seções pendentes, e o coletor enxergando o TSE
+    // geral: nada novo em nenhum arquivo, seções pendentes (no mínimo minFaltandoGeral), e o coletor
+    // enxergando o TSE
     const ultG = this.ultimaGeracaoMs();
-    if (ultG !== null && !this.abertas.has(GERAL) && somaAgora > 0 && somaAgora < somaTs && fresco(null) && agora - ultG > (this.o.limiarNacionalMin + this.o.folgaMin) * 60000) {
+    const faltam = somaTs - somaAgora;
+    if (
+      ultG !== null && !this.abertas.has(GERAL) && somaAgora > 0 && faltam >= (this.o.minFaltandoGeral ?? MIN_FALTANDO_GERAL_PADRAO) && fresco(null) &&
+      agora - ultG > (this.o.limiarNacionalMin + this.o.folgaMin) * 60000
+    ) {
       out.push(...this.abrir(GERAL, "geral", null, ultG, somaAgora, agora, { ts: somaTs }));
     }
 

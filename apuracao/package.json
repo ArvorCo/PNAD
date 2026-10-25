@@ -7,9 +7,10 @@
   "scripts": {
     "collect": "bun run src/collector/main.ts",
     "serve": "bun run src/server/main.ts",
+    "boletim": "bun run src/boletim/main.ts",
     "dev": "bun run --watch src/server/main.ts",
-    "build:ui": "bun build src/ui/main.ts src/director/main.ts --outdir public/dist --target browser --minify --sourcemap=external",
-    "watch:ui": "bun build src/ui/main.ts src/director/main.ts --outdir public/dist --target browser --watch",
+    "build:ui": "bun build src/ui/main.ts src/director/main.ts src/player/main.ts --outdir public/dist --target browser --minify --sourcemap=external",
+    "watch:ui": "bun build src/ui/main.ts src/director/main.ts src/player/main.ts --outdir public/dist --target browser --watch",
     "sweep": "bun run scripts/sweep-once.ts",
     "mundo": "bun run scripts/gerar-mundo.ts",
     "replay": "bun run src/replay/main.ts tests/fixtures",

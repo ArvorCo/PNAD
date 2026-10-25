@@ -1,6 +1,6 @@
 // /api/config e /api/estado.
 import type { Database } from "bun:sqlite";
-import { ELEICAO_ESTADUAL_2T, ELEICAO_FEDERAL_2T, ORDEM_REGIOES, REGIOES, UFS_GOVERNADOR_2T } from "../turno2/comum.ts";
+import { ELEICAO_ESTADUAL_2T, ELEICAO_FEDERAL_2T, ORDEM_REGIOES, REGIOES, UFS_GOVERNADOR_2T, corrigirTotalizadoEm } from "../turno2/comum.ts";
 import { chave, keyAb, keyU } from "../tse/urls.ts";
 import { arquivoPorChave, lerMeta, maxSnapshotId, ultimoSnapshotPorChave } from "../db/leitura.ts";
 import { UFS, nomeUf, titulo } from "./abr.ts";
@@ -191,7 +191,7 @@ function partePesada(db: Database, el: Eleicoes, arqPres: number | null, at?: st
       if (r.tpabr === "br" || r.cdabr === "br") continue;
       const o: UfEstado = {
         uf: r.cdabr, nome: nomeUf(r.cdabr), pst: n0(r.pst), st: n0(r.st), ts: n0(r.ts), te: n0(r.te), munnr: n0(r.munnr), munpt: n0(r.munpt), munf: n0(r.munf),
-        dt_ht: r.totalizado_em,
+        dt_ht: corrigirTotalizadoEm(r.cdabr, r.totalizado_em, r.gerado_em),
       };
       const f = fechou.get(r.cdabr);
       if (f) o.fechou_em = f;

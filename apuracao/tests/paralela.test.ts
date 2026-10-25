@@ -62,7 +62,7 @@ describe("conferência campo a campo", () => {
 
 const CFG: ConfigParalela = { ativo: true, intervaloS: 60, url: "https://supabase.teste", chave: "chave-teste", janela: 2000 };
 
-function montarPonte(dados: Record<string, unknown[]>, falhar: () => boolean = () => false) {
+function montarPonte(dados: Record<string, unknown[]>, falhar: (url: string) => boolean = () => false, espiar?: (url: string, init: RequestInit) => void) {
   const dir = tmp("paralela-");
   dirs.push(dir);
   const path = join(dir, "teste.sqlite");
@@ -85,7 +85,14 @@ function montarPonte(dados: Record<string, unknown[]>, falhar: () => boolean = (
     pleito: 3220, eleFederal: 6257, t0Ms: Date.parse("2026-10-04T20:00:00.000Z"), db, gravar: (i) => w.gravarLote(i), relogio, urls, obter,
     dormir: (ms) => Bun.sleep(Math.min(ms, 5)),
   });
-  const cliente = new ClienteSupabase({ url: CFG.url, chave: CFG.chave, fetchImpl: supabaseFalso(dados, falhar) });
+  const falso = supabaseFalso(dados, falhar);
+  const cliente = new ClienteSupabase({
+    url: CFG.url, chave: CFG.chave,
+    fetchImpl: (u, i) => {
+      espiar?.(u, i);
+      return falso(u);
+    },
+  });
   const ponte = new PonteParalela({ cfg: CFG, pleito: 3220, eleFederal: 6257, db, gravar: (i) => w.gravarLote(i), relogio, cliente, amostra });
   return { db, path, relogio, amostra, ponte };
 }
@@ -169,6 +176,34 @@ describe("ponte com o Supabase", () => {
     expect(e.atualizado_em).toBe(ok.atualizado_em);
     expect(e.cobertura_uf).toEqual(ok.cobertura_uf);
     expect(ponte.total).toBe(3);
+  });
+
+  test("uma view falha: as outras atualizam e ela fica com o último valor; count=exact só onde precisa", async () => {
+    let falharCobertura = false;
+    const contadas = new Set<string>();
+    const semContagem = new Set<string>();
+    const dados = DADOS();
+    const { ponte, amostra } = montarPonte(dados, (u) => falharCobertura && u.includes("/v_cobertura_uf"), (u, i) => {
+      const view = new URL(u).pathname.split("/").pop() ?? "";
+      const h = (i.headers ?? {}) as Record<string, string>;
+      (h.Prefer === "count=exact" ? contadas : semContagem).add(view);
+    });
+    await amostra.preparar();
+    const ok = await ponte.ciclo();
+    expect(ok.erro).toBeNull();
+    expect(ok.conflitos).toBe(0);
+    dados.v_estatisticas = [{ ...(dados.v_estatisticas?.[0] as Record<string, unknown>), envios: 9 }];
+    dados.v_totais_br = [{ cargo: 1, candidato: 13, votos: 100, n_secoes: 1 }];
+    falharCobertura = true;
+    const e = await ponte.ciclo();
+    expect(e.erro).toContain("v_cobertura_uf");
+    expect(e.estatisticas?.envios).toBe(9);
+    expect(e.totais_br).toEqual([{ cargo: 1, candidato: 13, votos: 100, n_secoes: 1 }]);
+    expect(e.cobertura_uf).toEqual(ok.cobertura_uf);
+    expect(e.cobertura_uf.length).toBeGreaterThan(0);
+    expect(e.atualizado_em).toBe(ok.atualizado_em);
+    expect([...contadas].sort()).toEqual(["v_bu_cargo_publico", "v_bu_voto_publico", "v_conflito"]);
+    expect([...semContagem].sort()).toEqual(["v_bu_publico", "v_cobertura_uf", "v_estatisticas", "v_totais_br", "v_totais_uf"]);
   });
 
   test("leitura incremental: só ids novos (com janela para commit fora de ordem)", async () => {

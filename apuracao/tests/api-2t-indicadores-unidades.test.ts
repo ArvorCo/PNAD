@@ -54,9 +54,28 @@ describe("relógio dos arquivos", () => {
     const tot = min(20);
     const c = new CorretorTotalizacao("AC");
     expect(c.instante(local(tot, -120), iso(tot + 20_000), iso(tot + 30_000))).toBe(tot);
-    // regerado 40 min depois: a regra simples já não corrige, a decisão guardada sim
-    expect(corrigirTotalizadoEm("AC", local(tot, -120), iso(tot + 40 * 60_000))).toBe(local(tot, -120));
+    // regerado 40 min depois: a regra continua corrigindo (diferença acima do deslocamento)
+    expect(corrigirTotalizadoEm("AC", local(tot, -120), iso(tot + 40 * 60_000))).toBe(iso(tot));
     expect(c.instante(local(tot, -120), iso(tot + 40 * 60_000), iso(tot + 41 * 60_000))).toBe(tot);
+  });
+
+  test("primeira versão depois da pausa geral: totalização de durante a pausa, ainda em hora local", () => {
+    // 1º turno, AM às 20:02:03 com dt/ht 18:45:05 (diferença de 77 min) e MS às 20:03:44 com 18:31:52 (92 min)
+    expect(corrigirTotalizadoEm("AM", "2026-10-04T21:45:05.000Z", "2026-10-04T23:02:03.000Z")).toBe("2026-10-04T22:45:05.000Z");
+    expect(corrigirTotalizadoEm("MS", "2026-10-04T21:31:52.000Z", "2026-10-04T23:03:44.000Z")).toBe("2026-10-04T22:31:52.000Z");
+  });
+
+  test("correção nunca passa da geração; diferença curta (Brasília) e UF sem fuso ficam como estão", () => {
+    const ger = min(60);
+    // 55 min de diferença no AM: local, mas somar 60 min passaria da geração: vale a geração
+    expect(corrigirTotalizadoEm("AM", iso(ger - 55 * 60_000), iso(ger))).toBe(iso(ger));
+    // recomputação do dia seguinte, já em Brasília: segundos de diferença
+    expect(corrigirTotalizadoEm("AC", iso(ger - 20_000), iso(ger))).toBe(iso(ger - 20_000));
+    // abaixo do deslocamento menos 10 min: não é hora local
+    expect(corrigirTotalizadoEm("MT", iso(ger - 49 * 60_000), iso(ger))).toBe(iso(ger - 49 * 60_000));
+    expect(corrigirTotalizadoEm("SP", iso(ger - 90 * 60_000), iso(ger))).toBe(iso(ger - 90 * 60_000));
+    expect(corrigirTotalizadoEm("AM", null, iso(ger))).toBeNull();
+    expect(corrigirTotalizadoEm("AM", iso(ger - 70 * 60_000), null)).toBe(iso(ger - 70 * 60_000));
   });
 
   test("carimbo depois da geração vale a geração (exterior e PE no 1º turno)", () => {

@@ -1,10 +1,14 @@
 // Soma de estados de UF (regiões, Brasil) e as medidas derivadas: votos em % válidos, líder,
 // margem, velocidade em seções por minuto nos últimos 10 min e previsão de 100%.
 import type { LinhaTempo, LinhaUf, Versao } from "./linha-tempo.ts";
-import { versaoFechamento, versaoLidaAte, versaoNoInstante } from "./linha-tempo.ts";
+import { versaoFechamento, versaoLidaAte, versaoPublicadaAte } from "./linha-tempo.ts";
 import { isoDe, minutosDe, paDe, pstDe, r2 } from "./base.ts";
 
 export const JANELA_VEL_MS = 10 * 60_000;
+/** Previsão de 100% além deste horizonte vira null (velocidade de retomada ou de fim de noite). */
+export const ETA_MAX_MS = 8 * 3_600_000;
+/** Abaixo desta velocidade (3 seções em 10 min) não há previsão: uma ou duas seções são ruído. */
+export const VEL_MIN_ETA_SPM = 0.3;
 
 export interface Soma {
   ts: number;
@@ -66,7 +70,12 @@ export interface Ritmo {
   eta_100_iso: string | null;
 }
 
-/** Seções por minuto totalizadas nos últimos 10 min, no relógio do TSE (instante corrigido). */
+/**
+ * Seções por minuto publicadas nos últimos 10 min, no relógio de publicação do TSE (gerado_em):
+ * pelo carimbo de totalização, a volta de uma pausa geral (totalizações de durante a pausa,
+ * publicadas depois dela) zerava a velocidade e jogava a previsão de 100% para semanas adiante.
+ * Previsão null abaixo de VEL_MIN_ETA_SPM ou além de ETA_MAX_MS.
+ */
 export function ritmo(linhas: readonly LinhaUf[], agoraMs: number): Ritmo {
   let st = 0;
   let ts = 0;
@@ -75,10 +84,11 @@ export function ritmo(linhas: readonly LinhaUf[], agoraMs: number): Ritmo {
     const v = versaoLidaAte(l, agoraMs);
     st += v?.st ?? 0;
     ts += v?.ts ?? 0;
-    stAntes += versaoNoInstante(l, agoraMs - JANELA_VEL_MS, agoraMs)?.st ?? 0;
+    stAntes += versaoPublicadaAte(l, agoraMs - JANELA_VEL_MS, agoraMs)?.st ?? 0;
   }
   const vel = Math.max(0, (st - stAntes) / (JANELA_VEL_MS / 60_000));
-  const eta = vel > 0 && ts > st ? isoDe(agoraMs + ((ts - st) / vel) * 60_000) : null;
+  const faltaMs = vel >= VEL_MIN_ETA_SPM && ts > st ? ((ts - st) / vel) * 60_000 : Number.POSITIVE_INFINITY;
+  const eta = faltaMs <= ETA_MAX_MS ? isoDe(agoraMs + faltaMs) : null;
   return { vel_10min_spm: r2(vel), eta_100_iso: eta };
 }
 

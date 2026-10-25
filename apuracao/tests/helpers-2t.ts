@@ -229,9 +229,9 @@ export function semearAbMunicipio(db: Database, ele: number, uf: string, mun: st
 // ---------------------------------------------------------------- respostas falsas
 
 /** fetch falso do PostgREST: devolve as fixtures por view, respeitando offset/limit e id=gt. */
-export function supabaseFalso(dados: Record<string, unknown[]>, falhar: () => boolean = () => false): (url: string) => Promise<Response> {
+export function supabaseFalso(dados: Record<string, unknown[]>, falhar: (url: string) => boolean = () => false): (url: string) => Promise<Response> {
   return async (url: string) => {
-    if (falhar()) throw new TypeError("fetch failed");
+    if (falhar(url)) throw new TypeError("fetch failed");
     const u = new URL(url);
     const view = u.pathname.split("/").pop() ?? "";
     let linhas = [...(dados[view] ?? [])] as Record<string, number>[];

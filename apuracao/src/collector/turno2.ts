@@ -125,14 +125,19 @@ export function instalarTurno2(c: Coletor, ag: Agendador, limitador: Limitador, 
   }
 
   ag.aCada(AVALIACAO_MS, (agora) => {
-    const estado = {
-      em: isoDe(agora),
-      pausas_abertas: { geral: detector.aberta("geral"), nacional: detector.aberta(null), ufs: detector.ufs.filter((u) => detector.aberta(u) !== null) },
-      secoes: amostra?.metricas(agora) ?? null,
-      paralela: ponte?.metricas() ?? null,
-    };
-    c.lote.adicionar([{ k: "meta", chave: "turno2_estado", valor: JSON.stringify(estado) }]);
-    log({ t: "turno2", ...estado });
+    // Como no gancho da avaliação: erro aqui (métricas da amostra ou da ponte) só vira log.
+    try {
+      const estado = {
+        em: isoDe(agora),
+        pausas_abertas: { geral: detector.aberta("geral"), nacional: detector.aberta(null), ufs: detector.ufs.filter((u) => detector.aberta(u) !== null) },
+        secoes: amostra?.metricas(agora) ?? null,
+        paralela: ponte?.metricas() ?? null,
+      };
+      c.lote.adicionar([{ k: "meta", chave: "turno2_estado", valor: JSON.stringify(estado) }]);
+      log({ t: "turno2", ...estado });
+    } catch (err) {
+      log({ t: "turno2_erro", onde: "estado", erro: msg(err) });
+    }
   });
 
   log({

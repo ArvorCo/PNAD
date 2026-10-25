@@ -61,6 +61,8 @@ export interface OpcoesPonte {
   log?: (o: Record<string, unknown>) => void;
 }
 
+type Agregados = Pick<EstadoParalela, "estatisticas" | "cobertura_uf" | "conflitos" | "totais_br" | "totais_uf">;
+
 interface BuLocal {
   linha: LinhaParalelaBu;
   cargos: CargoParalela[];
@@ -154,14 +156,30 @@ export class PonteParalela {
     return linhas.length;
   }
 
-  private async lerAgregados(): Promise<Pick<EstadoParalela, "estatisticas" | "cobertura_uf" | "conflitos" | "totais_br" | "totais_uf">> {
+  /**
+   * Agregados view a view: a falha de uma (prazo estourado na cobertura, por exemplo) não descarta
+   * as outras, e cada campo que falhou conserva o último valor lido. `count=exact` só na contagem
+   * de conflitos; as demais views são pequenas e vêm numa requisição sem contagem.
+   */
+  private async lerAgregados(anterior: Agregados): Promise<{ agregados: Agregados; erros: string[] }> {
     const c = this.o.cliente;
-    const est = await c.tudo<EstatisticasParalela>("v_estatisticas", []);
-    const cobertura = await c.tudo<CoberturaUf>("v_cobertura_uf", [["select", "uf,secoes_total,secoes_com_bu,secoes_em_conflito"], ["order", "uf"]]);
-    const conflitos = await c.tudo<{ uf: string }>("v_conflito", [["select", "uf,muni,zona,secao"], ["order", "uf,muni,zona,secao"]]);
-    const totaisBr = await c.tudo<unknown>("v_totais_br", [["order", "cargo,candidato"]]);
-    const totaisUf = await c.tudo<unknown>("v_totais_uf", [["order", "uf,cargo,candidato"]]);
-    return { estatisticas: est[0] ?? null, cobertura_uf: cobertura, conflitos: conflitos.length, totais_br: totaisBr, totais_uf: totaisUf };
+    const erros: string[] = [];
+    const ler = async <K extends keyof Agregados>(campo: K, f: () => Promise<Agregados[K]>): Promise<Agregados[K]> => {
+      try {
+        return await f();
+      } catch (err) {
+        erros.push(err instanceof Error ? err.message : String(err));
+        return anterior[campo];
+      }
+    };
+    const estatisticas = await ler("estatisticas", async () => (await c.tudo<EstatisticasParalela>("v_estatisticas", [], false))[0] ?? null);
+    const cobertura = await ler("cobertura_uf", () =>
+      c.tudo<CoberturaUf>("v_cobertura_uf", [["select", "uf,secoes_total,secoes_com_bu,secoes_em_conflito"], ["order", "uf"]], false),
+    );
+    const conflitos = await ler("conflitos", async () => (await c.contar("v_conflito", [["select", "uf"]])) ?? anterior.conflitos);
+    const totaisBr = await ler("totais_br", () => c.tudo<unknown>("v_totais_br", [["order", "cargo,candidato"]], false));
+    const totaisUf = await ler("totais_uf", () => c.tudo<unknown>("v_totais_uf", [["order", "uf,cargo,candidato"]], false));
+    return { agregados: { estatisticas, cobertura_uf: cobertura, conflitos, totais_br: totaisBr, totais_uf: totaisUf }, erros };
   }
 
   private situacao(b: BuLocal): Resultado {
@@ -227,23 +245,25 @@ export class PonteParalela {
     return { novos };
   }
 
-  /** Um ciclo: leitura do Supabase (se falhar, segue com o que tem) e conferência. */
+  /** Um ciclo: leitura do Supabase (o que falhar fica com o último valor) e conferência. */
   async ciclo(): Promise<EstadoParalela> {
     const em = isoDe(this.o.relogio.agora());
     const anterior = this.estado;
-    let erro: string | null = null;
+    const erros: string[] = [];
     let novos = 0;
-    let agregados: Pick<EstadoParalela, "estatisticas" | "cobertura_uf" | "conflitos" | "totais_br" | "totais_uf"> = {
+    try {
+      novos = await this.lerNovos(em);
+    } catch (err) {
+      erros.push(err instanceof Error ? err.message : String(err));
+    }
+    const ultimos: Agregados = {
       estatisticas: anterior?.estatisticas ?? null, cobertura_uf: anterior?.cobertura_uf ?? [], conflitos: anterior?.conflitos ?? null,
       totais_br: anterior?.totais_br ?? [], totais_uf: anterior?.totais_uf ?? [],
     };
-    try {
-      novos = await this.lerNovos(em);
-      agregados = await this.lerAgregados();
-    } catch (err) {
-      erro = err instanceof Error ? err.message : String(err);
-      this.log({ ev: "erro", erro });
-    }
+    const { agregados, erros: errosAgregados } = await this.lerAgregados(ultimos);
+    erros.push(...errosAgregados);
+    const erro = erros.length > 0 ? erros.join("; ").slice(0, 600) : null;
+    if (erro !== null) this.log({ ev: "erro", erro });
     const { novos: conf } = this.conferir(em);
     const estado: EstadoParalela = {
       atualizado_em: erro === null ? em : (anterior?.atualizado_em ?? null), consultado_em: em, erro, ...agregados, requisicoes: this.o.cliente.requisicoes,

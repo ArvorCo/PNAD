@@ -36,7 +36,8 @@ if scripts/preflight.sh 2t >> "$LOG" 2>&1; then
 else
   log "preflight reprovou (ver acima); ligando mesmo assim"
 fi
-rm -f data/collect.pid
+# Sem apagar data/collect.pid: o coletor confere sozinho se o pid é de um processo vivo e só
+# remove o arquivo velho; apagar aqui deixaria subir um segundo coletor ao lado de um vivo.
 nohup scripts/start-collect.sh 2t >> data/logs/collect-2t.out 2>&1 &
 log "coletor ligado (pid $!)"
 sleep 3

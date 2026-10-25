@@ -84,11 +84,17 @@ export function hhmmDeMinutos(min: number): string {
   return dias > 0 ? `${hh}:${mm} (+${dias})` : `${hh}:${mm}`;
 }
 
+/** Folga da regra do fuso: carimbo local pode ficar até 10 min além da geração (relógios). */
+export const FOLGA_FUSO_MIN = 10;
+
 /**
  * Corrige o `totalizado_em` de uma UF com fuso próprio quando ele veio em hora local.
- * Regra da régua do 1º turno: se `gerado_em − totalizado_em` fica a até 10 min do
- * deslocamento da UF, o carimbo é local e recebe o deslocamento; senão fica como está
- * (recomputações globais do dia seguinte já vêm em Brasília).
+ * O carimbo é local sempre que `gerado_em − totalizado_em` alcança o deslocamento da UF menos
+ * 10 min; aí recebe o deslocamento, limitado à geração (a totalização não acontece depois da
+ * publicação). Sem teto de diferença: a primeira versão depois de uma pausa geral traz uma
+ * totalização feita durante ela (77 a 92 min antes da geração em AM, MS e MT às 20:02 do 1º
+ * turno) e continua em hora local. Recomputações do dia seguinte vêm em Brasília com diferença
+ * de segundos e ficam como estão.
  */
 export function corrigirTotalizadoEm(uf: string, totalizadoIso: string | null, geradoIso: string | null): string | null {
   if (!totalizadoIso) return null;
@@ -98,7 +104,7 @@ export function corrigirTotalizadoEm(uf: string, totalizadoIso: string | null, g
   const g = Date.parse(geradoIso);
   if (!Number.isFinite(t) || !Number.isFinite(g)) return totalizadoIso;
   const difMin = (g - t) / 60000;
-  if (Math.abs(difMin - -desloc) <= 10) return new Date(t - desloc * 60000).toISOString();
+  if (difMin >= -desloc - FOLGA_FUSO_MIN) return new Date(Math.min(t - desloc * 60000, g)).toISOString();
   return totalizadoIso;
 }
 

@@ -65,18 +65,27 @@ export class ClienteSupabase {
   }
 
   /**
-   * View inteira (pequena ou filtrada), por offset e limit. Para pelo total do Content-Range
-   * (uma requisição só nas views pequenas e caras, como a cobertura) ou, sem total, na primeira
-   * página vazia: o teto de linhas do servidor pode ser menor que a página pedida.
+   * View inteira (pequena ou filtrada), por offset e limit. Com `contar` (padrão), pede
+   * `count=exact` e para pelo total do Content-Range ou, sem total, na primeira página vazia: o
+   * teto de linhas do servidor pode ser menor que a página pedida. Sem `contar` (views pequenas e
+   * caras, como a cobertura: a contagem repetiria a consulta inteira no Postgres), para na primeira
+   * página menor que a pedida; vale só para views bem abaixo do teto do servidor (1.000 linhas).
    * `params` precisa de `order` para a paginação ser estável.
    */
-  async tudo<T>(view: string, params: ParametrosPg = []): Promise<T[]> {
+  async tudo<T>(view: string, params: ParametrosPg = [], contar = true): Promise<T[]> {
     const out: T[] = [];
     for (;;) {
-      const { linhas, total } = await this.pedir<T>(view, [...params, ["offset", String(out.length)], ["limit", String(this.pagina)]], true);
+      const { linhas, total } = await this.pedir<T>(view, [...params, ["offset", String(out.length)], ["limit", String(this.pagina)]], contar);
       out.push(...linhas);
       if (linhas.length === 0 || (total !== null && out.length >= total)) return out;
+      if (!contar && linhas.length < this.pagina) return out;
     }
+  }
+
+  /** Só a contagem de linhas (`count=exact`, uma linha trazida); null se o servidor não contou. */
+  async contar(view: string, params: ParametrosPg = []): Promise<number | null> {
+    const { total } = await this.pedir<unknown>(view, [...params, ["limit", "1"]], true);
+    return total;
   }
 
   /** Linhas com id maior que `depois`, em ordem de id, por chave (sem deslocamento de página). */

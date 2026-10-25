@@ -102,3 +102,27 @@ export class RelogioArquivo {
     return t;
   }
 }
+
+/**
+ * Relógio de publicação de um arquivo: o instante em que o TSE publicou (gerado_em) as contagens
+ * de cada versão. Contagens iguais às da versão anterior (arquivo regerado sem totalizar nada)
+ * herdam a publicação anterior, para que um arquivo parado envelheça; contagens novas valem a
+ * geração da versão (sem geração, a leitura), nunca antes da publicação anterior.
+ * Mede idade, parada e velocidade: depois de uma pausa geral o TSE publica versões com
+ * `totalizado_em` de durante a pausa (19:45 publicado às 20:02 no 1º turno), e pelo carimbo de
+ * totalização todas as UFs pareceriam paradas havia 20 a 40 minutos no instante da volta.
+ */
+export class RelogioPublicacao {
+  private chaveAnt: string | null = null;
+  private pubAnt: number | null = null;
+
+  instante(contagens: string, geradoEm: string | null, capturadoEm: string): number {
+    if (this.pubAnt !== null && contagens === this.chaveAnt) return this.pubAnt;
+    const g = geradoEm ? Date.parse(geradoEm) : Number.NaN;
+    let p = Number.isFinite(g) ? g : Date.parse(capturadoEm);
+    if (this.pubAnt !== null && p < this.pubAnt) p = this.pubAnt;
+    this.chaveAnt = contagens;
+    this.pubAnt = p;
+    return p;
+  }
+}

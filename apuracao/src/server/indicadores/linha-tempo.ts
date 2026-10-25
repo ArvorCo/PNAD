@@ -6,7 +6,7 @@ import { maxSnapshotId } from "../../db/leitura.ts";
 import type { N, S } from "../../db/linhas.ts";
 import { CacheCurto } from "../cache.ts";
 import { FIM } from "../consultas.ts";
-import { RelogioArquivo } from "./base.ts";
+import { RelogioArquivo, RelogioPublicacao } from "./base.ts";
 
 export interface Versao {
   id: number;
@@ -14,6 +14,10 @@ export interface Versao {
   cap: number;
   /** instante da totalização que trouxe estas contagens (ms; ver RelogioArquivo), não decrescente */
   inst: number;
+  /** publicação (gerado_em) da primeira versão com estas contagens (ms; ver RelogioPublicacao), não decrescente */
+  pub: number;
+  /** geração desta versão (gerado_em; sem ele, a leitura), mesmo regerada sem contagem nova (ms) */
+  ger: number;
   ts: number;
   st: number;
   snt: number;
@@ -83,6 +87,7 @@ export function carregarLinhaTempo(db: Database, ele: number, cargo: number, at?
   }
   const ufs = new Map<string, LinhaUf>();
   const relogios = new Map<number, RelogioArquivo>();
+  const publicacoes = new Map<number, RelogioPublicacao>();
   for (const r of rows) {
     const uf = (r.uf ?? "").toUpperCase();
     if (!uf) continue;
@@ -96,10 +101,20 @@ export function carregarLinhaTempo(db: Database, ele: number, cargo: number, at?
       rel = new RelogioArquivo(uf);
       relogios.set(r.arquivo_id, rel);
     }
+    let pub = publicacoes.get(r.arquivo_id);
+    if (!pub) {
+      pub = new RelogioPublicacao();
+      publicacoes.set(r.arquivo_id, pub);
+    }
+    const contagens = `${r.st}|${r.tv}|${r.comparecimento}|${r.abstencao}`;
+    const cap = Date.parse(r.capturado_em);
+    const ger = r.gerado_em ? Date.parse(r.gerado_em) : Number.NaN;
     linha.versoes.push({
       id: r.id,
-      cap: Date.parse(r.capturado_em),
-      inst: rel.instante(`${r.st}|${r.tv}|${r.comparecimento}|${r.abstencao}`, r.totalizado_em, r.gerado_em, r.capturado_em),
+      cap,
+      ger: Number.isFinite(ger) ? ger : cap,
+      inst: rel.instante(contagens, r.totalizado_em, r.gerado_em, r.capturado_em),
+      pub: pub.instante(contagens, r.gerado_em, r.capturado_em),
       ts: n0(r.ts), st: n0(r.st), snt: n0(r.snt), te: n0(r.te), est: n0(r.est),
       comparecimento: n0(r.comparecimento), abstencao: n0(r.abstencao),
       tv: n0(r.tv), vv: n0(r.vv), vb: n0(r.vb), vn: n0(r.vn),
@@ -131,6 +146,15 @@ export function versaoNoInstante(l: LinhaUf, ms: number, lidoAteMs: number): Ver
   for (let i = l.versoes.length - 1; i >= 0; i -= 1) {
     const v = l.versoes[i];
     if (v && v.cap <= lidoAteMs && v.inst <= ms) return v;
+  }
+  return null;
+}
+
+/** Estado no relógio de publicação: a versão de maior publicação até `ms`, entre as lidas até `lidoAteMs`. */
+export function versaoPublicadaAte(l: LinhaUf, ms: number, lidoAteMs: number): Versao | null {
+  for (let i = l.versoes.length - 1; i >= 0; i -= 1) {
+    const v = l.versoes[i];
+    if (v && v.cap <= lidoAteMs && v.pub <= ms) return v;
   }
   return null;
 }

@@ -7,7 +7,7 @@ import type { Ritmo, TotaisOut, VotoOut } from "./agregados.ts";
 import { acumular, liderMargem, ritmo, somaVazia, totaisOut, votosOut } from "./agregados.ts";
 import { isoDe, minutosDe, pstDe, r1 } from "./base.ts";
 import type { LinhaTempo } from "./linha-tempo.ts";
-import { versaoFechamento, versaoLidaAte, versaoNoInstante } from "./linha-tempo.ts";
+import { versaoFechamento, versaoLidaAte, versaoPublicadaAte } from "./linha-tempo.ts";
 import type { Municipio } from "./municipios.ts";
 import type { Regua } from "./regua.ts";
 import { comparar } from "./regua.ts";
@@ -71,29 +71,47 @@ export function pendentesPorUf(muns: readonly Municipio[], regua: Regua | null, 
   return porUf;
 }
 
-/** Instante (relógio do TSE) da primeira seção totalizada no país; null se ainda não começou. */
+/** Publicação (gerado_em) da primeira seção totalizada no país; null se ainda não começou. */
 function inicioDoPais(lt: LinhaTempo, agoraMs: number): number | null {
   let ini: number | null = null;
   for (const l of lt.ufs.values()) {
     const v = l.versoes.find((x) => x.st > 0 && x.cap <= agoraMs);
-    if (v && (ini === null || v.inst < ini)) ini = v.inst;
+    if (v && (ini === null || v.pub < ini)) ini = v.pub;
   }
   return ini;
 }
 
 /**
- * O resto do país totalizou seção nova entre `desdeMs` e `agoraMs`? Medido no relógio do TSE
- * (instante corrigido), para que versões anteriores a uma pausa geral, lidas com atraso, não contem.
+ * O resto do país publicou seção nova entre `desdeMs` e `agoraMs`? Medido no relógio de
+ * publicação do TSE (gerado_em), para que versões anteriores a uma pausa geral, lidas com atraso,
+ * não contem, e para que a volta da pausa conte mesmo quando traz totalizações de durante ela.
  */
 function paisAvancou(lt: LinhaTempo, exceto: string, desdeMs: number, agoraMs: number): boolean {
   let antes = 0;
   let agora = 0;
   for (const [uf, l] of lt.ufs) {
     if (uf === exceto) continue;
-    antes += versaoNoInstante(l, desdeMs, agoraMs)?.st ?? 0;
+    antes += versaoPublicadaAte(l, desdeMs, agoraMs)?.st ?? 0;
     agora += versaoLidaAte(l, agoraMs)?.st ?? 0;
   }
   return agora > antes;
+}
+
+/**
+ * Fim do último silêncio geral até `agoraMs`: a geração que encerrou o intervalo mais recente,
+ * maior que `limiarMs`, sem versão nova de nenhuma UF (nem regerada). No 1º turno, a pausa geral
+ * de 19:32 a 20:02: na volta as UFs retornam com minutos de diferença, e as que ainda não tinham
+ * voltado às 20:04 (19 de 27) apareciam paradas havia mais de 30 min. Parada conta a partir daqui.
+ */
+function retomadaGeral(lt: LinhaTempo, agoraMs: number, limiarMs: number): number | null {
+  const geracoes: number[] = [];
+  for (const l of lt.ufs.values()) for (const v of l.versoes) if (v.cap <= agoraMs && v.ger <= agoraMs) geracoes.push(v.ger);
+  geracoes.sort((a, b) => a - b);
+  for (let i = geracoes.length - 1; i > 0; i -= 1) {
+    const depois = geracoes[i] ?? 0;
+    if (depois - (geracoes[i - 1] ?? depois) > limiarMs) return depois;
+  }
+  return null;
 }
 
 export interface EntradaUfs {
@@ -112,6 +130,8 @@ export function montarUfs(e: EntradaUfs): RespostaUfs {
   const ab = new Map(e.ab.map((r) => [r.cdabr.toUpperCase(), r]));
   const pend = pendentesPorUf(e.muns, regua);
   const inicio = inicioDoPais(lt, rel.agoraMs);
+  const limiarMs = e.limiarMin * 60_000;
+  const retomada = retomadaGeral(lt, rel.agoraMs, limiarMs);
   const linhas: { linha: UfLinha; atraso: number | null }[] = [];
   for (const uf of TODAS_UFS) {
     const l = lt.ufs.get(uf);
@@ -120,13 +140,16 @@ export function montarUfs(e: EntradaUfs): RespostaUfs {
     acumular(s, v);
     const lm = liderMargem(s.votos, s.vv);
     const ultimaMs = v?.inst ?? null;
-    const idade = ultimaMs === null ? null : r1((rel.agoraMs - ultimaMs) / 1000);
+    // Idade e parada pela publicação (gerado_em) das contagens vigentes, não pelo carimbo de
+    // totalização: depois de uma pausa geral o TSE publica totalizações de durante a pausa.
+    const pubMs = v?.pub ?? null;
+    const idade = pubMs === null ? null : r1((rel.agoraMs - pubMs) / 1000);
     const aberta = s.ts > 0 && s.st < s.ts;
-    // Parada conta desde a última versão, mas nunca antes de o país começar a totalizar.
-    const desde = Math.max(ultimaMs ?? rel.t0Ms, rel.t0Ms, inicio ?? Number.POSITIVE_INFINITY);
+    // Parada conta desde a última publicação, mas nunca antes de o país começar a publicar nem
+    // antes da volta da última pausa geral.
+    const desde = Math.max(pubMs ?? rel.t0Ms, rel.t0Ms, inicio ?? Number.POSITIVE_INFINITY, retomada ?? Number.NEGATIVE_INFINITY);
     // O país precisa ter andado dentro da própria janela do limiar: numa pausa geral (19:32 a 20:02
     // no 1º turno) ninguém anda e nenhuma UF é marcada.
-    const limiarMs = e.limiarMin * 60_000;
     const parada = aberta && inicio !== null && rel.agoraMs - desde > limiarMs && paisAvancou(lt, uf, rel.agoraMs - limiarMs, rel.agoraMs);
     const curva = regua?.uf(uf) ?? null;
     const marcos = regua?.marcosUf(uf) ?? null;

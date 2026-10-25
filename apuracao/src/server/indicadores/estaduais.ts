@@ -148,7 +148,7 @@ export function montarEstaduais(e: EntradaEstaduais): RespostaEstaduais {
       margem_pp: lm.margem_pp,
       viradas,
       ultima_versao_em: v ? isoDe(v.inst) : null,
-      idade_s: v ? r1((rel.agoraMs - v.inst) / 1000) : null,
+      idade_s: v ? r1((rel.agoraMs - v.pub) / 1000) : null,
       ref_1t: regua && curva ? comparar(curva, s.st, s.ts, minAgora, fech ? minutosDe(fech.inst, rel.t0Ms) : null) : null,
       pa_final_1t: regua?.paFinalGov(uf) ?? null,
     };

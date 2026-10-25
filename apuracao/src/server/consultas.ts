@@ -2,6 +2,7 @@
 // `at` = ISO UTC; "até `at`" significa capturado_em <= at. Sem `at`, usa o sentinela FIM.
 import type { Database } from "bun:sqlite";
 import type { LinhaAbEstado, N, S } from "../db/linhas.ts";
+import { corrigirTotalizadoEm } from "../turno2/comum.ts";
 import type { Nivel } from "../types.ts";
 
 export const FIM = "9999-12-31T23:59:59.999Z";
@@ -98,18 +99,30 @@ export function abAsOf(db: Database, arquivoId: number, at?: string): AbRow[] {
     .all(arquivoId, ate(at));
 }
 
-/** Primeira totalização com st = ts > 0 por cdabr no -ab (hora do TSE). */
-export function fechamentosAb(db: Database, arquivoId: number, at?: string): Map<string, string> {
+/** Fuso de uma entrada do -ab: a própria sigla quando o cdabr é UF; senão a UF do arquivo. */
+export function ufDoCdabr(cdabr: string, ufArquivo: string | null | undefined): string {
+  return /^[a-z]{2}$/i.test(cdabr) ? cdabr : (ufArquivo ?? "");
+}
+
+/**
+ * Primeira totalização com st = ts > 0 por cdabr no -ab (hora do TSE), com o `totalizado_em`
+ * corrigido do fuso (AC, AM, RO, RR, MT e MS vêm em hora local rotulada como Brasília). O
+ * `gerado_em` é o da linha do mínimo (coluna nua com MIN, regra do SQLite).
+ */
+export function fechamentosAb(db: Database, arquivoId: number, at?: string, ufArquivo?: string | null): Map<string, string> {
   const rows = db
-    .query<{ cdabr: string; em: S }, [number, string]>(
-      `SELECT e.cdabr, MIN(COALESCE(e.totalizado_em, s.capturado_em)) AS em
+    .query<{ cdabr: string; em: S; gerado_em: S }, [number, string]>(
+      `SELECT e.cdabr, MIN(COALESCE(e.totalizado_em, s.capturado_em)) AS em, s.gerado_em
        FROM snapshot s JOIN ab_estado e ON e.snapshot_id = s.id
        WHERE s.arquivo_id = ? AND s.regressivo = 0 AND s.capturado_em <= ? AND e.ts > 0 AND e.st = e.ts
        GROUP BY e.cdabr`,
     )
     .all(arquivoId, ate(at));
   const m = new Map<string, string>();
-  for (const r of rows) if (r.em) m.set(r.cdabr, r.em);
+  for (const r of rows) {
+    const em = corrigirTotalizadoEm(ufDoCdabr(r.cdabr, ufArquivo), r.em, r.gerado_em);
+    if (em) m.set(r.cdabr, em);
+  }
   return m;
 }
 

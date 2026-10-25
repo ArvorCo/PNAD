@@ -97,6 +97,20 @@ describe("pausa geral e por UF", () => {
     expect(eventos(fim).map((e) => [e.tipo, e.detalhe.minutos])).toEqual([["pausa_geral_fim", 7]]);
   });
 
+  test("geral não abre no fim da noite, com menos de 100 seções faltando no país", () => {
+    const d = novo();
+    // três UFs com 1.000 seções cada: 2.950 totalizadas, faltam 50
+    for (const [uf, st] of [["sp", 1000], ["mg", 1000], ["ba", 950]] as const) d.observar(uf, { geradoMs: m(5), st, ts: 1000 }, iso(m(5)));
+    d.observar(null, { geradoMs: m(5), st: 2950, ts: 3000 }, iso(m(5)));
+    const it = d.avaliar(m(30), sempre);
+    expect(eventos(it).filter((e) => e.tipo.startsWith("pausa_geral"))).toEqual([]);
+    expect(d.aberta("geral")).toBeNull();
+    // com 100 faltando, a regra volta a valer
+    const d2 = novo();
+    for (const [uf, st] of [["sp", 1000], ["mg", 1000], ["ba", 900]] as const) d2.observar(uf, { geradoMs: m(5), st, ts: 1000 }, iso(m(5)));
+    expect(eventos(d2.avaliar(m(30), sempre)).map((e) => e.tipo)).toContain("pausa_geral_inicio");
+  });
+
   test("geral não abre antes da primeira seção nem com tudo apurado", () => {
     const d = novo();
     d.observar("sp", { geradoMs: m(-60), st: 0, ts: 1000 }, iso(m(-60)));

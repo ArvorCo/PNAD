@@ -1,13 +1,16 @@
-// Uso: bun run scripts/exportar-publico.ts [--saida ../docs/assets/apuracao_2t] [--base http://127.0.0.1:4180]
+// Uso: bun run scripts/exportar-publico.ts [--saida ../docs/assets/apuracao_2t] [--anterior <dir>] [--base http://127.0.0.1:4180]
 //
 // Exporta o estado público da apuração do 2º turno (25/10/2026) para o GitHub Pages.
 // Chama a API local do telão (porta em APURACAO_PORT, padrão 4180), grava um JSON compacto por
 // rota em docs/assets/apuracao_2t/ e um manifest.json com gerado_em, turno, sha256 e bytes de
 // cada arquivo e a lista de rotas pendentes (resposta {pendente:true}, erro ou prazo estourado).
 //
-// Rota com erro não derruba a exportação: o arquivo anterior fica como está e a rota entra em
-// `pendentes`. Sem arquivo anterior, grava {"pendente":true}. Nunca grava identificador pessoal:
-// campos com nome de CPF, e-mail, telefone ou título de eleitor são removidos antes de gravar.
+// Rota com erro não derruba a exportação: vale o arquivo anterior e a rota entra em `pendentes`.
+// "Anterior" é o da pasta `--anterior` (ou APURACAO_EXPORT_ANTERIOR; padrão: a própria saída), que
+// o publicar-loop.sh aponta para o worktree de publicação, ou seja, o último retrato publicado. Na
+// main local a pasta é restaurada pelo git a cada ciclo e guarda um retrato antigo: reaproveitá-la
+// fazia a página regredir quando uma rota falhava. Sem anterior, grava {"pendente":true}. Nunca grava
+// identificador pessoal: campos com nome de CPF, e-mail, telefone ou título de eleitor são removidos.
 // Código de saída: 0 se gravou o manifesto, 1 se nem o manifesto pôde ser gravado.
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
@@ -106,6 +109,7 @@ function hashConteudo(texto: string): string {
 
 async function main(): Promise<void> {
   const saida = resolve(argumento("--saida", PADRAO_SAIDA));
+  const anterior = resolve(argumento("--anterior", process.env["APURACAO_EXPORT_ANTERIOR"] ?? saida));
   const porta = process.env["APURACAO_PORT"] ?? "4180";
   const base = argumento("--base", `http://127.0.0.1:${porta}`);
   mkdirSync(saida, { recursive: true });
@@ -137,14 +141,11 @@ async function main(): Promise<void> {
       pendentes.push(rota.arquivo);
       erros[rota.arquivo] = e instanceof Error ? e.message : String(e);
     }
-    if (texto !== null) {
-      gravarAtomico(destino, texto);
-    } else if (existsSync(destino)) {
-      texto = readFileSync(destino, "utf8");
-    } else {
-      texto = JSON.stringify({ pendente: true });
-      gravarAtomico(destino, texto);
+    if (texto === null) {
+      const doAnterior = join(anterior, `${rota.arquivo}.json`);
+      texto = existsSync(doAnterior) ? readFileSync(doAnterior, "utf8") : JSON.stringify({ pendente: true });
     }
+    gravarAtomico(destino, texto);
     arquivos[rota.arquivo] = { sha256: sha256(texto), bytes: Buffer.byteLength(texto), conteudo: hashConteudo(texto) };
   }
 

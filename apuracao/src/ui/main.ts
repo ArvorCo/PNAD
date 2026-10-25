@@ -18,6 +18,8 @@ import { campoDoPartido, CORES_PADRAO, normalizarCampos, normalizarCores } from 
 import { criarMock } from "./data/mock.ts";
 import { lerParamsMock } from "./data/mock-hash.ts";
 import { conectarSse } from "./data/sse.ts";
+import type { EventoBoletimTelao } from "./data/sse.ts";
+import { EVENTO_BOLETIM } from "./components/ticker.ts";
 import { preCarregar } from "./data/geo.ts";
 import { abrirCanal, ehComando } from "./control/broadcast.ts";
 import type { Comando, EspelhoTelao } from "./control/broadcast.ts";
@@ -320,11 +322,22 @@ async function iniciar(): Promise<void> {
     store.patch("rede", { modo: "replay", conectado: true, ultimo_evento_em: null, ultimo_ok_em: null });
     setInterval(recarregar, 2000);
   } else {
+    const avisarBoletim = (d: EventoBoletimTelao): void => {
+      document.dispatchEvent(new CustomEvent<EventoBoletimTelao>(EVENTO_BOLETIM, { detail: d }));
+    };
     conectarSse({
       aoEvento,
       aoPolling: recarregar,
       aoRede: r => store.patch("rede", { ...store.get().rede, ...r }),
+      aoBoletim: avisarBoletim,
     });
+    // Boletim já no ar quando o telão carrega: acende o chip sem esperar o próximo evento.
+    void fetch("/api/boletins", { cache: "no-store" })
+      .then(r => (r.ok ? (r.json() as Promise<{ no_ar: { id: string; hora: string | null; desde: string; duracao_s: number | null } | null }>) : null))
+      .then(l => {
+        if (l?.no_ar) avisarBoletim({ kind: "no_ar", id: l.no_ar.id, hora: l.no_ar.hora ?? undefined, desde: l.no_ar.desde, duracao_s: l.no_ar.duracao_s });
+      })
+      .catch(() => undefined);
   }
   // Rede de segurança: estado a cada 15 s mesmo sem evento.
   setInterval(() => carregador.carregar({ tipo: "estado" }), 15_000);

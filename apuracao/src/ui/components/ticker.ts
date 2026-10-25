@@ -8,6 +8,46 @@ import type { State } from "../state/types.ts";
 
 const PASSO_MS = 7000;
 
+/** Evento de documento com o boletim falado (disparado pelo main a partir do SSE). */
+export const EVENTO_BOLETIM = "apuracao:boletim";
+
+interface DetalheBoletim {
+  kind: string;
+  id: string;
+  hora?: string;
+  desde?: string;
+  duracao_s?: number | null;
+}
+
+/** Chip "boletim das HH:MM no ar" na faixa inferior enquanto o boletim toca; some no fim. */
+function criarChipBoletim(): HTMLElement {
+  const chip = document.createElement("span");
+  chip.className = "ticker-boletim";
+  chip.hidden = true;
+  let atual: string | null = null;
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  const apagar = (): void => {
+    chip.hidden = true;
+    atual = null;
+    if (timer !== null) clearTimeout(timer);
+    timer = null;
+  };
+  document.addEventListener(EVENTO_BOLETIM, ev => {
+    const d = (ev as CustomEvent<DetalheBoletim>).detail;
+    if (!d) return;
+    if (d.kind === "no_ar") {
+      atual = d.id;
+      chip.textContent = `boletim das ${d.hora ?? `${d.id.slice(0, 2)}:${d.id.slice(2, 4)}`} no ar`;
+      chip.hidden = false;
+      if (timer !== null) clearTimeout(timer);
+      // Rede de segurança: sem o evento de fim, o chip some ao fim previsto do áudio.
+      const resta = (d.duracao_s ?? 600) * 1000 - (Date.now() - Date.parse(d.desde ?? new Date().toISOString())) + 5000;
+      timer = setTimeout(apagar, Math.max(1000, resta));
+    } else if ((d.kind === "fim" || d.kind === "descartado") && d.id === atual) apagar();
+  });
+  return chip;
+}
+
 export interface ItemTicker {
   texto: string;
   /** Categoria das anomalias novas do 2º turno (pausa, divergência, abstenção, paralela): ganham cor própria. */
@@ -49,6 +89,7 @@ export function criarTicker(): Ticker {
   const el = document.createElement("div");
   el.className = "ticker";
   el.innerHTML = `<span class="ticker-marca">agora</span><span class="ticker-texto"></span>`;
+  el.prepend(criarChipBoletim());
   const texto = el.querySelector(".ticker-texto") as HTMLElement;
   const marca = el.querySelector(".ticker-marca") as HTMLElement;
   let lista: ItemTicker[] = [];

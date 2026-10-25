@@ -200,3 +200,138 @@ section h2[hidden],
 .grade[hidden] {
   display: none;
 }
+
+/* ---------- boletim falado ---------- */
+.boletim {
+  border-color: var(--ink);
+}
+
+.bol-status {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.bol-status[data-vivo="0"] {
+  color: #a8281c;
+  font-weight: 600;
+}
+
+.bol-noar {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--paper);
+  margin-bottom: 10px;
+}
+
+.bol-noar[data-noar="1"] {
+  background: var(--dark);
+  color: var(--paper);
+}
+
+.bol-msg {
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.bol-msg[data-erro="1"] {
+  color: #a8281c;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.bol-lista {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.bol-lista > li {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.bol-lista > li[data-estado="no_ar"] {
+  border-color: var(--ink);
+  background: var(--accent);
+}
+
+.bol-lista > li[data-estado="erro"] {
+  border-color: #a8281c;
+}
+
+.bol-lista > li[data-estado="tocado"],
+.bol-lista > li[data-estado="descartado"] {
+  opacity: 0.7;
+}
+
+.bol-cab {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.bol-hora {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 22px;
+}
+
+.bol-estado {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bol-num {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.bol-botoes {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.bol-botoes button,
+.bol-parar {
+  min-height: 44px;
+}
+
+.bol-tocar {
+  background: var(--dark);
+  color: var(--paper);
+  font-weight: 700;
+}
+
+.bol-resumo {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.bol-corpo pre {
+  white-space: pre-wrap;
+  font-family: "Archivo", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.bol-corpo audio {
+  width: 100%;
+  margin: 8px 0;
+}

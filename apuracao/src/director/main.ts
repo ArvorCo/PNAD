@@ -3,6 +3,7 @@
 
 import "./director.css";
 
+import { criarPainelBoletim } from "./boletim.ts";
 import { abrirCanal, ehEspelho } from "../ui/control/broadcast.ts";
 import type { Comando, EspelhoTelao } from "../ui/control/broadcast.ts";
 import { criarIndice } from "../ui/control/search.ts";
@@ -166,7 +167,7 @@ async function iniciar(): Promise<void> {
   const pl = el("ol", { class: "playlist" });
   plSec.append(pl);
 
-  raiz.replaceChildren(topo, controles, telasSec, ufsSec, buscaSec, plSec);
+  raiz.replaceChildren(topo, criarPainelBoletim(), controles, telasSec, ufsSec, buscaSec, plSec);
 
   function desenharEspelho(): void {
     const e = espelho;

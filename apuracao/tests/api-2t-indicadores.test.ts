@@ -117,7 +117,8 @@ describe("parcial (17:25): virada, fuso, arquivo parado", () => {
     for (let i = 1; i < u.ufs.length; i += 1) expect((u.ufs[i - 1]?.pst ?? 0) <= (u.ufs[i]?.pst ?? 0)).toBe(true);
     const ac = uf("AC");
     expect(ac?.ultima_versao_em).toBe(iso(seg2t(1180)));
-    expect(ac?.idade_s).toBe(320);
+    // idade pela publicação (gerado_em 17:19:50), não pelo carimbo de totalização (17:19:40)
+    expect(ac?.idade_s).toBe(310);
     expect(ac?.ref_1t).toMatchObject({ p50_min: 60, p90_min: 120, p99_min: 180, p100_min: 180, pa_final: 20 });
     const sp = uf("SP");
     expect(sp).toMatchObject({ st: 60_000, pst: 57.88, munnr: 400, munpt: 230, munf: 15, lider: F, parada: false, vel_10min_spm: 4_000 });
@@ -126,7 +127,7 @@ describe("parcial (17:25): virada, fuso, arquivo parado", () => {
     expect(sp?.pendentes_maiores.map((p) => p.nm)).toEqual(["São Paulo", "Guarulhos", "Campinas"]);
     expect(sp?.pendentes_maiores[0]).toMatchObject({ cd: "71072", te: 9_145_969, pst: 56.21 });
     const rj = uf("RJ");
-    expect(rj).toMatchObject({ st: 5_000, parada: true, idade_s: 920, vel_10min_spm: 0, eta_100_iso: null });
+    expect(rj).toMatchObject({ st: 5_000, parada: true, idade_s: 910, vel_10min_spm: 0, eta_100_iso: null });
     expect(rj?.pendentes_maiores[0]).toMatchObject({ cd: "60011", nm: "Rio de Janeiro" });
     expect(uf("ZZ")?.ref_1t).toBeNull();
     expect(uf("MG")).toMatchObject({ st: 0, parada: true });
@@ -178,7 +179,8 @@ describe("arquivo regerado sem nova totalização (17:36)", () => {
     const u = UfsSchema.parse((await get(`/api/2t/ufs?${em(2200)}`)).body);
     const ac = u.ufs.find((l) => l.uf === "AC");
     expect(ac?.ultima_versao_em).toBe(iso(seg2t(1180)));
-    expect(ac?.idade_s).toBe(1_020);
+    // regerado sem contagem nova: a publicação continua a das contagens (17:19:50) e envelhece
+    expect(ac?.idade_s).toBe(1_010);
     // nenhuma UF andou entre 17:26:40 e 17:36:40: é pausa geral, não arquivo parado
     expect(u.ufs.some((l) => l.parada)).toBe(false);
   });
@@ -284,10 +286,10 @@ describe("configuração e estado no 2º turno", () => {
         return UfsSchema.parse(await res.json()).ufs.find((l) => l.uf === "SP")?.idade_s;
       };
       const tempos: number[] = [];
-      expect(await pedir()).toBe(320);
+      expect(await pedir()).toBe(310);
       agora += 60_000;
       const t = performance.now();
-      expect(await pedir()).toBe(380);
+      expect(await pedir()).toBe(370);
       tempos.push(performance.now() - t);
       expect(tempos[0] ?? Infinity).toBeLessThan(500);
     } finally {

@@ -88,6 +88,10 @@ async function main(): Promise<void> {
   };
   process.on("SIGINT", () => void desligar("SIGINT"));
   process.on("SIGTERM", () => void desligar("SIGTERM"));
+  // Promessa rejeitada sem tratamento (ponte, amostra, gancho) vira log, não queda do coletor.
+  process.on("unhandledRejection", (motivo: unknown) => {
+    log({ t: "erro_nao_tratado", tipo: "unhandledRejection", erro: motivo instanceof Error ? `${motivo.message}\n${motivo.stack ?? ""}` : String(motivo) });
+  });
   await ag.rodar();
 }
 

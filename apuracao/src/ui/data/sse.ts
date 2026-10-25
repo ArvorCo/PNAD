@@ -11,6 +11,16 @@ export interface OpcoesSse {
   aoEvento: (e: EventoSse) => void;
   aoPolling: () => void;
   aoRede: (r: { modo: ModoRede; conectado: boolean; ultimo_evento_em: number | null }) => void;
+  /** Evento `boletim` do boletim falado (no ar, fim...); o telão só acende um chip na faixa. */
+  aoBoletim?: (d: EventoBoletimTelao) => void;
+}
+
+export interface EventoBoletimTelao {
+  kind: string;
+  id: string;
+  hora?: string;
+  desde?: string;
+  duracao_s?: number | null;
 }
 
 type Kind = EventoSse["kind"];
@@ -109,6 +119,15 @@ export function conectarSse(o: OpcoesSse): () => void {
     });
   }
   es.addEventListener("ping", tocar);
+  es.addEventListener("boletim", ev => {
+    tocar();
+    try {
+      const d = JSON.parse(String((ev as MessageEvent).data)) as EventoBoletimTelao;
+      if (typeof d.kind === "string" && typeof d.id === "string") o.aoBoletim?.(d);
+    } catch {
+      // evento malformado: ignora
+    }
+  });
 
   const vigia = setInterval(() => {
     const ref = ultimo ?? inicio;

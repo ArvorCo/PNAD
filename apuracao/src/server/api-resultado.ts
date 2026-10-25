@@ -1,5 +1,6 @@
 // /api/resultado e /api/serie.
 import type { Database } from "bun:sqlite";
+import { corrigirTotalizadoEm } from "../turno2/comum.ts";
 import { arquivoPorChave, snapshotPorId, ultimoSnapshotComCandidatos, ultimoSnapshotPorChave } from "../db/leitura.ts";
 import type { SnapshotLido } from "../db/leitura.ts";
 import type { Abr } from "./abr.ts";
@@ -169,7 +170,8 @@ export function resultado(ctx: Contexto, db: Database, p: Params): unknown {
     abr: abrTexto(a),
     nome_escopo: nomeEscopo(db, a),
     dg_hg: s.gerado_em,
-    dt_ht: s.totalizado_em,
+    // AC, AM, RO, RR, MT e MS publicam o dt/ht em hora local rotulada como Brasília
+    dt_ht: corrigirTotalizadoEm(a.uf ?? "", s.totalizado_em, s.gerado_em),
     lido_em: s.capturado_em,
     tf: s.tf === 1,
     idg: s.idg,

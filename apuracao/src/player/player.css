@@ -1,0 +1,150 @@
+/* Player do boletim: fundo transparente para o OBS, tarja discreta com progresso. */
+html,
+body {
+  margin: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: transparent;
+  font-family: "Archivo", system-ui, sans-serif;
+}
+
+#player {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tarja {
+  position: absolute;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 18px;
+  min-width: 520px;
+  padding: 18px 28px 22px 22px;
+  background: #142d2b;
+  color: #f4f0e6;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 35%);
+  overflow: hidden;
+  animation: entra 400ms ease-out;
+}
+
+.tarja[hidden] {
+  display: none;
+}
+
+#player[data-pos="bl"] .tarja {
+  left: 40px;
+  bottom: 110px;
+}
+
+#player[data-pos="br"] .tarja {
+  right: 40px;
+  bottom: 110px;
+}
+
+#player[data-pos="tl"] .tarja {
+  left: 40px;
+  top: 40px;
+}
+
+#player[data-pos="tr"] .tarja {
+  right: 40px;
+  top: 40px;
+}
+
+.tarja-ponto {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f0a79c;
+  box-shadow: 0 0 0 0 rgb(240 167 156 / 60%);
+  animation: pulsa 1.6s infinite;
+}
+
+.tarja-texto {
+  display: grid;
+  gap: 2px;
+}
+
+.tarja-titulo {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.tarja-marca {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 20px;
+  color: #d6e48c;
+  letter-spacing: 0.02em;
+}
+
+.tarja-barra {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: rgb(244 240 230 / 18%);
+}
+
+.tarja-barra i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #d6e48c;
+  transition: width 250ms linear;
+}
+
+.gesto {
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  pointer-events: auto;
+  font: inherit;
+  font-size: 24px;
+  padding: 16px 24px;
+  border: 0;
+  border-radius: 8px;
+  background: #f4f0e6;
+  color: #192e2b;
+  cursor: pointer;
+}
+
+.gesto[hidden] {
+  display: none;
+}
+
+@keyframes pulsa {
+  0% {
+    box-shadow: 0 0 0 0 rgb(240 167 156 / 60%);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgb(240 167 156 / 0%);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(240 167 156 / 0%);
+  }
+}
+
+@keyframes entra {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarja,
+  .tarja-ponto {
+    animation: none;
+  }
+}

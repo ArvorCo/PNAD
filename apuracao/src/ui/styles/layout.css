@@ -585,3 +585,30 @@
   color: var(--muted);
   font-family: var(--font-mono);
 }
+
+/* chip do boletim falado: só enquanto o áudio toca */
+.ticker-boletim {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--t-1);
+  font-weight: 700;
+  color: #142d2b;
+  background: #d6e48c;
+  border: 1px solid #142d2b;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.625rem;
+}
+
+.ticker-boletim::before {
+  content: "";
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: #a8281c;
+}
+
+.ticker-boletim[hidden] {
+  display: none;
+}

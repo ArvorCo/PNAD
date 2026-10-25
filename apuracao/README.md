@@ -99,6 +99,7 @@ Servidor em `http://127.0.0.1:4180`. Respostas JSON com `Cache-Control: no-store
 | `GET /api/anomalias[?severidade&limit]` | `[{id, at, tipo, categoria:virada\|regressao\|fechou\|atraso\|outro, severidade, uf, abr, cargo, texto, detalhe, derivado}]` |
 | `GET /events[?tudo=1\|nivel=br,uf,mun,zona]` | SSE: `snapshot` `{kind:resultado\|ab\|config, ele, cargo, abr, nivel, snapshot_id, at, pst, tf}`, `evento` `{kind:anomalia, ...}` (warn e error), `estado` `{agora, pronto, max_snapshot_id}` |
 | `/api/snapshots`, `/api/latencia`, `/api/fim`, `/api/velocidade`, `/api/andamento`, `/api/fetches`, `/api/blob/:id` | auditoria: versões de um arquivo, latências, municípios que fecharam, velocidade, `-ab`, log de requisições e o JSON original |
+| `/api/boletins*`, `/boletins/HHMM.mp3` | boletim falado do 2º turno (seção própria abaixo); únicas rotas com POST |
 
 Estáticos: HTML, `dist/` e JSON com `Cache-Control: no-cache` (um `build:ui` durante a live chega no próximo recarregamento do OBS); `geo/`, `fonts/` e `fotos/` com `max-age=3600`.
 
@@ -259,9 +260,80 @@ Playlist do 2º turno em `public/playlist-2t.json` (a do contrato é reserva). E
 
 `scripts/exportar-publico.ts` grava `../docs/assets/apuracao_2t/*.json` + `manifest.json` (sem municípios do config, sem identificador pessoal, abaixo de 2 MB); `scripts/publicar-loop.sh` exporta e dá commit + push só dessa pasta a cada `INTERVALO_S` (300; `PUSH=0` só commita). `../docs/apuracao_2t_ao_vivo.html` lê os JSON, recarrega a cada 60 s, avisa dados com mais de 10 min e aceita `?fonte=exemplo`. Card em `img/og/apuracao_2t_ao_vivo.png`; depois do primeiro commit da página rode `python3 ../scripts/sitemap-build.py`.
 
+## Boletim falado (2º turno)
+
+A cada 10 minutos o boletim lê os dados, escreve o roteiro na voz do Leonardo, gera o áudio e deixa o mp3 pronto; a hora de entrar no ar é sempre manual, pelo diretor. Substitui o laço `scripts/boletim-loop.sh` do 1º turno (que tocava sozinho pelo `afplay`).
+
+**Arquitetura.** O gerador roda num processo próprio (`bun run boletim`, laço de religar em `scripts/start-boletim.sh`), fora do servidor do telão: uma correção no prompt ou nos dados reinicia só ele. O servidor serve a lista, o controle, o mp3 e os eventos. Estado em arquivos em `data/boletins-2t/`, cada arquivo com um único escritor e gravação atômica; nada vai para o SQLite.
+
+| Arquivo | Escritor | Conteúdo |
+|---|---|---|
+| `indice.json` | gerador | `{itens:[{id, hora, estado: gerando\|pronto\|erro, etapa, origem, modo, palavras, duracao_s, resumo, erro}]}` |
+| `gerador.json` | gerador | batimento a cada 2 s: pid, relógio, `proximo_ciclo_em`, `gerando`, `etapa`, `ultimo_erro` |
+| `controle.json` | servidor | `no_ar {id, desde, duracao_s}`, `tocados`, `descartados` |
+| `pedido.json` | servidor | geração manual pedida pelo diretor; o gerador apaga ao atender |
+| `HHMM.dados.json`, `.prompt.txt`, `.txt`, `.mp3`, `.meta.json`, `.tts.log` | gerador | resumo e base do delta, prompt enviado, roteiro final, áudio, tempos e avisos, saída do TTS |
+
+**Ciclo.** Alinhado aos múltiplos de `APURACAO_BOLETIM_INTERVALO_S` a partir de `APURACAO_BOLETIM_INICIO` (17:10, 17:20...); `POST /api/boletins/gerar` gera a qualquer hora; nunca duas gerações ao mesmo tempo (ciclo que cai durante uma geração é pulado e registrado no log). Etapas:
+
+1. **dados** (`src/boletim/dados.ts`): `/api/estado`, `/api/resultado` (6258/1/br), `/api/2t/{regioes,ufs,abstencao,estaduais,pausas,secoes,paralela}`, `/api/anomalias`, `/api/lotes` e o resultado final do 1º turno lido uma vez de `data/apuracao.sqlite` (só leitura). Calcula o delta desde o boletim anterior (seções, votos, diferença F menos L, viradas por UF e nos governos, UFs que fecharam, pausas abertas e fechadas, divergências novas da paralela). Boletim anterior com mais de 30 min não serve de base: a janela volta a ser os últimos 10 min de versões. `bun run scripts/boletim-dados-2t.ts [--at ISO]` imprime o mesmo JSON sem gravar nada.
+2. **roteiro** (`src/boletim/roteiro.ts`): `claude -p --model opus --no-session-persistence` com o prompt pelo stdin e ambiente limpo (sem as variáveis `CLAUDE*`/`ANTHROPIC*` de quem lançou o laço; o CLI usa o login próprio), guia `data/boletins/ESTILO.md` na íntegra (relido a cada boletim, então uma regra nova vale no ciclo seguinte; `data/` fica fora do git, por isso há a cópia versionada `src/boletim/ESTILO.md`, usada quando o vivo falta, e `APURACAO_BOLETIM_ESTILO` troca o caminho), estrutura obrigatória do 2º turno e o boletim anterior para não repetir. Tamanho pelo modo: abertura (antes das 17:00 ou zero seção) 150 a 200 palavras; pouca mudança 300 a 380, dizendo que o quadro se mantém; muita novidade (2 pontos de seções, virada, UF fechada, pausa, divergência nova, troca de liderança) 500 a 600. Acima do teto (230, 420, 640) há o segundo passo de enxugar. Guardas finais: sem markdown, travessão vira vírgula, frase com a palavra proibida sai. Uma nova tentativa se o CLI falhar.
+3. **áudio** (`src/boletim/audio.ts`): chama o `scripts/boletim-tts.py` do 1º turno (ElevenLabs `eleven_v4`, por parágrafo com `previous_text`/`next_text`, estabilidade 0,4, estilo 0,3, concat pelo ffmpeg; chave e voz de `~/arvor/voicer/.env`, nunca copiadas). O caminho já provado em 30 boletins pesou mais que o porte para TypeScript. Duração pelo `ffprobe`.
+
+**Ensaio de 25/10, 13:57** (servidor real, zero seção): abertura de 182 palavras, mp3 de 77,2 s; dados 0,2 s, roteiro 23,0 s, áudio 7,7 s, total 30,9 s. Num ensaio com o banco `data/ensaio-2t.sqlite` em 46% das seções, o roteiro de muita novidade levou 48 s e o passo de enxugar mais 79 s (710 para 560 palavras).
+
+### Partida e variáveis
+
+```bash
+nohup scripts/start-boletim.sh >/dev/null 2>&1 &     # gerador com relógio (ligado em 25/10 às 13:57 nesta máquina)
+pkill -f src/boletim/main.ts                         # recarrega o código: sai com 143 e o laço religa
+kill $(cat data/boletins-2t/laco.pid); pkill -f src/boletim/main.ts   # desliga de vez
+```
+
+| Variável | Padrão | Efeito |
+|---|---|---|
+| `APURACAO_BOLETIM` | `1` no `start-boletim.sh` | `1` liga o relógio; `0` deixa só a geração manual |
+| `APURACAO_BOLETIM_INTERVALO_S` | `600` | segundos entre ciclos (mínimo 60) |
+| `APURACAO_BOLETIM_INICIO` | `17:10` | primeiro ciclo: `HH:MM` de Brasília no dia ou ISO completo |
+| `APURACAO_BOLETIM_DIR` | `data/boletins-2t` | pasta do estado (servidor e gerador precisam da mesma) |
+| `APURACAO_API` | `http://127.0.0.1:4180` | servidor lido pelo gerador |
+| `APURACAO_BOLETIM_MODELO` | `opus` | modelo do `claude -p` |
+| `APURACAO_BOLETIM_CLAUDE` | `claude` no PATH ou `~/.local/bin/claude` | CLI do roteiro |
+| `APURACAO_BOLETIM_TTS` | `scripts/boletim-tts.py` | script de voz (`BOLETIM_MODEL`, `BOLETIM_STABILITY`, `BOLETIM_STYLE` continuam valendo) |
+| `APURACAO_BOLETIM_AT` | vazio | ensaio sobre banco antigo: lê os dados neste instante |
+
+### Rotas
+
+| Rota | Efeito |
+|---|---|
+| `GET /api/boletins[?todos=1]` | `{agora, gerador:{vivo, relogio_ligado, proximo_ciclo_em, gerando, etapa, ultimo_erro}, no_ar:{id, hora, desde, duracao_s, decorrido_s}\|null, itens:[{id, hora, estado: gerando\|pronto\|no_ar\|tocado\|erro, palavras, duracao_s, resumo, erro, ...}]}`; descartados só com `todos=1` |
+| `GET /api/boletins/:id` | `{item, texto, meta, mp3}` |
+| `POST /api/boletins/gerar` | 202 grava o pedido; 409 se já está gerando; 503 se o gerador está fora do ar |
+| `POST /api/boletins/:id/tocar` | põe no ar (pronto ou tocado; tocar de novo vale); o que estava no ar sai |
+| `POST /api/boletins/parar` | tira do ar o que estiver tocando |
+| `POST /api/boletins/:id/descartar` | some da lista (e sai do ar, se estiver); arquivos ficam no disco |
+| `POST /api/boletins/:id/fim` | o player avisa que o áudio terminou; só vale para o que está no ar |
+| `GET /boletins/HHMM.mp3` | áudio com `Accept-Ranges` e respostas 206 |
+
+POST só nessas rotas, só de 127.0.0.1 e com o cabeçalho `x-apuracao: boletim` (uma página de outra origem não consegue mandar o cabeçalho sem preflight, que o servidor não atende). Sem o `fim` do player, o servidor encerra sozinho 30 s depois da duração. O SSE ganhou `event: boletim` com `{kind: gerando|pronto|erro|no_ar|fim|descartado, id, hora?, desde?, duracao_s?, motivo?}` em todas as assinaturas; `/events?so=boletim` entrega só o boletim e o batimento, sem sondar o banco.
+
+### Diretor, telão e OBS
+
+- **Diretor** (`/director.html`, painel "boletim falado" no topo): estado do gerador e próximo ciclo, o que está no ar com tempo decorrido, "gerar agora" e "parar", e a lista com hora, estado, duração, palavras, modo e o resumo de uma linha (gerado dos dados, sem LLM). Cada item tem "tocar", "descartar" e, aberto, o roteiro com prévia do áudio para fone. Atualiza a cada 2 s.
+- **Telão**: só o chip "boletim das HH:MM no ar" na faixa inferior enquanto o áudio toca (aparece também com `hud=0`); some no fim.
+- **OBS**: fonte de navegador `http://127.0.0.1:4180/boletim.html`, 1920 × 1080, acima da cena do telão. Marque "Control audio via OBS" (o áudio entra no mixer do OBS como fonte própria, com volume e monitoramento) e desmarque "Shutdown source when not visible" e "Refresh browser when scene becomes active". O navegador do OBS não exige gesto do usuário para tocar som, então o comando "tocar" do diretor basta. A página é transparente; a tarja "Boletim das HH:MM, Arvor Intelligence", com barra de progresso, aparece só enquanto toca. Parâmetros: `?tarja=0` (só áudio), `?pos=bl|br|tl|tr` (canto; padrão inferior esquerdo, acima da faixa), `?vol=0.8`. Recarregar a fonte no meio de um boletim retoma do ponto em que ele está. Num Chrome comum aparece "clique para liberar o áudio" (ou abra com `--autoplay-policy=no-user-gesture-required`).
+- **Abertura**: perto das 16:55, "gerar agora" produz o boletim de abertura (150 a 200 palavras); o relógio começa às 17:10.
+
+### Reserva
+
+- `scripts/boletim-tocar.sh HHMM` toca pelo `afplay` no desktop, como no 1º turno (sem argumento, o mp3 mais recente).
+- Gerador fora do ar: o diretor mostra "gerador FORA DO AR"; religue com `scripts/start-boletim.sh` e leia `data/logs/boletim-2t-AAAAMMDD.log`.
+- Geração manual por terminal: `curl -X POST -H 'x-apuracao: boletim' http://127.0.0.1:4180/api/boletins/gerar`.
+- O servidor agora sai com 143 no SIGTERM, então `pkill -f src/server/main.ts` religa pelo `start-serve.sh` como o runbook diz (antes saía com 0 e o laço `until` encerrava).
+
 ## Verificação
 
-- `bun run check` sem erro.
+- `bun run check` sem erro (`tests/boletim.test.ts` e `tests/boletim-server.test.ts` cobrem relógio, guardas, gerador, rotas, Range e SSE do boletim; `tests/preload.ts` dá aos testes uma pasta temporária de boletins).
 - `bun run scripts/semear-ensaio.ts && APURACAO_DB=data/ensaio.sqlite bun run serve`, depois `bun run qa/i1.ts` (`qa/` é bancada local, fora do git e do lint; `qa/i2.ts` percorre todas as telas, a espera num banco vazio na porta 4181 e a rotação por 90 s): presidente, SP por município, zonas da capital, governador e senado, diretor, atualização ao vivo pelo SSE, zero requisição fora de 127.0.0.1.
 - Contraste: `python3 ../scripts/contrast-audit.py --width 1920 "http://127.0.0.1:4180/#v=pres&auto=0&hud=0&replay=2026-10-04T23:00:00-03:00,1"` (o replay troca o SSE por sondagem, porque a auditoria espera a rede ficar ociosa; uma URL por execução).
 - `grep -rn $'\u2014' src public README.md` vazio (nenhum travessão em texto do telão).

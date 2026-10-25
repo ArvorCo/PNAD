@@ -79,6 +79,9 @@ export function responderSse(ctx: Contexto, req: Request, url: URL, o: OpcoesSse
   const hbMs = o.heartbeatMs ?? 5000;
   const lote = o.lote ?? 2000;
   const niveis = niveisDe(url);
+  // so=boletim: só batimento e eventos do boletim falado (player do OBS), sem sondar o banco.
+  const soBoletim = url.searchParams.get("so") === "boletim";
+  let desligarBoletim: (() => void) | null = null;
   const ultimoTxt = req.headers.get("last-event-id") ?? url.searchParams.get("ultimo");
   const ultimo = ultimoTxt !== null && /^\d+$/.test(ultimoTxt) ? Number(ultimoTxt) : null;
   const enc = new TextEncoder();
@@ -94,6 +97,8 @@ export function responderSse(ctx: Contexto, req: Request, url: URL, o: OpcoesSse
     abertas -= 1;
     for (const t of timers) clearInterval(t);
     timers = [];
+    desligarBoletim?.();
+    desligarBoletim = null;
   };
 
   const iniciarCursores = (db: Database): void => {
@@ -125,7 +130,7 @@ export function responderSse(ctx: Contexto, req: Request, url: URL, o: OpcoesSse
         enviar(`event: estado\ndata: ${JSON.stringify({ kind: "estado", agora: ctx.agora(), pronto: db !== null, max_snapshot_id: db ? maxSnapshotId(db) : 0 })}\n\n`);
       };
       const tick = (): void => {
-        if (!ativo) return;
+        if (!ativo || soBoletim) return;
         const db = ctx.banco.obter();
         if (!db) return;
         try {
@@ -173,6 +178,7 @@ export function responderSse(ctx: Contexto, req: Request, url: URL, o: OpcoesSse
         }
       };
       enviar(`retry: 2000\n\n`);
+      desligarBoletim = ctx.boletins?.assinar(e => enviar(`event: boletim\ndata: ${JSON.stringify(e)}\n\n`)) ?? null;
       estado();
       tick();
       timers = [setInterval(tick, pollMs), setInterval(estado, hbMs)];

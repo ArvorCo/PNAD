@@ -2,6 +2,7 @@
 import type { Database } from "bun:sqlite";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { abrirLeitura } from "../db/abrir.ts";
+import type { Boletins } from "./boletins.ts";
 
 /** Abre o banco só quando ele existir com o esquema; reabre se ainda não estiver pronto. */
 export class FonteBanco {
@@ -120,4 +121,6 @@ export interface Contexto {
   campos: Campos;
   publicDir: string;
   agora(): string;
+  /** Boletim falado (controle e eventos); ausente nos testes antigos. */
+  boletins?: Boletins;
 }

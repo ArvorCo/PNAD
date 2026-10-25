@@ -1,12 +1,13 @@
 // Endpoints de auditoria: versões de um arquivo, latências, municípios fechados, velocidade,
 // andamento do -ab, log de requisições e corpo original.
 import type { Database } from "bun:sqlite";
+import { corrigirTotalizadoEm } from "../turno2/comum.ts";
 import { chave, keyAb, parseChave } from "../tse/urls.ts";
 import { gunzipTexto } from "../db/itens.ts";
 import { arquivoPorChave, blobDoSnapshot, serieDoArquivo, ultimoSnapshotPorChave } from "../db/leitura.ts";
 import type { Nivel } from "../types.ts";
 import { abrTexto, chaveU, nomeUf, parseAbr, titulo } from "./abr.ts";
-import { FIM, abAsOf, municipiosIndex } from "./consultas.ts";
+import { FIM, abAsOf, municipiosIndex, ufDoCdabr } from "./consultas.ts";
 import type { Contexto } from "./contexto.ts";
 import { ErroHttp } from "./http.ts";
 import type { Params } from "./http.ts";
@@ -117,14 +118,17 @@ export function fim(_ctx: Contexto, db: Database, p: Params): unknown {
   const at = p.at() ?? FIM;
   const filtroUf = uf !== undefined ? "AND f.uf = ?" : "";
   const base: (string | number)[] = uf !== undefined ? [ele, cargo, at, uf] : [ele, cargo, at];
+  // totalizado_em corrigido do fuso antes de ordenar: em hora local, os municípios de AC, AM, RO,
+  // RR, MT e MS caíam uma ou duas horas para trás na lista dos últimos fechamentos
   const fechados = db
     .query<{ uf: string; cd: string; cdi: string | null; nome: string | null; snapshot_id: number; capturado_em: string; gerado_em: string | null; totalizado_em: string | null }, (string | number)[]>(
       `SELECT f.uf, f.municipio_cd AS cd, m.ibge AS cdi, m.nome, f.snapshot_id, f.capturado_em, f.gerado_em, f.totalizado_em
        FROM v_municipio_fim f LEFT JOIN municipio m ON m.cd = f.municipio_cd
-       WHERE f.eleicao_cd = ? AND f.cargo_cd = ? AND f.capturado_em <= ? ${filtroUf}
-       ORDER BY COALESCE(f.totalizado_em, f.capturado_em) DESC, f.snapshot_id DESC`,
+       WHERE f.eleicao_cd = ? AND f.cargo_cd = ? AND f.capturado_em <= ? ${filtroUf}`,
     )
-    .all(...base);
+    .all(...base)
+    .map((f) => ({ ...f, totalizado_em: corrigirTotalizadoEm(f.uf, f.totalizado_em, f.gerado_em) }))
+    .sort((a, b) => (b.totalizado_em ?? b.capturado_em).localeCompare(a.totalizado_em ?? a.capturado_em) || b.snapshot_id - a.snapshot_id);
   const totalArqs = db
     .query<{ n: number }, (string | number)[]>(
       `SELECT COUNT(*) AS n FROM arquivo WHERE tipo = 'u' AND nivel = 'mu' AND eleicao_cd = ? AND cargo_cd = ? ${uf !== undefined ? "AND uf = ?" : ""}`,
@@ -175,7 +179,7 @@ export function andamento(_ctx: Contexto, db: Database, p: Params): unknown {
   const entradas = abAsOf(db, arq.id, at).map((r) => ({
     tpabr: r.tpabr, cdabr: r.cdabr,
     nome: r.cdabr === "br" ? "Brasil" : muns ? titulo(muns.get(r.cdabr)?.nome ?? r.cdabr) : nomeUf(r.cdabr),
-    andamento: r.andamento, dt_ht: r.totalizado_em, ts: r.ts ?? 0, st: r.st ?? 0, pst: r.pst ?? 0, te: r.te ?? 0, est: r.est ?? 0,
+    andamento: r.andamento, dt_ht: corrigirTotalizadoEm(ufDoCdabr(r.cdabr, uf), r.totalizado_em, r.gerado_em), ts: r.ts ?? 0, st: r.st ?? 0, pst: r.pst ?? 0, te: r.te ?? 0, est: r.est ?? 0,
     comparecimento: r.comparecimento ?? 0, abstencao: r.abstencao ?? 0, munnr: r.munnr, munpt: r.munpt, munf: r.munf,
     snapshot_id: r.snapshot_id,
   }));
@@ -184,9 +188,11 @@ export function andamento(_ctx: Contexto, db: Database, p: Params): unknown {
 
 export function fetches(_ctx: Contexto, db: Database, p: Params): unknown {
   const ch = p.texto("chave");
-  const limit = p.limite("limit", 100, 5000);
+  // Piso de 5 e `+f.iniciado_em` (sem índice nesse termo): com LIMIT 1 o SQLite escolhia o índice de
+  // tempo e ordenava os 2,7 milhões de fetches em árvore temporária; assim lê pelo id, do fim.
+  const limit = p.limite("limit", 100, 5000, 5);
   const classe = p.texto("classe");
-  const where: string[] = ["f.iniciado_em <= ?"];
+  const where: string[] = ["+f.iniciado_em <= ?"];
   const params: (string | number)[] = [p.at() ?? FIM];
   if (ch !== undefined) {
     try {
