@@ -7,7 +7,7 @@
   var EXEMPLO = new URLSearchParams(location.search).get('fonte') === 'exemplo';
   var BASE = 'assets/apuracao_2t/' + (EXEMPLO ? 'exemplo/' : '');
   var T0 = Date.parse('2026-10-25T20:00:00Z');
-  var INTERVALO_MS = 60000, VELHO_MIN = 10;
+  var INTERVALO_MS = 60000, VELHO_MIN = 20;
   var D = {}, SHAS = {}, MANIFEST = null, sorts = {}, ultimaFalha = null;
 
   var nf0 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 });
@@ -525,6 +525,9 @@
   }
   function carregar() {
     return pegar(BASE + 'manifest.json?t=' + Date.now()).then(function (m) {
+      /* O CDN pode devolver um manifesto anterior ao já exibido: a página nunca volta no tempo. */
+      var novo = Date.parse(m && m.gerado_em), atual = MANIFEST ? Date.parse(MANIFEST.gerado_em) : NaN;
+      if (MANIFEST && isFinite(atual) && !(novo >= atual)) { ultimaFalha = null; return []; }
       MANIFEST = m; ultimaFalha = null;
       var tarefas = ARQUIVOS.map(function (nome) {
         var info = m.arquivos && m.arquivos[nome];
