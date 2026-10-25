@@ -94,7 +94,7 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
               <p>municípios<b class="e-mun">aguardando</b></p>
             </div>
             <div class="espera-grade" aria-label="estados"></div>
-            <p class="espera-legenda">verde: UF que já tem seção totalizada; cinza: nenhuma ainda</p>
+            <p class="espera-legenda">verde: UF com seções totalizadas no monitor do TSE (os arquivos de votos por UF podem ainda não ter sido publicados); cinza: nenhuma seção</p>
             <div class="espera-chamada" aria-label="totalização paralela">
               <img class="espera-qr" src="img/qr_totalizacao.svg" alt="QR code de brasil.arvor.co/totalizacao" width="176" height="176">
               <div>
