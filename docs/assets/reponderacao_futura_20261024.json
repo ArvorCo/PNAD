@@ -1,0 +1,72 @@
+{
+  "data": "2026-10-24",
+  "pesquisas": [
+    {
+      "id": "futura_2026-10-24",
+      "instituto": "Futura",
+      "registro_tse": "BR-09726/2026",
+      "contratante": "100% Cidades",
+      "campo": {
+        "inicio": "2026-10-23",
+        "fim": "2026-10-24"
+      },
+      "divulgacao": "2026-10-24",
+      "n": 2000,
+      "metodo": "telefônico CATI",
+      "publicado": {
+        "2t": {
+          "flavio": 48.2,
+          "lula": 47.9,
+          "branco_nulo": 2.3,
+          "indecisos": 1.6
+        }
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 50.1,
+          "lula": 49.9
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/futura_102026_24/Futura_24102026.pdf",
+        "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio_Tracking_Nacional_2_Turno_VotosValidos.pdf",
+        "sha256": "bbfc794be3e8c0b154a52acf4082ac1cc4bbb333bb9a503cb7641acb523ff6b6",
+        "bytes": 1759016,
+        "paginas": {
+          "2t": 4,
+          "validos": 5,
+          "perfil": 3,
+          "metodologia": 2
+        },
+        "total_paginas": 8,
+        "tipo": "relatorio",
+        "rotulo": "Futura: relatório de 24/10, pp. 2–5",
+        "conferido_em": "2026-10-24",
+        "status": "Relatório conferido visualmente; voto por renda não publicado.",
+        "nota": "Divulgação CNN às 20h32 e Exame às 20h35 de 24/10. Campo efetivo 23–24/10 informado por ambas, n=2.000, CATI, BR-09726/2026. Totais F/L/BN/I 48,2/47,9/2,3/1,6; válidos oficiais 50,1/49,9 preservados separadamente da normalização dos totais arredondados. PDF de oito páginas localizado no catálogo da CNN: perfil na p. 3, totais na p. 4 e válidos na p. 5, sem voto por renda; somente publicado na Projeção, sem transportar perfil anterior. Exame cita 51,5% para Flávio na comparação anterior, mas a íntegra de 21/10 arquivada registra 51,1%; não alterar a onda anterior.",
+        "complementos": [
+          {
+            "arquivo": "data/originals/futura_102026_24/exame.html.gz",
+            "url": "https://exame.com/brasil/pesquisa-futura-flavio-bolsonaro-tem-501-e-lula-499-no-2o-turno/",
+            "sha256": "10d3de75e55c4ee95740f3ed7de299c0599572ac3dd8dce3bab159516c1529d3",
+            "bytes": 45311,
+            "rotulo": "Exame: divulgação e registro"
+          },
+          {
+            "arquivo": "data/originals/futura_102026_24/cnn.html.gz",
+            "url": "https://www.cnnbrasil.com.br/eleicoes/futura-flavio-tem-501-dos-votos-validos-no-2o-turno-lula-499/",
+            "sha256": "a326ce5d7ce5c0072c30bcdde77d58ce1bd441bca944942f61e8cf129c54319f",
+            "bytes": 54324,
+            "rotulo": "CNN: válidos, campo, amostra e registro"
+          }
+        ]
+      },
+      "ignorar": true,
+      "cruzamentos": {},
+      "motivo": "Relatório publica perfil de renda, mas não voto por faixa; somente publicado na Projeção."
+    }
+  ],
+  "consultado_em": "2026-10-24T21:17:39.927047-03:00",
+  "busca": "Futura confirmada após Quaest e Atlas; CNN publicou às 20h32, Exame às 20h35. Nenhum novo resultado nacional posterior de Veritá, Phoenix ou Simplex confirmado neste corte. Relatório de oito páginas localizado no catálogo público de mídias da CNN às 20h30: perfil de renda familiar 28,7/20,4/25,1/9,1/5,4 e NS/NR 11,3 (p. 3), sem voto por faixa. Os dois PDFs Datafolha recém-incluídos no Poder360 são impressões de matérias Folha/G1, sem bases ponderadas atuais; não resolvem a prévia. Registro ou agenda não equivalem a resultado publicado.",
+  "regra": "Substitui apenas a última onda Futura na Projeção. Sem renda atual, fora da Média. Quaest mantém o likely voter oficial sem nova seleção de presença."
+}

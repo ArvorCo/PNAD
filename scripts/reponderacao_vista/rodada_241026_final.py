@@ -1,8 +1,23 @@
 """Amostra completa e eleitor provável preservados como universos distintos."""
 
 
-def section():
-    return (
+def section(latest=None):
+    futura = (
+        '<aside class="callout" id="futura-2410"><h3>24/10, 20h32: nova Futura</h3>'
+        "<p><b>48,2 × 47,9 nos totais; 50,1 × 49,9 nos válidos oficiais.</b> "
+        "Brancos/nulos: 2,3%; indecisos: 1,6%. Campo efetivo 23–24/10, "
+        "2.000 entrevistas por telefone, BR-09726/2026. A nova onda substitui "
+        "a de 21/10 na Projeção. O relatório traz perfil de renda, mas não voto por faixa: "
+        "fica fora da Média PNAD. Os válidos oficiais são preservados separadamente "
+        "da divisão dos totais arredondados.</p>"
+        '<p class="note">Flávio × Lula. '
+        '<a href="https://www.cnnbrasil.com.br/eleicoes/futura-flavio-tem-501-dos-votos-validos-no-2o-turno-lula-499/">CNN, divulgação das 20h32</a> · '
+        '<a href="fontes/futura_24102026.pdf">Relatório Futura</a> · '
+        '<a href="assets/reponderacao_futura_20261024.json">Fontes e auditoria</a>.</p></aside>'
+        if (latest or {}).get("Futura", {}).get("id") == "futura_2026-10-24"
+        else ""
+    )
+    return futura + (
         '<aside class="callout" id="rodada-2410-final">'
         "<h3>24/10, após 19h: Quaest com eleitor provável e AtlasIntel</h3>"
         "<p><b>Quaest: 46 × 45 na amostra completa; 51 × 49 no likely voter oficial.</b> "
