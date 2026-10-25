@@ -82,7 +82,19 @@ function estrutura(modo: Modo, tam: Tamanho): string {
   return `MUITA NOVIDADE (${tam.min} a ${tam.max} palavras faladas, sem contar as tags; mire em ${tam.alvo} e nunca passe de ${tam.max}: escolha o que importa, não leia o JSON inteiro).\n${comum}`;
 }
 
-export function montarPrompt(resumo: { hora_brt: string; modo: Modo }, dadosJson: string, anterior: string | null): string {
+/** Bloco de notícias do prompt; null quando não há manchete na janela. */
+function blocoNoticias(modo: Modo, noticias: string | null): string {
+  if (!noticias) return "";
+  const tamanho = modo === "abertura" ? "40 a 80 palavras" : "60 a 120 palavras";
+  return `
+
+NOTÍCIAS DA ELEIÇÃO (manchetes dos veículos, últimas 3 h; não são dados nossos). Formato [hh:mm de Brasília, veículo] título; NOVA marca o que o boletim anterior ainda não tinha na lista:
+${noticias}
+
+COMO USAR AS NOTÍCIAS: um bloco curto de ${tamanho}, ${modo === "abertura" ? "antes do fecho" : "depois dos alertas e antes do fecho de analista"}, que você abre dizendo, com estas palavras, "o que está acontecendo fora da urna". Use só o que está nas manchetes, sempre atribuindo ("segundo o G1", "a Folha informa", "a Agência Brasil noticia", "o Poder360 publicou"); nunca acrescente detalhe que a manchete não traz. Priorize ocorrências operacionais: urnas trocadas, atrasos, filas, transporte, decisões do TSE ou de TRE, prisões por crime eleitoral. Prefira as NOVAS e nunca repita manchete que o boletim anterior já deu. Nunca infira resultado a partir de notícia, nunca cite pesquisa de boca de urna como resultado, nunca use a palavra fraude. Se nenhuma manchete for nova nem relevante, pule o bloco sem comentar. Os números da apuração continuam sendo o núcleo do boletim; o tamanho total pode crescer até ${modo === "abertura" ? 80 : 120} palavras por causa deste bloco.`;
+}
+
+export function montarPrompt(resumo: { hora_brt: string; modo: Modo }, dadosJson: string, anterior: string | null, noticias: string | null = null): string {
   const tam = TAMANHOS[resumo.modo];
   return `Você é o analista de dados da Arvor Intelligence na noite da apuração do 2º turno da eleição presidencial de 2026 (25 de outubro), falando ao vivo na voz do Leonardo Dias. Escreva o roteiro do boletim das ${resumo.hora_brt} para o ElevenLabs seguindo EXATAMENTE o guia abaixo. Responda só com o roteiro, sem título, sem comentários, sem markdown.
 
@@ -104,12 +116,12 @@ BOLETIM ANTERIOR (para não repetir):
 ${anterior ?? "(nenhum: este é o primeiro boletim da noite)"}
 
 DADOS (JSON):
-${dadosJson}`;
+${dadosJson}${blocoNoticias(resumo.modo, noticias)}`;
 }
 
 export function promptEnxugar(texto: string, modo: Modo): string {
   const tam = TAMANHOS[modo];
-  return `Reescreva o roteiro abaixo com ${tam.alvo} palavras faladas (as tags entre colchetes não contam), cortando repetições e detalhes menores, mantendo a ordem dos blocos, as tags de áudio entre colchetes, os números por extenso exatamente como estão, a frase "soma dos BUs recebidos, não projeção" se ela aparecer, e o fecho de analista. Não acrescente nenhum número. Sem travessão. Responda só com o roteiro.
+  return `Reescreva o roteiro abaixo com ${tam.alvo} palavras faladas (as tags entre colchetes não contam), cortando repetições e detalhes menores, mantendo a ordem dos blocos, as tags de áudio entre colchetes, os números por extenso exatamente como estão, a frase "soma dos BUs recebidos, não projeção" se ela aparecer, o bloco "o que está acontecendo fora da urna" com as atribuições aos veículos (encurte, não apague), e o fecho de analista. Não acrescente nenhum número nem notícia. Sem travessão. Responda só com o roteiro.
 
 ${texto}`;
 }
@@ -170,6 +182,8 @@ export async function escreverRoteiro(
   modo: Modo,
   chamar: Chamador = p => chamarClaude(p),
   aoEtapa: (e: "roteiro" | "enxugar") => void = () => undefined,
+  /** Palavras a mais permitidas pelo bloco de notícias. */
+  folga = 0,
 ): Promise<ResultadoRoteiro> {
   aoEtapa("roteiro");
   const t0 = performance.now();
@@ -185,7 +199,7 @@ export async function escreverRoteiro(
   const palavras_bruto = contarPalavras(texto);
   let enxugado = false;
   let ms_enxugar = 0;
-  if (palavras_bruto > TAMANHOS[modo].teto) {
+  if (palavras_bruto > TAMANHOS[modo].teto + folga) {
     aoEtapa("enxugar");
     const t1 = performance.now();
     try {

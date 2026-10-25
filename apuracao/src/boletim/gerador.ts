@@ -7,12 +7,16 @@ import type { Base, SaidaDados } from "./dados.ts";
 import { caminho, gravarJson, hhmmBrt, horaBrt, lerControle, lerJson } from "./estado.ts";
 import type { Etapa, Gerador, Indice, ItemIndice, Pedido } from "./estado.ts";
 import { idLivre, proximoCiclo } from "./relogio.ts";
+import { blocoPrompt, buscarNoticias, normalizar } from "./noticias.ts";
+import type { Noticias } from "./noticias.ts";
 import { escreverRoteiro, montarPrompt } from "./roteiro.ts";
 import type { ResultadoRoteiro } from "./roteiro.ts";
 
 export interface Dependencias {
   dados: (o: { base: string; anterior: Base | null; hora: string; at?: string }) => Promise<SaidaDados>;
-  roteiro: (prompt: string, modo: SaidaDados["resumo"]["modo"], aoEtapa: (e: "roteiro" | "enxugar") => void) => Promise<ResultadoRoteiro>;
+  roteiro: (prompt: string, modo: SaidaDados["resumo"]["modo"], aoEtapa: (e: "roteiro" | "enxugar") => void, folga: number) => Promise<ResultadoRoteiro>;
+  /** Manchetes da eleição; falha vira lista vazia, nunca derruba o ciclo. */
+  noticias: (o: { agoraMs: number; primeiro: boolean; anteriores: ReadonlySet<string> }) => Promise<Noticias>;
   audio: (txt: string) => Promise<ResultadoAudio>;
   agora: () => number;
   log: (o: Record<string, unknown>) => void;
@@ -20,7 +24,8 @@ export interface Dependencias {
 
 export const DEPENDENCIAS_PADRAO: Dependencias = {
   dados: o => coletarDados(o),
-  roteiro: (p, m, e) => escreverRoteiro(p, m, undefined, e),
+  roteiro: (p, m, e, f) => escreverRoteiro(p, m, undefined, e, f),
+  noticias: o => buscarNoticias(o),
   audio: txt => gerarAudio(txt),
   agora: () => Date.now(),
   log: o => console.log(JSON.stringify({ t: new Date().toISOString(), ...o })),
@@ -161,6 +166,18 @@ export class GeradorBoletim {
     return { base: dados?.base ?? null, texto, id: ult.id };
   }
 
+  /** Manchetes do ciclo: o dia inteiro sem boletim anterior, 3 h depois; nunca lança. */
+  private async lerNoticias(anteriorId: string | null): Promise<Noticias | null> {
+    try {
+      const prev = anteriorId ? lerJson<Noticias>(caminho(this.o.dir, `${anteriorId}.noticias.json`)) : null;
+      const anteriores = new Set((prev?.itens ?? []).map(m => normalizar(m.titulo)));
+      return await this.d.noticias({ agoraMs: this.d.agora(), primeiro: anteriorId === null, anteriores });
+    } catch (e) {
+      this.d.log({ evento: "noticias_falhou", erro: String(e) });
+      return null;
+    }
+  }
+
   /** Uma geração completa. Nunca duas ao mesmo tempo; devolve o id ou null se ocupado. */
   async gerar(origem: "relogio" | "manual", instante: number): Promise<string | null> {
     if (this.gerando) return null;
@@ -185,9 +202,15 @@ export class GeradorBoletim {
       gravarJson(caminho(this.o.dir, `${id}.dados.json`), dados);
       this.atualizar(id, { modo: dados.resumo.modo, resumo: dados.linha });
       const dadosJson = JSON.stringify(dados.resumo, null, 1);
-      const prompt = montarPrompt(dados.resumo, dadosJson, ant.texto);
+      const tN = performance.now();
+      const noticias = await this.lerNoticias(ant.id);
+      tempos.noticias_ms = Math.round(performance.now() - tN);
+      if (noticias) gravarJson(caminho(this.o.dir, `${id}.noticias.json`), noticias);
+      const bloco = blocoPrompt(noticias);
+      const prompt = montarPrompt(dados.resumo, dadosJson, ant.texto, bloco);
       writeFileSync(caminho(this.o.dir, `${id}.prompt.txt`), prompt);
-      const rot = await this.d.roteiro(prompt, dados.resumo.modo, e => this.mudarEtapa(id, e));
+      const folga = bloco ? (dados.resumo.modo === "abertura" ? 80 : 120) : 0;
+      const rot = await this.d.roteiro(prompt, dados.resumo.modo, e => this.mudarEtapa(id, e), folga);
       tempos.roteiro_ms = rot.ms_roteiro;
       tempos.enxugar_ms = rot.ms_enxugar;
       const txt = caminho(this.o.dir, `${id}.txt`);
@@ -208,6 +231,7 @@ export class GeradorBoletim {
         avisos: rot.avisos,
         duracao_s: aud.duracao_s,
         resumo: dados.linha,
+        noticias: noticias ? { itens: noticias.itens.length, novas: noticias.itens.filter(n => n.nova).length, feeds: noticias.feeds.map(f => `${f.nome}: ${f.erro ?? f.itens}`) } : null,
         tempos,
         modelo_roteiro: process.env.APURACAO_BOLETIM_MODELO ?? "opus",
         modelo_voz: process.env.BOLETIM_MODEL ?? "eleven_v4",
