@@ -526,8 +526,11 @@ describe("playlist, atalhos e navegação do 2º turno", () => {
 
   test("a tecla 3 e o Backspace seguem o turno; a tecla de UF desce de gov-2t para gov-uf", () => {
     expect(destinoDoDigito("3", null)?.v).toBe("gov");
-    expect(destinoDoDigito("3", null, 2)?.v).toBe("gov-2t");
-    expect(destinoDoDigito("9", null, 2)?.v).toBe("ritmo");
+    expect(destinoDoDigito("3", null, 2)?.v).toBe("regioes");
+    expect(destinoDoDigito("6", null, 2)?.v).toBe("gov-2t");
+    expect(destinoDoDigito("7", null, 2)?.v).toBe("exterior");
+    expect(destinoDoDigito("9", null, 2)?.v).toBe("atraso");
+    expect(destinoDoDigito("0", null, 2)?.v).toBe("pausas");
     expect(destinoDoDigito("0", null, 2)?.v).toBe("mov");
     expect(destinoDaUf("gov-2t", "sp")).toMatchObject({ v: "gov-uf", uf: "SP" });
     expect(destinoDaUf("pausas", "sp").v).toBe("pres-uf");

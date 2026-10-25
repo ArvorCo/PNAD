@@ -55,7 +55,25 @@ const ACIMA: Readonly<Record<string, string>> = {
 };
 
 /** Tecla de cargo (códigos do TSE) mais 9 ritmo e 0 movimento. */
+/** No 2º turno os dígitos seguem a numeração da lista "a seguir no telão" (1 = presidente, 7 = exterior, 0 = pausas). */
+const DIGITOS_2T: Readonly<Record<string, string>> = {
+  "1": "pres",
+  "2": "projecao",
+  "3": "regioes",
+  "4": "ufs",
+  "5": "evolucao",
+  "6": "gov-2t",
+  "7": "exterior",
+  "8": "abstencao",
+  "9": "atraso",
+  "0": "pausas",
+};
+
 export function destinoDoDigito(d: string, ufAtual: string | null, turno = 1): Destino | null {
+  if (turno === 2) {
+    const v = DIGITOS_2T[d];
+    return v ? { v, uf: null, ...LIMPO } : null;
+  }
   switch (d) {
     case "1":
       return { v: "pres", uf: null, ...LIMPO };

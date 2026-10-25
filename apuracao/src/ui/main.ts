@@ -348,6 +348,8 @@ async function iniciar(): Promise<void> {
     store.ui({ vigilia: false, alvo: null });
     rotacao.iniciar();
     document.dispatchEvent(new CustomEvent(EVENTO_TICKER_EXTRA, { detail: { texto: textoRetomada(hora, novas), ms: 600_000 } }));
+    // A retomada é uma nova abertura: a vinheta toca de novo e devolve a rotação ao terminar.
+    vinheta.alternar(true);
   };
 
   // ---------- assinatura do store ----------
