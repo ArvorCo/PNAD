@@ -169,7 +169,7 @@ export function criarParalela() {
               const i = document.createElement("i");
               i.style.width = `${Math.min(100, (100 * u.pct) / maiorCob)}%`;
               b.append(i);
-              c.append(h("b", "", u.uf), b, h("span", "num", `${decimal(u.pct, 1)}%`));
+              c.append(h("b", "", u.uf), b, h("span", "num", `${inteiro(u.bus)} BU${u.bus === 1 ? "" : "s"} · ${decimal(u.pct, 2)}%`));
               c.title = `${u.uf}: ${inteiro(u.bus)} BUs de ${inteiro(u.secoes_total)} seções`;
               return c;
             })

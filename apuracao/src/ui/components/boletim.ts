@@ -58,7 +58,7 @@ export interface OpcoesBoletim {
 }
 
 /** Telas cujo canto inferior direito fica livre: o cartão pode ficar aberto. */
-const CANTO_LIVRE: ReadonlySet<string> = new Set(["regioes", "pausas", "paralela", "alertas", "espera"]);
+const CANTO_LIVRE: ReadonlySet<string> = new Set(["regioes", "pausas", "alertas", "espera"]);
 const ALERTA_MS = 20_000;
 const ESCOLHA_MS = 15_000;
 const ROTULO: Readonly<Record<Item["estado"], string>> = { gerando: "gerando", pronto: "pronto", no_ar: "no ar", tocado: "tocado", erro: "erro", descartado: "descartado" };
