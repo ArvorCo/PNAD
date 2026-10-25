@@ -1,6 +1,6 @@
 {
   "versao": 1,
-  "conferido_em": "2026-10-24",
+  "conferido_em": "2026-10-25",
   "escopo": "Séries documentais; não modifica as centrais. Toda onda sem entrada própria usa presença igual, explicitamente. Cobertura auditada não equivale a ausência da pergunta em todas as versões da íntegra.",
   "metodo": "Primeiro selecionar massas por presença declarada/proxy; depois converter 100% dos indecisos identificados proporcionalmente entre os candidatos presentes e normalizar. BN permanece fora; BN+NS inseparáveis não são desagregados. Distribuição proporcional não altera a razão F/L. Não há ajuste extra de 3,8%, tendência ou transporte entre ondas. Não é modelo de comparecimento validado.",
   "referencia_metodologica": "https://www.pewresearch.org/methods/2016/01/07/measuring-the-likelihood-to-vote/",
@@ -281,6 +281,24 @@
         "flavio": 51.5,
         "lula": 48.5
       }
+    },
+    "poderdata_2026-10-24": {
+      "tipo": "direto",
+      "taxas": {
+        "flavio": 0.96,
+        "lula": 0.94,
+        "indecisos": 0.56
+      },
+      "regra": "Seleção por 'Com certeza vai votar', por voto atual (p. 19). Autodeclaração, não probabilidade calibrada; aplicar à PNAD supõe estabilidade dentro de cada eleitorado. Renda × voto × presença não publicada. Apenas série documental, sem mudar as centrais.",
+      "fonte": {
+        "arquivo": "data/originals/poderdata_102026_25/relatorio.pdf",
+        "sha256": "9c41cf86fa7c7e72aee800c181781ce226acd369f680861301330fd235f38450",
+        "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-24out26-1.pdf",
+        "paginas": [
+          15,
+          19
+        ]
+      }
     }
   },
   "auditoria_ultima_onda": [
@@ -298,14 +316,6 @@
       "tipo": "neutro",
       "fonte": "https://paranapesquisas.com.br/wp-content/uploads/2026/03/Nacional_Mar26-3.pdf",
       "arquivo": "docs/fontes/historico_2t/parana_2026-03-28.pdf",
-      "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
-    },
-    {
-      "instituto": "PoderData",
-      "id": "poderdata_2026-10-18",
-      "tipo": "neutro",
-      "fonte": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-18out26.pdf",
-      "arquivo": "data/originals/poderdata_102026_19/relatorio.pdf",
       "nota": "Fonte atual examinada: sem cruzamento de presença utilizável incorporado. Rejeição, aprovação e firmeza de voto não foram convertidas em taxas de presença."
     },
     {
@@ -459,6 +469,14 @@
       "fonte": "https://lgjdbpskgjfbmlffbntx.supabase.co/storage/v1/object/public/pesquisas/pdfs/1792889305750_Relatorio_Brasil_24_de_outubro_de_2026.pdf",
       "arquivo": "data/originals/verita_102026_24/relatorio.pdf",
       "nota": "P. 5: 97,51% têm certeza de votar, 1,56% talvez e 0,93% certeza de não votar. Autodeclaração, sem cruzamento por candidato; não é likely voter nem substitui comparecimento Arvor."
+    },
+    {
+      "instituto": "PoderData",
+      "id": "poderdata_2026-10-24",
+      "tipo": "direto",
+      "fonte": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-24out26-1.pdf",
+      "arquivo": "data/originals/poderdata_102026_25/relatorio.pdf",
+      "nota": "Seleção por 'Com certeza vai votar', por voto atual (p. 19). Autodeclaração, não probabilidade calibrada; aplicar à PNAD supõe estabilidade dentro de cada eleitorado. Renda × voto × presença não publicada. Apenas série documental, sem mudar as centrais."
     }
   ],
   "revisao_acervo": "155 versões e 152 referências indexadas em presenca_acervo.json. Busca textual não é prova de ausência em páginas gráficas. Presença de Nexus pré-urna refere-se ao 1º turno e não é aplicada aos cenários de 2º turno; idem MDA de agosto. Veritá de 17/10 traz presença lembrada no 1º turno, não a futura. Vox de 09/10 e 18/10 traz presença futura apenas agregada."

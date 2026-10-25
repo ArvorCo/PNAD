@@ -1,0 +1,203 @@
+{
+  "data": "2026-10-25",
+  "consultado_em": "2026-10-25T13:40:13.981725-03:00",
+  "pesquisas": [
+    {
+      "id": "poderdata_2026-10-24",
+      "instituto": "PoderData",
+      "registro_tse": "BR-02828/2026",
+      "contratante": "PoderData, recursos próprios",
+      "campo": {
+        "inicio": "2026-10-23",
+        "fim": "2026-10-24"
+      },
+      "divulgacao": "2026-10-25",
+      "n": 4000,
+      "metodo": "telefônico automatizado IVR/URA",
+      "publicado": {
+        "2t": {
+          "flavio": 49,
+          "lula": 47,
+          "branco_nulo": 3,
+          "indecisos": 1
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/poderdata_102026_25/relatorio.pdf",
+        "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-24out26-1.pdf",
+        "sha256": "9c41cf86fa7c7e72aee800c181781ce226acd369f680861301330fd235f38450",
+        "bytes": 764636,
+        "pdf": "data/originals/poderdata_102026_25/relatorio.pdf",
+        "tipo": "relatorio",
+        "rotulo": "Relatório completo conferido",
+        "paginas": {
+          "metodologia": 2,
+          "perfil_renda": 4,
+          "2t_topline": 6,
+          "2t_validos": 11,
+          "2t_renda": 9,
+          "sexo": 7,
+          "presenca_por_voto": 19
+        },
+        "total_paginas": 27,
+        "conferido_em": "2026-10-25",
+        "status": "Íntegra arquivada e conferida visualmente.",
+        "nota": "Íntegra de 27 páginas, campo 23–24/10, 4.000 entrevistas em 914 municípios, BR-02828/2026. P. 2 declara ponderação por sexo, idade, instrução, renda, resultado do primeiro turno e região. P. 4 identifica expressamente o perfil 46/33/21 como percentuais ponderados; não transportar essa confirmação às ondas anteriores. Totais F/L/BN/NS 49/47/3/1 na p. 6; válidos oficiais 51/49 na p. 11, separados da normalização dos inteiros. Renda p. 9 e sexo p. 7 conferidos visualmente e por recomposição. Presença certa por voto atual p. 19: 96/94/52/56 (F/L/BN/NS), somente na série documental desta onda. Autodeclaração não substitui o comparecimento nem os ajustes das centrais.",
+        "url_publica": "https://brasil.arvor.co/fontes/poderdata_25102026.pdf"
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "ano_referencia": 2026,
+        "mes_precos": "202610",
+        "faixas": [
+          {
+            "rotulo": "0 a 2 SM",
+            "max": 2
+          },
+          {
+            "rotulo": "2 a 5 SM",
+            "max": 5
+          },
+          {
+            "rotulo": "Mais de 5 SM",
+            "max": null
+          }
+        ],
+        "amostra_pct": [
+          46,
+          33,
+          21
+        ],
+        "perfil_tipo": "perfil_ponderado",
+        "nota": "Íntegra de 27 páginas, campo 23–24/10, 4.000 entrevistas em 914 municípios, BR-02828/2026. P. 2 declara ponderação por sexo, idade, instrução, renda, resultado do primeiro turno e região. P. 4 identifica expressamente o perfil 46/33/21 como percentuais ponderados; não transportar essa confirmação às ondas anteriores. Totais F/L/BN/NS 49/47/3/1 na p. 6; válidos oficiais 51/49 na p. 11, separados da normalização dos inteiros. Renda p. 9 e sexo p. 7 conferidos visualmente e por recomposição. Presença certa por voto atual p. 19: 96/94/52/56 (F/L/BN/NS), somente na série documental desta onda. Autodeclaração não substitui o comparecimento nem os ajustes das centrais."
+      },
+      "cruzamentos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "linhas": [
+            [
+              42,
+              54,
+              4,
+              0
+            ],
+            [
+              56,
+              40,
+              3,
+              1
+            ],
+            [
+              52,
+              44,
+              3,
+              1
+            ]
+          ],
+          "nota": "Íntegra de 27 páginas, campo 23–24/10, 4.000 entrevistas em 914 municípios, BR-02828/2026. P. 2 declara ponderação por sexo, idade, instrução, renda, resultado do primeiro turno e região. P. 4 identifica expressamente o perfil 46/33/21 como percentuais ponderados; não transportar essa confirmação às ondas anteriores. Totais F/L/BN/NS 49/47/3/1 na p. 6; válidos oficiais 51/49 na p. 11, separados da normalização dos inteiros. Renda p. 9 e sexo p. 7 conferidos visualmente e por recomposição. Presença certa por voto atual p. 19: 96/94/52/56 (F/L/BN/NS), somente na série documental desta onda. Autodeclaração não substitui o comparecimento nem os ajustes das centrais."
+        }
+      },
+      "controles": {
+        "2t": {
+          "renda": {
+            "pesos": [
+              46,
+              33,
+              21
+            ],
+            "linhas": [
+              [
+                42,
+                54,
+                4,
+                0
+              ],
+              [
+                56,
+                40,
+                3,
+                1
+              ],
+              [
+                52,
+                44,
+                3,
+                1
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 48.72,
+              "lula": 47.28,
+              "branco_nulo": 3.46,
+              "indecisos": 0.54
+            },
+            "residuo": {
+              "flavio": -0.28000000000000114,
+              "lula": 0.28000000000000114,
+              "branco_nulo": 0.45999999999999996,
+              "indecisos": -0.45999999999999996
+            },
+            "residuo_max_abs": 0.45999999999999996
+          },
+          "sexo": {
+            "pesos": [
+              47,
+              53
+            ],
+            "linhas": [
+              [
+                56,
+                41,
+                3,
+                1
+              ],
+              [
+                42,
+                53,
+                4,
+                0
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 48.58,
+              "lula": 47.36,
+              "branco_nulo": 3.53,
+              "indecisos": 0.47
+            },
+            "residuo": {
+              "flavio": -0.4200000000000017,
+              "lula": 0.35999999999999943,
+              "branco_nulo": 0.5299999999999998,
+              "indecisos": -0.53
+            },
+            "residuo_max_abs": 0.53
+          }
+        }
+      },
+      "publicado_validos": {
+        "2t": {
+          "flavio": 51,
+          "lula": 49
+        }
+      }
+    }
+  ],
+  "regra": "Substitui a onda PoderData de 21/10 uma vez em cada central. Perfil ponderado atual explícito. Mantém o likely voter Quaest sem reaplicar presença e preserva snapshots publicados."
+}

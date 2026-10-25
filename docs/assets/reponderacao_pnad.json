@@ -1,6 +1,6 @@
 {
- "gerado_em": "2026-10-24T21:56:13",
- "referencia": "2026-10-24",
+ "gerado_em": "2026-10-25T13:40:20",
+ "referencia": "2026-10-25",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
   "rows_read": 408364,
@@ -29708,6 +29708,165 @@
     }
    },
    "arquivo": "analysis/reponderacao/pesquisas/palver_2026-10-24.json"
+  },
+  {
+   "id": "poderdata_2026-10-24",
+   "instituto": "PoderData",
+   "contratante": "PoderData, recursos próprios",
+   "registro_tse": "BR-02828/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+   },
+   "divulgacao": "2026-10-25",
+   "n": 4000,
+   "metodo": "telefônico automatizado IVR/URA",
+   "fonte": {
+    "arquivo": "data/originals/poderdata_102026_25/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-24out26-1.pdf",
+    "sha256": "9c41cf86fa7c7e72aee800c181781ce226acd369f680861301330fd235f38450",
+    "bytes": 764636,
+    "pdf": "data/originals/poderdata_102026_25/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 2,
+     "perfil_renda": 4,
+     "2t_topline": 6,
+     "2t_validos": 11,
+     "2t_renda": 9,
+     "sexo": 7,
+     "presenca_por_voto": 19
+    },
+    "total_paginas": 27,
+    "conferido_em": "2026-10-25",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 27 páginas, campo 23–24/10, 4.000 entrevistas em 914 municípios, BR-02828/2026. P. 2 declara ponderação por sexo, idade, instrução, renda, resultado do primeiro turno e região. P. 4 identifica expressamente o perfil 46/33/21 como percentuais ponderados; não transportar essa confirmação às ondas anteriores. Totais F/L/BN/NS 49/47/3/1 na p. 6; válidos oficiais 51/49 na p. 11, separados da normalização dos inteiros. Renda p. 9 e sexo p. 7 conferidos visualmente e por recomposição. Presença certa por voto atual p. 19: 96/94/52/56 (F/L/BN/NS), somente na série documental desta onda. Autodeclaração não substitui o comparecimento nem os ajustes das centrais.",
+    "url_publica": "https://brasil.arvor.co/fontes/poderdata_25102026.pdf"
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 49,
+     "lula": 47,
+     "branco_nulo": 3,
+     "indecisos": 1
+    }
+   },
+   "publicado_validos": {
+    "2t": {
+     "flavio": 51,
+     "lula": 49
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "0 a 2 SM",
+     "2 a 5 SM",
+     "Mais de 5 SM"
+    ],
+    "cortes_brl_202604": [
+     3215.9,
+     8039.76,
+     null
+    ],
+    "amostra_pct": [
+     46.0,
+     33.0,
+     21.0
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      35.187,
+      39.259,
+      25.554
+     ],
+     "pessoas16_habitual": [
+      34.864,
+      40.402,
+      24.734
+     ],
+     "domicilios_efetivo": [
+      42.672,
+      35.771,
+      21.557
+     ]
+    },
+    "nota": "Íntegra de 27 páginas, campo 23–24/10, 4.000 entrevistas em 914 municípios, BR-02828/2026. P. 2 declara ponderação por sexo, idade, instrução, renda, resultado do primeiro turno e região. P. 4 identifica expressamente o perfil 46/33/21 como percentuais ponderados; não transportar essa confirmação às ondas anteriores. Totais F/L/BN/NS 49/47/3/1 na p. 6; válidos oficiais 51/49 na p. 11, separados da normalização dos inteiros. Renda p. 9 e sexo p. 7 conferidos visualmente e por recomposição. Presença certa por voto atual p. 19: 96/94/52/56 (F/L/BN/NS), somente na série documental desta onda. Autodeclaração não substitui o comparecimento nem os ajustes das centrais.",
+    "perfil_tipo": "perfil_ponderado"
+   },
+   "desvio_ate_primeira_faixa": 10.813,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+     ],
+     "publicado": {
+      "flavio": 49.0,
+      "lula": 47.0,
+      "branco_nulo": 3.0,
+      "indecisos": 1.0
+     },
+     "recomposto": {
+      "flavio": 48.72,
+      "lula": 47.28,
+      "branco_nulo": 3.46,
+      "indecisos": 0.54
+     },
+     "residuo_max": 0.28,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 50.052,
+        "lula": 45.948,
+        "branco_nulo": 3.352,
+        "indecisos": 0.648
+       },
+       "ajustado": {
+        "flavio": 50.332,
+        "lula": 45.668,
+        "branco_nulo": 2.892,
+        "indecisos": 1.108
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 50.13,
+        "lula": 45.87,
+        "branco_nulo": 3.349,
+        "indecisos": 0.651
+       },
+       "ajustado": {
+        "flavio": 50.41,
+        "lula": 45.59,
+        "branco_nulo": 2.889,
+        "indecisos": 1.111
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 49.164,
+        "lula": 46.836,
+        "branco_nulo": 3.427,
+        "indecisos": 0.573
+       },
+       "ajustado": {
+        "flavio": 49.444,
+        "lula": 46.556,
+        "branco_nulo": 2.967,
+        "indecisos": 1.033
+       }
+      }
+     },
+     "gap_publicado": -2.0,
+     "gap_ajustado": -4.6640000000000015,
+     "margem_diferenca_95": 3.036
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/poderdata_2026-10-24.json"
   }
  ],
  "nao_reponderaveis": [
@@ -34808,6 +34967,12 @@
      "n_institutos": 0,
      "ondas": [],
      "institutos": []
+    },
+    {
+     "data": "2026-10-25",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
     }
    ],
    "2t": [
@@ -37156,6 +37321,40 @@
       "Real Time Big Data",
       "Veritá"
      ]
+    },
+    {
+     "data": "2026-10-25",
+     "n_institutos": 13,
+     "ondas": [
+      "alfa_2026-10-22",
+      "atlas_2026-10-23",
+      "datatrends_2026-10-17",
+      "datafolha_2026-10-24",
+      "gerp_2026-10-24",
+      "ipespe_2026-10-22",
+      "mda_2026-10-23",
+      "nexus_2026-10-24",
+      "palver_2026-10-24",
+      "poderdata_2026-10-24",
+      "quaest_2026-10-20",
+      "realtime_2026-10-22",
+      "verita_2026-10-23"
+     ],
+     "institutos": [
+      "Alfa Inteligência/TMC",
+      "AtlasIntel",
+      "DataTrends",
+      "Datafolha",
+      "Gerp",
+      "Ipespe",
+      "MDA",
+      "Nexus",
+      "Palver",
+      "PoderData",
+      "Quaest",
+      "Real Time Big Data",
+      "Veritá"
+     ]
     }
    ]
   },
@@ -39469,6 +39668,12 @@
       "n_institutos": 0,
       "ondas": [],
       "institutos": []
+     },
+     {
+      "data": "2026-10-25",
+      "n_institutos": 0,
+      "ondas": [],
+      "institutos": []
      }
     ],
     "rotulos": {
@@ -41460,6 +41665,7 @@
        null,
        null,
        null,
+       null,
        null
       ],
       "branco_nulo": [
@@ -41622,6 +41828,7 @@
        3.68,
        3.79,
        3.79,
+       null,
        null,
        null,
        null,
@@ -41814,6 +42021,7 @@
        null,
        null,
        null,
+       null,
        null
       ],
       "branco_nulo": [
@@ -41976,6 +42184,7 @@
        3.59,
        3.74,
        3.74,
+       null,
        null,
        null,
        null,
@@ -44289,6 +44498,38 @@
        "Real Time Big Data",
        "Veritá"
       ]
+     },
+     {
+      "data": "2026-10-25",
+      "n_institutos": 12,
+      "ondas": [
+       "alfa_2026-10-22",
+       "datatrends_2026-10-17",
+       "datafolha_2026-10-24",
+       "gerp_2026-10-24",
+       "ipespe_2026-10-22",
+       "mda_2026-10-23",
+       "nexus_2026-10-24",
+       "palver_2026-10-24",
+       "poderdata_2026-10-24",
+       "quaest_2026-10-20",
+       "realtime_2026-10-22",
+       "verita_2026-10-23"
+      ],
+      "institutos": [
+       "Alfa Inteligência/TMC",
+       "DataTrends",
+       "Datafolha",
+       "Gerp",
+       "Ipespe",
+       "MDA",
+       "Nexus",
+       "Palver",
+       "PoderData",
+       "Quaest",
+       "Real Time Big Data",
+       "Veritá"
+      ]
      }
     ],
     "rotulos": {
@@ -46495,6 +46736,31 @@
        "indecisos": 0.0,
        "branco_nulo": 1.0
       }
+     },
+     {
+      "id": "poderdata_2026-10-24",
+      "instituto": "PoderData",
+      "campo": {
+       "inicio": "2026-10-23",
+       "fim": "2026-10-24"
+      },
+      "divulgacao": "2026-10-25",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 1.0,
+       "branco_nulo": 3.0
+      },
+      "ajustado": {
+       "indecisos": 1.108,
+       "branco_nulo": 2.892
+      }
      }
     ],
     "excluidas": [
@@ -46705,6 +46971,7 @@
        1.82,
        1.73,
        1.52,
+       1.79,
        1.79
       ],
       "branco_nulo": [
@@ -46881,6 +47148,7 @@
        4.04,
        3.88,
        3.65,
+       3.62,
        3.62
       ]
      },
@@ -47059,7 +47327,8 @@
        1.75,
        1.68,
        1.47,
-       1.73
+       1.73,
+       1.75
       ],
       "branco_nulo": [
        null,
@@ -47235,7 +47504,8 @@
        4.04,
        3.88,
        3.66,
-       3.65
+       3.65,
+       3.66
       ]
      }
     },
@@ -47246,8 +47516,8 @@
       "branco_nulo": 3.62
      },
      "ajustado": {
-      "indecisos": 1.73,
-      "branco_nulo": 3.65
+      "indecisos": 1.75,
+      "branco_nulo": 3.66
      }
     }
    }
@@ -49045,6 +49315,12 @@
      "n_institutos": 0,
      "ondas": [],
      "institutos": []
+    },
+    {
+     "data": "2026-10-25",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
     }
    ],
    "rotulos": {
@@ -50712,6 +50988,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "outros_esquerda_nanicos": [
@@ -50874,6 +51151,7 @@
       0.0,
       0.0,
       0.0,
+      null,
       null,
       null,
       null,
@@ -51066,6 +51344,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "outros_esquerda_nanicos": [
@@ -51228,6 +51507,7 @@
       -0.05,
       -0.05,
       -0.05,
+      null,
       null,
       null,
       null,
@@ -51453,7 +51733,8 @@
     "2026-10-21",
     "2026-10-22",
     "2026-10-23",
-    "2026-10-24"
+    "2026-10-24",
+    "2026-10-25"
    ],
    "2t": {
     "publicado": {
@@ -51631,7 +51912,8 @@
       46.04,
       46.27,
       46.39,
-      46.45
+      46.45,
+      46.37
      ],
      "flavio": [
       null,
@@ -51807,6 +52089,7 @@
       48.28,
       48.28,
       48.57,
+      48.43,
       48.43
      ],
      "indecisos": [
@@ -51983,6 +52266,7 @@
       1.82,
       1.73,
       1.52,
+      1.79,
       1.79
      ],
      "branco_nulo": [
@@ -52159,6 +52443,7 @@
       4.04,
       3.88,
       3.65,
+      3.62,
       3.62
      ]
     },
@@ -52337,7 +52622,8 @@
       45.36,
       45.61,
       45.79,
-      45.75
+      45.75,
+      45.67
      ],
      "flavio": [
       null,
@@ -52513,7 +52799,8 @@
       49.01,
       48.97,
       49.2,
-      49.14
+      49.14,
+      49.13
      ],
      "indecisos": [
       null,
@@ -52689,7 +52976,8 @@
       1.75,
       1.68,
       1.47,
-      1.73
+      1.73,
+      1.75
      ],
      "branco_nulo": [
       null,
@@ -52865,7 +53153,8 @@
       4.04,
       3.88,
       3.66,
-      3.65
+      3.65,
+      3.66
      ]
     }
    },
@@ -53031,6 +53320,7 @@
       42.6,
       42.54,
       42.54,
+      null,
       null,
       null,
       null,
@@ -53221,6 +53511,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "outros_centro_direita": [
@@ -53383,6 +53674,7 @@
       9.5,
       9.5,
       9.5,
+      null,
       null,
       null,
       null,
@@ -53573,6 +53865,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "indecisos": [
@@ -53749,6 +54042,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "branco_nulo": [
@@ -53911,6 +54205,7 @@
       3.68,
       3.79,
       3.79,
+      null,
       null,
       null,
       null,
@@ -54103,6 +54398,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "flavio": [
@@ -54265,6 +54561,7 @@
       42.16,
       42.25,
       42.25,
+      null,
       null,
       null,
       null,
@@ -54455,6 +54752,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "outros_esquerda_nanicos": [
@@ -54617,6 +54915,7 @@
       -0.05,
       -0.05,
       -0.05,
+      null,
       null,
       null,
       null,
@@ -54807,6 +55106,7 @@
       null,
       null,
       null,
+      null,
       null
      ],
      "branco_nulo": [
@@ -54983,6 +55283,7 @@
       null,
       null,
       null,
+      null,
       null
      ]
     }
@@ -55008,26 +55309,26 @@
     ],
     "media_simples": {
      "publicado": {
-      "lula": 46.2,
+      "lula": 46.13,
       "flavio": 47.97
      },
      "ajustado": {
-      "lula": 45.52,
-      "flavio": 48.7
+      "lula": 45.44,
+      "flavio": 48.68
      }
     },
     "kernel": {
      "publicado": {
-      "lula": 46.45,
+      "lula": 46.37,
       "flavio": 48.43
      },
      "ajustado": {
-      "lula": 45.75,
-      "flavio": 49.14
+      "lula": 45.67,
+      "flavio": 49.13
      }
     },
     "cobertura_movel": {
-     "data": "2026-10-24",
+     "data": "2026-10-25",
      "n_institutos": 13,
      "ondas": [
       "alfa_2026-10-22",
@@ -55039,7 +55340,7 @@
       "mda_2026-10-23",
       "nexus_2026-10-24",
       "palver_2026-10-24",
-      "poderdata_2026-10-21",
+      "poderdata_2026-10-24",
       "quaest_2026-10-20",
       "realtime_2026-10-22",
       "verita_2026-10-23"
@@ -55095,7 +55396,7 @@
      }
     },
     "cobertura_movel": {
-     "data": "2026-10-24",
+     "data": "2026-10-25",
      "n_institutos": 0,
      "ondas": [],
      "institutos": []
