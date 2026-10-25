@@ -531,7 +531,6 @@ describe("playlist, atalhos e navegação do 2º turno", () => {
     expect(destinoDoDigito("7", null, 2)?.v).toBe("exterior");
     expect(destinoDoDigito("9", null, 2)?.v).toBe("atraso");
     expect(destinoDoDigito("0", null, 2)?.v).toBe("pausas");
-    expect(destinoDoDigito("0", null, 2)?.v).toBe("mov");
     expect(destinoDaUf("gov-2t", "sp")).toMatchObject({ v: "gov-uf", uf: "SP" });
     expect(destinoDaUf("pausas", "sp").v).toBe("pres-uf");
     expect(subirNivel({ v: "gov-uf", uf: "AC", mun: null, zonas: false, zona: null }, 2)?.v).toBe("gov-2t");
