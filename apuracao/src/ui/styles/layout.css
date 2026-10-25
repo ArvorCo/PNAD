@@ -87,7 +87,10 @@
   font-family: var(--font-serif);
   font-size: var(--t-3);
   flex: 1 1 auto;
-  min-width: 16rem;
+  min-width: 18rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .faixa-secoes {
