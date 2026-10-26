@@ -98,15 +98,13 @@ def cartoes(S: dict) -> str:
         '<div class="finding-grid">'
         + cartao(
             pr.get("encerramento_p50") or "s/d",
-            f"último voto, mediana das seções (99º percentil {pr.get('encerramento_p99')})",
+            f"encerramento do BU, mediana das seções (99º percentil {pr.get('encerramento_p99')})",
         )
-        + cartao(
-            f"{num(a19['pct'], 2)}%", "das seções com último voto depois das 19:00"
-        )
+        + cartao(f"{num(a19['pct'], 2)}%", "dos BUs encerrados depois das 19:00")
         + cartao(f"{num(rec['pct'], 2)}%", "dos BUs recebidos pelo TSE antes das 19:00")
         + cartao(
             f"{num(pr.get('lag_encerramento_recebimento_p50_min'), 0)} min",
-            "do último voto ao recebimento do BU, mediana",
+            "do encerramento do BU ao recebimento, mediana",
         )
         + "</div>"
     )
@@ -125,12 +123,13 @@ def encerramento(S: dict) -> str:
     sp = secoes_pais(S, "apos_19h")
     sp = f", {sp}" if sp else ""
     return p(
-        "A premissa de que as urnas ficaram abertas até as 19h não passa no BU. O último voto "
+        "A premissa de que as urnas ficaram abertas até as 19h não passa no BU. O encerramento do BU "
+        "(o último cômputo registrado no boletim, não um voto identificado) "
         f"tem mediana às {pr.get('encerramento_p50')}, 90º percentil às {pr.get('encerramento_p90')} "
         f"e 99º às {pr.get('encerramento_p99')}; {num(pr.get('pct_ate_1715'), 2)}% das seções da base "
         f"encerraram até 17:15. O BU saiu {num(pr.get('emissao_menos_encerramento_p50_min'), 0)} min "
-        f"depois do último voto (mediana) e {num(pr.get('pct_bu_emitido_ate_1730'), 2)}% dos BUs "
-        "estavam emitidos até 17:30. Emitir o BU encerra a votação naquela urna. Votaram depois das "
+        f"depois do encerramento (mediana) e {num(pr.get('pct_bu_emitido_ate_1730'), 2)}% dos BUs "
+        "estavam emitidos até 17:30. Emitir o BU encerra a votação naquela urna. Encerraram o BU depois das "
         f"19:00 {fmt_ind(S, 'apos_19h')} das seções do país{sp}: {verbo} os {num(u1, 2)}% do "
         f"universo do 1º turno ({num(enc.get('pct_apos_1900_1t_mesmas'), 2)}% nas mesmas seções da "
         "base). O 2º turno tem um ou dois cargos contra seis no 1º, e a fila anda mais depressa.",
@@ -160,10 +159,14 @@ def recebimento(S: dict) -> str:
         ult = tarde[-1]
         resto = tarde[:-1]
         if resto:
+            faixa = (
+                f"às {resto[0][2]}"
+                if resto[0][2] == resto[-1][2]
+                else f"entre {resto[0][2]} e {resto[-1][2]}"
+            )
             frase_ufs = (
-                f" Em {len(resto)} UFs o primeiro recebimento da base só aparece entre "
-                f"{resto[0][2]} e {resto[-1][2]} ({', '.join(u for _, u, _ in resto)}), e no "
-                f"{ult[1]} às {ult[2]}."
+                f" Em {len(resto)} UFs o primeiro recebimento da base só aparece {faixa} "
+                f"({', '.join(u for _, u, _ in resto)}), e no {ult[1]} às {ult[2]}."
             )
         else:
             frase_ufs = (
@@ -171,7 +174,7 @@ def recebimento(S: dict) -> str:
             )
     return p(
         f"O que atrasou foi a transmissão. Só {fmt_ind(S, 'recebido_antes_1900')} dos BUs foram "
-        f"recebidos pelo TSE antes das 19:00.{frase_ant}{frase_ufs} Do último voto ao recebimento "
+        f"recebidos pelo TSE antes das 19:00.{frase_ant}{frase_ufs} Do encerramento do BU ao recebimento "
         f"passaram {num(pr.get('lag_encerramento_recebimento_p50_min'), 0)} min na mediana "
         f"(90º percentil {num(pr.get('lag_encerramento_recebimento_p90_min'), 0)} min); a mediana do "
         f"recebimento é {pr.get('recebimento_p50')}.",
@@ -266,7 +269,7 @@ def _maior_salto(R: dict) -> dict | None:
     return max(cand, key=lambda s: s["salto_bio_pp"]) if cand else None
 
 
-def biometria(S: dict, R: dict) -> str:
+def biometria(S: dict, R: dict, V: dict | None = None) -> str:
     b = _b(S)
     sb, an, pe = b["sem_biometria"], b["ano_nascimento"], b["persistencia"]
     h = p(
@@ -303,10 +306,26 @@ def biometria(S: dict, R: dict) -> str:
         f"Comparecimento +5 pp e salto de biometria na mesma seção: {fmt_ind(S, 'pianista')} do "
         f"país{pi} ({inteiro(n13)} na base lida). É o padrão mais próximo da hipótese do mesário "
         "que libera eleitor ausente, o “pianista”. A combinação também aparece quando o leitor falha "
-        "num dia de fila maior; só a ata, o caderno de votação e o log separam as duas coisas.",
+        "num dia de fila maior; só a ata, o caderno de votação e o log separam as duas coisas."
+        + _voto_celula_pianista(V),
         "inferencia",
     )
     return h
+
+
+def _voto_celula_pianista(V: dict | None) -> str:
+    """O voto da célula do pianista (`secoes_voto.json`, sinal ``pianista``), quando existe."""
+    c = next(
+        (x for x in (V or {}).get("sinais") or [] if x.get("sinal") == "pianista"), None
+    )
+    if not c or c.get("did_fatia_flavio_pp") is None:
+        return ""
+    return (
+        f" O voto nessa célula: a fatia de Flávio fica {sinal(c['dif_fatia_flavio_vs_vizinhas_pp'], 2)} pp "
+        f"contra as vizinhas do município e, descontado o 1º turno, {sinal(c['did_fatia_flavio_pp'], 2)} pp "
+        f"(erro-padrão {num(c['ep_did_fatia_flavio_pp'], 2)}, n {inteiro(c['n_did'])}): a célula votava "
+        "assim antes e andou como as vizinhas entre os turnos."
+    )
 
 
 # ------------------------------------------------------------------ voto

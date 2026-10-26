@@ -392,7 +392,7 @@ def tabela_ranking(R: dict) -> str:
             "comparecimento 1º → 2º",
             "sem biometria 1º → 2º",
             "ano de nascimento 1º → 2º",
-            "último voto 1º → 2º",
+            "encerramento do BU 1º → 2º",
             "Flávio × Lula, 1º",
             "Flávio × Lula, 2º",
             "escore e sinais",

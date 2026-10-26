@@ -152,7 +152,7 @@ def documentado(H: dict) -> str:
         f"Entre {s['inicio']} e {s['fim']} o TSE não gerou nenhum arquivo, de nenhum tipo, nos dois pleitos: "
         f"{num(s['minutos'], 1)} minutos, com {inteiro(s['leituras_no_intervalo'])} leituras do nosso coletor no "
         f"intervalo e {s['versoes_geradas_dentro']} versões novas. Antes da pausa havia {inteiro(s['secoes_antes'])} "
-        f"seções totalizadas, com Lula a {num(s['lula_pct_antes'], 2)}% nessa fração. Nas urnas, o último voto teve "
+        f"seções totalizadas, com Lula a {num(s['lula_pct_antes'], 2)}% nessa fração. Nas urnas, o encerramento do BU (último cômputo registrado) teve "
         f"mediana às {u['encerramento_p50']} e a emissão do BU às {u['emissao_p50']}; {num(u['pct_ate_1715'], 2)}% "
         f"das seções encerraram até 17:15 e só {num(u['pct_apos_1900'], 2)}% depois das 19h. O recebimento dos BUs "
         f"pelo TSE teve mediana às {u['recebimento_p50']}: {num(u['pct_recebido_antes_1900'], 2)}% chegaram antes das 19h.",

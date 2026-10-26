@@ -79,7 +79,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += T.comparecimento(S) + F.fig_comparecimento(S, P)
     h += habilitacao(d.get("biometria.json"))
     h += "<h3>Biometria: cadastro, leitor e a hipótese do “pianista”</h3>"
-    h += T.biometria(S, R)
+    h += T.biometria(S, R, V)
     h += "<h3>O voto nas seções com sinal</h3>"
     h += T.voto(V) + FB.fig_did(V)
     h += T.tabela_2x2x2_texto(V) + FB.tabela_2x2x2(V) + T.tabela_e_extras(S, V)

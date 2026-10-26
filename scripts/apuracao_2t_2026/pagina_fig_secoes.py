@@ -1,8 +1,8 @@
 """Figuras do capítulo "Seção por seção": horário, transmissão e comparecimento.
 
 Três desenhos, todos em SVG gerado aqui, com os dados embutidos na página:
-- ``encerramento_1t_2t``: horário do último voto nas mesmas seções, 1º e 2º turno;
-- ``emissao_recebimento_uf``: por UF, último voto, emissão do BU e recebimento;
+- ``encerramento_1t_2t``: horário de encerramento do BU nas mesmas seções, 1º e 2º turno;
+- ``emissao_recebimento_uf``: por UF, encerramento do BU, emissão e recebimento;
 - ``comparecimento_1t_2t``: mapa de calor do comparecimento de cada seção nos dois turnos.
 
 Na fonte ``amostra`` as distribuições são ponderadas pelas seções de cada UF
@@ -43,7 +43,7 @@ TEAL = "#0c7a72"
 COR_2T = INK
 COR_1T = CINZA
 
-# Faixas do horário do último voto, em minutos inteiros depois das 17:00
+# Faixas do horário de encerramento do BU, em minutos inteiros depois das 17:00
 # (17:00 = 0, o minuto em que a votação terminava pela regra). "Depois das 19:00"
 # segue a regra de secoes.json: minuto inteiro 19:01 ou mais.
 FAIXAS_ENC = [
@@ -96,8 +96,8 @@ def fig_encerramento(S: dict, P: dict | None) -> str:
         svg_abre(
             w,
             h,
-            "Horário do último voto nas mesmas seções, 1º e 2º turno",
-            "Barras horizontais por faixa de horário do último voto; cinza é o 1º turno, tinta é o 2º.",
+            "Horário de encerramento do BU nas mesmas seções, 1º e 2º turno",
+            "Barras horizontais por faixa de horário de encerramento do BU; cinza é o 1º turno, tinta é o 2º.",
         )
     ]
     out.append(t(esq, 22, "parcela das seções em cada faixa", 13, MUTED))
@@ -114,7 +114,7 @@ def fig_encerramento(S: dict, P: dict | None) -> str:
         kk = tips.add(
             ficha(
                 rot,
-                "último voto da seção",
+                "encerramento do BU da seção",
                 [
                     ("1º turno", f"{num(dist['1t'][i], 2)}%"),
                     ("2º turno", f"{num(dist['2t'][i], 2)}%"),
@@ -177,7 +177,7 @@ def fig_emissao_recebimento(S: dict, L: dict | None = None) -> str:
             w,
             h,
             "Último voto, emissão do BU e recebimento pelo TSE, por UF",
-            "Uma linha por UF: ponto do último voto (mediana), emissão do BU, primeiro recebimento e "
+            "Uma linha por UF: ponto do encerramento do BU (mediana), emissão do BU, primeiro recebimento e "
             "faixa do recebimento entre o 10º percentil e a mediana.",
         )
     ]
@@ -236,7 +236,7 @@ def fig_emissao_recebimento(S: dict, L: dict | None = None) -> str:
                 rot,
                 f"{u.get('n')} seções na base",
                 [
-                    ("último voto, mediana", u.get("encerramento_p50") or "s/d"),
+                    ("encerramento do BU, mediana", u.get("encerramento_p50") or "s/d"),
                     ("BU emitido, mediana", u.get("emissao_p50") or "s/d"),
                     ("1º recebimento", u.get("recebimento_primeiro") or "s/d"),
                     ("recebimento, mediana", u.get("recebimento_p50") or "s/d"),
@@ -245,7 +245,7 @@ def fig_emissao_recebimento(S: dict, L: dict | None = None) -> str:
                         f"{num(u.get('pct_recebido_antes_1900'), 2)}%",
                     ),
                     (
-                        "último voto → recebimento",
+                        "encerramento → recebimento",
                         f"{num(u.get('lag_encerramento_recebimento_p50_min'), 0)} min",
                     ),
                 ],
@@ -257,16 +257,21 @@ def fig_emissao_recebimento(S: dict, L: dict | None = None) -> str:
     out.append("</svg>")
     leg = legenda_html(
         [
-            ("último voto (mediana)", INK),
+            ("encerramento do BU (mediana)", INK),
             ("BU emitido (mediana)", GOLD),
             ("primeiro BU recebido", "#ffffff; border:2px solid " + TEAL),
             ("recebimento: 10º percentil à mediana", TEAL),
         ]
     )
+    nota_base = (
+        " O primeiro recebimento é o da base lida: na amostra, é o primeiro entre as seções "
+        "sorteadas da UF, não o primeiro da UF."
+        if eh_amostra(S)
+        else ""
+    )
     legenda = (
-        "Hora de Brasília. O último voto e a emissão do BU colam no 17:00; o recebimento pelo TSE "
-        "só deslancha depois das 19:00. O primeiro recebimento é o da base lida: na amostra, é o "
-        "primeiro entre as seções sorteadas da UF, não o primeiro da UF. Fonte: secoes.json "
+        "Hora de Brasília. O encerramento do BU (último cômputo registrado) e a emissão colam no "
+        f"17:00; o recebimento pelo TSE só deslancha depois das 19:00.{nota_base} Fonte: secoes.json "
         "(prorrogacao.por_uf) e linha_do_tempo.json (pausa geral do arquivo nacional)."
     )
     return figura_html(

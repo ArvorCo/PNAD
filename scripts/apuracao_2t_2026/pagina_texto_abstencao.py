@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import json
 from html import escape
 
 from apuracao_2026.pagina_comum import caminho, inteiro, num, p, rotulo
 from apuracao_2026.pagina_fig_base import pct, pp
 
+from .pagina_comum import DADOS
 from .pagina_fig_turnos_util import linhas_de, lista_adiada, municipio, tabela_compacta
 
 
@@ -162,6 +164,22 @@ def tabela_capitais(A: dict) -> str:
     )
 
 
+def _log_19h() -> str:
+    """Frase com o que o log das urnas diz sobre votos depois das 19h (vazia sem logs.json)."""
+    arq = DADOS / "logs.json"
+    if not arq.exists():
+        return ""
+    try:
+        b = json.loads(arq.read_text(encoding="utf-8"))["cadencia"]["brasil_2t"]
+    except (KeyError, ValueError, OSError):
+        return ""
+    return (
+        f" Pelo log das urnas, que registra a hora de cada cômputo, entraram {inteiro(b['computados_depois_19'])} "
+        f"votos depois das 19h e {inteiro(b['computados_17_19'])} entre 17h e 19h, "
+        f"{pct(b['pct_17_19'])} do dia."
+    )
+
+
 def hipoteses(d, A: dict, q_lula: list[dict], q_abs: list[dict]) -> str:
     """Bloco das explicações candidatas, cada uma com o que o dado sustenta e o que não sustenta."""
     S = d.get("secoes.json") or {}
@@ -181,19 +199,22 @@ def hipoteses(d, A: dict, q_lula: list[dict], q_abs: list[dict]) -> str:
     )
     itens = []
     if pr:
+        amostra = (S.get("fonte") or "") == "amostra"
         tarde = (
-            f" A estimativa nacional da amostra estratificada dá {pct(est['pct'])} das seções com último voto depois das 19h "
+            f" A estimativa nacional da amostra estratificada dá {pct(est['pct'])} das seções com BU encerrado depois das 19h "
             f"(intervalo de 95% de {num(est['ic95'][0], 2)} a {num(est['ic95'][1], 2)})."
-            if est
+            if est and amostra
             else ""
         )
+        base = "Na amostra de" if amostra else "Nos boletins de"
         itens.append(
             "<li><b>Prorrogação até 19h.</b> "
             + rotulo("verificado")
-            + f" Na amostra de {inteiro(pr.get('n'))} seções com boletim de urna, o último voto tem mediana "
-            f"{pr.get('encerramento_p50', 's/d')} e p99 {pr.get('encerramento_p99', 's/d')}; só {pct(pr.get('pct_apos_1900'))} das seções "
-            f"lidas votaram depois das 19h.{tarde} A urna fechou quando acabou a fila, perto das 17h. A prorrogação não "
-            "explica a queda: quase ninguém usou as duas horas a mais. O capítulo Seção por seção traz a tabela por UF.</li>"
+            + f" {base} {inteiro(pr.get('n'))} seções, o encerramento do BU (último cômputo registrado, não um voto "
+            f"identificado) tem mediana {pr.get('encerramento_p50', 's/d')} e p99 {pr.get('encerramento_p99', 's/d')}; "
+            f"só {pct(pr.get('pct_apos_1900'))} dos BUs foram encerrados depois das 19h.{tarde}{_log_19h()} A urna fechou "
+            "quando acabou a fila, perto das 17h. A prorrogação não explica a queda: quase ninguém usou as duas horas a mais. "
+            "O capítulo Seção por seção traz a tabela por UF.</li>"
         )
     if q_lula:
         menor, maior = q_lula[0], q_lula[-1]
