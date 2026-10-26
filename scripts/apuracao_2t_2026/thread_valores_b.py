@@ -390,6 +390,68 @@ def v_logs() -> dict:
     }
 
 
+def _lista_br(itens: list[str]) -> str:
+    return (
+        ", ".join(itens[:-1]) + " e " + itens[-1] if len(itens) > 1 else "".join(itens)
+    )
+
+
+def v_habilitacao() -> dict:
+    """Card "Como o eleitor foi habilitado": ``biometria.json``."""
+    bi = dado("biometria")
+    t1, t2 = bi["totais"]["1t"], bi["totais"]["2t"]
+    mods = {m["modelo"]: m for m in bi["modelos"]["por_modelo"] if m["turno"] == "2t"}
+    dm = bi["modelos"]["dentro_do_municipio"]["2t"]
+    ufs = sorted(bi["por_uf"], key=lambda u: u["ano_nascimento_pct_2t"])
+    mun = bi["municipios"]
+    an = mun["maior_ano_nascimento"]
+    sc = mun["maior_sem_cadastro"][0]
+    vt = {x["grupo"]: x for x in bi["voto"]}
+    ext = bi["exterior_log"]["2t"]
+    v = {
+        "hb_comp": num(t2["comparecimento_com_categoria"]),
+        "hb_bio": num(t2["biometria"]),
+        "hb_bio_pct": pct(t2["biometria_pct"]),
+        "hb_ano": num(t2["ano_nascimento"]),
+        "hb_ano_pct": pct(t2["ano_nascimento_pct"]),
+        "hb_ano_pct_1t": pct(t1["ano_nascimento_pct"]),
+        "hb_sem": num(t2["sem_cadastro"]),
+        "hb_sem_pct": pct(t2["sem_cadastro_pct"]),
+        "hb_sem_pct_1t": pct(t1["sem_cadastro_pct"]),
+        "hb_ext": num(t2["exterior_comparecimento_sem_categoria"]),
+        "hb_ext_log_sem": num(ext["sem_biometria"]),
+        "hb_ext_log_bio": num(ext["biometrica"]),
+        "hb_ext_urnas": num(t2["exterior_secoes"]),
+        "hb_dm": sinal(dm["dif_ano_nascimento_antiga_menos_nova_pp"]),
+        "hb_dm_ep": num(dm["ep_pp"], 2),
+        "hb_dm_mun": num(dm["municipios"]),
+        "hb_uf_max": NOME_UF[ufs[-1]["uf"]],
+        "hb_uf_max_v": pct(ufs[-1]["ano_nascimento_pct_2t"]),
+        "hb_uf_min": NOME_UF[ufs[0]["uf"]],
+        "hb_uf_min_v": pct(ufs[0]["ano_nascimento_pct_2t"]),
+        "hb_mun1": f"{an[0]['nome']} ({an[0]['uf']})",
+        "hb_mun1_v": pct(an[0]["ano_nascimento_pct_2t"]),
+        "hb_mun2": f"{an[1]['nome']} ({an[1]['uf']})",
+        "hb_mun2_v": pct(an[1]["ano_nascimento_pct_2t"]),
+        "hb_mun3": f"{an[2]['nome']} ({an[2]['uf']})",
+        "hb_mun3_v": pct(an[2]["ano_nascimento_pct_2t"]),
+        "hb_sc_mun": f"{sc['nome']} ({sc['uf']})",
+        "hb_sc_v": pct(sc["sem_cadastro_pct_2t"]),
+        "hb_vt_ano": sinal(vt["ano_nascimento_alto"]["did_fatia_flavio_pp"]),
+        "hb_vt_ano_n": num(vt["ano_nascimento_alto"]["n_sinal_total"]),
+        "hb_vt_sem": sinal(vt["sem_cadastro_alto"]["did_fatia_flavio_pp"]),
+        "hb_vt_sem_n": num(vt["sem_cadastro_alto"]["n_sinal_total"]),
+    }
+    ordem = sorted(
+        (m for m in mods if m.startswith("UE")),
+        key=lambda m: -mods[m]["ano_nascimento_pct"],
+    )
+    v["hb_modelos"] = _lista_br(
+        [f"{pct(mods[m]['ano_nascimento_pct'])} nas {m}" for m in ordem]
+    )
+    return v
+
+
 def v_hipoteses() -> dict:
     """Card "O que poderia ter acontecido": ``hipoteses.json`` (estados e testes)."""
     hp = dado("hipoteses")

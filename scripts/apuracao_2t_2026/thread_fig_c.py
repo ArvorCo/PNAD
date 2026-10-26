@@ -247,10 +247,97 @@ def fig_hipoteses() -> str:
     return svg("".join(out), "Quadro-resumo das seis hipóteses")
 
 
+def fig_habilitacao() -> str:
+    """Ano de nascimento (% do comparecimento) por modelo de urna, 1º × 2º turno."""
+    bi = dado("biometria")
+    mods = ["UE2013", "UE2015", "UE2020", "UE2022"]
+    pm = {(m["turno"], m["modelo"]): m for m in bi["modelos"]["por_modelo"]}
+    t2 = bi["totais"]["2t"]
+    out = [
+        t(
+            60,
+            30,
+            "Eleitor habilitado pelo ano de nascimento, % do comparecimento, por modelo de urna",
+            15,
+            MUTED,
+            600,
+        )
+    ]
+    x0, y0, y1 = 120, 60, 380
+    vmax = 12.0
+
+    def Y(v):
+        return y1 - (y1 - y0) * v / vmax
+
+    for g in (3, 6, 9, 12):
+        out.append(
+            f'<line x1="{x0}" y1="{Y(g):.1f}" x2="960" y2="{Y(g):.1f}" stroke="#d6cfbd" stroke-dasharray="3 5"/>'
+        )
+        out.append(t(x0 - 10, Y(g) + 5, f"{g}%", 14, MUTED, 500, "end"))
+    passo = 210
+    for i, m in enumerate(mods):
+        xx = x0 + 30 + i * passo
+        for j, (turno, cor) in enumerate((("1t", "#8a8f96"), ("2t", FLAVIO))):
+            v = pm[(turno, m)]["ano_nascimento_pct"]
+            out.append(r(xx + j * 70, Y(v), 62, y1 - Y(v), cor, 2))
+            out.append(
+                t(
+                    xx + j * 70 + 31,
+                    Y(v) - 8,
+                    f"{v:.2f}".replace(".", ","),
+                    14,
+                    INK if j == 0 else FLAVIO,
+                    700,
+                    "middle",
+                )
+            )
+        out.append(t(xx + 66, y1 + 24, m, 15, INK, 700, "middle"))
+    out.append(f'<line x1="{x0}" y1="{y1}" x2="960" y2="{y1}" stroke="{MUTED}"/>')
+    out.append(legenda([("1º turno", "#8a8f96"), ("2º turno", FLAVIO)], x0, 438, 14))
+    # composição do 2º turno
+    tot = t2["comparecimento_com_categoria"]
+    xb0, xb1, yb = 120, 960, 470
+    partes = [
+        ("biometria", t2["biometria"], "#0c7a72"),
+        ("ano de nascimento", t2["ano_nascimento"], "#7d5b00"),
+        ("sem cadastro", t2["sem_cadastro"], LULA),
+    ]
+    x = xb0
+    for _nome, v, cor in partes:
+        w = (xb1 - xb0) * v / tot
+        out.append(r(x, yb, w, 30, cor))
+        x += w
+    out.append(
+        t(
+            xb0,
+            yb + 54,
+            "2º turno, Brasil: "
+            + " · ".join(
+                f"{n} {100 * v / tot:.1f}%".replace(".", ",") for n, v, _ in partes
+            ),
+            14,
+            INK,
+            600,
+        )
+    )
+    out.append(
+        t(
+            xb0,
+            yb + 80,
+            "Leitor antigo falha mais: hipótese a confirmar no log.",
+            14,
+            INK,
+            700,
+        )
+    )
+    return svg("".join(out), "Habilitação por modelo de urna e composição do 2º turno")
+
+
 __all__ = [
     "DESTINOS",
     "ORIGENS",
     "fig_cadencia",
+    "fig_habilitacao",
     "fig_hipoteses",
     "fig_transferencia",
     "fluxos",

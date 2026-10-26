@@ -53,3 +53,6 @@ Tom editorial (decisão do Leonardo, 25/10): crítico com tudo, sem afirmar o qu
 - Figura pesada (acima de 150 KB) vai em `<noscript class="fig-src">` como no 1T (ver `pagina_fig_base.figura_html` e `pagina_interativo`).
 - Identificadores dos capítulos: `abertura`, `noite`, `projecao`, `boletins`, `cedo_tarde`, `turnos`, `transferencia`, `abstencao`, `secoes`, `logs`, `exterior`, `governadores`, `pesquisas`, `paralela`, `noticias`, `auditoria`, `video`, `fontes`.
 - Áudio dos boletins: `docs/assets/apuracao_2t/boletins/<HHMM>.mp3` com `<HHMM>.txt` (roteiro) e `.meta.json` (resumo, duração); o capítulo `boletins` usa `<audio controls preload="none">`, nunca autoplay.
+
+## Bloco "Como o eleitor foi habilitado" (26/10, tarde)
+No capítulo `secoes`, antes dos sinais: `scripts/apuracao-2t-2026-biometria.py` (módulos `biometria_*.py`) grava `dados/biometria.json` e `biometria.md` a partir dos dois bancos de BUs e, para o exterior, dos logs (`tipos_habilitacao_computados`). Três situações no Brasil (biometria reconhecida; ano de nascimento = cadastro não reconhecido; sem cadastro) e o exterior sem conferência biométrica. Achado: a parcela por ano de nascimento depende do modelo da urna (UE2013 10,84%, UE2015 9,60%, UE2020 6,02%, UE2022 5,99%; +3,39 pp da antiga sobre a nova dentro do município), hipótese de leitor antigo a confirmar no log.

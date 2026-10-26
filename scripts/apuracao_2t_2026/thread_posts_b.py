@@ -26,6 +26,23 @@ POSTS_B: list[dict] = [
         ],
     },
     {
+        "tag": "Como o eleitor foi habilitado",
+        "tom": "outros",
+        "titulo": "Biometria, ano de nascimento, sem cadastro. E o exterior, sem leitor.",
+        "metrica": "{hb_ano_pct}",
+        "metrica_rot": "dos eleitores habilitados pelo ano de nascimento no 2º turno; no 1º, {hb_ano_pct_1t}",
+        "fig": C.fig_habilitacao,
+        "fonte": "biometria.json e biometria.md (BU de todas as seções; exterior pelo log da urna)",
+        "texto": [
+            "Verificado no BU de todas as seções. São quatro situações, e misturá-las produz manchete errada. No Brasil, {hb_comp} eleitores votaram com a categoria registrada no BU: {hb_bio}, {hb_bio_pct}, pela biometria reconhecida; {hb_ano}, {hb_ano_pct}, pelo ano de nascimento; e {hb_sem}, {hb_sem_pct}, sem biometria cadastrada. A quarta situação é o exterior.",
+            "Ano de nascimento não é voto sem identificação. É o eleitor que tem biometria cadastrada e que o leitor não reconheceu; a mesa o identifica pelo documento e libera a urna. Sem cadastro é o eleitor que nunca coletou biometria. No exterior não há conferência biométrica: os logs das {hb_ext_urnas} urnas registram as {hb_ext_log_sem} habilitações como sem biometria e {hb_ext_log_bio} biométricas. A fonte, ali, é o log, porque o BU do exterior não traz as categorias.",
+            "O modelo da urna pesa. Pelo ano de nascimento passaram {hb_modelos}: quanto mais antiga a urna, mais eleitor liberado por documento. As urnas antigas ficam em municípios diferentes das novas, e por isso a comparação justa é dentro do mesmo município. Dentro do mesmo município, em {hb_dm_mun} municípios com os dois tipos, a urna antiga fica {hb_dm} pontos acima, erro-padrão {hb_dm_ep}. Leitor antigo falha mais: hipótese a confirmar no log.",
+            "Os extremos. Por UF, de {hb_uf_max_v} no {hb_uf_max} a {hb_uf_min_v} em {hb_uf_min}. Entre os municípios com vinte mil eleitores ou mais, os maiores são {hb_mun1}, {hb_mun1_v}, {hb_mun2}, {hb_mun2_v}, e {hb_mun3}, {hb_mun3_v}. Sem cadastro chega a {hb_sc_v} em {hb_sc_mun}: é cadastro que nunca foi feito, não falha de leitor no dia.",
+            "E o voto. Nas {hb_vt_ano_n} seções com ano de nascimento alto, a fatia de Flávio mudou {hb_vt_ano} ponto a mais que nas vizinhas, descontado o 1º turno. Nas {hb_vt_sem_n} seções com sem cadastro alto, {hb_vt_sem}. As duas vão em direções opostas e ficam em décimos: nenhuma das categorias carrega o resultado para um lado.",
+            "Parcela alta pede explicação, não prova irregularidade. A pergunta, seção por seção, vai ao log e à ata: o leitor registrou falha, e a mesa anotou a liberação por documento?",
+        ],
+    },
+    {
         "tag": "Seções: biometria",
         "tom": "outros",
         "titulo": "A biometria baixa é do cadastro, não do dia.",

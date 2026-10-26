@@ -67,7 +67,9 @@ SONDA = """
     if (definicao.has(el.tagName.toUpperCase())) continue;
     if (el.closest('defs')) continue;
     const caixa = px(el);
-    if (el.children.length === 0 || caixa.height < 8) {
+    // Readouts podem ser parágrafos com texto direto, sem elementos filhos.
+    const textoDeLeitura = /readout$/.test(el.id) && el.textContent.trim().length > 0;
+    if ((!textoDeLeitura && el.children.length === 0) || caixa.height < 8) {
       problemas.push({tipo: 'container de grafico vazio', tag: '#' + el.id,
                       classe: '', style: `filhos=${el.children.length} altura=${Math.round(caixa.height)}`});
     }
@@ -79,7 +81,16 @@ SONDA = """
 
 def audit(page, url: str) -> list[dict]:
     erros: list[str] = []
-    page.on("console", lambda m: erros.append(m.text) if m.type == "error" else None)
+    # Avisos de Permissions-Policy vêm de iframes de terceiros (o player do YouTube pede
+    # compute-pressure) e não dizem nada sobre o desenho da página: ficam fora.
+    page.on(
+        "console",
+        lambda m: (
+            erros.append(m.text)
+            if m.type == "error" and "Permissions policy violation" not in m.text
+            else None
+        ),
+    )
     page.on("pageerror", lambda e: erros.append(str(e)))
     page.goto(url, wait_until="networkidle")
     page.wait_for_timeout(2500)

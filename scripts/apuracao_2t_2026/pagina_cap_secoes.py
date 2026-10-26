@@ -11,10 +11,12 @@ from __future__ import annotations
 
 import json
 
-from apuracao_2026.pagina_comum import Capitulo, Dados, limites
+from apuracao_2026.pagina_comum import Capitulo, Dados, caixa, limites
 
+from . import pagina_fig_biometria as FBIO
 from . import pagina_fig_secoes as F
 from . import pagina_fig_secoes_b as FB
+from . import pagina_texto_biometria as TBIO
 from . import pagina_texto_secoes as T
 from .pagina_comum import MEMOS, cabeca
 
@@ -42,6 +44,21 @@ def noticias(d: Dados) -> dict | None:
     return None
 
 
+def habilitacao(B: dict | None) -> str:
+    """Subseção "Como o eleitor foi habilitado" (vazia sem ``biometria.json``)."""
+    if not B:
+        return ""
+    h = "<h3>Como o eleitor foi habilitado</h3>"
+    h += caixa("io", "Como ler", f" {B['rotulo']}")
+    h += TBIO.abertura(B) + FBIO.fig_categorias(B)
+    h += TBIO.ufs(B) + FBIO.fig_ufs(B) + FBIO.fig_mapa_uf(B)
+    h += TBIO.municipios(B) + FBIO.fig_mapa_mun(B) + FBIO.tabela_municipios(B)
+    h += TBIO.histograma(B) + FBIO.fig_histograma(B)
+    h += TBIO.modelos(B) + FBIO.fig_modelos(B)
+    h += TBIO.voto(B)
+    return h
+
+
 def render(d: Dados, cap: Capitulo) -> str:
     S = d.get("secoes.json")
     V = d.get("secoes_voto.json")
@@ -60,6 +77,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += T.noticias(noticias(d)) + T.leitura_horario(S)
     h += "<h3>Comparecimento: alta geral, pequena</h3>"
     h += T.comparecimento(S) + F.fig_comparecimento(S, P)
+    h += habilitacao(d.get("biometria.json"))
     h += "<h3>Biometria: cadastro, leitor e a hipótese do “pianista”</h3>"
     h += T.biometria(S, R)
     h += "<h3>O voto nas seções com sinal</h3>"
