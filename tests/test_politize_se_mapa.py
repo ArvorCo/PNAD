@@ -54,6 +54,7 @@ def _local(**kw) -> dict:
         "secoes_sinal": 1,
         "secoes_mudaram": 0,
         "urnas_trocadas": 0,
+        "secoes_anomalas": 1,
     }
     base.update(kw)
     return base
@@ -82,11 +83,23 @@ def test_linha_local_completa():
     assert r["fatia_f2"] == 58.0 and r["aprox"] == 0
     assert r["modelo"] == "misto" and r["modelos"][0] == ["UE2020", 1]
     assert md.zona_de(r["id"]) == 9 and md.mun_de(r["id"]) == "01007"
+    assert r["secoes_anomalas"] == 1
+    # arquivo por município anterior ao motor: a coluna não existe e fica nula
+    antigo = dict(_local())
+    del antigo["secoes_anomalas"]
+    assert _como_dict(md.linha_local("AC", antigo))["secoes_anomalas"] is None
 
 
 def test_sem_boletim_do_2o_turno_nao_mostra_variacao():
     r = _como_dict(md.linha_local("AC", _local(n_bu2=0)))
-    for c in ("fatia_f2", "d_fatia_pp", "comp_pct2", "d_comp_pp", "abst_pct2"):
+    for c in (
+        "fatia_f2",
+        "d_fatia_pp",
+        "comp_pct2",
+        "d_comp_pp",
+        "abst_pct2",
+        "secoes_anomalas",
+    ):
         assert r[c] is None
     assert r["secoes"] == [7]  # sem lista da zona, cai na seção do link
 
@@ -123,6 +136,7 @@ def test_camadas_contrato():
         "log2",
         "log_subiu",
         "chuva2",
+        "anomalia",
     }
     for k, c in md.CAMADAS.items():
         assert c["campo"] in md.COLUNAS_LOCAIS, k
@@ -131,8 +145,19 @@ def test_camadas_contrato():
         assert TRAVESSAO not in texto and "fraude" not in texto.lower()
         for termo in JARGAO:
             assert not _tem(termo, texto), (k, termo)
+        for termo in ("GMM", "gaussiana", "verossimilhança", "Mahalanobis"):
+            assert termo not in texto, (k, termo)
     assert md.CAMADAS["mudanca"]["precisa_bu2"] is False
     assert "não prova irregularidade" in md.CAMADAS["sinal"]["explica"]
+    anom = md.CAMADAS["anomalia"]
+    assert anom["tipo"] == "presenca" and anom["campo"] == "secoes_anomalas"
+    assert anom["nome"] == "Grupo atípico (estatística)"
+    assert anom["precisa_bu2"] is True and anom["precisa_ml"] is True
+    assert (
+        "mistura estatística" in anom["explica"] and "sem o exterior" in anom["explica"]
+    )
+    assert "não prova nada" in anom["explica"]
+    assert "secoes_anomalas" in md.COLUNAS_MUNICIPIOS
 
 
 def test_gravar_amostra(tmp_path):
@@ -175,7 +200,9 @@ def test_indice_cobre_todos_os_locais_do_politize_se(indice):
         "log",
         "log_familias",
         "log_niveis",
+        "ml",
     }
+    assert isinstance(indice["anomalia_ml"]["disponivel"], bool)
 
 
 def test_arquivos_por_uf_coerentes(indice):
@@ -317,6 +344,18 @@ def test_lista_e_csv_trazem_o_registro_do_2o_turno():
     assert "['log2_max', 'Registro da urna, 2º turno']" in js
     assert "'registro_urna_2t_nivel_max'" in js
     assert "log2: { 0: '#9cb9c2', 1: '#4f8fa0', 2: '#0f5d6e', 3: '#5b2a86' }" in js
+
+
+def test_camada_do_grupo_atipico_no_app():
+    js = APP.read_text(encoding="utf-8")
+    assert "anomalia: ['#d8d4c8', '#6b4a92']" in js
+    assert "anomalia: 0.25" in js.split("const TETO_PARCELA")[1].split(";")[0]
+    assert "['secoes_anomalas', 'Grupo atípico']" in js
+    assert "'secoes_no_grupo_atipico_estatistica'" in js
+    # sem o motor, o campo é nulo e o prédio fica cinza, não "nenhuma seção"
+    assert "c.precisa_ml && vazio(l[c.campo])" in js
+    assert "ainda não entrou nos dados: todos os prédios ficam em cinza" in js
+    assert "'seção no grupo atípico', 'seções no grupo atípico'" in js
 
 
 def test_amostra_nao_regrava_cep_nem_perde_contagens(tmp_path):

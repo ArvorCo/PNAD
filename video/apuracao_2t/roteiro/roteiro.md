@@ -49,10 +49,10 @@ critica tudo, inclusive a casa.
 [calm] No fim, com cem por cento das seções: Lula, cinquenta e um vírgula setenta e nove por cento dos válidos, sessenta e quatro vírgula vinte e seis milhões de votos. Flávio, quarenta e oito vírgula vinte e um, cinquenta e nove vírgula oitenta e três milhões. Diferença de quatro vírgula quarenta e três milhões. [thoughtful] E o Norte terminou praticamente cinquenta a cinquenta, separado por mil e setenta e nove votos.
 <!-- dado: presidente.nacional.pst = 100.0 -->
 <!-- dado: presidente.nacional.pct_lula = 51.79 -->
-<!-- dado: presidente.nacional.lula = 64255891 -->
+<!-- dado: presidente.nacional.lula = 64256232 -->
 <!-- dado: presidente.nacional.pct_flavio = 48.21 -->
-<!-- dado: presidente.nacional.flavio = 59825984 -->
-<!-- dado: presidente.nacional.margem_lula_votos = 4429907 -->
+<!-- dado: presidente.nacional.flavio = 59826041 -->
+<!-- dado: presidente.nacional.margem_lula_votos = 4430191 -->
 <!-- dado: presidente.regioes[0].pct_lula = 50.01 -->
 <!-- dado: presidente.regioes[0].margem_lula_votos = 1079 -->
 
@@ -89,21 +89,21 @@ critica tudo, inclusive a casa.
 
 ## turnos-swing-uf
 
-[calm] Nos cinco mil quinhentos e sessenta e sete municípios completos, a parte de Flávio entre os finalistas caiu de cinquenta e um vírgula três por cento para quarenta e oito vírgula cinquenta e um. [serious] Caiu nas vinte e sete unidades da federação, sem exceção.
-<!-- dado: comparacao_1t.n_municipios_completos = 5567 -->
-<!-- dado: comparacao_1t.brasil.t1_h2h_flavio = 51.3 -->
-<!-- dado: comparacao_1t.brasil.t2_h2h_flavio = 48.51 -->
+[calm] Nos cinco mil quinhentos e setenta e um municípios completos, a parte de Flávio entre os finalistas caiu de cinquenta e um por cento para quarenta e oito vírgula dois. [serious] Caiu nas vinte e sete unidades da federação, sem exceção.
+<!-- dado: comparacao_1t.n_municipios_completos = 5571 -->
+<!-- dado: comparacao_1t.brasil.t1_h2h_flavio = 51.02 -->
+<!-- dado: comparacao_1t.brasil.t2_h2h_flavio = 48.22 -->
 <!-- dado: comparacao_1t.ufs.length = 27 -->
 
 ## turnos-transferencia
 
-[thoughtful] Entre os turnos ficaram disponíveis catorze vírgula um milhões de votos, e Flávio ficou com vinte e seis vírgula quatro por cento do ganho. Pela estimativa ecológica, três vírgula sessenta e dois milhões que faltaram no primeiro turno voltaram. De cada cem votos a mais, entre cinquenta e seis e sessenta e dois foram para Lula. Da terceira via, Flávio levou perto de trinta e sete por cento. [serious] É agregado, não o voto de ninguém.
-<!-- dado: transferencia.contabilidade.disponiveis = 14097834 -->
+[thoughtful] Entre os turnos ficaram disponíveis catorze vírgula um milhões de votos, e Flávio ficou com vinte e seis vírgula quatro por cento do ganho. Pela estimativa ecológica, três vírgula sessenta e dois milhões que faltaram no primeiro turno voltaram. De cada cem votos a mais, entre cinquenta e seis e sessenta e três foram para Lula. Da terceira via, Flávio levou perto de trinta e dois por cento, menos do que as pesquisas mediam. [serious] É agregado, não o voto de ninguém.
+<!-- dado: transferencia.contabilidade.disponiveis = 14098232 -->
 <!-- dado: transferencia.contabilidade.parte_flavio_pct = 26.4 -->
 <!-- dado: transferencia.resposta.voltaram_milhoes = 3.62 -->
 <!-- dado: transferencia.resposta.secoes_por_100_lula = 56.17 -->
-<!-- dado: transferencia.resposta.liquido_por_100_lula = 61.81 -->
-<!-- dado: transferencia.resposta.terceira_flavio_pct = 37.34 -->
+<!-- dado: transferencia.resposta.liquido_por_100_lula = 62.53 -->
+<!-- dado: transferencia.resposta.terceira_flavio_pct = 32.48 -->
 
 ## turnos-abstencao
 
@@ -144,7 +144,7 @@ critica tudo, inclusive a casa.
 
 ## secoes-ranking
 
-[calm] O ranking traz as cem seções mais atípicas, com a explicação provável de cada uma. [serious] Atipicidade estatística não é irregularidade. Só a ata, o caderno e o log separam leitor, cadastro e erro de mesa.
+[calm] O ranking traz cem casos: as seções mais atípicas do país, com a explicação provável de cada uma. [serious] Atipicidade estatística não é irregularidade. Só a ata, o caderno e o log separam leitor, cadastro e erro de mesa.
 <!-- dado: secoes_ranking.secoes.length = 100 -->
 
 ## cap-pesquisas
@@ -171,7 +171,7 @@ critica tudo, inclusive a casa.
 
 ## pesq-hipotese
 
-[thoughtful] O que mudou? A hipótese do autor, juízo editorial: para reproduzir a urna no simulador, a presença relativa de Flávio teria de ser treze vírgula setenta e três por cento menor que a de Lula. [serious] O que ainda falta explicar: a variação da abstenção por estado não acompanha a perda de Flávio, correlação de zero vírgula zero dois, e o aumento de comparecimento explica no máximo dois vírgula trinta e seis pontos. Se foi isso mesmo, não saberemos.
+[thoughtful] O que mudou? A hipótese do autor, juízo editorial: para reproduzir a urna no simulador, a presença relativa de Flávio teria de ser treze vírgula setenta e três por cento menor que a de Lula. [serious] O que ainda falta explicar: a variação da abstenção por estado não acompanha a perda de Flávio, e a correlação entre as duas fica em zero vírgula zero dois; o aumento de comparecimento explica no máximo dois vírgula trinta e seis pontos. Se foi isso mesmo, não saberemos.
 <!-- dado: hipotese_autor.presenca_necessaria_a = -13.73 -->
 <!-- dado: pesquisas_vs_urna.hipoteses.contabilidade_entre_turnos.correlacao_variacao_abstencao_com_residuo = 0.02 -->
 <!-- dado: pesquisas_vs_urna.hipoteses.contabilidade_entre_turnos.limite_comparecimento.parcela_maxima_explicada_pp = 2.36 -->
@@ -201,9 +201,9 @@ critica tudo, inclusive a casa.
 
 ## urnas-assinatura
 
-[calm] Nos quatrocentos e catorze mil oitocentos e sessenta e cinco arquivos de assinatura lidos, a cadeia de certificados e a assinatura da urna conferem em todos. O registro digital do voto bate com o boletim nos cento e trinta e nove mil quinhentos e sessenta e um lidos até agora. [serious] O que pede explicação: a série da memória de resultado se repete em mil quinhentas e noventa e uma seções, quase todas no exterior e no Rio. Não prova irregularidade.
-<!-- dado: metadados.turnos.2t.coerencia_vsc.cadeia_ate_a_ac.sim = 414865 -->
-<!-- dado: rdv.cobertura.total.confere = 139561 -->
+[calm] Nos quatrocentos e noventa e nove mil duzentos e sete arquivos de assinatura lidos, a cadeia de certificados e a assinatura da urna conferem em todos. O registro digital do voto bate com o boletim em quatrocentos e noventa e nove mil duzentos e cinco seções, nenhuma divergente. [serious] O que pede explicação: a série da memória de resultado se repete em mil quinhentas e noventa e uma seções, quase todas no exterior e no Rio. Não prova irregularidade.
+<!-- dado: metadados.turnos.2t.coerencia_vsc.cadeia_ate_a_ac.sim = 499207 -->
+<!-- dado: rdv.cobertura.total.confere = 499205 -->
 <!-- dado: logs.metadados.serie_mr.secoes_em_repeticao = 1591 -->
 
 ## paralela-177

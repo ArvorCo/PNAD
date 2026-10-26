@@ -67,6 +67,7 @@ COLUNAS_LOCAIS = [
     "secoes_sinal",
     "secoes_mudaram",
     "urnas_trocadas",
+    "secoes_anomalas",
     "modelo",
     "modelos",
     "log1_max",
@@ -95,6 +96,7 @@ COLUNAS_MUNICIPIOS = [
     "secoes_sinal",
     "urnas_trocadas",
     "secoes_mudaram",
+    "secoes_anomalas",
 ]
 # Campos que dependem do voto: somem em prédio ou município com menos de 30 eleitores.
 CAMPOS_VOTO = (
@@ -202,6 +204,23 @@ CAMADAS: dict[str, dict[str, Any]] = {
             "arquivo de locais e pelo painel do TSE."
         ),
         "precisa_bu2": False,
+    },
+    "anomalia": {
+        "nome": "Grupo atípico (estatística)",
+        "campo": "secoes_anomalas",
+        "tipo": "presenca",
+        "baixo": "Nenhuma seção no grupo atípico",
+        "alto": "Alguma seção no grupo atípico",
+        "explica": (
+            "Prédio com ao menos uma seção no grupo atípico do país. O grupo foi definido "
+            "por mistura estatística sobre as frações do eleitorado nos dois turnos (votos "
+            "de cada candidato, brancos, nulos e comparecimento sobre os aptos), sem o "
+            "exterior. Atipicidade estatística não é irregularidade: o grupo pede "
+            "explicação, não prova nada."
+        ),
+        "precisa_bu2": True,
+        # sem o arquivo do motor o campo é nulo em todo prédio: cinza, não "nenhuma"
+        "precisa_ml": True,
     },
 }
 CAMADAS["modelo"] = {
@@ -425,7 +444,14 @@ def linha_local(
         v.update(chuva_do_ponto(*pt))
     if not v.get("n_bu2"):
         # sem boletim do 2º turno não há variação nem sinal do 2º turno
-        for c in ("comp_pct2", "d_comp_pp", "abst_pct2", "bn_pct2", "fatia_f2"):
+        for c in (
+            "comp_pct2",
+            "d_comp_pp",
+            "abst_pct2",
+            "bn_pct2",
+            "fatia_f2",
+            "secoes_anomalas",
+        ):
             v[c] = None
         v["d_fatia_pp"] = None
     if _pequeno(r):

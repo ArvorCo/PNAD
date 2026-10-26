@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 
 import pytest
-from politize_se import saida, tempo, textos, urna
+from politize_se import fontes, montagem, saida, tempo, textos, urna
 
 ROOT = Path(__file__).resolve().parents[1]
 DADOS = ROOT / "docs/assets/politize_se/dados"
@@ -130,6 +130,9 @@ def test_frases_cobrem_casos_e_respeitam_regras():
             urna_situacao="outro_municipio",
             mudanca={"cat": "A", "real": False},
         ),
+        _secao(ml_grupo=4, ml_anomalo=True, ml_p=0.004),
+        _secao(ml_grupo=1, ml_anomalo=False, ml_p=0.62),
+        _secao(bu2=False, flavio2=None, lula2=None, fatia_f2=None, ml_anomalo=True),
     ]
     vistos = set()
     for r in casos:
@@ -146,11 +149,18 @@ def test_frases_cobrem_casos_e_respeitam_regras():
         "secoes_sinal": 2,
         "escore_max": 3,
         "secoes_mudaram": 1,
+        "secoes_anomalas": 1,
     }
     m = {"d_fatia_pp": 2.5, "comp_pct2": 79.0}
     fr = textos.frases_local(p, m)
     vistos |= {f[0] for f in fr}
     _confere_texto(textos.render(fr))
+    assert "1 seção deste local está no grupo atípico" in textos.render(fr)
+    fr2 = textos.frases_local({**p, "secoes_anomalas": 2}, m)
+    assert "2 seções deste local estão no grupo atípico" in textos.render(fr2)
+    assert "p_ml" not in {
+        f[0] for f in textos.frases_local({**p, "secoes_anomalas": None}, m)
+    }
     assert {
         "res2",
         "vs1_subiu",
@@ -158,9 +168,155 @@ def test_frases_cobrem_casos_e_respeitam_regras():
         "explica",
         "mud_real",
         "p_cobertura",
+        "ml_atipico",
+        "ml_comum",
+        "p_ml",
     } <= vistos
     for cod, modelo in textos.FRASES.items():
         _confere_texto(modelo, cod)
+
+
+def test_frase_do_grupo_estatistico_so_com_boletim_e_dado():
+    com = {f[0] for f in textos.frases_secao(_secao(ml_anomalo=True), CAT)}
+    assert "ml_atipico" in com and "ml_comum" not in com
+    sem_dado = {f[0] for f in textos.frases_secao(_secao(), CAT)}
+    assert not {"ml_atipico", "ml_comum"} & sem_dado
+    sem_bu = {
+        f[0]
+        for f in textos.frases_secao(
+            _secao(bu2=False, flavio2=None, lula2=None, fatia_f2=None, ml_anomalo=True),
+            CAT,
+        )
+    }
+    assert not {"ml_atipico", "ml_comum"} & sem_bu
+    assert "não prova irregularidade" in textos.FRASES["ml_atipico"]
+    assert "não prova" in textos.ROTULO_ML and "irregularidade" in textos.ROTULO_ML
+
+
+# ------------------------------------------------------------------ mistura estatística
+
+
+def _gravar_anomalia(tmp_path: Path, linhas: list[list]) -> tuple[Path, Path]:
+    pesado = tmp_path / "anomalia_secoes.json.gz"
+    with gzip.open(pesado, "wt", encoding="utf-8") as f:
+        json.dump(
+            {
+                "colunas": [
+                    "uf",
+                    "mun",
+                    "zona",
+                    "secao",
+                    "grupo",
+                    "score",
+                    "p",
+                    "anomalo",
+                ],
+                "linhas": linhas,
+            },
+            f,
+        )
+    compacto = tmp_path / "anomalia_ml.json"
+    compacto.write_text(
+        json.dumps(
+            {
+                "gerado_em": "2026-10-26T23:00:00+00:00",
+                "rotulo": textos.ROTULO_ML,
+                "k_escolhido": 3,
+                "componentes": [
+                    {"id": 0, "rotulo": "Lula muito à frente nos dois turnos"},
+                    {"id": 1, "rotulo": "País mediano"},
+                    {"id": 2, "rotulo": "Abstenção alta e brancos acima do país"},
+                ],
+                "mais_anomalo": {"id": 2},
+            }
+        ),
+        encoding="utf-8",
+    )
+    return pesado, compacto
+
+
+def test_fontes_anomalia_ml_presente(tmp_path, monkeypatch):
+    pesado, compacto = _gravar_anomalia(
+        tmp_path,
+        [
+            ["AC", "01007", 9, 7, 2, -12.345, 0.0042, 1],
+            ["AC", "01007", 9, 8, 1, -6.1, 0.51, 0],
+            ["SP", "71072", 1, 10, 0, -7.0, 0.3, 0],
+        ],
+    )
+    monkeypatch.setattr(fontes, "ANOMALIA_ML", pesado)
+    monkeypatch.setattr(fontes, "ANOMALIA_ML_INDICE", compacto)
+    ac = fontes.anomalia_ml("ac")
+    assert ac == {(9, 7): (2, -12.345, 0.0042, True), (9, 8): (1, -6.1, 0.51, False)}
+    assert fontes.anomalia_ml("RR") == {}
+    ind = fontes.anomalia_ml_indice()
+    assert ind["disponivel"] is True
+    assert (ind["secoes"], ind["anomalas"], ind["k"], ind["grupo_atipico"]) == (
+        3,
+        1,
+        3,
+        2,
+    )
+    assert (
+        ind["rotulos"]["2"].startswith("Abstenção")
+        and ind["rotulo"] == textos.ROTULO_ML
+    )
+    # só o compacto, sem o arquivo pesado: indisponível, mas com o catálogo
+    monkeypatch.setattr(fontes, "ANOMALIA_ML", tmp_path / "nao_existe.json.gz")
+    ind = fontes.anomalia_ml_indice()
+    assert ind["disponivel"] is False and ind["secoes"] is None and ind["k"] == 3
+
+
+def test_fontes_anomalia_ml_ausente_degrada(tmp_path, monkeypatch):
+    monkeypatch.setattr(fontes, "ANOMALIA_ML", tmp_path / "x.json.gz")
+    monkeypatch.setattr(fontes, "ANOMALIA_ML_INDICE", tmp_path / "x.json")
+    assert fontes.anomalia_ml("AC") == {}
+    ind = fontes.anomalia_ml_indice()
+    assert ind == {
+        "disponivel": False,
+        "secoes": None,
+        "anomalas": None,
+        "gerado_em": None,
+        "k": None,
+        "grupo_atipico": None,
+        "rotulos": {},
+        "rotulo": None,
+    }
+
+
+def _linha_somar(bu2: bool, ml_anomalo):
+    return {
+        "_raw": {
+            "aptos1": 300,
+            "comp1": 240,
+            "flavio1": 100,
+            "lula1": 110,
+            "terceira1": 20,
+            "bn1": 10,
+            "bu2": bu2,
+            "aptos2": 300 if bu2 else None,
+            "comp2": 250 if bu2 else None,
+            "flavio2": 130 if bu2 else None,
+            "lula2": 110 if bu2 else None,
+            "bn2": 10 if bu2 else None,
+        },
+        "escore": 0,
+        "ml_anomalo": ml_anomalo,
+    }
+
+
+def test_somar_conta_secoes_anomalas_e_degrada_sem_dado():
+    t = montagem.somar(
+        [_linha_somar(True, True), _linha_somar(True, False), _linha_somar(False, True)]
+    )
+    assert t["secoes_anomalas"] == 1  # a seção sem boletim do 2º turno não conta
+    assert "secoes_anomalas" in saida.CAMPOS_TOTAIS
+    sem = montagem.somar([_linha_somar(True, None), _linha_somar(True, None)])
+    assert sem["secoes_anomalas"] is None
+    assert (
+        saida._valor("ml_anomalo", True) == 1
+        and saida._valor("ml_anomalo", None) is None
+    )
 
 
 def _confere_texto(t: str, onde: str = "") -> None:
@@ -229,6 +385,15 @@ def test_indice_esquema_e_cobertura():
     assert nac["secoes"] == sum(c["secoes"] for c in ind["cobertura"]["ufs"].values())
     assert 0 <= nac["com_bu_2t"] <= nac["secoes"]
     assert ind["logs_2t"]["disponivel"] is True
+    am = ind["anomalia_ml"]
+    assert isinstance(am["disponivel"], bool)
+    assert set(am) >= {"disponivel", "secoes", "anomalas", "gerado_em"}
+    ml = ind["catalogos"]["ml"]
+    assert set(ml) == {"k", "rotulos", "atipico", "rotulo_casa"}
+    assert "não prova" in ml["rotulo_casa"]
+    if am["disponivel"]:
+        assert am["secoes"] > 0 and 0 < am["anomalas"] < am["secoes"]
+        assert 3 <= ml["k"] <= 10 and str(ml["atipico"]) in ml["rotulos"]
     for uf, zs in ind["zonas"].items():
         for z in zs[:3]:
             assert (DADOS / "zona" / uf / f"{z}.json.gz").exists()
@@ -275,6 +440,10 @@ def test_zona_ac_identidades_e_frases():
                 )
             if s["pequena"]:
                 assert s["flavio1"] is None and s["flavio2"] is None
+            assert s["ml_anomalo"] in (None, 0, 1)
+            assert s["ml_p"] is None or 0 <= s["ml_p"] <= 1
+            if s["ml_grupo"] is None:
+                assert s["ml_anomalo"] is None and s["ml_p"] is None
             texto = textos.render([[cods[f[0]], *f[1:]] for f in s["frases"]])
             _confere_texto(texto)
         for p in locais:
@@ -307,6 +476,12 @@ def test_pagina_ga_e_regras():
     )
     js = (ROOT / "docs/assets/politize_se/app.js").read_text(encoding="utf-8")
     assert "log2_reinicios" in js and "log2_meta" in js
+    # caixa do grupo estatístico: densidade em palavras, selo e cartão só quando atípico
+    assert "'Grupo estatístico'" in js and "blocoSinais(s), blocoMl(s)" in js
+    assert "entre as 1% menos prováveis do país" in js and "'grupo atípico'" in js
+    assert "ainda não cobre esta seção" in js and "secoes_anomalas" in js
+    for jargao in ("GMM", "cluster", "verossimilhança", "Mahalanobis"):
+        assert jargao not in js, jargao
     assert "—" not in js and "location.hash =" not in js and "pushState" not in js
     assert "politize/" not in js.replace("politize_se/", "")
     antigo = (ROOT / "docs/politizesuavizinhanca.html").read_text(encoding="utf-8")

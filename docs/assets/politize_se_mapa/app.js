@@ -12,7 +12,7 @@
 
   const BASE = 'assets/politize_se_mapa/';
   const SECOES = 'assets/politize_se/dados/zona/';
-  const VERSAO = '20261026d';
+  const VERSAO = '20261026e';
   const FORMATO = 3;
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
@@ -29,13 +29,15 @@
     log2: { 0: '#9cb9c2', 1: '#4f8fa0', 2: '#0f5d6e', 3: '#5b2a86' },
     log_subiu: ['#d8d4c8', '#b8560f'],
     abst: ['#f2ead2', '#7a3500'], chuva2: ['#e3edf2', '#12466b'], sinal: ['#e4e0d4', '#5b2a86'], urna: ['#d8d4c8', '#5b2a86'], mudanca: ['#d8d4c8', '#a3205f'],
+    // Grupo atípico da mistura estatística dos dois turnos: neutro → roxo.
+    anomalia: ['#d8d4c8', '#6b4a92'],
   };
   // Regra do grupo (agrupador do mapa) para camadas de presença e de sinal: parcela dos prédios com o atributo.
-  const TETO_PARCELA = { sinal: 0.5, urna: 0.25, mudanca: 0.1, log_subiu: 0.1 };
+  const TETO_PARCELA = { sinal: 0.5, urna: 0.25, mudanca: 0.1, log_subiu: 0.1, anomalia: 0.25 };
   const COLS_LISTA = [
     ['uf', 'UF'], ['municipio', 'Cidade'], ['zona', 'Zona'], ['nome', 'Local de votação'], ['secoes', 'Seções'],
     ['fatia_f2', 'Flávio × Lula, 2º turno'], ['d_fatia_pp', 'Mudança contra o 1º turno'], ['comp_pct2', 'Comparecimento'], ['abst_pct2', 'Abstenção'],
-    ['escore_max', 'Sinais'], ['log2_max', 'Registro da urna, 2º turno'], ['modelo', 'Modelo da urna'], ['urnas_trocadas', 'Urna trocada'], ['secoes_mudaram', 'Mudou de endereço'], ['dist', 'Distância'], ['acoes', 'Abrir'],
+    ['escore_max', 'Sinais'], ['log2_max', 'Registro da urna, 2º turno'], ['modelo', 'Modelo da urna'], ['urnas_trocadas', 'Urna trocada'], ['secoes_mudaram', 'Mudou de endereço'], ['secoes_anomalas', 'Grupo atípico'], ['dist', 'Distância'], ['acoes', 'Abrir'],
   ];
 
   const S = {
@@ -186,10 +188,12 @@
     return v > 0 ? par[1] : par[0];
   }
 
-  // Sem boletim do 2º turno, a camada que depende dele fica cinza.
+  // Sem boletim do 2º turno (ou sem registro da urna, ou sem a análise estatística), a
+  // camada que depende dele fica cinza.
+  const semDadoLocal = (l, c) => (c.precisa_bu2 && !l.n_bu2) || (c.precisa_log2 && vazio(l.log2_max)) || (c.precisa_ml && vazio(l[c.campo]));
   function corLocal(l) {
     const c = camada();
-    if ((c.precisa_bu2 && !l.n_bu2) || (c.precisa_log2 && vazio(l.log2_max))) return COR.semDado;
+    if (semDadoLocal(l, c)) return COR.semDado;
     return corValor(valor(l));
   }
 
@@ -197,7 +201,7 @@
   // parcela dos prédios com o atributo (sinais, urna trocada e mudança de endereço).
   function corGrupo(filhos) {
     const k = S.camada, c = camada();
-    const validos = filhos.filter((l) => !(c.precisa_bu2 && !l.n_bu2) && !(c.precisa_log2 && vazio(l.log2_max)));
+    const validos = filhos.filter((l) => !semDadoLocal(l, c));
     if (!validos.length) return COR.semDado;
     if (c.tipo === 'categoria') {
       // Grupo: o modelo mais comum entre os prédios do grupo.
@@ -546,6 +550,7 @@
       l.log_subiu ? h('span', { class: 'selo alerta' }, plural(l.log_subiu, 'seção subiu de nível', 'seções subiram de nível')) : null,
       l.urnas_trocadas ? h('span', { class: 'selo' }, plural(l.urnas_trocadas, 'urna trocada', 'urnas trocadas')) : null,
       l.secoes_mudaram ? h('span', { class: 'selo' }, plural(l.secoes_mudaram, 'seção mudou de endereço', 'seções mudaram de endereço')) : null,
+      l.secoes_anomalas ? h('span', { class: 'selo alerta' }, plural(l.secoes_anomalas, 'seção no grupo atípico', 'seções no grupo atípico')) : null,
     ];
     return h('div', { class: 'ficha' },
       h('div', { class: 'ficha-selos' }, selos),
@@ -562,8 +567,9 @@
           linhaCmp('Comparecimento, 2º turno', pct(l.comp_pct2), pct(m.comp_pct2)),
           linhaCmp('Mudança do comparecimento', pp(l.d_comp_pp), pp(m.d_comp_pp)),
           linhaCmp('Abstenção, 2º turno', pct(l.abst_pct2), pct(m.abst_pct2)),
-          linhaCmp('Seções com sinal', nf0.format(l.secoes_sinal || 0), nf0.format(m.secoes_sinal || 0)))),
-      h('p', { class: 'ficha-meta' }, 'Flávio entre os dois: parcela de Flávio nos votos dados a Flávio e a Lula. A coluna da cidade soma só as seções com boletim do 2º turno lido.'),
+          linhaCmp('Seções com sinal', nf0.format(l.secoes_sinal || 0), nf0.format(m.secoes_sinal || 0)),
+          linhaCmp('Seções no grupo atípico (estatística)', vazio(l.secoes_anomalas) ? null : nf0.format(l.secoes_anomalas), vazio(m.secoes_anomalas) ? null : nf0.format(m.secoes_anomalas)))),
+      h('p', { class: 'ficha-meta' }, 'Flávio entre os dois: parcela de Flávio nos votos dados a Flávio e a Lula. A coluna da cidade soma só as seções com boletim do 2º turno lido. Grupo atípico: mistura estatística sobre as frações do eleitorado nos dois turnos; pede explicação, não prova nada.'),
       blocoChuva(l),
       h('div', { class: 'ficha-secoes' }, h('p', { class: 'ficha-meta' }, 'Carregando as seções do prédio…')),
       h('a', { class: 'btn-politize', href: linkPolitize(l, l.secao_link), 'data-politize': '1' }, 'Entenda esta seção no Politize-se (seção ' + l.secao_link + ')'),
@@ -664,9 +670,9 @@
           pequena ? h('td', { colspan: '3', class: 'txt' }, h('small', {}, 'Seção com menos de 30 eleitores: não mostra voto nem comparecimento.'))
             : [h('td', {}, ida(s.comp_pct1, s.bu2 ? s.comp_pct2 : null, pct)), h('td', {}, ida(s.fatia_f1, s.bu2 ? s.fatia_f2 : null, pct)), h('td', {}, ida(s.sem_bio_pct1, s.bu2 ? s.sem_bio_pct2 : null, pct))],
           h('td', { class: 'txt' }, celulaLog(s)),
-          h('td', { class: 'txt' }, !s.bu2 ? h('small', {}, 'Ainda sem boletim do 2º turno') : sinais.length
+          h('td', { class: 'txt' }, !s.bu2 ? h('small', {}, 'Ainda sem boletim do 2º turno') : [sinais.length
             ? [h('b', {}, plural(sinais.length, 'sinal', 'sinais')), h('ul', { class: 'sinal-lista' }, sinais.map((t) => h('li', {}, t))), exps.length ? h('small', {}, 'Explicação provável: ' + exps.join('; ') + '.') : null]
-            : h('small', {}, 'Nenhum sinal')));
+            : h('small', {}, 'Nenhum sinal'), s.ml_anomalo ? h('small', {}, 'Grupo atípico pela estatística dos dois turnos.') : null]));
       });
       caixaSec.replaceChildren(
         h('p', { class: 'ficha-meta' }, 'As seções lado a lado, 1º turno → 2º turno, com o modelo da urna de cada turno. Toque no número para escolher a seção que o botão abre no Politize-se.'),
@@ -719,7 +725,14 @@
       itens.push(h('ul', { class: 'legenda-itens' }, h('li', {}, h('span', { class: 'bolinha', style: 'background:' + par[1] }), c.alto), h('li', {}, h('span', { class: 'bolinha', style: 'background:' + par[0] }), c.baixo)));
     }
     if (k === 'log_subiu' && S.meta.logs_2t) itens.push(h('p', {}, h('b', {}, plural(S.meta.logs_2t.predios_subiu || 0, 'prédio', 'prédios')), ' no país com alguma seção que subiu de nível.'));
-    const cinza = c.precisa_log2 ? 'Cinza: registro da urna do 2º turno ainda não lido.' : c.precisa_bu2 ? 'Cinza: ainda sem boletim do 2º turno, ou prédio com menos de 30 eleitores.' : 'Cinza: sem dado.';
+    if (k === 'anomalia') {
+      const am = S.meta.anomalia_ml || {};
+      const ml = (S.meta.catalogos || {}).ml || {};
+      if (!am.disponivel) itens.push(h('p', { class: 'ajuda' }, 'A análise estatística dos dois turnos ainda não entrou nos dados: todos os prédios ficam em cinza.'));
+      else itens.push(h('p', {}, h('b', {}, plural(am.anomalas || 0, 'seção', 'seções')), ' no grupo atípico do país, entre ' + nf0.format(am.secoes || 0) + ' seções analisadas' + (ml.k ? ', em ' + ml.k + ' grupos' : '') + '.'));
+      itens.push(h('p', { class: 'ajuda' }, ml.rotulo_casa || 'Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada.'));
+    }
+    const cinza = c.precisa_ml ? 'Cinza: a análise estatística ainda não cobre o prédio, ou ainda sem boletim do 2º turno.' : c.precisa_log2 ? 'Cinza: registro da urna do 2º turno ainda não lido.' : c.precisa_bu2 ? 'Cinza: ainda sem boletim do 2º turno, ou prédio com menos de 30 eleitores.' : 'Cinza: sem dado.';
     const grupo = c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
     $('#legenda').replaceChildren(...itens, h('p', {}, c.explica), h('ul', { class: 'legenda-itens' }, h('li', {}, h('span', { class: 'bolinha bolinha-cinza' }), cinza)), h('p', { class: 'ajuda' }, grupo + ' O tamanho do ponto cresce com o número de eleitores.'));
   }
@@ -782,6 +795,7 @@
       h('td', {}, textoModelo(l)),
       h('td', { class: 'num' }, l.urnas_trocadas ? String(l.urnas_trocadas) : ''),
       h('td', { class: 'num' }, l.secoes_mudaram ? String(l.secoes_mudaram) : ''),
+      h('td', { class: 'num' }, l.secoes_anomalas ? String(l.secoes_anomalas) : ''),
       h('td', { class: 'num' }, km(l.dist)),
       h('td', {},
         h('a', { href: linkPolitize(l, l.secao_link) }, 'Politize-se'),
@@ -807,14 +821,14 @@
   }
 
   function exportarCsv() {
-    const cab = ['uf', 'cidade', 'zona', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'secoes', 'secoes_com_2o_turno', 'eleitores', 'flavio_entre_os_dois_2t_pct', 'flavio_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_pontos', 'comparecimento_2t_pct', 'mudanca_comparecimento_pontos', 'abstencao_2t_pct', 'maior_numero_de_sinais_numa_secao', 'secoes_com_sinal', 'registro_urna_1t_nivel_max', 'registro_urna_2t_nivel_max', 'registro_urna_secoes_que_subiram', 'modelo_urna_predominante', 'modelos_urna_no_predio', 'urnas_trocadas', 'secoes_que_mudaram_de_endereco', 'politize_se', 'google_maps'];
+    const cab = ['uf', 'cidade', 'zona', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'secoes', 'secoes_com_2o_turno', 'eleitores', 'flavio_entre_os_dois_2t_pct', 'flavio_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_pontos', 'comparecimento_2t_pct', 'mudanca_comparecimento_pontos', 'abstencao_2t_pct', 'maior_numero_de_sinais_numa_secao', 'secoes_com_sinal', 'registro_urna_1t_nivel_max', 'registro_urna_2t_nivel_max', 'registro_urna_secoes_que_subiram', 'modelo_urna_predominante', 'modelos_urna_no_predio', 'urnas_trocadas', 'secoes_que_mudaram_de_endereco', 'secoes_no_grupo_atipico_estatistica', 'politize_se', 'google_maps'];
     const dec = (v, c) => (vazio(v) ? '' : typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v));
     const esc = (v) => { const s = vazio(v) ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const linhas = [cab.join(';')];
     (S.listaAtual || []).forEach((l) => {
       linhas.push([l.uf, l.municipio, l.zona, l.nome, l.endereco, l.bairro, l.cep, coordOk(l) ? dec(l.lat, 5) : '', coordOk(l) ? dec(l.lon, 5) : '', dec(l.dist, 2),
         l.n_secoes, l.n_bu2, l.aptos2 || l.aptos1, dec(l.fatia_f2, 1), dec(l.fatia_f1_par, 1), dec(l.d_fatia_pp, 1), dec(l.comp_pct2, 1), dec(l.d_comp_pp, 1), dec(l.abst_pct2, 1),
-        l.n_bu2 ? l.escore_max : '', l.secoes_sinal, l.log1_max, l.log2_max, l.log_subiu, predominante(l), (l.modelos || []).map((m) => m[0] + ':' + m[1]).join('|'), l.urnas_trocadas, l.secoes_mudaram,
+        l.n_bu2 ? l.escore_max : '', l.secoes_sinal, l.log1_max, l.log2_max, l.log_subiu, predominante(l), (l.modelos || []).map((m) => m[0] + ':' + m[1]).join('|'), l.urnas_trocadas, l.secoes_mudaram, l.secoes_anomalas,
         'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : ''].map(esc).join(';'));
     });
     const blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });

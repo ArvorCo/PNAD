@@ -20,6 +20,8 @@ from .tempo import hhmm
 from .urna import SITUACOES
 
 ROTULO = "Sinal pede explicação, não prova irregularidade."
+# Rótulo fixo da mistura estatística dos dois turnos (CONTRATO_ANOMALIA.md).
+ROTULO_ML = "Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada."
 
 # Os seis sinais da régua do dossiê (apuracao_2t_2026.secoes_sinais), em português corrente.
 SINAIS_NOME = {
@@ -82,6 +84,8 @@ FRASES: dict[str, str] = {
     "sinais_n": "{0} sinais da régua da casa acenderam nesta seção: {1}. " + ROTULO,
     "explica": "Explicação provável pela regra: {0}.",
     "sem_explicacao": "Nenhuma explicação provável pela regra; vale conferir a ata da seção e o log da urna.",
+    "ml_atipico": "Pela estatística dos dois turnos, esta seção está no grupo atípico do país: pede explicação, não prova irregularidade.",
+    "ml_comum": "Pela estatística dos dois turnos, esta seção está fora do grupo atípico do país.",
     "contingencia": "O boletim registra urna de contingência ou mais de uma carga, o que costuma acompanhar uma troca de urna no dia.",
     "agreg_mudou": "As seções agregadas a esta mudaram entre os turnos; a comparação entre 1º e 2º turno é aproximada.",
     "mud_real": "O local de votação desta seção mudou entre os turnos: {0}. Distância em linha reta: {1}.",
@@ -120,6 +124,7 @@ FRASES: dict[str, str] = {
     "p_log_persiste": "{0} deste local têm atenção 2 ou 3 no log dos dois turnos.",
     "p_log_reinicio": "{0} deste local tiveram a urna religada durante a votação no 2º turno.",
     "p_log_bateria": "{0} deste local passaram para a bateria durante a votação no 2º turno.",
+    "p_ml": "{0} deste local {1} no grupo atípico da estatística dos dois turnos: pede explicação, não prova irregularidade.",
 }
 
 
@@ -249,6 +254,8 @@ def frases_secao(r: dict[str, Any], catalogo: dict[str, Any]) -> list[list[str]]
                 out.append(["explica", lista([EXPLICACAO_NOME[e] for e in exp])])
             else:
                 out.append(["sem_explicacao"])
+        if r.get("ml_anomalo") is not None:
+            out.append(["ml_atipico" if r["ml_anomalo"] else "ml_comum"])
     if r.get("agreg_igual") is False:
         out.append(["agreg_mudou"])
     mud = r.get("mudanca")
@@ -386,6 +393,9 @@ def frases_local(p: dict[str, Any], mun: dict[str, Any]) -> list[list[str]]:
     ):
         if p.get(k):
             out.append(["p_" + k.removeprefix("secoes_"), secoes(p[k])])
+    if p.get("secoes_anomalas"):
+        n = int(p["secoes_anomalas"])
+        out.append(["p_ml", secoes(n), "está" if n == 1 else "estão"])
     return out
 
 

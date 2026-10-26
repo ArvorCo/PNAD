@@ -97,6 +97,9 @@ COLS_SECAO = [
     "log2_bateria_simultaneas",
     "log2_erro_mr",
     "log2_meta",
+    "ml_grupo",
+    "ml_anomalo",
+    "ml_p",
     "mudanca",
     "frases",
 ]
@@ -151,6 +154,7 @@ CAMPOS_LOCAL = [
     "secoes_log_persiste",
     "secoes_log_reinicio",
     "secoes_log_bateria",
+    "secoes_anomalas",
     "clima1",
     "clima2",
     "clima2o",
@@ -193,6 +197,7 @@ COLS_LOCAL_MUN = [
     "secoes_log_persiste",
     "secoes_log_reinicio",
     "secoes_log_bateria",
+    "secoes_anomalas",
     "link",
 ]
 
@@ -241,6 +246,7 @@ CAMPOS_TOTAIS = [
     "secoes_log_persiste",
     "secoes_log_reinicio",
     "secoes_log_bateria",
+    "secoes_anomalas",
 ]
 
 
@@ -248,7 +254,7 @@ def link(uf: str, zona: int | None, secao: int) -> str:
     return f"politizese.html#uf={uf}&z={zona}&s={secao}"
 
 
-BOOLEANOS = frozenset({"bu2", "pequena", "agreg_igual", "contingencia2"})
+BOOLEANOS = frozenset({"bu2", "pequena", "agreg_igual", "contingencia2", "ml_anomalo"})
 CLIMA1 = [
     "chuva_mm",
     "chuva_dia_mm",

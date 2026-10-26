@@ -23,6 +23,10 @@ LOGS_1T = ROOT / "docs/assets/logs_urnas_2026"
 LOGS_2T_DB = ROOT / "data/outputs/logs_urnas_2t_2026.sqlite"
 LOGS_2T = ROOT / "docs/assets/logs_urnas_2t_2026"
 CLIMA = ROOT / "docs/assets/fiscais_mapa/clima"
+# Mistura estatística dos dois turnos (analysis/apuracao_2t_2026/CONTRATO_ANOMALIA.md):
+# o arquivo pesado fica fora do git e o compacto traz k, rótulos e o grupo atípico.
+ANOMALIA_ML = ROOT / "data/outputs/apuracao_2t_2026/anomalia_secoes.json.gz"
+ANOMALIA_ML_INDICE = ROOT / "analysis/apuracao_2t_2026/dados/anomalia_ml.json"
 
 FLAVIO = 22
 LULA = 13
@@ -328,6 +332,81 @@ def logs_2t(uf: str) -> dict[tuple[int, int], dict[str, Any]]:
                 "erro_mr": r.get("erro_mr_pre_zeresima"),
                 "reinicios_sistema": r.get("reinicios_sistema"),
             }
+    return out
+
+
+# ------------------------------------------------------------------ mistura estatística
+
+SecaoML = tuple[int, float, float, bool]
+_ANOMALIA_CACHE: dict[
+    tuple[Path, int | None], dict[str, dict[tuple[int, int], SecaoML]]
+] = {}
+
+
+def _anomalia_ml_tudo() -> dict[str, dict[tuple[int, int], SecaoML]]:
+    """Arquivo pesado inteiro, lido uma vez por caminho e data, separado por UF.
+
+    Convenção de ``secoes_linhas``: ``{"colunas": [uf, mun, zona, secao, grupo, score, p,
+    anomalo], "linhas": [...]}`` em gzip. Ausente, devolve ``{}``.
+    """
+    arq = ANOMALIA_ML
+    chave = (arq, arq.stat().st_mtime_ns if arq.exists() else None)
+    if chave in _ANOMALIA_CACHE:
+        return _ANOMALIA_CACHE[chave]
+    por_uf: dict[str, dict[tuple[int, int], SecaoML]] = {}
+    if arq.exists():
+        d = _json(arq)
+        cols = d["colunas"]
+        i = {
+            c: cols.index(c)
+            for c in ("uf", "zona", "secao", "grupo", "score", "p", "anomalo")
+        }
+        for x in d["linhas"]:
+            por_uf.setdefault(str(x[i["uf"]]).upper(), {})[
+                (int(x[i["zona"]]), int(x[i["secao"]]))
+            ] = (
+                int(x[i["grupo"]]),
+                float(x[i["score"]]),
+                float(x[i["p"]]),
+                bool(x[i["anomalo"]]),
+            )
+    _ANOMALIA_CACHE.clear()
+    _ANOMALIA_CACHE[chave] = por_uf
+    return por_uf
+
+
+def anomalia_ml(uf: str) -> dict[tuple[int, int], SecaoML]:
+    """(zona, seção) → (grupo, score, p, anomalo) da UF; ``{}`` sem o arquivo pesado."""
+    return _anomalia_ml_tudo().get(uf.upper(), {})
+
+
+def anomalia_ml_indice() -> dict[str, Any]:
+    """Disponibilidade e catálogo da mistura: só fica ``disponivel`` com os dois arquivos."""
+    out: dict[str, Any] = {
+        "disponivel": False,
+        "secoes": None,
+        "anomalas": None,
+        "gerado_em": None,
+        "k": None,
+        "grupo_atipico": None,
+        "rotulos": {},
+        "rotulo": None,
+    }
+    compacto = ANOMALIA_ML_INDICE.exists()
+    if compacto:
+        d = _json(ANOMALIA_ML_INDICE)
+        out.update(
+            gerado_em=d.get("gerado_em"),
+            k=d.get("k_escolhido"),
+            grupo_atipico=(d.get("mais_anomalo") or {}).get("id"),
+            rotulos={str(c["id"]): c.get("rotulo") for c in d.get("componentes") or []},
+            rotulo=d.get("rotulo"),
+        )
+    tudo = _anomalia_ml_tudo()
+    if tudo and compacto:
+        out["disponivel"] = True
+        out["secoes"] = sum(len(v) for v in tudo.values())
+        out["anomalas"] = sum(1 for v in tudo.values() for t in v.values() if t[3])
     return out
 
 

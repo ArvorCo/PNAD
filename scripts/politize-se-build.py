@@ -101,6 +101,7 @@ def contexto() -> montagem.Contexto:
 def catalogos(ctx: montagem.Contexto) -> dict[str, Any]:
     regras = fontes.regras_fiscal()
     _, meta_prev = fontes.previsao_2t()
+    ml = fontes.anomalia_ml_indice()
     return {
         "sinais": textos.SINAIS_NOME,
         "explicacoes": textos.EXPLICACAO_NOME,
@@ -126,6 +127,26 @@ def catalogos(ctx: montagem.Contexto) -> dict[str, Any]:
         },
         "clima2": meta_prev,
         "clima2o": fontes.observado_2t()[1],
+        # mistura estatística dos dois turnos: k, rótulo por grupo e o grupo atípico
+        "ml": {
+            "k": ml["k"],
+            "rotulos": ml["rotulos"],
+            "atipico": ml["grupo_atipico"],
+            "rotulo_casa": ml["rotulo"] or textos.ROTULO_ML,
+        },
+    }
+
+
+def bloco_anomalia_ml() -> dict[str, Any]:
+    """``indice.anomalia_ml``: disponibilidade da mistura estatística (falsa sem o motor)."""
+    ml = fontes.anomalia_ml_indice()
+    return {
+        **{k: ml[k] for k in ("disponivel", "secoes", "anomalas", "gerado_em")},
+        "nota": (
+            "Grupo definido por mistura estatística sobre as frações do eleitorado nos dois "
+            "turnos, sem o exterior (analysis/apuracao_2t_2026/CONTRATO_ANOMALIA.md). "
+            + textos.ROTULO_ML
+        ),
     }
 
 
@@ -235,6 +256,7 @@ def main() -> None:
             "disponivel": fontes.logs_2t_disponivel(),
             "nota": "Logs do 2º turno processados (regra 2: o aviso de problema ao desmontar a memória de resultado antes da zerésima fica fora do erro técnico, em erro_mr_pre_zeresima).",
         },
+        "anomalia_ml": bloco_anomalia_ml(),
         "ufs": dict(sorted(tot_uf.items())),
         "zonas": dict(sorted(zonas.items())),
         "municipios": {
@@ -274,6 +296,12 @@ def main() -> None:
                 "logs_2t_metricas", fontes.LOGS_2T_DB, "registro por tamanho e data"
             ),
             _fonte("clima_previsao", fontes.CLIMA / "previsao.json"),
+            _fonte("anomalia_ml_indice", fontes.ANOMALIA_ML_INDICE),
+            _fonte(
+                "anomalia_ml_secoes",
+                fontes.ANOMALIA_ML,
+                "arquivo pesado fora do git: registro por tamanho e data",
+            ),
         ],
         "escopo": "Brasil e exterior" if not args.uf else ", ".join(sorted(cob)),
     }

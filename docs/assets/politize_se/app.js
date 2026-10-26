@@ -394,6 +394,23 @@ function blocoSinais(s) {
   itens.push(h('p', { class: 'rotulo-casa' }, (E.indice && E.indice.rotulo) || 'Sinal pede explicação, não prova irregularidade.'));
   return h('div', { class: 'caixa' }, h('h4', {}, `Sinais do 2º turno${num(s.escore) !== null ? ` · escore ${s.escore} de 6` : ''}`), itens);
 }
+// Grupo da mistura estatística dos dois turnos (motor do dossiê): grupo, densidade em
+// palavras e o rótulo da casa. Sem o arquivo do motor, os três campos vêm nulos.
+function blocoMl(s) {
+  const ml = cats().ml || {};
+  const rotulo = ml.rotulo_casa || 'Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada.';
+  const itens = [];
+  if (!s.bu2 || num(s.ml_grupo) === null || s.ml_anomalo === null || s.ml_anomalo === undefined) {
+    itens.push(h('p', {}, 'A análise estatística dos dois turnos ainda não cobre esta seção.'));
+  } else {
+    const nome = (ml.rotulos || {})[String(s.ml_grupo)] || '';
+    const densidade = num(s.ml_p) === null ? '' : s.ml_p < 0.01 ? 'entre as 1% menos prováveis do país' : s.ml_p < 0.05 ? 'entre as 5% menos prováveis do país' : 'densidade comum';
+    itens.push(h('p', {}, h('b', {}, s.ml_anomalo ? 'No grupo atípico do país.' : 'Fora do grupo atípico.'), ` Grupo ${s.ml_grupo}${ml.k ? ` de ${ml.k}` : ''}${nome ? `: ${nome}` : ''}.${densidade ? ` Densidade: ${densidade}.` : ''}`));
+    itens.push(h('p', { class: 'ajuda' }, 'Grupos definidos por mistura estatística sobre as frações do eleitorado nos dois turnos (votos de cada candidato, brancos, nulos e comparecimento sobre os aptos), sem o exterior. Os grupos são numerados a partir de zero, como no dossiê.'));
+  }
+  itens.push(h('p', { class: 'rotulo-casa' }, rotulo));
+  return h('div', { class: 'caixa' }, h('h4', {}, 'Grupo estatístico'), itens);
+}
 function blocoUrna(s) {
   const c = cats();
   const t = s.urna_situacao ? (c.urna || {})[s.urna_situacao] : null;
@@ -475,7 +492,7 @@ function tabelaPredio(uf, zd, local, atual) {
   const secs = zd.listaSecoes.filter((s) => s.li === local.li).sort((a, b) => a.secao - b.secao);
   return h('div', { class: 'tabela-rolagem', tabindex: '0', role: 'region', 'aria-label': 'Seções deste local de votação' },
     h('table', { class: 'tabela' },
-      h('thead', {}, h('tr', {}, ['Seção', 'Aptos', 'Flávio 2º', 'Lula 2º', 'Variação de Flávio', 'Comparecimento 2º', 'Sinais', 'Log 1º → 2º'].map((t, i) => h('th', { scope: 'col', class: i ? 'n' : '' }, t)))),
+      h('thead', {}, h('tr', {}, ['Seção', 'Aptos', 'Flávio 2º', 'Lula 2º', 'Variação de Flávio', 'Comparecimento 2º', 'Sinais', 'Log 1º → 2º', 'Grupo estatístico'].map((t, i) => h('th', { scope: 'col', class: i ? 'n' : '' }, t)))),
       h('tbody', {}, secs.map((s) => h('tr', { class: s.secao === atual ? 'atual' : '' },
         h('td', {}, s.secao === atual ? `${s.secao} (esta)` : h('button', { type: 'button', class: 'link', onclick: () => executar(`Abrindo a seção ${s.secao}`, () => renderSecao(uf, zd, s, {})) }, String(s.secao))),
         h('td', { class: 'n' }, f0(s.aptos2 ?? s.aptos1)),
@@ -485,6 +502,7 @@ function tabelaPredio(uf, zd, local, atual) {
         h('td', { class: 'n' }, s.pequena || !s.bu2 ? '' : pc(s.comp_pct2)),
         h('td', { class: 'n' }, s.bu2 ? f0(s.escore) : ''),
         h('td', { class: 'n' }, s.log2_atencao === null || s.log2_atencao === undefined ? '' : `${s.log1_atencao ?? '?'} → ${s.log2_atencao}`),
+        h('td', { class: 'n' }, s.ml_anomalo === null || s.ml_anomalo === undefined ? '' : s.ml_anomalo ? 'atípico' : 'comum'),
       )))));
 }
 function tabelaContraMun(local, mun) {
@@ -504,6 +522,7 @@ function tabelaContraMun(local, mun) {
         lin('Urnas trocadas entre os turnos', f0(local.urnas_trocadas), f0(mun.urnas_trocadas)),
         lin('Log subiu para atenção 2 ou 3 no 2º turno', f0(local.secoes_log_subiu), f0(mun.secoes_log_subiu)),
         lin('Urna religada durante a votação, 2º turno', f0(local.secoes_log_reinicio), f0(mun.secoes_log_reinicio)),
+        lin('Seções no grupo atípico (estatística dos dois turnos)', f0(local.secoes_anomalas), f0(mun.secoes_anomalas)),
       )));
 }
 function cabecalhoLocal(uf, zd, local) {
@@ -803,6 +822,7 @@ function renderSecao(uf, zd, s, extra) {
   const selos = [
     s.bu2 ? h('span', { class: 'selo ok' }, '2º turno lido') : h('span', { class: 'selo alerta' }, '2º turno ainda não lido'),
     s.bu2 && num(s.escore) > 0 ? h('span', { class: 'selo alerta' }, `${s.escore} ${s.escore === 1 ? 'sinal' : 'sinais'}`) : null,
+    s.bu2 && s.ml_anomalo ? h('span', { class: 'selo alerta' }, 'grupo atípico') : null,
     s.urna_situacao && !['mesma', 'mesma_recarga'].includes(s.urna_situacao) ? h('span', { class: 'selo' }, 'urna trocada') : null,
     s.mudanca ? h('span', { class: 'selo' }, 'local alterado') : null,
   ];
@@ -820,7 +840,7 @@ function renderSecao(uf, zd, s, extra) {
     h('h3', {}, 'Como quem votou foi identificado'),
     h('div', { class: 'turnos' }, blocoBio(1, s), blocoBio(2, s)),
     h('h3', {}, 'Urna, sinais e registros'),
-    h('div', { class: 'grade2' }, blocoSinais(s), blocoUrna(s), blocoLogs(s), blocoFiscal(s), blocoMudanca(s), blocoClima(local)),
+    h('div', { class: 'grade2' }, blocoSinais(s), blocoMl(s), blocoUrna(s), blocoLogs(s), blocoFiscal(s), blocoMudanca(s), blocoClima(local)),
   );
   const partes = [ficha, blocoRelato(uf, zd.zona, s, local)];
   if (local) {
@@ -866,7 +886,8 @@ function linkDe(uf, zona, secao) {
 function textoCompartilhar({ uf, zona, s, mun }) {
   const lugar = `seção ${s.secao}, zona ${zona}, ${mun.nome || ''} (${uf === 'ZZ' ? 'Exterior' : uf})`;
   if (s.pequena || !s.bu2 || num(s.fatia_f2) === null) return `Veja o que aconteceu na ${lugar}, no 1º e no 2º turno: ${linkDe(uf, zona, s.secao)}`;
-  return `Na ${lugar}, o 2º turno deu Flávio ${pc(s.fatia_f2)} e Lula ${pc(100 - s.fatia_f2)} dos válidos; no 1º turno, entre os dois, Flávio tinha ${pc(s.fatia_f1)}. Comparecimento: ${pc(s.comp_pct1)} no 1º turno, ${pc(s.comp_pct2)} no 2º. Leitura agregada por seção, TSE. ${linkDe(uf, zona, s.secao)}`;
+  const ml = s.ml_anomalo ? ' Pela estatística dos dois turnos, a seção está no grupo atípico do país: pede explicação, não prova irregularidade.' : '';
+  return `Na ${lugar}, o 2º turno deu Flávio ${pc(s.fatia_f2)} e Lula ${pc(100 - s.fatia_f2)} dos válidos; no 1º turno, entre os dois, Flávio tinha ${pc(s.fatia_f1)}. Comparecimento: ${pc(s.comp_pct1)} no 1º turno, ${pc(s.comp_pct2)} no 2º.${ml} Leitura agregada por seção, TSE. ${linkDe(uf, zona, s.secao)}`;
 }
 async function desenharCard(cv, { uf, zona, s, mun }) {
   const W = 1080;
@@ -928,6 +949,12 @@ async function desenharCard(cv, { uf, zona, s, mun }) {
   c.fillStyle = '#4f5862';
   const sin = !s.bu2 ? '2º turno ainda não lido' : num(s.escore) > 0 ? `${s.escore} ${s.escore === 1 ? 'sinal pede' : 'sinais pedem'} explicação, sem provar irregularidade` : 'Nenhum sinal da régua da casa';
   c.fillText(sin, 70, 830);
+  if (s.bu2 && s.ml_anomalo) {
+    // selo do grupo atípico da mistura estatística dos dois turnos
+    c.font = `600 26px ${FS}`;
+    c.fillStyle = '#6b4a92';
+    c.fillText('Grupo atípico na estatística dos dois turnos: pede explicação, não prova nada', 70, 872);
+  }
   c.fillStyle = '#1d2a33';
   c.fillRect(0, 920, W, 160);
   c.fillStyle = '#ffffff';

@@ -169,12 +169,15 @@ def gravar(lido: dict[str, Any], saida: Path = SAIDA, mesclar: bool = False) -> 
                 "log",
                 "log_familias",
                 "log_niveis",
+                "ml",
             )
         },
         "logs_2t": {
             **(origem.get("logs_2t") or {}),
             **contagem_logs(lido, anterior.get("logs_2t")),
         },
+        # mistura estatística dos dois turnos: copiado do Politize-se; sem o motor, indisponível
+        "anomalia_ml": origem.get("anomalia_ml") or {"disponivel": False},
         "clima2": {
             k: (md.observado() or {}).get(k)
             for k in (

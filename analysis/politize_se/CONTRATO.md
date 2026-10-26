@@ -69,10 +69,13 @@ como 0/1.
 ### `indice.json` (~600 KB)
 `versao`, `gerado_em`, `rotulo`, `rotulos[]`, `cobertura {nacional {secoes, com_bu_2t, pct, banco_2t_bus,
 banco_2t_principais, coleta_completa}, ufs {UF: {secoes, com_bu_2t, pct}}}`, `logs_2t {disponivel, nota}`,
-`ufs {UF: totais}`, `zonas {UF: [zonas]}`, `municipios {colunas: [uf, mun_tse, nome, lat, lon, pais, nome_tse,
-n_locais, n_secoes, n_bu2, aptos, fatia_f1, fatia_f2, arquivo]}`, `frases {código: modelo}`, `frases_codigos
-[códigos na ordem do índice numérico]`, `catalogos {sinais, explicacoes, urna, fiscal_niveis, fiscal_criterios,
-log, log_rotina, log_familias, log_niveis, mudanca, modelos_urna, clima2}`, `fontes[]`, `escopo`.
+`anomalia_ml {disponivel, secoes, anomalas, gerado_em, nota}` (mistura estatística dos dois turnos; `disponivel =
+false` e os demais nulos enquanto o motor não gravar os dois arquivos), `ufs {UF: totais}`, `zonas {UF: [zonas]}`,
+`municipios {colunas: [uf, mun_tse, nome, lat, lon, pais, nome_tse, n_locais, n_secoes, n_bu2, aptos, fatia_f1,
+fatia_f2, arquivo]}`, `frases {código: modelo}`, `frases_codigos [códigos na ordem do índice numérico]`,
+`catalogos {sinais, explicacoes, urna, fiscal_niveis, fiscal_criterios, log, log_rotina, log_familias, log_niveis,
+mudanca, modelos_urna, clima2, clima2o, ml {k, rotulos {id: rótulo do grupo}, atipico (id do grupo atípico),
+rotulo_casa}}`, `fontes[]`, `escopo`.
 
 ### `zona/<UF>/<zona>.json.gz` (um por zona; gzip com data zerada; 95 MB com a coleta completa do 2º turno e os logs, 26/10)
 O app abre só este arquivo para uma seção (DecompressionStream, como os logs do 1º turno).
@@ -91,6 +94,7 @@ locais {colunas, clima1, clima2, linhas}, secoes {colunas, linhas}}`.
 | sinais 2T | `escore` (0 a 6), `sinais` (`delta`, `sem_bio`, `ano_nasc`, `salto_bio`, `tardia`, `papel`), `explicacoes` (chaves de `secoes_ranking.REGRAS_EXPLICACAO`) |
 | fiscal 1T | `fiscal_nivel` (`maxima`, `alta`, `reforcada`, `padrao`), `fiscal_pontos`, `fiscal_sinais` (códigos de `fiscal/regras.json`), `c13_nivel` |
 | logs | `log1_atencao` (0 a 3), `log1_sinais`, `log1_familias`, `log2_atencao`, `log2_sinais`, `log2_familias` (códigos de `apuracao_logs.familias`), `log2_reinicios` (`[[minuto de Brasília, votos antes, votos depois], ...]`, partidas do sistema na fase de votação), `log2_bateria` (`simultanea`, `isolada`, `votacao` ou `null`), `log2_bateria_simultaneas`, `log2_erro_mr` (avisos de problema ao desmontar a MR antes da zerésima: contexto, fora do erro técnico), `log2_meta` (`[versão do aplicativo, carga registrada em, série da MR]`) |
+| estatística 1T × 2T | `ml_grupo` (0 a k−1, ou `null`), `ml_anomalo` (0/1: a seção está no grupo atípico do país; `null` sem dado), `ml_p` (parcela das seções do país com densidade menor, 0 a 1 com 4 casas; 0,01 = entre as 1% menos prováveis; `null` sem dado). Fonte: `data/outputs/apuracao_2t_2026/anomalia_secoes.json.gz` do motor (`analysis/apuracao_2t_2026/CONTRATO_ANOMALIA.md`), lido por `fontes.anomalia_ml(uf)`; exterior e seções com menos de 30 aptos ficam fora do motor e vêm `null` |
 | mudança | `mudanca` (`null` ou `{cat, nome1, nome2, end2, bairro2, dist_m, motivo, url, fonte, real, maps}`) |
 | texto | `frases` = `[[índice do código, arg0, arg1, ...], ...]` |
 
@@ -102,7 +106,9 @@ secao_link, n_secoes, n_bu2, aptos1, comp1, flavio1, lula1, terceira1, bn1, apto
 bn2, comp_pct1, comp_pct2, comp_pct1_par, d_comp_pp, abst_pct1, abst_pct2, bn_pct1, bn_pct2, flavio_v1,
 lula_v1, terceira_v1, fatia_f1, fatia_f1_par, fatia_f2, d_fatia_pp, escore_max, secoes_sinal, secoes_sinal2,
 secoes_mudaram, urnas_trocadas, log2_atencao_max, secoes_log_subiu, secoes_log_persiste, secoes_log_reinicio,
-secoes_log_bateria, clima1, clima2, frases`. Totais do 2º turno só sobre seções com BU lido;
+secoes_log_bateria, secoes_anomalas, clima1, clima2, clima2o, frases`. Totais do 2º turno só sobre seções com BU lido;
+`secoes_anomalas` conta as seções com BU do 2º turno no grupo atípico e fica `null` quando nenhuma seção do grupo
+tem dado da mistura (sem o motor, o mapa pinta de cinza, não de "nenhuma");
 `*_par` = 1º turno **sobre as mesmas seções**; deltas do prédio, do município e da UF usam o par (a cobertura
 parcial não inventa variação). `clima1` = `[chuva_mm (horas de votação), chuva_dia_mm, faixa, rajada_kmh, pico,
 urnas, urnas_bateria_votacao]`; `clima2` = `[chuva_mm, prob_pct, rajada_kmh, risco]` (previsão da véspera).
@@ -113,7 +119,7 @@ Totais do município (`municipios`) têm as mesmas chaves agregadas (`CAMPOS_TOT
 `local_id, zona, nome, endereco, bairro, cep, lat, lon, n_secoes, n_bu2, secao_link, aptos1, aptos2,
 comp_pct1, comp_pct2, d_comp_pp, abst_pct2, bn_pct2, flavio2, lula2, fatia_f1, fatia_f1_par, fatia_f2,
 d_fatia_pp, escore_max, secoes_sinal, secoes_sinal2, secoes_mudaram, urnas_trocadas, log2_atencao_max,
-secoes_log_subiu, secoes_log_persiste, secoes_log_reinicio, secoes_log_bateria, link`.
+secoes_log_subiu, secoes_log_persiste, secoes_log_reinicio, secoes_log_bateria, secoes_anomalas, link`.
 
 ### `cep/<2 dígitos>.json`
 Cópia do índice de CEP do Politize (`exato`, `prefixo5` → `local_id`): CEP dos locais de votação, não do eleitor.
@@ -141,8 +147,10 @@ O build decide quais frases valem e grava `[código, args formatados em pt-BR]`;
 - **Seção**, nesta ordem: pequena | ainda sem BU do 2º turno (+ resultado do 1º turno) | resultado do 2º turno,
   fatia entre os dois contra o 1º turno (igual abaixo de 0,5 ponto), comparecimento (igual abaixo de 1 ponto),
   brancos e nulos, biometria; horário do último voto nos dois turnos; recebimento do BU; situação da urna;
-  contingência; sinais (0, 1 ou n) com a explicação provável ou o pedido de conferir ata e log; agregação
-  mudada; mudança de local (categoria e distância); logs; nível de fiscalização do 1º turno.
+  contingência; sinais (0, 1 ou n) com a explicação provável ou o pedido de conferir ata e log; grupo da mistura
+  estatística (`ml_atipico`: "Pela estatística dos dois turnos, esta seção está no grupo atípico do país: pede
+  explicação, não prova irregularidade."; `ml_comum`: fora do grupo atípico; nada quando `ml_anomalo` é `null`);
+  agregação mudada; mudança de local (categoria e distância); logs; nível de fiscalização do 1º turno.
 - **Logs** (regra do coordenador, 26/10): atenção de 0/1 no 1º turno para 2/3 no 2º → "o nível de atenção do log
   subiu de X para Y", com os diagnósticos e o rótulo; mesma atenção nos dois turnos e alguma família em comum →
   "o mesmo sinal já aparecia no 1º turno" (mesmo nível sem família em comum: "o 1º turno tinha o mesmo nível de
@@ -151,7 +159,8 @@ O build decide quais frases valem e grava `[código, args formatados em pt-BR]`;
   (simultânea ou isolada) e o aviso da MR antes da zerésima como rotina. Sem log do 2º turno, cai na frase do 1º.
 - **Prédio**: cobertura parcial; resultado do 2º turno; variação da fatia nas mesmas seções contra a variação
   do município; comparecimento contra o município; seções com sinal e escore máximo; seções que mudaram de endereço;
-  seções cujo log subiu para 2/3, que têm 2/3 nos dois turnos, com urna religada e com bateria na votação.
+  seções cujo log subiu para 2/3, que têm 2/3 nos dois turnos, com urna religada e com bateria na votação; seções
+  no grupo atípico da estatística (`p_ml`, com concordância "está"/"estão"; só quando a contagem é maior que zero).
 
 ## Aplicativo (`docs/politizese.html`, `docs/assets/politize_se/app.js`, `app.css`)
 
@@ -160,7 +169,12 @@ O build decide quais frases valem e grava `[código, args formatados em pt-BR]`;
 - Ficha da seção: cabeçalho (seção, zona, UF, local, endereço), selos, parágrafo gerado, barras dos dois
   turnos sobre os aptos, tabela 1º × 2º (aptos, votaram, comparecimento, abstenção, votos, brancos, nulos,
   fatia, biometria, primeiro e último voto, recebimento do BU, urna, tipo, cargas), barras de identificação,
-  caixas de sinais, urna, logs (atenção e famílias nos dois turnos, reinícios, bateria, MR, versão e carga), fiscal do 1º turno, mudança de local e clima;
+  caixas de sinais, grupo estatístico (`blocoMl`: "No grupo atípico do país" ou "Fora do grupo atípico", grupo com o
+  rótulo de `catalogos.ml`, densidade em palavras: `ml_p < 0,01` "entre as 1% menos prováveis do país", `< 0,05`
+  "entre as 5% menos prováveis do país", senão "densidade comum"; sem dado, "a análise estatística dos dois turnos
+  ainda não cobre esta seção"; sempre com `rotulo_casa`), urna, logs (atenção e famílias nos dois turnos, reinícios,
+  bateria, MR, versão e carga), fiscal do 1º turno, mudança de local e clima; selo "grupo atípico" e linha no card e
+  no texto compartilhável só quando `ml_anomalo`;
   "Neste prédio" com as seções lado a lado e o prédio contra o município; compartilhar (card 1080 × 1080 no
   canvas, sem nome de local; copiar texto; copiar link).
 - Privacidade: a página **nunca escreve a seção no endereço** (o link é montado só quando pedido); o `#`
@@ -196,21 +210,28 @@ seções de `zona/<UF>/<zona>.json.gz`; validação da coordenada; regra das se�
 interface) e `mapa_saida.py` (gravação). Reaproveita `apuracao_logs.mapa.tabela` por import.
 
 - `indice.json`: `formato`, `gerado_em`, `fonte_gerado_em` (= `gerado_em` do Politize-se), `rotulos`,
-  `cobertura` (copiada), `camadas`, `camada_padrao` (`resultado`), `catalogos {sinais, explicacoes, urna}`,
+  `cobertura` (copiada), `camadas`, `camada_padrao` (`resultado`), `catalogos {sinais, explicacoes, urna, log,
+  log_familias, log_niveis, ml}`, `anomalia_ml` (copiado do Politize-se; `{disponivel: false}` sem o motor),
   `colunas_locais`, `colunas_municipios`, `resumo {locais, com_coord, sem_coord, com_bu2, secoes, secoes_bu2,
   aptos, bytes_ufs}`, `ufs {UF: {arquivo, bytes, contagens, municipios [[mun_tse, nome]]}}`, `zonas {UF: {zona:
   [lat, lon, n]}}`.
 - `uf/<UF>.json`: `municipios` (totais da cidade para "prédio contra a cidade") e `locais`, um prédio por linha:
   `id, nome, endereco, bairro, cep, lat, lon, aprox, n_secoes, n_bu2, secao_link, secoes, aptos1, aptos2,
   comp_pct1, comp_pct2, d_comp_pp, abst_pct2, bn_pct2, fatia_f1_par, fatia_f2, d_fatia_pp, escore_max,
-  secoes_sinal, secoes_mudaram, urnas_trocadas`. Zona e município saem do `id`. Sem BU do 2º turno, os campos
+  secoes_sinal, secoes_mudaram, urnas_trocadas, secoes_anomalas, modelo, modelos, log1_max, log2_max, log_subiu,
+  chuva2_*`. Zona e município saem do `id`. Sem BU do 2º turno, os campos
   do 2º turno e as variações ficam `null` (cinza no mapa); prédio ou município com menos de 30 eleitores não
   mostra voto nem comparecimento; coordenada fora do território vira `null` (só lista); exterior tem `aprox = 1`
   (ponto da cidade do consulado).
 - `cep/<2 dígitos>.json`: `exato` e `p5` → `[lat, lon, n]`, média dos locais de votação com o CEP.
 - Camadas: resultado do 2º turno (`fatia_f2`), mudança contra o 1º turno (`d_fatia_pp`), mudança do
   comparecimento (`d_comp_pp`), abstenção (`abst_pct2`), sinais (`escore_max`), urna trocada, mudança de
-  endereço (esta não depende do BU). Grupo de pontos: média ponderada pelos eleitores, ou parcela dos prédios
+  endereço (esta não depende do BU), modelo da urna, registro da urna do 2º turno, mudou entre os turnos, chuva do
+  dia e **grupo atípico (estatística)** (`anomalia`: tipo `presenca`, campo `secoes_anomalas`, `precisa_bu2` e
+  `precisa_ml`; cor neutro → roxo `#6b4a92`, teto de parcela 0,25 no grupo de pontos; a explicação diz que o grupo
+  foi definido por mistura estatística sobre as frações do eleitorado nos dois turnos, sem o exterior, e traz o
+  rótulo da casa; prédio com `secoes_anomalas` nulo fica cinza, e a legenda avisa quando a análise ainda não entrou
+  nos dados). Grupo de pontos: média ponderada pelos eleitores, ou parcela dos prédios
   com o atributo; a cor pura fica no anel e o miolo é clareado até o número passar 4,5:1.
 - A ficha abre as seções direto de `zona/<UF>/<zona>.json.gz` (sem cópia): 1º → 2º turno de comparecimento,
   Flávio entre os dois e sem digital, sinais com a explicação provável; o botão "Entenda esta seção no
@@ -305,6 +326,17 @@ pede explicação e não prova irregularidade; nenhum texto é citado sem revis�
   (prefixos de CEP atravessam estados) e as contagens por UF são mescladas.
 
 ## Mudanças de esquema (registro para o mapa)
+
+- **26/10/2026, grupo atípico da mistura estatística dos dois turnos** (`analysis/apuracao_2t_2026/CONTRATO_ANOMALIA.md`,
+  seção 7). Seção: acrescentadas `ml_grupo`, `ml_anomalo`, `ml_p` depois de `log2_meta` e antes de `mudanca`. Prédio
+  (zona), prédio no arquivo do município e totais (município e UF): acrescentada `secoes_anomalas` depois de
+  `secoes_log_bateria` (na zona, antes de `clima1`; no município, antes de `link`). Índice: `anomalia_ml {disponivel,
+  secoes, anomalas, gerado_em, nota}` e `catalogos.ml {k, rotulos, atipico, rotulo_casa}`; fontes `anomalia_ml_indice`
+  e `anomalia_ml_secoes` (registradas com `existe: false` enquanto o motor não grava). Frases novas `ml_atipico`,
+  `ml_comum` e `p_ml`. Mapa do Brasil: coluna `secoes_anomalas` em `colunas_locais` (depois de `urnas_trocadas`) e em
+  `colunas_municipios` (no fim), camada `anomalia`, `indice.anomalia_ml` e `catalogos.ml` copiados; o app bumpou
+  `VERSAO` para `20261026e`. Tudo degrada sem os arquivos do motor: campos nulos, `disponivel = false`, camada em
+  cinza, build sem erro (o CI não tem os arquivos pesados). Leitura por nome de coluna, nunca por posição.
 
 - **26/10/2026, logs do 2º turno.** Seção: acrescentadas `log1_familias`, `log2_familias`, `log2_reinicios`,
   `log2_bateria`, `log2_bateria_simultaneas`, `log2_erro_mr`, `log2_meta`; `log2_atencao` e `log2_sinais` agora

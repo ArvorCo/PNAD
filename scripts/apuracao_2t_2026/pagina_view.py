@@ -70,6 +70,12 @@ CAPITULOS: list[tuple[str, str, str, tuple[str, ...]]] = [
         ("secoes.json",),
     ),
     (
+        "anomalia",
+        "Grupos",
+        "Os grupos de seções nos dois turnos",
+        ("anomalia_ml.json",),
+    ),
+    (
         "logs",
         "Logs",
         "O que os logs das 499 mil urnas dizem",

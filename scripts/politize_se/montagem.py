@@ -199,8 +199,13 @@ def somar(rows: list[dict[str, Any]]) -> dict[str, Any]:
     n_bu = n_par = n_1 = 0
     esc_max = sinal = sinal2 = mud = trocadas = 0
     log_max = log_subiu = log_persiste = log_reinicio = log_bat = 0
+    # Mistura estatística dos dois turnos: só conta onde a análise cobre a seção; sem o
+    # arquivo do motor, o campo fica nulo (o mapa pinta de cinza, não de "nenhuma").
+    anomalas: int | None = None
     for r in rows:
         v = r["_raw"]
+        if v["bu2"] and r.get("ml_anomalo") is not None:
+            anomalas = (anomalas or 0) + int(bool(r["ml_anomalo"]))
         if v["flavio1"] is not None:
             n_1 += 1
             for c in ("aptos1", "comp1", "flavio1", "lula1", "terceira1", "bn1"):
@@ -260,6 +265,7 @@ def somar(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "secoes_log_persiste": log_persiste,
         "secoes_log_reinicio": log_reinicio,
         "secoes_log_bateria": log_bat,
+        "secoes_anomalas": anomalas,
     }
     t["d_fatia_pp"] = dif(t["fatia_f2"], t["fatia_f1_par"])
     t["d_comp_pp"] = dif(t["comp_pct2"], t["comp_pct1_par"])
@@ -362,6 +368,7 @@ def processar_uf(uf: str, ctx: Contexto) -> ResultadoUF:
     mud = fontes.mudancas(uf)
     log1 = fontes.logs_1t(uf)
     clima1 = fontes.clima_1t(uf)
+    ml = fontes.anomalia_ml(uf)
 
     principais2: set[tuple[int, int]] = set()
     agreg2: dict[tuple[int, int], list[int]] = defaultdict(list)
@@ -462,6 +469,7 @@ def processar_uf(uf: str, ctx: Contexto) -> ResultadoUF:
         )
         fz = fis.get((z, s))
         logs = log1.get((z, s))
+        mls = ml.get((z, s))
         r: dict[str, Any] = {
             "uf": uf,
             "secao": s,
@@ -521,6 +529,9 @@ def processar_uf(uf: str, ctx: Contexto) -> ResultadoUF:
             "log1_sinais": logs if logs is not None else None,
             "log1_familias": familias.familias_de(logs) if logs is not None else None,
             **_campos_log2(uf, str(mun), log2.get((z, s)), log2d.get((z, s)), corr2),
+            "ml_grupo": mls[0] if mls else None,
+            "ml_anomalo": mls[3] if mls else None,
+            "ml_p": round(mls[2], 4) if mls else None,
             "mudanca": mud.get((z, s)),
             "_raw": raw,
             "_pol_local": (pol or {}).get("local"),
