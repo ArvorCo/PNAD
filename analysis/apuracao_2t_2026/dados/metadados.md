@@ -1,12 +1,12 @@
 # Metadados das urnas por seção: repetição e coerência (2º turno de 2026)
 
-Gerado em 2026-10-26T15:59:33+00:00. Rótulo: **pede explicação, não prova irregularidade**. Estado: completo.
+Gerado em 2026-10-26T19:46:19+00:00. Rótulo: **pede explicação, não prova irregularidade**. Estado: completo.
 
 ## Cobertura
 
 - BUs: 1º turno 499.187, 2º turno 499.207 seções.
 - `.vsc` do 2º turno: 517.179 seções tentadas (ok 499.207, agregada 17.931, sem_vsc 41) para 499.207 BUs.
-- `.vsc` do 1º turno: 492.426 seções tentadas (ok 475.924, agregada 16.502) para 499.187 BUs.
+- `.vsc` do 1º turno: 517.179 seções tentadas (ok 499.207, agregada 17.931, sem_vsc 41) para 499.187 BUs.
 - Logs processados do 2º turno: 499.176 seções, 499.176 com metadados da urna.
 
 ## O que o `.vsc` contém
@@ -80,13 +80,13 @@ Arquivo DER com três blocos: assinatura de software do TSE (usuário SEVIN), as
 | Versão do software de votação | BU | global | 499.187 | 1 | | | coerente: 10.23.0.0 - Praia da Barra do Cahy (499.187) |
 | SHA-256 do arquivo do BU | BU | secao | 499.187 | 499.187 | 0 | 0 | 0 / 0 |
 | Hash de transmissão (diretório do aux) | BU | secao | 499.187 | 499.187 | 0 | 0 | 0 / 0 |
-| SHA-256 do arquivo .vsc | .vsc | secao | 475.904 | 475.904 | 0 | 0 | 0 / 0 |
-| Série da urna na assinatura de hardware | .vsc | urna | 475.904 | 475.904 | 0 | 0 | 0 / 0 |
-| SHA-256 do certificado de hardware | .vsc | urna | 475.904 | 475.904 | 0 | 0 | 0 / 0 |
-| SHA-256 da chave pública do certificado | .vsc | urna | 475.904 | 475.904 | 0 | 0 | 0 / 0 |
-| Número de série do certificado dentro da AC emissora | .vsc | urna | 475.904 | 475.904 | 0 | 0 | 0 / 0 |
-| Chave de software do TSE (série) | .vsc | global | 475.904 | 1 | | | coerente: 20260708 (475.904) |
-| Data da chave de software do TSE | .vsc | global | 475.904 | 1 | | | coerente: 202607021654 (475.904) |
+| SHA-256 do arquivo .vsc | .vsc | secao | 499.187 | 499.187 | 0 | 0 | 0 / 0 |
+| Série da urna na assinatura de hardware | .vsc | urna | 499.187 | 499.159 | 1 | 29 | 0 / 0 |
+| SHA-256 do certificado de hardware | .vsc | urna | 499.187 | 499.159 | 1 | 29 | 0 / 0 |
+| SHA-256 da chave pública do certificado | .vsc | urna | 499.187 | 499.159 | 1 | 29 | 0 / 0 |
+| Número de série do certificado dentro da AC emissora | .vsc | urna | 499.187 | 499.159 | 1 | 29 | 0 / 0 |
+| Chave de software do TSE (série) | .vsc | global | 499.187 | 1 | | | coerente: 20260708 (499.187) |
+| Data da chave de software do TSE | .vsc | global | 499.187 | 1 | | | coerente: 202607021654 (499.187) |
 | Número de série da memória de resultado (MR) no log, no dia da eleição | log | urna | 0 | | | | sem dados |
 | Computador que gerou a mídia de votação, no log do dia | log | compartilhado | 0 | | | | sem dados |
 | Identificador da mídia de carga no log | log | compartilhado | 0 | | | | sem dados |
@@ -100,23 +100,27 @@ Arquivo DER com três blocos: assinatura de software do TSE (usuário SEVIN), as
 - Número de série da mídia de carga (FC): Mídia ou computador compartilhado dentro da zona ou da UF: 22.888 grupos, 499.008 seções.
   Pares iguais observados 0; esperados ao acaso entre 23.067 identificadores de 32 bits: 0,06 (limite de 99,9%: 2).
 - Computador que gerou a mídia de carga (nome, TPM, instalação): Mídia ou computador compartilhado dentro da zona ou da UF: 2.422 grupos, 499.156 seções.
+- Série da urna na assinatura de hardware: Sistema de apuração: 1 grupos, 29 seções.
+- SHA-256 do certificado de hardware: Sistema de apuração: 1 grupos, 29 seções.
+- SHA-256 da chave pública do certificado: Sistema de apuração: 1 grupos, 29 seções.
+- Número de série do certificado dentro da AC emissora: Sistema de apuração: 1 grupos, 29 seções.
 
-### Coerência BU × `.vsc`, 1º turno (475.904 seções com `.vsc` lido)
+### Coerência BU × `.vsc`, 1º turno (499.187 seções com `.vsc` lido)
 
-- Número interno do BU igual à série da assinatura de hardware: 475.856 sim, 0 não.
-- CN do certificado igual à série: 475.904 sim, 0 não.
-- Modelo no `.vsc` igual ao do BU: 475.902 sim, 0 não; AC compatível com o modelo: 475.904 sim, 0 não.
-- Cadeia até a AC arquivada: 475.904 sim, 0 não. Por AC: AC UE2020 191.729, AC UE2022 190.140, AC URNA 94.035.
-- Autoassinatura de hardware: 475.904 sim, 0 não; assinatura de hardware do BU: 475.904 sim, 0 não.
-- BU publicado com o SHA-512 listado no `.vsc`: 475.904 sim, 0 não.
-- Certificado válido no dia: 475.904 sim, 0 não.
+- Número interno do BU igual à série da assinatura de hardware: 499.137 sim, 0 não.
+- CN do certificado igual à série: 499.187 sim, 0 não.
+- Modelo no `.vsc` igual ao do BU: 499.156 sim, 0 não; AC compatível com o modelo: 499.187 sim, 0 não.
+- Cadeia até a AC arquivada: 499.187 sim, 0 não. Por AC: AC UE2020 200.457, AC UE2022 198.748, AC URNA 99.982.
+- Autoassinatura de hardware: 499.187 sim, 0 não; assinatura de hardware do BU: 499.187 sim, 0 não.
+- BU publicado com o SHA-512 listado no `.vsc`: 499.187 sim, 0 não.
+- Certificado válido no dia: 499.187 sim, 0 não.
 - Minutos entre a emissão do BU e a assinatura de hardware: mediana 1,18, máximo 308,63.
 - Falhas por teste: id_bu_diferente_da_serie_hw 0, modelo_vsc_diferente_do_bu 0, ac_incompativel_com_modelo 0, cadeia_valida_falso 0, hw_assinatura_ok_falso 0, hw_bu_assinatura_ok_falso 0, listas_ok_falso 0, hw_resumo_ok_falso 0, sw_resumo_ok_falso 0, cn_confere_usuario_falso 0, bu_diferente_do_vsc 0, certificado_fora_da_validade 0, vsc_antes_da_emissao_do_bu 0, vsc_mais_de_4h_depois_da_emissao 2.
 
 ## A mesma seção nos dois turnos
 
-- Seções com `.vsc` nos dois turnos: 475.922; mesma urna e mesmo certificado 471.698; urna e certificado trocados juntos 4.224.
-- Mesma urna com certificado diferente: 0. Urna diferente com o mesmo certificado: 0. Certificado do 1º turno em outra seção no 2º: 74.
+- Seções com `.vsc` nos dois turnos: 499.176; mesma urna e mesmo certificado 494.747; urna e certificado trocados juntos 4.429.
+- Mesma urna com certificado diferente: 0. Urna diferente com o mesmo certificado: 0. Certificado do 1º turno em outra seção no 2º: 85.
 - Carga (BU, 499.187 seções): mesma urna e mesma carga 494.394; mesma urna com carga nova 359 (359 com a carga feita entre 05/10 e 24/10, recarga para o 2º turno); urna trocada 4.434, das quais com o mesmo código de carga 0.
 
 ## BU × log do 2º turno
@@ -147,5 +151,4 @@ Fatia de Flávio entre os válidos dos dois finalistas, menos a média das demai
 
 ## Pendências
 
-- `.vsc` do 1º turno parcial: a comparação de certificado entre turnos cobre só as seções já lidas.
 - A assinatura de software (SEVIN, algoritmo 3 de 256 bits) não é verificada; só o resumo SHA-512 dela.

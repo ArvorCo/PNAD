@@ -575,6 +575,39 @@ def metadados(L: dict) -> str:
             f"{inteiro(z['7_as_8'])} seções; depois das 8h em {inteiro(z['depois_das_8'])}.",
             "inferencia",
         )
+        + _vsc_turnos(M)
+    )
+
+
+def _vsc_turnos(M: dict) -> str:
+    """Certificado de hardware de cada urna (`.vsc`) nos dois turnos: a mesma seção recebeu a
+    mesma urna? Quando trocou, o certificado trocou junto? Sem dado, não escreve nada.
+    """
+    e = (M.get("dossie_metadados") or {}).get("entre_turnos_vsc") or {}
+    if not e.get("secoes_com_vsc_nos_dois_turnos"):
+        return ""
+    cg = e.get("carga") or {}
+    dias = cg.get("carga_nova_por_dia") or {}
+    faixa = (
+        f", todas entre {min(dias)[8:10]}/{min(dias)[5:7]} e {max(dias)[8:10]}/{max(dias)[5:7]}"
+        if dias
+        else ""
+    )
+    return p(
+        f"<strong>Certificado da urna nos dois turnos:</strong> {inteiro(e['secoes_com_vsc_nos_dois_turnos'])} seções "
+        f"têm o arquivo de assinatura (<code>.vsc</code>) nos dois turnos. Em {inteiro(e['mesma_urna_mesmo_certificado'])} "
+        f"a mesma urna voltou com o mesmo certificado de hardware; em {inteiro(e['urna_trocada_certificado_trocado'])} "
+        f"a urna trocou e o certificado trocou junto. Mesma urna com certificado diferente: "
+        f"{inteiro(e['mesma_urna_certificado_diferente'])}. Urnas diferentes com o mesmo certificado: "
+        f"{inteiro(e['urna_diferente_mesmo_certificado'])}. O certificado de uma urna do 1º turno reaparece em outra "
+        f"seção no 2º em {inteiro(e['certificado_do_1t_em_outra_secao_no_2t'])} casos, "
+        f"{inteiro(e.get('outra_secao_mesmo_municipio', 0))} no mesmo município e "
+        f"{inteiro(e.get('outra_secao_mesma_zona', 0))} na mesma zona: urna de reserva realocada, com o número "
+        f"interno e o certificado andando juntos. Pelo BU, {inteiro(cg.get('mesma_urna_carga_nova', 0))} urnas que "
+        f"serviram a mesma seção receberam carga nova entre os turnos{faixa}; nenhuma urna trocada manteve o código "
+        "de carga da anterior. Um certificado por urna, uma urna por seção, nenhum certificado fora da sua autoridade: "
+        "a repetição alegada em 2022 não aparece em 2026.",
+        "verificado",
     )
 
 

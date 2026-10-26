@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-26T15:59:33+00:00",
+ "gerado_em": "2026-10-26T19:46:19+00:00",
  "rotulo": "pede explicação, não prova irregularidade",
  "estado": "completo",
  "formato_vsc": "Arquivo DER com três blocos: assinatura de software do TSE (usuário SEVIN), assinatura de hardware da urna (usuário UEAO e a série da urna) e um rodapé com o código do modelo (13, 15, 20, 22) e o algoritmo da chave de hardware. Cada bloco lista os arquivos da seção (bu.dat, rdv.dat, jufa.dat, imgbu.dat, imgze.dat, hash.dat, wsqbio.jez, wsqman.jez, wsqmes.jez, mr.ver, log.jez; no sistema de apuração, busa.dat e logsa.jez) com tamanho, SHA-512 e assinatura. O bloco de hardware termina no certificado X.509 da urna: PEM e Ed521 nas UE2020 e UE2022 (AC UE2020 e AC UE2022), DER e ECDSA P-521 nas UE2013 e UE2015 (AC URNA). A urna assina o SHA-512 do resumo SHA-512, a mesma regra do QR Code do BU.",
@@ -7,14 +7,15 @@
   "bu_1t": 499187,
   "bu_2t": 499207,
   "vsc_2t": "517.179 seções tentadas (ok 499.207, agregada 17.931, sem_vsc 41) para 499.207 BUs",
-  "vsc_1t": "492.426 seções tentadas (ok 475.924, agregada 16.502) para 499.187 BUs",
+  "vsc_1t": "517.179 seções tentadas (ok 499.207, agregada 17.931, sem_vsc 41) para 499.187 BUs",
   "vsc_detalhe": {
    "1t": {
     "status": {
-     "ok": 475924,
-     "agregada": 16502
+     "ok": 499207,
+     "agregada": 17931,
+     "sem_vsc": 41
     },
-    "arquivos_listados": 5236386,
+    "arquivos_listados": 5487279,
     "arquivos_com_nome_de_outra_secao": 0
    },
    "2t": {
@@ -917,8 +918,8 @@
      "fonte": ".vsc",
      "escopo": "secao",
      "descricao": "SHA-256 do arquivo .vsc",
-     "secoes_com_valor": 475904,
-     "valores_distintos": 475904,
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499187,
      "grupos_repetidos": 0,
      "secoes_em_grupos": 0,
      "maior_grupo": 0,
@@ -936,13 +937,20 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "Série da urna na assinatura de hardware",
-     "secoes_com_valor": 475904,
-     "valores_distintos": 475904,
-     "grupos_repetidos": 0,
-     "secoes_em_grupos": 0,
-     "maior_grupo": 0,
-     "por_explicacao": {},
-     "por_geografia": {},
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499159,
+     "grupos_repetidos": 1,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 29,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 1,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 1
+     },
      "colisao_aleatoria": null,
      "sem_explicacao": {
       "grupos": 0,
@@ -955,13 +963,20 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "SHA-256 do certificado de hardware",
-     "secoes_com_valor": 475904,
-     "valores_distintos": 475904,
-     "grupos_repetidos": 0,
-     "secoes_em_grupos": 0,
-     "maior_grupo": 0,
-     "por_explicacao": {},
-     "por_geografia": {},
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499159,
+     "grupos_repetidos": 1,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 29,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 1,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 1
+     },
      "colisao_aleatoria": null,
      "sem_explicacao": {
       "grupos": 0,
@@ -974,13 +989,20 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "SHA-256 da chave pública do certificado",
-     "secoes_com_valor": 475904,
-     "valores_distintos": 475904,
-     "grupos_repetidos": 0,
-     "secoes_em_grupos": 0,
-     "maior_grupo": 0,
-     "por_explicacao": {},
-     "por_geografia": {},
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499159,
+     "grupos_repetidos": 1,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 29,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 1,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 1
+     },
      "colisao_aleatoria": null,
      "sem_explicacao": {
       "grupos": 0,
@@ -993,13 +1015,20 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "Número de série do certificado dentro da AC emissora",
-     "secoes_com_valor": 475904,
-     "valores_distintos": 475904,
-     "grupos_repetidos": 0,
-     "secoes_em_grupos": 0,
-     "maior_grupo": 0,
-     "por_explicacao": {},
-     "por_geografia": {},
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499159,
+     "grupos_repetidos": 1,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 29,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 1,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 1
+     },
      "colisao_aleatoria": null,
      "sem_explicacao": {
       "grupos": 0,
@@ -1012,12 +1041,12 @@
      "fonte": ".vsc",
      "escopo": "global",
      "descricao": "Chave de software do TSE (série)",
-     "secoes_com_valor": 475904,
+     "secoes_com_valor": 499187,
      "valores_distintos": 1,
      "valores": [
       {
        "valor": "20260708",
-       "secoes": 475904
+       "secoes": 499187
       }
      ],
      "coerente": true
@@ -1027,12 +1056,12 @@
      "fonte": ".vsc",
      "escopo": "global",
      "descricao": "Data da chave de software do TSE",
-     "secoes_com_valor": 475904,
+     "secoes_com_valor": 499187,
      "valores_distintos": 1,
      "valores": [
       {
        "valor": "202607021654",
-       "secoes": 475904
+       "secoes": 499187
       }
      ],
      "coerente": true
@@ -1079,72 +1108,72 @@
     }
    },
    "coerencia_vsc": {
-    "secoes_vsc_ok": 475904,
+    "secoes_vsc_ok": 499187,
     "origem": {
-     "vota": 475902,
-     "sa": 2
+     "vota": 499156,
+     "sa": 31
     },
     "mesmo_hash_do_bu": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0,
      "sem_dado": 0
     },
-    "votacao_recuperada_assinada_por_outra_urna": 12,
+    "votacao_recuperada_assinada_por_outra_urna": 14,
     "id_bu_igual_serie_hw": {
-     "sim": 475856,
+     "sim": 499137,
      "nao": 0
     },
     "cn_do_certificado_igual_serie_hw": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0,
      "sem_dado": 0
     },
     "modelo_vsc_igual_bu": {
-     "sim": 475902,
+     "sim": 499156,
      "nao": 0
     },
     "ac_compativel_com_modelo": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0
     },
     "por_ac": {
-     "AC UE2020": 191729,
-     "AC UE2022": 190140,
-     "AC URNA": 94035
+     "AC UE2020": 200457,
+     "AC UE2022": 198748,
+     "AC URNA": 99982
     },
     "cadeia_ate_a_ac": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0,
      "sem_dado": 0
     },
     "autoassinatura_hw": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0,
      "sem_dado": 0
     },
     "assinatura_hw_do_bu": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0,
      "sem_dado": 0
     },
     "bu_publicado_igual_ao_vsc": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0,
      "sem_dado": 0
     },
     "listas_sw_hw_iguais": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0,
      "sem_dado": 0
     },
     "certificado_valido_no_dia": {
-     "sim": 475904,
+     "sim": 499187,
      "nao": 0
     },
     "minutos_vsc_depois_da_emissao": {
-     "n": 475854,
+     "n": 499106,
      "mediana": 1.18,
-     "p99": 5.72,
+     "p99": 5.7,
      "min": 0.55,
      "max": 308.63
     },
@@ -1168,12 +1197,12 @@
   }
  },
  "entre_turnos_vsc": {
-  "secoes_com_vsc_nos_dois_turnos": 475922,
-  "mesma_urna_mesmo_certificado": 471698,
-  "urna_trocada_certificado_trocado": 4224,
+  "secoes_com_vsc_nos_dois_turnos": 499176,
+  "mesma_urna_mesmo_certificado": 494747,
+  "urna_trocada_certificado_trocado": 4429,
   "mesma_urna_certificado_diferente": 0,
   "urna_diferente_mesmo_certificado": 0,
-  "certificado_do_1t_em_outra_secao_no_2t": 74,
+  "certificado_do_1t_em_outra_secao_no_2t": 85,
   "certificado_do_1t_em_outra_secao_no_2t_casos": [
    {
     "secao_2t": "ac/01015/2/88",
@@ -1471,6 +1500,11 @@
     "serie_hw": "2303588"
    },
    {
+    "secao_2t": "sp/62200/427/49",
+    "secao_1t": "sp/72176/427/35",
+    "serie_hw": "2182494"
+   },
+   {
     "secao_2t": "sp/63134/388/113",
     "secao_1t": "sp/63134/388/114",
     "serie_hw": "1819392"
@@ -1499,6 +1533,11 @@
     "secao_2t": "sp/68756/93/515",
     "secao_1t": "sp/68756/93/201",
     "serie_hw": "1786618"
+   },
+   {
+    "secao_2t": "sp/69051/135/332",
+    "secao_1t": "sp/71358/135/206",
+    "serie_hw": "2181097"
    },
    {
     "secao_2t": "sp/70335/187/123",
@@ -1541,9 +1580,54 @@
     "serie_hw": "2362612"
    },
    {
+    "secao_2t": "sp/71072/352/15",
+    "secao_1t": "sp/71072/352/487",
+    "serie_hw": "1821132"
+   },
+   {
+    "secao_2t": "sp/71072/418/150",
+    "secao_1t": "sp/71072/418/133",
+    "serie_hw": "1819430"
+   },
+   {
+    "secao_2t": "sp/71072/418/168",
+    "secao_1t": "sp/71072/418/73",
+    "serie_hw": "2276282"
+   },
+   {
+    "secao_2t": "sp/71072/418/187",
+    "secao_1t": "sp/71072/418/114",
+    "serie_hw": "2398894"
+   },
+   {
+    "secao_2t": "sp/71072/418/373",
+    "secao_1t": "sp/71072/418/418",
+    "serie_hw": "2403160"
+   },
+   {
+    "secao_2t": "sp/71072/418/452",
+    "secao_1t": "sp/71072/418/387",
+    "serie_hw": "1670355"
+   },
+   {
+    "secao_2t": "sp/71072/418/475",
+    "secao_1t": "sp/71072/418/363",
+    "serie_hw": "2397674"
+   },
+   {
     "secao_2t": "sp/71153/132/48",
     "secao_1t": "sp/65099/132/289",
     "serie_hw": "1830744"
+   },
+   {
+    "secao_2t": "sp/71579/416/97",
+    "secao_1t": "sp/71579/416/141",
+    "serie_hw": "2144093"
+   },
+   {
+    "secao_2t": "sp/72095/144/13",
+    "secao_1t": "sp/72095/144/150",
+    "serie_hw": "1840488"
    }
   ],
   "carga": {
@@ -1789,7 +1873,6 @@
   }
  ],
  "pendencias": [
-  "`.vsc` do 1º turno parcial: a comparação de certificado entre turnos cobre só as seções já lidas.",
   "A assinatura de software (SEVIN, algoritmo 3 de 256 bits) não é verificada; só o resumo SHA-512 dela."
  ]
 }

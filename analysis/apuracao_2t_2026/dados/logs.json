@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-26T16:09:16+00:00",
+ "gerado_em": "2026-10-26T19:49:51+00:00",
  "rotulo": "pede explicação, não prova irregularidade",
  "fontes": {
   "metricas_2t": "data/outputs/logs_urnas_2t_2026.sqlite",
@@ -1614,7 +1614,7 @@
  },
  "clima_observado": {
   "disponivel": true,
-  "gerado_clima_em": "2026-10-26T16:09:09+00:00",
+  "gerado_clima_em": "2026-10-26T16:38:04+00:00",
   "cobertura_celulas": {
    "celulas": 6539,
    "com_modelo": 6539,
@@ -3129,7 +3129,7 @@
   },
   "versao_unica": true,
   "dossie_metadados": {
-   "gerado_em": "2026-10-26T15:59:33+00:00",
+   "gerado_em": "2026-10-26T19:46:19+00:00",
    "estado": "completo",
    "coerencia_logs": {
     "secoes_com_log": 499176,
@@ -3231,6 +3231,59 @@
      "sem_dado": 0
     },
     "secoes_com_outra_urna_no_log": 1839
+   },
+   "entre_turnos_vsc": {
+    "secoes_com_vsc_nos_dois_turnos": 499176,
+    "mesma_urna_mesmo_certificado": 494747,
+    "urna_trocada_certificado_trocado": 4429,
+    "mesma_urna_certificado_diferente": 0,
+    "urna_diferente_mesmo_certificado": 0,
+    "certificado_do_1t_em_outra_secao_no_2t": 85,
+    "carga": {
+     "secoes_nos_dois_turnos": 499187,
+     "mesma_urna_mesma_carga": 494394,
+     "mesma_urna_carga_nova": 359,
+     "urna_trocada": 4434,
+     "urna_trocada_mesma_carga": 0,
+     "carga_nova_entre_os_turnos": 359,
+     "carga_nova_fora_do_intervalo": 0,
+     "carga_nova_por_dia": {
+      "2026-10-14": 16,
+      "2026-10-15": 70,
+      "2026-10-16": 87,
+      "2026-10-17": 49,
+      "2026-10-18": 45,
+      "2026-10-19": 40,
+      "2026-10-20": 15,
+      "2026-10-21": 16,
+      "2026-10-22": 7,
+      "2026-10-23": 11,
+      "2026-10-24": 3
+     }
+    },
+    "outra_secao_mesmo_municipio": 58,
+    "outra_secao_mesma_zona": 45,
+    "outra_secao_casos_listados": 85
+   },
+   "vsc_detalhe": {
+    "1t": {
+     "status": {
+      "ok": 499207,
+      "agregada": 17931,
+      "sem_vsc": 41
+     },
+     "arquivos_listados": 5487279,
+     "arquivos_com_nome_de_outra_secao": 0
+    },
+    "2t": {
+     "status": {
+      "ok": 499207,
+      "agregada": 17931,
+      "sem_vsc": 41
+     },
+     "arquivos_listados": 5487289,
+     "arquivos_com_nome_de_outra_secao": 0
+    }
    }
   }
  },

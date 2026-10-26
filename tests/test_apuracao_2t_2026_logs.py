@@ -334,3 +334,27 @@ def test_rdv_resumo_fecha(L):
     for u in R["ufs"]:
         for x in u["limites"]:
             assert x["min_pct"] <= x["independencia_pct"] <= x["max_pct"]
+
+
+def test_certificado_da_urna_nos_dois_turnos(L):
+    """Com a coleta completa dos `.vsc` dos dois turnos, o bloco de certificados entra em
+    logs.json sem incoerência e o capítulo o publica."""
+    e = L["metadados"]["dossie_metadados"]["entre_turnos_vsc"]
+    assert e["secoes_com_vsc_nos_dois_turnos"] > 490_000
+    assert e["mesma_urna_certificado_diferente"] == 0
+    assert e["urna_diferente_mesmo_certificado"] == 0
+    assert (
+        e["mesma_urna_mesmo_certificado"] + e["urna_trocada_certificado_trocado"]
+        == e["secoes_com_vsc_nos_dois_turnos"]
+    )
+    assert e["outra_secao_mesma_zona"] <= e["outra_secao_mesmo_municipio"]
+    assert (
+        e["outra_secao_mesmo_municipio"] <= e["certificado_do_1t_em_outra_secao_no_2t"]
+    )
+    assert e["carga"]["carga_nova_fora_do_intervalo"] == 0
+    assert "certificado_do_1t_em_outra_secao_no_2t_casos" not in e
+
+
+def test_capitulo_publica_certificado_entre_turnos(capitulo):
+    assert "Certificado da urna nos dois turnos" in capitulo
+    assert "a repetição alegada em 2022 não aparece em 2026" in capitulo

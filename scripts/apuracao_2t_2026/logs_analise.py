@@ -472,5 +472,29 @@ def montar(refazer: bool = False) -> dict:
             "gerado_em": m.get("gerado_em"),
             "estado": m.get("estado"),
             "coerencia_logs": m.get("coerencia_logs"),
+            "entre_turnos_vsc": _vsc_entre_turnos(m.get("entre_turnos_vsc") or {}),
+            "vsc_detalhe": (m.get("cobertura") or {}).get("vsc_detalhe"),
         }
+    return out
+
+
+def _vsc_entre_turnos(e: dict) -> dict:
+    """Contagens da comparação de certificados entre turnos, com os casos de certificado do
+    1º turno em outra seção classificados por município e zona (a lista completa fica em
+    ``metadados.json``)."""
+    casos = e.get("certificado_do_1t_em_outra_secao_no_2t_casos") or []
+    mesmo_mun = sum(
+        1 for c in casos if c["secao_2t"].split("/")[:2] == c["secao_1t"].split("/")[:2]
+    )
+    mesma_zona = sum(
+        1 for c in casos if c["secao_2t"].split("/")[:3] == c["secao_1t"].split("/")[:3]
+    )
+    out = {
+        k: v
+        for k, v in e.items()
+        if k != "certificado_do_1t_em_outra_secao_no_2t_casos"
+    }
+    out["outra_secao_mesmo_municipio"] = mesmo_mun
+    out["outra_secao_mesma_zona"] = mesma_zona
+    out["outra_secao_casos_listados"] = len(casos)
     return out
