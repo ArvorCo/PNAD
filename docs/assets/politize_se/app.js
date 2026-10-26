@@ -455,7 +455,7 @@ function rotuloFonte2(fonte, o) {
     const n = num(o.n_estacoes);
     return `chuva medida em ${n === 1 ? 'estação' : 'estações'} ${rede} a ${f1(o.dist_km)} km`;
   }
-  if (fonte === 'era5') return 'chuva observada (reanálise ERA5)';
+  if (fonte === 'era5') return 'chuva observada (reanálise climática)';
   if (fonte === 'ifs_provisorio') return 'modelo, provisório';
   return SD;
 }
@@ -469,7 +469,7 @@ function blocoClima(l) {
     a ? h('p', {}, `1º turno, observado: ${f1(a.chuva_mm)} mm de chuva nas horas de votação (${f1(a.chuva_dia_mm)} mm no dia), rajada de até ${f0(a.rajada_kmh)} km/h.${num(a.urnas_bateria_votacao) > 0 ? ` ${f0(a.urnas_bateria_votacao)} de ${f0(a.urnas)} urnas do local usaram bateria durante a votação.` : ''}`) : null,
     o ? h('p', {}, `2º turno, no dia: ${f1(o.chuva_dia_mm)} mm em 25/10 (${rotuloFonte2(o.fonte_dia, o)}); ${f1(o.chuva_mm)} mm nas horas de votação, 7h às 18h (${rotuloFonte2(o.fonte_votacao, o)}); rajada de até ${f0(o.rajada_kmh)} km/h (modelo, provisório).`) : null,
     b ? h('p', { class: o ? 'ajuda' : null }, `2º turno, previsão publicada na véspera: ${f1(b.chuva_mm)} mm, chance de chuva de ${f0(b.prob_pct)}%, risco ${b.risco || SD}.`) : null,
-    h('p', { class: 'ajuda' }, 'Reanálise ERA5 para o 1º turno. No 2º turno, pluviômetro a até 50 km é estimativa para a célula de 0,25 grau, não medição no prédio; onde não há estação, o modelo ECMWF IFS é provisório e será trocado pela reanálise ERA5.' + (medida ? '' : ' Sem estação a 50 km deste local.')));
+    h('p', { class: 'ajuda' }, 'Reanálise climática para o 1º turno. No 2º turno, pluviômetro a até 50 km é estimativa para a célula de 0,25 grau, não medição no prédio; onde não há estação, o modelo modelo meteorológico é provisório e será trocado pela reanálise climática.' + (medida ? '' : ' Sem estação a 50 km deste local.')));
 }
 function tabelaPredio(uf, zd, local, atual) {
   const secs = zd.listaSecoes.filter((s) => s.li === local.li).sort((a, b) => a.secao - b.secao);

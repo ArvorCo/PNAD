@@ -346,7 +346,11 @@ def test_lote_pula_o_que_ja_foi_baixado():
 
 
 def _uf_jsons():
-    return sorted(p for p in MAPA.glob("*.json") if p.name != "previsao.json")
+    return sorted(
+        p
+        for p in MAPA.glob("*.json")
+        if p.name not in ("previsao.json", "observado_2t.json")
+    )
 
 
 @pytest.mark.skipif(not MAPA.exists(), reason="saídas do mapa ainda não geradas")

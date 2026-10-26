@@ -57,7 +57,7 @@ CAMINHOS=(
   video/apuracao_2t/
   # clima do 2º turno (modelo provisório, medição agendada)
   scripts/clima-2t.py scripts/clima-2t-modelo.py scripts/clima-2t-cemaden.py scripts/clima-2t-fotos-cemaden.py scripts/clima-2t-atualizar.sh scripts/clima_2t/ analysis/clima_2t_2026/
-  docs/assets/fiscais_mapa/clima/observado_2t.json docs/assets/fiscais_mapa/app.js docs/fiscais_mapa.html tests/test_clima_2t_observado.py
+  docs/assets/fiscais_mapa/clima/observado_2t.json docs/assets/fiscais_mapa/app.js docs/fiscais_mapa.html tests/test_clima_2t_observado.py tests/test_clima_1t.py tests/test_fiscais_mapa_mudancas.py
   # raiz
   AGENTS.md .gitignore .gitattributes requirements.txt
 )

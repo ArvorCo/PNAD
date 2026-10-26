@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -67,8 +68,9 @@ def test_interface_sem_jargao_e_com_crit():
     assert TRAVESSAO not in js and TRAVESSAO not in html
     assert "fraude" not in html.lower() and "fraude" not in js.lower()
     assert "'crit='" in js and "mudanca_endereco" in js
-    assert "app.js?v=20261024-clima-horario" in html
-    assert "20261024-clima-horario" in js
+    versao = re.search(r'app\.js\?v=(2026\d{4}-[\w-]+)"', html)
+    assert versao, "a página precisa carregar app.js com carimbo de versão"
+    assert versao.group(1) in js, "o carimbo da página precisa constar do app.js"
     interface = "\n".join(
         ln for ln in js.splitlines() if not ln.strip().startswith("//")
     )

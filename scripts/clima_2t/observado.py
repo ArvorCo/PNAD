@@ -315,7 +315,7 @@ ROTULOS = {
     "cemaden": "chuva medida em estações CEMADEN",
     "inmet": "chuva medida em estações INMET",
     "ambos": "chuva medida em estações INMET e CEMADEN",
-    "ifs_provisorio": "modelo, provisório (ECMWF IFS)",
+    "ifs_provisorio": "modelo meteorológico, provisório",
     "era5": "reanálise ERA5",
 }
 

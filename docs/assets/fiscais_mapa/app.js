@@ -277,7 +277,7 @@
   function fonteChuva2t(fonte, c) {
     const rede = { cemaden: 'CEMADEN', inmet: 'INMET', ambos: 'INMET/CEMADEN' }[fonte];
     if (rede) return 'chuva medida em ' + (c.n_estacoes === 1 ? 'estação ' : 'estações ') + rede + ' a ' + nf1.format(c.distancia_min_km) + ' km';
-    if (fonte === 'era5') return 'reanálise ERA5';
+    if (fonte === 'era5') return 'reanálise climática';
     if (fonte === 'ifs_provisorio') return 'modelo, provisório';
     return 'sem dado';
   }
@@ -290,7 +290,7 @@
         h('li', {}, 'Chuva no dia: ' + mm(c.chuva_dia_mm) + ' (' + fonteChuva2t(c.fonte_dia, c) + ')' + (forte ? '; chuva forte' : '') + '.'),
         h('li', {}, 'Chuva das 7h às 18h de Brasília: ' + mm(c.chuva_votacao_mm) + ' (' + fonteChuva2t(c.fonte_votacao, c) + ').'),
         h('li', {}, 'Rajada máxima das 7h às 18h: ' + kmh(c.rajada_votacao_kmh) + ' (modelo, provisório).')),
-      h('p', { class: 'ficha-meta' }, 'Pluviômetro a até ' + nf0.format(obs.raio_km || 50) + ' km é estimativa para a célula de 0,25 grau, não medição no prédio; onde não há estação, o modelo ECMWF IFS é provisório até a reanálise ERA5 cobrir 25/10.' + (obs.gerado_em ? ' Gerado em ' + formatarCarimbo(obs.gerado_em) + '.' : '')));
+      h('p', { class: 'ficha-meta' }, 'Pluviômetro a até ' + nf0.format(obs.raio_km || 50) + ' km é estimativa para a célula de 0,25 grau, não medição no prédio; onde não há estação, o modelo modelo meteorológico é provisório até a reanálise climática cobrir 25/10.' + (obs.gerado_em ? ' Gerado em ' + formatarCarimbo(obs.gerado_em) + '.' : '')));
   }
 
   function blocoPrevisao(cel, prev) {

@@ -578,7 +578,7 @@
   function fonteChuva(fonte, l) {
     const rede = { cemaden: 'CEMADEN', inmet: 'INMET', ambos: 'INMET/CEMADEN' }[fonte];
     if (rede) return 'chuva medida em ' + (l.chuva2_n === 1 ? 'estação ' : 'estações ') + rede + ' a ' + km(l.chuva2_dist_km);
-    if (fonte === 'era5') return 'reanálise ERA5';
+    if (fonte === 'era5') return 'reanálise climática';
     if (fonte === 'ifs_provisorio') return 'modelo, provisório';
     return 'sem dado';
   }

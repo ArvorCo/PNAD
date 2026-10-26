@@ -265,7 +265,7 @@ CAMADAS["chuva2"] = {
     "explica": (
         "Chuva de 25/10, das 0h às 24h, medida em pluviômetros do CEMADEN a até 50 km do "
         "local (média pelo inverso do quadrado da distância); sem estação por perto, o "
-        "modelo ECMWF IFS, provisório até a reanálise ERA5. Estimativa para a célula de "
+        "modelo meteorológico, provisório até a reanálise climática. Estimativa para a célula de "
         "0,25 grau, não medição no prédio."
     ),
     "precisa_bu2": False,
