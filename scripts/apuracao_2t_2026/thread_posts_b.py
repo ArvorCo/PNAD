@@ -77,6 +77,23 @@ POSTS_B: list[dict] = [
         ],
     },
     {
+        "tag": "Grupos de seções",
+        "tom": "outros",
+        "titulo": "{an_secoes} seções formam o grupo que o modelo menos explica.",
+        "metrica": "{an_pct}",
+        "metrica_rot": "das {an_universo} seções do Brasil ficam no grupo mais atípico da mistura gaussiana",
+        "fig": C.fig_grupos,
+        "fonte": "anomalia_ml.json e anomalia_ml.md (mistura gaussiana sobre as frações do eleitorado nos dois turnos)",
+        "texto": [
+            "Uma pergunta sem régua: deixando a máquina agrupar as seções, aparece algum grupo estranho? O dossiê ajustou uma mistura gaussiana sobre nove frações do eleitorado de cada seção: Lula, Flávio, outros, brancos e nulos no 1º turno; Lula, Flávio, brancos e nulos no 2º. Entraram {an_universo} seções do Brasil com boletim nos dois turnos; o exterior ficou fora, porque a abstenção lá é tão alta que formaria um grupo só dela.",
+            "Comparecimento e abstenção entram implícitos, como a soma das frações; e enquadrar por diferença entre turnos é o mesmo modelo, porque a mistura com covariância completa não muda com uma troca linear de coordenadas. O número de grupos foi fixado por regra declarada antes de ver o resultado, o joelho do BIC: {an_k} grupos (o BIC puro só para em {an_k_bic}; o ICL prefere {an_k_icl}, sinal de grupos sobrepostos numa nuvem contínua).",
+            "Convergência conferida: as {an_partidas} partidas convergiram, {an_no_maximo} no mesmo máximo; a escolhida rodou {an_iteracoes} iterações até o refino final. O k-means, só contraste, concorda pouco com a mistura (índice de Rand ajustado {an_ari_kmeans}).",
+            "O grupo mais atípico, pelo critério do 1º turno (menor verossimilhança e maior dispersão), tem {an_secoes} seções, {an_pct} do país. O que o define não é o voto nos candidatos, é o voto que não escolhe: brancos e nulos somam {an_bn1_grupo} do eleitorado no 1º turno contra {an_bn1_pais} no país, e {an_bn2_grupo} no 2º contra {an_bn2_pais}. E é, em boa parte, seção pequena: {an_aptos_grupo} aptos em média contra {an_aptos_pais}; {an_pequenas_pct} das seções de trinta a noventa e nove aptos caem nele, {an_pequenas_vezes} vezes a taxa do país. Um eleitor move mais de um ponto numa seção dessas, e o modelo lê essa instabilidade como dispersão.",
+            "O que ele não é. Os oito grupos seguem a geografia política (V de Cramér de {an_vcr8_regiao} com a região), mas o atípico não: V de {an_vcr_regiao}; pesa mais em {an_ufs_mais}, e o volume está em {an_ufs_volume}. Não é modelo de urna: {an_vcr_modelo}. Com o tamanho da seção, {an_vcr_tamanho}. Os sinais do boletim aparecem um pouco mais nele (escore dois ou mais em {an_escore2_grupo} contra {an_escore2_pais}). O segundo grupo mais atípico, com {an_segundo_secoes} seções, é o do comparecimento que caiu {an_segundo_comp} pontos entre os turnos.",
+            "O voto, publicado seja qual for o sinal: a fatia de Flávio nessas seções fica {an_fatia_viz} pontos contra as vizinhas do mesmo município ({an_fatia_ic}, {an_vizinhas} vizinhas em {an_municipios} municípios). Mas o grupo foi definido pelo próprio voto, então isso descreve o tamanho da diferença, não é teste. O teste é a diferença em diferenças contra o 1º turno: {an_did} ponto, intervalo de {an_did_ic}, com o zero dentro. Entre os turnos, o grupo andou como as vizinhas. Cada seção dele leva o sinal no Politize-se e no mapa do Brasil. Atipicidade estatística não é irregularidade: pede explicação, não prova nada.",
+        ],
+    },
+    {
         "tag": "Seções: o voto",
         "tom": "outros",
         "titulo": "As seções com sinal votam diferente porque já votavam assim.",

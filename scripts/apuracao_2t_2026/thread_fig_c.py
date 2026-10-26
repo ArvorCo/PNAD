@@ -333,10 +333,146 @@ def fig_habilitacao() -> str:
     return svg("".join(out), "Habilitação por modelo de urna e composição do 2º turno")
 
 
+CORES_GRUPOS = (
+    "#1f5f9e",
+    "#4f8fa0",
+    "#0c7a72",
+    "#7d5b00",
+    "#939cae",
+    "#6b4a92",
+    "#b8560f",
+    "#c8412f",
+)
+
+
+def fig_grupos() -> str:
+    """Os grupos da mistura gaussiana (tamanho) e o que define o atípico (brancos e nulos)."""
+    A = dado("anomalia_ml")
+    comps = A["componentes"]
+    anom = A["mais_anomalo"]["id"]
+    pais = A["pais"]["centro_pct_eleitorado"]
+    out = [
+        t(
+            60,
+            30,
+            "Oito grupos de seções pelas frações do eleitorado nos dois turnos",
+            15,
+            MUTED,
+            600,
+        )
+    ]
+    x0, y0, passo = 60, 56, 40
+    vmax = max(c["secoes"] for c in comps)
+    larg = 300
+    for i, c in enumerate(comps):
+        y = y0 + i * passo
+        cor = CORES_GRUPOS[c["id"] % len(CORES_GRUPOS)]
+        w = larg * c["secoes"] / vmax
+        out.append(r(x0 + 90, y, w, 26, cor, 2))
+        out.append(t(x0 + 82, y + 19, f"Grupo {c['id'] + 1}", 14, INK, 700, "end"))
+        rot = f"{c['secoes']:,}".replace(
+            ",", "."
+        ) + f" ({c['pct_secoes']:.1f}%)".replace(".", ",")
+        out.append(
+            t(
+                x0 + 96 + w,
+                y + 19,
+                rot,
+                13,
+                INK if c["id"] != anom else "#6b4a92",
+                700 if c["id"] == anom else 500,
+            )
+        )
+    ya = y0 + anom * passo
+    out.append(
+        f'<rect x="{x0 + 86}" y="{ya - 4}" width="{larg + 210}" height="34" fill="none" stroke="#6b4a92" stroke-width="2" stroke-dasharray="6 4" rx="4"/>'
+    )
+    out.append(
+        t(
+            x0 + 90,
+            y0 + len(comps) * passo + 14,
+            "O tracejado marca o grupo mais atípico, pelo critério do 1º turno.",
+            13,
+            MUTED,
+            500,
+        )
+    )
+    # direita: brancos e nulos, grupo atípico contra o país, nos dois turnos
+    cx0, cy1, cy0 = 680, 360, 90
+    c = comps[anom]["centro_pct_eleitorado"]
+    pares = [
+        ("1º turno", c["brancos1"] + c["nulos1"], pais["brancos1"] + pais["nulos1"]),
+        ("2º turno", c["brancos2"] + c["nulos2"], pais["brancos2"] + pais["nulos2"]),
+    ]
+    vmax2 = 8.0
+    out.append(t(cx0, 66, "Brancos e nulos, % do eleitorado", 15, INK, 700))
+
+    def Y(v):
+        return cy1 - (cy1 - cy0) * v / vmax2
+
+    for g in (2, 4, 6, 8):
+        out.append(
+            f'<line x1="{cx0}" y1="{Y(g):.1f}" x2="{cx0 + 300}" y2="{Y(g):.1f}" stroke="#d6cfbd" stroke-dasharray="3 5"/>'
+        )
+        out.append(t(cx0 - 8, Y(g) + 5, f"{g}%", 13, MUTED, 500, "end"))
+    for i, (nome, vg, vp) in enumerate(pares):
+        xx = cx0 + 30 + i * 150
+        for j, (v, cor) in enumerate(((vg, "#6b4a92"), (vp, "#8a8f96"))):
+            out.append(r(xx + j * 58, Y(v), 50, cy1 - Y(v), cor, 2))
+            out.append(
+                t(
+                    xx + j * 58 + 25,
+                    Y(v) - 7,
+                    f"{v:.1f}%".replace(".", ","),
+                    14,
+                    INK,
+                    700,
+                    "middle",
+                )
+            )
+        out.append(t(xx + 54, cy1 + 22, nome, 14, INK, 700, "middle"))
+    out.append(
+        f'<line x1="{cx0}" y1="{cy1}" x2="{cx0 + 300}" y2="{cy1}" stroke="{MUTED}"/>'
+    )
+    out.append(
+        legenda([("grupo atípico", "#6b4a92"), ("país", "#8a8f96")], cx0, 412, 14)
+    )
+    out.append(t(cx0, 460, "Não é geografia nem modelo de urna:", 14, INK, 700))
+    cv = A["mais_anomalo"]["contra"]["cramer_v"]
+    linhas_cv = (
+        f"V de Cramér do grupo com a região {cv['regiao']:.3f};",
+        f"com o modelo da urna {cv['modelo']:.3f}; com o tamanho {cv['tamanho']:.3f}.",
+    )
+    for j, linha in enumerate(linhas_cv):
+        out.append(
+            t(
+                cx0,
+                482 + 22 * j,
+                linha.replace(".0", ",0").replace(".2", ",2"),
+                14,
+                INK,
+                500,
+            )
+        )
+    out.append(t(cx0, 530, "É, em boa parte, seção pequena.", 14, INK, 700))
+    out.append(
+        t(
+            60,
+            560,
+            "Atipicidade estatística não é irregularidade; o grupo pede explicação, não prova nada.",
+            14,
+            MUTED,
+            600,
+        )
+    )
+    return svg("".join(out), "Grupos de seções nos dois turnos e o grupo atípico")
+
+
 __all__ = [
     "DESTINOS",
     "ORIGENS",
     "fig_cadencia",
+    "fig_grupos",
     "fig_habilitacao",
     "fig_hipoteses",
     "fig_transferencia",

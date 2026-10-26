@@ -41,7 +41,7 @@ def html(posts):
 
 def test_quantidade_de_cards(posts):
     assert MIN_POSTS <= len(posts) <= MAX_POSTS
-    assert 16 <= len(posts) <= 22
+    assert 16 <= len(posts) <= 23
 
 
 def test_tamanho_dos_posts(posts):

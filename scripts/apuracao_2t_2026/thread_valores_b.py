@@ -452,6 +452,71 @@ def v_habilitacao() -> dict:
     return v
 
 
+def v_anomalia() -> dict:
+    """Card dos grupos de seções: ``anomalia_ml.json`` (mistura gaussiana nos dois turnos)."""
+    A = dado("anomalia_ml")
+    c = A["componentes"][A["mais_anomalo"]["id"]]
+    pais = A["pais"]
+    cp, cg = pais["centro_pct_eleitorado"], c["centro_pct_eleitorado"]
+    aj = A["ajuste"]
+    ap = (aj.get("diagnostico_convergencia") or {}).get("apertado") or {}
+    iteracoes = int(ap.get("iteracoes_padrao") or 0) + int(aj.get("iteracoes") or 0)
+    voto = A["mais_anomalo"]["voto"]
+    pequenas = next(
+        x
+        for x in A["cluster_tamanho"]
+        if x["cluster"] == c["id"] and x["tamanho"] == "30 a 99"
+    )
+    ufs = c["ufs_top"][:3]
+    por_uf = sorted(
+        (x for x in A["cluster_uf"] if x["cluster"] == c["id"] and x["uf"] != "ZZ"),
+        key=lambda x: -x["pct_da_uf"],
+    )[:3]
+    segundo = A["componentes"][A["mais_anomalo"]["segundo"]["id"]]
+    contra = A["mais_anomalo"]["contra"]
+    return {
+        "an_secoes": num(c["secoes"]),
+        "an_pct": pct(c["pct_secoes"], 2),
+        "an_universo": num(A["universo"]["secoes"]),
+        "an_exterior": num(A["universo"]["excluidas"]["exterior"]),
+        "an_k": num(A["k_escolhido"]),
+        "an_k_bic": num(A["k_min_bic"]),
+        "an_k_icl": num(A["k_min_icl"]),
+        "an_partidas": num(len(aj["sementes"])),
+        "an_no_maximo": num(aj["sementes_no_maximo"]),
+        "an_iteracoes": num(iteracoes),
+        "an_bn1_grupo": pct(cg["brancos1"] + cg["nulos1"], 1),
+        "an_bn1_pais": pct(cp["brancos1"] + cp["nulos1"], 1),
+        "an_bn2_grupo": pct(cg["brancos2"] + cg["nulos2"], 1),
+        "an_bn2_pais": pct(cp["brancos2"] + cp["nulos2"], 1),
+        "an_aptos_grupo": num(c["aptos_medio"]),
+        "an_aptos_pais": num(pais["aptos_medio"]),
+        "an_pequenas_pct": pct(pequenas["pct_da_faixa"], 1),
+        "an_pequenas_vezes": num(pequenas["pct_da_faixa"] / c["pct_secoes"], 1),
+        "an_vcr_regiao": num(contra["cramer_v"]["regiao"], 3),
+        "an_vcr_modelo": num(contra["cramer_v"]["modelo"], 3),
+        "an_vcr_tamanho": num(contra["cramer_v"]["tamanho"], 3),
+        "an_vcr8_regiao": num(A["cramer_v_regiao"], 2),
+        "an_fatia_viz": sinal(voto["fatia_f2_vs_vizinhas_pp"], 2),
+        "an_fatia_ic": f"{sinal(voto['ic95'][0], 2)} a {sinal(voto['ic95'][1], 2)}",
+        "an_did": sinal(voto["did_vs_1t_pp"], 2),
+        "an_did_ic": f"{sinal(voto['ic95_did'][0], 2)} a {sinal(voto['ic95_did'][1], 2)}",
+        "an_vizinhas": num(voto["n_vizinhas"]),
+        "an_municipios": num(voto["n_municipios"]),
+        "an_escore2_grupo": pct(c["sinais"]["escore_2_mais_pct"], 2),
+        "an_escore2_pais": pct(A["sinais_pais"]["escore_2_mais_pct"], 2),
+        "an_ufs_mais": "; ".join(
+            f"{NOME_UF.get(x['uf'], x['uf'])} {pct(x['pct_da_uf'], 1)}" for x in por_uf
+        ),
+        "an_ufs_volume": ", ".join(f"{x['uf']} ({num(x['secoes'])})" for x in ufs),
+        "an_fatia1": pct(c["fatia_f1"], 1),
+        "an_fatia2": pct(c["fatia_f2"], 1),
+        "an_segundo_secoes": num(segundo["secoes"]),
+        "an_segundo_comp": sinal(segundo["centro_delta_pp"]["comp"], 1),
+        "an_ari_kmeans": num(A["kmeans"]["ari_com_mistura_k_estrela"]["niveis"], 2),
+    }
+
+
 def v_hipoteses() -> dict:
     """Card "O que poderia ter acontecido": ``hipoteses.json`` (estados e testes)."""
     hp = dado("hipoteses")
