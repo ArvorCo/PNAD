@@ -195,6 +195,7 @@ async function iniciar(): Promise<void> {
   });
   ligarTeclado({
     vinheta: () => vinheta.alternar(),
+    encerramento: () => vinheta.alternar(undefined, "encerramento"),
     ufAtual: () => store.get().ui.uf,
     telaAtual: () => store.get().ui.v,
     turno: () => store.get().config?.turno ?? 1,
@@ -299,7 +300,7 @@ async function iniciar(): Promise<void> {
         recarregar();
         break;
       case "vinheta":
-        vinheta.alternar(c.valor);
+        vinheta.alternar(c.valor, c.arquivo);
         break;
       case "vigilia":
         if (c.alvo) {

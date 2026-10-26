@@ -34,6 +34,8 @@ export interface AcoesTeclado {
    */
   /** Tecla `v`: toca a vinheta de abertura ou interrompe a que está no ar. */
   vinheta?(): void;
+  /** Shift+V: toca o vídeo de encerramento (só manual) ou interrompe o que está no ar. */
+  encerramento?(): void;
   boletim?(acao: "alternar" | "parar" | "anterior" | "seguinte"): boolean;
 }
 
@@ -96,6 +98,9 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     else if (/^[0-9]$/.test(k)) {
       const d = destinoDoDigito(k, a.ufAtual(), a.turno());
       if (d) a.irPara(d);
+    } else if (ev.shiftKey && k === "V" && a.encerramento) {
+      cancelarAdiado();
+      a.encerramento();
     } else if (ev.shiftKey && (k === "B" || k === "b") && a.boletim?.("parar")) {
       cancelarAdiado();
     } else if (ev.shiftKey && destinoDaTecla2T(k)) {

@@ -1,0 +1,27 @@
+{
+  "name": "vinheta-2t",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Vinheta de abertura da live da apuração do 2º turno de 2026, Arvor Intelligence",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render Vinheta ../../apuracao/public/vinheta/abertura.mp4",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "render:encerramento": "remotion render Encerramento ../../apuracao/public/vinheta/encerramento.mp4 --codec h264 --crf 20 --audio-codec aac"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.436",
+    "@remotion/google-fonts": "4.0.436",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.436"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.436",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "eslint": "9.30.0",
+    "typescript": "5.8.3"
+  }
+}

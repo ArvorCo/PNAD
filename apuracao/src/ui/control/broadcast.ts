@@ -14,7 +14,7 @@ export type Comando =
   | { tipo: "dwell"; segundos: number | null }
   | { tipo: "hud"; valor?: boolean }
   | { tipo: "refetch" }
-  | { tipo: "vinheta"; valor?: boolean }
+  | { tipo: "vinheta"; valor?: boolean; arquivo?: "abertura" | "encerramento" }
   | { tipo: "vigilia"; alvo: string | null }
   | { tipo: "pedir-estado" };
 

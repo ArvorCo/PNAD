@@ -1,12 +1,14 @@
 // Vinheta de abertura do 2º turno: vídeo em tela cheia sobre o telão, às 17:00:00 em ponto.
 // Disparo automático único (relógio do telão contra T0_2T_MS), só se o arquivo existir e sem
 // `#vinheta=0`; `localStorage` guarda que já tocou. `#vinheta=1` força ao carregar (teste, cai no
-// teste.mp4 se a abertura não existir); `#vinheta=teste` toca sempre o teste.mp4; `v` e o diretor alternam. Enquanto toca, a rotação e o
+// teste.mp4 se a abertura não existir); `#vinheta=teste` toca sempre o teste.mp4; `v` e o diretor alternam; `Shift+V` e o diretor tocam o vídeo de encerramento, só manualmente. Enquanto toca, a rotação e o
 // boletim ficam suspensos; ao fim, o telão volta de onde estava.
 
 import { T0_2T_MS } from "../../turno2/comum.ts";
 
 export const ARQUIVO_VINHETA = "vinheta/abertura.mp4";
+export const ARQUIVO_ENCERRAMENTO = "vinheta/encerramento.mp4";
+export type NomeVinheta = "abertura" | "encerramento";
 const ARQUIVO_TESTE = "vinheta/teste.mp4";
 const CHAVE = "apuracao-vinheta-tocou";
 
@@ -20,7 +22,7 @@ export interface OpcoesVinheta {
 
 export interface Vinheta {
   tocando(): boolean;
-  alternar(valor?: boolean): void;
+  alternar(valor?: boolean, arquivo?: NomeVinheta): void;
 }
 
 async function existe(url: string): Promise<boolean> {
@@ -112,13 +114,20 @@ export function criarVinheta(o: OpcoesVinheta): Vinheta {
     void video.play().catch(() => fim());
   });
 
-  const alternar = (valor?: boolean): void => {
+  // O encerramento só toca por ação manual; nunca entra no disparo automático.
+  const alternar = (valor?: boolean, arquivo: NomeVinheta = "abertura"): void => {
     const querTocar = valor ?? !ativa;
     if (!querTocar) {
       fim();
       return;
     }
     if (ativa) return;
+    if (arquivo === "encerramento") {
+      void existe(ARQUIVO_ENCERRAMENTO).then(ok => {
+        if (ok) iniciar(ARQUIVO_ENCERRAMENTO);
+      });
+      return;
+    }
     void resolver(false).then(url => {
       if (url) iniciar(url);
     });

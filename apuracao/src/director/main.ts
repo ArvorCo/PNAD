@@ -94,6 +94,8 @@ async function iniciar(): Promise<void> {
     botao("Sair da vigília", () => ({ tipo: "vigilia", alvo: null })),
     botao("Vinheta de abertura", () => ({ tipo: "vinheta", valor: true })),
     botao("interromper vinheta", () => ({ tipo: "vinheta", valor: false })),
+    botao("Vídeo de encerramento", () => ({ tipo: "vinheta", valor: true, arquivo: "encerramento" })),
+    botao("interromper encerramento", () => ({ tipo: "vinheta", valor: false, arquivo: "encerramento" })),
     rotDwell,
     botao("tempo padrão", () => ({ tipo: "dwell", segundos: null })),
   );
