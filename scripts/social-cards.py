@@ -59,13 +59,112 @@ def _agregador_counts() -> tuple[str, str]:
 
 _ONDAS, _INSTITUTOS = _agregador_counts()
 
+
+def _apuracao_2t_card() -> dict:
+    """Card do dossiê da apuração do 2º turno, com os números lidos dos JSONs do dossiê."""
+    dados = ROOT / "analysis/apuracao_2t_2026/dados"
+
+    def ler(nome: str) -> dict:
+        c = dados / nome
+        return json.loads(c.read_text(encoding="utf-8")) if c.exists() else {}
+
+    n = ler("presidente.json").get("nacional", {})
+    sil = ler("linha_do_tempo.json").get("pausas", {}).get("silencio_geral", {})
+    par = ler("paralela.json")
+
+    def br(x: float, casas: int = 2) -> str:
+        return f"{x:.{casas}f}".replace(".", ",")
+
+    placar = f"{br(n['pct_lula'])}%" if n else "s/d"
+    contra = f"Lula nos válidos, contra {br(n['pct_flavio'])}% de Flávio" if n else ""
+    margem = f"{br(n['margem_lula_votos'] / 1e6)} milhões" if n else "s/d"
+    return {
+        "slug": "apuracao_2T_2026",
+        "eyebrow": "Dossiê da apuração · 2º turno de 25/10/2026",
+        "title": f"Lula vence por {margem} de votos.",
+        "title_em": "O silêncio do TSE e o método.",
+        "lede": "A noite minuto a minuto, a projeção da casa, os boletins, seções e a paralela. "
+        "<b>Entre a última pesquisa e a urna, 5,5 pontos mudaram de lado: o que aconteceu no domingo.</b>",
+        "stats": [
+            (placar, contra),
+            (
+                f"{br(sil.get('minutos', 0), 1)} min",
+                "sem nenhum arquivo gerado pelo TSE durante a prorrogação",
+            ),
+            (
+                str(par.get("conferencia", {}).get("igual", 0)),
+                "boletins de urna conferidos pela paralela, nenhuma divergência",
+            ),
+        ],
+        "foot": "atipicidade pede explicação, não prova irregularidade",
+        "accent": "red",
+        "logo": True,
+    }
+
+
+def _apuracao_2t_thread_card() -> dict:
+    """Card da thread do dossiê do 2º turno, números lidos dos JSONs do dossiê."""
+    dados = ROOT / "analysis/apuracao_2t_2026/dados"
+
+    def ler(nome: str) -> dict:
+        c = dados / nome
+        return json.loads(c.read_text(encoding="utf-8")) if c.exists() else {}
+
+    def br(x: float, casas: int = 2) -> str:
+        return f"{x:.{casas}f}".replace(".", ",")
+
+    pr = ler("projecao_noite.json")
+    pq = ler("pesquisas_vs_urna.json")
+    stats = []
+    if pr:
+        lula = sum(1 for x in pr["pontos"] if x.get("lider_projetado") == "lula")
+        stats.append(
+            (
+                f"{lula} de {pr['pontos_com_projecao']}",
+                "pontos da projeção da noite com Lula à frente",
+            )
+        )
+    if pq:
+        stats.append(
+            (
+                f"+{br(pq['resumo']['publicado_validos_do_total']['media'])}",
+                "pontos entre o último campo das pesquisas e a urna, mesmo sinal nas casas",
+            )
+        )
+        stats.append(
+            (
+                f"+{br(pq['centrais']['media_arvor']['erro_f_menos_l'])}",
+                "pela Média Arvor: o tamanho do que mudou no domingo",
+            )
+        )
+    return {
+        "slug": "apuracao_2T_2026_thread",
+        "eyebrow": "Thread · apuração do 2º turno de 2026",
+        "title": "A noite do 2º turno, card a card.",
+        "title_em": "As pesquisas mediram o sábado; a urna contou o domingo.",
+        "lede": (
+            "A parada do TSE, a prorrogação que não encontrou urna aberta, seções, "
+            "abstenção e paralela. <b>A projeção da noite acertou desde o primeiro ponto; "
+            "entre o último campo e a urna, uma mudança que o dossiê investiga.</b>"
+        ),
+        "stats": stats,
+        "foot": "arquivos públicos do TSE · cada número com fonte no dossiê",
+        "accent": "blue",
+        "thread": True,
+    }
+
+
 CARDS: list[dict] = [
+    _apuracao_2t_card(),
+    _apuracao_2t_thread_card(),
     importlib.import_module("social-card-projecao-secoes").card(ROOT),
     importlib.import_module("social-card-quaest-141026").card(ROOT),
     *importlib.import_module("social-card-dossies-2t").cards(ROOT),
     importlib.import_module("social-card-clima").card(ROOT),
     importlib.import_module("social-card-mudancas").card(ROOT),
     importlib.import_module("social-card-mudancas").card_thread(ROOT),
+    importlib.import_module("social-card-politizese").card(ROOT),
+    importlib.import_module("social-card-politizese-mapa").card(ROOT),
     importlib.import_module("social-card-politize").card(ROOT),
     importlib.import_module("social-card-politize-game").card(ROOT),
     importlib.import_module("social-card-apuracao").card(ROOT),

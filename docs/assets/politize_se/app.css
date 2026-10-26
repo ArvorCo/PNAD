@@ -1,0 +1,169 @@
+/* Politize-se. Folha escrita à mão. Mobile-first: a base é a tela de 360 px. Neutra: sem cores de campanha. */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#f6f4ee;--paper2:#ece9df;--card:#ffffff;--ink:#16191c;--ink2:#2b3036;--muted:#4f5862;--line:#d3d0c5;
+  --slate:#1d2a33;--slate2:#2c3d49;--ocre:#a86a00;--ocre-claro:#f0c36a;--verde:#1f6f4a;
+  --flavio:#1f5f9e;--flavio-txt:#1a5189;--lula:#b23a2a;--lula-txt:#9c2f20;--outros:#6b7280;--bn:#8a8f96;--abst:#c9c6bb;
+  --alerta:#8a4b00;--alerta-bg:#fff4dd;
+  --display:Fraunces,Georgia,serif;--sans:"IBM Plex Sans Condensed",Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --wrap:min(1120px,calc(100% - 32px));--raio:12px;
+}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{width:var(--wrap);margin:0 auto}
+a{color:var(--flavio-txt)}
+:focus-visible{outline:3px solid var(--ocre-claro);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:8px;top:8px;background:var(--ink);color:var(--paper);padding:10px 14px;z-index:99}
+[hidden]{display:none!important}
+
+/* topo */
+.topo{background:var(--slate);color:#eef1f3;padding:0 0 40px}
+.marca{padding:20px 0 0;font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:#c4ccd3}
+.marca a{display:inline-flex;align-items:center;gap:10px;color:inherit;text-decoration:none;min-height:44px}
+.marca img{width:26px;height:26px;border-radius:4px}
+.eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ocre-claro);margin:24px 0 0}
+.topo h1{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,10vw,4.8rem);line-height:.95;letter-spacing:-.03em;margin:10px 0 0}
+.deck{max-width:64ch;color:#dde3e8;font-size:1.06rem;margin:16px 0 0}
+.numeros{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;margin:26px 0 0;max-width:760px}
+.numeros:empty{display:none}
+.numeros>div{border-top:3px solid var(--ocre-claro);padding-top:8px;display:flex;flex-direction:column-reverse;gap:2px}
+.numeros dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#c2ccd4}
+.numeros dd{margin:0;font-family:var(--display);font-weight:900;font-size:1.6rem;line-height:1.05}
+.topo-mapa{margin:18px 0 0}
+.cobertura{margin:18px 0 0;color:#dde3e8;font-size:.98rem;max-width:72ch}
+.cobertura:empty{display:none}
+
+/* busca */
+.busca{margin-top:-20px;position:relative;z-index:2}
+.painel{background:var(--card);border:1px solid var(--line);border-radius:var(--raio);padding:18px 16px;box-shadow:0 8px 24px rgb(20 30 40 / 10%)}
+.painel-titulo{font-family:var(--display);font-size:1.5rem;margin:0 0 12px}
+.abas{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.abas button{font:600 .95rem var(--sans);min-height:44px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.abas button[aria-selected="true"]{background:var(--slate);color:#fff;border-color:var(--slate)}
+.rot{display:block;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+input,select{font:400 1.05rem var(--sans);width:100%;min-height:46px;padding:8px 10px;border:1px solid #9aa1a8;border-radius:8px;background:#fff;color:var(--ink)}
+input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--lula);box-shadow:0 0 0 2px rgb(178 58 42 / 20%)}
+.grade-secao{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grade-secao>div:first-child{grid-column:1 / -1}
+.grade-cidade{display:grid;grid-template-columns:1fr;gap:12px}
+.linha-busca{display:grid;gap:8px}
+.acoes-form{display:flex;flex-wrap:wrap;gap:8px;grid-column:1 / -1;align-items:end}
+.btn{font:700 1rem var(--sans);min-height:46px;padding:10px 18px;border-radius:8px;border:2px solid var(--slate);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn-prim{background:var(--slate);color:#fff}
+.btn-sec{background:#fff;color:var(--slate)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.ajuda{color:var(--muted);font-size:.95rem;margin:12px 0 0;max-width:72ch}
+.combo{position:relative}
+#cidade-lista{position:absolute;left:0;right:0;top:100%;z-index:5;list-style:none;margin:4px 0 0;padding:4px;background:#fff;border:1px solid var(--line);border-radius:8px;max-height:300px;overflow:auto;box-shadow:0 8px 20px rgb(0 0 0 / 12%)}
+#cidade-lista li{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:6px;cursor:pointer;min-height:44px}
+#cidade-lista li[aria-selected="true"]{background:var(--paper2)}
+#cidade-lista .uf{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.avisos:empty{display:none}
+.aviso{border-left:5px solid var(--ocre);background:var(--alerta-bg);color:var(--ink);padding:12px 14px;border-radius:0 10px 10px 0;margin:12px 0;font-size:1rem}
+.aviso.erro{border-left-color:var(--lula);background:#fbecea}
+.aviso strong{display:block;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+
+/* resultado */
+.resultado{padding:8px 0 24px}
+.resultado-in:empty{display:none}
+.carregando{padding:24px 0;color:var(--muted)}
+.ficha{background:var(--card);border:1px solid var(--line);border-radius:var(--raio);padding:18px 16px;margin:18px 0}
+.ficha h2{font-family:var(--display);font-size:clamp(1.6rem,6vw,2.3rem);line-height:1.08;margin:4px 0 6px}
+.ficha h3{font-family:var(--display);font-size:1.3rem;margin:24px 0 8px}
+.kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ocre);margin:0}
+.fixa .kicker,.ficha .kicker{color:#8a5600}
+.local-nome{font-weight:700;margin:0}
+.local-end{color:var(--muted);margin:2px 0 0;font-size:.98rem}
+.selos{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+.selo{font-family:var(--mono);font-size:.76rem;letter-spacing:.04em;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:var(--paper)}
+.selo.alerta{border-color:#d9a441;background:var(--alerta-bg);color:var(--alerta)}
+.selo.ok{border-color:#9cc3ad;background:#eef6f1;color:#1d5a3c}
+.leitura{font-size:1.05rem;margin:14px 0 0;max-width:72ch}
+.rotulo-casa{font-size:.95rem;color:var(--muted);border-left:3px solid var(--line);padding-left:10px;margin:12px 0 0;max-width:72ch}
+
+/* comparação entre turnos */
+.turnos{display:grid;grid-template-columns:1fr;gap:14px;margin:14px 0 0}
+.turno{border:1px solid var(--line);border-radius:10px;padding:12px}
+.turno h4{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px;color:var(--ink2)}
+.barra-empilhada{display:flex;height:26px;border-radius:6px;overflow:hidden;background:var(--paper2)}
+.barra-empilhada>span{display:block;height:100%}
+.leg{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-size:.92rem}
+.leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.c-flavio{background:var(--flavio)}.c-lula{background:var(--lula)}.c-outros{background:var(--outros)}.c-bn{background:var(--bn)}.c-abst{background:var(--abst)}
+.c-bio{background:#2f6b57}.c-ano{background:#c08a1e}.c-sem{background:#7b5ea7}
+.tabela-rolagem{overflow-x:auto;max-width:100%;margin:10px 0 0}
+.tabela{border-collapse:collapse;width:100%;font-size:.95rem;min-width:300px}
+.tabela th,.tabela td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.tabela th{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.tabela td.n,.tabela th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tabela tr.atual td{background:#fff7e3;font-weight:700}
+.tabela button.link{font:inherit;color:var(--flavio-txt);text-decoration:underline;background:none;border:0;padding:6px 0;min-height:36px;cursor:pointer}
+.mais{color:#1d5a3c}.menos{color:var(--lula-txt)}
+.grade2{display:grid;grid-template-columns:1fr;gap:14px}
+.caixa{border:1px solid var(--line);border-radius:10px;padding:12px;background:#fdfcf9}
+.caixa h4{margin:0 0 6px;font-size:1rem}
+.caixa p{margin:6px 0 0;font-size:.98rem}
+.lista-sinais{margin:8px 0 0;padding-left:20px}
+.lista-sinais li{margin:4px 0}
+.compartilhar{display:grid;gap:12px;margin:12px 0 0}
+.compartilhar canvas{width:100%;max-width:420px;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+.botoes{display:flex;flex-wrap:wrap;gap:8px}
+.ao-redor{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.ao-redor button{width:100%;text-align:left;font:inherit;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;min-height:44px;display:flex;justify-content:space-between;gap:10px}
+.ao-redor small{color:var(--muted);white-space:nowrap}
+
+/* seções fixas */
+.fixa{padding:40px 0;border-top:1px solid var(--line)}
+.fixa h2{font-family:var(--display);font-size:clamp(1.6rem,6vw,2.2rem);line-height:1.1;margin:6px 0 12px}
+.fixa.escuro{background:var(--slate);color:#eef1f3;border-top:0}
+.fixa.escuro a{color:#bcd6f2}
+.fixa.escuro .kicker{color:var(--ocre-claro)}
+.lista-texto{padding-left:20px;margin:0}
+.lista-texto li{margin:8px 0;max-width:72ch}
+.duas{display:grid;grid-template-columns:1fr;gap:28px}
+.rodape{padding:28px 0 40px;color:var(--muted);font-size:.95rem;border-top:1px solid var(--line)}
+.rodape a{color:var(--flavio-txt)}
+td.hash{font-family:var(--mono);font-size:.75rem;word-break:break-all}
+
+/* relatos da seção */
+.relato-contagem{font-weight:600;margin:10px 0 0;max-width:72ch}
+.relato-form{margin:14px 0 0;display:grid;gap:6px}
+.relato-grade{display:grid;grid-template-columns:1fr;gap:12px;margin:0 0 8px}
+.relato-form textarea{font:400 1.05rem var(--sans);width:100%;min-height:130px;padding:10px;border:1px solid #9aa1a8;border-radius:8px;background:#fff;color:var(--ink);resize:vertical}
+.relato-form textarea[aria-invalid="true"]{border-color:var(--lula);box-shadow:0 0 0 2px rgb(178 58 42 / 20%)}
+.relato-ajuda{margin:2px 0 10px}
+.relato-contador{font-family:var(--mono);font-size:.85rem}
+.relato-campo{border:0;padding:0;margin:4px 0 10px;min-width:0}
+.relato-opcoes{display:flex;flex-wrap:wrap;gap:8px 18px}
+.relato-opcao{display:inline-flex;align-items:center;gap:8px;min-height:44px;cursor:pointer}
+.relato-opcao input{width:20px;height:20px;min-height:0;margin:0;accent-color:var(--slate)}
+.relato-lgpd{border-left:3px solid var(--line);padding-left:10px}
+.relato-status{margin:8px 0 0;font-size:.98rem}
+.relato-status:empty{display:none}
+.relato-status.erro{color:var(--lula-txt);font-weight:600}
+.relato-ok{border-left:5px solid var(--verde);background:#eef6f1;padding:12px 14px;border-radius:0 10px 10px 0;margin:14px 0 0}
+.relato-ok p{margin:4px 0}
+.relato-ok:focus{outline:none}
+.relato-mel{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.relato-progresso{display:flex;align-items:center;gap:10px;margin:10px 0 0;max-width:420px}
+.relato-progresso-trilho{flex:1;height:8px;border-radius:999px;background:var(--paper2);overflow:hidden;border:1px solid var(--line)}
+.relato-progresso-trilho>span{display:block;height:100%;width:0;background:var(--slate);transition:width .2s}
+.relato-progresso-rot{font-family:var(--mono);font-size:.85rem;color:var(--muted)}
+
+@media (min-width:720px){
+  .numeros{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .grade-secao{grid-template-columns:2fr 1fr 1fr auto}
+  .grade-secao>div:first-child{grid-column:auto}
+  .grade-cidade{grid-template-columns:2fr 1.4fr auto}
+  .acoes-form{grid-column:auto}
+  .linha-busca{grid-template-columns:auto 1fr auto;align-items:end}
+  .turnos{grid-template-columns:1fr 1fr}
+  .grade2{grid-template-columns:1fr 1fr}
+  .duas{grid-template-columns:1fr 1fr}
+  .ficha{padding:24px 26px}
+  .compartilhar{grid-template-columns:minmax(0,420px) 1fr;align-items:start}
+  .relato-grade{grid-template-columns:2fr 1.2fr 1fr}
+}
+@media print{.busca,.compartilhar,.relato,.topo .numeros{display:none}}
+.ficha h2:focus{outline:none}

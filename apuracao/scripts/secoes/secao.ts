@@ -6,9 +6,11 @@ import { decodificarBu } from "../bu-decode.ts";
 import type { ResultadoSecao, SecaoCs } from "./banco.ts";
 import type { Resposta } from "./http.ts";
 import { lerZip, modeloDaUrna, resumirLog } from "./log-urna.ts";
+import { PLEITO_ATUAL } from "./pleito.ts";
 
-export const BASE_URNA = "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220";
-export const PLEITO = "003220";
+/** Pleito por APURACAO_PLEITO (padrão 003220, 1º turno); ver pleito.ts. */
+export const PLEITO = PLEITO_ATUAL.codigo;
+export const BASE_URNA = `https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/${PLEITO_ATUAL.numero}`;
 
 export const ArqSchema = z.object({ nm: z.string(), tp: z.string().optional() }).passthrough();
 export const HashSchema = z

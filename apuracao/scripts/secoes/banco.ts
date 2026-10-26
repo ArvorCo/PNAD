@@ -8,6 +8,7 @@ import { dirname } from "node:path";
 import { dataHoraJe } from "../bu-decode.ts";
 import type { BoletimUrna } from "../bu-decode.ts";
 import type { FonteModelo, ResumoLog } from "./log-urna.ts";
+import { PLEITO_ATUAL } from "./pleito.ts";
 
 export const ESQUEMA = `
 CREATE TABLE IF NOT EXISTS meta (chave TEXT PRIMARY KEY, valor TEXT);
@@ -67,10 +68,10 @@ CREATE TABLE IF NOT EXISTS bu (
   fase INTEGER,
   pleito INTEGER,
   versao_votacao TEXT,
-  aptos INTEGER,                  -- eleição federal (6257): aptos da urna = aptos_secao + aptos_tte
+  aptos INTEGER,                  -- eleição federal (6257 no 1T, 6258 no 2T): aptos da urna = aptos_secao + aptos_tte
   aptos_secao INTEGER,
   aptos_tte INTEGER,
-  aptos_estadual INTEGER,         -- eleição estadual (6259), sem trânsito
+  aptos_estadual INTEGER,         -- eleição estadual (6259 no 1T, 6260 no 2T), sem trânsito
   comparecimento INTEGER,         -- qtdEleitoresCompareceram
   comp_sem_biometria INTEGER,
   hab_biometria INTEGER,
@@ -279,8 +280,8 @@ export function linhasCargo(bu: BoletimUrna): LinhaCargo[] {
   return [...m.values()];
 }
 
-const FEDERAL = 6257;
-const ESTADUAL = 6259;
+const FEDERAL = PLEITO_ATUAL.federal;
+const ESTADUAL = PLEITO_ATUAL.estadual;
 
 export class EscritorSecoes {
   private readonly insSecao;

@@ -77,9 +77,19 @@ export const textoRetomada = (hora: string, novas: number): string =>
   `divulgação retomada às ${hora}: ${novas} ${novas === 1 ? "seção nova" : "seções novas"}`;
 
 /** Parada longa do arquivo nacional com apuração aberta: mais de `limiarS` sem versão nova e seções faltando. */
+/** Apuração praticamente encerrada: faltam só as seções residuais (0,1% ou menos). */
+export function quaseCompleta(e: Estado): boolean {
+  return e.br.ts > 0 && e.br.st >= e.br.ts * 0.999;
+}
+
+/**
+ * Parada longa do arquivo nacional com apuração aberta. Com a apuração quase completa não há
+ * parada: as últimas seções podem levar dias, e a vinheta de abertura não deve tocar de novo
+ * a cada versão residual (noite de 25/10, depois das 22:46).
+ */
 export function paradaLonga(e: Estado, limiarS = 600): boolean {
   const idade = e.br.idade_s;
-  return e.br.st > 0 && e.br.st < e.br.ts && typeof idade === "number" && idade > limiarS;
+  return e.br.st > 0 && e.br.st < e.br.ts && !quaseCompleta(e) && typeof idade === "number" && idade > limiarS;
 }
 
 /** Alvo automático da vigília: 19:00 de Brasília enquanto não passou; depois, sem alvo. */

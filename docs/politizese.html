@@ -1,0 +1,224 @@
+<!doctype html>
+<!--
+  Politize-se. Página ESCRITA À MÃO, não gerada por script.
+  Edite este arquivo, docs/assets/politize_se/app.js e app.css diretamente.
+  Todo número exibido vem dos JSON em docs/assets/politize_se/dados/ (gerados por
+  scripts/politize-se-build.py), inclusive os modelos das frases. Contrato:
+  analysis/politize_se/CONTRATO.md.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Politize-se: o que aconteceu na sua seção, 1º e 2º turno | Arvor</title>
+<meta name="description" content="Digite UF, zona e seção do seu título, o CEP, a cidade ou use a localização e veja o que aconteceu na sua seção e no seu local de votação no 1º e no 2º turno de 2026: votos, comparecimento, biometria, horário, urna e sinais da régua da casa. Leitura agregada por seção, TSE.">
+<link rel="canonical" href="https://brasil.arvor.co/politizese.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1d2a33">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Politize-se: o que aconteceu na sua seção">
+<meta property="og:description" content="1º e 2º turno de 2026 lado a lado, seção por seção e local por local: votos, comparecimento, biometria, horário, urna e sinais com a explicação provável.">
+<meta property="og:url" content="https://brasil.arvor.co/politizese.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/politizese.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Politize-se: o que aconteceu na sua seção">
+<meta name="twitter:description" content="1º e 2º turno de 2026 lado a lado, seção por seção e local por local.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/politizese.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/politize_se/app.css?v=20261026-relatos2">
+<script>document.documentElement.classList.add('js')</script>
+<script src="assets/totalizacao/config.js?v=20261026-relatos2"></script>
+<script type="module" src="assets/politize_se/app.js?v=20261026-relatos2-urna"></script>
+</head>
+<body>
+<a class="skip" href="#busca">Pular para a busca</a>
+
+<header class="topo">
+  <div class="wrap">
+    <div class="marca"><a href="index.html"><img src="img/arvor_logo.png" alt="" width="26" height="26">Arvor Intelligence · Utilidade pública</a></div>
+    <p class="eyebrow">Eleições 2026 · 1º e 2º turno</p>
+    <h1>Politize-se</h1>
+    <p class="deck">Entenda o que aconteceu na sua seção e no seu local de votação. Os dois turnos lado a lado: votos, comparecimento, biometria, horário do último voto, a urna e os sinais que pedem explicação, com a explicação provável ao lado.</p>
+    <p class="topo-mapa"><a class="btn btn-sec" href="politizese_mapa.html">Ver no mapa do Brasil</a></p>
+    <dl class="numeros" id="numeros" aria-live="off"></dl>
+    <p class="cobertura" id="cobertura" role="status"></p>
+  </div>
+</header>
+
+<main id="conteudo">
+  <section id="busca" class="busca" aria-labelledby="busca-titulo">
+    <div class="wrap">
+      <div class="painel">
+        <h2 id="busca-titulo" class="painel-titulo">Onde você vota?</h2>
+        <div class="abas" role="tablist" aria-label="Como encontrar a seção ou o local de votação">
+          <button type="button" role="tab" id="aba-titulo" aria-controls="p-titulo" aria-selected="true">Título de eleitor</button>
+          <button type="button" role="tab" id="aba-cep" aria-controls="p-cep" aria-selected="false" tabindex="-1">CEP</button>
+          <button type="button" role="tab" id="aba-cidade" aria-controls="p-cidade" aria-selected="false" tabindex="-1">Cidade e bairro</button>
+          <button type="button" role="tab" id="aba-geo" aria-controls="p-geo" aria-selected="false" tabindex="-1">Localização</button>
+        </div>
+
+        <div role="tabpanel" id="p-titulo" aria-labelledby="aba-titulo" class="aba-painel">
+          <form id="form-secao" class="grade-secao" novalidate>
+            <div>
+              <label for="s-uf" class="rot">UF</label>
+              <select id="s-uf" aria-describedby="titulo-ajuda">
+              <option value="">Estado</option>
+              <option value="AC">AC · Acre</option>
+              <option value="AL">AL · Alagoas</option>
+              <option value="AP">AP · Amapá</option>
+              <option value="AM">AM · Amazonas</option>
+              <option value="BA">BA · Bahia</option>
+              <option value="CE">CE · Ceará</option>
+              <option value="DF">DF · Distrito Federal</option>
+              <option value="ES">ES · Espírito Santo</option>
+              <option value="GO">GO · Goiás</option>
+              <option value="MA">MA · Maranhão</option>
+              <option value="MT">MT · Mato Grosso</option>
+              <option value="MS">MS · Mato Grosso do Sul</option>
+              <option value="MG">MG · Minas Gerais</option>
+              <option value="PA">PA · Pará</option>
+              <option value="PB">PB · Paraíba</option>
+              <option value="PR">PR · Paraná</option>
+              <option value="PE">PE · Pernambuco</option>
+              <option value="PI">PI · Piauí</option>
+              <option value="RJ">RJ · Rio de Janeiro</option>
+              <option value="RN">RN · Rio Grande do Norte</option>
+              <option value="RS">RS · Rio Grande do Sul</option>
+              <option value="RO">RO · Rondônia</option>
+              <option value="RR">RR · Roraima</option>
+              <option value="SC">SC · Santa Catarina</option>
+              <option value="SP">SP · São Paulo</option>
+              <option value="SE">SE · Sergipe</option>
+              <option value="TO">TO · Tocantins</option>
+              <option value="ZZ">ZZ · Exterior</option>
+              </select>
+            </div>
+            <div>
+              <label for="s-zona" class="rot">Zona</label>
+              <input id="s-zona" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="000" aria-describedby="titulo-ajuda">
+            </div>
+            <div>
+              <label for="s-secao" class="rot">Seção</label>
+              <input id="s-secao" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" aria-describedby="titulo-ajuda">
+            </div>
+            <div class="acoes-form"><button type="submit" class="btn btn-prim">Ver a seção</button><button type="button" class="btn btn-sec" data-limpar>Limpar</button></div>
+          </form>
+          <p id="titulo-ajuda" class="ajuda"><b>Está no título de eleitor e no e-Título.</b> Se a sua seção é agregada a outra, mostramos a seção onde ela votou. Os números digitados não saem do seu aparelho.</p>
+        </div>
+
+        <div role="tabpanel" id="p-cep" aria-labelledby="aba-cep" class="aba-painel" hidden>
+          <form id="form-cep" class="linha-busca" novalidate>
+            <label for="cep" class="rot">CEP</label>
+            <input id="cep" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" maxlength="9" aria-describedby="cep-ajuda">
+            <div class="acoes-form"><button type="submit" class="btn btn-prim">Ver o local</button><button type="button" class="btn btn-sec" data-limpar>Limpar</button></div>
+          </form>
+          <p id="cep-ajuda" class="ajuda">A busca aproxima pelo CEP dos locais de votação do cadastro do TSE, não pelo seu endereço.</p>
+        </div>
+
+        <div role="tabpanel" id="p-cidade" aria-labelledby="aba-cidade" class="aba-painel" hidden>
+          <form id="form-cidade" class="grade-cidade" novalidate>
+            <div class="combo">
+              <label for="cidade" class="rot">Cidade</label>
+              <input id="cidade" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cidade-lista" autocomplete="off" spellcheck="false" placeholder="Comece a digitar" aria-describedby="cidade-ajuda">
+              <ul id="cidade-lista" role="listbox" aria-label="Cidades encontradas" hidden></ul>
+            </div>
+            <div>
+              <label for="bairro" class="rot">Bairro</label>
+              <select id="bairro" disabled><option value="">Escolha a cidade primeiro</option></select>
+            </div>
+            <div class="acoes-form"><button type="submit" class="btn btn-prim" id="btn-cidade" disabled>Ver o local</button><button type="button" class="btn btn-sec" data-limpar>Limpar</button></div>
+          </form>
+          <p id="cidade-ajuda" class="ajuda">Digite sem se preocupar com acento; use as setas e Enter. O bairro é o do cadastro de locais de votação do TSE.</p>
+        </div>
+
+        <div role="tabpanel" id="p-geo" aria-labelledby="aba-geo" class="aba-painel" hidden>
+          <button type="button" class="btn btn-prim" id="btn-geo">Usar minha localização</button>
+          <p class="ajuda">A coordenada fica no seu aparelho: o navegador mede a distância até os locais de votação e ela não é enviada a ninguém.</p>
+        </div>
+      </div>
+      <div id="avisos" class="avisos" role="status"></div>
+    </div>
+  </section>
+
+  <section id="resultado" class="resultado" aria-live="polite" aria-busy="false">
+    <div class="wrap" id="resultado-in"></div>
+  </section>
+
+  <section id="como-ler" class="fixa" aria-labelledby="t-ler">
+    <div class="wrap duas">
+      <div>
+        <p class="kicker">Como ler</p>
+        <h2 id="t-ler">Atipicidade pede explicação, não prova irregularidade</h2>
+        <ul class="lista-texto">
+          <li>Os números vêm dos boletins de urna publicados pelo TSE para cada seção, nos dois turnos. É leitura agregada por seção: o voto é secreto e nenhum número descreve uma pessoa. Seções com menos de 30 eleitores aptos não mostram votos.</li>
+          <li>Seis sinais da régua da casa comparam a seção com ela mesma no 1º turno e com o município: comparecimento muito acima do 1º turno, muitos votantes sem digital cadastrada, muitos liberados pelo ano de nascimento, salto da parcela sem digital reconhecida, último voto tardio e boletim do sistema de apuração. Cada sinal vem com a explicação provável que a regra encontra, como fila no fechamento, extensão do horário até as 19h, seção agregada ou urna trocada.</li>
+          <li>A troca de urna entre os turnos tem explicação técnica comum: defeito, substituição ou reserva acionada no dia. A ficha mostra o número interno da urna nos dois boletins e a carga.</li>
+          <li>Os horários estão em Brasília, convertidos pelo fuso do estado e corrigidos pela abertura das 8h de cada município. No exterior, valem as horas locais da cidade.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="kicker">Limites</p>
+        <h2 id="t-limites">O que esta página não diz</h2>
+        <ul class="lista-texto" id="lista-limites">
+          <li>Não diz como uma pessoa votou nem por que o comparecimento mudou. Variação entre turnos mistura quem foi votar, quem mudou de voto e quem anulou.</li>
+          <li>A cobertura dos boletins do 2º turno aparece no topo e na ficha. Os logs das urnas mostram o nível de atenção de 0 a 3 nos dois turnos: subir de nível pede explicação, não prova irregularidade, e religar a urna ou passar para a bateria tem explicação técnica comum.</li>
+          <li>O clima do 1º turno é observado (reanálise ERA5, célula de 0,25 grau); o do 2º turno é a previsão publicada na véspera, não a medição do dia.</li>
+          <li>O nível de fiscalização é a régua que a casa publicou antes do 2º turno. Não temos registro do que cada fiscal conferiu na seção.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="mais" class="fixa escuro" aria-labelledby="t-mais">
+    <div class="wrap">
+      <p class="kicker">Para ir além</p>
+      <h2 id="t-mais">O país inteiro</h2>
+      <ul class="lista-texto">
+        <li><a href="apuracao_2T_2026.html">Dossiê da apuração do 2º turno</a>: o resultado, as pesquisas, o comparecimento e os sinais por seção no país.</li>
+        <li><a href="politizese_mapa.html">Mapa do Brasil</a>: todos os locais de votação do país, coloridos pelo 2º turno, pela mudança contra o 1º, pelo comparecimento ou pelos sinais, com cada seção aberta aqui.</li>
+        <li><a href="logs_urnas_2026.html">Logs das urnas do 1º turno</a>: os diagnósticos operacionais de cada seção.</li>
+        <li><a href="mudancas_secoes_abstencoes.html">Seções que mudaram de endereço entre os turnos</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="fontes" class="fixa" aria-labelledby="t-fontes">
+    <div class="wrap">
+      <p class="kicker">Fontes</p>
+      <h2 id="t-fontes">Arquivos usados</h2>
+      <p class="ajuda">Tamanho, data e impressão digital SHA-256 de cada fonte no instante do build. Bancos em coleta ficam registrados por tamanho e data.</p>
+      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Arquivos de origem dos dados">
+        <table class="tabela"><thead><tr><th scope="col">Fonte</th><th scope="col">Arquivo</th><th scope="col">Tamanho</th><th scope="col">SHA-256</th></tr></thead><tbody id="fontes-corpo"></tbody></table>
+      </div>
+      <p class="ajuda" id="gerado-em"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <p>Arvor Intelligence · <a href="index.html">brasil.arvor.co</a> · Leitura agregada por seção, TSE. O voto é secreto. A página tem só a medição de audiência do site; a seção digitada, o CEP e a localização não vão para o endereço da página. Para abrir uma seção, o aplicativo pede ao servidor o arquivo e a contagem de relatos da zona inteira, nunca a seção; ela só sai do aparelho se você enviar um relato.</p>
+    <p><a href="politizesuavizinhanca.html">Politize sua vizinhança</a>, a versão de campanha do 1º turno, segue publicada como arquivo.</p>
+  </div>
+</footer>
+
+<script>
+  if (location.protocol === 'file:') {
+    document.addEventListener('DOMContentLoaded', function () {
+      var a = document.getElementById('avisos');
+      if (a) a.innerHTML = '<p class="aviso erro"><strong>Abra pelo site</strong>Este aplicativo lê arquivos de dados e não funciona aberto direto do disco. Use https://brasil.arvor.co/politizese.html ou um servidor local.</p>';
+      document.querySelectorAll('#busca button, #busca input, #busca select').forEach(function (n) { n.disabled = true; });
+    });
+  }
+</script>
+</body>
+</html>

@@ -11,12 +11,14 @@ import re
 import statistics
 import zipfile
 from collections import Counter, defaultdict
+from datetime import date, timedelta
 from itertools import pairwise
 
 from .cronologia import preparacao_anterior
 from .processo import resumir
 
 VERSAO = "12"
+DIA_PADRAO = "04/10/2026"  # 1º turno; o 2º turno passa dia="25/10/2026" (pleito.py)
 DIAS = {"04/10/2026": 0, "05/10/2026": 86400}
 MAX_DESCOMPRIMIDO = 80_000_000
 RE_MESARIO = re.compile(r"^Mesário \d+ habilitou o eleitor$")
@@ -28,6 +30,20 @@ METADADOS = (
     ("Zona Eleitoral:", "zona"),
     ("Seção Eleitoral:", "secao"),
     ("Fase da UE:", "fase"),
+)
+RE_CODIGO_CARGA = re.compile(
+    r"^Código de carga ([\d.]+) gravado na tabela de correspondência"
+)
+PREFIXO_MIDIA = "Identificador da mídia de carga:"
+# Metadados da urna para a análise de repetição entre seções (qualquer data do log).
+META_URNA = (
+    ("Versão da aplicação:", "versao_aplicacao"),
+    ("Número de série da MR:", "serie_mr"),
+    ("O número de série da chave pública", "serie_chave_publica"),
+    ("Mídia de carga gerada pelo computador", "midia_carga_computador"),
+    ("Data e hora da geração da mídia de carga:", "midia_carga_gerada_em"),
+    ("Mídia de votação gerada pelo computador", "midia_votacao_computador"),
+    ("Data e hora da geração da mídia de votação:", "midia_votacao_gerada_em"),
 )
 CRITICOS = {
     "Eleitor foi habilitado",
@@ -80,9 +96,17 @@ def textos_zip(raw: bytes) -> list[tuple[str, str]]:
     return out
 
 
-def segundos(data: str) -> int:
+def dias_do_pleito(dia: str) -> dict[str, int]:
+    """O dia de votação e o seguinte (encerramentos depois da meia-noite)."""
+    if dia == DIA_PADRAO:
+        return DIAS
+    d = date(int(dia[6:10]), int(dia[3:5]), int(dia[:2])) + timedelta(days=1)
+    return {dia: 0, d.strftime("%d/%m/%Y"): 86400}
+
+
+def segundos(data: str, dias: dict[str, int] = DIAS) -> int:
     return (
-        DIAS[data[:10]]
+        dias[data[:10]]
         + int(data[11:13]) * 3600
         + int(data[14:16]) * 60
         + int(data[17:19])
@@ -144,9 +168,27 @@ def fases_da_bateria(
     return dict(fases), sorted(votacao)
 
 
-def analisar(raw: bytes, identidade: dict | None = None) -> dict:
-    arquivos = textos_zip(raw)
+def analisar(raw: bytes, identidade: dict | None = None, dia: str = DIA_PADRAO) -> dict:
+    return analisar_textos(textos_zip(raw), identidade, dia)
+
+
+def analisar_textos(
+    arquivos: list[tuple[str, str]],
+    identidade: dict | None = None,
+    dia: str = DIA_PADRAO,
+    linhas_omitidas: int = 0,
+) -> dict:
+    """Mesmo leitor sobre textos já extraídos. ``linhas_omitidas`` soma ao total
+    as linhas anteriores ao dia guardadas por referência no modo compacto do 2º
+    turno (ver ``compacto.py``); elas não alimentam nenhuma outra contagem."""
+    dias = dias_do_pleito(dia)
+    dia_ordem = dia[6:10] + dia[3:5] + dia[:2]
     cont = Counter()
+    if linhas_omitidas:
+        cont["linhas_total"] += linhas_omitidas
+    cargas = defaultdict(set)
+    midias = defaultdict(set)
+    meta_urna = defaultdict(dict)
     membros = []
     identidades = defaultdict(dict)
     fases = defaultdict(set)
@@ -157,7 +199,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
     for nome, texto in arquivos:
         local = []
         anterior = {}
-        historico = preparacao_anterior(nome, texto)
+        historico = preparacao_anterior(nome, texto, dia)
         for linha in texto.splitlines():
             a = linha.split("\t")
             if len(a) != 6:
@@ -166,12 +208,25 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
                 continue
             data, nivel, urna, app, msg, _ = a
             cont["linhas_total"] += 1
-            if data[:10] not in DIAS:
+            carga = RE_CODIGO_CARGA.match(msg)
+            if carga:
+                cargas[urna].add(carga[1].replace(".", ""))
+                meta_urna[urna].setdefault("carga_registrada_em", data)
+            elif msg.startswith(PREFIXO_MIDIA):
+                midias[urna].add(msg.split(":", 1)[1].strip())
+            else:
+                for prefixo, campo in META_URNA:
+                    if msg.startswith(prefixo):
+                        valor = msg.split(":", 1)[1].strip() if ":" in msg else msg
+                        meta_urna[urna].setdefault(campo, set()).add(valor)
+                        if data[:10] in dias:
+                            meta_urna[urna].setdefault(campo + "_dia", set()).add(valor)
+            if data[:10] not in dias:
                 # Uma urna pode permanecer ligada desde a véspera. Sua identidade
                 # não precisa reaparecer no dia 4; só usar o último metadado
                 # anterior, nunca substituir um metadado do próprio dia.
                 ordem = data[6:10] + data[3:5] + data[:2] + data[11:19]
-                if len(data) == 19 and ordem[:8] < "20261004":
+                if len(data) == 19 and ordem[:8] < dia_ordem:
                     pares = [
                         (campo, msg.split(":", 1)[1].strip())
                         for prefixo, campo in METADADOS
@@ -190,7 +245,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
                 cont["eventos_preparacao_excluidos"] += 1
                 continue
             try:
-                t = segundos(data)
+                t = segundos(data, dias)
             except (ValueError, IndexError):
                 cont["linhas_invalidas"] += 1
                 continue
@@ -262,6 +317,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
     duracoes_inspecao = []
     ocorrencias = []
     bateria_t = []
+    partidas = []
 
     def vazio():
         return {
@@ -286,6 +342,13 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
         if nivel in ("ERRO", "FATAL"):
             cont["erros"] += 1
             horarios_erros.append(t)
+            # No 2º turno de 2026 a urna religada com a carga do 1º turno registra
+            # este erro do GAP antes da zerésima em quase toda seção. Contagem à
+            # parte, sem alterar ``erros`` nem o critério publicado.
+            if app == "GAP" and msg == "Problema ao desmontar a MR":
+                cont["erro_mr"] += 1
+                if not zerésimas:
+                    cont["erro_mr_pre_zeresima"] += 1
             # Catálogo sem números pessoais, caminhos ou conteúdo arbitrário.
             categoria = next(
                 (
@@ -318,6 +381,26 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
         if "operando" in baixa and "bateria interna" in baixa:
             cont["eventos_bateria"] += 1
             bateria_t.append(t)
+        if (app == "LOGD" and msg.startswith("Urna ligada em ")) or (
+            app == "VOTA" and msg.startswith("Iniciando aplicação")
+        ):
+            partidas.append(
+                {
+                    "tipo": "sistema" if app == "LOGD" else "vota",
+                    "urna": urna,
+                    "segundo": t,
+                    "votos_antes": cont["computados"],
+                    "fase": (
+                        "pos_encerramento"
+                        if urna in encerradas
+                        else (
+                            "votacao"
+                            if urna in ultimo_por_urna
+                            else "pre_votacao" if zerésimas else "pre_zeresima"
+                        )
+                    ),
+                }
+            )
         if app == "LOGD" and msg.startswith("Urna ligada em "):
             cont["partidas_sistema"] += 1
             if urna in ultimo_por_urna and urna not in encerradas:
@@ -488,6 +571,8 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
     intervalos = [] if invalidar else [b - a for a, b in pairwise(computados)]
     # Histograma permite média nacional ponderada por ciclos sem microdados.
     hist = Counter(duracoes)
+    # Cômputos por hora do relógio da urna (hora local; 24+ = dia seguinte).
+    por_hora = Counter(t // 3600 for t in computados)
     return {
         "versao_parser": VERSAO,
         "processo_observado": processo,
@@ -517,4 +602,24 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
         ),
         "erros_categoria": dict(erros),
         "alertas_categoria": dict(avisos),
+        # Sinais acrescentados sem mudar a semântica dos campos anteriores.
+        "urnas_log": sorted(permitidas),
+        "urnas_excluidas_ids": sorted({e[1] for e in eventos} - permitidas),
+        "cargas_log": {u: sorted(cargas[u]) for u in sorted(permitidas) if cargas[u]},
+        "midias_log": {u: sorted(midias[u]) for u in sorted(permitidas) if midias[u]},
+        "computados_por_hora": {str(h): n for h, n in sorted(por_hora.items())},
+        "computados_por_hora_confiavel": not invalidar,
+        "metadados_urna": {
+            u: {
+                k: (sorted(v) if isinstance(v, set) else v)
+                for k, v in sorted(meta_urna[u].items())
+            }
+            | {"modelos": sorted(modelos[u])}
+            for u in sorted(permitidas)
+        },
+        "zeresima_s": min(zerésimas) if zerésimas else None,
+        "partidas_dia": [
+            p | {"votos_depois": cont["computados"] - p["votos_antes"]}
+            for p in partidas
+        ],
     }

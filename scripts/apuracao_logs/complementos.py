@@ -12,6 +12,7 @@ import asn1tools
 import requests
 
 from .coleta import BASE, DESTINO, HEADERS, ROOT
+from .pleito import Pleito
 
 PASTA = ROOT / "data/originals/tse_logs_2026/complementos"
 MANIFESTO = ROOT / "analysis/apuracao_2026/logs_urnas/complementos.json"
@@ -19,12 +20,34 @@ LACUNAS = ROOT / "analysis/apuracao_2026/logs_urnas/lacunas.json"
 SPEC = ROOT / "apuracao/scripts/secoes/bu.asn1"
 
 
-def registros_sa() -> dict:
+def _config(pleito: Pleito | None) -> dict:
+    """Sem pleito, os padrões do 1º turno (constantes do módulo, como antes)."""
+    if pleito is None:
+        return {
+            "manifesto": MANIFESTO,
+            "lacunas": LACUNAS,
+            "base": BASE,
+            "numero": 3220,
+            "destino": DESTINO,
+            "pasta": PASTA,
+        }
+    return {
+        "manifesto": pleito.complementos,
+        "lacunas": pleito.lacunas,
+        "base": pleito.base,
+        "numero": pleito.numero,
+        "destino": pleito.raw,
+        "pasta": ROOT / f"data/originals/tse_logs_2026/complementos_{pleito.numero}",
+    }
+
+
+def registros_sa(pleito: Pleito | None = None) -> dict:
     """Endereços do logSA na evidência preservada; não são ciclos do VOTA."""
-    if not LACUNAS.exists():
+    cfg = _config(pleito)
+    if not cfg["lacunas"].exists():
         return {}
     resultado = {}
-    for r in json.loads(LACUNAS.read_text())["linhas"]:
+    for r in json.loads(cfg["lacunas"].read_text())["linhas"]:
         if r.get("tipo_arquivo_bu") not in (3, 4, 5, 6):
             continue
         raw = (ROOT / r["arquivo"]).read_bytes()
@@ -36,9 +59,11 @@ def registros_sa() -> dict:
             assert len(arquivos) <= 1
             if arquivos:
                 uf, mun, z, s = r["uf"].lower(), r["mun"], r["zona"], r["secao"]
-                assert arquivos[0] == f"o03220{uf}{mun}{z:04d}{s:04d}-logsa.jez"
+                assert (
+                    arquivos[0] == f"o0{cfg['numero']}{uf}{mun}{z:04d}{s:04d}-logsa.jez"
+                )
                 resultado[(uf, mun, z, s)] = {
-                    "url": f"{BASE}/{uf}/{mun}/{z:04d}/{s:04d}/{h['hash']}/{arquivos[0]}",
+                    "url": f"{cfg['base']}/{uf}/{mun}/{z:04d}/{s:04d}/{h['hash']}/{arquivos[0]}",
                     "metadados_url": r["url"],
                     "metadados_sha256": r["sha256"],
                     "analisado": False,
@@ -46,7 +71,7 @@ def registros_sa() -> dict:
     return resultado
 
 
-def ler_bu(raw: bytes, chave: tuple, leitor) -> dict:
+def ler_bu(raw: bytes, chave: tuple, leitor, pleito: int = 3220) -> dict:
     env = leitor.decode("EntidadeEnvelopeGenerico", raw)
     bu = leitor.decode("EntidadeBoletimUrna", env["conteudo"])
     uf, mun, zona, secao = chave
@@ -56,7 +81,7 @@ def ler_bu(raw: bytes, chave: tuple, leitor) -> dict:
         ident["municipioZona"]["zona"],
         ident["secao"],
     ) == (int(mun), zona, secao)
-    assert bu["fase"] == 2 and bu["cabecalho"]["idEleitoral"] == ("idPleito", 3220)
+    assert bu["fase"] == 2 and bu["cabecalho"]["idEleitoral"] == ("idPleito", pleito)
     urna = bu["urna"]
     det = bu.get("detalhamentoComparecimento", {})
     return {
@@ -76,16 +101,17 @@ def ler_bu(raw: bytes, chave: tuple, leitor) -> dict:
         "tipo_arquivo": urna["tipoArquivo"],
         "n_cargas": len(bu["historicoCodigosCarga"]),
         "fase": 2,
-        "pleito": 3220,
+        "pleito": pleito,
     }
 
 
-def carregar() -> dict:
-    if not MANIFESTO.exists():
+def carregar(pleito: Pleito | None = None) -> dict:
+    manifesto = _config(pleito)["manifesto"]
+    if not manifesto.exists():
         return {}
     registros = {
         (r["uf"], r["mun"], r["zona"], r["secao"]): r
-        for r in json.loads(MANIFESTO.read_text())["linhas"]
+        for r in json.loads(manifesto.read_text())["linhas"]
     }
     for r in registros.values():
         for nome in ("fonte_bu", "fonte_aux"):
@@ -97,9 +123,9 @@ def carregar() -> dict:
     return registros
 
 
-def enderecos() -> dict:
+def enderecos(pleito: Pleito | None = None) -> dict:
     """Local identificado no BU; endereço só quando existe no cadastro público."""
-    registros = carregar()
+    registros = carregar() if pleito is None else carregar(pleito)
     if not registros:
         return {}
     leitor = asn1tools.compile_files(str(SPEC), codec="ber", numeric_enums=True)
@@ -137,19 +163,20 @@ def enderecos() -> dict:
     return resultado
 
 
-def preparar():
+def preparar(pleito: Pleito | None = None):
     """Arquiva BUs de lacunas anteriores; não toca no SQLite em coleta."""
-    if MANIFESTO.exists():
+    cfg = _config(pleito)
+    if cfg["manifesto"].exists():
         print(
-            f"{len(carregar())} BUs suplementares já preservados e hashes conferidos."
+            f"{len(carregar(pleito))} BUs suplementares já preservados e hashes conferidos."
         )
         return
-    PASTA.mkdir(parents=True, exist_ok=True)
+    cfg["pasta"].mkdir(parents=True, exist_ok=True)
     leitor = asn1tools.compile_files(str(SPEC), codec="ber", numeric_enums=True)
     linhas = []
     with requests.Session() as sessao:
         sessao.headers.update(HEADERS)
-        for r in json.loads(LACUNAS.read_text())["linhas"]:
+        for r in json.loads(cfg["lacunas"].read_text())["linhas"]:
             if r["hash_anterior"] is not None or r.get("status_atual") != "Totalizada":
                 continue
             aux_raw = (ROOT / r["arquivo"]).read_bytes()
@@ -162,13 +189,13 @@ def preparar():
             logs = [a["nm"] for a in h["arq"] if a["nm"].endswith("-log.jez")]
             assert len(bus) == len(logs) == 1
             uf, mun, z, s = r["uf"].lower(), r["mun"], r["zona"], r["secao"]
-            prefixo = f"o03220{uf}{mun}{z:04d}{s:04d}"
+            prefixo = f"o0{cfg['numero']}{uf}{mun}{z:04d}{s:04d}"
             assert bus[0] == prefixo + "-bu.dat" and logs[0] == prefixo + "-log.jez"
-            url = f"{BASE}/{uf}/{mun}/{z:04d}/{s:04d}/{h['hash']}/{bus[0]}"
+            url = f"{cfg['base']}/{uf}/{mun}/{z:04d}/{s:04d}/{h['hash']}/{bus[0]}"
             resposta = sessao.get(url, timeout=(10, 40))
             resposta.raise_for_status()
-            bu = ler_bu(resposta.content, (uf, mun, z, s), leitor)
-            path = PASTA / bus[0]
+            bu = ler_bu(resposta.content, (uf, mun, z, s), leitor, cfg["numero"])
+            path = cfg["pasta"] / bus[0]
             path.write_bytes(resposta.content)
             linhas.append(
                 {
@@ -194,17 +221,19 @@ def preparar():
                 }
             )
             time.sleep(0.25)
-    MANIFESTO.write_text(
+    cfg["manifesto"].parent.mkdir(parents=True, exist_ok=True)
+    cfg["manifesto"].write_text(
         json.dumps({"linhas": linhas}, ensure_ascii=False, indent=2) + "\n"
     )
     print(f"{len(linhas)} BUs suplementares preservados; catálogo ainda não alterado.")
 
 
-def aplicar():
+def aplicar(pleito: Pleito | None = None):
     """Executar só após encerrar o coletor: um escritor por banco."""
-    con = sqlite3.connect(DESTINO)
+    cfg = _config(pleito)
+    con = sqlite3.connect(cfg["destino"])
     with con:
-        for chave, r in carregar().items():
+        for chave, r in (carregar() if pleito is None else carregar(pleito)).items():
             anterior = con.execute(
                 "SELECT hash,nome FROM catalogo WHERE uf=? AND mun=? AND zona=? AND secao=?",
                 chave,
@@ -220,7 +249,7 @@ def aplicar():
                 ("complementos_aplicados_em", datetime.now(timezone.utc).isoformat()),
                 (
                     "complementos_manifesto_sha256",
-                    hashlib.sha256(MANIFESTO.read_bytes()).hexdigest(),
+                    hashlib.sha256(cfg["manifesto"].read_bytes()).hexdigest(),
                 ),
             ],
         )

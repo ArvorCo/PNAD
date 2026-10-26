@@ -1,4 +1,4 @@
-// Configuração de seções por UF (`{uf}-p003220-cs.json`): abr[].mu[].zon[].sec[] com
+// Configuração de seções por UF (`{uf}-p<pleito>-cs.json`, p003220 no 1º turno): abr[].mu[].zon[].sec[] com
 // `ns` (seção), `nsp` (principal, quando a seção é agregada) e `nsa` (agregadas a esta).
 import { z } from "zod";
 import type { SecaoCs } from "./banco.ts";

@@ -48,6 +48,17 @@ Segredos: `MODO` (`teste` aceita FASE S/T; `oficial` exige o perfil do 2º turno
 (sal do hash de IP para o limite de taxa) e `TURNSTILE_SECRET` (opcional; sem ele, só o limite por
 IP). A chave `SUPABASE_SERVICE_ROLE_KEY` é injetada pela plataforma.
 
+## Relatos de seção do Politize-se (`supabase/functions/receber-relato/`)
+
+```bash
+supabase functions deploy receber-relato --project-ref brvjvizqbyfamtxogvqf --use-api --no-verify-jwt
+```
+
+Tabela `relato_secao` (migração 0005), validação em `src/relato/validar.ts`, limite de 5 relatos por hora
+por hash de IP em `registrar_relato(jsonb)` (migrações 0005 e 0006). Sem Turnstile: desafio próprio
+assinado com `SAL_IP`, tempo mínimo de 8 s, prova de trabalho de 18 bits e campo-armadilha (`src/relato/desafio.ts`).
+Contrato completo em `analysis/politize_se/CONTRATO.md`, seção "Relatos".
+
 ## Conferência com o TSE
 
 `python3 scripts/totalizacao-conferir-tse.py` compara cada BU aceito (fase O) com o `-bu.dat` ou

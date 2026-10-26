@@ -1,0 +1,3941 @@
+{
+ "descricao": "Pesquisas nacionais de 2º turno com campo encerrado a partir de 19/10/2026 (última onda de cada casa), centrais da casa e hipóteses medidas contra a urna. Erro = pesquisa menos urna em pontos dos válidos; na diferença F−L, positivo superestima Flávio. erro_lula_menos_flavio traz o sinal do 1º turno.",
+ "gerado_por": "scripts/apuracao-2t-2026-pesquisas.py",
+ "fontes": [
+  {
+   "arquivo": "docs/assets/reponderacao_pnad.json",
+   "sha256": "55ac3346cda43a079a77750f874a4dfa13d448cd1cbfeaeb7e15372fe0c45361",
+   "ultimo_commit": "9cff11a76 2026-10-22T19:47:16-03:00"
+  },
+  {
+   "arquivo": "docs/assets/reponderacao_simulador.json",
+   "sha256": "9c5687bab1db5ba0ddc97556ccb3f5b7958a5aee6330060c1e28fc11377ecc36",
+   "ultimo_commit": "9cff11a76 2026-10-22T19:47:16-03:00"
+  },
+  {
+   "arquivo": "analysis/reponderacao/historico_2t/presenca.json",
+   "sha256": "e2576abdb9cfb4f0298b943e48bf97fa222df170214fe2e5db3805434352e916",
+   "ultimo_commit": "694d062fe 2026-10-22T19:36:33-03:00"
+  },
+  {
+   "arquivo": "docs/assets/mapa_previsao_2t_2026.json",
+   "sha256": "3d65e06136cc6402b5e769dfc273df9852603e9c6565cf3613027f15193b5052",
+   "ultimo_commit": "847e824f7 2026-10-25T00:22:15-03:00"
+  },
+  {
+   "arquivo": "analysis/apuracao_2026/dados/pesquisas_vs_urna.json",
+   "sha256": "0f4391d21352041fc6fbf994472d65738ebfe8e04a93ba61e96c0be16a22c7c4",
+   "ultimo_commit": "00143a04f 2026-10-05T04:19:56-03:00"
+  },
+  {
+   "arquivo": "analysis/predicao_2026/erro_2022/erro_2022.json",
+   "sha256": "716848baa76ed3ce4f7bdaa72c7ecfabc544b75e5485f0dabe5864bd28f5fed3",
+   "ultimo_commit": "8f3420b28 2026-10-03T14:43:14-03:00"
+  }
+ ],
+ "urna": {
+  "fonte": {
+   "tipo": "arquivo",
+   "arquivo": "analysis/apuracao_2t_2026/dados/presidente.json",
+   "sha256": "9eec711a4b12318a38687953d2f6159a93d8009280be90fc1b9e54b4d738f9e9",
+   "ultimo_commit": null,
+   "pst": 100.0,
+   "versao_gerada_em": "2026-10-26T01:46:03.000Z",
+   "completo": false
+  },
+  "brasil": {
+   "uf": "BR",
+   "regiao": "ZZ",
+   "votos": {
+    "flavio": 59825984,
+    "lula": 64255891
+   },
+   "validos_votos": 124081875,
+   "validos": {
+    "flavio": 48.214926,
+    "lula": 51.785074
+   },
+   "comparecimento": 128235666,
+   "abstencao": 30508972,
+   "eleitores": 158745502,
+   "abstencao_pct": 19.218899,
+   "pst": 100.0,
+   "brancos": 1430493,
+   "nulos": 2723298
+  },
+  "brasil_sem_exterior": {
+   "uf": "BR sem ZZ",
+   "regiao": "ZZ",
+   "votos": {
+    "flavio": 59654487,
+    "lula": 64055737
+   },
+   "validos_votos": 123710224,
+   "validos": {
+    "flavio": 48.221145,
+    "lula": 51.778855
+   },
+   "comparecimento": 127854223,
+   "abstencao": 29974155,
+   "eleitores": 157828819,
+   "abstencao_pct": 18.991613,
+   "pst": null
+  },
+  "regioes": {
+   "N": {
+    "uf": "N",
+    "regiao": "ZZ",
+    "votos": {
+     "flavio": 5023547,
+     "lula": 5024626
+    },
+    "validos_votos": 10048173,
+    "validos": {
+     "flavio": 49.994631,
+     "lula": 50.005369
+    },
+    "comparecimento": 10317110,
+    "abstencao": 2783746,
+    "eleitores": 13100856,
+    "abstencao_pct": 21.248581,
+    "pst": null
+   },
+   "NE": {
+    "uf": "NE",
+    "regiao": "ZZ",
+    "votos": {
+     "flavio": 10796697,
+     "lula": 24450169
+    },
+    "validos_votos": 35246866,
+    "validos": {
+     "flavio": 30.631651,
+     "lula": 69.368349
+    },
+    "comparecimento": 36335320,
+    "abstencao": 7175199,
+    "eleitores": 43510858,
+    "abstencao_pct": 16.490723,
+    "pst": null
+   },
+   "CO": {
+    "uf": "CO",
+    "regiao": "ZZ",
+    "votos": {
+     "flavio": 5603867,
+     "lula": 3733919
+    },
+    "validos_votos": 9337786,
+    "validos": {
+     "flavio": 60.012802,
+     "lula": 39.987198
+    },
+    "comparecimento": 9595354,
+    "abstencao": 2406342,
+    "eleitores": 12001696,
+    "abstencao_pct": 20.050016,
+    "pst": null
+   },
+   "SE": {
+    "uf": "SE",
+    "regiao": "NE",
+    "votos": {
+     "flavio": 26844483,
+     "lula": 24037653
+    },
+    "validos_votos": 50882136,
+    "validos": {
+     "flavio": 52.758168,
+     "lula": 47.241832
+    },
+    "comparecimento": 52895159,
+    "abstencao": 13449515,
+    "eleitores": 66344776,
+    "abstencao_pct": 20.272185,
+    "pst": null
+   },
+   "S": {
+    "uf": "S",
+    "regiao": "ZZ",
+    "votos": {
+     "flavio": 11385893,
+     "lula": 6809370
+    },
+    "validos_votos": 18195263,
+    "validos": {
+     "flavio": 62.576139,
+     "lula": 37.423861
+    },
+    "comparecimento": 18711280,
+    "abstencao": 4159353,
+    "eleitores": 22870633,
+    "abstencao_pct": 18.186436,
+    "pst": null
+   }
+  },
+  "abstencao_mesmos_municipios": {
+   "base": "municipios_fechados",
+   "brasil": {
+    "sigla": "BR",
+    "nome": "Brasil",
+    "n_mun": 5757,
+    "n_mun_fechados": 5753,
+    "te_fechado": 156687790,
+    "pct_te_fechado": 98.7,
+    "comparecimento": 126503366,
+    "abstencao": 30184001,
+    "pa_2t": 19.26,
+    "pa_1t_mesmos": 21.1,
+    "delta_pp": -1.84
+   },
+   "regioes": [
+    {
+     "sigla": "N",
+     "nome": "Norte",
+     "n_mun": 450,
+     "n_mun_fechados": 450,
+     "te_fechado": 13100856,
+     "pct_te_fechado": 100,
+     "comparecimento": 10317110,
+     "abstencao": 2783746,
+     "pa_2t": 21.25,
+     "pa_1t_mesmos": 19.43,
+     "delta_pp": 1.81
+    },
+    {
+     "sigla": "NE",
+     "nome": "Nordeste",
+     "n_mun": 1794,
+     "n_mun_fechados": 1792,
+     "te_fechado": 41465090,
+     "pct_te_fechado": 95.3,
+     "comparecimento": 34612272,
+     "abstencao": 6852818,
+     "pa_2t": 16.53,
+     "pa_1t_mesmos": 18.32,
+     "delta_pp": -1.79
+    },
+    {
+     "sigla": "CO",
+     "nome": "Centro-Oeste",
+     "n_mun": 468,
+     "n_mun_fechados": 468,
+     "te_fechado": 12001696,
+     "pct_te_fechado": 100,
+     "comparecimento": 9595354,
+     "abstencao": 2406342,
+     "pa_2t": 20.05,
+     "pa_1t_mesmos": 21.7,
+     "delta_pp": -1.65
+    },
+    {
+     "sigla": "SE",
+     "nome": "Sudeste",
+     "n_mun": 1668,
+     "n_mun_fechados": 1667,
+     "te_fechado": 66335186,
+     "pct_te_fechado": 99.99,
+     "comparecimento": 52887932,
+     "abstencao": 13447254,
+     "pa_2t": 20.27,
+     "pa_1t_mesmos": 22.7,
+     "delta_pp": -2.43
+    },
+    {
+     "sigla": "S",
+     "nome": "Sul",
+     "n_mun": 1191,
+     "n_mun_fechados": 1190,
+     "te_fechado": 22868279,
+     "pct_te_fechado": 99.99,
+     "comparecimento": 18709255,
+     "abstencao": 4159024,
+     "pa_2t": 18.19,
+     "pa_1t_mesmos": 20.46,
+     "delta_pp": -2.27
+    },
+    {
+     "sigla": "ZZ",
+     "nome": "Exterior",
+     "n_mun": 186,
+     "n_mun_fechados": 186,
+     "te_fechado": 916683,
+     "pct_te_fechado": 100,
+     "comparecimento": 381443,
+     "abstencao": 534817,
+     "pa_2t": 58.37,
+     "pa_1t_mesmos": 62.69,
+     "delta_pp": -4.32
+    }
+   ]
+  },
+  "primeiro_turno_brasil": {
+   "uf": "BR",
+   "flavio": 56104503,
+   "lula": 53879538,
+   "terceiros": 9316747,
+   "validos": 119300788,
+   "branco_nulo": 5975047,
+   "comparecimento": 125275835,
+   "abstencao": 33469244,
+   "eleitores": 158745502,
+   "abstencao_pct": 21.083642,
+   "lula_validos_pct": 45.162768,
+   "flavio_validos_pct": 47.027772
+  }
+ },
+ "regra_validos": "candidaturas renormalizadas para 100; indecisos, branco/nulo e não vai votar fora; válidos oficiais da casa guardados à parte",
+ "regra_selecao": "acervo analysis/reponderacao/pesquisas com placar de 2º turno, campo iniciado depois de 04/10 e encerrado a partir de 19/10; última onda por casa pelo fim do campo e pela divulgação",
+ "conferencia_snapshot": {
+  "na_projecao_fora_daqui": [
+   "ranking_2026-10-16"
+  ],
+  "aqui_fora_da_projecao": [],
+  "nota": "Data Ranking (campo até 16/10) entra na Projeção, mas fica fora daqui pela regra de campo encerrado a partir de 19/10"
+ },
+ "pesquisas": [
+  {
+   "id": "alfa_2026-10-22",
+   "instituto": "Alfa Inteligência/TMC",
+   "registro_tse": "BR-08496/2026",
+   "campo": {
+    "inicio": "2026-10-18",
+    "fim": "2026-10-22"
+   },
+   "meio_do_campo": "2026-10-20",
+   "divulgacao": "2026-10-23",
+   "dias_fim_campo_ate_urna": 3,
+   "n": 2700,
+   "metodo": "entrevistas pessoais; municípios por PPT e cotas de entrevistados",
+   "modo": "presencial",
+   "perfil_renda": "perfil_publicado",
+   "publicado_total": {
+    "flavio": 49.9,
+    "lula": 46.0,
+    "branco_nulo": 2.0,
+    "indecisos": 2.1
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 95.9,
+    "nao_escolha_pct_total": 4.1,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 52.033368,
+    "lula": 47.966632
+   },
+   "validos_oficiais": {
+    "flavio": 52,
+    "lula": 48
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 52.0,
+    "lula": 48.0
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 50.387,
+     "lula": 45.49,
+     "indecisos": 2.123,
+     "branco_nulo": 2.0
+    },
+    "validos": {
+     "flavio": 52.553793,
+     "lula": 47.446207
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 95.877,
+     "nao_escolha_pct_total": 4.123,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/alfa_2026-10-22.json",
+    "sha256": "474aaa2e610b457a4979829d2cf1d1a639d661bff424d1c28c3e1cfbf388501c",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 4.066736,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.636885,
+    "erro_lula_menos_flavio": -7.636885,
+    "erro_flavio": 3.818442,
+    "erro_lula": -3.818442
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 4.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.570148,
+    "erro_lula_menos_flavio": -7.570148,
+    "erro_flavio": 3.785074,
+    "erro_lula": -3.785074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 5.107586,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 8.677734,
+    "erro_lula_menos_flavio": -8.677734,
+    "erro_flavio": 4.338867,
+    "erro_lula": -4.338867
+   },
+   "margem_95_diferenca_aas_pp": 3.848553,
+   "margem_95_diferenca_deff_pp": 4.713496,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 4.066736,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 7.624445,
+    "erro_lula_menos_flavio": -7.624445,
+    "erro_flavio": 3.812223,
+    "erro_lula": -3.812223
+   }
+  },
+  {
+   "id": "atlas_2026-10-23",
+   "instituto": "AtlasIntel",
+   "registro_tse": "BR-06380/2026",
+   "campo": {
+    "inicio": "2026-10-18",
+    "fim": "2026-10-23"
+   },
+   "meio_do_campo": "2026-10-20",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 2,
+   "n": 4990,
+   "metodo": "recrutamento digital aleatório Atlas RDR; pós-estratificação",
+   "modo": "online",
+   "perfil_renda": "perfil_publicado",
+   "publicado_total": {
+    "flavio": 49.9,
+    "lula": 48.4,
+    "branco_nulo": 1.7
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 98.3,
+    "nao_escolha_pct_total": 1.7,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.76297,
+    "lula": 49.23703
+   },
+   "validos_oficiais": {
+    "flavio": 50.8,
+    "lula": 49.2
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 50.8,
+    "lula": 49.2
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 49.947501,
+     "lula": 48.333517,
+     "indecisos": 0.0,
+     "branco_nulo": 1.718983
+    },
+    "validos": {
+     "flavio": 50.821107,
+     "lula": 49.178893
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 98.281017,
+     "nao_escolha_pct_total": 1.718983,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/atlas_2026-10-23.json",
+    "sha256": "39e3a456c71aee55790523cd46408ae298c3de3b44457490f536075d7f011f8f",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.525941,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.096089,
+    "erro_lula_menos_flavio": -5.096089,
+    "erro_flavio": 2.548045,
+    "erro_lula": -2.548045
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 1.6,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.170148,
+    "erro_lula_menos_flavio": -5.170148,
+    "erro_flavio": 2.585074,
+    "erro_lula": -2.585074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 1.642213,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.212362,
+    "erro_lula_menos_flavio": -5.212362,
+    "erro_flavio": 2.606181,
+    "erro_lula": -2.606181
+   },
+   "margem_95_diferenca_aas_pp": 2.798147,
+   "margem_95_diferenca_deff_pp": 3.427016,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.525941,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 5.08365,
+    "erro_lula_menos_flavio": -5.08365,
+    "erro_flavio": 2.541825,
+    "erro_lula": -2.541825
+   }
+  },
+  {
+   "id": "colectta_2026-10-23",
+   "instituto": "Colectta",
+   "registro_tse": "BR-05601/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-23"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 2,
+   "n": 3000,
+   "metodo": "presencial, 101 municípios, 27 UFs",
+   "modo": "presencial",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 46.0,
+    "lula": 46.5,
+    "branco_nulo": 4.4,
+    "indecisos": 3.1
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 92.5,
+    "nao_escolha_pct_total": 7.5,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 49.72973,
+    "lula": 50.27027
+   },
+   "validos_oficiais": {
+    "flavio": 49.7,
+    "lula": 50.3
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 49.7,
+    "lula": 50.3
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Íntegra e perfil de renda não localizados; somente publicado na Projeção.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/colectta_2026-10-23.json",
+    "sha256": "acabbee5041cb25f5a2c902baca5b574d88f2a56ded3d18ca00f770e3972d148",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": -0.540541,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 3.029608,
+    "erro_lula_menos_flavio": -3.029608,
+    "erro_flavio": 1.514804,
+    "erro_lula": -1.514804
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": -0.6,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 2.970148,
+    "erro_lula_menos_flavio": -2.970148,
+    "erro_flavio": 1.485074,
+    "erro_lula": -1.485074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 3.720577,
+   "margem_95_diferenca_deff_pp": 4.556757,
+   "erro_fora_da_margem_aas": false,
+   "flavio_a_frente_nos_validos": false,
+   "acertou_vencedor": true,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": -0.540541,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 3.017169,
+    "erro_lula_menos_flavio": -3.017169,
+    "erro_flavio": 1.508584,
+    "erro_lula": -1.508584
+   }
+  },
+  {
+   "id": "datatrends_2026-10-21",
+   "instituto": "DataTrends",
+   "registro_tse": "BR-03365/2026",
+   "campo": {
+    "inicio": "2026-10-19",
+    "fim": "2026-10-21"
+   },
+   "meio_do_campo": "2026-10-20",
+   "divulgacao": "2026-10-23",
+   "dias_fim_campo_ate_urna": 4,
+   "n": 2000,
+   "metodo": "telefônico automatizado",
+   "modo": "telefone",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 50.0,
+    "lula": 46.0,
+    "branco_nulo": 4.0,
+    "indecisos": 1.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 96.0,
+    "nao_escolha_pct_total": 5.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 52.083333,
+    "lula": 47.916667
+   },
+   "validos_oficiais": {
+    "flavio": 51.9,
+    "lula": 48.1
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 51.9,
+    "lula": 48.1
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Divulgação de 23/10, campo 19–21/10, n=2.000. Total 50/46/4/1 soma 101 por arredondamento. Válidos publicados 51,9/48,1 preservados. Íntegra atual não localizada; não transportar perfil ou cruzamentos de 19/10. Somente publicado na Projeção até obter documentação atual.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/datatrends_2026-10-21.json",
+    "sha256": "fc41ee32fd02697ceb6d2965bc0196bbcb9c947245afca17dfa94e9d9bda5659",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 4.166667,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.736815,
+    "erro_lula_menos_flavio": -7.736815,
+    "erro_flavio": 3.868408,
+    "erro_lula": -3.868408
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 3.8,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.370148,
+    "erro_lula_menos_flavio": -7.370148,
+    "erro_flavio": 3.685074,
+    "erro_lula": -3.685074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 4.469101,
+   "margem_95_diferenca_deff_pp": 5.473508,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 4.166667,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 7.724376,
+    "erro_lula_menos_flavio": -7.724376,
+    "erro_flavio": 3.862188,
+    "erro_lula": -3.862188
+   }
+  },
+  {
+   "id": "datafolha_2026-10-24",
+   "instituto": "Datafolha",
+   "registro_tse": "BR-09540/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 1,
+   "n": 4050,
+   "metodo": "presencial, 124 municípios",
+   "modo": "presencial",
+   "perfil_renda": "hipotese_onda_anterior",
+   "publicado_total": {
+    "flavio": 48.0,
+    "lula": 47.0,
+    "branco_nulo": 3.0,
+    "indecisos": 2.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 95.0,
+    "nao_escolha_pct_total": 5.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.526316,
+    "lula": 49.473684
+   },
+   "validos_oficiais": {
+    "flavio": 51,
+    "lula": 49
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 51.0,
+    "lula": 49.0
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 50.034033,
+     "lula": 45.309497,
+     "indecisos": 1.638573,
+     "branco_nulo": 3.017897
+    },
+    "validos": {
+     "flavio": 52.477638,
+     "lula": 47.522362
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 95.34353,
+     "nao_escolha_pct_total": 4.65647,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/datafolha_2026-10-24.json",
+    "sha256": "e6f5465741b7a2569b0ebbbad15e720fe3ff825233836698d6abc66ec13672de",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.052632,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.62278,
+    "erro_lula_menos_flavio": -4.62278,
+    "erro_flavio": 2.31139,
+    "erro_lula": -2.31139
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 2.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.570148,
+    "erro_lula_menos_flavio": -5.570148,
+    "erro_flavio": 2.785074,
+    "erro_lula": -2.785074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 4.955277,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 8.525425,
+    "erro_lula_menos_flavio": -8.525425,
+    "erro_flavio": 4.262712,
+    "erro_lula": -4.262712
+   },
+   "margem_95_diferenca_aas_pp": 3.159619,
+   "margem_95_diferenca_deff_pp": 3.869727,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.052632,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.610341,
+    "erro_lula_menos_flavio": -4.610341,
+    "erro_flavio": 2.30517,
+    "erro_lula": -2.30517
+   }
+  },
+  {
+   "id": "futura_2026-10-24",
+   "instituto": "Futura",
+   "registro_tse": "BR-09726/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 1,
+   "n": 2000,
+   "metodo": "telefônico CATI",
+   "modo": "telefone",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 48.2,
+    "lula": 47.9,
+    "branco_nulo": 2.3,
+    "indecisos": 1.6
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 96.1,
+    "nao_escolha_pct_total": 3.9,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.156087,
+    "lula": 49.843913
+   },
+   "validos_oficiais": {
+    "flavio": 50.1,
+    "lula": 49.9
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 50.1,
+    "lula": 49.9
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Relatório publica perfil de renda, mas não voto por faixa; somente publicado na Projeção.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/futura_2026-10-24.json",
+    "sha256": "3193c8f3596169236582fed292c9c6bb2a81823ea867fc2b171eb14eb82b22ac",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 0.312175,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 3.882323,
+    "erro_lula_menos_flavio": -3.882323,
+    "erro_flavio": 1.941162,
+    "erro_lula": -1.941162
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 0.2,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 3.770148,
+    "erro_lula_menos_flavio": -3.770148,
+    "erro_flavio": 1.885074,
+    "erro_lula": -1.885074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 4.470636,
+   "margem_95_diferenca_deff_pp": 5.475388,
+   "erro_fora_da_margem_aas": false,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 0.312175,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 3.869884,
+    "erro_lula_menos_flavio": -3.869884,
+    "erro_flavio": 1.934942,
+    "erro_lula": -1.934942
+   }
+  },
+  {
+   "id": "gerp_2026-10-24",
+   "instituto": "Gerp",
+   "registro_tse": "BR-09327/2026",
+   "campo": {
+    "inicio": "2026-10-22",
+    "fim": "2026-10-24"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 1,
+   "n": 2400,
+   "metodo": "telefônico, CATI/GerpCati; ponderação por sexo, idade, escolaridade, renda e região",
+   "modo": "telefone",
+   "perfil_renda": "perfil_ponderado",
+   "publicado_total": {
+    "flavio": 49.0,
+    "lula": 46.0,
+    "branco_nulo": 1.0,
+    "indecisos": 3.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 95.0,
+    "nao_escolha_pct_total": 4.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 51.578947,
+    "lula": 48.421053
+   },
+   "validos_oficiais": {
+    "flavio": 52,
+    "lula": 48
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 52.0,
+    "lula": 48.0
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 49.479288,
+     "lula": 46.471176,
+     "indecisos": 3.035384,
+     "branco_nulo": 1.014152
+    },
+    "validos": {
+     "flavio": 51.567533,
+     "lula": 48.432467
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 95.950464,
+     "nao_escolha_pct_total": 4.049536,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/gerp_2026-10-24.json",
+    "sha256": "35efa415d2a968cc2999c47258d45ddf9a83f29ec7f143516d07ecb1c038c295",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 3.157895,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.728043,
+    "erro_lula_menos_flavio": -6.728043,
+    "erro_flavio": 3.364022,
+    "erro_lula": -3.364022
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 4.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.570148,
+    "erro_lula_menos_flavio": -7.570148,
+    "erro_flavio": 3.785074,
+    "erro_lula": -3.785074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 3.135067,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.705215,
+    "erro_lula_menos_flavio": -6.705215,
+    "erro_flavio": 3.352608,
+    "erro_lula": -3.352608
+   },
+   "margem_95_diferenca_aas_pp": 4.102646,
+   "margem_95_diferenca_deff_pp": 5.024694,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 3.157895,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 6.715604,
+    "erro_lula_menos_flavio": -6.715604,
+    "erro_flavio": 3.357802,
+    "erro_lula": -3.357802
+   }
+  },
+  {
+   "id": "indexa_2026-10-21",
+   "instituto": "Indexa/Broadcast",
+   "registro_tse": "BR-02348/2026",
+   "campo": {
+    "inicio": "2026-10-20",
+    "fim": "2026-10-21"
+   },
+   "meio_do_campo": "2026-10-20",
+   "divulgacao": "2026-10-22",
+   "dias_fim_campo_ate_urna": 4,
+   "n": 2000,
+   "metodo": "telefônico CATI",
+   "modo": "telefone",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 45.2,
+    "lula": 44.1,
+    "branco_nulo": 4.3,
+    "indecisos": 1.6,
+    "nao_vai_votar": 4.8
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 89.3,
+    "nao_escolha_pct_total": 10.7,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.615901,
+    "lula": 49.384099
+   },
+   "validos_oficiais": {
+    "flavio": 50.6,
+    "lula": 49.4
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 50.6,
+    "lula": 49.4
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Perfil de renda não recompõe o total; sem PNAD até reconciliação.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/indexa_2026-10-21.json",
+    "sha256": "dd415ce01d9085205ec1e5da3be1efd5729a4398ace8ae8414aff4ce58a7c75f",
+    "ultimo_commit": "cb7e1cac8 2026-10-22T17:51:32-03:00"
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.231803,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.801951,
+    "erro_lula_menos_flavio": -4.801951,
+    "erro_flavio": 2.400976,
+    "erro_lula": -2.400976
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 1.2,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.770148,
+    "erro_lula_menos_flavio": -4.770148,
+    "erro_flavio": 2.385074,
+    "erro_lula": -2.385074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 4.637398,
+   "margem_95_diferenca_deff_pp": 5.67963,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.231803,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.789512,
+    "erro_lula_menos_flavio": -4.789512,
+    "erro_flavio": 2.394756,
+    "erro_lula": -2.394756
+   }
+  },
+  {
+   "id": "franca_2026-10-23",
+   "instituto": "Instituto França",
+   "registro_tse": "BR-04863/2026",
+   "campo": {
+    "inicio": "2026-10-21",
+    "fim": "2026-10-23"
+   },
+   "meio_do_campo": "2026-10-22",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 2,
+   "n": 1537,
+   "metodo": "seleção por cotas; modo de entrevista não informado no material consultado",
+   "modo": "nao_informado",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 45.6,
+    "lula": 43.1,
+    "branco_nulo": 7.4,
+    "indecisos": 3.9
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 88.7,
+    "nao_escolha_pct_total": 11.3,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 51.409245,
+    "lula": 48.590755
+   },
+   "validos_oficiais": {
+    "flavio": 51.4,
+    "lula": 48.6
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 51.4,
+    "lula": 48.6
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Voto por renda publicado sem bases ou pesos atuais; somente publicado na Projeção.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/franca_2026-10-23.json",
+    "sha256": "bfdac1e9caf1f9341e70af9ab0c50ba58c487fdfdf3504847b4ed0cabe77e377",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 2.818489,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.388638,
+    "erro_lula_menos_flavio": -6.388638,
+    "erro_flavio": 3.194319,
+    "erro_lula": -3.194319
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 2.8,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.370148,
+    "erro_lula_menos_flavio": -6.370148,
+    "erro_flavio": 3.185074,
+    "erro_lula": -3.185074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 5.306116,
+   "margem_95_diferenca_deff_pp": 6.498639,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 2.818489,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 6.376198,
+    "erro_lula_menos_flavio": -6.376198,
+    "erro_flavio": 3.188099,
+    "erro_lula": -3.188099
+   }
+  },
+  {
+   "id": "ipespe_2026-10-22",
+   "instituto": "Ipespe",
+   "registro_tse": "BR-04350/2026",
+   "campo": {
+    "inicio": "2026-10-20",
+    "fim": "2026-10-22"
+   },
+   "meio_do_campo": "2026-10-21",
+   "divulgacao": "2026-10-23",
+   "dias_fim_campo_ate_urna": 3,
+   "n": 1500,
+   "metodo": "telefônico CATI",
+   "modo": "telefone",
+   "perfil_renda": "perfil_publicado",
+   "publicado_total": {
+    "flavio": 48.0,
+    "lula": 47.0,
+    "branco_nulo": 3.0,
+    "indecisos": 2.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 95.0,
+    "nao_escolha_pct_total": 5.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.526316,
+    "lula": 49.473684
+   },
+   "validos_oficiais": {
+    "flavio": 50.5,
+    "lula": 49.5
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 50.5,
+    "lula": 49.5
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 48.762718,
+     "lula": 46.214196,
+     "indecisos": 1.917888,
+     "branco_nulo": 3.105199
+    },
+    "validos": {
+     "flavio": 51.341653,
+     "lula": 48.658347
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 94.976913,
+     "nao_escolha_pct_total": 5.023087,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": {
+    "criterio": "Nota 10 de chance de comparecer",
+    "pagina": 13,
+    "total": {
+     "flavio": 50,
+     "lula": 47,
+     "branco_nulo": 2,
+     "indecisos": 1
+    },
+    "validos": {
+     "flavio": 51.5,
+     "lula": 48.5
+    }
+   },
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/ipespe_2026-10-22.json",
+    "sha256": "0fdba518707c3f072579141b985794a7a9e4de559772dbb05f227ca0ceb8486e",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.052632,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.62278,
+    "erro_lula_menos_flavio": -4.62278,
+    "erro_flavio": 2.31139,
+    "erro_lula": -2.31139
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 1.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.570148,
+    "erro_lula_menos_flavio": -4.570148,
+    "erro_flavio": 2.285074,
+    "erro_lula": -2.285074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 2.683307,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.253455,
+    "erro_lula_menos_flavio": -6.253455,
+    "erro_flavio": 3.126728,
+    "erro_lula": -3.126728
+   },
+   "margem_95_diferenca_aas_pp": 5.191784,
+   "margem_95_diferenca_deff_pp": 6.358611,
+   "erro_fora_da_margem_aas": false,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.052632,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.610341,
+    "erro_lula_menos_flavio": -4.610341,
+    "erro_flavio": 2.30517,
+    "erro_lula": -2.30517
+   }
+  },
+  {
+   "id": "mda_2026-10-23",
+   "instituto": "MDA",
+   "registro_tse": "BR-02136/2026",
+   "campo": {
+    "inicio": "2026-10-21",
+    "fim": "2026-10-23"
+   },
+   "meio_do_campo": "2026-10-22",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 2,
+   "n": 2032,
+   "metodo": "presencial, domiciliar e pontos de fluxo, 140 municípios",
+   "modo": "presencial",
+   "perfil_renda": "perfil_publicado",
+   "publicado_total": {
+    "flavio": 46.3,
+    "lula": 45.0,
+    "branco_nulo": 5.8,
+    "indecisos": 2.9
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 91.3,
+    "nao_escolha_pct_total": 8.7,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.711939,
+    "lula": 49.288061
+   },
+   "validos_oficiais": {
+    "flavio": 50.7,
+    "lula": 49.3
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 50.7,
+    "lula": 49.3
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 47.678,
+     "lula": 43.839,
+     "indecisos": 2.626,
+     "branco_nulo": 5.857
+    },
+    "validos": {
+     "flavio": 52.097425,
+     "lula": 47.902575
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 91.517,
+     "nao_escolha_pct_total": 8.483,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/mda_2026-10-23.json",
+    "sha256": "59fe2e8a3184ca02e5e4a7cee25031d0f831aa14b7963903cedf98627213d625",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.423877,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.994026,
+    "erro_lula_menos_flavio": -4.994026,
+    "erro_flavio": 2.497013,
+    "erro_lula": -2.497013
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 1.4,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.970148,
+    "erro_lula_menos_flavio": -4.970148,
+    "erro_flavio": 2.485074,
+    "erro_lula": -2.485074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 4.194849,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.764997,
+    "erro_lula_menos_flavio": -7.764997,
+    "erro_flavio": 3.882499,
+    "erro_lula": -3.882499
+   },
+   "margem_95_diferenca_aas_pp": 4.549952,
+   "margem_95_diferenca_deff_pp": 5.57253,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.423877,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.981587,
+    "erro_lula_menos_flavio": -4.981587,
+    "erro_flavio": 2.490793,
+    "erro_lula": -2.490793
+   }
+  },
+  {
+   "id": "ideia_2026-10-19",
+   "instituto": "Meio/Ideia",
+   "registro_tse": "BR-08251/2026",
+   "campo": {
+    "inicio": "2026-10-15",
+    "fim": "2026-10-19"
+   },
+   "meio_do_campo": "2026-10-17",
+   "divulgacao": "2026-10-21",
+   "dias_fim_campo_ate_urna": 6,
+   "n": 1500,
+   "metodo": "telefônico, questionário estruturado",
+   "modo": "telefone",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 48.0,
+    "lula": 46.0,
+    "branco_nulo": 3.4,
+    "indecisos": 2.6
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 94.0,
+    "nao_escolha_pct_total": 6.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 51.06383,
+    "lula": 48.93617
+   },
+   "validos_oficiais": {
+    "flavio": 51.1,
+    "lula": 48.9
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 51.1,
+    "lula": 48.9
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Sem perfil e cruzamento de renda na íntegra pública.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/ideia_2026-10-19.json",
+    "sha256": "39c89afb978806d088ecc4447ff1ee2fd37aaa133206f9c937112c81aac87598",
+    "ultimo_commit": "7ab9278fd 2026-10-21T17:38:36-03:00"
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 2.12766,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.697808,
+    "erro_lula_menos_flavio": -5.697808,
+    "erro_flavio": 2.848904,
+    "erro_lula": -2.848904
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 2.2,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.770148,
+    "erro_lula_menos_flavio": -5.770148,
+    "erro_flavio": 2.885074,
+    "erro_lula": -2.885074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 5.218434,
+   "margem_95_diferenca_deff_pp": 6.391251,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 2.12766,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 5.685369,
+    "erro_lula_menos_flavio": -5.685369,
+    "erro_flavio": 2.842684,
+    "erro_lula": -2.842684
+   }
+  },
+  {
+   "id": "nexus_2026-10-24",
+   "instituto": "Nexus",
+   "registro_tse": "BR-08234/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 1,
+   "n": 2000,
+   "metodo": "telefônico com entrevistador, CATI, 27 UFs",
+   "modo": "telefone",
+   "perfil_renda": "perfil_publicado",
+   "publicado_total": {
+    "flavio": 47.0,
+    "lula": 46.0,
+    "branco_nulo": 5.2,
+    "indecisos": 1.8
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 93.0,
+    "nao_escolha_pct_total": 7.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.537634,
+    "lula": 49.462366
+   },
+   "validos_oficiais": {
+    "flavio": 50.5,
+    "lula": 49.5
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 50.5,
+    "lula": 49.5
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 47.97148,
+     "lula": 44.879449,
+     "indecisos": 1.661017,
+     "branco_nulo": 5.488055
+    },
+    "validos": {
+     "flavio": 51.665051,
+     "lula": 48.334949
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 92.850929,
+     "nao_escolha_pct_total": 7.149071,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": {
+    "paginas": [
+     6,
+     8,
+     9,
+     10
+    ],
+    "abstencao_estimada_pct": 21,
+    "validos": {
+     "flavio": 52.4,
+     "lula": 47.6
+    },
+    "por_100_eleitores": {
+     "flavio": 40.6,
+     "lula": 36.8,
+     "branco_nulo": 0.9,
+     "indecisos": 0.6,
+     "abstencao": 21
+    },
+    "entra_nas_centrais": false,
+    "regra": "Seleção dos 79% mais prováveis de comparecer; resultado arredondado soma 99,9."
+   },
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/nexus_2026-10-24.json",
+    "sha256": "624787d3a1fda0b83c4ac5c6f9ea9f77d11e47c2d4f3dfa83055745fba9a4bba",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.075269,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.645417,
+    "erro_lula_menos_flavio": -4.645417,
+    "erro_flavio": 2.322709,
+    "erro_lula": -2.322709
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 1.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.570148,
+    "erro_lula_menos_flavio": -4.570148,
+    "erro_flavio": 2.285074,
+    "erro_lula": -2.285074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 3.330102,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.900251,
+    "erro_lula_menos_flavio": -6.900251,
+    "erro_flavio": 3.450125,
+    "erro_lula": -3.450125
+   },
+   "margem_95_diferenca_aas_pp": 4.544295,
+   "margem_95_diferenca_deff_pp": 5.565602,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.075269,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.632978,
+    "erro_lula_menos_flavio": -4.632978,
+    "erro_flavio": 2.316489,
+    "erro_lula": -2.316489
+   }
+  },
+  {
+   "id": "palver_2026-10-24",
+   "instituto": "Palver",
+   "registro_tse": "BR-01794/2026",
+   "campo": {
+    "inicio": "2026-10-22",
+    "fim": "2026-10-24"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 1,
+   "n": 5000,
+   "metodo": "online, recrutamento por anúncios; não probabilística, raking v3",
+   "modo": "online",
+   "perfil_renda": "perfil_ponderado",
+   "publicado_total": {
+    "flavio": 50.0,
+    "lula": 49.0,
+    "branco_nulo": 1.0,
+    "indecisos": 0.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 99.0,
+    "nao_escolha_pct_total": 1.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.505051,
+    "lula": 49.494949
+   },
+   "validos_oficiais": null,
+   "validos_oficiais_normalizados": null,
+   "reponderado": {
+    "total": {
+     "flavio": 49.900491,
+     "lula": 49.099419,
+     "indecisos": 0.0,
+     "branco_nulo": 1.00009
+    },
+    "validos": {
+     "flavio": 50.404582,
+     "lula": 49.595418
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 98.99991,
+     "nao_escolha_pct_total": 1.00009,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/palver_2026-10-24.json",
+    "sha256": "353509f55a2dffa6a26ebc7ec4c523d9119cd346300f8162b4e876ec0b49b49c",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.010101,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.580249,
+    "erro_lula_menos_flavio": -4.580249,
+    "erro_flavio": 2.290125,
+    "erro_lula": -2.290125
+   },
+   "erro_validos_oficiais": null,
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 0.809164,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.379313,
+    "erro_lula_menos_flavio": -4.379313,
+    "erro_flavio": 2.189656,
+    "erro_lula": -2.189656
+   },
+   "margem_95_diferenca_aas_pp": 2.785629,
+   "margem_95_diferenca_deff_pp": 3.411685,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.010101,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.56781,
+    "erro_lula_menos_flavio": -4.56781,
+    "erro_flavio": 2.283905,
+    "erro_lula": -2.283905
+   }
+  },
+  {
+   "id": "poderdata_2026-10-24",
+   "instituto": "PoderData",
+   "registro_tse": "BR-02828/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-25",
+   "dias_fim_campo_ate_urna": 1,
+   "n": 4000,
+   "metodo": "telefônico automatizado IVR/URA",
+   "modo": "telefone",
+   "perfil_renda": "perfil_ponderado",
+   "publicado_total": {
+    "flavio": 49.0,
+    "lula": 47.0,
+    "branco_nulo": 3.0,
+    "indecisos": 1.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 96.0,
+    "nao_escolha_pct_total": 4.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 51.041667,
+    "lula": 48.958333
+   },
+   "validos_oficiais": {
+    "flavio": 51,
+    "lula": 49
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 51.0,
+    "lula": 49.0
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 50.332,
+     "lula": 45.668,
+     "indecisos": 1.108,
+     "branco_nulo": 2.892
+    },
+    "validos": {
+     "flavio": 52.429167,
+     "lula": 47.570833
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 96.0,
+     "nao_escolha_pct_total": 4.0,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/poderdata_2026-10-24.json",
+    "sha256": "3e00dffa968c20bf4a23eb9fc88c41d231c0195dcd710a8d12e9f66b0d9b9531",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 2.083333,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.653482,
+    "erro_lula_menos_flavio": -5.653482,
+    "erro_flavio": 2.826741,
+    "erro_lula": -2.826741
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 2.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.570148,
+    "erro_lula_menos_flavio": -5.570148,
+    "erro_flavio": 2.785074,
+    "erro_lula": -2.785074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 4.858333,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 8.428482,
+    "erro_lula_menos_flavio": -8.428482,
+    "erro_flavio": 4.214241,
+    "erro_lula": -4.214241
+   },
+   "margem_95_diferenca_aas_pp": 3.162192,
+   "margem_95_diferenca_deff_pp": 3.872878,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 2.083333,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 5.641043,
+    "erro_lula_menos_flavio": -5.641043,
+    "erro_flavio": 2.820521,
+    "erro_lula": -2.820521
+   }
+  },
+  {
+   "id": "quaest_2026-10-24",
+   "instituto": "Quaest",
+   "registro_tse": "BR-09158/2026",
+   "campo": {
+    "inicio": "2026-10-23",
+    "fim": "2026-10-24"
+   },
+   "meio_do_campo": "2026-10-23",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 1,
+   "n": 3702,
+   "metodo": "presencial domiciliar; válido oficial por modelo de eleitor provável",
+   "modo": "presencial",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 46.0,
+    "lula": 45.0,
+    "branco_nulo": 8.0,
+    "indecisos": 1.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 91.0,
+    "nao_escolha_pct_total": 9.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 50.549451,
+    "lula": 49.450549
+   },
+   "validos_oficiais": {
+    "flavio": 51,
+    "lula": 49
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 51.0,
+    "lula": 49.0
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Perfil atual de renda e cruzamentos likely voter ausentes; sem PNAD nesta onda.",
+   "eleitor_provavel_oficial": {
+    "usar_na_projecao": true,
+    "validos": {
+     "flavio": 51,
+     "lula": 49
+    },
+    "fonte": {
+     "arquivo": "data/originals/quaest_102026_24/g1-validos.json",
+     "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-201&instituto=Quaest",
+     "sha256": "597760cb6fb1470d27d83abcd96c84c21bf0b4884dbfc70c2ecca11699ece870",
+     "bytes": 2271
+    },
+    "regra": "Publicado oficial da casa; sem reaplicar presença Arvor, renda ou indecisos da amostra completa."
+   },
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-10-24.json",
+    "sha256": "dfeeafdc72dceb66c4d4b81615eb38de53d9f2d5835c1843d1d2e2ddc7742033",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 1.098901,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 4.669049,
+    "erro_lula_menos_flavio": -4.669049,
+    "erro_flavio": 2.334525,
+    "erro_lula": -2.334525
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 2.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 5.570148,
+    "erro_lula_menos_flavio": -5.570148,
+    "erro_flavio": 2.785074,
+    "erro_lula": -2.785074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 3.376626,
+   "margem_95_diferenca_deff_pp": 4.135505,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 1.098901,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.65661,
+    "erro_lula_menos_flavio": -4.65661,
+    "erro_flavio": 2.328305,
+    "erro_lula": -2.328305
+   }
+  },
+  {
+   "id": "realtime_2026-10-22",
+   "instituto": "Real Time Big Data",
+   "registro_tse": "BR-09670/2026",
+   "campo": {
+    "inicio": "2026-10-19",
+    "fim": "2026-10-22"
+   },
+   "meio_do_campo": "2026-10-20",
+   "divulgacao": "2026-10-23",
+   "dias_fim_campo_ate_urna": 3,
+   "n": 2000,
+   "metodo": "entrevistas telefônicas e digitais; método misto declarado no PesqEle",
+   "modo": "telefone",
+   "perfil_renda": "perfil_publicado",
+   "publicado_total": {
+    "flavio": 49.0,
+    "lula": 45.0,
+    "branco_nulo": 5.0,
+    "indecisos": 1.0
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 94.0,
+    "nao_escolha_pct_total": 6.0,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 52.12766,
+    "lula": 47.87234
+   },
+   "validos_oficiais": {
+    "flavio": 52,
+    "lula": 48
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 52.0,
+    "lula": 48.0
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 50.798,
+     "lula": 43.247,
+     "indecisos": 1.046,
+     "branco_nulo": 4.909
+    },
+    "validos": {
+     "flavio": 54.014567,
+     "lula": 45.985433
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 94.045,
+     "nao_escolha_pct_total": 5.955,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/realtime_2026-10-22.json",
+    "sha256": "608dc03f1acdbe8bec49e56a11ef655204c8e06f50ad762a0dfb3efca7bbab42",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 4.255319,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.825467,
+    "erro_lula_menos_flavio": -7.825467,
+    "erro_flavio": 3.912734,
+    "erro_lula": -3.912734
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 4.0,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.570148,
+    "erro_lula_menos_flavio": -7.570148,
+    "erro_flavio": 3.785074,
+    "erro_lula": -3.785074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 8.029135,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 11.599283,
+    "erro_lula_menos_flavio": -11.599283,
+    "erro_flavio": 5.799642,
+    "erro_lula": -5.799642
+   },
+   "margem_95_diferenca_aas_pp": 4.516225,
+   "margem_95_diferenca_deff_pp": 5.531224,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 4.255319,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 7.813028,
+    "erro_lula_menos_flavio": -7.813028,
+    "erro_flavio": 3.906514,
+    "erro_lula": -3.906514
+   }
+  },
+  {
+   "id": "verita_2026-10-23",
+   "instituto": "Veritá",
+   "registro_tse": "BR-03181/2026",
+   "campo": {
+    "inicio": "2026-10-19",
+    "fim": "2026-10-23"
+   },
+   "meio_do_campo": "2026-10-21",
+   "divulgacao": "2026-10-24",
+   "dias_fim_campo_ate_urna": 2,
+   "n": 15554,
+   "metodo": "entrevistas telefônicas automatizadas",
+   "modo": "telefone",
+   "perfil_renda": "hipotese_perfil_condicional",
+   "publicado_total": {
+    "flavio": 49.44,
+    "lula": 46.46,
+    "branco_nulo": 1.43,
+    "indecisos": 2.67
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 95.9,
+    "nao_escolha_pct_total": 4.1,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 51.553702,
+    "lula": 48.446298
+   },
+   "validos_oficiais": {
+    "flavio": 51.56,
+    "lula": 48.44
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 51.56,
+    "lula": 48.44
+   },
+   "reponderado": {
+    "total": {
+     "flavio": 49.953,
+     "lula": 46.005,
+     "indecisos": 2.656,
+     "branco_nulo": 1.386
+    },
+    "validos": {
+     "flavio": 52.05715,
+     "lula": 47.94285
+    },
+    "auditoria": {
+     "soma_candidaturas_pct_total": 95.958,
+     "nao_escolha_pct_total": 4.042,
+     "negativos_truncados_pp": 0
+    },
+    "fonte": "reponderacao_simulador.json (polls)",
+    "cenario": "pessoas16_efetivo"
+   },
+   "reponderado_motivo": null,
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/verita_2026-10-23.json",
+    "sha256": "4be5e3c081fd1338a29f507c6750c358b8058d9d0a6404d5f17dbe57b8fb3ba6",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 3.107404,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.677552,
+    "erro_lula_menos_flavio": -6.677552,
+    "erro_flavio": 3.338776,
+    "erro_lula": -3.338776
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 3.12,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.690148,
+    "erro_lula_menos_flavio": -6.690148,
+    "erro_flavio": 3.345074,
+    "erro_lula": -3.345074
+   },
+   "erro_reponderado": {
+    "pesquisa_f_menos_l": 4.1143,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 7.684448,
+    "erro_lula_menos_flavio": -7.684448,
+    "erro_flavio": 3.842224,
+    "erro_lula": -3.842224
+   },
+   "margem_95_diferenca_aas_pp": 1.604013,
+   "margem_95_diferenca_deff_pp": 1.964507,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 3.107404,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 6.665113,
+    "erro_lula_menos_flavio": -6.665113,
+    "erro_flavio": 3.332556,
+    "erro_lula": -3.332556
+   }
+  },
+  {
+   "id": "vetor_2026-10-23",
+   "instituto": "Vetor/Arrow",
+   "registro_tse": "BR-06957/2026",
+   "campo": {
+    "inicio": "2026-10-22",
+    "fim": "2026-10-23"
+   },
+   "meio_do_campo": "2026-10-22",
+   "divulgacao": "2026-10-23",
+   "dias_fim_campo_ate_urna": 2,
+   "n": 6867,
+   "metodo": "telefônico automatizado URA",
+   "modo": "telefone",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 50.0,
+    "lula": 44.9,
+    "branco_nulo": 3.6,
+    "indecisos": 1.5
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 94.9,
+    "nao_escolha_pct_total": 5.1,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 52.687039,
+    "lula": 47.312961
+   },
+   "validos_oficiais": {
+    "flavio": 52.7,
+    "lula": 47.3
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 52.7,
+    "lula": 47.3
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Divulgação de 23/10, campo 22–23/10, 6.867 entrevistas em 1.559 municípios segundo a divulgação; amostra planejada registrada de 3.000. Release menciona 824 entrevistas adicionais de jovens, 616 classificações de gênero pelo nome e 628 municípios não informados. Totais 50/44,9/3,6/1,5 e válidos oficiais 52,7/47,3. Íntegra não localizada; sem perfil e voto por renda atuais, somente publicado na Projeção.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/vetor_2026-10-23.json",
+    "sha256": "c45e655b6a110f6444ba6616f8d099e34af466cb782c49e2852e85750c6b2cc3",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": 5.374078,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 8.944226,
+    "erro_lula_menos_flavio": -8.944226,
+    "erro_flavio": 4.472113,
+    "erro_lula": -4.472113
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": 5.4,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 8.970148,
+    "erro_lula_menos_flavio": -8.970148,
+    "erro_flavio": 4.485074,
+    "erro_lula": -4.485074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 2.424395,
+   "margem_95_diferenca_deff_pp": 2.969266,
+   "erro_fora_da_margem_aas": true,
+   "flavio_a_frente_nos_validos": true,
+   "acertou_vencedor": false,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": 5.374078,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 8.931787,
+    "erro_lula_menos_flavio": -8.931787,
+    "erro_flavio": 4.465894,
+    "erro_lula": -4.465894
+   }
+  },
+  {
+   "id": "vox_brasil_2026-10-22",
+   "instituto": "Vox Brasil",
+   "registro_tse": "BR-03259/2026",
+   "campo": {
+    "inicio": "2026-10-20",
+    "fim": "2026-10-22"
+   },
+   "meio_do_campo": "2026-10-21",
+   "divulgacao": "2026-10-23",
+   "dias_fim_campo_ate_urna": 3,
+   "n": 2100,
+   "metodo": "presencial domiciliar",
+   "modo": "presencial",
+   "perfil_renda": null,
+   "publicado_total": {
+    "flavio": 44.3,
+    "lula": 45.4,
+    "branco_nulo": 6.0,
+    "indecisos": 4.3
+   },
+   "auditoria_total": {
+    "soma_candidaturas_pct_total": 89.7,
+    "nao_escolha_pct_total": 10.3,
+    "negativos_truncados_pp": 0
+   },
+   "validos_do_total": {
+    "flavio": 49.386845,
+    "lula": 50.613155
+   },
+   "validos_oficiais": {
+    "flavio": 49.4,
+    "lula": 50.6
+   },
+   "validos_oficiais_normalizados": {
+    "flavio": 49.4,
+    "lula": 50.6
+   },
+   "reponderado": null,
+   "reponderado_motivo": "Conceito de renda não identificado; somente publicado na Projeção.",
+   "eleitor_provavel_oficial": null,
+   "eleitor_provavel_documental": null,
+   "subconjunto_presenca_publicado": null,
+   "fonte": {
+    "arquivo": "analysis/reponderacao/pesquisas/vox_brasil_2026-10-22.json",
+    "sha256": "e12b15f8430551b8cfbde516182ecc8c984e351adf00e56334682f99f8fcce66",
+    "ultimo_commit": null
+   },
+   "erro_validos_do_total": {
+    "pesquisa_f_menos_l": -1.22631,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 2.343838,
+    "erro_lula_menos_flavio": -2.343838,
+    "erro_flavio": 1.171919,
+    "erro_lula": -1.171919
+   },
+   "erro_validos_oficiais": {
+    "pesquisa_f_menos_l": -1.2,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 2.370148,
+    "erro_lula_menos_flavio": -2.370148,
+    "erro_flavio": 1.185074,
+    "erro_lula": -1.185074
+   },
+   "erro_reponderado": null,
+   "margem_95_diferenca_aas_pp": 4.515539,
+   "margem_95_diferenca_deff_pp": 5.530383,
+   "erro_fora_da_margem_aas": false,
+   "flavio_a_frente_nos_validos": false,
+   "acertou_vencedor": true,
+   "erro_sem_exterior": {
+    "pesquisa_f_menos_l": -1.22631,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 2.331399,
+    "erro_lula_menos_flavio": -2.331399,
+    "erro_flavio": 1.1657,
+    "erro_lula": -1.1657
+   }
+  }
+ ],
+ "ranking": [
+  "vox_brasil_2026-10-22",
+  "colectta_2026-10-23",
+  "futura_2026-10-24",
+  "palver_2026-10-24",
+  "datafolha_2026-10-24",
+  "ipespe_2026-10-22",
+  "nexus_2026-10-24",
+  "quaest_2026-10-24",
+  "indexa_2026-10-21",
+  "mda_2026-10-23",
+  "atlas_2026-10-23",
+  "poderdata_2026-10-24",
+  "ideia_2026-10-19",
+  "franca_2026-10-23",
+  "verita_2026-10-23",
+  "gerp_2026-10-24",
+  "alfa_2026-10-22",
+  "datatrends_2026-10-21",
+  "realtime_2026-10-22",
+  "vetor_2026-10-23"
+ ],
+ "resumo": {
+  "n_casas": 20,
+  "publicado_validos_do_total": {
+   "n": 20,
+   "media": 5.528851,
+   "mediana": 5.045058,
+   "desvio_padrao": 1.685289,
+   "media_absoluta": 5.528851,
+   "positivos": 20,
+   "negativos": 0,
+   "amplitude": [
+    2.343838,
+    8.944226
+   ]
+  },
+  "publicado_validos_oficiais": {
+   "n": 19,
+   "media": 5.671201,
+   "mediana": 5.570148,
+   "desvio_padrao": 1.698699,
+   "media_absoluta": 5.671201,
+   "positivos": 19,
+   "negativos": 0,
+   "amplitude": [
+    2.370148,
+    8.970148
+   ]
+  },
+  "n_com_validos_oficiais": 19,
+  "reponderado": {
+   "n": 11,
+   "media": 7.466451,
+   "mediana": 7.684448,
+   "desvio_padrao": 1.942006,
+   "media_absoluta": 7.466451,
+   "positivos": 11,
+   "negativos": 0,
+   "amplitude": [
+    4.379313,
+    11.599283
+   ]
+  },
+  "publicado_mesmas_casas_reponderadas": {
+   "n": 11,
+   "media": 5.734797,
+   "mediana": 5.096089,
+   "desvio_padrao": 1.25779,
+   "media_absoluta": 5.734797,
+   "positivos": 11,
+   "negativos": 0,
+   "amplitude": [
+    4.580249,
+    7.825467
+   ]
+  },
+  "n_reponderadas": 11,
+  "desvio_esperado_so_amostragem_aas_pp": 2.062599,
+  "desvio_esperado_so_amostragem_deff_pp": 2.526157,
+  "fora_da_margem_aas": 16,
+  "flavio_a_frente_nos_validos": 18,
+  "lula_a_frente_nos_validos": 2,
+  "empates_nos_validos": 0,
+  "acertaram_vencedor": 2,
+  "casas_que_acertaram_vencedor": [
+   "Colectta",
+   "Vox Brasil"
+  ],
+  "media_simples_validos": {
+   "flavio": 50.979352,
+   "lula": 49.020648
+  },
+  "erro_media_simples": {
+   "pesquisa_f_menos_l": 1.958703,
+   "urna_f_menos_l": -3.570148,
+   "erro_f_menos_l": 5.528851,
+   "erro_lula_menos_flavio": -5.528851,
+   "erro_flavio": 2.764426,
+   "erro_lula": -2.764426
+  }
+ },
+ "por_modo": {
+  "nao_informado": {
+   "n": 1,
+   "media": 6.388638,
+   "casas": {
+    "Instituto França": 6.389
+   }
+  },
+  "online": {
+   "n": 2,
+   "media": 4.838169,
+   "casas": {
+    "AtlasIntel": 5.096,
+    "Palver": 4.58
+   }
+  },
+  "presencial": {
+   "n": 6,
+   "media": 4.549364,
+   "casas": {
+    "Alfa Inteligência/TMC": 7.637,
+    "Colectta": 3.03,
+    "Datafolha": 4.623,
+    "MDA": 4.994,
+    "Quaest": 4.669,
+    "Vox Brasil": 2.344
+   }
+  },
+  "telefone": {
+   "n": 11,
+   "media": 6.110533,
+   "casas": {
+    "DataTrends": 7.737,
+    "Futura": 3.882,
+    "Gerp": 6.728,
+    "Indexa/Broadcast": 4.802,
+    "Ipespe": 4.623,
+    "Meio/Ideia": 5.698,
+    "Nexus": 4.645,
+    "PoderData": 5.653,
+    "Real Time Big Data": 7.825,
+    "Veritá": 6.678,
+    "Vetor/Arrow": 8.944
+   }
+  }
+ },
+ "efeito_reponderacao": {
+  "regra": "variação do erro absoluto na diferença F−L; negativa aproxima da urna",
+  "por_casa": [
+   {
+    "id": "alfa_2026-10-22",
+    "instituto": "Alfa Inteligência/TMC",
+    "perfil_renda": "perfil_publicado",
+    "erro_publicado_f_menos_l": 7.636885,
+    "erro_reponderado_f_menos_l": 8.677734,
+    "deslocamento_f_menos_l": 1.04085,
+    "variacao_erro_absoluto": 1.04085,
+    "direcao": "afastou"
+   },
+   {
+    "id": "atlas_2026-10-23",
+    "instituto": "AtlasIntel",
+    "perfil_renda": "perfil_publicado",
+    "erro_publicado_f_menos_l": 5.096089,
+    "erro_reponderado_f_menos_l": 5.212362,
+    "deslocamento_f_menos_l": 0.116272,
+    "variacao_erro_absoluto": 0.116272,
+    "direcao": "afastou"
+   },
+   {
+    "id": "datafolha_2026-10-24",
+    "instituto": "Datafolha",
+    "perfil_renda": "hipotese_onda_anterior",
+    "erro_publicado_f_menos_l": 4.62278,
+    "erro_reponderado_f_menos_l": 8.525425,
+    "deslocamento_f_menos_l": 3.902645,
+    "variacao_erro_absoluto": 3.902645,
+    "direcao": "afastou"
+   },
+   {
+    "id": "gerp_2026-10-24",
+    "instituto": "Gerp",
+    "perfil_renda": "perfil_ponderado",
+    "erro_publicado_f_menos_l": 6.728043,
+    "erro_reponderado_f_menos_l": 6.705215,
+    "deslocamento_f_menos_l": -0.022828,
+    "variacao_erro_absoluto": -0.022828,
+    "direcao": "neutro"
+   },
+   {
+    "id": "ipespe_2026-10-22",
+    "instituto": "Ipespe",
+    "perfil_renda": "perfil_publicado",
+    "erro_publicado_f_menos_l": 4.62278,
+    "erro_reponderado_f_menos_l": 6.253455,
+    "deslocamento_f_menos_l": 1.630675,
+    "variacao_erro_absoluto": 1.630675,
+    "direcao": "afastou"
+   },
+   {
+    "id": "mda_2026-10-23",
+    "instituto": "MDA",
+    "perfil_renda": "perfil_publicado",
+    "erro_publicado_f_menos_l": 4.994026,
+    "erro_reponderado_f_menos_l": 7.764997,
+    "deslocamento_f_menos_l": 2.770972,
+    "variacao_erro_absoluto": 2.770972,
+    "direcao": "afastou"
+   },
+   {
+    "id": "nexus_2026-10-24",
+    "instituto": "Nexus",
+    "perfil_renda": "perfil_publicado",
+    "erro_publicado_f_menos_l": 4.645417,
+    "erro_reponderado_f_menos_l": 6.900251,
+    "deslocamento_f_menos_l": 2.254833,
+    "variacao_erro_absoluto": 2.254833,
+    "direcao": "afastou"
+   },
+   {
+    "id": "palver_2026-10-24",
+    "instituto": "Palver",
+    "perfil_renda": "perfil_ponderado",
+    "erro_publicado_f_menos_l": 4.580249,
+    "erro_reponderado_f_menos_l": 4.379313,
+    "deslocamento_f_menos_l": -0.200937,
+    "variacao_erro_absoluto": -0.200937,
+    "direcao": "aproximou"
+   },
+   {
+    "id": "poderdata_2026-10-24",
+    "instituto": "PoderData",
+    "perfil_renda": "perfil_ponderado",
+    "erro_publicado_f_menos_l": 5.653482,
+    "erro_reponderado_f_menos_l": 8.428482,
+    "deslocamento_f_menos_l": 2.775,
+    "variacao_erro_absoluto": 2.775,
+    "direcao": "afastou"
+   },
+   {
+    "id": "realtime_2026-10-22",
+    "instituto": "Real Time Big Data",
+    "perfil_renda": "perfil_publicado",
+    "erro_publicado_f_menos_l": 7.825467,
+    "erro_reponderado_f_menos_l": 11.599283,
+    "deslocamento_f_menos_l": 3.773816,
+    "variacao_erro_absoluto": 3.773816,
+    "direcao": "afastou"
+   },
+   {
+    "id": "verita_2026-10-23",
+    "instituto": "Veritá",
+    "perfil_renda": "hipotese_perfil_condicional",
+    "erro_publicado_f_menos_l": 6.677552,
+    "erro_reponderado_f_menos_l": 7.684448,
+    "deslocamento_f_menos_l": 1.006896,
+    "variacao_erro_absoluto": 1.006896,
+    "direcao": "afastou"
+   }
+  ],
+  "n": 11,
+  "aproximou": 1,
+  "afastou": 9,
+  "neutro": 1,
+  "deslocamento_medio_f_menos_l": 1.731654,
+  "variacao_media_erro_absoluto": 1.731654
+ },
+ "centrais": {
+  "snapshot": "e1e4524328558a79",
+  "referencia": "2026-10-25",
+  "media_arvor": {
+   "rotulo": "Média Arvor",
+   "validos": {
+    "flavio": 52.880441,
+    "lula": 47.119559
+   },
+   "parametros": {
+    "centro": "media",
+    "modo": "modelo",
+    "idade": "central",
+    "presenca_relativa": 3.8,
+    "comparecimento": 79.157882,
+    "branco_nulo_pp": 0.0,
+    "nulo_diferencial_pp": 0.0,
+    "indecisos_validos": 100.0,
+    "indecisos_flavio": null,
+    "vies_pp": 0.0
+   },
+   "pesquisa_f_menos_l": 5.760883,
+   "urna_f_menos_l": -3.570148,
+   "erro_f_menos_l": 9.331031,
+   "erro_lula_menos_flavio": -9.331031,
+   "erro_flavio": 4.665516,
+   "erro_lula": -4.665516
+  },
+  "projecao_arvor": {
+   "rotulo": "Projeção Arvor",
+   "validos": {
+    "flavio": 52.065802,
+    "lula": 47.934198
+   },
+   "parametros": {
+    "centro": "projecao",
+    "modo": "modelo",
+    "idade": "central",
+    "presenca_relativa": 3.8,
+    "comparecimento": 79.157882,
+    "branco_nulo_pp": 0.0,
+    "nulo_diferencial_pp": 0.0,
+    "indecisos_validos": 100.0,
+    "indecisos_flavio": null,
+    "vies_pp": 0.0
+   },
+   "pesquisa_f_menos_l": 4.131603,
+   "urna_f_menos_l": -3.570148,
+   "erro_f_menos_l": 7.701751,
+   "erro_lula_menos_flavio": -7.701751,
+   "erro_flavio": 3.850876,
+   "erro_lula": -3.850876
+  },
+  "ancora_projecao_pnad": {
+   "rotulo": "Âncora da Projeção (pnad): recência e tendência encolhida, antes da presença relativa",
+   "inclinacao_lula_validos_pp_dia": 0.086504,
+   "validos": {
+    "flavio": 51.209529,
+    "lula": 48.790471
+   },
+   "pesquisa_f_menos_l": 2.419057,
+   "urna_f_menos_l": -3.570148,
+   "erro_f_menos_l": 5.989205,
+   "erro_lula_menos_flavio": -5.989205,
+   "erro_flavio": 2.994603,
+   "erro_lula": -2.994603
+  },
+  "ancora_projecao_published": {
+   "rotulo": "Âncora da Projeção (published): recência e tendência encolhida, antes da presença relativa",
+   "inclinacao_lula_validos_pp_dia": 0.071178,
+   "validos": {
+    "flavio": 50.706265,
+    "lula": 49.293735
+   },
+   "pesquisa_f_menos_l": 1.412531,
+   "urna_f_menos_l": -3.570148,
+   "erro_f_menos_l": 4.982679,
+   "erro_lula_menos_flavio": -4.982679,
+   "erro_flavio": 2.49134,
+   "erro_lula": -2.49134
+  },
+  "presenca_relativa_pct": 3.8,
+  "sem_exterior": {
+   "media_arvor": {
+    "pesquisa_f_menos_l": 5.760883,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 9.318592,
+    "erro_lula_menos_flavio": -9.318592,
+    "erro_flavio": 4.659296,
+    "erro_lula": -4.659296
+   },
+   "projecao_arvor": {
+    "pesquisa_f_menos_l": 4.131603,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 7.689312,
+    "erro_lula_menos_flavio": -7.689312,
+    "erro_flavio": 3.844656,
+    "erro_lula": -3.844656
+   },
+   "ancora_projecao_pnad": {
+    "pesquisa_f_menos_l": 2.419057,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 5.976766,
+    "erro_lula_menos_flavio": -5.976766,
+    "erro_flavio": 2.988383,
+    "erro_lula": -2.988383
+   },
+   "ancora_projecao_published": {
+    "pesquisa_f_menos_l": 1.412531,
+    "urna_f_menos_l": -3.557709,
+    "erro_f_menos_l": 4.97024,
+    "erro_lula_menos_flavio": -4.97024,
+    "erro_flavio": 2.48512,
+    "erro_lula": -2.48512
+   }
+  }
+ },
+ "tendencia_publicada": {
+  "regra": "diferença F−L nos válidos do total publicado contra o meio do campo; positivo na inclinação quer dizer Flávio ganhando terreno",
+  "pos_urna_05_a_24": {
+   "n_ondas": 58,
+   "n_casas": 21,
+   "n_casas_com_duas_ou_mais": 17,
+   "inclinacao_simples_pp_dia": -0.113983,
+   "inclinacao_dentro_da_casa_pp_dia": -0.150433,
+   "media_f_menos_l": 2.311582
+  },
+  "extrapolacao_ate_a_urna": {
+   "regra": "média F−L da última semana levada à urna pela inclinação dentro da casa de 05 a 24/10; ilustração, não previsão",
+   "dias_do_meio_do_campo_ate_a_urna": 4.59375,
+   "media_ultima_semana": 2.167565,
+   "f_menos_l_extrapolado": 1.476513
+  },
+  "ultima_semana_19_a_24": {
+   "n_ondas": 32,
+   "n_casas": 20,
+   "n_casas_com_duas_ou_mais": 10,
+   "inclinacao_simples_pp_dia": -0.236196,
+   "inclinacao_dentro_da_casa_pp_dia": -0.022105,
+   "media_f_menos_l": 2.167565
+  },
+  "media_campo_ate_12_10": 4.201817,
+  "media_campo_desde_19_10": 2.167565,
+  "serie": [
+   {
+    "id": "datafolha_2026-10-08",
+    "instituto": "Datafolha",
+    "meio_do_campo": "2026-10-06",
+    "f_menos_l_validos": 4.255319
+   },
+   {
+    "id": "poderdata_2026-10-07",
+    "instituto": "PoderData",
+    "meio_do_campo": "2026-10-06",
+    "f_menos_l_validos": 5.376344
+   },
+   {
+    "id": "vox_brasil_2026-10-07",
+    "instituto": "Vox Brasil",
+    "meio_do_campo": "2026-10-06",
+    "f_menos_l_validos": -1.726122
+   },
+   {
+    "id": "ipespe_2026-10-08",
+    "instituto": "Ipespe",
+    "meio_do_campo": "2026-10-07",
+    "f_menos_l_validos": 5.376344
+   },
+   {
+    "id": "datatrends_2026-10-09",
+    "instituto": "DataTrends",
+    "meio_do_campo": "2026-10-08",
+    "f_menos_l_validos": 6.382979
+   },
+   {
+    "id": "futura_2026-10-10",
+    "instituto": "Futura",
+    "meio_do_campo": "2026-10-08",
+    "f_menos_l_validos": 3.519669
+   },
+   {
+    "id": "gerp_2026-10-12",
+    "instituto": "Gerp",
+    "meio_do_campo": "2026-10-10",
+    "f_menos_l_validos": 9.278351
+   },
+   {
+    "id": "nexus_2026-10-12",
+    "instituto": "Nexus",
+    "meio_do_campo": "2026-10-11",
+    "f_menos_l_validos": 3.225806
+   },
+   {
+    "id": "palver_2026-10-13",
+    "instituto": "Palver",
+    "meio_do_campo": "2026-10-11",
+    "f_menos_l_validos": 1.010101
+   },
+   {
+    "id": "poderdata_2026-10-12",
+    "instituto": "PoderData",
+    "meio_do_campo": "2026-10-11",
+    "f_menos_l_validos": 2.12766
+   },
+   {
+    "id": "quaest_2026-10-13",
+    "instituto": "Quaest",
+    "meio_do_campo": "2026-10-11",
+    "f_menos_l_validos": 2.222222
+   },
+   {
+    "id": "datafolha_2026-10-14",
+    "instituto": "Datafolha",
+    "meio_do_campo": "2026-10-13",
+    "f_menos_l_validos": 2.173913
+   },
+   {
+    "id": "indexa_2026-10-14",
+    "instituto": "Indexa/Broadcast",
+    "meio_do_campo": "2026-10-13",
+    "f_menos_l_validos": 2.325581
+   },
+   {
+    "id": "futura_2026-10-15",
+    "instituto": "Futura",
+    "meio_do_campo": "2026-10-14",
+    "f_menos_l_validos": 1.554404
+   },
+   {
+    "id": "ipespe_2026-10-15",
+    "instituto": "Ipespe",
+    "meio_do_campo": "2026-10-14",
+    "f_menos_l_validos": 2.12766
+   },
+   {
+    "id": "mda_2026-10-15",
+    "instituto": "MDA",
+    "meio_do_campo": "2026-10-14",
+    "f_menos_l_validos": 0.970874
+   },
+   {
+    "id": "poderdata_2026-10-15",
+    "instituto": "PoderData",
+    "meio_do_campo": "2026-10-14",
+    "f_menos_l_validos": 0.0
+   },
+   {
+    "id": "verita_2026-10-16",
+    "instituto": "Veritá",
+    "meio_do_campo": "2026-10-14",
+    "f_menos_l_validos": 2.053388
+   },
+   {
+    "id": "atlas_2026-10-18",
+    "instituto": "AtlasIntel",
+    "meio_do_campo": "2026-10-15",
+    "f_menos_l_validos": 2.258727
+   },
+   {
+    "id": "gerp_2026-10-16",
+    "instituto": "Gerp",
+    "meio_do_campo": "2026-10-15",
+    "f_menos_l_validos": 5.263158
+   },
+   {
+    "id": "ranking_2026-10-16",
+    "instituto": "Data Ranking",
+    "meio_do_campo": "2026-10-15",
+    "f_menos_l_validos": -0.888889
+   },
+   {
+    "id": "datatrends_2026-10-17",
+    "instituto": "DataTrends",
+    "meio_do_campo": "2026-10-16",
+    "f_menos_l_validos": 3.157895
+   },
+   {
+    "id": "futura_2026-10-17",
+    "instituto": "Futura",
+    "meio_do_campo": "2026-10-16",
+    "f_menos_l_validos": 0.835073
+   },
+   {
+    "id": "vox_brasil_2026-10-17",
+    "instituto": "Vox Brasil",
+    "meio_do_campo": "2026-10-16",
+    "f_menos_l_validos": -1.978022
+   },
+   {
+    "id": "alfa_2026-10-19",
+    "instituto": "Alfa Inteligência/TMC",
+    "meio_do_campo": "2026-10-17",
+    "f_menos_l_validos": 3.062302
+   },
+   {
+    "id": "gerp_2026-10-19",
+    "instituto": "Gerp",
+    "meio_do_campo": "2026-10-17",
+    "f_menos_l_validos": 5.263158
+   },
+   {
+    "id": "ideia_2026-10-19",
+    "instituto": "Meio/Ideia",
+    "meio_do_campo": "2026-10-17",
+    "f_menos_l_validos": 2.12766
+   },
+   {
+    "id": "nexus_2026-10-18",
+    "instituto": "Nexus",
+    "meio_do_campo": "2026-10-17",
+    "f_menos_l_validos": 0.649351
+   },
+   {
+    "id": "poderdata_2026-10-18",
+    "instituto": "PoderData",
+    "meio_do_campo": "2026-10-17",
+    "f_menos_l_validos": 3.157895
+   },
+   {
+    "id": "realtime_2026-10-19",
+    "instituto": "Real Time Big Data",
+    "meio_do_campo": "2026-10-17",
+    "f_menos_l_validos": 3.225806
+   },
+   {
+    "id": "verita_2026-10-19",
+    "instituto": "Veritá",
+    "meio_do_campo": "2026-10-17",
+    "f_menos_l_validos": 1.532176
+   },
+   {
+    "id": "franca_2026-10-20",
+    "instituto": "Instituto França",
+    "meio_do_campo": "2026-10-18",
+    "f_menos_l_validos": 1.612903
+   },
+   {
+    "id": "quaest_2026-10-20",
+    "instituto": "Quaest",
+    "meio_do_campo": "2026-10-18",
+    "f_menos_l_validos": 1.123596
+   },
+   {
+    "id": "futura_2026-10-20",
+    "instituto": "Futura",
+    "meio_do_campo": "2026-10-19",
+    "f_menos_l_validos": 2.194357
+   },
+   {
+    "id": "palver_2026-10-20",
+    "instituto": "Palver",
+    "meio_do_campo": "2026-10-19",
+    "f_menos_l_validos": 2.040816
+   },
+   {
+    "id": "alfa_2026-10-22",
+    "instituto": "Alfa Inteligência/TMC",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 4.066736
+   },
+   {
+    "id": "atlas_2026-10-23",
+    "instituto": "AtlasIntel",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 1.525941
+   },
+   {
+    "id": "datatrends_2026-10-21",
+    "instituto": "DataTrends",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 4.166667
+   },
+   {
+    "id": "gerp_2026-10-21",
+    "instituto": "Gerp",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 5.263158
+   },
+   {
+    "id": "indexa_2026-10-21",
+    "instituto": "Indexa/Broadcast",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 1.231803
+   },
+   {
+    "id": "poderdata_2026-10-21",
+    "instituto": "PoderData",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 1.030928
+   },
+   {
+    "id": "realtime_2026-10-22",
+    "instituto": "Real Time Big Data",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 4.255319
+   },
+   {
+    "id": "verita_2026-10-22",
+    "instituto": "Veritá",
+    "meio_do_campo": "2026-10-20",
+    "f_menos_l_validos": 2.763562
+   },
+   {
+    "id": "datafolha_2026-10-22",
+    "instituto": "Datafolha",
+    "meio_do_campo": "2026-10-21",
+    "f_menos_l_validos": 1.075269
+   },
+   {
+    "id": "ipespe_2026-10-22",
+    "instituto": "Ipespe",
+    "meio_do_campo": "2026-10-21",
+    "f_menos_l_validos": 1.052632
+   },
+   {
+    "id": "verita_2026-10-23",
+    "instituto": "Veritá",
+    "meio_do_campo": "2026-10-21",
+    "f_menos_l_validos": 3.107404
+   },
+   {
+    "id": "vox_brasil_2026-10-22",
+    "instituto": "Vox Brasil",
+    "meio_do_campo": "2026-10-21",
+    "f_menos_l_validos": -1.22631
+   },
+   {
+    "id": "franca_2026-10-23",
+    "instituto": "Instituto França",
+    "meio_do_campo": "2026-10-22",
+    "f_menos_l_validos": 2.818489
+   },
+   {
+    "id": "mda_2026-10-23",
+    "instituto": "MDA",
+    "meio_do_campo": "2026-10-22",
+    "f_menos_l_validos": 1.423877
+   },
+   {
+    "id": "vetor_2026-10-23",
+    "instituto": "Vetor/Arrow",
+    "meio_do_campo": "2026-10-22",
+    "f_menos_l_validos": 5.374078
+   },
+   {
+    "id": "colectta_2026-10-23",
+    "instituto": "Colectta",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": -0.540541
+   },
+   {
+    "id": "datafolha_2026-10-24",
+    "instituto": "Datafolha",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": 1.052632
+   },
+   {
+    "id": "futura_2026-10-24",
+    "instituto": "Futura",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": 0.312175
+   },
+   {
+    "id": "gerp_2026-10-24",
+    "instituto": "Gerp",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": 3.157895
+   },
+   {
+    "id": "nexus_2026-10-24",
+    "instituto": "Nexus",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": 1.075269
+   },
+   {
+    "id": "palver_2026-10-24",
+    "instituto": "Palver",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": 1.010101
+   },
+   {
+    "id": "poderdata_2026-10-24",
+    "instituto": "PoderData",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": 2.083333
+   },
+   {
+    "id": "quaest_2026-10-24",
+    "instituto": "Quaest",
+    "meio_do_campo": "2026-10-23",
+    "f_menos_l_validos": 1.098901
+   }
+  ]
+ },
+ "hipoteses": {
+  "presenca_declarada": [
+   {
+    "id": "ipespe_2026-10-22",
+    "instituto": "Ipespe",
+    "taxas": {
+     "flavio": 0.94,
+     "lula": 0.9,
+     "indecisos": 0.61
+    },
+    "validos_amostra_completa": {
+     "flavio": 50.526316,
+     "lula": 49.473684
+    },
+    "validos_presenca_declarada": {
+     "flavio": 51.612903,
+     "lula": 48.387097
+    },
+    "deslocamento_f_menos_l": 2.173175,
+    "pesquisa_f_menos_l": 3.225806,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.795955,
+    "erro_lula_menos_flavio": -6.795955,
+    "erro_flavio": 3.397977,
+    "erro_lula": -3.397977
+   },
+   {
+    "id": "poderdata_2026-10-24",
+    "instituto": "PoderData",
+    "taxas": {
+     "flavio": 0.96,
+     "lula": 0.94,
+     "indecisos": 0.56
+    },
+    "validos_amostra_completa": {
+     "flavio": 51.041667,
+     "lula": 48.958333
+    },
+    "validos_presenca_declarada": {
+     "flavio": 51.567639,
+     "lula": 48.432361
+    },
+    "deslocamento_f_menos_l": 1.051944,
+    "pesquisa_f_menos_l": 3.135277,
+    "urna_f_menos_l": -3.570148,
+    "erro_f_menos_l": 6.705426,
+    "erro_lula_menos_flavio": -6.705426,
+    "erro_flavio": 3.352713,
+    "erro_lula": -3.352713
+   }
+  ],
+  "indecisos_extremo": {
+   "regra": "cenário extremo, não hipótese provável: indecisos inteiros para Lula",
+   "por_casa": [
+    {
+     "id": "alfa_2026-10-22",
+     "instituto": "Alfa Inteligência/TMC",
+     "indecisos_pct": 2.1,
+     "branco_nulo_pct": 2.0,
+     "f_menos_l_todos_indecisos_lula": 1.836735,
+     "erro_todos_indecisos_lula": 5.406883,
+     "f_menos_l_indecisos_e_bn_lula": -0.2
+    },
+    {
+     "id": "atlas_2026-10-23",
+     "instituto": "AtlasIntel",
+     "indecisos_pct": 0.0,
+     "branco_nulo_pct": 1.7,
+     "f_menos_l_todos_indecisos_lula": 1.525941,
+     "erro_todos_indecisos_lula": 5.096089,
+     "f_menos_l_indecisos_e_bn_lula": -0.2
+    },
+    {
+     "id": "colectta_2026-10-23",
+     "instituto": "Colectta",
+     "indecisos_pct": 3.1,
+     "branco_nulo_pct": 4.4,
+     "f_menos_l_todos_indecisos_lula": -3.76569,
+     "erro_todos_indecisos_lula": -0.195542,
+     "f_menos_l_indecisos_e_bn_lula": -8.0
+    },
+    {
+     "id": "datatrends_2026-10-21",
+     "instituto": "DataTrends",
+     "indecisos_pct": 1.0,
+     "branco_nulo_pct": 4.0,
+     "f_menos_l_todos_indecisos_lula": 3.092784,
+     "erro_todos_indecisos_lula": 6.662932,
+     "f_menos_l_indecisos_e_bn_lula": -0.990099
+    },
+    {
+     "id": "datafolha_2026-10-24",
+     "instituto": "Datafolha",
+     "indecisos_pct": 2.0,
+     "branco_nulo_pct": 3.0,
+     "f_menos_l_todos_indecisos_lula": -1.030928,
+     "erro_todos_indecisos_lula": 2.539221,
+     "f_menos_l_indecisos_e_bn_lula": -4.0
+    },
+    {
+     "id": "futura_2026-10-24",
+     "instituto": "Futura",
+     "indecisos_pct": 1.6,
+     "branco_nulo_pct": 2.3,
+     "f_menos_l_todos_indecisos_lula": -1.330604,
+     "erro_todos_indecisos_lula": 2.239544,
+     "f_menos_l_indecisos_e_bn_lula": -3.6
+    },
+    {
+     "id": "gerp_2026-10-24",
+     "instituto": "Gerp",
+     "indecisos_pct": 3.0,
+     "branco_nulo_pct": 1.0,
+     "f_menos_l_todos_indecisos_lula": 0.0,
+     "erro_todos_indecisos_lula": 3.570148,
+     "f_menos_l_indecisos_e_bn_lula": -1.010101
+    },
+    {
+     "id": "indexa_2026-10-21",
+     "instituto": "Indexa/Broadcast",
+     "indecisos_pct": 1.6,
+     "branco_nulo_pct": 4.3,
+     "f_menos_l_todos_indecisos_lula": -0.550055,
+     "erro_todos_indecisos_lula": 3.020093,
+     "f_menos_l_indecisos_e_bn_lula": -5.042017
+    },
+    {
+     "id": "franca_2026-10-23",
+     "instituto": "Instituto França",
+     "indecisos_pct": 3.9,
+     "branco_nulo_pct": 7.4,
+     "f_menos_l_todos_indecisos_lula": -1.511879,
+     "erro_todos_indecisos_lula": 2.058269,
+     "f_menos_l_indecisos_e_bn_lula": -8.8
+    },
+    {
+     "id": "ipespe_2026-10-22",
+     "instituto": "Ipespe",
+     "indecisos_pct": 2.0,
+     "branco_nulo_pct": 3.0,
+     "f_menos_l_todos_indecisos_lula": -1.030928,
+     "erro_todos_indecisos_lula": 2.539221,
+     "f_menos_l_indecisos_e_bn_lula": -4.0
+    },
+    {
+     "id": "mda_2026-10-23",
+     "instituto": "MDA",
+     "indecisos_pct": 2.9,
+     "branco_nulo_pct": 5.8,
+     "f_menos_l_todos_indecisos_lula": -1.698514,
+     "erro_todos_indecisos_lula": 1.871635,
+     "f_menos_l_indecisos_e_bn_lula": -7.4
+    },
+    {
+     "id": "ideia_2026-10-19",
+     "instituto": "Meio/Ideia",
+     "indecisos_pct": 2.6,
+     "branco_nulo_pct": 3.4,
+     "f_menos_l_todos_indecisos_lula": -0.621118,
+     "erro_todos_indecisos_lula": 2.94903,
+     "f_menos_l_indecisos_e_bn_lula": -4.0
+    },
+    {
+     "id": "nexus_2026-10-24",
+     "instituto": "Nexus",
+     "indecisos_pct": 1.8,
+     "branco_nulo_pct": 5.2,
+     "f_menos_l_todos_indecisos_lula": -0.843882,
+     "erro_todos_indecisos_lula": 2.726266,
+     "f_menos_l_indecisos_e_bn_lula": -6.0
+    },
+    {
+     "id": "palver_2026-10-24",
+     "instituto": "Palver",
+     "indecisos_pct": 0.0,
+     "branco_nulo_pct": 1.0,
+     "f_menos_l_todos_indecisos_lula": 1.010101,
+     "erro_todos_indecisos_lula": 4.580249,
+     "f_menos_l_indecisos_e_bn_lula": 0.0
+    },
+    {
+     "id": "poderdata_2026-10-24",
+     "instituto": "PoderData",
+     "indecisos_pct": 1.0,
+     "branco_nulo_pct": 3.0,
+     "f_menos_l_todos_indecisos_lula": 1.030928,
+     "erro_todos_indecisos_lula": 4.601076,
+     "f_menos_l_indecisos_e_bn_lula": -2.0
+    },
+    {
+     "id": "quaest_2026-10-24",
+     "instituto": "Quaest",
+     "indecisos_pct": 1.0,
+     "branco_nulo_pct": 8.0,
+     "f_menos_l_todos_indecisos_lula": 0.0,
+     "erro_todos_indecisos_lula": 3.570148,
+     "f_menos_l_indecisos_e_bn_lula": -8.0
+    },
+    {
+     "id": "realtime_2026-10-22",
+     "instituto": "Real Time Big Data",
+     "indecisos_pct": 1.0,
+     "branco_nulo_pct": 5.0,
+     "f_menos_l_todos_indecisos_lula": 3.157895,
+     "erro_todos_indecisos_lula": 6.728043,
+     "f_menos_l_indecisos_e_bn_lula": -2.0
+    },
+    {
+     "id": "verita_2026-10-23",
+     "instituto": "Veritá",
+     "indecisos_pct": 2.67,
+     "branco_nulo_pct": 1.43,
+     "f_menos_l_todos_indecisos_lula": 0.314497,
+     "erro_todos_indecisos_lula": 3.884646,
+     "f_menos_l_indecisos_e_bn_lula": -1.12
+    },
+    {
+     "id": "vetor_2026-10-23",
+     "instituto": "Vetor/Arrow",
+     "indecisos_pct": 1.5,
+     "branco_nulo_pct": 3.6,
+     "f_menos_l_todos_indecisos_lula": 3.73444,
+     "erro_todos_indecisos_lula": 7.304588,
+     "f_menos_l_indecisos_e_bn_lula": 0.0
+    },
+    {
+     "id": "vox_brasil_2026-10-22",
+     "instituto": "Vox Brasil",
+     "indecisos_pct": 4.3,
+     "branco_nulo_pct": 6.0,
+     "f_menos_l_todos_indecisos_lula": -5.744681,
+     "erro_todos_indecisos_lula": -2.174533,
+     "f_menos_l_indecisos_e_bn_lula": -11.4
+    }
+   ],
+   "flavio_ainda_a_frente": 8,
+   "erro_medio_todos_indecisos_lula": 3.4489,
+   "flavio_ainda_a_frente_com_bn": 0
+  },
+  "contabilidade_entre_turnos": {
+   "regra": "identidade de agregados entre turnos; resíduo do transporte = Flávio na urna menos Flávio no transporte proporcional do 1º turno, entre os dois, por UF",
+   "brasil": {
+    "ganho_flavio": 3721481,
+    "ganho_lula": 10376353,
+    "terceiros_1t": 9316747,
+    "branco_nulo_1t": 5975047,
+    "branco_nulo_2t": 4153791,
+    "variacao_comparecimento": 2959831,
+    "disponivel": 14097834,
+    "parcela_flavio_do_ganho_pct": 26.397537,
+    "residuo_identidade": 0,
+    "teto_parcela_flavio_da_terceira_via_pct": 39.943995,
+    "abstencao_1t_pct": 21.083642,
+    "abstencao_2t_pct": 19.218899,
+    "variacao_abstencao_pp": -1.864743
+   },
+   "limite_comparecimento": {
+    "regra": "limite extremo: todo o aumento líquido de comparecimento atribuído a Lula e retirado; não é estimativa, é o máximo que a variação poderia explicar",
+    "flavio_validos_sem_o_aumento": 49.393143,
+    "f_menos_l_sem_o_aumento": -1.213715,
+    "f_menos_l_urna": -3.570148,
+    "parcela_maxima_explicada_pp": 2.356434
+   },
+   "ufs": [
+    {
+     "uf": "AC",
+     "regiao": "N",
+     "ganho_flavio": -15092,
+     "ganho_lula": 9743,
+     "terceiros_1t": 31489,
+     "branco_nulo_1t": 19264,
+     "branco_nulo_2t": 21426,
+     "variacao_comparecimento": -34676,
+     "disponivel": -5349,
+     "parcela_flavio_do_ganho_pct": null,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": -47.927848,
+     "abstencao_1t_pct": 20.433993,
+     "abstencao_2t_pct": 26.080673,
+     "variacao_abstencao_pp": 5.646679,
+     "lula_1t_validos_pct": 28.731564,
+     "terceiros_1t_validos_pct": 6.713128,
+     "flavio_urna_entre_os_dois": 66.565563,
+     "residuo_transporte_flavio_pp": -2.669224
+    },
+    {
+     "uf": "AL",
+     "regiao": "NE",
+     "ganho_flavio": 8422,
+     "ganho_lula": 157162,
+     "terceiros_1t": 87679,
+     "branco_nulo_1t": 119572,
+     "branco_nulo_2t": 54871,
+     "variacao_comparecimento": 13204,
+     "disponivel": 165584,
+     "parcela_flavio_do_ganho_pct": 5.08624,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 9.605493,
+     "abstencao_1t_pct": 20.62539,
+     "abstencao_2t_pct": 20.08324,
+     "variacao_abstencao_pp": -0.542149,
+     "lula_1t_validos_pct": 54.729951,
+     "terceiros_1t_validos_pct": 4.820558,
+     "flavio_urna_entre_os_dois": 39.232144,
+     "residuo_transporte_flavio_pp": -3.413432
+    },
+    {
+     "uf": "AM",
+     "regiao": "N",
+     "ganho_flavio": -1519,
+     "ganho_lula": 98787,
+     "terceiros_1t": 147003,
+     "branco_nulo_1t": 63786,
+     "branco_nulo_2t": 71031,
+     "variacao_comparecimento": -42490,
+     "disponivel": 97268,
+     "parcela_flavio_do_ganho_pct": null,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": -1.033312,
+     "abstencao_1t_pct": 20.15507,
+     "abstencao_2t_pct": 21.674722,
+     "variacao_abstencao_pp": 1.519653,
+     "lula_1t_validos_pct": 48.231705,
+     "terceiros_1t_validos_pct": 6.771951,
+     "flavio_urna_entre_os_dois": 45.979827,
+     "residuo_transporte_flavio_pp": -2.606026
+    },
+    {
+     "uf": "AP",
+     "regiao": "N",
+     "ganho_flavio": -13604,
+     "ganho_lula": 10465,
+     "terceiros_1t": 40077,
+     "branco_nulo_1t": 11704,
+     "branco_nulo_2t": 8333,
+     "variacao_comparecimento": -46587,
+     "disponivel": -3139,
+     "parcela_flavio_do_ganho_pct": null,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": -33.944657,
+     "abstencao_1t_pct": 17.405215,
+     "abstencao_2t_pct": 25.469311,
+     "variacao_abstencao_pp": 8.064096,
+     "lula_1t_validos_pct": 45.71353,
+     "terceiros_1t_validos_pct": 8.621342,
+     "flavio_urna_entre_os_dois": 47.11912,
+     "residuo_transporte_flavio_pp": -2.995216
+    },
+    {
+     "uf": "BA",
+     "regiao": "NE",
+     "ganho_flavio": 166137,
+     "ganho_lula": 820224,
+     "terceiros_1t": 452935,
+     "branco_nulo_1t": 493310,
+     "branco_nulo_2t": 328018,
+     "variacao_comparecimento": 368134,
+     "disponivel": 986361,
+     "parcela_flavio_do_ganho_pct": 16.843428,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 36.680098,
+     "abstencao_1t_pct": 19.969951,
+     "abstencao_2t_pct": 16.714328,
+     "variacao_abstencao_pp": -3.255623,
+     "lula_1t_validos_pct": 66.174982,
+     "terceiros_1t_validos_pct": 5.291117,
+     "flavio_urna_entre_os_dois": 28.687081,
+     "residuo_transporte_flavio_pp": -1.556923
+    },
+    {
+     "uf": "CE",
+     "regiao": "NE",
+     "ganho_flavio": 62628,
+     "ganho_lula": 480861,
+     "terceiros_1t": 305701,
+     "branco_nulo_1t": 292657,
+     "branco_nulo_2t": 169241,
+     "variacao_comparecimento": 114372,
+     "disponivel": 543489,
+     "parcela_flavio_do_ganho_pct": 11.523324,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 20.486685,
+     "abstencao_1t_pct": 15.523005,
+     "abstencao_2t_pct": 13.888017,
+     "variacao_abstencao_pp": -1.634988,
+     "lula_1t_validos_pct": 63.285524,
+     "terceiros_1t_validos_pct": 5.441636,
+     "flavio_urna_entre_os_dois": 31.072433,
+     "residuo_transporte_flavio_pp": -2.160417
+    },
+    {
+     "uf": "DF",
+     "regiao": "CO",
+     "ganho_flavio": 69926,
+     "ganho_lula": 149597,
+     "terceiros_1t": 187565,
+     "branco_nulo_1t": 58588,
+     "branco_nulo_2t": 63514,
+     "variacao_comparecimento": 36884,
+     "disponivel": 219523,
+     "parcela_flavio_do_ganho_pct": 31.85361,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 37.280943,
+     "abstencao_1t_pct": 18.904495,
+     "abstencao_2t_pct": 17.295966,
+     "variacao_abstencao_pp": -1.60853,
+     "lula_1t_validos_pct": 38.110557,
+     "terceiros_1t_validos_pct": 10.580108,
+     "flavio_urna_entre_os_dois": 54.275291,
+     "residuo_transporte_flavio_pp": -3.095119
+    },
+    {
+     "uf": "ES",
+     "regiao": "SE",
+     "ganho_flavio": 61310,
+     "ganho_lula": 151937,
+     "terceiros_1t": 167856,
+     "branco_nulo_1t": 101204,
+     "branco_nulo_2t": 112745,
+     "variacao_comparecimento": 56932,
+     "disponivel": 213247,
+     "parcela_flavio_do_ganho_pct": 28.750698,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 36.525355,
+     "abstencao_1t_pct": 21.371751,
+     "abstencao_2t_pct": 19.465087,
+     "variacao_abstencao_pp": -1.906664,
+     "lula_1t_validos_pct": 37.760931,
+     "terceiros_1t_validos_pct": 7.456694,
+     "flavio_urna_entre_os_dois": 56.369322,
+     "residuo_transporte_flavio_pp": -2.837533
+    },
+    {
+     "uf": "GO",
+     "regiao": "CO",
+     "ganho_flavio": 293446,
+     "ganho_lula": 396675,
+     "terceiros_1t": 587055,
+     "branco_nulo_1t": 143764,
+     "branco_nulo_2t": 116391,
+     "variacao_comparecimento": 75693,
+     "disponivel": 690121,
+     "parcela_flavio_do_ganho_pct": 42.520949,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 49.986117,
+     "abstencao_1t_pct": 21.828233,
+     "abstencao_2t_pct": 20.335171,
+     "variacao_abstencao_pp": -1.493061,
+     "lula_1t_validos_pct": 31.058907,
+     "terceiros_1t_validos_pct": 15.336524,
+     "flavio_urna_entre_os_dois": 59.664213,
+     "residuo_transporte_flavio_pp": -3.60314
+    },
+    {
+     "uf": "MA",
+     "regiao": "NE",
+     "ganho_flavio": -9069,
+     "ganho_lula": 241930,
+     "terceiros_1t": 205098,
+     "branco_nulo_1t": 149904,
+     "branco_nulo_2t": 89569,
+     "variacao_comparecimento": -32572,
+     "disponivel": 232861,
+     "parcela_flavio_do_ganho_pct": null,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": -4.421789,
+     "abstencao_1t_pct": 19.732767,
+     "abstencao_2t_pct": 20.360178,
+     "variacao_abstencao_pp": 0.627411,
+     "lula_1t_validos_pct": 63.990526,
+     "terceiros_1t_validos_pct": 5.114103,
+     "flavio_urna_entre_os_dois": 30.458382,
+     "residuo_transporte_flavio_pp": -2.312255
+    },
+    {
+     "uf": "MG",
+     "regiao": "SE",
+     "ganho_flavio": 464220,
+     "ganho_lula": 1162085,
+     "terceiros_1t": 1009751,
+     "branco_nulo_1t": 661039,
+     "branco_nulo_2t": 451318,
+     "variacao_comparecimento": 406833,
+     "disponivel": 1626305,
+     "parcela_flavio_do_ganho_pct": 28.544461,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 45.97371,
+     "abstencao_1t_pct": 22.81342,
+     "abstencao_2t_pct": 20.326939,
+     "variacao_abstencao_pp": -2.486481,
+     "lula_1t_validos_pct": 43.326939,
+     "terceiros_1t_validos_pct": 8.431289,
+     "flavio_urna_entre_os_dois": 49.566208,
+     "residuo_transporte_flavio_pp": -3.214968
+    },
+    {
+     "uf": "MS",
+     "regiao": "CO",
+     "ganho_flavio": 54541,
+     "ganho_lula": 112118,
+     "terceiros_1t": 100072,
+     "branco_nulo_1t": 50942,
+     "branco_nulo_2t": 37595,
+     "variacao_comparecimento": 53240,
+     "disponivel": 166659,
+     "parcela_flavio_do_ganho_pct": 32.726105,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 54.501759,
+     "abstencao_1t_pct": 23.868941,
+     "abstencao_2t_pct": 21.239337,
+     "variacao_abstencao_pp": -2.629604,
+     "lula_1t_validos_pct": 34.681784,
+     "terceiros_1t_validos_pct": 6.714989,
+     "flavio_urna_entre_os_dois": 59.60003,
+     "residuo_transporte_flavio_pp": -3.304046
+    },
+    {
+     "uf": "MT",
+     "regiao": "CO",
+     "ganho_flavio": 52518,
+     "ganho_lula": 112486,
+     "terceiros_1t": 113026,
+     "branco_nulo_1t": 58845,
+     "branco_nulo_2t": 40068,
+     "variacao_comparecimento": 33201,
+     "disponivel": 165004,
+     "parcela_flavio_do_ganho_pct": 31.828319,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 46.465415,
+     "abstencao_1t_pct": 22.202888,
+     "abstencao_2t_pct": 20.946564,
+     "variacao_abstencao_pp": -1.256324,
+     "lula_1t_validos_pct": 29.181985,
+     "terceiros_1t_validos_pct": 5.67033,
+     "flavio_urna_entre_os_dois": 66.059818,
+     "residuo_transporte_flavio_pp": -2.941496
+    },
+    {
+     "uf": "PA",
+     "regiao": "N",
+     "ganho_flavio": 35983,
+     "ganho_lula": 263212,
+     "terceiros_1t": 271978,
+     "branco_nulo_1t": 203332,
+     "branco_nulo_2t": 99184,
+     "variacao_comparecimento": -76931,
+     "disponivel": 299195,
+     "parcela_flavio_do_ganho_pct": 12.026605,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 13.230114,
+     "abstencao_1t_pct": 19.09641,
+     "abstencao_2t_pct": 20.32062,
+     "variacao_abstencao_pp": 1.22421,
+     "lula_1t_validos_pct": 49.910573,
+     "terceiros_1t_validos_pct": 5.592605,
+     "flavio_urna_entre_os_dois": 44.984969,
+     "residuo_transporte_flavio_pp": -2.255377
+    },
+    {
+     "uf": "PB",
+     "regiao": "NE",
+     "ganho_flavio": 33833,
+     "ganho_lula": 252932,
+     "terceiros_1t": 141243,
+     "branco_nulo_1t": 170241,
+     "branco_nulo_2t": 84291,
+     "variacao_comparecimento": 59572,
+     "disponivel": 286765,
+     "parcela_flavio_do_ganho_pct": 11.798162,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 23.953753,
+     "abstencao_1t_pct": 17.378409,
+     "abstencao_2t_pct": 15.542074,
+     "variacao_abstencao_pp": -1.836335,
+     "lula_1t_validos_pct": 61.30796,
+     "terceiros_1t_validos_pct": 5.618823,
+     "flavio_urna_entre_os_dois": 32.535633,
+     "residuo_transporte_flavio_pp": -2.70312
+    },
+    {
+     "uf": "PE",
+     "regiao": "NE",
+     "ganho_flavio": 94511,
+     "ganho_lula": 563542,
+     "terceiros_1t": 309003,
+     "branco_nulo_1t": 310045,
+     "branco_nulo_2t": 176400,
+     "variacao_comparecimento": 215405,
+     "disponivel": 658053,
+     "parcela_flavio_do_ganho_pct": 14.362217,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 30.585787,
+     "abstencao_1t_pct": 18.168438,
+     "abstencao_2t_pct": 15.183795,
+     "variacao_abstencao_pp": -2.984642,
+     "lula_1t_validos_pct": 63.452244,
+     "terceiros_1t_validos_pct": 5.516909,
+     "flavio_urna_entre_os_dois": 30.79888,
+     "residuo_transporte_flavio_pp": -2.158779
+    },
+    {
+     "uf": "PI",
+     "regiao": "NE",
+     "ganho_flavio": 8831,
+     "ganho_lula": 130279,
+     "terceiros_1t": 105656,
+     "branco_nulo_1t": 94489,
+     "branco_nulo_2t": 59982,
+     "variacao_comparecimento": -1053,
+     "disponivel": 139110,
+     "parcela_flavio_do_ganho_pct": 6.348214,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 8.358257,
+     "abstencao_1t_pct": 17.150333,
+     "abstencao_2t_pct": 17.187335,
+     "variacao_abstencao_pp": 0.037002,
+     "lula_1t_validos_pct": 70.989296,
+     "terceiros_1t_validos_pct": 4.922489,
+     "flavio_urna_entre_os_dois": 24.123654,
+     "residuo_transporte_flavio_pp": -1.368464
+    },
+    {
+     "uf": "PR",
+     "regiao": "S",
+     "ganho_flavio": 346099,
+     "ganho_lula": 511907,
+     "terceiros_1t": 585301,
+     "branco_nulo_1t": 256214,
+     "branco_nulo_2t": 201391,
+     "variacao_comparecimento": 217882,
+     "disponivel": 858006,
+     "parcela_flavio_do_ganho_pct": 40.337597,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 59.131797,
+     "abstencao_1t_pct": 20.574304,
+     "abstencao_2t_pct": 18.044534,
+     "variacao_abstencao_pp": -2.529771,
+     "lula_1t_validos_pct": 31.200018,
+     "terceiros_1t_validos_pct": 8.88807,
+     "flavio_urna_entre_os_dois": 62.576211,
+     "residuo_transporte_flavio_pp": -3.212459
+    },
+    {
+     "uf": "RJ",
+     "regiao": "SE",
+     "ganho_flavio": 202189,
+     "ganho_lula": 872372,
+     "terceiros_1t": 709835,
+     "branco_nulo_1t": 490102,
+     "branco_nulo_2t": 343023,
+     "variacao_comparecimento": 217647,
+     "disponivel": 1074561,
+     "parcela_flavio_do_ganho_pct": 18.815963,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 28.483943,
+     "abstencao_1t_pct": 23.315664,
+     "abstencao_2t_pct": 21.622177,
+     "variacao_abstencao_pp": -1.693487,
+     "lula_1t_validos_pct": 39.414506,
+     "terceiros_1t_validos_pct": 7.575856,
+     "flavio_urna_entre_os_dois": 53.100542,
+     "residuo_transporte_flavio_pp": -4.215318
+    },
+    {
+     "uf": "RN",
+     "regiao": "NE",
+     "ganho_flavio": 16916,
+     "ganho_lula": 175633,
+     "terceiros_1t": 113442,
+     "branco_nulo_1t": 99115,
+     "branco_nulo_2t": 81818,
+     "variacao_comparecimento": 61810,
+     "disponivel": 192549,
+     "parcela_flavio_do_ganho_pct": 8.785296,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 14.911585,
+     "abstencao_1t_pct": 18.3776,
+     "abstencao_2t_pct": 16.055088,
+     "variacao_abstencao_pp": -2.322512,
+     "lula_1t_validos_pct": 59.75019,
+     "terceiros_1t_validos_pct": 5.47527,
+     "flavio_urna_entre_os_dois": 34.282068,
+     "residuo_transporte_flavio_pp": -2.633056
+    },
+    {
+     "uf": "RO",
+     "regiao": "N",
+     "ganho_flavio": 21394,
+     "ganho_lula": 43779,
+     "terceiros_1t": 64404,
+     "branco_nulo_1t": 23021,
+     "branco_nulo_2t": 19661,
+     "variacao_comparecimento": -2591,
+     "disponivel": 65173,
+     "parcela_flavio_do_ganho_pct": 32.826477,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 33.218434,
+     "abstencao_1t_pct": 21.709023,
+     "abstencao_2t_pct": 21.915736,
+     "variacao_abstencao_pp": 0.206713,
+     "lula_1t_validos_pct": 25.893773,
+     "terceiros_1t_validos_pct": 6.6529,
+     "flavio_urna_entre_os_dois": 69.608021,
+     "residuo_transporte_flavio_pp": -2.571165
+    },
+    {
+     "uf": "RR",
+     "regiao": "N",
+     "ganho_flavio": -11647,
+     "ganho_lula": 9085,
+     "terceiros_1t": 19803,
+     "branco_nulo_1t": 7227,
+     "branco_nulo_2t": 5417,
+     "variacao_comparecimento": -24175,
+     "disponivel": -2562,
+     "parcela_flavio_do_ganho_pct": null,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": -58.814321,
+     "abstencao_1t_pct": 17.122143,
+     "abstencao_2t_pct": 23.146635,
+     "variacao_abstencao_pp": 6.024492,
+     "lula_1t_validos_pct": 22.860127,
+     "terceiros_1t_validos_pct": 6.08303,
+     "flavio_urna_entre_os_dois": 72.456956,
+     "residuo_transporte_flavio_pp": -3.333687
+    },
+    {
+     "uf": "RS",
+     "regiao": "S",
+     "ganho_flavio": 300595,
+     "ganho_lula": 529793,
+     "terceiros_1t": 554504,
+     "branco_nulo_1t": 279857,
+     "branco_nulo_2t": 190708,
+     "variacao_comparecimento": 186735,
+     "disponivel": 830388,
+     "parcela_flavio_do_ganho_pct": 36.199343,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 54.209708,
+     "abstencao_1t_pct": 21.350923,
+     "abstencao_2t_pct": 19.157699,
+     "variacao_abstencao_pp": -2.193224,
+     "lula_1t_validos_pct": 35.726959,
+     "terceiros_1t_validos_pct": 8.633038,
+     "flavio_urna_entre_os_dois": 57.835774,
+     "residuo_transporte_flavio_pp": -3.038504
+    },
+    {
+     "uf": "SC",
+     "regiao": "S",
+     "ganho_flavio": 220051,
+     "ganho_lula": 291146,
+     "terceiros_1t": 373709,
+     "branco_nulo_1t": 147262,
+     "branco_nulo_2t": 123918,
+     "variacao_comparecimento": 114144,
+     "disponivel": 511197,
+     "parcela_flavio_do_ganho_pct": 43.046223,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 58.882981,
+     "abstencao_1t_pct": 18.946088,
+     "abstencao_2t_pct": 16.956183,
+     "variacao_abstencao_pp": -1.989905,
+     "lula_1t_validos_pct": 25.043186,
+     "terceiros_1t_validos_pct": 8.302989,
+     "flavio_urna_entre_os_dois": 69.422245,
+     "residuo_transporte_flavio_pp": -3.22309
+    },
+    {
+     "uf": "SE",
+     "regiao": "NE",
+     "ganho_flavio": 15515,
+     "ganho_lula": 133022,
+     "terceiros_1t": 90338,
+     "branco_nulo_1t": 74886,
+     "branco_nulo_2t": 44264,
+     "variacao_comparecimento": 27577,
+     "disponivel": 148537,
+     "parcela_flavio_do_ganho_pct": 10.445209,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 17.17439,
+     "abstencao_1t_pct": 17.300554,
+     "abstencao_2t_pct": 15.713758,
+     "variacao_abstencao_pp": -1.586796,
+     "lula_1t_validos_pct": 62.748974,
+     "terceiros_1t_validos_pct": 6.622069,
+     "flavio_urna_entre_os_dois": 30.466502,
+     "residuo_transporte_flavio_pp": -2.454501
+    },
+    {
+     "uf": "SP",
+     "regiao": "SE",
+     "ganho_flavio": 1217155,
+     "ganho_lula": 2613861,
+     "terceiros_1t": 2455512,
+     "branco_nulo_1t": 1549044,
+     "branco_nulo_2t": 1105937,
+     "variacao_comparecimento": 932397,
+     "disponivel": 3831016,
+     "parcela_flavio_do_ganho_pct": 31.771076,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": 49.568277,
+     "abstencao_1t_pct": 22.538828,
+     "abstencao_2t_pct": 19.808003,
+     "variacao_abstencao_pp": -2.730825,
+     "lula_1t_validos_pct": 38.20051,
+     "terceiros_1t_validos_pct": 9.868252,
+     "flavio_urna_entre_os_dois": 53.846198,
+     "residuo_transporte_flavio_pp": -3.703547
+    },
+    {
+     "uf": "TO",
+     "regiao": "N",
+     "ganho_flavio": -1405,
+     "ganho_lula": 38953,
+     "terceiros_1t": 57117,
+     "branco_nulo_1t": 34749,
+     "branco_nulo_2t": 43885,
+     "variacao_comparecimento": -10433,
+     "disponivel": 37548,
+     "parcela_flavio_do_ganho_pct": null,
+     "residuo_identidade": 0,
+     "teto_parcela_flavio_da_terceira_via_pct": -2.459863,
+     "abstencao_1t_pct": 18.343721,
+     "abstencao_2t_pct": 19.22759,
+     "variacao_abstencao_pp": 0.883869,
+     "lula_1t_validos_pct": 43.420958,
+     "terceiros_1t_validos_pct": 6.138662,
+     "flavio_urna_entre_os_dois": 51.369777,
+     "residuo_transporte_flavio_pp": -2.5075
+    }
+   ],
+   "correlacao_variacao_abstencao_com_residuo": 0.023603,
+   "correlacao_lula_1t_com_residuo": 0.664591,
+   "correlacao_terceiros_1t_com_residuo": -0.570562,
+   "correlacao_distancia_de_50_com_residuo": 0.530528,
+   "residuo_medio_simples_pp": -2.818087,
+   "ufs_com_residuo_negativo": 27,
+   "nota": "correlação entre 27 UFs; agregado ecológico, não diz quem votou. Resíduo negativo: Flávio rendeu menos que a repetição local do 1º turno"
+  },
+  "indecisos_divisao_autor": {
+   "parte_flavio": 0.348,
+   "indecisos_medios_pct": 1.9535,
+   "erro_medio_f_menos_l": 4.871853,
+   "erro_medio_sem_redistribuir": 5.528851
+  },
+  "presenca_relativa_necessaria": {
+   "regra": "100 × [(F/L urna) / (F/L referência) − 1]; não separa presença por candidato de erro de medição",
+   "media_simples_publicada_20_casas": -10.47143,
+   "media_arvor": -17.037269,
+   "media_arvor_sem_o_extra": -13.884685,
+   "projecao_arvor": -14.282438,
+   "projecao_arvor_sem_o_extra": -11.02517,
+   "extra_central_pct": 3.8,
+   "autor_cenario_pct": -12.5,
+   "autor_empate_pct": -6.4
+  }
+ },
+ "primeiro_turno": {
+  "fonte": {
+   "arquivo": "analysis/apuracao_2026/dados/pesquisas_vs_urna.json",
+   "sha256": "0f4391d21352041fc6fbf994472d65738ebfe8e04a93ba61e96c0be16a22c7c4",
+   "ultimo_commit": "00143a04f 2026-10-05T04:19:56-03:00"
+  },
+  "erro_comum_lula_menos_flavio": 3.545846,
+  "mediana": 4.038917,
+  "desvio_entre_casas": 3.147629,
+  "n_casas": 13,
+  "agregador_publicado_erro": 4.247982,
+  "agregador_reponderado_erro": 2.430826,
+  "efeito_reponderacao_ultimas_ondas": {
+   "n": 10,
+   "aproximou": 7,
+   "afastou": 2,
+   "neutro": 1,
+   "deslocamento_medio_lula_menos_flavio": -1.817156,
+   "variacao_media_erro_absoluto_dif": -1.07766
+  }
+ },
+ "painel_1t_2t": {
+  "regra": "última onda de cada casa nos dois turnos; erro L−F, positivo superestima Lula",
+  "linhas": [
+   {
+    "instituto": "AtlasIntel",
+    "id_1t": "atlas_2026-10-02",
+    "id_2t": "atlas_2026-10-23",
+    "erro_1t_lula_menos_flavio": 4.779577,
+    "erro_2t_lula_menos_flavio": -5.096089
+   },
+   {
+    "instituto": "Datafolha",
+    "id_1t": "datafolha_2026-10-03",
+    "id_2t": "datafolha_2026-10-24",
+    "erro_1t_lula_menos_flavio": 4.038917,
+    "erro_2t_lula_menos_flavio": -4.62278
+   },
+   {
+    "instituto": "Futura",
+    "id_1t": "futura_2026-10-03",
+    "id_2t": "futura_2026-10-24",
+    "erro_1t_lula_menos_flavio": -0.240259,
+    "erro_2t_lula_menos_flavio": -3.882323
+   },
+   {
+    "instituto": "Gerp",
+    "id_1t": "gerp_2026-10-02",
+    "id_2t": "gerp_2026-10-24",
+    "erro_1t_lula_menos_flavio": -0.262655,
+    "erro_2t_lula_menos_flavio": -6.728043
+   },
+   {
+    "instituto": "Indexa/Broadcast",
+    "id_1t": "indexa_2026-09-29",
+    "id_2t": "indexa_2026-10-21",
+    "erro_1t_lula_menos_flavio": 7.747357,
+    "erro_2t_lula_menos_flavio": -4.801951
+   },
+   {
+    "instituto": "MDA",
+    "id_1t": "mda_2026-10-02",
+    "id_2t": "mda_2026-10-23",
+    "erro_1t_lula_menos_flavio": 7.525382,
+    "erro_2t_lula_menos_flavio": -4.994026
+   },
+   {
+    "instituto": "Meio/Ideia",
+    "id_1t": "meio_ideia_2026-09-28",
+    "id_2t": "ideia_2026-10-19",
+    "erro_1t_lula_menos_flavio": 2.882298,
+    "erro_2t_lula_menos_flavio": -5.697808
+   },
+   {
+    "instituto": "Nexus",
+    "id_1t": "nexus_2026-09-27",
+    "id_2t": "nexus_2026-10-24",
+    "erro_1t_lula_menos_flavio": 7.128162,
+    "erro_2t_lula_menos_flavio": -4.645417
+   },
+   {
+    "instituto": "Palver",
+    "id_1t": "palver_2026-10-03",
+    "id_2t": "palver_2026-10-24",
+    "erro_1t_lula_menos_flavio": -1.701376,
+    "erro_2t_lula_menos_flavio": -4.580249
+   },
+   {
+    "instituto": "PoderData",
+    "id_1t": "poderdata_2026-10-02",
+    "id_2t": "poderdata_2026-10-24",
+    "erro_1t_lula_menos_flavio": 2.940273,
+    "erro_2t_lula_menos_flavio": -5.653482
+   },
+   {
+    "instituto": "Quaest",
+    "id_1t": "quaest_2026-10-03",
+    "id_2t": "quaest_2026-10-24",
+    "erro_1t_lula_menos_flavio": 4.163855,
+    "erro_2t_lula_menos_flavio": -4.669049
+   },
+   {
+    "instituto": "Real Time Big Data",
+    "id_1t": "realtime_2026-09-30",
+    "id_2t": "realtime_2026-10-22",
+    "erro_1t_lula_menos_flavio": 6.120324,
+    "erro_2t_lula_menos_flavio": -7.825467
+   },
+   {
+    "instituto": "Vox Brasil",
+    "id_1t": "vox_brasil_2026-10-01",
+    "id_2t": "vox_brasil_2026-10-22",
+    "erro_1t_lula_menos_flavio": 0.974136,
+    "erro_2t_lula_menos_flavio": -2.343838
+   }
+  ],
+  "n": 13,
+  "correlacao": -0.215357,
+  "media_1t": 3.545845,
+  "media_2t": -5.041579,
+  "inverteram_sinal": 10
+ },
+ "referencia_2022": {
+  "fonte": {
+   "arquivo": "analysis/predicao_2026/erro_2022/erro_2022.json",
+   "sha256": "716848baa76ed3ce4f7bdaa72c7ecfabc544b75e5485f0dabe5864bd28f5fed3",
+   "ultimo_commit": "8f3420b28 2026-10-03T14:43:14-03:00"
+  },
+  "erro_comum_lula_menos_bolsonaro": 3.918615,
+  "mediana": 4.964338,
+  "erro_medio_bolsonaro_pp": -4.33,
+  "nota": "1º turno de 2022, 12 casas; Bolsonaro −4,33 conforme AGENTS.md"
+ }
+}

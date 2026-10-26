@@ -22,6 +22,13 @@ ROOT = Path(__file__).resolve().parents[2]
 ORIGEM = ROOT / "apuracao/data/secoes_2026.sqlite"
 DESTINO = ROOT / "data/raw/tse_logs_2026/logs.sqlite"
 BASE = "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/dados"
+
+
+def base_do_pleito(pleito: int) -> str:
+    """Raiz dos dados por seção do pleito (3220 no 1º turno, 3221 no 2º)."""
+    return f"https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/{pleito}/dados"
+
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
     "Accept": "application/json,*/*;q=0.8",
@@ -39,6 +46,12 @@ CREATE TABLE IF NOT EXISTS arquivos (
  PRIMARY KEY(uf,mun,zona,secao)
 ) WITHOUT ROWID;
 CREATE TABLE IF NOT EXISTS meta (chave TEXT PRIMARY KEY, valor TEXT);
+CREATE TABLE IF NOT EXISTS compacto (
+ uf TEXT, mun TEXT, zona INTEGER, secao INTEGER, formato TEXT,
+ sha256_zip TEXT, bytes_zip INTEGER, diretorio TEXT, sha256_prefixo TEXT,
+ sha256_zip_1t TEXT, linhas_prefixo_omitidas INTEGER, sha256_blob TEXT, blob BLOB,
+ PRIMARY KEY(uf,mun,zona,secao)
+) WITHOUT ROWID;
 """
 
 
@@ -69,15 +82,16 @@ def catalogar(con: sqlite3.Connection, origem: Path = ORIGEM) -> None:
     src.close()
 
 
-def url(r: dict) -> str:
+def url(r: dict, base: str = BASE) -> str:
     return (
-        f"{BASE}/{r['uf']}/{r['mun']}/{r['zona']:04d}/{r['secao']:04d}/"
+        f"{base}/{r['uf']}/{r['mun']}/{r['zona']:04d}/{r['secao']:04d}/"
         f"{r['hash']}/{r['nome']}"
     )
 
 
 class Cliente:
-    def __init__(self, rps: float):
+    def __init__(self, rps: float, base: str = BASE):
+        self.base = base
         self.intervalo = 1 / rps
         self.proxima = 0.0
         self.lock = threading.Lock()
@@ -98,7 +112,7 @@ class Cliente:
         for tentativa in range(4):
             self.ficha()
             try:
-                res = self.local.session.get(url(r), timeout=(10, 40))
+                res = self.local.session.get(url(r, self.base), timeout=(10, 40))
                 codigo = res.status_code
                 if codigo == 200:
                     corpo = res.content
@@ -142,9 +156,106 @@ class Cliente:
         )
 
 
-def coletar(path: Path, limite: int, workers: int, rps: float, ufs: list[str]) -> None:
+def linha_compacta(chave: tuple, pacote: dict) -> tuple:
+    return (
+        *chave,
+        pacote["formato"],
+        pacote["sha256_zip"],
+        pacote["bytes_zip"],
+        (
+            json.dumps(pacote["diretorio"], ensure_ascii=False)
+            if pacote["diretorio"]
+            else None
+        ),
+        pacote.get("sha256_prefixo"),
+        pacote.get("sha256_zip_1t"),
+        pacote.get("linhas_prefixo_omitidas", 0),
+        hashlib.sha256(pacote["blob"]).hexdigest(),
+        pacote["blob"],
+    )
+
+
+def ler_compacto(con: sqlite3.Connection, chave: tuple) -> dict | None:
+    r = con.execute(
+        "SELECT formato,sha256_zip,bytes_zip,diretorio,sha256_prefixo,sha256_zip_1t,"
+        "linhas_prefixo_omitidas,sha256_blob,blob FROM compacto "
+        "WHERE uf=? AND mun=? AND zona=? AND secao=?",
+        chave,
+    ).fetchone()
+    if r is None:
+        return None
+    pacote = dict(
+        zip(
+            (
+                "formato",
+                "sha256_zip",
+                "bytes_zip",
+                "diretorio",
+                "sha256_prefixo",
+                "sha256_zip_1t",
+                "linhas_prefixo_omitidas",
+                "sha256_blob",
+                "blob",
+            ),
+            r,
+            strict=True,
+        )
+    )
+    if hashlib.sha256(pacote["blob"]).hexdigest() != pacote["sha256_blob"]:
+        raise ValueError("Pacote compacto não confere com o hash gravado")
+    pacote["diretorio"] = (
+        json.loads(pacote["diretorio"]) if pacote["diretorio"] else None
+    )
+    return pacote
+
+
+class Compactador:
+    """Empacota no próprio worker (o xz libera o GIL), lendo o ZIP do 1º turno."""
+
+    def __init__(self, referencia: Path | None):
+        self.referencia = referencia
+        self.local = threading.local()
+
+    def zip_1t(self, r: dict) -> bytes | None:
+        if self.referencia is None or not self.referencia.exists():
+            return None
+        if not hasattr(self.local, "con"):
+            self.local.con = sqlite3.connect(
+                f"file:{self.referencia}?mode=ro", uri=True, check_same_thread=False
+            )
+        row = self.local.con.execute(
+            "SELECT zip FROM arquivos WHERE uf=? AND mun=? AND zona=? AND secao=? AND status='ok'",
+            (r["uf"], r["mun"], r["zona"], r["secao"]),
+        ).fetchone()
+        return row[0] if row else None
+
+
+def coletar(
+    path: Path,
+    limite: int,
+    workers: int,
+    rps: float,
+    ufs: list[str],
+    origem: Path = ORIGEM,
+    base: str = BASE,
+    guardar: str = "zip",
+    referencia: Path | None = None,
+) -> None:
+    """``guardar='compacto'`` grava o log em ``compacto`` (ver compacto.py) e deixa
+    ``arquivos.zip`` nulo; o SHA-256 do ZIP original continua em ``arquivos``."""
+    if guardar not in ("zip", "compacto"):
+        raise ValueError("guardar: zip ou compacto")
     con = abrir(path)
-    catalogar(con)
+    catalogar(con, origem)
+    con.execute("INSERT OR IGNORE INTO meta VALUES (?,?)", ("origem", str(origem)))
+    con.execute("INSERT OR IGNORE INTO meta VALUES (?,?)", ("base", base))
+    con.execute("INSERT OR REPLACE INTO meta VALUES (?,?)", ("guardar", guardar))
+    if referencia is not None:
+        con.execute(
+            "INSERT OR REPLACE INTO meta VALUES (?,?)",
+            ("referencia_1t", str(referencia)),
+        )
+    con.commit()
     # Um índice de metadados evita visitar as páginas dos ZIPs em cada retomada.
     con.execute(
         "CREATE INDEX IF NOT EXISTS arquivos_estado ON arquivos(status,uf,mun,zona,secao,sha256)"
@@ -175,7 +286,18 @@ def coletar(path: Path, limite: int, workers: int, rps: float, ufs: list[str]) -
         json.dumps({"pendentes": len(rows), "rps": rps, "workers": workers}), flush=True
     )
     it = iter(rows)
-    cliente = Cliente(rps)
+    cliente = Cliente(rps, base)
+    compactador = Compactador(referencia) if guardar == "compacto" else None
+
+    def tarefa(r: dict) -> tuple:
+        res = cliente.obter(r)
+        if compactador is None or res[5] != "ok":
+            return res, None
+        from .compacto import empacotar
+
+        pacote = empacotar(res[-1], compactador.zip_1t(r))
+        return (*res[:-1], None), linha_compacta(res[:4], pacote)
+
     inicio = time.monotonic()
     feitos, bons, tamanho = 0, 0, 0
     with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -187,18 +309,23 @@ def coletar(path: Path, limite: int, workers: int, rps: float, ufs: list[str]) -
                 if r is None:
                     esgotado = True
                 else:
-                    pendentes.add(pool.submit(cliente.obter, dict(r)))
+                    pendentes.add(pool.submit(tarefa, dict(r)))
             if not pendentes:
                 break
             prontos, pendentes = wait(pendentes, return_when=FIRST_COMPLETED)
             for p in prontos:
-                r = p.result()
+                r, compacta = p.result()
+                if compacta is not None:
+                    con.execute(
+                        "INSERT OR REPLACE INTO compacto VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                        compacta,
+                    )
                 con.execute(
                     "INSERT OR REPLACE INTO arquivos VALUES (?,?,?,?,?,?,?,?,?,?)", r
                 )
                 feitos += 1
                 bons += r[5] == "ok"
-                tamanho += len(r[-1] or b"")
+                tamanho += len(r[-1] or (compacta[-1] if compacta else b""))
                 if feitos % 100 == 0:
                     con.commit()
                 if feitos % 500 == 0:

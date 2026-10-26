@@ -1,0 +1,161 @@
+<!doctype html>
+<!--
+  Mapa do Brasil do Politize-se. Página ESCRITA À MÃO, não gerada por script.
+  Edite este arquivo, docs/assets/politize_se_mapa/app.js e app.css diretamente.
+  Dados: docs/assets/politize_se_mapa/ (formato 3, gerados por scripts/politize-se-mapa-build.py
+  a partir dos arquivos por município do Politize-se); a ficha abre as seções direto de
+  docs/assets/politize_se/dados/zona/<UF>/<zona>.json.gz. Contrato: analysis/politize_se/CONTRATO.md.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mapa do Brasil do Politize-se: todos os locais de votação, 1º e 2º turno | Arvor</title>
+<meta name="description" content="Todos os locais de votação do país num mapa: resultado do 2º turno de 2026 em cada prédio, mudança contra o 1º turno, comparecimento, abstenção, sinais, urnas trocadas e mudanças de endereço. Cada prédio abre as seções lado a lado e leva ao Politize-se.">
+<link rel="canonical" href="https://brasil.arvor.co/politizese_mapa.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#151812">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Politize-se: o mapa do Brasil">
+<meta property="og:description" content="Todos os locais de votação do país, prédio por prédio: o 2º turno, a mudança contra o 1º, o comparecimento e os sinais, com cada seção aberta no Politize-se.">
+<meta property="og:url" content="https://brasil.arvor.co/politizese_mapa.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/politizese_mapa.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Politize-se: o mapa do Brasil">
+<meta name="twitter:description" content="Todos os locais de votação do país, prédio por prédio, com cada seção aberta no Politize-se.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/politizese_mapa.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/politize_se_mapa/app.css?v=20261026c">
+<script>document.documentElement.classList.add('js')</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
+<script defer src="assets/politize_se_mapa/app.js?v=20261026c"></script>
+</head>
+<body>
+<a class="skip" href="#controles">Pular para a busca</a>
+<header class="topo">
+  <div class="topo-in">
+    <a class="marca" href="index.html"><img src="img/arvor_logo.png" alt="" width="24" height="24">Arvor Intelligence</a>
+    <div class="topo-t">
+      <h1>Politize-se: o mapa do Brasil</h1>
+      <p>Todos os locais de votação do país. Toque num prédio para ver as seções e abrir cada uma no <a href="politizese.html">Politize-se</a> · <a href="apuracao_2T_2026.html">Dossiê do 2º turno</a>.</p>
+    </div>
+  </div>
+</header>
+
+<section class="intro" aria-label="O que o mapa mostra">
+  <div class="intro-in">
+    <div class="intro-txt">
+      <p class="kicker">1º e 2º turno · 4 e 25 de outubro de 2026</p>
+      <h2>Cada ponto é um prédio de votação. A cor é a camada que você escolher.</h2>
+      <p>O resultado do 2º turno no prédio, a mudança contra o 1º turno nas mesmas seções, o comparecimento, a abstenção, os sinais que pedem explicação, o modelo da urna, as urnas trocadas e as mudanças de endereço. <strong>Sinal pede explicação, não prova irregularidade.</strong> Leitura agregada por seção, como o TSE publica: o voto é secreto e nenhum número descreve uma pessoa.</p>
+      <p id="cobertura" class="cobertura" role="status"></p>
+    </div>
+    <dl class="intro-num" aria-label="Números do mapa">
+      <div><dd id="n-locais">…</dd><dt>locais de votação, com o exterior</dt></div>
+      <div><dd id="n-bu2">…</dd><dt>prédios com o boletim do 2º turno já lido</dt></div>
+      <div><dd id="n-secoes">…</dd><dt>seções com os dois turnos lado a lado</dt></div>
+    </dl>
+  </div>
+</section>
+
+<main class="app">
+  <button type="button" class="filtros-toggle" id="filtros-toggle" aria-expanded="false" aria-controls="controles">Buscar, filtrar e trocar a cor</button>
+  <aside class="controles" id="controles" aria-label="Busca, camada e filtros">
+    <form class="bloco" id="f-busca" autocomplete="off">
+      <h2>Onde fica?</h2>
+      <label for="f-uf" class="rot">Estado</label>
+      <select id="f-uf"><option value="">Brasil inteiro e exterior</option></select>
+      <label for="f-mun" class="rot">Cidade</label>
+      <select id="f-mun" disabled><option value="">Escolha o estado primeiro</option></select>
+      <div class="duas-col">
+        <div><label for="q-cep" class="rot">CEP</label><input id="q-cep" type="text" inputmode="numeric" maxlength="9" placeholder="00000-000"></div>
+        <div><label for="f-zona" class="rot">Zona eleitoral</label><input id="f-zona" type="text" inputmode="numeric" maxlength="4" placeholder="000"></div>
+      </div>
+      <label for="f-texto" class="rot">Escola, rua ou bairro</label>
+      <input id="f-texto" type="search" placeholder="Qualquer palavra do nome ou do endereço">
+      <div class="acoes">
+        <button type="submit" class="btn btn-prim">Buscar</button>
+        <button type="button" class="btn btn-sec" id="b-limpar">Limpar</button>
+      </div>
+      <button type="button" class="btn btn-sec btn-geo" id="b-geo">Usar minha localização</button>
+      <p class="ajuda">O CEP centra o mapa no local de votação com o mesmo CEP. A zona está no título de eleitor e pede o estado. O CEP e a localização não saem do seu aparelho nem vão para o endereço da página.</p>
+    </form>
+
+    <section class="bloco" aria-labelledby="t-camada">
+      <h2 id="t-camada">Cor dos pontos</h2>
+      <div id="camadas" class="camadas" role="radiogroup" aria-labelledby="t-camada"></div>
+      <div id="legenda" class="legenda-camada" aria-live="polite"></div>
+    </section>
+
+    <section class="bloco" id="bloco-raio" aria-label="Distância">
+      <h2>Até que distância?</h2>
+      <div class="raios" role="radiogroup" aria-label="Raio em quilômetros" id="raios"></div>
+      <p class="ajuda">Distância em linha reta, não pelas ruas, a partir do CEP, da zona ou da sua localização. Sem busca, o mapa mostra tudo; na lista dá para desligar o raio.</p>
+    </section>
+
+    <div class="modo" role="group" aria-label="Modo de exibição">
+      <button type="button" class="btn-modo" id="m-mapa" aria-pressed="true">Mapa</button>
+      <button type="button" class="btn-modo" id="m-lista" aria-pressed="false">Ver em lista</button>
+    </div>
+    <p class="status" id="status" role="status">Carregando o mapa.</p>
+  </aside>
+
+  <section class="palco" id="palco" aria-label="Resultado">
+    <div id="mapa" class="mapa" role="region" aria-label="Mapa dos locais de votação"></div>
+    <div id="painel" class="painel" role="dialog" aria-label="Ficha do local de votação" hidden>
+      <button type="button" class="painel-fechar" id="painel-fechar">Fechar ficha</button>
+      <div class="painel-corpo" id="painel-corpo"></div>
+    </div>
+    <div id="lista" class="lista" hidden>
+      <div class="lista-topo">
+        <label for="l-busca" class="rot">Pesquisar na lista</label>
+        <input id="l-busca" type="search" autocomplete="off" placeholder="Escola, bairro, cidade">
+        <div class="lista-acoes">
+          <label for="l-por-pag" class="rot rot-inline">Por página</label>
+          <select id="l-por-pag"><option>25</option><option selected>50</option><option>100</option><option>250</option></select>
+          <button type="button" class="btn btn-sec" id="l-csv">Baixar em planilha (CSV)</button>
+          <label class="l-raio" id="l-raio-caixa" hidden><input type="checkbox" id="l-raio" checked><span id="l-raio-txt">Só até o raio escolhido</span></label>
+        </div>
+      </div>
+      <p class="ajuda" id="l-resumo"></p>
+      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Locais de votação">
+        <table class="tabela" id="tabela"><thead></thead><tbody></tbody></table>
+      </div>
+      <nav class="paginas" id="paginas" aria-label="Páginas da lista"></nav>
+    </div>
+  </section>
+</main>
+
+<section class="limites" aria-labelledby="t-limites">
+  <div class="limites-in">
+    <h2 id="t-limites">O que o mapa não diz</h2>
+    <ul>
+      <li>Não diz como uma pessoa votou nem por que o comparecimento mudou. Mudança entre turnos mistura quem foi votar, quem trocou de voto e quem anulou.</li>
+      <li>A leitura dos boletins do 2º turno pode estar em andamento: prédio em cinza ainda não tem boletim do 2º turno lido. A cobertura de cada estado aparece acima e na ficha.</li>
+      <li>A mudança contra o 1º turno compara só as seções do prédio que já têm os dois turnos; seção com menos de 30 eleitores não mostra voto nem comparecimento.</li>
+      <li>Sinal pede explicação, não prova irregularidade. A explicação provável vem antes de qualquer suspeita; o que resolve é a ata da mesa e o registro da urna.</li>
+      <li>O ponto é o endereço do cadastro do TSE. No exterior, o ponto é a cidade do consulado. Local sem coordenada fica fora do mapa e aparece na lista.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="rodape">
+  <p>Fontes: boletins de urna do TSE por seção, dos dois turnos, lidos pelo <a href="politizese.html">Politize-se</a>; cadastro dos locais de votação do TSE (nome, endereço e coordenada); mudanças de endereço pela união do arquivo de locais e do painel de seções alteradas do TSE. Distância em linha reta pela fórmula de Vincenty no elipsoide WGS84, não por estrada. Mapa: © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. A página tem só a medição de audiência do site.</p>
+  <p id="gerado-em"></p>
+  <p>Arvor Intelligence · <a href="index.html">brasil.arvor.co</a> · <a href="assets/politize_se_mapa/indice.json">Dados (JSON)</a></p>
+</footer>
+<noscript><p class="sem-js">Esta página precisa de JavaScript para o mapa e a lista. Os dados estão em <a href="assets/politize_se_mapa/indice.json">JSON</a>.</p></noscript>
+</body>
+</html>

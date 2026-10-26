@@ -26,6 +26,10 @@ LOGO = ROOT / "docs" / "img" / "arvor_logo.png"
 
 FORMATOS = {"16x9": (1920, 1080), "9x16": (1080, 1920)}
 
+# Imagem de fundo (`public/midia/<FUNDO>_<fmt>.png`) e nome da capa no <title>; os vídeos irmãos trocam.
+FUNDO = "rua_escola_amanhecer_still"
+NOME_CAPA = "sete riscos"
+
 TITULO = ("Sete riscos, ", "um fiscal", "")
 SUBTITULO = "Boca de urna, compra de voto, transporte, medo, mesário, pianista e totalização: o que a lei deixa você fazer no dia 25"
 KICKER = "GUIA DO FISCAL · 2º TURNO 2026"
@@ -69,7 +73,7 @@ p.sub { font-weight:500; font-size:__SUB__px; line-height:1.22; color:var(--tint
 """
 
 HTML = """<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><title>Capa sete riscos __FMT__</title>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Capa __NOME__ __FMT__</title>
 <style>__CSS__</style></head>
 <body>
 <div class="foto"></div><div class="veu"></div><div class="grade"></div>
@@ -119,7 +123,7 @@ def _dados_uri(caminho: Path, mime: str) -> str:
 
 def fonte_html(fmt: str) -> str:
     largura, altura = FORMATOS[fmt]
-    foto = VIDEO / "public" / "midia" / f"rua_escola_amanhecer_still_{fmt}.png"
+    foto = VIDEO / "public" / "midia" / f"{FUNDO}_{fmt}.png"
     if not foto.exists():
         raise SystemExit(f"falta a imagem de fundo {foto}")
     aj = AJUSTES[fmt]
@@ -127,7 +131,11 @@ def fonte_html(fmt: str) -> str:
     css = css.replace("__FOTO__", _dados_uri(foto, "image/png"))
     for chave, valor in aj.items():
         css = css.replace(f"__{chave}__", str(valor))
-    html = HTML.replace("__CSS__", css).replace("__FMT__", fmt)
+    html = (
+        HTML.replace("__CSS__", css)
+        .replace("__FMT__", fmt)
+        .replace("__NOME__", NOME_CAPA)
+    )
     html = html.replace("__LOGO__", _dados_uri(LOGO, "image/png"))
     html = html.replace("__BLOCO__", aj["BLOCO"]).replace("__KICKER__", KICKER)
     html = (

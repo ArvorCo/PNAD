@@ -1,0 +1,246 @@
+{
+ "descricao": "Estaduais presidenciais de 2º turno contra a urna da UF.",
+ "gerado_por": "scripts/apuracao-2t-2026-pesquisas.py",
+ "fontes": [
+  {
+   "arquivo": "analysis/projecao_secoes_2t/estaduais.json",
+   "sha256": "8f45a537e230baf2c5590d7dfc8ffcd366098fd40ed7f732e36281ddf00d34b1",
+   "ultimo_commit": "f80836754 2026-10-19T19:45:23-03:00"
+  },
+  {
+   "arquivo": "analysis/reponderacao/estaduais/datafolha_DF_20261009.json",
+   "sha256": "b39a79cbb3e9deafc5a047dd1edcb545face94472c19e05cf5296dbb5fc4b818",
+   "ultimo_commit": "0bdad3303 2026-10-09T20:08:19-03:00"
+  },
+  {
+   "arquivo": "analysis/reponderacao/estaduais/quaest_DF_20261012.json",
+   "sha256": "7d6f7e1d05d7cadfa0adac336e979d504f14ef0c29b9c9b13d02dfced5d10232",
+   "ultimo_commit": "4a82896f0 2026-10-13T15:48:49-03:00"
+  }
+ ],
+ "urna_fonte": {
+  "tipo": "arquivo",
+  "arquivo": "analysis/apuracao_2t_2026/dados/presidente.json",
+  "sha256": "9eec711a4b12318a38687953d2f6159a93d8009280be90fc1b9e54b4d738f9e9",
+  "ultimo_commit": null,
+  "pst": 100.0,
+  "versao_gerada_em": "2026-10-26T01:46:03.000Z",
+  "completo": false
+ },
+ "regra": "estaduais do 2º turno pós-urna; erro F−L nos válidos contra a urna da UF; campo de 06 a 13/10, duas semanas antes da urna",
+ "pesquisas": [
+  {
+   "id": "quaest_AC_2026-10-12",
+   "instituto": "Quaest",
+   "uf": "AC",
+   "campo": {
+    "inicio": "2026-10-09",
+    "fim": "2026-10-12"
+   },
+   "n": 1098,
+   "publicado": {
+    "flavio": 60,
+    "lula": 28,
+    "branco_nulo": 5,
+    "indecisos": 7
+   },
+   "validos": {
+    "flavio": 68.181818,
+    "lula": 31.818182
+   },
+   "urna_validos": {
+    "flavio": 66.565563,
+    "lula": 33.434437
+   },
+   "urna_flavio_entre_os_dois": 66.565563,
+   "erro_f_menos_l_pp": 3.232511,
+   "acertou_vencedor": true,
+   "transporte_flavio": 69.234787,
+   "erro_transporte_f_menos_l_pp": 5.338448
+  },
+  {
+   "id": "quaest_AM_2026-10-12",
+   "instituto": "Quaest",
+   "uf": "AM",
+   "campo": {
+    "inicio": "2026-10-09",
+    "fim": "2026-10-12"
+   },
+   "n": 1098,
+   "publicado": {
+    "flavio": 43,
+    "lula": 47,
+    "branco_nulo": 5,
+    "indecisos": 5
+   },
+   "validos": {
+    "flavio": 47.777778,
+    "lula": 52.222222
+   },
+   "urna_validos": {
+    "flavio": 45.979827,
+    "lula": 54.020173
+   },
+   "urna_flavio_entre_os_dois": 45.979827,
+   "erro_f_menos_l_pp": 3.595902,
+   "acertou_vencedor": true,
+   "transporte_flavio": 48.585853,
+   "erro_transporte_f_menos_l_pp": 5.212052
+  },
+  {
+   "id": "quaest_DF_2026-10-11",
+   "instituto": "Quaest",
+   "uf": "DF",
+   "campo": {
+    "inicio": "2026-10-08",
+    "fim": "2026-10-11"
+   },
+   "n": 1104,
+   "publicado": {
+    "flavio": 50,
+    "lula": 40,
+    "branco_nulo": 6,
+    "indecisos": 4
+   },
+   "validos": {
+    "flavio": 55.555556,
+    "lula": 44.444444
+   },
+   "urna_validos": {
+    "flavio": 54.275291,
+    "lula": 45.724709
+   },
+   "urna_flavio_entre_os_dois": 54.275291,
+   "erro_f_menos_l_pp": 2.560529,
+   "acertou_vencedor": true,
+   "transporte_flavio": 57.37041,
+   "erro_transporte_f_menos_l_pp": 6.190237
+  },
+  {
+   "id": "quaest_ES_2026-10-13",
+   "instituto": "Quaest",
+   "uf": "ES",
+   "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-13"
+   },
+   "n": 1098,
+   "publicado": {
+    "flavio": 51,
+    "lula": 38,
+    "branco_nulo": 6,
+    "indecisos": 5
+   },
+   "validos": {
+    "flavio": 57.303371,
+    "lula": 42.696629
+   },
+   "urna_validos": {
+    "flavio": 56.369322,
+    "lula": 43.630678
+   },
+   "urna_flavio_entre_os_dois": 56.369322,
+   "erro_f_menos_l_pp": 1.868098,
+   "acertou_vencedor": true,
+   "transporte_flavio": 59.206855,
+   "erro_transporte_f_menos_l_pp": 5.675067
+  },
+  {
+   "id": "quaest_RN_2026-10-12",
+   "instituto": "Quaest",
+   "uf": "RN",
+   "campo": {
+    "inicio": "2026-10-09",
+    "fim": "2026-10-12"
+   },
+   "n": 1098,
+   "publicado": {
+    "flavio": 33,
+    "lula": 59,
+    "branco_nulo": 5,
+    "indecisos": 3
+   },
+   "validos": {
+    "flavio": 35.869565,
+    "lula": 64.130435
+   },
+   "urna_validos": {
+    "flavio": 34.282068,
+    "lula": 65.717932
+   },
+   "urna_flavio_entre_os_dois": 34.282068,
+   "erro_f_menos_l_pp": 3.174994,
+   "acertou_vencedor": true,
+   "transporte_flavio": 36.915124,
+   "erro_transporte_f_menos_l_pp": 5.266112
+  },
+  {
+   "id": "quaest_TO_2026-10-13",
+   "instituto": "Quaest",
+   "uf": "TO",
+   "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-13"
+   },
+   "n": 1098,
+   "publicado": {
+    "flavio": 48,
+    "lula": 42,
+    "branco_nulo": 6,
+    "indecisos": 4
+   },
+   "validos": {
+    "flavio": 53.333333,
+    "lula": 46.666667
+   },
+   "urna_validos": {
+    "flavio": 51.369777,
+    "lula": 48.630223
+   },
+   "urna_flavio_entre_os_dois": 51.369777,
+   "erro_f_menos_l_pp": 3.927112,
+   "acertou_vencedor": true,
+   "transporte_flavio": 53.877277,
+   "erro_transporte_f_menos_l_pp": 5.015
+  },
+  {
+   "id": "datafolha_DF_2026-10-07",
+   "instituto": "Datafolha",
+   "uf": "DF",
+   "campo": {
+    "inicio": "2026-10-06",
+    "fim": "2026-10-07"
+   },
+   "n": 910,
+   "publicado": {
+    "flavio": 49,
+    "lula": 43,
+    "branco_nulo": 6,
+    "indecisos": 2
+   },
+   "validos": {
+    "flavio": 53.26087,
+    "lula": 46.73913
+   },
+   "urna_validos": {
+    "flavio": 54.275291,
+    "lula": 45.724709
+   },
+   "urna_flavio_entre_os_dois": 54.275291,
+   "erro_f_menos_l_pp": -2.028843,
+   "acertou_vencedor": true,
+   "transporte_flavio": 57.37041,
+   "erro_transporte_f_menos_l_pp": 6.190237
+  }
+ ],
+ "resumo": {
+  "n": 7,
+  "media": 2.3329,
+  "mediana": 3.174994,
+  "desvio_padrao": 2.039108,
+  "media_absoluta": 2.91257,
+  "positivos": 6,
+  "negativos": 1
+ },
+ "acertaram_vencedor": 7
+}

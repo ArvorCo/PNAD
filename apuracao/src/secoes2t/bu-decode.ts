@@ -108,7 +108,7 @@ export function hex(buf: Uint8Array, t: Tlv): string {
 }
 
 // Octetos identificadores usados pela especificação (IMPLICIT TAGS).
-const T = {
+export const T = {
   INTEGER: 0x02,
   OCTET: 0x04,
   ENUM: 0x0a,
@@ -121,7 +121,7 @@ const T = {
 } as const;
 
 /** Percorre os filhos de uma SEQUENCE na ordem da especificação. */
-class Cursor {
+export class Cursor {
   private i = 0;
   private readonly itens: Tlv[];
 
@@ -378,7 +378,7 @@ export interface Envelope {
 
 // ---------------------------------------------------------------- mapeamento
 
-function cabecalho(buf: Uint8Array, t: Tlv, onde: string): Cabecalho {
+export function cabecalho(buf: Uint8Array, t: Tlv, onde: string): Cabecalho {
   const c = new Cursor(buf, t, onde);
   const dataGeracao = c.str("dataGeracao");
   const id = c.exigirUm([T.ctx(1), T.ctx(2), T.ctx(3)], "idEleitoral");
@@ -397,7 +397,7 @@ function municipioZona(buf: Uint8Array, t: Tlv, onde: string): MunicipioZona {
   return { municipio, zona };
 }
 
-function identificacaoSecao(buf: Uint8Array, t: Tlv, onde: string): IdentificacaoSecao {
+export function identificacaoSecao(buf: Uint8Array, t: Tlv, onde: string): IdentificacaoSecao {
   const c = new Cursor(buf, t, onde);
   const mz = municipioZona(buf, c.exigir(T.SEQ, "municipioZona"), `${onde}.municipioZona`);
   const local = c.int("local");
@@ -432,7 +432,7 @@ function carga(buf: Uint8Array, t: Tlv, onde: string): Carga {
 
 const TAGS_ID_URNA = [T.ctxC(0), T.ctxC(1)] as const;
 
-function urna(buf: Uint8Array, t: Tlv, onde: string): Urna {
+export function urna(buf: Uint8Array, t: Tlv, onde: string): Urna {
   const c = new Cursor(buf, t, onde);
   const tipoUrna = c.int("tipoUrna", T.ENUM);
   const versaoVotacao = c.str("versaoVotacao");

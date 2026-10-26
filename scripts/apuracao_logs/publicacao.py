@@ -19,13 +19,22 @@ from pathlib import Path
 
 import pandas as pd
 
-from .coleta import DESTINO, ORIGEM, ROOT, url
+from .coleta import BASE, DESTINO, ORIGEM, ROOT, url
 from .complementos import LACUNAS, enderecos, registros_sa
 from .complementos import carregar as carregar_complementos
 from .conferencias import conferir
-from .criterios import CRITERIOS, MIN_PARES, avaliar, campos, referencias
+from .criterios import (
+    CRITERIOS,
+    MIN_PARES,
+    MUDANCAS_REGRAS,
+    VERSAO_REGRAS,
+    avaliar,
+    campos,
+    referencias,
+)
 from .csv_processo import exportar as exportar_processos
 from .parser import VERSAO
+from .pleito import Pleito
 from .processamento import METRICAS
 from .processo import TIPOS
 from .regras_processo import avaliar_processo
@@ -132,6 +141,7 @@ COLUNAS += [
     "bateria_fase",
     "bateria_votacao",
     "bateria_simultaneas",
+    "erro_mr_pre_zeresima",
 ]
 JANELA_BATERIA_S = 60
 
@@ -176,16 +186,28 @@ def simultaneidade_bateria(linhas: list[dict], janela: int = JANELA_BATERIA_S):
     return linhas
 
 
-def montar() -> dict:
-    raw = sqlite3.connect(f"file:{DESTINO}?mode=ro", uri=True)
+def montar(pleito: Pleito | None = None) -> dict:
+    """Sem ``pleito``, os padrões do 1º turno (constantes do módulo, como antes).
+    Com ``pleito``, originais, BUs, métricas e saídas do turno correspondente;
+    os casos conferidos à mão (``conferir``) são do 1º turno e só entram nele."""
+    if pleito is None:
+        DESTINO_, ORIGEM_, METRICAS_ = DESTINO, ORIGEM, METRICAS
+        PUBLICO_, ANALISE_, LACUNAS_, BASE_ = PUBLICO, ANALISE, LACUNAS, BASE
+    else:
+        DESTINO_, ORIGEM_, METRICAS_ = pleito.raw, pleito.origem, pleito.metricas
+        PUBLICO_, ANALISE_, LACUNAS_ = pleito.publico, pleito.analise, pleito.lacunas
+        BASE_ = pleito.base
+    raw = sqlite3.connect(f"file:{DESTINO_}?mode=ro", uri=True)
     raw.row_factory = sqlite3.Row
     catalogo = {
         tuple(r[k] for k in ("uf", "mun", "zona", "secao")): dict(r)
         for r in raw.execute("SELECT * FROM catalogo")
     }
     raw.close()
-    complementos = {k: r for k, r in carregar_complementos().items() if k in catalogo}
-    gravar(PUBLICO / "complementos.json", enderecos())
+    complementos = {
+        k: r for k, r in carregar_complementos(pleito).items() if k in catalogo
+    }
+    gravar(PUBLICO_ / "complementos.json", enderecos(pleito))
     catalogo_hash = hashlib.sha256()
     for key, cat in sorted(catalogo.items()):
         catalogo_hash.update(
@@ -194,7 +216,7 @@ def montar() -> dict:
             ).encode("utf-8")
             + b"\n"
         )
-    con = sqlite3.connect(f"file:{METRICAS}?mode=ro", uri=True)
+    con = sqlite3.connect(f"file:{METRICAS_}?mode=ro", uri=True)
     linhas, resumos = [], []
     hist = defaultdict(Counter)
     hist_processo, hist_cadencia = defaultdict(Counter), defaultdict(Counter)
@@ -220,6 +242,7 @@ def montar() -> dict:
             "falhas_assinatura_com_sucesso_posterior",
             "falhas_assinatura_sem_sucesso_localizado",
             "falhas_assinatura_ordem_incerta",
+            "erro_mr_pre_zeresima",
         ):
             operacao[k] += r["contagens"].get(k, 0)
         janela = r["contagens"].get("erros_na_janela_votacao")
@@ -248,7 +271,7 @@ def montar() -> dict:
         cobertura[uf]["processo_elegivel"] += row["processo_elegivel"]
         cobertura[uf]["cadencia_elegivel"] += row["cadencia_elegivel"]
         row["_bateria_votacao_s"] = r.get("bateria_votacao_segundos") or []
-        row["url"] = url(catalogo[(uf, mun, z, s)])
+        row["url"] = url(catalogo[(uf, mun, z, s)], BASE_)
         suplemento = complementos.get((uf, mun, z, s))
         row["bu_suplementar"] = suplemento["fonte_bu"] if suplemento else None
         esperado = catalogo[(uf, mun, z, s)]["sha256_esperado"]
@@ -294,7 +317,7 @@ def montar() -> dict:
     con.close()
     # A coleta pode continuar enquanto este build lê as métricas. Conferir seu
     # estágio depois da leitura evita apresentar menos baixados do que analisados.
-    raw = sqlite3.connect(f"file:{DESTINO}?mode=ro", uri=True)
+    raw = sqlite3.connect(f"file:{DESTINO_}?mode=ro", uri=True)
     downloads = {
         tuple(r[:4]): r[4]
         for r in raw.execute("SELECT uf,mun,zona,secao,status FROM arquivos")
@@ -307,7 +330,7 @@ def montar() -> dict:
         "WHERE a.status='ok' AND a.sha256=c.sha256_esperado"
     ).fetchone()[0]
     raw.close()
-    src = sqlite3.connect(f"file:{ORIGEM}?mode=ro", uri=True)
+    src = sqlite3.connect(f"file:{ORIGEM_}?mode=ro", uri=True)
     tipos_bu = {
         tuple(r[:4]): r[4]
         for r in src.execute("SELECT uf,mun,zona,secao,tipo_arquivo FROM bu")
@@ -317,7 +340,7 @@ def montar() -> dict:
     bus.update(complementos)
     situacoes = Counter()
     indisponiveis = defaultdict(list)
-    arquivos_sa = registros_sa()
+    arquivos_sa = registros_sa(pleito)
     for key, cat in catalogo.items():
         cod = situacao(
             cat, downloads.get(key), processados.get(key), key in bus, tipos_bu.get(key)
@@ -375,7 +398,7 @@ def montar() -> dict:
         por_zona[(row["uf"], row["zona"])].append([nulo(row.get(k)) for k in COLUNAS])
     for uf, z in por_zona.keys() | indisponiveis.keys():
         gravar(
-            PUBLICO / "zona" / uf / f"{z}.json.gz",
+            PUBLICO_ / "zona" / uf / f"{z}.json.gz",
             {
                 "uf": uf,
                 "zona": z,
@@ -457,6 +480,8 @@ def montar() -> dict:
     }
     indice = {
         "versao_parser": VERSAO,
+        "versao_regras": VERSAO_REGRAS,
+        "mudancas_regras": MUDANCAS_REGRAS,
         "processo": {p: duracoes(h) for p, h in hist_processo.items()},
         "cadencia": {p: duracoes(h) for p, h in hist_cadencia.items()},
         "formato_zonas": "json.gz",
@@ -505,15 +530,17 @@ def montar() -> dict:
     indice["concluido"] = (
         indice["concluido"] and not indice["complementos"]["pendentes_catalogo"]
     )
-    if LACUNAS.exists() and complementos:
-        lacunas = json.loads(LACUNAS.read_text())
+    if LACUNAS_.exists() and complementos:
+        lacunas = json.loads(LACUNAS_.read_text())
         indice["lacunas"] = {k: v for k, v in lacunas.items() if k != "linhas"}
-        gravar(PUBLICO / "lacunas.json", lacunas)
-    indice["casos_conferidos"] = conferir()
-    gravar(PUBLICO / "indice.json", indice)
-    gravar(ANALISE / "resumo.json", indice)
+        gravar(PUBLICO_ / "lacunas.json", lacunas)
+    indice["casos_conferidos"] = (
+        conferir() if pleito is None or pleito.numero == 3220 else []
+    )
+    gravar(PUBLICO_ / "indice.json", indice)
+    gravar(ANALISE_ / "resumo.json", indice)
     with (
-        (PUBLICO / "secoes.csv.gz").open("wb") as out,
+        (PUBLICO_ / "secoes.csv.gz").open("wb") as out,
         gzip.GzipFile(filename="", mode="wb", fileobj=out, mtime=0) as gz,
         io.TextIOWrapper(gz, encoding="utf-8", newline="") as f,
     ):
@@ -545,13 +572,13 @@ def montar() -> dict:
                     for k in w.fieldnames
                 }
             )
-    exportar_processos(linhas, PUBLICO / "processos_por_tipo.csv.gz")
+    exportar_processos(linhas, PUBLICO_ / "processos_por_tipo.csv.gz")
     # Arquivo compacto privado para o build do mapa, só linhas sinalizadas.
     gravar(
-        ANALISE / "sinalizadas.json",
+        ANALISE_ / "sinalizadas.json",
         [{k: nulo(v) for k, v in r.items()} for r in linhas if r["sinais"]],
     )
     # Remove só a representação antiga deste mesmo conjunto gerado, após sucesso.
-    for antigo in (PUBLICO / "zona").rglob("*.json"):
+    for antigo in (PUBLICO_ / "zona").rglob("*.json"):
         antigo.unlink()
     return indice

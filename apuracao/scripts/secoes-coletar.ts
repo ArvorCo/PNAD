@@ -1,5 +1,10 @@
-// Coleta retomável dos boletins de urna (BU) do 1º turno de 2026, seção a seção, com o
-// modelo da urna lido no log da própria urna, e conferência automática por zona.
+// Coleta retomável dos boletins de urna (BU) de 2026, seção a seção, com o modelo da urna
+// lido no log da própria urna, e conferência automática por zona.
+//
+// Pleito por APURACAO_PLEITO (padrão 003220, 1º turno). No 2º turno:
+//   APURACAO_PLEITO=003221 bun run scripts/secoes-coletar.ts
+// usa por padrão data/secoes_2t_2026.sqlite, data/apuracao-2t.sqlite (só leitura),
+// data/secoes-p003221.pid e data/logs/secoes-p003221-AAAAMMDD.log; eleições 6258 e 6260.
 //
 //   bun run scripts/secoes-coletar.ts                       # todas as UFs, ordem das pequenas para SP, depois zz
 //   bun run scripts/secoes-coletar.ts --ufs ac              # só o Acre
@@ -22,16 +27,19 @@ import type { ResultadoSecao, SecaoCs } from "./secoes/banco.ts";
 import { conferirZona } from "./secoes/conferencia.ts";
 import { CsSchema, secoesDoCs } from "./secoes/cs.ts";
 import { ClienteTse } from "./secoes/http.ts";
-import { coletarSecao, sha256, urlCs } from "./secoes/secao.ts";
+import { ORDEM_UF } from "./secoes/ordem.ts";
+import { PLEITO_ATUAL } from "./secoes/pleito.ts";
+import { BASE_URNA, coletarSecao, PLEITO, sha256, urlCs } from "./secoes/secao.ts";
 
-/** Pequenas primeiro, SP por último entre as UFs, exterior no fim. */
-export const ORDEM_UF = [
-  "ac", "ap", "rr", "ro", "to", "se", "df", "al", "ms", "mt", "es", "rn", "pb", "pi", "am",
-  "pa", "go", "sc", "ce", "ma", "pe", "rs", "pr", "ba", "rj", "mg", "sp", "zz",
-] as const;
+export { ORDEM_UF };
 
 const RAIZ = join(import.meta.dir, "..");
 const RPS_MAX = 80;
+const PRIMEIRO_TURNO = PLEITO === "003220";
+/** Sufixo dos arquivos auxiliares fora do 1º turno, para não colidir com a coleta dele. */
+const SUFIXO = PRIMEIRO_TURNO ? "" : `-p${PLEITO}`;
+const DB_PADRAO = PRIMEIRO_TURNO ? "secoes_2026.sqlite" : PLEITO_ATUAL.turno === 2 ? "secoes_2t_2026.sqlite" : `secoes_p${PLEITO}.sqlite`;
+const APURACAO_PADRAO = PRIMEIRO_TURNO ? "apuracao.sqlite" : PLEITO_ATUAL.turno === 2 ? "apuracao-2t.sqlite" : `apuracao-p${PLEITO}.sqlite`;
 
 const { values: a } = parseArgs({
   options: {
@@ -44,8 +52,8 @@ const { values: a } = parseArgs({
     "guardar-log": { type: "boolean", default: false },
     "so-conferir": { type: "boolean", default: false },
     limite: { type: "string" },
-    db: { type: "string", default: join(RAIZ, "data", "secoes_2026.sqlite") },
-    apuracao: { type: "string", default: join(RAIZ, "data", "apuracao.sqlite") },
+    db: { type: "string", default: join(RAIZ, "data", DB_PADRAO) },
+    apuracao: { type: "string", default: join(RAIZ, "data", APURACAO_PADRAO) },
   },
   strict: true,
 });
@@ -60,8 +68,8 @@ const hoje = new Date();
 const dia = `${hoje.getFullYear()}${String(hoje.getMonth() + 1).padStart(2, "0")}${String(hoje.getDate()).padStart(2, "0")}`;
 const DIR_LOG = join(RAIZ, "data", "logs");
 const DIR_CS = join(RAIZ, "data", "secoes", "cs");
-const ARQ_LOG = join(DIR_LOG, `secoes-${dia}.log`);
-const PIDFILE = join(RAIZ, "data", "secoes.pid");
+const ARQ_LOG = join(DIR_LOG, `secoes${SUFIXO}-${dia}.log`);
+const PIDFILE = join(RAIZ, "data", `secoes${SUFIXO}.pid`);
 mkdirSync(DIR_LOG, { recursive: true });
 mkdirSync(DIR_CS, { recursive: true });
 
@@ -110,11 +118,13 @@ const db = abrirSecoes(a.db);
 const apuracao = new Database(a.apuracao, { readonly: true });
 const escritor = new EscritorSecoes(db);
 const cliente = new ClienteTse({ rps, log });
-db.query("INSERT OR REPLACE INTO meta (chave, valor) VALUES ('fonte', ?)").run("resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220");
+db.query("INSERT OR REPLACE INTO meta (chave, valor) VALUES ('fonte', ?)").run(BASE_URNA.replace(/^https:\/\//, ""));
+db.query("INSERT OR REPLACE INTO meta (chave, valor) VALUES ('pleito', ?)").run(PLEITO);
+db.query("INSERT OR REPLACE INTO meta (chave, valor) VALUES ('eleicoes', ?)").run(JSON.stringify({ federal: PLEITO_ATUAL.federal, estadual: PLEITO_ATUAL.estadual }));
 
 // ---------------------------------------------------------------- configuração de seções
 async function prepararUf(uf: string): Promise<number> {
-  const arq = join(DIR_CS, `${uf}-p003220-cs.json`);
+  const arq = join(DIR_CS, `${uf}-p${PLEITO}-cs.json`);
   let bruto: Uint8Array;
   if (existsSync(arq) && a["refresh-cs"] !== true) {
     bruto = new Uint8Array(readFileSync(arq));
@@ -216,7 +226,7 @@ function progresso(t: string): void {
 
 // ---------------------------------------------------------------- execução
 async function main(): Promise<void> {
-  log({ t: "inicio", ufs, rps, concorrencia, db: a.db, guardar_log: a["guardar-log"], pid: process.pid });
+  log({ t: "inicio", pleito: PLEITO, eleicoes: [PLEITO_ATUAL.federal, PLEITO_ATUAL.estadual], ufs, rps, concorrencia, db: a.db, apuracao: a.apuracao, guardar_log: a["guardar-log"], pid: process.pid });
   const fila: SecaoCs[] = [];
   for (const uf of ufs) {
     const total = await prepararUf(uf);

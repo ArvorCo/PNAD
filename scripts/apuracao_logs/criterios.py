@@ -13,6 +13,17 @@ from .regras_processo import avaliar_processo, campos_processo
 
 MIN_PARES = 30
 DESVIOS_ROBUSTOS = 4
+# Versão das regras de publicação, separada da versão do leitor (parser.VERSAO).
+VERSAO_REGRAS = "2"
+MUDANCAS_REGRAS = [
+    {
+        "versao": "2",
+        "data": "2026-10-26",
+        "criterio": "erro_tecnico",
+        "mudanca": "O erro do GAP 'Problema ao desmontar a MR' registrado antes da zerésima deixa de contar como erro técnico e passa a contagem própria (erro_mr_pre_zeresima), publicada por seção.",
+        "motivo": "No 2º turno de 2026 a urna foi religada com a mesma carga de setembro e registrou esse erro antes da zerésima em quase todas as seções: 2.198 de 2.270 em AC tinham só ele. Contado como erro técnico, o critério deixaria de distinguir seções. Em amostra de 3.500 logs do 1º turno (14 UFs) a mensagem não aparece, por isso a mudança não altera o 1º turno nessa amostra.",
+    }
+]
 
 
 def criterio(nome, grupo, regra, limite, conferir):
@@ -148,8 +159,8 @@ CRITERIOS = {
     "erro_tecnico": criterio(
         "Erro técnico registrado no dia",
         "operacao",
-        "Ao menos um evento classificado ERRO ou FATAL pelo log no dia da votação.",
-        "ALERTA não entra aqui: inclui erro de digitação normal. Gravidade e recuperação exigem leitura do evento original.",
+        "Ao menos um evento classificado ERRO ou FATAL pelo log no dia da votação, fora o erro do GAP ao desmontar a memória de resultado antes da zerésima (regra 2, de 26/10/2026), que tem contagem própria.",
+        "ALERTA não entra aqui: inclui erro de digitação normal. Gravidade e recuperação exigem leitura do evento original. O erro de desmontar a memória de resultado antes da zerésima continua publicado por seção (erro_mr_pre_zeresima).",
         "Conferir mensagem, subsistema, recuperação e ata; erro registrado não é necessariamente erro sem solução.",
     ),
     "assinatura": criterio(
@@ -226,6 +237,11 @@ def fase_principal(fases: dict) -> str | None:
     return next((f for f in FASES_BATERIA if fases.get(f)), None)
 
 
+def erros_tecnicos(c: dict) -> int:
+    """ERRO/FATAL do dia menos o erro de desmontar a MR antes da zerésima (regra 2)."""
+    return c.get("erros", 0) - c.get("erro_mr_pre_zeresima", 0)
+
+
 def campos(r: dict) -> dict:
     c, bu = r["contagens"], r["bu"]
     cargos = r["tempo_por_cargos"]
@@ -283,6 +299,7 @@ def campos(r: dict) -> dict:
         "suspensoes": c.get("suspensoes", 0),
         "reinicios": c.get("reinicios_durante_votacao", 0),
         "erros": c.get("erros", 0),
+        "erro_mr_pre_zeresima": c.get("erro_mr_pre_zeresima", 0),
         "intervalo_max": r["intervalo_computados"]["max"],
         "computados": c.get("computados", 0),
         "ciclos_reconstruidos": r["ciclos"],
@@ -382,10 +399,10 @@ def avaliar(
             ("reinicios", "reinicios_durante_votacao"),
             ("reinicio_sistema", "reinicios_sistema_em_votacao"),
             ("bateria", "eventos_bateria"),
-            ("erro_tecnico", "erros"),
             ("assinatura", "falhas_assinatura_declaradas"),
         ):
             flags[cod][i] = c.get(campo, 0) > 0
+        flags["erro_tecnico"][i] = erros_tecnicos(c) > 0
         simultaneas = df.bateria_simultaneas.iat[i]
         em_votacao = r["tempos_validos"] and df.bateria_votacao.iat[i] > 0
         flags["bateria_votacao_local"][i] = bool(

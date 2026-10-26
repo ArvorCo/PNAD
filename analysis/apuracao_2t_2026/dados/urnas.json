@@ -1,0 +1,2850 @@
+{
+ "gerado_em": "2026-10-26T06:56:35+00:00",
+ "rotulo": "pede explicação, não prova irregularidade",
+ "estado_coleta_2t": "completa",
+ "fontes_2022": "analysis/apuracao_2t_2026/urnas_fontes/fontes.json",
+ "turnos": {
+  "1t": {
+   "cobertura": {
+    "secoes_catalogo": 517179,
+    "secoes_principais": 499248,
+    "secoes_com_bu": 499187,
+    "pct": 99.99,
+    "por_uf": {
+     "ac": 2270,
+     "al": 7101,
+     "am": 8157,
+     "ap": 1914,
+     "ba": 35476,
+     "ce": 23765,
+     "df": 6969,
+     "es": 9844,
+     "go": 15686,
+     "ma": 18093,
+     "mg": 52054,
+     "ms": 7106,
+     "mt": 8287,
+     "pa": 20827,
+     "pb": 10712,
+     "pe": 21418,
+     "pi": 10225,
+     "pr": 27142,
+     "rj": 37675,
+     "rn": 8115,
+     "ro": 4698,
+     "rr": 1519,
+     "rs": 27547,
+     "sc": 17326,
+     "se": 5923,
+     "sp": 103644,
+     "to": 4384,
+     "zz": 1310
+    }
+   },
+   "modelos": {
+    "secoes": 499187,
+    "modelo": [
+     {
+      "valor": "UE2020",
+      "rotulo": "UE2020",
+      "secoes": 200453,
+      "pct": 40.156
+     },
+     {
+      "valor": "UE2022",
+      "rotulo": "UE2022",
+      "secoes": 198656,
+      "pct": 39.796
+     },
+     {
+      "valor": "UE2015",
+      "rotulo": "UE2015",
+      "secoes": 88032,
+      "pct": 17.635
+     },
+     {
+      "valor": "UE2013",
+      "rotulo": "UE2013",
+      "secoes": 11921,
+      "pct": 2.388
+     },
+     {
+      "valor": "sem informação",
+      "rotulo": "sem informação",
+      "secoes": 125,
+      "pct": 0.025
+     }
+    ],
+    "fonte_modelo": [
+     {
+      "valor": "log_mesma_urna",
+      "rotulo": "log_mesma_urna",
+      "secoes": 499048,
+      "pct": 99.972
+     },
+     {
+      "valor": "sem_log",
+      "rotulo": "sem_log",
+      "secoes": 125,
+      "pct": 0.025
+     },
+     {
+      "valor": "log_modelo_unico",
+      "rotulo": "log_modelo_unico",
+      "secoes": 14,
+      "pct": 0.003
+     }
+    ],
+    "tipo_urna": [
+     {
+      "valor": 1,
+      "rotulo": "seção",
+      "secoes": 496123,
+      "pct": 99.386
+     },
+     {
+      "valor": 4,
+      "rotulo": "reserva da seção",
+      "secoes": 3033,
+      "pct": 0.608
+     },
+     {
+      "valor": 3,
+      "rotulo": "contingência",
+      "secoes": 31,
+      "pct": 0.006
+     }
+    ],
+    "tipo_arquivo": [
+     {
+      "valor": 1,
+      "rotulo": "votação na urna",
+      "secoes": 499106,
+      "pct": 99.984
+     },
+     {
+      "valor": 2,
+      "rotulo": "votação recuperada (RED)",
+      "secoes": 50,
+      "pct": 0.01
+     },
+     {
+      "valor": 5,
+      "rotulo": "sistema de apuração",
+      "secoes": 29,
+      "pct": 0.006
+     },
+     {
+      "valor": 4,
+      "rotulo": "sistema de apuração",
+      "secoes": 2,
+      "pct": 0.0
+     }
+    ],
+    "n_cargas": [
+     {
+      "valor": 1,
+      "rotulo": "1",
+      "secoes": 496152,
+      "pct": 99.392
+     },
+     {
+      "valor": 2,
+      "rotulo": "2",
+      "secoes": 2973,
+      "pct": 0.596
+     },
+     {
+      "valor": 3,
+      "rotulo": "3",
+      "secoes": 59,
+      "pct": 0.012
+     },
+     {
+      "valor": 4,
+      "rotulo": "4",
+      "secoes": 3,
+      "pct": 0.001
+     }
+    ],
+    "modelo_por_tipo_urna": {
+     "1": {
+      "UE2020": 199403,
+      "UE2022": 198048,
+      "UE2015": 87627,
+      "UE2013": 10951,
+      "sem": 94
+     },
+     "3": {
+      "sem": 31
+     },
+     "4": {
+      "UE2020": 1050,
+      "UE2013": 970,
+      "UE2022": 608,
+      "UE2015": 405
+     }
+    }
+   },
+   "repetidos": {
+    "ids_distintos": 499159,
+    "ids_repetidos": 1,
+    "secoes_envolvidas": 29,
+    "por_classe": {
+     "mesmo_bu": {
+      "descricao": "Mesmo BU (seção agregada): o mesmo arquivo responde por mais de uma seção",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sistema_apuracao": {
+      "descricao": "BU emitido pelo sistema de apuração: o número é o do equipamento da junta, não de uma urna de votação",
+      "ids": 1,
+      "secoes": 29
+     },
+     "troca_compativel": {
+      "descricao": "Contingência, reserva ou recarga com horários de votação que não se sobrepõem",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sem_contingencia": {
+      "descricao": "Horários não se sobrepõem, mas nenhuma seção do grupo declara contingência, reserva ou recarga",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sobreposicao": {
+      "descricao": "A mesma urna aparece votando em duas seções no mesmo intervalo de horário",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sem_horario": {
+      "descricao": "Sem horário de votação em alguma seção do grupo para testar sobreposição",
+      "ids": 0,
+      "secoes": 0
+     }
+    },
+    "por_geografia": {
+     "mesma_uf": 1
+    },
+    "sem_explicacao_pela_regra": 0,
+    "grupos": [
+     {
+      "numero_interno_urna": 1808076,
+      "secoes": 29,
+      "classe": "sistema_apuracao",
+      "explicada": true,
+      "geografia": "mesma_uf",
+      "contingencia_declarada": true,
+      "sistema_apuracao": true,
+      "horarios_sobrepostos": false,
+      "ufs_com_fusos_possivelmente_diferentes": false,
+      "linhas": [
+       {
+        "uf": "zz",
+        "mun": "29173",
+        "zona": 1,
+        "secao": 494,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 91.66666666666667
+       },
+       {
+        "uf": "zz",
+        "mun": "29254",
+        "zona": 1,
+        "secao": 1,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 35.13513513513514
+       },
+       {
+        "uf": "zz",
+        "mun": "29270",
+        "zona": 1,
+        "secao": 3,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 20.0
+       },
+       {
+        "uf": "zz",
+        "mun": "29297",
+        "zona": 1,
+        "secao": 495,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 22.580645161290324
+       },
+       {
+        "uf": "zz",
+        "mun": "29300",
+        "zona": 1,
+        "secao": 6,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 10.0
+       },
+       {
+        "uf": "zz",
+        "mun": "29394",
+        "zona": 1,
+        "secao": 28,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 50.0
+       },
+       {
+        "uf": "zz",
+        "mun": "29564",
+        "zona": 1,
+        "secao": 91,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": null
+       },
+       {
+        "uf": "zz",
+        "mun": "29580",
+        "zona": 1,
+        "secao": 96,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 94.11764705882354
+       },
+       {
+        "uf": "zz",
+        "mun": "29645",
+        "zona": 1,
+        "secao": 380,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 62.7906976744186
+       },
+       {
+        "uf": "zz",
+        "mun": "29750",
+        "zona": 1,
+        "secao": 1703,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 51.851851851851855
+       },
+       {
+        "uf": "zz",
+        "mun": "29777",
+        "zona": 1,
+        "secao": 127,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 2.7027027027027026
+       },
+       {
+        "uf": "zz",
+        "mun": "29858",
+        "zona": 1,
+        "secao": 1183,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 82.6086956521739
+       },
+       {
+        "uf": "zz",
+        "mun": "29912",
+        "zona": 1,
+        "secao": 150,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 18.75
+       },
+       {
+        "uf": "zz",
+        "mun": "30163",
+        "zona": 1,
+        "secao": 647,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 33.78378378378378
+       },
+       {
+        "uf": "zz",
+        "mun": "30171",
+        "zona": 1,
+        "secao": 1340,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 16.666666666666668
+       },
+       {
+        "uf": "zz",
+        "mun": "30295",
+        "zona": 1,
+        "secao": 348,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 60.0
+       },
+       {
+        "uf": "zz",
+        "mun": "30325",
+        "zona": 1,
+        "secao": 352,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 71.42857142857143
+       },
+       {
+        "uf": "zz",
+        "mun": "30333",
+        "zona": 1,
+        "secao": 353,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 0.0
+       },
+       {
+        "uf": "zz",
+        "mun": "30430",
+        "zona": 1,
+        "secao": 384,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 56.25
+       },
+       {
+        "uf": "zz",
+        "mun": "30546",
+        "zona": 1,
+        "secao": 1764,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 19.047619047619047
+       },
+       {
+        "uf": "zz",
+        "mun": "30597",
+        "zona": 1,
+        "secao": 1182,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 44.0
+       },
+       {
+        "uf": "zz",
+        "mun": "30686",
+        "zona": 1,
+        "secao": 443,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 0.0
+       },
+       {
+        "uf": "zz",
+        "mun": "30708",
+        "zona": 1,
+        "secao": 444,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 42.857142857142854
+       },
+       {
+        "uf": "zz",
+        "mun": "30821",
+        "zona": 1,
+        "secao": 1524,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 45.45454545454545
+       },
+       {
+        "uf": "zz",
+        "mun": "38962",
+        "zona": 1,
+        "secao": 558,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 31.25
+       },
+       {
+        "uf": "zz",
+        "mun": "39102",
+        "zona": 1,
+        "secao": 712,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 62.5
+       },
+       {
+        "uf": "zz",
+        "mun": "99155",
+        "zona": 1,
+        "secao": 1504,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 68.18181818181819
+       },
+       {
+        "uf": "zz",
+        "mun": "99180",
+        "zona": 1,
+        "secao": 1228,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 62.5
+       },
+       {
+        "uf": "zz",
+        "mun": "99473",
+        "zona": 1,
+        "secao": 1327,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 61.36363636363637
+       }
+      ]
+     }
+    ]
+   },
+   "resultado_repetidos": {
+    "secoes": 29,
+    "contra_vizinhas": {
+     "n": 0,
+     "media_pp": null,
+     "ep_pp": null,
+     "ic95_pp": null
+    }
+   },
+   "codigo_carga": {
+    "codigos_repetidos": 1,
+    "secoes": 29,
+    "por_tipo_arquivo": {
+     "5": 29
+    },
+    "exemplos": [
+     {
+      "uf": "zz",
+      "mun": "29173",
+      "zona": 1,
+      "secao": 494,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 91.66666666666667,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29254",
+      "zona": 1,
+      "secao": 1,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 35.13513513513514,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29270",
+      "zona": 1,
+      "secao": 3,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 20.0,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29297",
+      "zona": 1,
+      "secao": 495,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 22.580645161290324,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29300",
+      "zona": 1,
+      "secao": 6,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 10.0,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29394",
+      "zona": 1,
+      "secao": 28,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 50.0,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29564",
+      "zona": 1,
+      "secao": 91,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": null,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29580",
+      "zona": 1,
+      "secao": 96,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 94.11764705882354,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29645",
+      "zona": 1,
+      "secao": 380,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 62.7906976744186,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29750",
+      "zona": 1,
+      "secao": 1703,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 51.851851851851855,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29777",
+      "zona": 1,
+      "secao": 127,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 2.7027027027027026,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29858",
+      "zona": 1,
+      "secao": 1183,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 82.6086956521739,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29912",
+      "zona": 1,
+      "secao": 150,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 18.75,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30163",
+      "zona": 1,
+      "secao": 647,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 33.78378378378378,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30171",
+      "zona": 1,
+      "secao": 1340,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 16.666666666666668,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30295",
+      "zona": 1,
+      "secao": 348,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 60.0,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30325",
+      "zona": 1,
+      "secao": 352,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 71.42857142857143,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30333",
+      "zona": 1,
+      "secao": 353,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 0.0,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30430",
+      "zona": 1,
+      "secao": 384,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 56.25,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30546",
+      "zona": 1,
+      "secao": 1764,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 19.047619047619047,
+      "codigo_carga": "723283724025687430931213"
+     }
+    ]
+   },
+   "id_no_log": {
+    "secoes_com_log": 499062,
+    "secoes_sem_log": 125,
+    "urnas_no_log": {
+     "1": 499061,
+     "2": 1
+    },
+    "id_do_bu_ausente_do_log": 14,
+    "ausentes_por_tipo_arquivo": {
+     "2": 14
+    },
+    "ausentes": [
+     {
+      "uf": "ba",
+      "mun": "38857",
+      "zona": 108,
+      "secao": 148,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "01672673"
+      ]
+     },
+     {
+      "uf": "es",
+      "mun": "56995",
+      "zona": 53,
+      "secao": 28,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "01656698"
+      ]
+     },
+     {
+      "uf": "es",
+      "mun": "56472",
+      "zona": 24,
+      "secao": 100,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "01771857"
+      ]
+     },
+     {
+      "uf": "se",
+      "mun": "31054",
+      "zona": 1,
+      "secao": 346,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "01791133"
+      ]
+     },
+     {
+      "uf": "al",
+      "mun": "27057",
+      "zona": 22,
+      "secao": 581,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02072552"
+      ]
+     },
+     {
+      "uf": "es",
+      "mun": "57053",
+      "zona": 1,
+      "secao": 413,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02036277"
+      ]
+     },
+     {
+      "uf": "ms",
+      "mun": "91570",
+      "zona": 31,
+      "secao": 7,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02152596"
+      ]
+     },
+     {
+      "uf": "pr",
+      "mun": "75280",
+      "zona": 133,
+      "secao": 34,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02077196"
+      ]
+     },
+     {
+      "uf": "pr",
+      "mun": "76236",
+      "zona": 93,
+      "secao": 83,
+      "tipo_arquivo": 2,
+      "tipo_urna": 4,
+      "ids_no_log": [
+       "02056331"
+      ]
+     },
+     {
+      "uf": "rn",
+      "mun": "18813",
+      "zona": 9,
+      "secao": 144,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02052038"
+      ]
+     },
+     {
+      "uf": "es",
+      "mun": "57053",
+      "zona": 1,
+      "secao": 46,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02353044"
+      ]
+     },
+     {
+      "uf": "se",
+      "mun": "32417",
+      "zona": 22,
+      "secao": 133,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02273651"
+      ]
+     },
+     {
+      "uf": "sp",
+      "mun": "71072",
+      "zona": 418,
+      "secao": 73,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02276282"
+      ]
+     },
+     {
+      "uf": "sp",
+      "mun": "71072",
+      "zona": 418,
+      "secao": 418,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02403160"
+      ]
+     }
+    ],
+    "secoes_com_id_67305985_no_log": 0,
+    "por_modelo": {
+     "UE2013": {
+      "secoes": 11921,
+      "id_do_bu_no_log": 11919
+     },
+     "UE2015": {
+      "secoes": 88032,
+      "id_do_bu_no_log": 88030
+     },
+     "UE2020": {
+      "secoes": 200453,
+      "id_do_bu_no_log": 200447
+     },
+     "UE2022": {
+      "secoes": 198656,
+      "id_do_bu_no_log": 198652
+     }
+    }
+   },
+   "carga": {
+    "por_dia": {
+     "2026-09-15": 1,
+     "2026-09-16": 547,
+     "2026-09-17": 2396,
+     "2026-09-18": 6187,
+     "2026-09-19": 11061,
+     "2026-09-20": 14398,
+     "2026-09-21": 41904,
+     "2026-09-22": 56654,
+     "2026-09-23": 70579,
+     "2026-09-24": 73979,
+     "2026-09-25": 68778,
+     "2026-09-26": 47123,
+     "2026-09-27": 25918,
+     "2026-09-28": 30577,
+     "2026-09-29": 24655,
+     "2026-09-30": 17220,
+     "2026-10-01": 6081,
+     "2026-10-02": 332,
+     "2026-10-03": 790,
+     "2026-10-04": 7
+    },
+    "primeira": "2026-09-15 15:57:00",
+    "ultima": "2026-10-04 09:54:00",
+    "sem_data": 0,
+    "fase": [
+     {
+      "valor": 2,
+      "rotulo": "2",
+      "secoes": 499187,
+      "pct": 100.0
+     }
+    ],
+    "pleito": [
+     {
+      "valor": 3220,
+      "rotulo": "3220",
+      "secoes": 499187,
+      "pct": 100.0
+     }
+    ],
+    "carga_depois_do_1t": {
+     "secoes": 0,
+     "por_tipo_urna": {},
+     "por_n_cargas": {}
+    },
+    "carga_depois_da_eleicao": 0,
+    "carga_no_dia_da_eleicao": {
+     "secoes": 7,
+     "por_tipo_urna": {
+      "1": 4,
+      "4": 3
+     }
+    },
+    "carga_depois_do_primeiro_voto": 2,
+    "carga_depois_do_primeiro_voto_sem_contingencia": 0,
+    "exemplos_carga_no_dia": [
+     {
+      "uf": "sc",
+      "mun": "83194",
+      "zona": 27,
+      "secao": 56,
+      "local": 1171,
+      "modelo_urna": "UE2013",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-04 08:13:00",
+      "abertura": "2026-10-04 09:23:18",
+      "encerramento": "2026-10-04 17:10:23",
+      "comparecimento": 242,
+      "fatia_flavio": 73.77777777777777
+     },
+     {
+      "uf": "sc",
+      "mun": "83194",
+      "zona": 27,
+      "secao": 57,
+      "local": 1180,
+      "modelo_urna": "UE2013",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-04 08:01:00",
+      "abertura": "2026-10-04 09:18:43",
+      "encerramento": "2026-10-04 17:35:12",
+      "comparecimento": 240,
+      "fatia_flavio": 75.55555555555556
+     },
+     {
+      "uf": "sc",
+      "mun": "83518",
+      "zona": 46,
+      "secao": 38,
+      "local": 1023,
+      "modelo_urna": "UE2013",
+      "tipo_urna": 4,
+      "tipo_arquivo": 1,
+      "n_cargas": 2,
+      "carga_em": "2026-10-04 09:45:00",
+      "abertura": "2026-10-04 08:00:01",
+      "encerramento": "2026-10-04 17:52:18",
+      "comparecimento": 261,
+      "fatia_flavio": 84.89795918367346
+     },
+     {
+      "uf": "sc",
+      "mun": "83518",
+      "zona": 46,
+      "secao": 113,
+      "local": 1287,
+      "modelo_urna": "UE2015",
+      "tipo_urna": 4,
+      "tipo_arquivo": 1,
+      "n_cargas": 2,
+      "carga_em": "2026-10-04 09:54:00",
+      "abertura": "2026-10-04 08:00:01",
+      "encerramento": "2026-10-04 17:04:50",
+      "comparecimento": 246,
+      "fatia_flavio": 83.94495412844037
+     },
+     {
+      "uf": "ba",
+      "mun": "33197",
+      "zona": 36,
+      "secao": 3,
+      "local": 1015,
+      "modelo_urna": "UE2020",
+      "tipo_urna": 4,
+      "tipo_arquivo": 1,
+      "n_cargas": 2,
+      "carga_em": "2026-10-04 05:50:00",
+      "abertura": "2026-10-04 08:12:37",
+      "encerramento": "2026-10-04 18:22:18",
+      "comparecimento": 269,
+      "fatia_flavio": 41.07883817427386
+     },
+     {
+      "uf": "mg",
+      "mun": "48852",
+      "zona": 190,
+      "secao": 107,
+      "local": 1023,
+      "modelo_urna": "UE2020",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-04 07:51:00",
+      "abertura": "2026-10-04 08:07:45",
+      "encerramento": "2026-10-04 17:01:11",
+      "comparecimento": 176,
+      "fatia_flavio": 75.44910179640719
+     },
+     {
+      "uf": "pr",
+      "mun": "75353",
+      "zona": 3,
+      "secao": 495,
+      "local": 1058,
+      "modelo_urna": "UE2022",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-04 08:09:00",
+      "abertura": "2026-10-04 08:47:27",
+      "encerramento": "2026-10-04 17:01:46",
+      "comparecimento": 300,
+      "fatia_flavio": 70.11952191235059
+     }
+    ],
+    "id_nao_confere_caminho": 0
+   }
+  },
+  "2t": {
+   "cobertura": {
+    "secoes_catalogo": 517179,
+    "secoes_principais": 499248,
+    "secoes_com_bu": 499207,
+    "pct": 99.99,
+    "por_uf": {
+     "ac": 2270,
+     "al": 7101,
+     "am": 8157,
+     "ap": 1914,
+     "ba": 35476,
+     "ce": 23765,
+     "df": 6969,
+     "es": 9844,
+     "go": 15686,
+     "ma": 18093,
+     "mg": 52062,
+     "ms": 7106,
+     "mt": 8287,
+     "pa": 20827,
+     "pb": 10712,
+     "pe": 21418,
+     "pi": 10225,
+     "pr": 27142,
+     "rj": 37675,
+     "rn": 8115,
+     "ro": 4698,
+     "rr": 1519,
+     "rs": 27547,
+     "sc": 17326,
+     "se": 5923,
+     "sp": 103656,
+     "to": 4384,
+     "zz": 1310
+    }
+   },
+   "modelos": {
+    "secoes": 499207,
+    "modelo": [
+     {
+      "valor": "UE2020",
+      "rotulo": "UE2020",
+      "secoes": 200490,
+      "pct": 40.162
+     },
+     {
+      "valor": "UE2022",
+      "rotulo": "UE2022",
+      "secoes": 198735,
+      "pct": 39.81
+     },
+     {
+      "valor": "UE2015",
+      "rotulo": "UE2015",
+      "secoes": 87472,
+      "pct": 17.522
+     },
+     {
+      "valor": "UE2013",
+      "rotulo": "UE2013",
+      "secoes": 12455,
+      "pct": 2.495
+     },
+     {
+      "valor": "sem informação",
+      "rotulo": "sem informação",
+      "secoes": 55,
+      "pct": 0.011
+     }
+    ],
+    "fonte_modelo": [
+     {
+      "valor": "log_mesma_urna",
+      "rotulo": "log_mesma_urna",
+      "secoes": 499149,
+      "pct": 99.988
+     },
+     {
+      "valor": "sem_log",
+      "rotulo": "sem_log",
+      "secoes": 55,
+      "pct": 0.011
+     },
+     {
+      "valor": "log_modelo_unico",
+      "rotulo": "log_modelo_unico",
+      "secoes": 3,
+      "pct": 0.001
+     }
+    ],
+    "tipo_urna": [
+     {
+      "valor": 1,
+      "rotulo": "seção",
+      "secoes": 493464,
+      "pct": 98.85
+     },
+     {
+      "valor": 4,
+      "rotulo": "reserva da seção",
+      "secoes": 5712,
+      "pct": 1.144
+     },
+     {
+      "valor": 3,
+      "rotulo": "contingência",
+      "secoes": 29,
+      "pct": 0.006
+     },
+     {
+      "valor": 6,
+      "rotulo": "reserva ao encerrar",
+      "secoes": 2,
+      "pct": 0.0
+     }
+    ],
+    "tipo_arquivo": [
+     {
+      "valor": 1,
+      "rotulo": "votação na urna",
+      "secoes": 499162,
+      "pct": 99.991
+     },
+     {
+      "valor": 5,
+      "rotulo": "sistema de apuração",
+      "secoes": 29,
+      "pct": 0.006
+     },
+     {
+      "valor": 2,
+      "rotulo": "votação recuperada (RED)",
+      "secoes": 16,
+      "pct": 0.003
+     }
+    ],
+    "n_cargas": [
+     {
+      "valor": 1,
+      "rotulo": "1",
+      "secoes": 493495,
+      "pct": 98.856
+     },
+     {
+      "valor": 2,
+      "rotulo": "2",
+      "secoes": 5495,
+      "pct": 1.101
+     },
+     {
+      "valor": 3,
+      "rotulo": "3",
+      "secoes": 205,
+      "pct": 0.041
+     },
+     {
+      "valor": 4,
+      "rotulo": "4",
+      "secoes": 11,
+      "pct": 0.002
+     },
+     {
+      "valor": 5,
+      "rotulo": "5",
+      "secoes": 1,
+      "pct": 0.0
+     }
+    ],
+    "modelo_por_tipo_urna": {
+     "1": {
+      "UE2020": 198486,
+      "UE2022": 197608,
+      "UE2015": 86627,
+      "UE2013": 10717,
+      "sem": 26
+     },
+     "3": {
+      "sem": 29
+     },
+     "4": {
+      "UE2020": 2004,
+      "UE2013": 1738,
+      "UE2022": 1127,
+      "UE2015": 843
+     },
+     "6": {
+      "UE2015": 2
+     }
+    }
+   },
+   "repetidos": {
+    "ids_distintos": 499180,
+    "ids_repetidos": 2,
+    "secoes_envolvidas": 29,
+    "por_classe": {
+     "mesmo_bu": {
+      "descricao": "Mesmo BU (seção agregada): o mesmo arquivo responde por mais de uma seção",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sistema_apuracao": {
+      "descricao": "BU emitido pelo sistema de apuração: o número é o do equipamento da junta, não de uma urna de votação",
+      "ids": 2,
+      "secoes": 29
+     },
+     "troca_compativel": {
+      "descricao": "Contingência, reserva ou recarga com horários de votação que não se sobrepõem",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sem_contingencia": {
+      "descricao": "Horários não se sobrepõem, mas nenhuma seção do grupo declara contingência, reserva ou recarga",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sobreposicao": {
+      "descricao": "A mesma urna aparece votando em duas seções no mesmo intervalo de horário",
+      "ids": 0,
+      "secoes": 0
+     },
+     "sem_horario": {
+      "descricao": "Sem horário de votação em alguma seção do grupo para testar sobreposição",
+      "ids": 0,
+      "secoes": 0
+     }
+    },
+    "por_geografia": {
+     "mesma_uf": 2
+    },
+    "sem_explicacao_pela_regra": 0,
+    "grupos": [
+     {
+      "numero_interno_urna": 1808076,
+      "secoes": 20,
+      "classe": "sistema_apuracao",
+      "explicada": true,
+      "geografia": "mesma_uf",
+      "contingencia_declarada": true,
+      "sistema_apuracao": true,
+      "horarios_sobrepostos": false,
+      "ufs_com_fusos_possivelmente_diferentes": false,
+      "linhas": [
+       {
+        "uf": "zz",
+        "mun": "29173",
+        "zona": 1,
+        "secao": 494,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 92.3076923076923
+       },
+       {
+        "uf": "zz",
+        "mun": "29270",
+        "zona": 1,
+        "secao": 3,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 38.46153846153846
+       },
+       {
+        "uf": "zz",
+        "mun": "29297",
+        "zona": 1,
+        "secao": 495,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 21.62162162162162
+       },
+       {
+        "uf": "zz",
+        "mun": "29564",
+        "zona": 1,
+        "secao": 91,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": null
+       },
+       {
+        "uf": "zz",
+        "mun": "29580",
+        "zona": 1,
+        "secao": 96,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 90.3225806451613
+       },
+       {
+        "uf": "zz",
+        "mun": "29645",
+        "zona": 1,
+        "secao": 380,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 64.70588235294117
+       },
+       {
+        "uf": "zz",
+        "mun": "29777",
+        "zona": 1,
+        "secao": 127,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 2.272727272727273
+       },
+       {
+        "uf": "zz",
+        "mun": "29912",
+        "zona": 1,
+        "secao": 150,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 13.513513513513514
+       },
+       {
+        "uf": "zz",
+        "mun": "30295",
+        "zona": 1,
+        "secao": 348,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 42.857142857142854
+       },
+       {
+        "uf": "zz",
+        "mun": "30325",
+        "zona": 1,
+        "secao": 352,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 57.142857142857146
+       },
+       {
+        "uf": "zz",
+        "mun": "30333",
+        "zona": 1,
+        "secao": 353,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 25.0
+       },
+       {
+        "uf": "zz",
+        "mun": "30430",
+        "zona": 1,
+        "secao": 384,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 60.0
+       },
+       {
+        "uf": "zz",
+        "mun": "30546",
+        "zona": 1,
+        "secao": 1764,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 24.528301886792452
+       },
+       {
+        "uf": "zz",
+        "mun": "30597",
+        "zona": 1,
+        "secao": 1182,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 40.74074074074074
+       },
+       {
+        "uf": "zz",
+        "mun": "30686",
+        "zona": 1,
+        "secao": 443,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": null
+       },
+       {
+        "uf": "zz",
+        "mun": "38962",
+        "zona": 1,
+        "secao": 558,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 35.294117647058826
+       },
+       {
+        "uf": "zz",
+        "mun": "39102",
+        "zona": 1,
+        "secao": 712,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 68.75
+       },
+       {
+        "uf": "zz",
+        "mun": "99155",
+        "zona": 1,
+        "secao": 1504,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 65.0
+       },
+       {
+        "uf": "zz",
+        "mun": "99180",
+        "zona": 1,
+        "secao": 1228,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 70.0
+       },
+       {
+        "uf": "zz",
+        "mun": "99473",
+        "zona": 1,
+        "secao": 1327,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 15:17:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 71.7948717948718
+       }
+      ]
+     },
+     {
+      "numero_interno_urna": 1762246,
+      "secoes": 9,
+      "classe": "sistema_apuracao",
+      "explicada": true,
+      "geografia": "mesma_uf",
+      "contingencia_declarada": true,
+      "sistema_apuracao": true,
+      "horarios_sobrepostos": false,
+      "ufs_com_fusos_possivelmente_diferentes": false,
+      "linhas": [
+       {
+        "uf": "zz",
+        "mun": "29254",
+        "zona": 1,
+        "secao": 1,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 41.509433962264154
+       },
+       {
+        "uf": "zz",
+        "mun": "29300",
+        "zona": 1,
+        "secao": 6,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 11.538461538461538
+       },
+       {
+        "uf": "zz",
+        "mun": "29394",
+        "zona": 1,
+        "secao": 28,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 53.65853658536585
+       },
+       {
+        "uf": "zz",
+        "mun": "29750",
+        "zona": 1,
+        "secao": 1703,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 53.125
+       },
+       {
+        "uf": "zz",
+        "mun": "29858",
+        "zona": 1,
+        "secao": 1183,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 84.21052631578948
+       },
+       {
+        "uf": "zz",
+        "mun": "30163",
+        "zona": 1,
+        "secao": 647,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 35.483870967741936
+       },
+       {
+        "uf": "zz",
+        "mun": "30171",
+        "zona": 1,
+        "secao": 1340,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 11.11111111111111
+       },
+       {
+        "uf": "zz",
+        "mun": "30708",
+        "zona": 1,
+        "secao": 444,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 30.434782608695652
+       },
+       {
+        "uf": "zz",
+        "mun": "30821",
+        "zona": 1,
+        "secao": 1524,
+        "local": 1,
+        "modelo_urna": null,
+        "tipo_urna": 3,
+        "tipo_arquivo": 5,
+        "n_cargas": 1,
+        "carga_em": "2026-09-18 14:16:00",
+        "abertura": null,
+        "encerramento": null,
+        "comparecimento": 0,
+        "fatia_flavio": 33.333333333333336
+       }
+      ]
+     }
+    ]
+   },
+   "resultado_repetidos": {
+    "secoes": 29,
+    "contra_vizinhas": {
+     "n": 0,
+     "media_pp": null,
+     "ep_pp": null,
+     "ic95_pp": null
+    },
+    "contra_o_proprio_1t_e_vizinhas": {
+     "n": 0,
+     "media_pp": null,
+     "ep_pp": null,
+     "ic95_pp": null
+    }
+   },
+   "codigo_carga": {
+    "codigos_repetidos": 2,
+    "secoes": 29,
+    "por_tipo_arquivo": {
+     "5": 29
+    },
+    "exemplos": [
+     {
+      "uf": "zz",
+      "mun": "29173",
+      "zona": 1,
+      "secao": 494,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 92.3076923076923,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29254",
+      "zona": 1,
+      "secao": 1,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 14:16:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 41.509433962264154,
+      "codigo_carga": "905001904443682739040437"
+     },
+     {
+      "uf": "zz",
+      "mun": "29270",
+      "zona": 1,
+      "secao": 3,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 38.46153846153846,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29297",
+      "zona": 1,
+      "secao": 495,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 21.62162162162162,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29300",
+      "zona": 1,
+      "secao": 6,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 14:16:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 11.538461538461538,
+      "codigo_carga": "905001904443682739040437"
+     },
+     {
+      "uf": "zz",
+      "mun": "29394",
+      "zona": 1,
+      "secao": 28,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 14:16:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 53.65853658536585,
+      "codigo_carga": "905001904443682739040437"
+     },
+     {
+      "uf": "zz",
+      "mun": "29564",
+      "zona": 1,
+      "secao": 91,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": null,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29580",
+      "zona": 1,
+      "secao": 96,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 90.3225806451613,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29645",
+      "zona": 1,
+      "secao": 380,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 64.70588235294117,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29750",
+      "zona": 1,
+      "secao": 1703,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 14:16:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 53.125,
+      "codigo_carga": "905001904443682739040437"
+     },
+     {
+      "uf": "zz",
+      "mun": "29777",
+      "zona": 1,
+      "secao": 127,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 2.272727272727273,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "29858",
+      "zona": 1,
+      "secao": 1183,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 14:16:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 84.21052631578948,
+      "codigo_carga": "905001904443682739040437"
+     },
+     {
+      "uf": "zz",
+      "mun": "29912",
+      "zona": 1,
+      "secao": 150,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 13.513513513513514,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30163",
+      "zona": 1,
+      "secao": 647,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 14:16:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 35.483870967741936,
+      "codigo_carga": "905001904443682739040437"
+     },
+     {
+      "uf": "zz",
+      "mun": "30171",
+      "zona": 1,
+      "secao": 1340,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 14:16:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 11.11111111111111,
+      "codigo_carga": "905001904443682739040437"
+     },
+     {
+      "uf": "zz",
+      "mun": "30295",
+      "zona": 1,
+      "secao": 348,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 42.857142857142854,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30325",
+      "zona": 1,
+      "secao": 352,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 57.142857142857146,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30333",
+      "zona": 1,
+      "secao": 353,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 25.0,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30430",
+      "zona": 1,
+      "secao": 384,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 60.0,
+      "codigo_carga": "723283724025687430931213"
+     },
+     {
+      "uf": "zz",
+      "mun": "30546",
+      "zona": 1,
+      "secao": 1764,
+      "local": 1,
+      "modelo_urna": null,
+      "tipo_urna": 3,
+      "tipo_arquivo": 5,
+      "n_cargas": 1,
+      "carga_em": "2026-09-18 15:17:00",
+      "abertura": null,
+      "encerramento": null,
+      "comparecimento": 0,
+      "fatia_flavio": 24.528301886792452,
+      "codigo_carga": "723283724025687430931213"
+     }
+    ]
+   },
+   "id_no_log": {
+    "secoes_com_log": 499152,
+    "secoes_sem_log": 55,
+    "urnas_no_log": {
+     "1": 499152
+    },
+    "id_do_bu_ausente_do_log": 3,
+    "ausentes_por_tipo_arquivo": {
+     "2": 3
+    },
+    "ausentes": [
+     {
+      "uf": "es",
+      "mun": "57932",
+      "zona": 9,
+      "secao": 85,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "01758779"
+      ]
+     },
+     {
+      "uf": "rj",
+      "mun": "58696",
+      "zona": 27,
+      "secao": 139,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02189420"
+      ]
+     },
+     {
+      "uf": "sp",
+      "mun": "64777",
+      "zona": 393,
+      "secao": 312,
+      "tipo_arquivo": 2,
+      "tipo_urna": 1,
+      "ids_no_log": [
+       "02399743"
+      ]
+     }
+    ],
+    "secoes_com_id_67305985_no_log": 0,
+    "por_modelo": {
+     "UE2013": {
+      "secoes": 12455,
+      "id_do_bu_no_log": 12455
+     },
+     "UE2015": {
+      "secoes": 87472,
+      "id_do_bu_no_log": 87471
+     },
+     "UE2020": {
+      "secoes": 200490,
+      "id_do_bu_no_log": 200489
+     },
+     "UE2022": {
+      "secoes": 198735,
+      "id_do_bu_no_log": 198734
+     }
+    }
+   },
+   "carga": {
+    "por_dia": {
+     "2026-09-15": 1,
+     "2026-09-16": 547,
+     "2026-09-17": 2383,
+     "2026-09-18": 6148,
+     "2026-09-19": 10997,
+     "2026-09-20": 14337,
+     "2026-09-21": 41672,
+     "2026-09-22": 56377,
+     "2026-09-23": 70228,
+     "2026-09-24": 73620,
+     "2026-09-25": 68471,
+     "2026-09-26": 46849,
+     "2026-09-27": 25835,
+     "2026-09-28": 30483,
+     "2026-09-29": 24583,
+     "2026-09-30": 17197,
+     "2026-10-01": 6053,
+     "2026-10-02": 371,
+     "2026-10-03": 800,
+     "2026-10-04": 10,
+     "2026-10-09": 1,
+     "2026-10-12": 1,
+     "2026-10-13": 35,
+     "2026-10-14": 111,
+     "2026-10-15": 275,
+     "2026-10-16": 300,
+     "2026-10-17": 200,
+     "2026-10-18": 145,
+     "2026-10-19": 154,
+     "2026-10-20": 116,
+     "2026-10-21": 88,
+     "2026-10-22": 61,
+     "2026-10-23": 44,
+     "2026-10-24": 709,
+     "2026-10-25": 5
+    },
+    "primeira": "2026-09-15 15:57:00",
+    "ultima": "2026-10-25 10:04:00",
+    "sem_data": 0,
+    "fase": [
+     {
+      "valor": 2,
+      "rotulo": "2",
+      "secoes": 499207,
+      "pct": 100.0
+     }
+    ],
+    "pleito": [
+     {
+      "valor": 3221,
+      "rotulo": "3221",
+      "secoes": 499207,
+      "pct": 100.0
+     }
+    ],
+    "carga_depois_do_1t": {
+     "secoes": 2245,
+     "por_tipo_urna": {
+      "1": 1970,
+      "4": 275
+     },
+     "por_n_cargas": {
+      "1": 1970,
+      "2": 249,
+      "3": 24,
+      "4": 2
+     }
+    },
+    "carga_depois_da_eleicao": 0,
+    "carga_no_dia_da_eleicao": {
+     "secoes": 5,
+     "por_tipo_urna": {
+      "1": 5
+     }
+    },
+    "carga_depois_do_primeiro_voto": 0,
+    "carga_depois_do_primeiro_voto_sem_contingencia": 0,
+    "exemplos_carga_no_dia": [
+     {
+      "uf": "pr",
+      "mun": "74918",
+      "zona": 56,
+      "secao": 37,
+      "local": 1015,
+      "modelo_urna": "UE2015",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-25 09:20:00",
+      "abertura": "2026-10-25 10:02:54",
+      "encerramento": "2026-10-25 17:01:04",
+      "comparecimento": 278,
+      "fatia_flavio": 67.55725190839695
+     },
+     {
+      "uf": "ms",
+      "mun": "91650",
+      "zona": 51,
+      "secao": 44,
+      "local": 1066,
+      "modelo_urna": "UE2020",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-25 07:36:00",
+      "abertura": "2026-10-25 08:13:13",
+      "encerramento": "2026-10-25 16:00:29",
+      "comparecimento": 218,
+      "fatia_flavio": 54.629629629629626
+     },
+     {
+      "uf": "ms",
+      "mun": "90514",
+      "zona": 8,
+      "secao": 486,
+      "local": 1384,
+      "modelo_urna": "UE2022",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-25 06:55:00",
+      "abertura": "2026-10-25 07:26:47",
+      "encerramento": "2026-10-25 16:01:19",
+      "comparecimento": 280,
+      "fatia_flavio": 59.9264705882353
+     },
+     {
+      "uf": "pr",
+      "mun": "75833",
+      "zona": 43,
+      "secao": 397,
+      "local": 1775,
+      "modelo_urna": "UE2022",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-25 10:04:00",
+      "abertura": "2026-10-25 10:51:03",
+      "encerramento": "2026-10-25 17:00:47",
+      "comparecimento": 38,
+      "fatia_flavio": 40.54054054054054
+     },
+     {
+      "uf": "sp",
+      "mun": "61816",
+      "zona": 16,
+      "secao": 436,
+      "local": 1589,
+      "modelo_urna": "UE2022",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "n_cargas": 1,
+      "carga_em": "2026-10-25 07:58:00",
+      "abertura": "2026-10-25 08:32:01",
+      "encerramento": "2026-10-25 17:00:35",
+      "comparecimento": 297,
+      "fatia_flavio": 61.05263157894737
+     }
+    ],
+    "id_nao_confere_caminho": 0
+   }
+  }
+ },
+ "entre_turnos": {
+  "secoes_pareadas": 499187,
+  "mesma_urna": 494753,
+  "urna_diferente": 4434,
+  "mesma_urna_mesma_carga": 494394,
+  "mesma_urna_carga_diferente": 359,
+  "trocadas_por_tipo_urna_2t": {
+   "4": 2816,
+   "1": 1607,
+   "3": 9,
+   "6": 2
+  },
+  "trocadas_por_tipo_urna_1t": {
+   "1": 4296,
+   "4": 127,
+   "3": 11
+  },
+  "trocadas_por_origem_da_urna": {
+   "urna_sem_bu_no_1t": 4353,
+   "veio_de_outra_secao_da_zona": 41,
+   "veio_de_outro_municipio": 28,
+   "veio_de_outra_zona_do_municipio": 12
+  },
+  "modelo_mudou": 1215,
+  "diferenca_em_diferencas": {
+   "todas_trocadas": {
+    "fatia_flavio": {
+     "n": 4425,
+     "media_pp": 0.022,
+     "ep_pp": 0.031,
+     "ic95_pp": [
+      -0.039,
+      0.084
+     ],
+     "media_ponderada_pp": 0.019
+    },
+    "comparecimento": {
+     "n": 4425,
+     "media_pp": 0.084,
+     "ep_pp": 0.041,
+     "ic95_pp": [
+      0.004,
+      0.164
+     ],
+     "media_ponderada_pp": 0.163
+    }
+   },
+   "trocada_reserva_no_2t": {
+    "fatia_flavio": {
+     "n": 2818,
+     "media_pp": 0.037,
+     "ep_pp": 0.04,
+     "ic95_pp": [
+      -0.041,
+      0.114
+     ],
+     "media_ponderada_pp": 0.026
+    },
+    "comparecimento": {
+     "n": 2818,
+     "media_pp": -0.034,
+     "ep_pp": 0.042,
+     "ic95_pp": [
+      -0.117,
+      0.048
+     ],
+     "media_ponderada_pp": 0.036
+    }
+   },
+   "trocada_urna_de_secao_no_2t": {
+    "fatia_flavio": {
+     "n": 1607,
+     "media_pp": -0.004,
+     "ep_pp": 0.051,
+     "ic95_pp": [
+      -0.104,
+      0.096
+     ],
+     "media_ponderada_pp": 0.004
+    },
+    "comparecimento": {
+     "n": 1607,
+     "media_pp": 0.289,
+     "ep_pp": 0.085,
+     "ic95_pp": [
+      0.122,
+      0.456
+     ],
+     "media_ponderada_pp": 0.389
+    }
+   }
+  },
+  "nota_did": "Para cada seção com urna trocada: variação da fatia de Flávio (ou do comparecimento) do 1º para o 2º turno menos a variação média das seções do mesmo município que mantiveram a urna (mínimo de 3). Em pontos percentuais; IC de 95% pela aproximação normal. Não é efeito causal: a troca de urna acontece por defeito, e defeito não é sorteado."
+ },
+ "ids_em_outra_secao": {
+  "urnas_em_outra_secao": 100,
+  "mesmo_municipio": 53,
+  "outro_municipio": 47,
+  "por_tipo_urna_2t": {
+   "1": 48,
+   "4": 33,
+   "3": 19
+  }
+ }
+}

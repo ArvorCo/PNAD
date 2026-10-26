@@ -3,3 +3,7 @@ project_id = "brvjvizqbyfamtxogvqf"
 [functions.receber-bu]
 # A PWA manda a chave publicavel (nao e JWT); a funcao nao autentica usuario, valida o BU.
 verify_jwt = false
+
+[functions.receber-relato]
+# O Politize-se manda a chave publicavel (nao e JWT); a funcao valida o relato e limita por IP.
+verify_jwt = false

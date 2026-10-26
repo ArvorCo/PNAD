@@ -1,0 +1,1433 @@
+{
+ "gerado_em": "2026-10-26T13:08:42+00:00",
+ "rotulo": "pede explicação, não prova irregularidade",
+ "estado": "completo",
+ "formato_vsc": "Arquivo DER com três blocos: assinatura de software do TSE (usuário SEVIN), assinatura de hardware da urna (usuário UEAO e a série da urna) e um rodapé com o código do modelo (13, 15, 20, 22) e o algoritmo da chave de hardware. Cada bloco lista os arquivos da seção (bu.dat, rdv.dat, jufa.dat, imgbu.dat, imgze.dat, hash.dat, wsqbio.jez, wsqman.jez, wsqmes.jez, mr.ver, log.jez; no sistema de apuração, busa.dat e logsa.jez) com tamanho, SHA-512 e assinatura. O bloco de hardware termina no certificado X.509 da urna: PEM e Ed521 nas UE2020 e UE2022 (AC UE2020 e AC UE2022), DER e ECDSA P-521 nas UE2013 e UE2015 (AC URNA). A urna assina o SHA-512 do resumo SHA-512, a mesma regra do QR Code do BU.",
+ "cobertura": {
+  "bu_1t": 499187,
+  "bu_2t": 499207,
+  "vsc_2t": "517.179 seções tentadas (ok 499.207, agregada 17.931, sem_vsc 41) para 499.207 BUs",
+  "vsc_1t": "8.540 seções tentadas (ok 8.108, agregada 432) para 499.187 BUs",
+  "vsc_detalhe": {
+   "1t": {
+    "status": {
+     "ok": 8108,
+     "agregada": 432
+    },
+    "arquivos_listados": 89188,
+    "arquivos_com_nome_de_outra_secao": 0
+   },
+   "2t": {
+    "status": {
+     "ok": 499207,
+     "agregada": 17931,
+     "sem_vsc": 41
+    },
+    "arquivos_listados": 5487289,
+    "arquivos_com_nome_de_outra_secao": 0
+   }
+  },
+  "logs_2t": {
+   "banco": "data/outputs/logs_urnas_2t_2026.sqlite",
+   "secoes": 499176,
+   "com_metadados_urna": 499176,
+   "com_cargas_log": 499176
+  },
+  "logs_2t_texto": "499.176 seções, 499.176 com metadados da urna"
+ },
+ "explicacoes": {
+  "preenchimento": "Valor de preenchimento (zeros), usado por arquivos do sistema de apuração e da votação recuperada",
+  "sistema_apuracao": "Sistema de apuração: o equipamento da junta responde por várias seções",
+  "red": "Votação recuperada (RED)",
+  "agregada": "Seção agregada a outra",
+  "mesma_urna": "A mesma urna responde pelas seções (troca, reserva ou contingência com horários compatíveis)",
+  "contingencia": "Contingência, reserva ou recarga declarada no BU",
+  "midia_compartilhada": "Mídia ou computador compartilhado dentro da zona ou da UF, como previsto",
+  "mr_mesma_serie_na_zona": "Memórias de resultado com o mesmo número de série em várias urnas da mesma zona (candidata: lote de mídias com série de fábrica repetida; não confirmada pelo TSE)",
+  "colisao_32_bits": "Coincidência de identificador de 4 bytes entre urnas diferentes, dentro do esperado ao acaso",
+  "sem_explicacao": "Sem explicação pela regra"
+ },
+ "turnos": {
+  "2t": {
+   "repeticao": {
+    "numero_interno_urna": {
+     "campo": "numero_interno_urna",
+     "fonte": "BU",
+     "escopo": "urna",
+     "descricao": "Número interno da urna",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499180,
+     "grupos_repetidos": 2,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 20,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 2,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 2
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "codigo_carga": {
+     "campo": "codigo_carga",
+     "fonte": "BU",
+     "escopo": "urna",
+     "descricao": "Código da carga",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499180,
+     "grupos_repetidos": 2,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 20,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 2,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 2
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "numero_serie_fv": {
+     "campo": "numero_serie_fv",
+     "fonte": "BU",
+     "escopo": "urna",
+     "descricao": "Número de série da flash de votação (FV)",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499149,
+     "grupos_repetidos": 30,
+     "secoes_em_grupos": 88,
+     "maior_grupo": 30,
+     "por_explicacao": {
+      "preenchimento": {
+       "grupos": 1,
+       "secoes": 30
+      },
+      "colisao_32_bits": {
+       "grupos": 29,
+       "secoes": 58
+      }
+     },
+     "por_geografia": {
+      "ufs_diferentes": 27,
+      "mesma_uf": 3
+     },
+     "colisao_aleatoria": {
+      "n": 499177,
+      "bits": 32,
+      "pares_esperados": 29.01,
+      "limite_999": 47,
+      "pares_observados": 29,
+      "dentro_do_esperado": true
+     },
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "numero_serie_fc": {
+     "campo": "numero_serie_fc",
+     "fonte": "BU",
+     "escopo": "compartilhado",
+     "descricao": "Número de série da mídia de carga (FC)",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 23170,
+     "grupos_repetidos": 22919,
+     "secoes_em_grupos": 498956,
+     "maior_grupo": 125,
+     "por_explicacao": {
+      "midia_compartilhada": {
+       "grupos": 22919,
+       "secoes": 498956
+      }
+     },
+     "por_geografia": {
+      "mesmo_local": 2350,
+      "mesma_zona": 19716,
+      "mesma_uf": 764,
+      "mesmo_municipio": 89
+     },
+     "colisao_aleatoria": {
+      "n": 23170,
+      "bits": 32,
+      "pares_esperados": 0.06,
+      "limite_999": 2,
+      "pares_observados": 0,
+      "dentro_do_esperado": true
+     },
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     },
+     "tamanho_dos_grupos": {
+      "mediana": 20.0,
+      "p99": 61.0
+     }
+    },
+    "gerador_midia": {
+     "campo": "gerador_midia",
+     "fonte": "BU",
+     "escopo": "compartilhado",
+     "descricao": "Computador que gerou a mídia de carga (nome, TPM, instalação)",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 2479,
+     "grupos_repetidos": 2435,
+     "secoes_em_grupos": 499163,
+     "maior_grupo": 3599,
+     "por_explicacao": {
+      "midia_compartilhada": {
+       "grupos": 2435,
+       "secoes": 499163
+      }
+     },
+     "por_geografia": {
+      "mesma_zona": 932,
+      "mesma_uf": 1467,
+      "mesmo_municipio": 30,
+      "mesmo_local": 6
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     },
+     "tamanho_dos_grupos": {
+      "mediana": 148.0,
+      "p99": 1100.619999999999
+     }
+    },
+    "versao_votacao": {
+     "campo": "versao_votacao",
+     "fonte": "BU",
+     "escopo": "global",
+     "descricao": "Versão do software de votação",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 1,
+     "valores": [
+      {
+       "valor": "10.23.0.0 - Praia da Barra do Cahy",
+       "secoes": 499207
+      }
+     ],
+     "coerente": true
+    },
+    "bu_sha256": {
+     "campo": "bu_sha256",
+     "fonte": "BU",
+     "escopo": "secao",
+     "descricao": "SHA-256 do arquivo do BU",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499207,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "hash_transmissao": {
+     "campo": "hash_transmissao",
+     "fonte": "BU",
+     "escopo": "secao",
+     "descricao": "Hash de transmissão (diretório do aux)",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499207,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "vsc_sha256": {
+     "campo": "vsc_sha256",
+     "fonte": ".vsc",
+     "escopo": "secao",
+     "descricao": "SHA-256 do arquivo .vsc",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499207,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "hw_serial": {
+     "campo": "hw_serial",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "Série da urna na assinatura de hardware",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499179,
+     "grupos_repetidos": 3,
+     "secoes_em_grupos": 31,
+     "maior_grupo": 20,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 2,
+       "secoes": 29
+      },
+      "red": {
+       "grupos": 1,
+       "secoes": 2
+      }
+     },
+     "por_geografia": {
+      "mesma_zona": 1,
+      "mesma_uf": 2
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "cert_sha256": {
+     "campo": "cert_sha256",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "SHA-256 do certificado de hardware",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499179,
+     "grupos_repetidos": 3,
+     "secoes_em_grupos": 31,
+     "maior_grupo": 20,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 2,
+       "secoes": 29
+      },
+      "red": {
+       "grupos": 1,
+       "secoes": 2
+      }
+     },
+     "por_geografia": {
+      "mesma_zona": 1,
+      "mesma_uf": 2
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "cert_chave_sha256": {
+     "campo": "cert_chave_sha256",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "SHA-256 da chave pública do certificado",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499179,
+     "grupos_repetidos": 3,
+     "secoes_em_grupos": 31,
+     "maior_grupo": 20,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 2,
+       "secoes": 29
+      },
+      "red": {
+       "grupos": 1,
+       "secoes": 2
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 2,
+      "mesma_zona": 1
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "cert_serial_ac": {
+     "campo": "cert_serial_ac",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "Número de série do certificado dentro da AC emissora",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 499179,
+     "grupos_repetidos": 3,
+     "secoes_em_grupos": 31,
+     "maior_grupo": 20,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 2,
+       "secoes": 29
+      },
+      "red": {
+       "grupos": 1,
+       "secoes": 2
+      }
+     },
+     "por_geografia": {
+      "mesma_zona": 1,
+      "mesma_uf": 2
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "sw_serial": {
+     "campo": "sw_serial",
+     "fonte": ".vsc",
+     "escopo": "global",
+     "descricao": "Chave de software do TSE (série)",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 1,
+     "valores": [
+      {
+       "valor": "20260708",
+       "secoes": 499207
+      }
+     ],
+     "coerente": true
+    },
+    "sw_chave_data": {
+     "campo": "sw_chave_data",
+     "fonte": ".vsc",
+     "escopo": "global",
+     "descricao": "Data da chave de software do TSE",
+     "secoes_com_valor": 499207,
+     "valores_distintos": 1,
+     "valores": [
+      {
+       "valor": "202607021654",
+       "secoes": 499207
+      }
+     ],
+     "coerente": true
+    },
+    "log_serie_mr_dia": {
+     "campo": "log_serie_mr_dia",
+     "fonte": "log",
+     "escopo": "urna",
+     "descricao": "Número de série da memória de resultado (MR) no log, no dia da eleição",
+     "secoes_com_valor": 497718,
+     "valores_distintos": 496267,
+     "grupos_repetidos": 41,
+     "secoes_em_grupos": 1591,
+     "maior_grupo": 1212,
+     "por_explicacao": {
+      "red": {
+       "grupos": 2,
+       "secoes": 13
+      },
+      "mr_mesma_serie_na_zona": {
+       "grupos": 9,
+       "secoes": 1518
+      },
+      "colisao_32_bits": {
+       "grupos": 30,
+       "secoes": 60
+      }
+     },
+     "por_geografia": {
+      "mesmo_municipio": 2,
+      "mesma_uf": 5,
+      "ufs_diferentes": 25,
+      "mesma_zona": 8,
+      "mesmo_local": 1
+     },
+     "colisao_aleatoria": {
+      "n": 497817,
+      "bits": 32,
+      "pares_esperados": 28.85,
+      "limite_999": 47,
+      "pares_observados": 30,
+      "dentro_do_esperado": true
+     },
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "log_midia_votacao_computador": {
+     "campo": "log_midia_votacao_computador",
+     "fonte": "log",
+     "escopo": "compartilhado",
+     "descricao": "Computador que gerou a mídia de votação, no log do dia",
+     "secoes_com_valor": 497839,
+     "valores_distintos": 3471,
+     "grupos_repetidos": 3356,
+     "secoes_em_grupos": 497732,
+     "maior_grupo": 2092,
+     "por_explicacao": {
+      "midia_compartilhada": {
+       "grupos": 3356,
+       "secoes": 497732
+      }
+     },
+     "por_geografia": {
+      "mesma_zona": 1565,
+      "mesma_uf": 1700,
+      "mesmo_municipio": 82,
+      "mesmo_local": 9
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     },
+     "tamanho_dos_grupos": {
+      "mediana": 112.0,
+      "p99": 856.6499999999933
+     }
+    },
+    "log_midias": {
+     "campo": "log_midias",
+     "fonte": "log",
+     "escopo": "compartilhado",
+     "descricao": "Identificador da mídia de carga no log",
+     "secoes_com_valor": 499176,
+     "valores_distintos": 23225,
+     "grupos_repetidos": 22971,
+     "secoes_em_grupos": 503019,
+     "maior_grupo": 127,
+     "por_explicacao": {
+      "midia_compartilhada": {
+       "grupos": 22971,
+       "secoes": 503019
+      }
+     },
+     "por_geografia": {
+      "mesmo_local": 2267,
+      "mesma_zona": 19412,
+      "mesma_uf": 1130,
+      "mesmo_municipio": 162
+     },
+     "colisao_aleatoria": {
+      "n": 23225,
+      "bits": 32,
+      "pares_esperados": 0.06,
+      "limite_999": 2,
+      "pares_observados": 0,
+      "dentro_do_esperado": true
+     },
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     },
+     "tamanho_dos_grupos": {
+      "mediana": 20.0,
+      "p99": 61.0
+     }
+    },
+    "log_midia_computador": {
+     "campo": "log_midia_computador",
+     "fonte": "log",
+     "escopo": "compartilhado",
+     "descricao": "Computador da mídia de carga no log",
+     "secoes_com_valor": 12214,
+     "valores_distintos": 2164,
+     "grupos_repetidos": 1723,
+     "secoes_em_grupos": 12233,
+     "maior_grupo": 137,
+     "por_explicacao": {
+      "midia_compartilhada": {
+       "grupos": 1723,
+       "secoes": 12233
+      }
+     },
+     "por_geografia": {
+      "mesma_zona": 909,
+      "mesma_uf": 733,
+      "mesmo_local": 28,
+      "mesmo_municipio": 53
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     },
+     "tamanho_dos_grupos": {
+      "mediana": 4.0,
+      "p99": 40.77999999999997
+     }
+    },
+    "log_versao": {
+     "campo": "log_versao",
+     "fonte": "log",
+     "escopo": "global",
+     "descricao": "Versão da aplicação no log",
+     "secoes_com_valor": 499176,
+     "valores_distintos": 1,
+     "valores": [
+      {
+       "valor": "10.23.0.0 - Praia da Barra do Cahy",
+       "secoes": 499176
+      }
+     ],
+     "coerente": true
+    }
+   },
+   "coerencia_vsc": {
+    "secoes_vsc_ok": 499207,
+    "origem": {
+     "vota": 499178,
+     "sa": 29
+    },
+    "mesmo_hash_do_bu": {
+     "sim": 499207,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "votacao_recuperada_assinada_por_outra_urna": 3,
+    "id_bu_igual_serie_hw": {
+     "sim": 499191,
+     "nao": 0
+    },
+    "cn_do_certificado_igual_serie_hw": {
+     "sim": 499207,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "modelo_vsc_igual_bu": {
+     "sim": 499178,
+     "nao": 0
+    },
+    "ac_compativel_com_modelo": {
+     "sim": 499207,
+     "nao": 0
+    },
+    "por_ac": {
+     "AC UE2020": 200504,
+     "AC UE2022": 198746,
+     "AC URNA": 99957
+    },
+    "cadeia_ate_a_ac": {
+     "sim": 499207,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "autoassinatura_hw": {
+     "sim": 499207,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "assinatura_hw_do_bu": {
+     "sim": 499207,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "bu_publicado_igual_ao_vsc": {
+     "sim": 499207,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "listas_sw_hw_iguais": {
+     "sim": 499207,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "certificado_valido_no_dia": {
+     "sim": 499207,
+     "nao": 0
+    },
+    "minutos_vsc_depois_da_emissao": {
+     "n": 499162,
+     "mediana": 0.8,
+     "p99": 3.58,
+     "min": 0.43,
+     "max": 190.27
+    },
+    "falhas": {
+     "id_bu_diferente_da_serie_hw": 0,
+     "modelo_vsc_diferente_do_bu": 0,
+     "ac_incompativel_com_modelo": 0,
+     "cadeia_valida_falso": 0,
+     "hw_assinatura_ok_falso": 0,
+     "hw_bu_assinatura_ok_falso": 0,
+     "listas_ok_falso": 0,
+     "hw_resumo_ok_falso": 0,
+     "sw_resumo_ok_falso": 0,
+     "cn_confere_usuario_falso": 0,
+     "bu_diferente_do_vsc": 0,
+     "certificado_fora_da_validade": 0,
+     "vsc_antes_da_emissao_do_bu": 0,
+     "vsc_mais_de_4h_depois_da_emissao": 0
+    }
+   }
+  },
+  "1t": {
+   "repeticao": {
+    "numero_interno_urna": {
+     "campo": "numero_interno_urna",
+     "fonte": "BU",
+     "escopo": "urna",
+     "descricao": "Número interno da urna",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499159,
+     "grupos_repetidos": 1,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 29,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 1,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 1
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "codigo_carga": {
+     "campo": "codigo_carga",
+     "fonte": "BU",
+     "escopo": "urna",
+     "descricao": "Código da carga",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499159,
+     "grupos_repetidos": 1,
+     "secoes_em_grupos": 29,
+     "maior_grupo": 29,
+     "por_explicacao": {
+      "sistema_apuracao": {
+       "grupos": 1,
+       "secoes": 29
+      }
+     },
+     "por_geografia": {
+      "mesma_uf": 1
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "numero_serie_fv": {
+     "campo": "numero_serie_fv",
+     "fonte": "BU",
+     "escopo": "urna",
+     "descricao": "Número de série da flash de votação (FV)",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499122,
+     "grupos_repetidos": 31,
+     "secoes_em_grupos": 96,
+     "maior_grupo": 36,
+     "por_explicacao": {
+      "preenchimento": {
+       "grupos": 1,
+       "secoes": 36
+      },
+      "colisao_32_bits": {
+       "grupos": 30,
+       "secoes": 60
+      }
+     },
+     "por_geografia": {
+      "ufs_diferentes": 28,
+      "mesma_uf": 3
+     },
+     "colisao_aleatoria": {
+      "n": 499151,
+      "bits": 32,
+      "pares_esperados": 29.01,
+      "limite_999": 47,
+      "pares_observados": 30,
+      "dentro_do_esperado": true
+     },
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "numero_serie_fc": {
+     "campo": "numero_serie_fc",
+     "fonte": "BU",
+     "escopo": "compartilhado",
+     "descricao": "Número de série da mídia de carga (FC)",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 23067,
+     "grupos_repetidos": 22888,
+     "secoes_em_grupos": 499008,
+     "maior_grupo": 126,
+     "por_explicacao": {
+      "midia_compartilhada": {
+       "grupos": 22888,
+       "secoes": 499008
+      }
+     },
+     "por_geografia": {
+      "mesmo_local": 2418,
+      "mesma_zona": 19995,
+      "mesma_uf": 447,
+      "mesmo_municipio": 28
+     },
+     "colisao_aleatoria": {
+      "n": 23067,
+      "bits": 32,
+      "pares_esperados": 0.06,
+      "limite_999": 2,
+      "pares_observados": 0,
+      "dentro_do_esperado": true
+     },
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     },
+     "tamanho_dos_grupos": {
+      "mediana": 20.0,
+      "p99": 61.0
+     }
+    },
+    "gerador_midia": {
+     "campo": "gerador_midia",
+     "fonte": "BU",
+     "escopo": "compartilhado",
+     "descricao": "Computador que gerou a mídia de carga (nome, TPM, instalação)",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 2453,
+     "grupos_repetidos": 2422,
+     "secoes_em_grupos": 499156,
+     "maior_grupo": 3593,
+     "por_explicacao": {
+      "midia_compartilhada": {
+       "grupos": 2422,
+       "secoes": 499156
+      }
+     },
+     "por_geografia": {
+      "mesma_zona": 942,
+      "mesma_uf": 1455,
+      "mesmo_municipio": 20,
+      "mesmo_local": 5
+     },
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     },
+     "tamanho_dos_grupos": {
+      "mediana": 148.0,
+      "p99": 1101.5299999999997
+     }
+    },
+    "versao_votacao": {
+     "campo": "versao_votacao",
+     "fonte": "BU",
+     "escopo": "global",
+     "descricao": "Versão do software de votação",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 1,
+     "valores": [
+      {
+       "valor": "10.23.0.0 - Praia da Barra do Cahy",
+       "secoes": 499187
+      }
+     ],
+     "coerente": true
+    },
+    "bu_sha256": {
+     "campo": "bu_sha256",
+     "fonte": "BU",
+     "escopo": "secao",
+     "descricao": "SHA-256 do arquivo do BU",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499187,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "hash_transmissao": {
+     "campo": "hash_transmissao",
+     "fonte": "BU",
+     "escopo": "secao",
+     "descricao": "Hash de transmissão (diretório do aux)",
+     "secoes_com_valor": 499187,
+     "valores_distintos": 499187,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "vsc_sha256": {
+     "campo": "vsc_sha256",
+     "fonte": ".vsc",
+     "escopo": "secao",
+     "descricao": "SHA-256 do arquivo .vsc",
+     "secoes_com_valor": 8108,
+     "valores_distintos": 8108,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "hw_serial": {
+     "campo": "hw_serial",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "Série da urna na assinatura de hardware",
+     "secoes_com_valor": 8108,
+     "valores_distintos": 8108,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "cert_sha256": {
+     "campo": "cert_sha256",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "SHA-256 do certificado de hardware",
+     "secoes_com_valor": 8108,
+     "valores_distintos": 8108,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "cert_chave_sha256": {
+     "campo": "cert_chave_sha256",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "SHA-256 da chave pública do certificado",
+     "secoes_com_valor": 8108,
+     "valores_distintos": 8108,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "cert_serial_ac": {
+     "campo": "cert_serial_ac",
+     "fonte": ".vsc",
+     "escopo": "urna",
+     "descricao": "Número de série do certificado dentro da AC emissora",
+     "secoes_com_valor": 8108,
+     "valores_distintos": 8108,
+     "grupos_repetidos": 0,
+     "secoes_em_grupos": 0,
+     "maior_grupo": 0,
+     "por_explicacao": {},
+     "por_geografia": {},
+     "colisao_aleatoria": null,
+     "sem_explicacao": {
+      "grupos": 0,
+      "secoes": 0,
+      "casos": []
+     }
+    },
+    "sw_serial": {
+     "campo": "sw_serial",
+     "fonte": ".vsc",
+     "escopo": "global",
+     "descricao": "Chave de software do TSE (série)",
+     "secoes_com_valor": 8108,
+     "valores_distintos": 1,
+     "valores": [
+      {
+       "valor": "20260708",
+       "secoes": 8108
+      }
+     ],
+     "coerente": true
+    },
+    "sw_chave_data": {
+     "campo": "sw_chave_data",
+     "fonte": ".vsc",
+     "escopo": "global",
+     "descricao": "Data da chave de software do TSE",
+     "secoes_com_valor": 8108,
+     "valores_distintos": 1,
+     "valores": [
+      {
+       "valor": "202607021654",
+       "secoes": 8108
+      }
+     ],
+     "coerente": true
+    },
+    "log_serie_mr_dia": {
+     "campo": "log_serie_mr_dia",
+     "fonte": "log",
+     "escopo": "urna",
+     "descricao": "Número de série da memória de resultado (MR) no log, no dia da eleição",
+     "secoes_com_valor": 0,
+     "situacao": "sem dados"
+    },
+    "log_midia_votacao_computador": {
+     "campo": "log_midia_votacao_computador",
+     "fonte": "log",
+     "escopo": "compartilhado",
+     "descricao": "Computador que gerou a mídia de votação, no log do dia",
+     "secoes_com_valor": 0,
+     "situacao": "sem dados"
+    },
+    "log_midias": {
+     "campo": "log_midias",
+     "fonte": "log",
+     "escopo": "compartilhado",
+     "descricao": "Identificador da mídia de carga no log",
+     "secoes_com_valor": 0,
+     "situacao": "sem dados"
+    },
+    "log_midia_computador": {
+     "campo": "log_midia_computador",
+     "fonte": "log",
+     "escopo": "compartilhado",
+     "descricao": "Computador da mídia de carga no log",
+     "secoes_com_valor": 0,
+     "situacao": "sem dados"
+    },
+    "log_versao": {
+     "campo": "log_versao",
+     "fonte": "log",
+     "escopo": "global",
+     "descricao": "Versão da aplicação no log",
+     "secoes_com_valor": 0,
+     "situacao": "sem dados"
+    }
+   },
+   "coerencia_vsc": {
+    "secoes_vsc_ok": 8108,
+    "origem": {
+     "vota": 8108
+    },
+    "mesmo_hash_do_bu": {
+     "sim": 8108,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "votacao_recuperada_assinada_por_outra_urna": 0,
+    "id_bu_igual_serie_hw": {
+     "sim": 8108,
+     "nao": 0
+    },
+    "cn_do_certificado_igual_serie_hw": {
+     "sim": 8108,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "modelo_vsc_igual_bu": {
+     "sim": 8108,
+     "nao": 0
+    },
+    "ac_compativel_com_modelo": {
+     "sim": 8108,
+     "nao": 0
+    },
+    "por_ac": {
+     "AC UE2022": 4150,
+     "AC UE2020": 3958
+    },
+    "cadeia_ate_a_ac": {
+     "sim": 8108,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "autoassinatura_hw": {
+     "sim": 8108,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "assinatura_hw_do_bu": {
+     "sim": 8108,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "bu_publicado_igual_ao_vsc": {
+     "sim": 8108,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "listas_sw_hw_iguais": {
+     "sim": 8108,
+     "nao": 0,
+     "sem_dado": 0
+    },
+    "certificado_valido_no_dia": {
+     "sim": 8108,
+     "nao": 0
+    },
+    "minutos_vsc_depois_da_emissao": {
+     "n": 8108,
+     "mediana": 1.05,
+     "p99": 4.43,
+     "min": 0.62,
+     "max": 17.22
+    },
+    "falhas": {
+     "id_bu_diferente_da_serie_hw": 0,
+     "modelo_vsc_diferente_do_bu": 0,
+     "ac_incompativel_com_modelo": 0,
+     "cadeia_valida_falso": 0,
+     "hw_assinatura_ok_falso": 0,
+     "hw_bu_assinatura_ok_falso": 0,
+     "listas_ok_falso": 0,
+     "hw_resumo_ok_falso": 0,
+     "sw_resumo_ok_falso": 0,
+     "cn_confere_usuario_falso": 0,
+     "bu_diferente_do_vsc": 0,
+     "certificado_fora_da_validade": 0,
+     "vsc_antes_da_emissao_do_bu": 0,
+     "vsc_mais_de_4h_depois_da_emissao": 0
+    }
+   }
+  }
+ },
+ "entre_turnos_vsc": {
+  "secoes_com_vsc_nos_dois_turnos": 8108,
+  "mesma_urna_mesmo_certificado": 8009,
+  "urna_trocada_certificado_trocado": 99,
+  "mesma_urna_certificado_diferente": 0,
+  "urna_diferente_mesmo_certificado": 0,
+  "certificado_do_1t_em_outra_secao_no_2t": 2,
+  "certificado_do_1t_em_outra_secao_no_2t_casos": [
+   {
+    "secao_2t": "ac/01015/2/88",
+    "secao_1t": "ac/01015/2/93",
+    "serie_hw": "2264191"
+   },
+   {
+    "secao_2t": "ro/00035/20/116",
+    "secao_1t": "ro/00035/20/243",
+    "serie_hw": "2251902"
+   }
+  ],
+  "carga": {
+   "secoes_nos_dois_turnos": 499187,
+   "mesma_urna_mesma_carga": 494394,
+   "mesma_urna_carga_nova": 359,
+   "urna_trocada": 4434,
+   "urna_trocada_mesma_carga": 0,
+   "carga_nova_entre_os_turnos": 359,
+   "carga_nova_fora_do_intervalo": 0,
+   "carga_nova_por_dia": {
+    "2026-10-14": 16,
+    "2026-10-15": 70,
+    "2026-10-16": 87,
+    "2026-10-17": 49,
+    "2026-10-18": 45,
+    "2026-10-19": 40,
+    "2026-10-20": 15,
+    "2026-10-21": 16,
+    "2026-10-22": 7,
+    "2026-10-23": 11,
+    "2026-10-24": 3
+   }
+  }
+ },
+ "coerencia_logs": {
+  "secoes_com_log": 499176,
+  "id_do_bu_no_log": {
+   "cobertas": 499176,
+   "confere": 499176,
+   "nao_confere": 0
+  },
+  "carga_do_bu_no_log": {
+   "cobertas": 499176,
+   "confere": 499176,
+   "nao_confere": 0
+  },
+  "midia_fc_do_bu_no_log": {
+   "cobertas": 499176,
+   "confere": 499176,
+   "nao_confere": 0
+  },
+  "computador_da_midia_no_log": {
+   "cobertas": 12214,
+   "confere": 12214,
+   "nao_confere": 0
+  },
+  "versao_do_bu_no_log": {
+   "cobertas": 499176,
+   "confere": 499176,
+   "nao_confere": 0
+  },
+  "carga_registrada_vs_abertura": {
+   "cobertas": 499176,
+   "carga_antes_da_abertura": 499176,
+   "carga_depois_da_abertura_no_log": 5,
+   "das_quais_bu_registra_carga_antes": 5,
+   "carga_depois_da_abertura": 0,
+   "carga_no_dia_da_eleicao": 1,
+   "carga_por_mes": {
+    "2026-08": 8,
+    "2026-09": 491600,
+    "2026-10": 7568
+   }
+  },
+  "reinicios_durante_votacao": {
+   "cobertas": 499176,
+   "secoes_com_reinicio": 12378,
+   "distribuicao": {
+    "0": 486798,
+    "1": 9196,
+    "2": 1772,
+    "3": 667,
+    "4": 336,
+    "5": 167,
+    "6": 92,
+    "7": 55,
+    "8": 35,
+    "9": 20,
+    "10": 8,
+    "11": 13,
+    "12": 7,
+    "13": 2,
+    "14": 3,
+    "16": 1,
+    "17": 2,
+    "20": 1,
+    "21": 1
+   }
+  },
+  "partidas_do_vota_no_dia": {
+   "0": 1337,
+   "1": 474619,
+   "2": 18200,
+   "3": 2729,
+   "4": 1043,
+   "5": 540,
+   "6": 279,
+   "7": 166,
+   "8": 99,
+   "9": 72,
+   "10": 27,
+   "11": 18,
+   "12": 11,
+   "13": 16,
+   "14": 7,
+   "15": 4,
+   "16": 2,
+   "17": 2,
+   "18": 2,
+   "19": 1,
+   "21": 1,
+   "23": 1
+  },
+  "urna_do_bu_no_log_pelo_processamento": {
+   "sim": 499176,
+   "nao": 0,
+   "sem_dado": 0
+  },
+  "carga_do_bu_no_log_pelo_processamento": {
+   "sim": 499176,
+   "nao": 0,
+   "sem_dado": 0
+  },
+  "secoes_com_outra_urna_no_log": 1839
+ },
+ "voto": [
+  {
+   "grupo": "mr_mesma_serie_na_zona",
+   "n": 306,
+   "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+    "n": 306,
+    "media_pp": 2.526,
+    "ep_pp": 0.5,
+    "ic95_pp": [
+     1.546,
+     3.507
+    ]
+   },
+   "dif_em_dif_contra_1t": {
+    "n": 306,
+    "media_pp": 0.073,
+    "ep_pp": 0.133,
+    "ic95_pp": [
+     -0.188,
+     0.334
+    ]
+   },
+   "nota": "Média simples por seção, 3+ vizinhas: sensibilidade. O número publicado no dossiê (capítulo logs, logs.json, metadados.serie_mr.voto_estruturais_brasil) usa os mesmos grupos, ponderado pelos votos dos dois finalistas e com 5+ vizinhas."
+  },
+  {
+   "grupo": "mr_mesma_serie_na_zona_exterior",
+   "n": 1212,
+   "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+    "n": 123,
+    "media_pp": -4.2,
+    "ep_pp": 1.277,
+    "ic95_pp": [
+     -6.702,
+     -1.697
+    ]
+   },
+   "dif_em_dif_contra_1t": {
+    "n": 123,
+    "media_pp": -1.679,
+    "ep_pp": 0.27,
+    "ic95_pp": [
+     -2.208,
+     -1.151
+    ]
+   },
+   "nota": "Exterior separado: a vizinhança é a cidade do consulado, onde quase todas as seções têm a mesma série; sensibilidade, não resultado."
+  },
+  {
+   "grupo": "mesma_urna_carga_nova",
+   "n": 359,
+   "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+    "n": 359,
+    "media_pp": -0.595,
+    "ep_pp": 0.366,
+    "ic95_pp": [
+     -1.313,
+     0.123
+    ]
+   },
+   "dif_em_dif_contra_1t": {
+    "n": 359,
+    "media_pp": -0.164,
+    "ep_pp": 0.111,
+    "ic95_pp": [
+     -0.382,
+     0.054
+    ]
+   }
+  },
+  {
+   "grupo": "data_de_carga_do_log_diverge_do_bu",
+   "n": 5,
+   "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+    "n": 5,
+    "media_pp": -1.946,
+    "ep_pp": 2.55,
+    "ic95_pp": [
+     -6.945,
+     3.052
+    ]
+   },
+   "dif_em_dif_contra_1t": {
+    "n": 5,
+    "media_pp": 0.216,
+    "ep_pp": 1.842,
+    "ic95_pp": [
+     -3.394,
+     3.826
+    ]
+   }
+  },
+  {
+   "grupo": "reinicio_durante_votacao",
+   "n": 12378,
+   "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+    "n": 12334,
+    "media_pp": -0.104,
+    "ep_pp": 0.07,
+    "ic95_pp": [
+     -0.242,
+     0.034
+    ]
+   },
+   "dif_em_dif_contra_1t": {
+    "n": 12334,
+    "media_pp": -0.015,
+    "ep_pp": 0.019,
+    "ic95_pp": [
+     -0.053,
+     0.022
+    ]
+   }
+  },
+  {
+   "grupo": "qualquer sinal fora da regra (exceto recarga entre turnos, reinício, MR repetida na zona e data de carga do log)",
+   "n": 0
+  }
+ ],
+ "pendencias": [
+  "`.vsc` do 1º turno parcial: a comparação de certificado entre turnos cobre só as seções já lidas.",
+  "A assinatura de software (SEVIN, algoritmo 3 de 256 bits) não é verificada; só o resumo SHA-512 dela."
+ ]
+}

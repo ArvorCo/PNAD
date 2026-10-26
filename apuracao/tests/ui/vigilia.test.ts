@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { escreverHash, lerHash } from "../../src/ui/control/router.ts";
-import { baseDe, resolverAlvo, textoRetomada, versaoNova } from "../../src/ui/control/vigilia.ts";
+import { baseDe, paradaLonga, quaseCompleta, resolverAlvo, textoRetomada, versaoNova } from "../../src/ui/control/vigilia.ts";
 import type { Estado } from "../../src/ui/state/types.ts";
 
 const estado = (st: number, ufs: Record<string, number>, dt = "2026-10-25T20:06:00.000Z"): Estado =>
@@ -43,4 +43,21 @@ describe("versão nova", () => {
   test("só uma UF maior não conta: os arquivos de UF se alinham ao nacional depois da parada", () => expect(versaoNova(base, estado(1225, { SP: 100, MG: 80 }))).toBeNull());
   test("só a hora mudou não conta", () => expect(versaoNova(base, estado(1225, { SP: 100, MG: 50 }, "2026-10-25T22:10:00.000Z"))).toBeNull());
   test("texto", () => expect(textoRetomada("19:04", 75)).toBe("divulgação retomada às 19:04: 75 seções novas"));
+});
+
+describe("paradaLonga com apuração quase completa", () => {
+  const quase = (st: number, ts: number): Estado => {
+    const e = estado(st, {});
+    e.br.ts = ts;
+    e.br.idade_s = 3_600;
+    return e;
+  };
+  test("faltando 2 de 499.248 seções não é parada e não toca a vinheta de novo", () => {
+    expect(quaseCompleta(quase(499_246, 499_248))).toBe(true);
+    expect(paradaLonga(quase(499_246, 499_248))).toBe(false);
+  });
+  test("com 1% faltando e uma hora sem versão continua sendo parada", () => {
+    expect(quaseCompleta(quase(494_000, 499_248))).toBe(false);
+    expect(paradaLonga(quase(494_000, 499_248))).toBe(true);
+  });
 });

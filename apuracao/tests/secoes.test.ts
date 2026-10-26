@@ -7,6 +7,7 @@ import { chaveZona, conferir } from "../scripts/secoes/conferencia.ts";
 import { secoesDoCs } from "../scripts/secoes/cs.ts";
 import { ClienteTse } from "../scripts/secoes/http.ts";
 import { lerZip, modeloDaUrna, resumirLog } from "../scripts/secoes/log-urna.ts";
+import { resolverPleito } from "../scripts/secoes/pleito.ts";
 import { coletarSecao, dataHoraTse, escolherHash, urlAux } from "../scripts/secoes/secao.ts";
 import type { ResultadoU } from "../src/parse/schemas.ts";
 import { RelogioFalso } from "../src/collector/relogio.ts";
@@ -259,5 +260,21 @@ describe("coleta e banco", () => {
     const corpo = new TextEncoder().encode(JSON.stringify({ st: "Não instalada", hashes: [] }));
     const sem = await coletarSecao(s, { obter: () => Promise.resolve({ status: 200, corpo, erro: null, requisicoes: 1 }), guardarLog: false });
     expect([sem.statusAux, sem.hash, sem.requisicoes]).toEqual(["Não instalada", null, 1]);
+  });
+});
+
+describe("pleito da coleta de seções", () => {
+  test("padrão é o 1º turno, com as eleições 6257 e 6259", () => {
+    expect(resolverPleito({})).toEqual({ codigo: "003220", numero: 3220, federal: 6257, estadual: 6259, turno: 1 });
+  });
+  test("2º turno pelo ambiente, com 6258 e 6260", () => {
+    expect(resolverPleito({ APURACAO_PLEITO: "3221" })).toEqual({ codigo: "003221", numero: 3221, federal: 6258, estadual: 6260, turno: 2 });
+  });
+  test("APURACAO_ELEICAO fora da tabela leva a estadual para federal + 2", () => {
+    expect(resolverPleito({ APURACAO_PLEITO: "003300", APURACAO_ELEICAO: "7000" })).toMatchObject({ federal: 7000, estadual: 7002, turno: null });
+  });
+  test("pleito desconhecido sem eleição e valor inválido falham", () => {
+    expect(() => resolverPleito({ APURACAO_PLEITO: "003300" })).toThrow();
+    expect(() => resolverPleito({ APURACAO_PLEITO: "abc" })).toThrow();
   });
 });
