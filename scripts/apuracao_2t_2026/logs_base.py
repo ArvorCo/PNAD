@@ -194,7 +194,7 @@ def _ler_sinais(publico: Path) -> pd.DataFrame:
 
 def _ler_secoes_bu() -> pd.DataFrame:
     d = _loads((DADOS / "secoes.json").read_bytes())
-    s = secoes_linhas.bloco(d)
+    s = secoes_linhas.exigir(d)
     df = pd.DataFrame(s["linhas"], columns=s["colunas"])
     df["mun"] = df["mun"].astype(str).str.zfill(5)
     keep = [

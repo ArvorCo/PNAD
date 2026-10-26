@@ -317,6 +317,8 @@ def test_voz_cobre_a_ordem(voz: dict, ordem: list[str]) -> None:
     for c in voz["cenas"]:
         assert c["segundos"] > 2, c["id"]
         assert c["palavras"] and c["palavras"][-1]["f"] <= c["segundos"] + 0.5, c["id"]
+        if not (VIDEO / "public" / "voz").is_dir():
+            pytest.skip("narração não versionada (public/voz fica fora do git)")
         assert (VIDEO / "public" / c["arquivo"]).exists(), c["arquivo"]
 
 

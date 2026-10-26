@@ -202,6 +202,7 @@ def main() -> None:
         "conferencia_api_fuso_uf": secoes_sinais.conferencia_api(x),
         "agregados": secoes_sinais.agregados(x, nomes),
         "prorrogacao": pror,
+        "reduzidos_thread": secoes_sinais.reduzidos_thread(x),
         "estimativa_nacional": (
             secoes_sinais.estimativa_nacional(x, ref.groupby("uf").size().to_dict())
             if fonte == "amostra"

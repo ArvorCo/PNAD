@@ -6,8 +6,10 @@ Com o banco completo, uma linha por seção passa de 100 MB. O script
 git) e deixa em ``secoes.json``, na chave ``secoes``, só o ponteiro: arquivo
 relativo à raiz, SHA-256, bytes, contagem de linhas e colunas. Quem precisa das
 linhas chama ``bloco(S)``; um ``secoes.json`` antigo, com as linhas embutidas,
-continua valendo. Sem o arquivo, ``bloco`` levanta ``LinhasAusentes`` com o
-comando que o refaz, em vez de devolver tabela vazia.
+continua valendo. Sem o arquivo (no CI, por desenho), ``bloco`` devolve um bloco
+vazio com ``disponivel: False``; cada leitor decide. Quem não pode seguir sem as
+linhas chama ``exigir(S)``, que levanta ``LinhasAusentes`` com o comando que as
+refaz. A thread lê só os agregados de ``secoes.json`` (``reduzidos_thread``).
 """
 
 from __future__ import annotations
@@ -83,20 +85,33 @@ def _ler(caminho_str: str, sha256: str) -> dict:
 
 
 def bloco(S: dict) -> dict:
-    """``{"colunas": [...], "linhas": [[...]]}`` das seções analisadas."""
+    """``{"disponivel", "colunas", "linhas"}``; vazio quando o arquivo falta."""
     p = S["secoes"]
     if "linhas" in p:
-        return p
+        return {"disponivel": True, **p}
     c = caminho(S)
     assert c is not None
     if not c.exists():
-        raise LinhasAusentes(
-            f"linhas por seção ausentes em {c}; secoes.json aponta para elas "
-            f"({p['n_linhas']} linhas). Refaça com: {COMANDO}"
-        )
+        return {
+            "disponivel": False,
+            "colunas": p["colunas"],
+            "linhas": [],
+            "arquivo": str(c),
+        }
     b = _ler(str(c), p["sha256"])
     if len(b["linhas"]) != p["n_linhas"] or b["colunas"] != p["colunas"]:
         raise ValueError(
             f"{c} não confere com o ponteiro de secoes.json; rode {COMANDO}"
+        )
+    return {"disponivel": True, **b}
+
+
+def exigir(S: dict) -> dict:
+    """Como ``bloco``, mas levanta ``LinhasAusentes`` quando o arquivo falta."""
+    b = bloco(S)
+    if not b["disponivel"]:
+        raise LinhasAusentes(
+            f"linhas por seção ausentes em {b['arquivo']}; secoes.json aponta para "
+            f"elas ({S['secoes']['n_linhas']} linhas). Refaça com: {COMANDO}"
         )
     return b

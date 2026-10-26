@@ -32,7 +32,7 @@ CAMINHOS=(
   # dossiê, thread, Politize-se, mapa
   docs/apuracao_2T_2026.html docs/apuracao_2T_2026_thread.html
   docs/politizese.html docs/politizese_mapa.html docs/politize-se/ docs/politizesuavizinhanca.html
-  docs/index.html docs/logs_urnas_2026.html
+  docs/index.html docs/logs_urnas_2026.html docs/apuracao_1o_turno_2026.html docs/fiscais_thread.html
   docs/assets/apuracao_2t/ docs/assets/politize_se/ docs/assets/politize_se_mapa/
   docs/assets/logs_urnas_2t_2026/ docs/assets/logs_urnas_2026/
   docs/img/apuracao_2t/ docs/img/apuracao_2t_thread/
@@ -59,7 +59,7 @@ CAMINHOS=(
   AGENTS.md .gitignore .gitattributes requirements.txt
 )
 # scripts soltos do dossiê, pelo padrão de nome
-for f in scripts/apuracao-2t-2026-*.py scripts/politize-se-*.py scripts/video-apuracao-2t-*.py tests/test_apuracao_2t_*.py tests/test_politize_se*.py; do
+for f in scripts/video-masterclass-*.py tests/test_video_masterclass.py scripts/apuracao-2t-2026-*.py scripts/politize-se-*.py scripts/video-apuracao-2t-*.py tests/test_apuracao_2t_*.py tests/test_politize_se*.py; do
   [ -e "$f" ] && CAMINHOS+=("$f")
 done
 

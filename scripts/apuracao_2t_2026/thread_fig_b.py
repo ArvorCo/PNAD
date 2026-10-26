@@ -28,9 +28,8 @@ from apuracao_2026.thread_base import (
     t,
 )
 
-from . import secoes_linhas
 from .pagina_cap_boletins import NAO_FOI_AO_AR, boletins
-from .thread_base import dado, tabela
+from .thread_base import dado
 
 ROXO = "#6b4a92"
 VERDE = "#0c7a72"
@@ -65,13 +64,13 @@ def _barra(out, y, rot, valor, n, x0, x1, vmax, cor):
 
 def fig_comparecimento() -> str:
     s = dado("secoes")
-    linhas = [x for x in tabela(secoes_linhas.bloco(s)) if x["delta_pp"] is not None]
+    hd = s["reduzidos_thread"]["delta_comp"]
     dc = s["agregados"]["brasil"]["delta_comp"]
     out = [
         t(
             60,
             24,
-            f"Comparecimento da seção no 2º turno menos no 1º, todas as {num(len(linhas))} seções comparáveis",
+            f"Comparecimento da seção no 2º turno menos no 1º, todas as {num(hd['n'])} seções comparáveis",
             15,
             MUTED,
             600,
@@ -79,10 +78,7 @@ def fig_comparecimento() -> str:
     ]
     v0, v1, x0, x1 = -15, 15, 60, 980
     y0, y1 = 40, 290
-    caixas = {}
-    for x in linhas:
-        k = int((min(max(x["delta_pp"], v0), v1 - 0.01) - v0) // 1)
-        caixas[k] = caixas.get(k, 0) + 1
+    caixas = {int(k): c for k, c in hd["caixas"].items()}
     cmax = max(caixas.values())
     larg = (x1 - x0) / (v1 - v0)
     for k, c in caixas.items():

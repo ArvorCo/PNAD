@@ -28,8 +28,7 @@ from apuracao_2026.thread_base import (
     t,
 )
 
-from . import secoes_linhas
-from .thread_base import dado, hhmm_min, min_hhmm, tabela
+from .thread_base import dado, hhmm_min, min_hhmm
 from .thread_valores import noticia, serie_nacional
 
 ROXO = "#6b4a92"
@@ -374,9 +373,8 @@ def fig_noite() -> str:
 
 def fig_prorrogacao() -> str:
     s = dado("secoes")
-    linhas = tabela(secoes_linhas.bloco(s))
-    enc = [17 * 60 + x["enc_min"] for x in linhas if x["enc_min"] is not None]
-    m0, m1 = 16 * 60 + 30, 19 * 60 + 30
+    he = s["reduzidos_thread"]["encerramento"]
+    m0, m1 = he["inicio_min_do_dia"], he["fim_min_do_dia"]
     x0, x1 = 60, 980
 
     def X(m):
@@ -410,12 +408,8 @@ def fig_prorrogacao() -> str:
         out.append(t(X(m) + 12, y + 5, f"{hh} {rot} ({it['veiculo']})", 15, INK, 600))
     # histograma do último voto
     yb0, yb1 = 300, 520
-    passo = 5
-    caixas = {}
-    for m in enc:
-        k = int((m - m0) // passo)
-        if 0 <= k < (m1 - m0) // passo:
-            caixas[k] = caixas.get(k, 0) + 1
+    passo = he["passo_min"]
+    caixas = {int(k): c for k, c in he["caixas"].items()}
     cmax = max(caixas.values())
     largura = (x1 - x0) / ((m1 - m0) / passo)
     for k, c in caixas.items():
@@ -457,7 +451,7 @@ def fig_prorrogacao() -> str:
         t(
             x0,
             588,
-            f"Último voto de cada seção do país ({num(len(enc))} seções; altura em raiz quadrada)",
+            f"Último voto de cada seção do país ({num(he['n'])} seções; altura em raiz quadrada)",
             14,
             MUTED,
             600,

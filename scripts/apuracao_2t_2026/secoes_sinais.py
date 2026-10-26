@@ -497,3 +497,46 @@ def estimativa_nacional(x: pd.DataFrame, secoes_uf: dict[str, int]) -> dict[str,
             }
         )
     return out
+
+
+def reduzidos_thread(x: pd.DataFrame) -> dict[str, Any]:
+    """Contagens já reduzidas que a thread desenha, para ela rodar sem as linhas.
+
+    ``encerramento``: histograma do último voto em caixas de 5 min de 16:30 a
+    19:30 de Brasília (chave = índice da caixa). ``delta_comp``: histograma do
+    comparecimento 2T menos 1T em caixas de 1 pp, de -15 a +15, com os extremos
+    acumulados nas pontas. ``recebido_antes_1900``: BUs recebidos antes das
+    19:00. ``apos_19h_municipios``: municípios com seção encerrada depois das 19:00.
+    """
+    m0, m1, passo = 16 * 60 + 30, 19 * 60 + 30, 5
+    enc = (17 * 60 + x["enc_min"].dropna()).tolist()
+    caixas_enc: dict[str, int] = {}
+    for m in enc:
+        k = int((m - m0) // passo)
+        if 0 <= k < (m1 - m0) // passo:
+            caixas_enc[str(k)] = caixas_enc.get(str(k), 0) + 1
+    v0, v1 = -15, 15
+    d = x["delta_pp"].dropna().tolist()
+    caixas_d: dict[str, int] = {}
+    for v in d:
+        k = int((min(max(v, v0), v1 - 0.01) - v0) // 1)
+        caixas_d[str(k)] = caixas_d.get(str(k), 0) + 1
+    cedo = x[x["rec_min"].notna() & (x["rec_min"] < 120)]
+    return {
+        "encerramento": {
+            "inicio_min_do_dia": m0,
+            "fim_min_do_dia": m1,
+            "passo_min": passo,
+            "n": len(enc),
+            "caixas": caixas_enc,
+        },
+        "delta_comp": {"de_pp": v0, "ate_pp": v1, "n": len(d), "caixas": caixas_d},
+        "recebido_antes_1900": {
+            "n": len(cedo),
+            "rec_min_max": float(cedo["rec_min"].max()) if len(cedo) else None,
+            "ufs": int(cedo["uf"].nunique()),
+        },
+        "apos_19h_municipios": int(
+            x.loc[x["apos_19h"].astype(bool), ["uf", "mun"]].drop_duplicates().shape[0]
+        ),
+    }

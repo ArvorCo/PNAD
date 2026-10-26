@@ -20,7 +20,7 @@ _N = ("agregados", "brasil", "n")
 
 def linhas(S: dict) -> list[dict]:
     """Tabela de seções como lista de dicionários."""
-    bloco = secoes_linhas.bloco(S)
+    bloco = secoes_linhas.exigir(S)
     cols = bloco["colunas"]
     return [dict(zip(cols, r, strict=False)) for r in bloco["linhas"]]
 

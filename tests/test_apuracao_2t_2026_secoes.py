@@ -81,7 +81,7 @@ def test_secoes_coerentes():
     s = _carregar("secoes.json")
     if not secoes_linhas.disponivel(s):
         pytest.skip("linhas por seção fora do git ausentes")
-    bloco = secoes_linhas.bloco(s)
+    bloco = secoes_linhas.exigir(s)
     cols = bloco["colunas"]
     linhas = bloco["linhas"]
     assert len(linhas) == s["totais"]["secoes"]
@@ -141,8 +141,10 @@ def test_linhas_fora_do_json(tmp_path):
     assert secoes_linhas.bloco(S)["linhas"] == [[1, 2], [3, None]]
     (tmp_path / "x.json.gz").unlink()
     assert not secoes_linhas.disponivel(S)
+    b = secoes_linhas.bloco(S)
+    assert b["disponivel"] is False and b["linhas"] == []
     with pytest.raises(secoes_linhas.LinhasAusentes):
-        secoes_linhas.bloco(S)
+        secoes_linhas.exigir(S)
 
 
 def test_ponteiro_no_json_leve():
@@ -151,3 +153,11 @@ def test_ponteiro_no_json_leve():
     assert "linhas" not in p
     assert p["n_linhas"] == s["totais"]["secoes"]
     assert len(p["sha256"]) == 64
+
+
+def test_reduzidos_da_thread_batem_com_os_totais():
+    s = _carregar("secoes.json")
+    red = s["reduzidos_thread"]
+    assert red["delta_comp"]["n"] == sum(red["delta_comp"]["caixas"].values())
+    assert red["encerramento"]["n"] >= sum(red["encerramento"]["caixas"].values())
+    assert red["delta_comp"]["n"] <= s["totais"]["secoes"]

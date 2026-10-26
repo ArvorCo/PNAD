@@ -14,7 +14,6 @@ from functools import cache
 
 from apuracao_2026.thread_base import mi, nome_proprio, num, pct, sinal
 
-from . import secoes_linhas
 from .thread_base import (
     URL_DOSSIE,
     dado,
@@ -274,12 +273,12 @@ def v_prorrogacao() -> dict:
         "lag_emis_rec": num(pb["lag_emissao_recebimento_p50_min"], 0),
         "lag_enc_rec_p90": num(pb["lag_encerramento_recebimento_p90_min"], 0),
     }
-    linhas = tabela(secoes_linhas.bloco(s))
-    cedo = [x for x in linhas if x["rec_min"] is not None and x["rec_min"] < 120]
-    v["base_antes19_n"] = str(len(cedo))
-    v["base_antes19_ate"] = min_hhmm(17 * 60 + int(max(x["rec_min"] for x in cedo)))
-    v["base_antes19_ufs"] = str(len({x["uf"] for x in cedo}))
-    v["apos19_mun"] = num(len({(x["uf"], x["mun"]) for x in linhas if x["apos_19h"]}))
+    red = s["reduzidos_thread"]
+    cedo = red["recebido_antes_1900"]
+    v["base_antes19_n"] = str(cedo["n"])
+    v["base_antes19_ate"] = min_hhmm(17 * 60 + int(cedo["rec_min_max"]))
+    v["base_antes19_ufs"] = str(cedo["ufs"])
+    v["apos19_mun"] = num(red["apos_19h_municipios"])
     por_uf = [
         u
         for u in s["prorrogacao"]["por_uf"]

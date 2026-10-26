@@ -2,7 +2,7 @@
 
 > Sinal pede explicação, não prova irregularidade; a extensão até 19h eleva o comparecimento legitimamente.
 
-Gerado em 2026-10-26T13:14:59+00:00 sobre a fonte **completo** (`apuracao/data/secoes_2t_2026.sqlite`), 499.207 seções com BU, 497.877 com a mesma seção na régua do 1T. Último recebimento lido: 23:21 de Brasília. Régua do 1T: `apuracao/data/referencia_1t_secoes.json` (SHA-256 `99939e691c45b5af`, gerada em 2026-10-25T21:45:14.554Z).
+Gerado em 2026-10-26T15:44:29+00:00 sobre a fonte **completo** (`apuracao/data/secoes_2t_2026.sqlite`), 499.207 seções com BU, 497.877 com a mesma seção na régua do 1T. Último recebimento lido: 23:21 de Brasília. Régua do 1T: `apuracao/data/referencia_1t_secoes.json` (SHA-256 `99939e691c45b5af`, gerada em 2026-10-25T21:45:14.554Z).
 
 ## Método
 

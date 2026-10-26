@@ -152,7 +152,7 @@ def _conjunto(valor) -> list[str]:
 def _meta(valor, campo: str) -> list[str]:
     if valor is None:
         return []
-    obj = json.loads(valor)
+    obj = json.loads(valor) if isinstance(valor, str) else (valor or {})
     saida = set()
     for meta in (obj or {}).values():
         v = (meta or {}).get(campo)
@@ -167,7 +167,9 @@ def _carga_por_urna(valor) -> dict[int, str]:
     if valor is None:
         return {}
     saida = {}
-    for urna, meta in (json.loads(valor) or {}).items():
+    for urna, meta in (
+        (json.loads(valor) if isinstance(valor, str) else valor) or {}
+    ).items():
         v = (meta or {}).get("carga_registrada_em")
         if isinstance(v, list):
             v = min(v) if v else None
