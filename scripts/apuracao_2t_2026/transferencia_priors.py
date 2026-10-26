@@ -315,10 +315,101 @@ def _piso(v: dict[str, float]) -> dict[str, float]:
     return {k: x / s for k, x in w.items()}
 
 
-def tipo_elo(origem: str, destino: str) -> str:
-    """Natureza do elo na figura: medido (linha publicada), regressão ou estimado."""
+def tipo_elo(origem: str, destino: str, cruzamento: str | None = None) -> str:
+    """Natureza do elo na figura: medido (linha publicada), regressão ou estimado.
+
+    `cruzamento`: tipo das duas células de cruzamento entre as bases quando o
+    cenário as fixa (``zero``, ``estimado`` ou ``medido``); None mantém a regra geral.
+    """
+    if cruzamento is not None and (origem, destino) in CRUZA:
+        return cruzamento
     if origem == "abstencao":
         return "estimado" if destino == "abstencao" else "regressao"
     if destino == "abstencao" or origem in ("brancos", "nulos"):
         return "estimado"
     return "medido"
+
+
+# ------------------------------------------------------------------ cruzamento entre as bases
+
+CRUZA = (("lula", "flavio"), ("flavio", "lula"))
+"""As duas células de cruzamento: eleitor de Lula no 1º turno que votou em Flávio no
+2º, e o contrário. Os cenários abaixo as fixam; o ajuste distribui o resto."""
+
+
+def cruzamento_publicado() -> list[dict[str, Any]]:
+    """Linhas de base publicadas (Lula e Flávio na mesma página), com o NS repartido."""
+    out = []
+    for (f, pg), grupos in LINHAS.items():
+        if "lula" not in grupos or "flavio" not in grupos:
+            continue
+        nl, nf = normaliza(grupos["lula"]), normaliza(grupos["flavio"])
+        out.append(
+            {
+                "fonte": f,
+                "instituto": FONTES[f]["instituto"],
+                "campo": FONTES[f]["campo"],
+                "registro": FONTES[f]["registro"],
+                "pagina": pg,
+                "lula_para_flavio_pct": 100 * nl["F"],
+                "flavio_para_lula_pct": 100 * nf["L"],
+                "lula_fica_pct": 100 * nl["L"],
+                "flavio_fica_pct": 100 * nf["F"],
+                "publicado_lula": grupos["lula"],
+                "publicado_flavio": grupos["flavio"],
+                "na_media": (f, pg) in {(a, b) for a, b, _g in CENTRAL["lula"]},
+            }
+        )
+    return out
+
+
+def cenarios_cruzamento() -> dict[str, dict[str, Any]]:
+    """Os quatro cenários de cruzamento, na ordem dos botões da página.
+
+    Cada um fixa as duas células como fração da base do 1º turno de quem cruza.
+    O das pesquisas usa a média da onda mais recente de cada instituto que publica
+    a linha de base (a mesma regra da prior central); o Datafolha não publica.
+    """
+    lf = media(CENTRAL["lula"])["F"]
+    fl = media(CENTRAL["flavio"])["L"]
+    return {
+        "sem": {
+            "nome": "Sem cruzamento",
+            "botao": "Sem cruzamento",
+            "lula_para_flavio": 0.0,
+            "flavio_para_lula": 0.0,
+            "tipo": "zero",
+            "descricao": "nenhum eleitor de Lula no 1º turno votou em Flávio no 2º, nem o contrário; as duas células "
+            "são zeros estruturais no ajuste",
+        },
+        "um": {
+            "nome": "1% de cada base cruza",
+            "botao": "1% cruza",
+            "lula_para_flavio": 0.01,
+            "flavio_para_lula": 0.01,
+            "tipo": "estimado",
+            "descricao": "1% dos eleitores de Lula no 1º turno votou em Flávio no 2º, e 1% dos de Flávio em Lula",
+        },
+        "dois": {
+            "nome": "2% de cada base cruza",
+            "botao": "2% cruza",
+            "lula_para_flavio": 0.02,
+            "flavio_para_lula": 0.02,
+            "tipo": "estimado",
+            "descricao": "2% dos eleitores de Lula no 1º turno votou em Flávio no 2º, e 2% dos de Flávio em Lula",
+        },
+        "pesquisas": {
+            "nome": "O que as pesquisas mediram",
+            "botao": "O que as pesquisas mediram",
+            "lula_para_flavio": lf,
+            "flavio_para_lula": fl,
+            "tipo": "medido",
+            "descricao": "média das linhas de base mais recentes de cada instituto que as publica: "
+            + citacao(CENTRAL["lula"])
+            + "; indecisos repartidos na proporção da linha",
+        },
+    }
+
+
+ORDEM_CRUZAMENTO = ("sem", "um", "dois", "pesquisas")
+PADRAO_CRUZAMENTO = "sem"

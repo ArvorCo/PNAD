@@ -45,7 +45,7 @@ CAMINHOS=(
   scripts/apuracao-2026-logs-coletar.py scripts/apuracao-2026-logs-processar.py scripts/apuracao-2026-logs-build.py
   scripts/video-sete-riscos-capa.py scripts/publicar-dossie-2t.sh
   # testes
-  tests/test_apuracao_logs_2t.py tests/test_video_apuracao_2t.py
+  tests/test_apuracao_logs_2t.py tests/test_video_apuracao_2t.py tests/test_video_sete_riscos.py
   # análise (sem os pesados ignorados)
   analysis/apuracao_2t_2026/ analysis/politize_se/ analysis/apuracao_2026/logs_urnas/CONTRATO.md
   # fontes arquivadas
@@ -55,6 +55,9 @@ CAMINHOS=(
   totalizacao/supabase/migrations/ totalizacao/supabase/functions/receber-relato/ totalizacao/supabase/config.toml
   totalizacao/src/relato/ totalizacao/tests/relato.test.ts totalizacao/tests/relato_desafio.test.ts totalizacao/README.md
   video/apuracao_2t/
+  # clima do 2º turno (modelo provisório, medição agendada)
+  scripts/clima-2t.py scripts/clima-2t-modelo.py scripts/clima-2t-cemaden.py scripts/clima-2t-fotos-cemaden.py scripts/clima-2t-atualizar.sh scripts/clima_2t/ analysis/clima_2t_2026/
+  docs/assets/fiscais_mapa/clima/observado_2t.json docs/assets/fiscais_mapa/app.js docs/fiscais_mapa.html tests/test_clima_2t_observado.py
   # raiz
   AGENTS.md .gitignore .gitattributes requirements.txt
 )

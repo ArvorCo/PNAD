@@ -81,6 +81,15 @@ def _tabela_ultimos(C: dict) -> str:
     )
 
 
+def _ufs_abertas(d: Dados) -> str:
+    """Limite sobre UFs com seção por totalizar, lido do presidente.json da rodada."""
+    ufs = (d.get("presidente.json") or {}).get("ufs") or []
+    abertas = sorted(u["uf"] for u in ufs if not u.get("completo"))
+    if not abertas:
+        return "Na rodada usada, todas as UFs já tinham todas as seções totalizadas."
+    return f"Na rodada usada, {', '.join(abertas)} ainda tinham seção por totalizar."
+
+
 def render(d: Dados, cap: Capitulo) -> str:
     C = d.get(ARQ)
     checar(
@@ -217,7 +226,7 @@ def render(d: Dados, cap: Capitulo) -> str:
             "Decis por número de municípios, não por eleitorado: o último decil pesa vinte vezes o primeiro.",
             "Minutos dos dois turnos só se comparam descontando os 120 minutos da prorrogação.",
             "Mudança contra o 1º turno é agregada por município; não identifica troca de voto individual.",
-            "Na rodada usada, AM, BA, MA, MG e PA ainda tinham seção por totalizar.",
+            _ufs_abertas(d),
         ]
     )
     return h

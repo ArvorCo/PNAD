@@ -193,6 +193,44 @@ def previsao_2t() -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
     return cel, meta
 
 
+def observado_2t() -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    """Chuva de 25/10 por célula de 0,25° (estação CEMADEN ou modelo provisório)."""
+    arq = CLIMA / "observado_2t.json"
+    if not arq.exists():
+        return {}, {}
+    d = _json(arq)
+    cols = d["colunas"]
+    rot = d.get("rotulos_fonte", {})
+    cel = {}
+    for k, v in d["celulas"].items():
+        r = dict(zip(cols, v, strict=True))
+        cel[k] = {
+            "chuva_mm": r["chuva_votacao_mm"],
+            "fonte_votacao": r["fonte_votacao"],
+            "chuva_dia_mm": r["chuva_dia_mm"],
+            "fonte_dia": r["fonte_dia"],
+            "rajada_kmh": r["rajada_votacao_kmh"],
+            "n_estacoes": r["n_estacoes"],
+            "dist_km": r["distancia_min_km"],
+            "fonte": r["fonte"],
+        }
+    meta = {
+        k: d.get(k)
+        for k in (
+            "gerado_em",
+            "dia",
+            "fonte",
+            "celula_graus",
+            "raio_km",
+            "janela_votacao_brasilia",
+            "nota",
+            "cortes",
+        )
+    }
+    meta["rotulos_fonte"] = rot
+    return cel, meta
+
+
 # ------------------------------------------------------------------ boletins de urna
 
 

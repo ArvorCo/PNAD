@@ -209,7 +209,13 @@ def fig_dispersao(C1: dict) -> str:
         "Região",
     )
     legenda = (
-        f"{inteiro(len(ms))} municípios completos; só {inteiro(acima)} ficam acima da reta. A nuvem desce inteira por "
+        f"{inteiro(len(ms))} municípios"
+        + (
+            " (o país inteiro, sem exterior)"
+            if len(ms) == len(linhas_de(C1["municipios"]))
+            else " completos"
+        )
+        + f"; só {inteiro(acima)} ficam acima da reta. A nuvem desce inteira por "
         "um degrau quase constante: a geografia do voto se manteve e o nível de Flávio caiu. Fonte: comparacao_1t.json (municipios)."
     )
     return figura_html(

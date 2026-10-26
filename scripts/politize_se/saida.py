@@ -153,6 +153,7 @@ CAMPOS_LOCAL = [
     "secoes_log_bateria",
     "clima1",
     "clima2",
+    "clima2o",
     "frases",
 ]
 
@@ -258,6 +259,16 @@ CLIMA1 = [
     "urnas_bateria_votacao",
 ]
 CLIMA2 = ["chuva_mm", "prob_pct", "rajada_kmh", "risco"]
+CLIMA2O = [
+    "chuva_mm",
+    "fonte_votacao",
+    "chuva_dia_mm",
+    "fonte_dia",
+    "rajada_kmh",
+    "n_estacoes",
+    "dist_km",
+    "fonte",
+]
 
 
 def gravar(caminho: Path, obj: Any) -> int:
@@ -291,6 +302,8 @@ def _local(p: dict[str, Any], codigo: dict[str, int]) -> list[Any]:
             v = [v.get(k) for k in CLIMA1]
         elif c == "clima2" and v is not None:
             v = [v.get(k) for k in CLIMA2]
+        elif c == "clima2o" and v is not None:
+            v = [v.get(k) for k in CLIMA2O]
         elif c == "frases":
             v = _frases(v or [], codigo)
         out.append(v)
@@ -331,6 +344,7 @@ def escrever_uf(res: Any, gerado_em: str, codigos: list[str]) -> dict[str, int]:
                 "colunas": CAMPOS_LOCAL,
                 "clima1": CLIMA1,
                 "clima2": CLIMA2,
+                "clima2o": CLIMA2O,
                 "linhas": [_local(res.locais[lid], codigo) for lid in lids],
             },
             "secoes": {

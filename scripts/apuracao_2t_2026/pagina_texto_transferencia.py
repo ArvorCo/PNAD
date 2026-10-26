@@ -52,10 +52,6 @@ def mi(v: float, casas: int = 2) -> str:
     return f"{num(x, casas)} {'milhão' if abs(round(x, casas)) < 2 else 'milhões'}"
 
 
-def mi_curto(v: float, casas: int = 2) -> str:
-    return f"{num(v / 1e6, casas)} mi"
-
-
 def pc(v: float, casas: int = 1) -> str:
     return f"{num(v, casas)}%"
 
@@ -73,7 +69,7 @@ def conta(T: dict, swing_municipios: float | None = None) -> str:
     c = T["contabilidade"]
     sw = c["h2h_flavio_2t"] - c["h2h_flavio_1t"]
     mun = (
-        f"; {num(swing_municipios, 2).replace('-', '−')} nos municípios completos do capítulo anterior"
+        f"; {num(swing_municipios, 2).replace('-', '−')} na régua municipal do capítulo anterior"
         if swing_municipios is not None
         else ""
     )
@@ -180,17 +176,6 @@ def _lula_pais(T: dict) -> float:
     return 100 * d["lula"] / (d["lula"] + d["flavio"])
 
 
-def _retencao_flavio(T: dict) -> tuple[float, float, list[str]]:
-    vals = [
-        (x["publicado"]["F"], x["instituto"])
-        for x in T["priors"]["linhas_publicadas"]
-        if x["grupo"] == "flavio"
-    ]
-    lo = min(vals)
-    hi = max(vals)
-    return lo[0], hi[0], [lo[1], hi[1]]
-
-
 def robustez_texto(T: dict) -> str:
     rob = {x["nome"]: x for x in T["regressao"]["robustez"]}
     nomes = list(rob)
@@ -268,7 +253,7 @@ def secoes_contrario(T: dict) -> str:
     amostra = T["regressao"].get("secoes_amostra") or []
     am_mun = next((x for x in amostra if "município" in x["nome"]), None)
     am_txt = (
-        f" A amostra de 7.539 seções sorteada antes da votação dava {num(am_mun['lula'], 1)} entre seções do mesmo município; "
+        f" A amostra de {inteiro(max(x['n'] for x in amostra))} seções sorteada antes da votação dava {num(am_mun['lula'], 1)} entre seções do mesmo município; "
         "com todas as seções, a distância entre as escalas encolheu e os intervalos passaram a se cruzar."
         if am_mun and _censo(T)
         else ""
@@ -355,13 +340,15 @@ def metodo_matriz(T: dict) -> str:
         "A matriz segue o método fixo da casa. Primeiro, a prior de cada linha: as bases de Lula e Flávio pela média da Nexus "
         "(24/10, p. 23) e da Quaest (21/10, p. 20); cada candidatura de terceira via pela média da Nexus, da Quaest e do Datafolha "
         "(22/10, p. 5) que a publicam; branco e nulo do 1º turno com metade continuando branco ou nulo e o resto na proporção da "
-        "linha mista da Quaest; a mesma fração de cada eleitorado do 1º turno faltando no 2º. A linha de quem faltou no 1º turno "
-        "vem da regressão e fica fixa. Depois, o ajuste proporcional iterativo, UF a UF, até bater exatamente as duas urnas "
+        "linha mista da Quaest; a mesma fração de cada eleitorado do 1º turno faltando no 2º. Três grupos de células ficam "
+        "fixos: a linha de quem faltou no 1º turno, que vem da regressão, e as duas células de cruzamento entre as bases, que "
+        "vêm do cenário (zero no padrão, como zero estrutural). Depois, o ajuste proporcional iterativo, UF a UF, distribui o "
+        "resto até bater exatamente as duas urnas "
         f"(desvio máximo de {num(max(c['confere']['linhas_max_desvio_votos'], c['confere']['colunas_max_desvio_votos']), 3)} voto "
         f"em linhas e colunas; até {inteiro(d['iteracoes_max'])} iterações). As origens "
         f"do 1º turno foram reescaladas para o eleitorado apurado do 2º (fator de {num(d['escala_min'], 5)} a "
-        f"{num(d['escala_max'], 5)}). Nenhum zero estrutural: todo eleitor pode, em tese, fazer qualquer caminho, e zero de "
-        "pesquisa vira piso de 0,2% da linha.",
+        f"{num(d['escala_max'], 5)}). Fora as células fixadas pelo cenário, nenhum zero estrutural: zero de pesquisa vira piso "
+        "de 0,2% da linha.",
         "Como a matriz foi montada.",
     )
 
@@ -396,24 +383,22 @@ def tabela_sensibilidades(T: dict) -> str:
             "Explica (pp)",
         ],
         linhas,
-        "Cada linha troca uma peça da prior e refaz o ajuste UF a UF. A última é diagnóstico: deixa o IPF mexer também na linha "
-        "da regressão. Fonte: transferencia.json (ipf.sensibilidades).",
+        "Cada linha troca uma peça da prior e refaz o ajuste UF a UF, com o cruzamento do cenário padrão. As duas últimas são "
+        "diagnóstico: uma deixa o IPF mexer também na linha da regressão, a outra deixa o IPF escolher o cruzamento. Fonte: "
+        "transferencia.json (ipf.sensibilidades).",
     )
 
 
 def sobrevive(T: dict) -> str:
     inv = T["ipf"]["invariantes"]
-    m = T["ipf"]["central"]["metricas"]
     pcand = inv["por_candidatura_flavio_pct"]
     return p(
-        "O que as margens impõem e sobrevive a toda troca de prior: Lula ganhou fora da própria base de "
+        "Somando os quatro cenários de cruzamento e as trocas de prior: Lula ganhou fora da própria base de "
         f"{mi(inv['ganho_fora_base_lula'][0])} a {mi(inv['ganho_fora_base_lula'][1])}, Flávio de "
-        f"{mi(inv['ganho_fora_base_flavio'][0])} a {mi(inv['ganho_fora_base_flavio'][1])}; a razão de consolidação fica entre "
-        f"{num(inv['razao_consolidacao'][0], 2)} e {num(inv['razao_consolidacao'][1], 2)} para 1 (central "
-        f"{num(m['razao_consolidacao_flavio_lula'], 2)}). Para cada voto que Flávio buscou fora da base, Lula buscou de "
-        f"{num(1 / inv['razao_consolidacao'][1], 1)} a {num(1 / inv['razao_consolidacao'][0], 1)}. A terceira via deu a "
-        f"Flávio de {faixa(inv['terceira_flavio_pct'])} do seu estoque em todos os cenários, e o "
-        f"comparecimento explica de {num(inv['explica_pp'][0], 2)} a {num(inv['explica_pp'][1], 2)} ponto da queda dele.",
+        f"{mi(inv['ganho_fora_base_flavio'][0])} a {mi(inv['ganho_fora_base_flavio'][1])}; para cada voto que Flávio buscou "
+        f"fora da base, Lula buscou de {num(1 / inv['razao_consolidacao'][1], 1)} a {num(1 / inv['razao_consolidacao'][0], 1)}. "
+        f"A terceira via deu a Flávio de {faixa(inv['terceira_flavio_pct'])} do seu estoque, e quem voltou a votar explica de "
+        f"{num(inv['explica_pp'][0], 2)} a {num(inv['explica_pp'][1], 2)} ponto da queda dele.",
         "inferencia",
     ) + p(
         "O que depende da prior e não deve ser lido como medição: o corte candidato a candidato (a parte de Flávio vai de "
@@ -438,7 +423,7 @@ def sem_informacao(T: dict) -> str:
 
 def tabela_decomposicao(T: dict) -> str:
     sens = T["ipf"]["sensibilidades"]
-    chaves = [k for k in sens if k != "abstencao_ajustada"]
+    chaves = [k for k in sens if not sens[k].get("diagnostico_apenas")]
     m = T["ipf"]["central"]["metricas"]
     dec = m["decomposicao_margem_flavio_menos_lula"]
     grupos = [
@@ -467,7 +452,7 @@ def tabela_decomposicao(T: dict) -> str:
         ["Origem", "Matriz central (mi)", "Faixa nas trocas de prior (mi)"],
         linhas,
         "Contribuição de cada origem à mudança da diferença Flávio menos Lula entre os turnos, em milhões de votos "
-        "(negativo: a favor de Lula). "
+        "(negativo: a favor de Lula), no cenário padrão e nas trocas de prior. "
         "Só o total é imposto pelas urnas; a divisão depende da prior. Fonte: transferencia.json.",
     )
 
@@ -543,57 +528,22 @@ def tabela_linhas_candidato(T: dict) -> str:
     )
 
 
-def terceira_contrario(T: dict) -> str:
-    pt = T["pesquisas"]["terceira_via_2t"]
-    m = T["ipf"]["central"]["metricas"]
-    inv = T["ipf"]["invariantes"]
-    eq = [e for e in pt.get("equilibrio", []) if e]
-    ondas = pt["linhas"]
-    n_inst = len({x["instituto"] for x in ondas})
-    r_lo, r_hi, r_inst = _retencao_flavio(T)
-    sint = T["pesquisas"].get("sintese_pre_1t")
-    sint_txt = (
-        f" A síntese da casa de 04/10, antes do 1º turno, dizia que {pc(100 * sint['fracao_flavio'], 0)} da queda da terceira via "
-        "reapareceria em Flávio."
-        if sint
-        else ""
-    )
-    eq_txt = ""
-    if len(eq) == 2:
-        eq_txt = (
-            f" Para a matriz chegar ao menor número publicado ({pc(eq[0]['alvo_pct'])}), Flávio teria de ter retido só "
-            f"{pc(eq[0]['fidelidade_flavio'])} da própria base, com {mi(eq[0]['flavio_para_lula'])} de eleitores dele indo a Lula; "
-            f"para chegar ao maior ({pc(eq[1]['alvo_pct'])}), {pc(eq[1]['fidelidade_flavio'])}. As pesquisas mediram a retenção "
-            f"de Flávio entre {pc(r_lo, 0)} ({r_inst[0]}) e {pc(r_hi, 0)} ({r_inst[1]})."
-        )
-    return nota(
-        "contrario",
-        f"As pesquisas mediram a terceira via indo para Flávio: de {faixa(pt['flavio_do_estoque'])} do eleitorado dela e de "
-        f"{faixa(pt['flavio_entre_finalistas'])} entre os que escolheram um finalista, em {len(ondas)} ondas de {n_inst} "
-        "institutos."
-        f"{sint_txt} Na matriz, Flávio fica com {pc(m['terceira']['flavio_pct'])} do estoque "
-        f"({pc(m['terceira']['flavio_entre_finalistas'])} entre os que escolheram um finalista), e em nenhuma troca de prior passa "
-        f"de {pc(inv['terceira_flavio_pct'][1])}.{eq_txt} O menor número publicado fica perto do alcance da matriz; os "
-        "maiores, não.",
-        "A terceira via não foi para Flávio como as pesquisas mediram.",
-    )
-
-
 def terceira_regressao(T: dict) -> str:
-    rob = T["regressao"]["robustez"]
-    sec = T["regressao"]["secoes_resumo"]
-    uf_fe = [x["terceira_flavio"] for x in rob if "UF" in x["nome"]]
-    sem = next(x["terceira_flavio"] for x in rob if x["nome"].startswith("Sem efeito"))
-    sec_txt = (
-        f" e de {num(min(x['terceira_flavio'] for x in sec), 1)} a {num(max(x['terceira_flavio'] for x in sec), 1)} na escala da seção"
-        if sec
-        else ""
-    )
+    reg = T["regressao"]
+    todas = reg["robustez"] + reg["secoes_resumo"] + (reg.get("secoes_amostra") or [])
+    com_ef = [x for x in todas if not x["nome"].startswith("Sem efeito")]
+    sem = next(x for x in reg["robustez"] if x["nome"].startswith("Sem efeito"))
+    uf_fe = [x["terceira_flavio"] for x in reg["robustez"] if "UF" in x["nome"]]
+    pl = T["pesquisas"]["terceira_via_2t"]["lula_do_estoque"]
     return p(
-        "A regressão ecológica, que não usa pesquisa nenhuma, conta uma história próxima e mais frágil: por 100 votos de terceira "
-        f"via, Flávio leva de {num(min(uf_fe), 1)} a {num(max(uf_fe), 1)} com efeito fixo de UF{sec_txt}, no piso do que as "
-        f"pesquisas mediram, mas {num(sem, 1)} sem efeito fixo. A matriz e a regressão concordam no sentido; a regressão sozinha "
-        "não sustentaria o número.",
+        "A regressão ecológica, que não usa pesquisa nenhuma, fica entre a matriz e as pesquisas: por 100 votos de terceira "
+        f"via, Flávio leva de {num(min(uf_fe), 1)} a {num(max(uf_fe), 1)} com efeito fixo de UF entre municípios. Com algum "
+        f"efeito fixo, em qualquer escala, Lula leva de {num(min(x['terceira_lula'] for x in com_ef), 1)} a "
+        f"{num(max(x['terceira_lula'] for x in com_ef), 1)}, acima do que as pesquisas mediram para ele "
+        f"({num(pl[0], 0)} a {num(pl[1], 0)}); sem efeito fixo, {num(sem['terceira_lula'], 1)} para Lula e "
+        f"{num(sem['terceira_flavio'], 1)} para Flávio, dentro do que elas mediram. É a mais frágil das três medidas: o "
+        "coeficiente da terceira via mede o tipo de município em que ela era forte, não o eleitor dela, e nenhuma "
+        "especificação sozinha sustenta o número exato.",
         "inferencia",
     )
 
@@ -622,35 +572,14 @@ def reserva(T: dict) -> str:
     )
 
 
-def resposta(T: dict) -> str:
-    r = T["resposta"]
-    sec = (
-        f"; na escala da seção, {pc(r['secoes_voltaram_lula_pct'], 0)}, e o comparecimento explicaria só "
-        f"{num(r['secoes_explica_pp'], 2)} ponto"
-        if "secoes_voltaram_lula_pct" in r
-        else ""
-    )
-    return (
-        '<aside class="io resposta-tr"><b>A resposta, em duas frases.</b>'
-        f"<p>Dos {mi(r['voltaram_milhoes'] * 1e6)} que faltaram no 1º turno e votaram no 2º (o mínimo compatível com as seções), "
-        f"de {pc(r['voltaram_lula_ic'][0], 0)} a {pc(r['voltaram_lula_ic'][1], 0)} teriam ido para Lula (estimativa ecológica, "
-        f"intervalo de 95% da regressão entre municípios{sec}), e isso explica de {num(r['explica_pp_ic'][0], 2)} a "
-        f"{num(r['explica_pp_ic'][1], 2)} ponto (central {num(r['explica_pp'], 2)}) dos {num(abs(r['swing_h2h_pp']), 2)} pontos "
-        "que Flávio perdeu na parte entre os dois.</p>"
-        f"<p>A terceira via rendeu a Flávio {pc(r['terceira_flavio_pct'])} do seu estoque (de "
-        f"{faixa(r['terceira_flavio_faixa'])} nas trocas de prior) contra {faixa(r['pesquisas_flavio_do_estoque'])} que as "
-        f"pesquisas mediram ({faixa(r['pesquisas_flavio_entre_finalistas'], 0)} entre os que escolheram um finalista).</p></aside>"
-    )
-
-
 def juizo(T: dict) -> str:
     inv = T["ipf"]["invariantes"]
     return nota(
         "juizo",
         "O voto que decidiu o 2º turno já estava na urna em 4 de outubro. Quem voltou para votar pesou no máximo "
-        f"{num(inv['explica_pp'][1], 2)} ponto; o resto se decidiu entre eleitores que já tinham votado, na terceira via, no "
-        "branco e nulo e na margem da própria base de Flávio. Para a campanha derrotada, o dado aponta para conversão, não para "
-        "mobilização.",
+        f"{num(inv['explica_pp'][1], 2)} ponto; o resto se decidiu entre eleitores que já tinham votado, na terceira via e no "
+        "branco e nulo, que pela matriz foram mais para Lula do que as pesquisas mediram, qualquer que seja o cruzamento entre "
+        "as bases. Para a campanha derrotada, o dado aponta para conversão, não para mobilização.",
         "Leitura da casa.",
     )
 
@@ -660,15 +589,21 @@ def limites_cap(T: dict) -> str:
         [
             "Regressão ecológica: vai de agregado para agregado e não identifica o voto de nenhum eleitor. A resposta muda com a "
             "escala (município ou seção) e com o efeito fixo (UF, região ou nenhum).",
+            "O cruzamento entre as bases não é observado. A Quaest publicou zero, a Nexus de 1,0% a 2,1%, ninguém publicou a base "
+            "de cada grupo; por isso os quatro cenários. O padrão, sem cruzamento, é hipótese compatível com as urnas, não "
+            "medição.",
+            "A terceira via fica abaixo do que as pesquisas mediram em todos os cenários. As urnas não separam três caminhos que "
+            "levariam ao número das pesquisas: mais cruzamento líquido de Flávio para Lula, mais perda da base dele para branco, "
+            "nulo e abstenção, ou menos branco e nulo do 1º turno para ele.",
             "A rotatividade bruta não é observada. A matriz usa o mínimo compatível com as seções; com mais rotatividade, voltam "
             "mais eleitores e a parte de Lula entre eles cai, por construção, para manter o saldo que a regressão mede.",
             "As linhas das pesquisas são voto lembrado do 1º turno cruzado com intenção de 2º turno, na mesma entrevista, sem bases "
             'publicadas por grupo. As pesquisas da última semana superestimaram Flávio em média (<a href="#pesquisas">capítulo '
-            "das pesquisas</a>); usá-las como prior "
-            "puxa a matriz para ele, e o ajuste às urnas desfaz parte disso.",
+            "das pesquisas</a>); usá-las como prior puxa a matriz para ele, e o ajuste às urnas desfaz parte disso.",
             "A matriz soma 28 ajustes (27 UFs e exterior) com a mesma prior em todas, mudando só a rotatividade. Diferenças "
             "regionais de transferência entram pelas margens de cada UF, não por linhas regionais das pesquisas.",
-            "Brancos e nulos foram separados pela proporção de cada UF no 2º turno; a separação é hipótese.",
+            "Brancos e nulos: metade do branco e nulo do 1º turno continua branco ou nulo na prior, e a separação entre branco e "
+            "nulo segue a proporção de cada UF no 2º turno. As duas coisas são hipótese.",
             "Nada aqui é prova de irregularidade. Pede explicação, não prova.",
         ],
         "Reprodução: <code>python3 scripts/apuracao-2t-2026-transferencia.py</code>; memorando em "
@@ -677,8 +612,6 @@ def limites_cap(T: dict) -> str:
 
 
 CSS = (
-    "<style>.resposta-tr{border-left-width:6px;font-size:17px}"
-    ".resposta-tr p{margin:8px 0 0}"
-    "#transferencia .table-scroll table{font-variant-numeric:tabular-nums}"
+    "<style>#transferencia .table-scroll table{font-variant-numeric:tabular-nums}"
     "#transferencia details.limites,#transferencia code{overflow-wrap:anywhere}</style>"
 )

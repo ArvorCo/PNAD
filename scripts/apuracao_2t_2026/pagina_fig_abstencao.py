@@ -72,6 +72,15 @@ DELTA_ROT = [
 UFS_MAPA = ["BA", "PE", "CE", "SP"]
 
 
+def _universo(A: dict) -> str:
+    """Rótulo do universo municipal: o país inteiro quando a versão lida está completa."""
+    if (A.get("meta") or {}).get("pst_nacional") == 100.0:
+        return f"todos os {(A.get('brasil') or {}).get('n_municipios', 0):,} municípios, completos".replace(
+            ",", "."
+        )
+    return "municípios completos"
+
+
 def _uf_valores(u: dict) -> tuple[float, float]:
     """Abstenção do arquivo da UF quando existe (2º e 1º turno); senão, municípios completos."""
     a = u.get("arquivo_uf") or {}
@@ -156,7 +165,7 @@ def fig_ranking(A: dict) -> str:
     subiram = [u["uf"] for u in ufs if _uf_valores(u)[0] > _uf_valores(u)[1]]
     legenda_txt = (
         f"Barras em roxo e seta: as {len(subiram)} UFs em que a abstenção subiu contra o 1º turno ({', '.join(subiram)}). "
-        "Abstenção do arquivo de presidente da UF; 2022 nos municípios completos. Fonte: abstencao.json (ufs)."
+        f"Abstenção do arquivo de presidente da UF; 2022 nos {_universo(A)}. Fonte: abstencao.json (ufs)."
     )
     return figura_html(
         "ab_ranking", "".join(out), legenda_txt, tips, modo="scroll", minw=760
@@ -451,7 +460,7 @@ def fig_recortes(A: dict) -> str:
         t(x0, h - 10, "embaixo de cada recorte: mudança contra o 1º turno", 12, MUTED)
     )
     out.append("</svg>")
-    legenda_txt = "Mesmos municípios nos três momentos (municípios completos, sem exterior). Fonte: abstencao.json (capitais_x_interior, regioes)."
+    legenda_txt = f"Mesmos municípios nos três momentos ({_universo(A)}, sem exterior). Fonte: abstencao.json (capitais_x_interior, regioes)."
     return figura_html(
         "ab_recortes", "".join(out), legenda_txt, tips, modo="scroll", minw=760
     )

@@ -1,6 +1,6 @@
 # O que os logs das urnas dizem: 1º × 2º turno
 
-Rótulo: pede explicação, não prova irregularidade. Gerado em 2026-10-26T13:30:17+00:00 por `scripts/apuracao-2t-2026-logs.py`.
+Rótulo: pede explicação, não prova irregularidade. Gerado em 2026-10-26T16:09:16+00:00 por `scripts/apuracao-2t-2026-logs.py`.
 
 ## 1. Cobertura e integridade
 
@@ -99,6 +99,20 @@ Rótulo: pede explicação, não prova irregularidade. Gerado em 2026-10-26T13:3
   - chuva prevista 20 mm ou mais: 76.172 seções, bateria na votação 6,32%.
   - bateria durante a votação junto com o município: diferença em diferenças -0,07 pp (IC95 -0,10 a -0,05; n 31.104).
   - bateria durante a votação só nesta urna: diferença em diferenças -0,00 pp (IC95 -0,04 a 0,04; n 11.839).
+- Chuva de 25/10 medida (fonte: analysis/clima_2t_2026/clima.json: estações CEMADEN a até 50 km (1/d²); sem estação, ECMWF IFS (análise operacional, provisória) via Open-Meteo): 0 pluviômetros com o dia e 0 com as horas de votação; 0 de 6.539 células com estação a até 50 km; 0 seções. INMET: sem dado público de 25/10 (ver fontes/inmet_tentativas_25_10.json).
+  - bateria, chuva horas de votação, modelo IFS provisório, seca (0 mm): 78.442 seções, 14,50 (IC95 12,17 a 17,15)%; razão contra a seca n/d.
+  - bateria, chuva horas de votação, modelo IFS provisório, fraca (até 5 mm): 244.045 seções, 11,83 (IC95 9,97 a 14,62)%; razão contra a seca 0,816 (IC95 0,640 a 1,063).
+  - bateria, chuva horas de votação, modelo IFS provisório, moderada (5 a 20 mm): 150.205 seções, 13,04 (IC95 11,09 a 15,91)%; razão contra a seca 0,899 (IC95 0,702 a 1,176).
+  - bateria, chuva horas de votação, modelo IFS provisório, forte (20 a 50 mm): 22.760 seções, 9,53 (IC95 6,88 a 13,29)%; razão contra a seca 0,657 (IC95 0,451 a 0,960).
+  - bateria, chuva horas de votação, modelo IFS provisório, muito forte (acima de 50 mm): 617 seções, 5,35%; razão contra a seca 0,369.
+  - bateria, chuva horas de votação, modelo IFS provisório, 20 mm ou mais: 23.377 seções, 9,42 (IC95 6,85 a 13,28)%; razão contra a seca 0,650 (IC95 0,449 a 0,951).
+  - abstenção, chuva horas de votação, modelo IFS provisório, seca (0 mm): 78.442 seções, 17,4 (IC95 17,0 a 17,9)%; contra a UF 0,43 (IC95 0,11 a 0,86) pp; variação 1º→2º contra a UF -0,04 (IC95 -0,25 a 0,19) pp.
+  - abstenção, chuva horas de votação, modelo IFS provisório, fraca (até 5 mm): 244.045 seções, 18,9 (IC95 18,4 a 19,4)%; contra a UF 0,07 (IC95 -0,21 a 0,35) pp; variação 1º→2º contra a UF -0,02 (IC95 -0,12 a 0,08) pp.
+  - abstenção, chuva horas de votação, modelo IFS provisório, moderada (5 a 20 mm): 150.206 seções, 19,9 (IC95 19,4 a 20,4)%; contra a UF -0,20 (IC95 -0,51 a 0,08) pp; variação 1º→2º contra a UF -0,01 (IC95 -0,17 a 0,14) pp.
+  - abstenção, chuva horas de votação, modelo IFS provisório, forte (20 a 50 mm): 22.761 seções, 18,9 (IC95 18,3 a 19,5)%; contra a UF -0,88 (IC95 -1,44 a -0,27) pp; variação 1º→2º contra a UF 0,40 (IC95 0,25 a 0,55) pp.
+  - abstenção, chuva horas de votação, modelo IFS provisório, muito forte (acima de 50 mm): 617 seções, 18,4%; contra a UF -1,40 pp; variação 1º→2º contra a UF 0,64 pp.
+  - abstenção, chuva horas de votação, modelo IFS provisório, 20 mm ou mais: 23.378 seções, 18,9 (IC95 18,3 a 19,5)%; contra a UF -0,90 (IC95 -1,44 a -0,33) pp; variação 1º→2º contra a UF 0,40 (IC95 0,26 a 0,54) pp.
+  - 1º turno (ERA5): razão da chuva forte contra a seca 2,289 nas horas de votação e 1,572 no dia.
 
 ## 6. Metadados
 

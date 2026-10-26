@@ -1,0 +1,42 @@
+{
+ "catalogo_estacoes": 669,
+ "automaticas_operantes": 538,
+ "tentativas_25_10": [
+  {
+   "url": "https://apitempo.inmet.gov.br/estacao/2026-10-25/2026-10-25/A472",
+   "status": 204,
+   "bytes": 0,
+   "erro": "",
+   "horario": "2026-10-26T15:56:18+00:00"
+  },
+  {
+   "url": "https://apitempo.inmet.gov.br/estacao/2026-10-25/2026-10-25/A657",
+   "status": 204,
+   "bytes": 0,
+   "erro": "",
+   "horario": "2026-10-26T15:56:18+00:00"
+  },
+  {
+   "url": "https://apitempo.inmet.gov.br/estacao/2026-10-25/2026-10-25/A756",
+   "status": 204,
+   "bytes": 0,
+   "erro": "",
+   "horario": "2026-10-26T15:56:19+00:00"
+  },
+  {
+   "url": "https://apitempo.inmet.gov.br/estacao/2026-10-25/2026-10-25/S733",
+   "status": 204,
+   "bytes": 0,
+   "erro": "",
+   "horario": "2026-10-26T15:56:19+00:00"
+  },
+  {
+   "url": "https://apitempo.inmet.gov.br/estacao/2026-10-25/2026-10-25/A045",
+   "status": 204,
+   "bytes": 0,
+   "erro": "",
+   "horario": "2026-10-26T15:56:19+00:00"
+  }
+ ],
+ "nota": "a rota pública devolve 204 sem corpo (também para 2025); a tabela do site busca os dados por POST em /estacao/front/ com token reCAPTCHA, que não usamos; o arquivo anual de dados históricos (portal.inmet.gov.br/uploads/dadoshistoricos/2026.zip) foi modificado em 05/10/2026 e não chega a 25/10"
+}

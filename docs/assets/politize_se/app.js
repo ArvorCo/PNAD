@@ -155,11 +155,13 @@ async function carregarZona(uf, zona) {
   if (d._pronto) return d;
   const c1 = d.locais.clima1 || [];
   const c2 = d.locais.clima2 || [];
+  const c2o = d.locais.clima2o || [];
   d.listaLocais = tabela(d.locais).map((l, i) => ({
     ...l,
     li: i,
     clima1: Array.isArray(l.clima1) ? Object.fromEntries(c1.map((k, j) => [k, l.clima1[j]])) : null,
     clima2: Array.isArray(l.clima2) ? Object.fromEntries(c2.map((k, j) => [k, l.clima2[j]])) : null,
+    clima2o: Array.isArray(l.clima2o) ? Object.fromEntries(c2o.map((k, j) => [k, l.clima2o[j]])) : null,
   }));
   d.listaSecoes = tabela(d.secoes);
   d._pronto = true;
@@ -446,14 +448,28 @@ function blocoMudanca(s) {
     m.motivo ? h('p', {}, `Motivo informado pelo TRE: ${m.motivo}.`) : null,
     h('p', { class: 'ajuda' }, h('a', { href: 'mudancas_secoes_abstencoes.html' }, 'Laudo das seções que mudaram de endereço')));
 }
+// Rótulo da fonte da chuva do 2º turno: estação a X km ou modelo provisório.
+function rotuloFonte2(fonte, o) {
+  if (fonte === 'cemaden' || fonte === 'inmet' || fonte === 'ambos') {
+    const rede = { cemaden: 'CEMADEN', inmet: 'INMET', ambos: 'INMET/CEMADEN' }[fonte];
+    const n = num(o.n_estacoes);
+    return `chuva medida em ${n === 1 ? 'estação' : 'estações'} ${rede} a ${f1(o.dist_km)} km`;
+  }
+  if (fonte === 'era5') return 'chuva observada (reanálise ERA5)';
+  if (fonte === 'ifs_provisorio') return 'modelo, provisório';
+  return SD;
+}
 function blocoClima(l) {
-  if (!l || (!l.clima1 && !l.clima2)) return null;
+  if (!l || (!l.clima1 && !l.clima2 && !l.clima2o)) return null;
   const a = l.clima1;
   const b = l.clima2;
+  const o = l.clima2o;
+  const medida = o && ['cemaden', 'inmet', 'ambos'].includes(o.fonte_dia);
   return h('div', { class: 'caixa' }, h('h4', {}, 'Clima'),
     a ? h('p', {}, `1º turno, observado: ${f1(a.chuva_mm)} mm de chuva nas horas de votação (${f1(a.chuva_dia_mm)} mm no dia), rajada de até ${f0(a.rajada_kmh)} km/h.${num(a.urnas_bateria_votacao) > 0 ? ` ${f0(a.urnas_bateria_votacao)} de ${f0(a.urnas)} urnas do local usaram bateria durante a votação.` : ''}`) : null,
-    b ? h('p', {}, `2º turno, previsão publicada na véspera: ${f1(b.chuva_mm)} mm, chance de chuva de ${f0(b.prob_pct)}%, risco ${b.risco || SD}.`) : null,
-    h('p', { class: 'ajuda' }, 'Reanálise ERA5 para o 1º turno; a previsão do 2º turno não é medição do dia.'));
+    o ? h('p', {}, `2º turno, no dia: ${f1(o.chuva_dia_mm)} mm em 25/10 (${rotuloFonte2(o.fonte_dia, o)}); ${f1(o.chuva_mm)} mm nas horas de votação, 7h às 18h (${rotuloFonte2(o.fonte_votacao, o)}); rajada de até ${f0(o.rajada_kmh)} km/h (modelo, provisório).`) : null,
+    b ? h('p', { class: o ? 'ajuda' : null }, `2º turno, previsão publicada na véspera: ${f1(b.chuva_mm)} mm, chance de chuva de ${f0(b.prob_pct)}%, risco ${b.risco || SD}.`) : null,
+    h('p', { class: 'ajuda' }, 'Reanálise ERA5 para o 1º turno. No 2º turno, pluviômetro a até 50 km é estimativa para a célula de 0,25 grau, não medição no prédio; onde não há estação, o modelo ECMWF IFS é provisório e será trocado pela reanálise ERA5.' + (medida ? '' : ' Sem estação a 50 km deste local.')));
 }
 function tabelaPredio(uf, zd, local, atual) {
   const secs = zd.listaSecoes.filter((s) => s.li === local.li).sort((a, b) => a.secao - b.secao);

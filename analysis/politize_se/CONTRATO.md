@@ -42,7 +42,7 @@ build relê o banco e marca a cobertura. Rodar de novo quando a coleta dos BUs t
 | regua_1t | `apuracao/data/referencia_1t_secoes.json` | régua dos sinais (mesma do dossiê) |
 | logs_1t | `docs/assets/logs_urnas_2026/zona/<UF>/<zona>.json.gz` | sinais dos logs do 1º turno; nível 0 a 3 por `apuracao_logs.familias.atencao` |
 | logs_2t | `docs/assets/logs_urnas_2t_2026/zona/<UF>/<zona>.json.gz` (sinais, bateria, `erro_mr_pre_zeresima`) e `data/outputs/logs_urnas_2t_2026.sqlite` (`metricas.resumo`: `partidas_dia`, `metadados_urna`, via `json_extract`) | campos `log2_*`; `indice.logs_2t.disponivel = true` desde 26/10 (regra 2 do critério de erro técnico) |
-| clima | `docs/assets/fiscais_mapa/clima/<UF>.json` (1º turno observado, ERA5) e `previsao.json` (previsão da véspera para 25/10, célula de 0,5°) | caixa de clima do prédio |
+| clima | `docs/assets/fiscais_mapa/clima/<UF>.json` (1º turno observado, ERA5), `observado_2t.json` (chuva de 25/10 por célula de 0,25°: estação CEMADEN a até 50 km ou modelo ECMWF IFS provisório; `analysis/clima_2t_2026/CONTRATO.md`) e `previsao.json` (previsão da véspera, célula de 0,5°, campo secundário) | caixa de clima do prédio |
 
 Fora desta versão (próximas camadas): RDV do 2º turno (`apuracao/data/rdv_2t_2026.sqlite`, só AC, AM, DF, ES,
 RN, TO); governador nas seis UFs; trocas de urna com contexto nacional de `analysis/apuracao_2t_2026/dados/urnas.json`
@@ -173,7 +173,7 @@ O build decide quais frases valem e grava `[código, args formatados em pt-BR]`;
 ## Limites (escritos na página)
 
 Não diz como uma pessoa votou nem por que o comparecimento mudou; cobertura do 2º turno pode ser parcial;
-clima do 2º turno é previsão; o nível de fiscalização é a régua publicada antes do 2º turno, sem registro do
+clima do 2º turno vem de pluviômetro a até 50 km ou de modelo provisório, estimativa para a célula e não medição no prédio; o nível de fiscalização é a régua publicada antes do 2º turno, sem registro do
 que cada fiscal conferiu; reinício da urna e bateria têm explicação técnica comum e só o log não diz a causa.
 
 ## Mapa do Brasil (`docs/politizese_mapa.html`, 26/10/2026)
@@ -313,3 +313,14 @@ pede explicação e não prova irregularidade; nenhum texto é citado sem revis�
   município (o mapa deve ler as colunas pelo nome, nunca pela posição). Índice: `logs_2t.disponivel = true`,
   `catalogos.log_niveis`, `catalogos.log_familias[*].curto`, fontes `logs_2t_indice` e `logs_2t_metricas`. Banco de
   BUs do 2º turno completo (499.207 seções principais) e dados regerados.
+
+- **26/10/2026, chuva do 2º turno.** Prédio (zona): acrescentada `clima2o` depois de `clima2`, com
+  `locais.clima2o = [chuva_mm (07h às 18h de Brasília), fonte_votacao, chuva_dia_mm (00h às 24h), fonte_dia,
+  rajada_kmh, n_estacoes, dist_km, fonte]`; fontes `cemaden`, `inmet`, `ambos`, `ifs_provisorio` ou `era5`;
+  índice `catalogos.clima2o` com `gerado_em`, `fonte`, `rotulos_fonte`, `raio_km`, `cortes` e `nota`. A ficha mostra
+  primeiro a chuva do dia ("chuva medida em estações CEMADEN a X km" ou "modelo, provisório") e deixa a previsão
+  da véspera como linha secundária. Mapa do Brasil: colunas `chuva2_mm`, `chuva2_vot_mm`, `chuva2_fonte`,
+  `chuva2_fonte_vot`, `chuva2_dist_km`, `chuva2_n` no fim de `colunas_locais`, camada `chuva2` ("Chuva no dia do
+  2º turno", 0 a 40 mm), filtro "Só prédios com chuva forte no dia do 2º turno" (`chuva_dia_mm ≥ 20`, `#chuva=1`),
+  bloco "No dia do 2º turno" na ficha e `indice.clima2`/`indice.chuva_forte_mm`. Sem `observado_2t.json` os campos
+  ficam nulos e o mapa segue.

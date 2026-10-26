@@ -158,13 +158,22 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += tabela_alertas(L)
     if S:
         enc = caminho(S, "agregados.brasil.encerramento") or {}
-        h += "<h3>A amostra de seções ao vivo</h3>" + p(
-            f"Ao lado dos arquivos agregados, o coletor buscou o boletim de urna de uma amostra equiprovável por município: "
-            f"{inteiro(caminho(S, 'totais.secoes'))} seções com horário de encerramento, emissão e recebimento. É dela que sai o "
-            f"encerramento mediano às {enc.get('p50_2t', 's/d')}. O banco completo, com todas as seções, ainda estava em coleta "
-            "quando esta página foi gerada; o capítulo 08 diz qual fonte usou.",
-            "verificado",
-        )
+        if S.get("fonte") == "completo":
+            h += "<h3>Os boletins de todas as seções</h3>" + p(
+                f"Ao lado dos arquivos agregados, a casa leu o boletim de urna de cada seção: "
+                f"{inteiro(caminho(S, 'totais.secoes'))} seções com horário de encerramento, emissão e recebimento, "
+                f"último recebimento às {S.get('max_recebido_hhmm', 's/d')}. Na noite, o coletor lia uma amostra equiprovável por "
+                f"município; esta página usa o banco completo. É dele que sai o encerramento mediano às {enc.get('p50_2t', 's/d')}.",
+                "verificado",
+            )
+        else:
+            h += "<h3>A amostra de seções ao vivo</h3>" + p(
+                f"Ao lado dos arquivos agregados, o coletor buscou o boletim de urna de uma amostra equiprovável por município: "
+                f"{inteiro(caminho(S, 'totais.secoes'))} seções com horário de encerramento, emissão e recebimento. É dela que sai o "
+                f"encerramento mediano às {enc.get('p50_2t', 's/d')}. O banco completo, com todas as seções, ainda estava em coleta "
+                "quando esta página foi gerada; o capítulo 08 diz qual fonte usou.",
+                "verificado",
+            )
     h += "<h3>O telão</h3>" + p(
         "A live foi um telão em navegador, com telas trocadas pela playlist do 2º turno e por teclado, alimentado pela API local "
         "sobre o mesmo banco. As capturas abaixo são do fim da noite.",
@@ -183,7 +192,11 @@ def render(d: Dados, cap: Capitulo) -> str:
     )
     h += limites(
         [
-            f"Amostra de {inteiro(caminho(S, 'totais.secoes')) if S else 's/d'} seções ao vivo; o banco completo de boletins de urna estava em coleta.",
+            (
+                f"Boletins de urna de {inteiro(caminho(S, 'totais.secoes'))} seções, banco completo lido depois da noite."
+                if S and S.get("fonte") == "completo"
+                else f"Amostra de {inteiro(caminho(S, 'totais.secoes')) if S else 's/d'} seções ao vivo; o banco completo de boletins de urna estava em coleta."
+            ),
             "O coletor lê o que o TSE publica; não vê o que acontece entre a urna e o arquivo público.",
             "Latência inclui o intervalo de sondagem: é teto da demora de publicação.",
             "As telas são capturas para registro, não a gravação da live (que está no topo da página).",

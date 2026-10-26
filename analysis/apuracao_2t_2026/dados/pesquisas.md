@@ -2,15 +2,15 @@
 
 Gerado por `python3 scripts/apuracao-2t-2026-pesquisas.py`. Não editar à mão: o script regrava este arquivo e os três JSON ao lado.
 
-Urna: `analysis/apuracao_2t_2026/dados/presidente.json` (sha256 `9eec711a4b12318a`).
+Urna: `analysis/apuracao_2t_2026/dados/presidente.json` (sha256 `9713c9d0a456ada3`).
 
 Convenção: erro = pesquisa menos urna, em pontos dos votos válidos. Na diferença Flávio menos Lula (F−L), positivo quer dizer que a pesquisa pôs Flávio mais à frente do que a urna. O 1º turno e 2022 usaram L−F; para comparar, troque o sinal.
 
 ## 1. O que a urna devolveu (fato)
 
-- Lula 64.255.891 × Flávio 59.825.984 votos; 51,79% × 48,21% dos válidos; F−L = −3,57 pp.
+- Lula 64.256.232 × Flávio 59.826.041 votos; 51,79% × 48,21% dos válidos; F−L = −3,57 pp.
 - Sem exterior (universo das pesquisas e das centrais): Lula 51,78% × Flávio 48,22%.
-- Abstenção 19,22% contra 21,08% no 1º turno (−1,86 pp); comparecimento +2,96 milhões de eleitores. Nos 5.753 municípios já fechados: 19,26% contra 21,10% nos mesmos municípios.
+- Abstenção 19,22% contra 21,08% no 1º turno (−1,86 pp); comparecimento +2,96 milhões de eleitores.
 
 ## 2. Os números mais fortes
 
@@ -21,7 +21,7 @@ Convenção: erro = pesquisa menos urna, em pontos dos votos válidos. Na difere
 5. 16 de 20 erros ficam fora da margem de 95% da diferença sob amostragem simples.
 6. Válidos oficiais das casas: erro comum +5,67 (19 casas).
 7. Reponderação por renda (PNAD): 9 de 11 casas se afastaram da urna, 1 se aproximou; deslocamento médio +1,73 pp em F−L na direção de Flávio.
-8. Nas mesmas 11 casas, erro comum publicado +5,73 contra reponderado +7,47.
+8. Nas mesmas 11 casas, erro comum publicado +5,74 contra reponderado +7,47.
 9. Média Arvor 52,88 × 47,12: erro +9,33 pp em F−L.
 10. Projeção Arvor 52,07 × 47,93: erro +7,70 pp; a âncora publicada sozinha errava +4,98, a PNAD somou +1,01 e a presença relativa de Flávio (+3,8%) somou +1,71.
 11. 1º turno: erro comum +3,55 em L−F (superestimou Lula). 2º turno: −5,53 em L−F. Sinal invertido.
@@ -50,7 +50,7 @@ Erro F−L sobre os válidos do total publicado (regra da casa); oficial = váli
 | Nexus | 23/10–24/10 | telefone | 47,0 × 46,0 | 50,54 | +4,65 | +4,57 | +6,90 | 4,54 |
 | Quaest | 23/10–24/10 | presencial | 46,0 × 45,0 | 50,55 | +4,67 | +5,57 | sem PNAD | 3,38 |
 | Indexa/Broadcast | 20/10–21/10 | telefone | 45,2 × 44,1 | 50,62 | +4,80 | +4,77 | sem PNAD | 4,64 |
-| MDA | 21/10–23/10 | presencial | 46,3 × 45,0 | 50,71 | +4,99 | +4,97 | +7,76 | 4,55 |
+| MDA | 21/10–23/10 | presencial | 46,3 × 45,0 | 50,71 | +4,99 | +4,97 | +7,77 | 4,55 |
 | AtlasIntel | 18/10–23/10 | online | 49,9 × 48,4 | 50,76 | +5,10 | +5,17 | +5,21 | 2,80 |
 | PoderData | 23/10–24/10 | telefone | 49,0 × 47,0 | 51,04 | +5,65 | +5,57 | +8,43 | 3,16 |
 | Meio/Ideia | 15/10–19/10 | telefone | 48,0 × 46,0 | 51,06 | +5,70 | +5,77 | sem PNAD | 5,22 |
@@ -79,7 +79,7 @@ Fora desta lista: Data Ranking (campo até 16/10) entrou na Projeção, mas a re
 | Datafolha | hipotese_onda_anterior | +4,62 | +8,53 | +3,90 |
 | Gerp | perfil_ponderado | +6,73 | +6,71 | −0,02 |
 | Ipespe | perfil_publicado | +4,62 | +6,25 | +1,63 |
-| MDA | perfil_publicado | +4,99 | +7,76 | +2,77 |
+| MDA | perfil_publicado | +4,99 | +7,77 | +2,77 |
 | Nexus | perfil_publicado | +4,65 | +6,90 | +2,25 |
 | Palver | perfil_ponderado | +4,58 | +4,38 | −0,20 |
 | PoderData | perfil_ponderado | +5,65 | +8,43 | +2,77 |
@@ -191,7 +191,7 @@ Legenda: **Fato** (medido nos arquivos), **Inferência** (apoiada nos fatos, nã
 
 ### (d) Reponderação por renda
 
-- Fato: a urna testou a premissa e ela falhou nesta rodada (9 de 11 casas pioraram, erro comum 5,73 para 7,47). Ver seção 4.
+- Fato: a urna testou a premissa e ela falhou nesta rodada (9 de 11 casas pioraram, erro comum 5,74 para 7,47). Ver seção 4.
 - Hipótese: o gradiente renda × voto medido dentro das faixas não é transportável. Se o entrevistado de renda alta que a pesquisa alcança é mais pró-Flávio que o eleitor de renda alta da população, dar mais peso a ele amplia o erro. Exige microdados com pesos para testar; o anúncio da Palver de liberar a base individual depois do 2º turno permite a primeira prova.
 
 ### (e) Perfil de quem votou
@@ -207,21 +207,21 @@ Legenda: **Fato** (medido nos arquivos), **Inferência** (apoiada nos fatos, nã
 
 Cenário do simulador (Central Média de 24/10) que reproduz a urna: abstenção 18,50%, presença relativa de Flávio −12,5% (presença efetiva Flávio 76,0%, Lula 86,9%), indecisos 100% escolhendo, divisão 34,8% Flávio × 65,2% Lula; resultado 48,3 × 51,7. Empate exigiria presença relativa −6,4%, mantido o resto.
 
-**Cenário refeito no motor da casa com a urna observada** (`hipotese_autor.json`; `scripts/reponderacao-simulador.py` sobre o snapshot `9399acb33c51065d`, último de 24/10, o único da data que reproduz o tweet: Flávio 48,33% e brancos e nulos de 3,09% do comparecimento; empate com presença −6,4% dá Flávio 49,99%). Fixados: abstenção 19,22% e brancos mais nulos 4.153.791 (3,24% de quem compareceu; o tweet usava 18,50% e 3,1%).
+**Cenário refeito no motor da casa com a urna observada** (`hipotese_autor.json`; `scripts/reponderacao-simulador.py` sobre o snapshot `9399acb33c51065d`, último de 24/10, o único da data que reproduz o tweet: Flávio 48,33% e brancos e nulos de 3,09% do comparecimento; empate com presença −6,4% dá Flávio 49,99%). Fixados: abstenção 19,22% e brancos mais nulos 4.153.801 (3,24% de quem compareceu; o tweet usava 18,50% e 3,1%).
 
 | Cenário | Presença relativa de Flávio | Indecisos para Flávio | Flávio | Lula | Erro F−L contra a urna | Votos de Flávio contra a urna |
 |---|---|---|---|---|---|---|
-| presença relativa resolvida para bater Flávio da urna; indecisos na proporção automática da central | −13,7% | 48,2% | 48,21 | 51,79 | 0,00 | 337 |
-| sem solução entre 0 e 100%: mesmo com 100% dos indecisos para Lula e presença +3,8% da central, Flávio fica acima da urna | +3,8% | 0,0% | 51,98 | 48,02 | +7,53 | 4.672.724 |
-| presença −12,5% e indecisos 34,8/65,2, com comparecimento e brancos e nulos da urna | −12,5% | 34,8% | 48,33 | 51,67 | +0,22 | 138.808 |
-| central (+3,8%, divisão automática) só com comparecimento e BN da urna | +3,8% | 52,8% | 52,84 | 47,16 | +9,24 | 5.733.140 |
+| presença relativa resolvida para bater Flávio da urna; indecisos na proporção automática da central | −13,7% | 48,2% | 48,21 | 51,79 | 0,00 | 165 |
+| sem solução entre 0 e 100%: mesmo com 100% dos indecisos para Lula e presença +3,8% da central, Flávio fica acima da urna | +3,8% | 0,0% | 51,98 | 48,02 | +7,53 | 4.672.689 |
+| presença −12,5% e indecisos 34,8/65,2, com comparecimento e brancos e nulos da urna | −12,5% | 34,8% | 48,33 | 51,67 | +0,22 | 138.771 |
+| central (+3,8%, divisão automática) só com comparecimento e BN da urna | +3,8% | 52,8% | 52,84 | 47,16 | +9,24 | 5.733.105 |
 
 - (a) Com indecisos na proporção automática, bater a urna exige presença relativa de Flávio de −13,7%, contra +3,8% da central.
 - (b) Mantida a presença +3,8%, nenhuma divisão dos indecisos alcança a urna: mesmo com todos para Lula, Flávio fica em 51,98% (+7,53 pp em F−L).
-- (c) A combinação do autor (−12,5% e 34,8/65,2) com brancos e nulos reais dá Flávio 48,33% (+0,22 pp em F−L, 138.808 votos de Flávio acima da urna).
+- (c) A combinação do autor (−12,5% e 34,8/65,2) com brancos e nulos reais dá Flávio 48,33% (+0,22 pp em F−L, 138.771 votos de Flávio acima da urna).
 
 **Peça 1, abstenção.**
-- Sustenta (fato): a urna mediu abstenção de 19,22%, o número que o tweet cita (o cenário da imagem usou 18,50%), contra 21,08% no 1º turno; 2,96 milhões a mais votaram. Nos mesmos municípios: 19,26% contra 21,10%.
+- Sustenta (fato): a urna mediu abstenção de 19,22%, o número que o tweet cita (o cenário da imagem usou 18,50%), contra 21,08% no 1º turno; 2,96 milhões a mais votaram.
 - Contraria (fato): menos abstenção sozinha não move a razão entre os candidatos; só move se os novos votantes forem desiguais. Mesmo com todos para Lula, o efeito seria no máximo 2,36 pp em F−L, e entre as UFs a variação da abstenção não acompanha o resíduo de Flávio (correlação 0,02).
 
 **Peça 2, presença diferencial (o centro da hipótese).**
@@ -249,6 +249,6 @@ Cenário do simulador (Central Média de 24/10) que reproduz a urna: abstenção
 - `python3 scripts/apuracao-2t-2026-pesquisas.py` (este memorando e os três JSON).
 - Urna: `analysis/apuracao_2t_2026/dados/presidente.json` quando existir; senão `curl -s http://127.0.0.1:4180/api/2t/regioes`, `/api/2t/ufs`, `/api/2t/abstencao` e `/api/2t/evolucao` (nomes por número de urna).
 - Pesquisas: `analysis/reponderacao/pesquisas/*.json` (placar de 2º turno, campo iniciado depois de 04/10); reponderado: `docs/assets/reponderacao_simulador.json` (`polls[].pnad`) e `docs/assets/reponderacao_pnad.json` (cenário pessoas16_efetivo).
-- Centrais: `docs/assets/reponderacao_simulador.json` (`central`, `central_projection`, `projection.anchors`), snapshot `e1e4524328558a79`.
+- Centrais: `docs/assets/reponderacao_simulador.json` (`central`, `central_projection`, `projection.anchors`), snapshot `03347beae3867392`.
 - Presença declarada: `analysis/reponderacao/historico_2t/presenca.json`; 1º turno: `analysis/apuracao_2026/dados/pesquisas_vs_urna.json` e `presidente.json`; 2022: `analysis/predicao_2026/erro_2022/erro_2022.json`.
 - Território: `docs/assets/mapa_previsao_2t_2026.json` (25/10 e 24/10 via git), `docs/assets/projecao_secoes_2t_ufs.csv` (19/10), `analysis/projecao_secoes_2t/estaduais.json`, `analysis/reponderacao/estaduais/`.

@@ -12,7 +12,7 @@
 
   const BASE = 'assets/politize_se_mapa/';
   const SECOES = 'assets/politize_se/dados/zona/';
-  const VERSAO = '20261026c';
+  const VERSAO = '20261026d';
   const FORMATO = 3;
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
@@ -28,7 +28,7 @@
     // Níveis do registro da urna: as mesmas cores do mapa de fiscais.
     log2: { 0: '#9cb9c2', 1: '#4f8fa0', 2: '#0f5d6e', 3: '#5b2a86' },
     log_subiu: ['#d8d4c8', '#b8560f'],
-    abst: ['#f2ead2', '#7a3500'], sinal: ['#e4e0d4', '#5b2a86'], urna: ['#d8d4c8', '#5b2a86'], mudanca: ['#d8d4c8', '#a3205f'],
+    abst: ['#f2ead2', '#7a3500'], chuva2: ['#e3edf2', '#12466b'], sinal: ['#e4e0d4', '#5b2a86'], urna: ['#d8d4c8', '#5b2a86'], mudanca: ['#d8d4c8', '#a3205f'],
   };
   // Regra do grupo (agrupador do mapa) para camadas de presença e de sinal: parcela dos prédios com o atributo.
   const TETO_PARCELA = { sinal: 0.5, urna: 0.25, mudanca: 0.1, log_subiu: 0.1 };
@@ -40,7 +40,7 @@
 
   const S = {
     meta: null, porUf: new Map(), locais: [], porId: new Map(), muni: new Map(),
-    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '' }, camada: 'resultado',
+    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', chuva: false }, camada: 'resultado',
     raio: RAIO_PADRAO, modo: 'mapa', centro: null, abrir: '',
     ordem: { col: 'nome', dir: 1 }, ordemManual: false, pagina: 1, porPagina: 50, buscaLista: '',
     mapa: null, canvas: null, cluster: null, circulo: null, alvo: null, marcadores: new Map(),
@@ -260,6 +260,7 @@
     const f = S.filtro;
     if (f.mun && l.mun !== f.mun) return false;
     if (f.zona && l.zona !== Number(f.zona)) return false;
+    if (f.chuva && !(typeof l.chuva2_mm === 'number' && l.chuva2_mm >= (S.meta.chuva_forte_mm || 20))) return false;
     if (f.texto) {
       const termos = norm(f.texto).split(' ');
       for (let i = 0; i < termos.length; i++) if (l.busca.indexOf(termos[i]) < 0) return false;
@@ -311,6 +312,7 @@
     f.uf = $('#f-uf').value;
     f.mun = $('#f-mun').value;
     f.texto = $('#f-texto').value.trim();
+    f.chuva = $('#f-chuva').checked;
     const zonaTxt = so($('#f-zona').value);
     const cep = f.uf === 'ZZ' ? '' : so($('#q-cep').value);
     if (zonaTxt && !f.uf) { setStatus('Escolha o estado para buscar a zona: o número da zona se repete entre os estados.', true); $('#f-uf').focus(); return; }
@@ -562,6 +564,7 @@
           linhaCmp('Abstenção, 2º turno', pct(l.abst_pct2), pct(m.abst_pct2)),
           linhaCmp('Seções com sinal', nf0.format(l.secoes_sinal || 0), nf0.format(m.secoes_sinal || 0)))),
       h('p', { class: 'ficha-meta' }, 'Flávio entre os dois: parcela de Flávio nos votos dados a Flávio e a Lula. A coluna da cidade soma só as seções com boletim do 2º turno lido.'),
+      blocoChuva(l),
       h('div', { class: 'ficha-secoes' }, h('p', { class: 'ficha-meta' }, 'Carregando as seções do prédio…')),
       h('a', { class: 'btn-politize', href: linkPolitize(l, l.secao_link), 'data-politize': '1' }, 'Entenda esta seção no Politize-se (seção ' + l.secao_link + ')'),
       h('p', { class: 'ficha-rotulo' }, 'Sinal pede explicação, não prova irregularidade. Leitura agregada por seção: o voto é secreto e nenhum número descreve uma pessoa.'),
@@ -569,6 +572,25 @@
         gmaps ? h('a', { href: gmaps, target: '_blank', rel: 'noopener' }, 'Como chegar (Google Maps)') : null, gmaps ? ' · ' : null,
         h('a', { href: 'politizese.html#uf=' + l.uf + '&z=' + l.zona + '&l=' + encodeURIComponent(l.id) }, 'Este prédio no Politize-se'), ' · ',
         h('a', { href: link, onclick: (ev) => { ev.preventDefault(); copiar(link, ev.target); } }, 'Copiar link do prédio')));
+  }
+
+  // Rótulo da fonte da chuva de 25/10: estação a X km ou modelo provisório.
+  function fonteChuva(fonte, l) {
+    const rede = { cemaden: 'CEMADEN', inmet: 'INMET', ambos: 'INMET/CEMADEN' }[fonte];
+    if (rede) return 'chuva medida em ' + (l.chuva2_n === 1 ? 'estação ' : 'estações ') + rede + ' a ' + km(l.chuva2_dist_km);
+    if (fonte === 'era5') return 'reanálise ERA5';
+    if (fonte === 'ifs_provisorio') return 'modelo, provisório';
+    return 'sem dado';
+  }
+
+  function blocoChuva(l) {
+    if (vazio(l.chuva2_mm) && vazio(l.chuva2_vot_mm)) return null;
+    const mm = (v) => (vazio(v) ? 'sem dado' : nf1.format(v) + ' mm');
+    const forte = typeof l.chuva2_mm === 'number' && l.chuva2_mm >= (S.meta.chuva_forte_mm || 20);
+    return h('div', { class: 'ficha-chuva' },
+      h('p', {}, h('b', {}, 'No dia do 2º turno: '), mm(l.chuva2_mm) + ' de chuva em 25/10 (' + fonteChuva(l.chuva2_fonte, l) + '); ' +
+        mm(l.chuva2_vot_mm) + ' das 7h às 18h (' + fonteChuva(l.chuva2_fonte_vot, l) + ').' + (forte ? ' Chuva forte no dia.' : '')),
+      h('p', { class: 'ficha-meta' }, 'Pluviômetro a até 50 km é estimativa para a área, não medição no prédio. Chuva não prova efeito no comparecimento.'));
   }
 
   // Modelo predominante (o de mais seções) e texto curto do prédio, com a contagem quando é misto.
@@ -884,6 +906,7 @@
     if (f.mun) p.push('mun=' + encodeURIComponent(f.mun));
     if (f.zona) p.push('zona=' + f.zona);
     if (f.texto) p.push('q=' + encodeURIComponent(f.texto));
+    if (f.chuva) p.push('chuva=1');
     if (S.camada !== S.meta.camada_padrao) p.push('camada=' + S.camada);
     if (S.raio !== RAIO_PADRAO) p.push('raio=' + S.raio);
     if (S.modo === 'lista') p.push('modo=lista');
@@ -908,6 +931,7 @@
     $('#q-cep').value = '';
     $('#q-cep').disabled = uf === 'ZZ';
     $('#f-texto').value = q.get('q') || '';
+    $('#f-chuva').checked = q.get('chuva') === '1';
     S.camada = S.meta.camadas[q.get('camada')] ? q.get('camada') : S.meta.camada_padrao;
     const r = Number(q.get('raio'));
     S.raio = RAIOS.indexOf(r) >= 0 ? r : RAIO_PADRAO;
@@ -923,7 +947,8 @@
     $('#f-uf').value = '';
     $('#q-cep').disabled = false;
     montarMunicipios();
-    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '' };
+    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', chuva: false };
+    $('#f-chuva').checked = false;
     S.centro = null; S.buscaLista = ''; S.pagina = 1; S.abrir = ''; S.ordemManual = false;
     if (S.modo === 'lista') trocarModo('mapa'); else aplicarBusca();
   }
@@ -945,13 +970,14 @@
       S.aberto = null;
       S.semGravar = false;
       const modo = lerHash();
-      Object.assign(S.filtro, { uf: $('#f-uf').value, mun: $('#f-mun').value, zona: so($('#f-zona').value), texto: $('#f-texto').value.trim(), cep: '' });
+      Object.assign(S.filtro, { uf: $('#f-uf').value, mun: $('#f-mun').value, zona: so($('#f-zona').value), texto: $('#f-texto').value.trim(), cep: '', chuva: $('#f-chuva').checked });
       S.centro = null;
       recolorir();
       if (modo !== S.modo) trocarModo(modo, true);
       aplicarBusca(true);
     });
     $('#b-limpar').addEventListener('click', limpar);
+    $('#f-chuva').addEventListener('change', () => { S.pagina = 1; aplicarBusca(); });
     const geo = $('#b-geo');
     if (!navigator.geolocation) geo.hidden = true;
     geo.addEventListener('click', () => {

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import gzip
 import json
+import math
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -21,6 +22,8 @@ from apuracao_logs.mapa import tabela
 
 ROOT = Path(__file__).resolve().parents[2]
 ORIGEM = ROOT / "docs/assets/politize_se/dados"
+OBSERVADO = ROOT / "docs/assets/fiscais_mapa/clima/observado_2t.json"
+CHUVA_FORTE_MM = 20
 FORMATO = 3
 MIN_APTOS_VOTO = 30
 MISTO = "misto"
@@ -69,6 +72,12 @@ COLUNAS_LOCAIS = [
     "log1_max",
     "log2_max",
     "log_subiu",
+    "chuva2_mm",
+    "chuva2_vot_mm",
+    "chuva2_fonte",
+    "chuva2_fonte_vot",
+    "chuva2_dist_km",
+    "chuva2_n",
 ]
 I_LAT = COLUNAS_LOCAIS.index("lat")
 COLUNAS_MUNICIPIOS = [
@@ -245,7 +254,59 @@ CAMADAS["log_subiu"] = {
     "precisa_bu2": False,
     "precisa_log2": True,
 }
+CAMADAS["chuva2"] = {
+    "nome": "Chuva no dia do 2º turno",
+    "campo": "chuva2_mm",
+    "tipo": "sequencial",
+    "minimo": 0,
+    "maximo": 40,
+    "baixo": "Sem chuva",
+    "alto": "40 mm ou mais",
+    "explica": (
+        "Chuva de 25/10, das 0h às 24h, medida em pluviômetros do CEMADEN a até 50 km do "
+        "local (média pelo inverso do quadrado da distância); sem estação por perto, o "
+        "modelo ECMWF IFS, provisório até a reanálise ERA5. Estimativa para a célula de "
+        "0,25 grau, não medição no prédio."
+    ),
+    "precisa_bu2": False,
+}
 CAMADA_PADRAO = "resultado"
+
+
+_OBS: dict[str, Any] = {}
+
+
+def observado() -> dict[str, Any]:
+    """Chuva de 25/10 por célula de 0,25° (``clima_2t``); vazio se ainda não gerada."""
+    if not _OBS:
+        if not OBSERVADO.exists():
+            _OBS["doc"] = None
+        else:
+            d = json.loads(OBSERVADO.read_text(encoding="utf-8"))
+            cols = d["colunas"]
+            d["por"] = {
+                k: dict(zip(cols, v, strict=True)) for k, v in d["celulas"].items()
+            }
+            _OBS["doc"] = d
+    return _OBS["doc"] or {}
+
+
+def chuva_do_ponto(lat: float, lon: float) -> dict[str, Any]:
+    c = (
+        observado()
+        .get("por", {})
+        .get(f"{math.floor(lat * 4) / 4:.2f},{math.floor(lon * 4) / 4:.2f}")
+    )
+    if not c:
+        return {}
+    return {
+        "chuva2_mm": c["chuva_dia_mm"],
+        "chuva2_vot_mm": c["chuva_votacao_mm"],
+        "chuva2_fonte": c["fonte_dia"],
+        "chuva2_fonte_vot": c["fonte_votacao"],
+        "chuva2_dist_km": c["distancia_min_km"],
+        "chuva2_n": c["n_estacoes"],
+    }
 
 
 def ponto(uf: str, lat: Any, lon: Any) -> tuple[float, float] | None:
@@ -360,6 +421,8 @@ def linha_local(
     v["id"] = r["local_id"]
     v["lat"], v["lon"] = (round(pt[0], 5), round(pt[1], 5)) if pt else (None, None)
     v["aprox"] = 1 if uf == "ZZ" and pt else 0
+    if pt and uf != "ZZ":
+        v.update(chuva_do_ponto(*pt))
     if not v.get("n_bu2"):
         # sem boletim do 2º turno não há variação nem sinal do 2º turno
         for c in ("comp_pct2", "d_comp_pp", "abst_pct2", "bn_pct2", "fatia_f2"):

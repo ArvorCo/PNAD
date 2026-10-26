@@ -9,9 +9,10 @@ Grava ``analysis/apuracao_2t_2026/dados/transferencia.json`` e o memorando
 2. regressão ecológica da variação entre turnos, com efeito fixo de UF e pesos
    pelo eleitorado, e as trocas de especificação pedidas;
 3. matriz de hipótese por IPF, UF a UF, com a linha de quem faltou no 1º turno
-   fixada pela regressão e as demais ajustadas a partir das linhas publicadas
-   pelos institutos; sensibilidades de fidelidade, regressão, terceira via,
-   rotatividade e branco/nulo.
+   fixada pela regressão, as duas células de cruzamento entre as bases fixadas
+   por cenário (zero, 1%, 2% e o que as pesquisas mediram) e as demais ajustadas
+   a partir das linhas publicadas pelos institutos; sensibilidades de regressão,
+   terceira via, rotatividade e branco/nulo sobre o cenário padrão.
 
 Sem os bancos locais de seções, reaproveita o bloco de seções do JSON anterior
 (marcado ``"origem": "cache"``). Uso: ``python3 scripts/apuracao-2t-2026-transferencia.py``.
@@ -24,6 +25,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
+from apuracao_2t_2026 import transferencia_cruzamento as CZ
 from apuracao_2t_2026 import transferencia_dados as D
 from apuracao_2t_2026 import transferencia_ipf as I
 from apuracao_2t_2026 import transferencia_priors as P
@@ -174,15 +176,15 @@ def resumo_uf(cen: dict[str, Any], margens: dict[str, Any]) -> list[dict[str, An
     return sorted(out, key=lambda x: x["uf"])
 
 
-def tipos() -> dict[str, dict[str, str]]:
-    return {a: {b: P.tipo_elo(a, b) for b in P.DESTINOS} for a in P.ORIGENS}
+def tipos(cruz: str | None = None) -> dict[str, dict[str, str]]:
+    return {a: {b: P.tipo_elo(a, b, cruz) for b in P.DESTINOS} for a in P.ORIGENS}
 
 
-def contagem_tipos(M: np.ndarray) -> dict[str, Any]:
+def contagem_tipos(M: np.ndarray, cruz: str | None = None) -> dict[str, Any]:
     cont: dict[str, dict[str, float]] = {}
     for i, a in enumerate(P.ORIGENS):
         for j, b in enumerate(P.DESTINOS):
-            t = P.tipo_elo(a, b)
+            t = P.tipo_elo(a, b, cruz)
             c = cont.setdefault(t, {"elos": 0, "votos": 0.0})
             c["elos"] += 1
             c["votos"] += float(M[i, j])
@@ -194,42 +196,6 @@ def contagem_tipos(M: np.ndarray) -> dict[str, Any]:
 
 def faixa(valores: list[float]) -> list[float]:
     return [min(valores), max(valores)]
-
-
-def equilibrio(
-    alvo: float, margens: dict, piso: dict, b: dict, nac: dict
-) -> dict[str, float] | None:
-    """Fidelidade de base (prior, igual para os dois) que leva a terceira via a `alvo`% para Flávio.
-
-    A parte de Flávio na terceira via cai quando a fidelidade sobe; bissecção em [0,70; 0,99].
-    """
-
-    def parte(f: float) -> dict[str, Any]:
-        cen = I.cenario(margens, piso, b, nome="", descricao="", fidelidade=f)
-        return I.metricas(cen["matriz"], nac)
-
-    lo, hi = 0.70, 0.99
-    if (
-        not parte(lo)["terceira"]["flavio_pct"]
-        >= alvo
-        >= parte(hi)["terceira"]["flavio_pct"]
-    ):
-        return None
-    for _ in range(40):
-        mid = (lo + hi) / 2
-        if parte(mid)["terceira"]["flavio_pct"] > alvo:
-            lo = mid
-        else:
-            hi = mid
-    m = parte((lo + hi) / 2)
-    return {
-        "alvo_pct": alvo,
-        "fidelidade_prior": (lo + hi) / 2,
-        "fidelidade_flavio": m["fidelidade_flavio"],
-        "fidelidade_lula": m["fidelidade_lula"],
-        "flavio_para_lula": m["flavio_para_lula"],
-        "perda_base_flavio_pct": 100 - m["fidelidade_flavio"],
-    }
 
 
 def main() -> None:
@@ -248,28 +214,17 @@ def main() -> None:
     if piso is None:
         piso = piso_municipal_por_uf(painel)
 
+    cz = CZ.roda(margens, piso, b, nac)
+    padrao = P.PADRAO_CRUZAMENTO
+    op_padrao = P.cenarios_cruzamento()[padrao]
+    par_padrao = (op_padrao["lula_para_flavio"], op_padrao["flavio_para_lula"])
+    tipo_padrao = op_padrao["tipo"]
     cenarios: list[tuple[str, dict[str, Any]]] = [
         (
             "central",
             {
-                "nome": "Central",
-                "descricao": "prior das pesquisas, abstenção pela regressão",
-            },
-        ),
-        (
-            "fidelidade_093",
-            {
-                "nome": "Fidelidade 0,93",
-                "descricao": "Lula e Flávio retêm 93% da própria base na prior",
-                "fidelidade": 0.93,
-            },
-        ),
-        (
-            "fidelidade_099",
-            {
-                "nome": "Fidelidade 0,99",
-                "descricao": "Lula e Flávio retêm 99% da própria base na prior",
-                "fidelidade": 0.99,
+                "nome": f"Central ({op_padrao['nome'].lower()})",
+                "descricao": "prior das pesquisas, abstenção pela regressão, cruzamento do cenário padrão",
             },
         ),
         (
@@ -328,7 +283,17 @@ def main() -> None:
                 "abstencao_fixa": False,
             },
         ),
+        (
+            "cruzamento_livre",
+            {
+                "nome": "Cruzamento escolhido pelo ajuste",
+                "descricao": "diagnóstico: as duas células de cruzamento partem das pesquisas e o IPF as move (versão "
+                "anterior deste capítulo)",
+                "cruzamento": None,
+            },
+        ),
     ]
+    diagnosticos = {"abstencao_ajustada", "cruzamento_livre"}
     if secoes_res is not None:
         cs = secoes_res["especificacoes"]["municipio"]["coef"]
         bs = {x: cs[x]["delta_comparecimento"]["b"] for x in R.DESTINOS_REG}
@@ -351,12 +316,14 @@ def main() -> None:
         nome = op.pop("nome")
         desc = op.pop("descricao")
         bb = op.pop("b", b)
+        op.setdefault("cruzamento", par_padrao)
         cen = I.cenario(margens, piso, bb, nome=nome, descricao=desc, **op)
         if chave == "central":
             central_cen = cen
         resultados[chave] = {
             "nome": nome,
             "descricao": desc,
+            "diagnostico_apenas": chave in diagnosticos,
             "alpha": cen["alpha"],
             "rotatividade": cen["churn_nacional"],
             "metricas": I.metricas(cen["matriz"], nac),
@@ -371,59 +338,40 @@ def main() -> None:
     Mc = central_cen["matriz"]
     met = resultados["central"]["metricas"]
 
-    nao_diag = [k for k in resultados if k != "abstencao_ajustada"]
+    nao_diag = [k for k in resultados if k not in diagnosticos]
+    cz_json = {k: v["json"] for k, v in cz.items()}
+    todos = [resultados[k]["metricas"] for k in nao_diag] + [
+        v["metricas"] for v in cz_json.values()
+    ]
+
+    def faixa_todos(f) -> list[float]:
+        return faixa([f(m) for m in todos])
+
     invariantes = {
-        "terceira_flavio_pct": faixa(
-            [resultados[k]["metricas"]["terceira"]["flavio_pct"] for k in nao_diag]
+        "terceira_flavio_pct": faixa_todos(lambda m: m["terceira"]["flavio_pct"]),
+        "terceira_lula_pct": faixa_todos(lambda m: m["terceira"]["lula_pct"]),
+        "terceira_flavio_entre_finalistas": faixa_todos(
+            lambda m: m["terceira"]["flavio_entre_finalistas"]
         ),
-        "terceira_lula_pct": faixa(
-            [resultados[k]["metricas"]["terceira"]["lula_pct"] for k in nao_diag]
+        "razao_consolidacao": faixa_todos(
+            lambda m: m["razao_consolidacao_flavio_lula"]
         ),
-        "terceira_flavio_entre_finalistas": faixa(
-            [
-                resultados[k]["metricas"]["terceira"]["flavio_entre_finalistas"]
-                for k in nao_diag
-            ]
-        ),
-        "razao_consolidacao": faixa(
-            [
-                resultados[k]["metricas"]["razao_consolidacao_flavio_lula"]
-                for k in nao_diag
-            ]
-        ),
-        "ganho_fora_base_lula": faixa(
-            [resultados[k]["metricas"]["ganho_fora_base_lula"] for k in nao_diag]
-        ),
-        "ganho_fora_base_flavio": faixa(
-            [resultados[k]["metricas"]["ganho_fora_base_flavio"] for k in nao_diag]
-        ),
-        "voltaram": faixa([resultados[k]["metricas"]["voltaram"] for k in nao_diag]),
-        "voltaram_lula_pct": faixa(
-            [resultados[k]["metricas"]["voltaram_lula_pct"] for k in nao_diag]
-        ),
-        "explica_pp": faixa(
-            [resultados[k]["metricas"]["explica_pp"] for k in nao_diag]
-        ),
-        "fidelidade_lula": faixa(
-            [resultados[k]["metricas"]["fidelidade_lula"] for k in nao_diag]
-        ),
-        "fidelidade_flavio": faixa(
-            [resultados[k]["metricas"]["fidelidade_flavio"] for k in nao_diag]
-        ),
-        "bn1_continua_bn_pct": faixa(
-            [resultados[k]["metricas"]["bn1_continua_bn_pct"] for k in nao_diag]
-        ),
+        "ganho_fora_base_lula": faixa_todos(lambda m: m["ganho_fora_base_lula"]),
+        "ganho_fora_base_flavio": faixa_todos(lambda m: m["ganho_fora_base_flavio"]),
+        "voltaram": faixa_todos(lambda m: m["voltaram"]),
+        "voltaram_lula_pct": faixa_todos(lambda m: m["voltaram_lula_pct"]),
+        "explica_pp": faixa_todos(lambda m: m["explica_pp"]),
+        "fidelidade_lula": faixa_todos(lambda m: m["fidelidade_lula"]),
+        "fidelidade_flavio": faixa_todos(lambda m: m["fidelidade_flavio"]),
+        "bn1_continua_bn_pct": faixa_todos(lambda m: m["bn1_continua_bn_pct"]),
         "por_candidatura_flavio_pct": {
-            c: faixa(
-                [
-                    resultados[k]["metricas"]["terceira"]["por_candidatura"][c][
-                        "flavio_pct"
-                    ]
-                    for k in nao_diag
-                ]
+            c: faixa_todos(
+                lambda m, c=c: m["terceira"]["por_candidatura"][c]["flavio_pct"]
             )
             for c in P.TERCEIRA
         },
+        "regra": "faixa sobre os quatro cenários de cruzamento e as trocas de prior feitas sobre o cenário padrão; "
+        "os diagnósticos ficam de fora",
     }
     ic_volta = [
         resultados["abstencao_ic_min"]["metricas"]["voltaram_lula_pct"],
@@ -441,14 +389,69 @@ def main() -> None:
         "flavio_entre_finalistas": faixa([x["flavio_entre_finalistas"] for x in polls]),
     }
     pesquisas_terceira["equilibrio"] = [
-        equilibrio(alvo, margens, piso, b, nac)
+        CZ.equilibrio(alvo, margens, piso, b, nac)
         for alvo in pesquisas_terceira["flavio_do_estoque"]
     ]
+    pesquisas_terceira["equilibrio_regra"] = (
+        "cruzamento líquido de Flávio para Lula (Lula para Flávio em zero) que leva a terceira via ao número "
+        "publicado, com o resto da prior igual ao cenário padrão"
+    )
+    linhas_base = P.cruzamento_publicado()
+    cruzamento = {
+        "padrao": padrao,
+        "ordem": list(P.ORDEM_CRUZAMENTO),
+        "regra": "as duas células de cruzamento (Lula no 1º turno para Flávio no 2º e o contrário) ficam fixas como "
+        "fração da base do 1º turno de quem cruza; o IPF distribui o resto, UF a UF, até bater as duas urnas",
+        "linhas_publicadas": linhas_base,
+        "publicado_liquido": CZ.publicado_liquido(linhas_base, nac),
+        "faixa_publicada": {
+            "lula_para_flavio_pct": faixa(
+                [x["lula_para_flavio_pct"] for x in linhas_base]
+            ),
+            "flavio_para_lula_pct": faixa(
+                [x["flavio_para_lula_pct"] for x in linhas_base]
+            ),
+        },
+        "cenarios": cz_json,
+        "comparacao": CZ.comparacao(cz_json),
+    }
+    sem = cz_json["sem"]
+    cruzamento["padrao_compativel"] = {
+        "margens": max(
+            sem["confere"]["linhas_max_desvio_votos"],
+            sem["confere"]["colunas_max_desvio_votos"],
+        )
+        < 1,
+        "margens_desvio_max_votos": max(
+            sem["confere"]["linhas_max_desvio_votos"],
+            sem["confere"]["colunas_max_desvio_votos"],
+        ),
+        "ufs_ajustadas": len(margens),
+        "linhas_publicadas": any(
+            x["lula_para_flavio_pct"] == 0 and x["flavio_para_lula_pct"] == 0
+            for x in linhas_base
+        ),
+        "texto": "fecha as duas urnas em todas as UFs e no exterior; é o que a Quaest publicou (21/10, p. 20) nas duas "
+        "direções e fica abaixo das linhas da Nexus (de 1,0% a 2,1%)",
+    }
+    if not (
+        cruzamento["padrao_compativel"]["margens"]
+        and cruzamento["padrao_compativel"]["linhas_publicadas"]
+    ):
+        raise SystemExit("cenário sem cruzamento incompatível: trocar o padrão para 1%")
     reserva = D.reserva_voto_util()
     sintese = D.sintese_pre_1t()
     pesq_1t = D.terceira_via_pesquisas_1t()
 
+    comp = cruzamento["comparacao"]
     resposta = {
+        "cruzamento_padrao": padrao,
+        "terceira_flavio_cenarios": comp["muda_pouco"]["terceira_flavio_pct"],
+        "terceira_lula_cenarios": comp["muda_pouco"]["terceira_lula_pct"],
+        "cruzamento_pesquisas_pct": {
+            "lula_para_flavio": cz_json["pesquisas"]["lula_para_flavio_pct"],
+            "flavio_para_lula": cz_json["pesquisas"]["flavio_para_lula_pct"],
+        },
         "voltaram_milhoes": met["voltaram"] / 1e6,
         "voltaram_lula_pct": met["voltaram_lula_pct"],
         "voltaram_lula_ic": ic_volta,
@@ -500,7 +503,13 @@ def main() -> None:
             "regressao": "Δvotos_X = efeito fixo + b·Δcomparecimento + c·terceira via + d·branco/nulo do 1º turno + e·Δeleitorado, tudo sobre o eleitorado médio, pesos pelo eleitorado, erro-padrão por agrupamento em UF",
             "elo_medido": "linha de origem com prior em matriz publicada por instituto (voto lembrado × intenção); o IPF ajusta",
             "elo_regressao": "linha de quem faltou no 1º turno: divisão pela regressão, retenção pela rotatividade mínima; fixa no IPF",
-            "elo_estimado": "hipótese declarada (rotatividade, branco e nulo do 1º turno) ajustada pelo IPF",
+            "elo_estimado": "hipótese declarada (rotatividade, branco e nulo do 1º turno, cruzamento de 1% ou 2%) "
+            "ajustada pelo IPF ou fixada pelo cenário",
+            "elo_zero": "célula de cruzamento fixada em zero pelo cenário (zero estrutural no IPF)",
+            "cruzamento": "Lula no 1º turno para Flávio no 2º e Flávio no 1º turno para Lula no 2º, como fração da base "
+            "do 1º turno de quem cruza; fixado por cenário",
+            "lula_de_terceira_bn_e_cruzamento": "votos de Lula vindos da terceira via e do branco e nulo do 1º turno, "
+            "mais o saldo líquido da troca entre as bases",
             "explica_pp": "pontos da parte de Flávio entre os dois que voltariam se os votos de quem faltou no 1º turno saíssem do 2º",
             "razao_consolidacao": "ganho de Flávio fora da própria base dividido pelo de Lula",
         },
@@ -560,11 +569,13 @@ def main() -> None:
                 "do comparecimento do 2º turno (como teria votado quem faltou); mantém o saldo que a regressão mede",
             },
         },
+        "cruzamento": cruzamento,
         "ipf": {
             "central": {
+                "cenario_cruzamento": padrao,
                 "matriz": I.como_dict(Mc),
-                "tipos": tipos(),
-                "contagem_tipos": contagem_tipos(Mc),
+                "tipos": tipos(tipo_padrao),
+                "contagem_tipos": contagem_tipos(Mc, tipo_padrao),
                 "metricas": met,
                 "por_uf": resumo_uf(central_cen, margens),
                 "confere": resultados["central"]["confere"],
@@ -650,9 +661,66 @@ def memorando(doc: dict[str, Any]) -> str:
             f"| {x['nome']} | {x['n']} | {_pt(x['lula'], 1)} | {_pt(x['lula_ic95'][0], 1)} a {_pt(x['lula_ic95'][1], 1)} "
             f"| {_pt(x['flavio'], 1)} | {_pt(x['branco_nulo'], 1)} |"
         )
+    cz = doc["cruzamento"]
+    cp = cz["comparacao"]
     L += [
         "",
-        "## 3. Matriz de hipótese (IPF por UF, abstenção fixa pela regressão)",
+        "## 3. Cenários de cruzamento entre as bases (IPF por UF)",
+        "",
+        f"- Padrão: {cz['cenarios'][cz['padrao']]['nome']}; {cz['padrao_compativel']['texto']} "
+        f"(desvio máximo {_pt(cz['padrao_compativel']['margens_desvio_max_votos'], 4)} voto).",
+        f"- Linhas de base publicadas: Lula → Flávio de {_pt(cz['faixa_publicada']['lula_para_flavio_pct'][0], 1)} a "
+        f"{_pt(cz['faixa_publicada']['lula_para_flavio_pct'][1], 1)}%; Flávio → Lula de "
+        f"{_pt(cz['faixa_publicada']['flavio_para_lula_pct'][0], 1)} a {_pt(cz['faixa_publicada']['flavio_para_lula_pct'][1], 1)}%.",
+        f"- Não muda: voltaram {_pt(cp['nao_muda']['voltaram'][0] / 1e6)} mi, Lula entre eles "
+        f"{_pt(cp['nao_muda']['voltaram_lula_pct'][0], 1)}%; Lula recebeu da terceira via, do branco e nulo e do saldo "
+        f"entre as bases de {_pt(cp['nao_muda']['lula_de_terceira_bn_e_cruzamento'][0] / 1e6)} a "
+        f"{_pt(cp['nao_muda']['lula_de_terceira_bn_e_cruzamento'][1] / 1e6)} mi.",
+        f"- Muda pouco: terceira via para Flávio de {_pt(cp['muda_pouco']['terceira_flavio_pct'][0], 1)} a "
+        f"{_pt(cp['muda_pouco']['terceira_flavio_pct'][1], 1)}%.",
+        f"- Muda: razão de consolidação de {_pt(cp['muda']['razao_consolidacao'][0], 3)} a "
+        f"{_pt(cp['muda']['razao_consolidacao'][1], 3)}; fidelidade de Flávio de "
+        f"{_pt(cp['muda']['fidelidade_flavio'][0], 1)} a {_pt(cp['muda']['fidelidade_flavio'][1], 1)}%.",
+        "",
+        "| Cenário | Lula → Flávio | Flávio → Lula | Terceira → Flávio | Terceira → Lula | Razão | Fidelidade L / F |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for k in cz["ordem"]:
+        x = cz["cenarios"][k]
+        m = x["metricas"]
+        L.append(
+            f"| {x['nome']} | {_pt(x['lula_para_flavio_pct'], 2)}% | {_pt(x['flavio_para_lula_pct'], 2)}% | "
+            f"{_pt(m['terceira']['flavio_pct'], 1)}% | {_pt(m['terceira']['lula_pct'], 1)}% | "
+            f"{_pt(m['razao_consolidacao_flavio_lula'], 3)} | {_pt(m['fidelidade_lula'], 1)} / {_pt(m['fidelidade_flavio'], 1)} |"
+        )
+    fig = cz["cenarios"][cz["padrao"]]["figura"]
+    L += [
+        "",
+        "Cenário padrão, de cada 100 eleitores de cada origem do 1º turno (brancos e nulos somados):",
+        "",
+        "| Origem | Votos no 1º turno | Lula | Flávio | Branco e nulo | Abstenção |",
+        "|---|---|---|---|---|---|",
+    ]
+    nomes = {
+        "lula": "Lula",
+        "flavio": "Flávio",
+        "cury": "Augusto Cury",
+        "renan": "Renan Santos",
+        "caiado": "Ronaldo Caiado",
+        "zema": "Romeu Zema",
+        "outros": "Demais",
+        "bn": "Brancos e nulos",
+        "abstencao": "Não votou",
+    }
+    for a in fig["origens"]:
+        tot = sum(fig["votos"][a].values())
+        pc = fig["pct_origem"][a]
+        L.append(
+            f"| {nomes[a]} | {_pt(tot, 0)} | {_pt(pc['lula'], 1)} | {_pt(pc['flavio'], 1)} | {_pt(pc['bn'], 1)} | {_pt(pc['abstencao'], 1)} |"
+        )
+    L += [
+        "",
+        "## 4. Matriz de hipótese, cenário padrão (IPF por UF, abstenção fixa pela regressão)",
         "",
         f"- Voltaram (faltaram no 1º turno e votaram no 2º): {_pt(met['voltaram'] / 1e6)} mi; "
         f"Lula {_pt(met['voltaram_lula_pct'], 1)}%, Flávio {_pt(met['voltaram_flavio_pct'], 1)}%, "
@@ -680,12 +748,18 @@ def memorando(doc: dict[str, Any]) -> str:
     pt = doc["pesquisas"]["terceira_via_2t"]
     L += [
         "",
-        "## 4. Contra as pesquisas",
+        "## 5. Contra as pesquisas",
         "",
         f"- Linhas publicadas da terceira via somada (6 ondas): Flávio de {_pt(pt['flavio_do_estoque'][0], 1)} a "
         f"{_pt(pt['flavio_do_estoque'][1], 1)}% do eleitorado, de {_pt(pt['flavio_entre_finalistas'][0], 1)} a "
         f"{_pt(pt['flavio_entre_finalistas'][1], 1)}% entre os que escolhem um finalista.",
     ]
+    for e in pt.get("equilibrio") or []:
+        if e:
+            L.append(
+                f"- Para a terceira via dar {_pt(e['alvo_pct'], 1)}% a Flávio, ele teria de perder para Lula, em saldo, "
+                f"{_pt(e['flavio_para_lula_pct'], 2)}% da base ({_pt(e['flavio_para_lula'] / 1e6)} mi)."
+            )
     if doc["pesquisas"]["sintese_pre_1t"]:
         L.append(
             f"- Síntese da casa de 04/10: {_pt(100 * doc['pesquisas']['sintese_pre_1t']['fracao_flavio'], 1)}% da migração para Flávio."
@@ -696,7 +770,7 @@ def memorando(doc: dict[str, Any]) -> str:
         )
     L += [
         "",
-        "## 5. Limites",
+        "## 6. Limites",
         "",
         "- Regressão ecológica: agregado para agregado, sensível à escala (município contra seção) e ao efeito fixo.",
         "- A matriz depende da prior; só as razões impostas pelas margens sobrevivem à troca dela.",

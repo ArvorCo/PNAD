@@ -26,6 +26,7 @@ ORIG = P.ORIGENS
 DEST = P.DESTINOS
 IA = ORIG.index("abstencao")
 JA = DEST.index("abstencao")
+CELULAS_CRUZA = tuple((ORIG.index(a), DEST.index(b)) for a, b in P.CRUZA)
 
 
 def ras(
@@ -53,6 +54,33 @@ def ras(
         r = M.sum(1)
         desvio = float(np.max(np.abs(r - linhas) / np.maximum(linhas, 1.0)))
     return M, iteracoes, desvio
+
+
+def ras_fixas(
+    prior: np.ndarray,
+    linhas: np.ndarray,
+    colunas: np.ndarray,
+    fixa: np.ndarray,
+    livre: np.ndarray,
+) -> tuple[np.ndarray, int, float]:
+    """RAS com células fixas: as fixas entram como dadas e as livres batem o que sobra.
+
+    Célula fixa vira zero estrutural no ajuste e é somada de volta no fim; linha sem
+    nenhuma célula livre precisa fechar sozinha. Falha se o fixo exceder uma margem.
+    """
+    lin = linhas - fixa.sum(1)
+    col = colunas - fixa.sum(0)
+    ativas = livre.any(1)
+    tol = 1e-6 * float(colunas.sum())
+    if np.any(col <= 0) or np.any(lin[ativas] <= 0):
+        raise ValueError("células fixas excedem uma margem")
+    if np.any(np.abs(lin[~ativas]) > tol):
+        raise ValueError("linha toda fixa não fecha a própria margem")
+    pr = np.where(livre, prior, 0.0)[ativas]
+    Mr, it, desvio = ras(pr, lin[ativas], col)
+    M = fixa.copy()
+    M[ativas] += Mr
+    return M, it, desvio
 
 
 def churn_uf(
@@ -131,6 +159,7 @@ def matriz_uf(
     bn_hipotese: bool,
     uniforme: bool = False,
     abstencao_fixa: bool = True,
+    cruzamento: tuple[float, float] | None = None,
 ) -> tuple[np.ndarray, dict[str, Any]]:
     """IPF de uma UF.
 
@@ -138,6 +167,9 @@ def matriz_uf(
     rotatividade e fica fixa (é a medição da casa sobre as urnas); só as outras
     linhas são ajustadas, contra o que sobra das margens do 2º turno. Falso deixa
     o IPF mexer nela também (diagnóstico). `uniforme`: prior sem informação.
+    `cruzamento`: (Lula → Flávio, Flávio → Lula) como fração da base do 1º turno
+    de quem cruza; as duas células ficam fixas (zero estrutural quando 0) e o
+    ajuste distribui o resto. None deixa o IPF escolher a partir da prior.
     """
     o = np.array([m["origens"][k] for k in ORIG], dtype=float)
     d = np.array([m["destinos"][k] for k in DEST], dtype=float)
@@ -163,16 +195,19 @@ def matriz_uf(
             )
             linhas.append([lin[j] for j in DEST])
         prior = o_esc[:, None] * np.array(linhas)
-    if uniforme or not abstencao_fixa:
+    if uniforme:
         M, it, desvio = ras(prior, o_esc, d)
         return M, {"iteracoes": it, "desvio": desvio, "escala_origens": escala}
-    fixa = prior[IA].copy()
-    resto = np.delete(prior, IA, axis=0)
-    d_resto = d - fixa
-    if np.any(d_resto <= 0):
-        raise ValueError("linha fixa da abstenção excede um destino do 2º turno")
-    Mr, it, desvio = ras(resto, np.delete(o_esc, IA), d_resto)
-    M = np.insert(Mr, IA, fixa, axis=0)
+    fixa = np.zeros_like(prior)
+    livre = np.ones(prior.shape, dtype=bool)
+    if abstencao_fixa:
+        fixa[IA] = prior[IA]
+        livre[IA] = False
+    if cruzamento is not None:
+        for (i, j), k in zip(CELULAS_CRUZA, cruzamento, strict=True):
+            fixa[i, j] = k * o_esc[i]
+            livre[i, j] = False
+    M, it, desvio = ras_fixas(prior, o_esc, d, fixa, livre)
     return M, {"iteracoes": it, "desvio": desvio, "escala_origens": escala}
 
 
@@ -189,6 +224,7 @@ def cenario(
     bn_hipotese: bool = True,
     uniforme: bool = False,
     abstencao_fixa: bool = True,
+    cruzamento: tuple[float, float] | None = None,
 ) -> dict[str, Any]:
     churn = churn_uf(margens, piso, multiplicador)
     alpha = alpha_bruto(b, churn, margens)
@@ -206,6 +242,7 @@ def cenario(
             bn_hipotese=bn_hipotese,
             uniforme=uniforme,
             abstencao_fixa=abstencao_fixa,
+            cruzamento=cruzamento,
         )
         total += M
         por_uf[uf] = M
@@ -330,6 +367,17 @@ def metricas(M: np.ndarray, margens_nac: Mapping[str, Any]) -> dict[str, Any]:
         "decomposicao_margem_flavio_menos_lula": decomposicao,
         "margem_1t": o["flavio"] * escala - o["lula"] * escala,
         "margem_2t": d["flavio"] - d["lula"],
+        "lula_para_flavio_pct": 100 * cel("lula", "flavio") / o["lula"],
+        "flavio_para_lula_pct": 100 * cel("flavio", "lula") / o["flavio"],
+        "cruzamento_liquido_para_lula": cel("flavio", "lula") - cel("lula", "flavio"),
+        "lula_de_terceira_bn_e_cruzamento": terc_l
+        + sum(cel(k, "lula") for k in ("brancos", "nulos"))
+        + cel("flavio", "lula")
+        - cel("lula", "flavio"),
+        "flavio_de_terceira_bn_e_cruzamento": terc_f
+        + sum(cel(k, "flavio") for k in ("brancos", "nulos"))
+        - cel("flavio", "lula")
+        + cel("lula", "flavio"),
     }
 
 

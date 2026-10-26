@@ -1,6 +1,6 @@
 # IDs das urnas por seção, 1º e 2º turnos de 2026
 
-Gerado em 2026-10-26T06:56:35+00:00. Coleta do 2º turno: **completa**. Rótulo de tudo o que segue: pede explicação, não prova irregularidade.
+Gerado em 2026-10-26T15:54:23+00:00. Coleta do 2º turno: **completa**. Rótulo de tudo o que segue: pede explicação, não prova irregularidade.
 
 Reprodução: `python3 scripts/apuracao-2t-2026-urnas.py` (lê os dois bancos de BUs por seção em modo somente leitura; reexecutável sobre a coleta parcial e a completa).
 

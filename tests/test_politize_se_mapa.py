@@ -122,6 +122,7 @@ def test_camadas_contrato():
         "modelo",
         "log2",
         "log_subiu",
+        "chuva2",
     }
     for k, c in md.CAMADAS.items():
         assert c["campo"] in md.COLUNAS_LOCAIS, k

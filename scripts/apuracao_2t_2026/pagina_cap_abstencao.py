@@ -74,6 +74,21 @@ def _numero_oficial(x: dict) -> str:
     return f"{m.group(1)}%" if m else "o número oficial"
 
 
+def _diferenca_oficial(oficial: str, nossa: str, nac: dict) -> str:
+    """Explica a diferença entre o número anunciado e o desta página, conforme a versão lida."""
+    if oficial == nossa:
+        return f" O número oficial e o desta página coincidem: {nossa}."
+    completo = nac.get("secoes") is not None and nac.get("secoes") == nac.get(
+        "secoes_total"
+    )
+    versao = (
+        f"a nossa é a versão final, com {num(nac.get('pst', 0), 2)}% das seções, e o anúncio saiu de uma versão anterior"
+        if completo
+        else f"a nossa é a mais nova do banco da casa, com {num(nac.get('pst', 0), 2)}% das seções"
+    )
+    return f" A diferença entre os {oficial} oficiais e os {nossa} desta página é a versão do arquivo lida ({versao})."
+
+
 def render(d: Dados, cap: Capitulo) -> str:
     A = d.get(ARQ)
     checar(
@@ -130,8 +145,7 @@ def render(d: Dados, cap: Capitulo) -> str:
         h += p(
             f"O TSE anunciou {_numero_oficial(ofi)} na noite, e a {ofi['veiculo']} registrou que é a menor abstenção de 2º turno "
             'desde 2006. O Globo escreveu "menor desde 2010": as duas leituras cabem, porque a de 2010 conta também o '
-            f"1º turno daquele ano. A diferença entre os {_numero_oficial(ofi)} oficiais e os {pct(pa_nac)} desta página é a versão do "
-            "arquivo lida (a nossa é a mais nova do banco da casa, com 99,99% das seções).",
+            f"1º turno daquele ano.{_diferenca_oficial(_numero_oficial(ofi), pct(pa_nac), nac)}",
             "relato",
         )
     h += T.fontes_imprensa(itens)
@@ -218,8 +232,18 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += FC.bloco(d)
     h += limites(
         [
-            "Abstenção sobre o eleitorado das seções totalizadas; a versão lida não é a do anúncio oficial.",
-            "Comparação com o 1º turno e 2022 nos mesmos municípios completos; UFs pelo arquivo da UF.",
+            (
+                "Abstenção sobre o eleitorado de todas as seções, na versão final; o anúncio oficial da noite saiu de uma versão anterior."
+                if nac.get("secoes") is not None
+                and nac.get("secoes") == nac.get("secoes_total")
+                else "Abstenção sobre o eleitorado das seções totalizadas; a versão lida não é a do anúncio oficial."
+            ),
+            (
+                f"Comparação com o 1º turno e 2022 nos {inteiro(br['n_municipios'])} municípios do país (todos completos, sem exterior); UFs pelo arquivo da UF."
+                if nac.get("secoes") is not None
+                and nac.get("secoes") == nac.get("secoes_total")
+                else "Comparação com o 1º turno e 2022 nos mesmos municípios completos; UFs pelo arquivo da UF."
+            ),
             "Quintis por número de municípios, médias ponderadas pelo eleitorado; correlação não é causa.",
             "O acervo não tem oferta de transporte, ocorrência de boca de urna nem tempo observado em 25/10.",
             "Eleitorado pode mudar entre turnos por cancelamento e regularização; a régua usa o de cada turno.",

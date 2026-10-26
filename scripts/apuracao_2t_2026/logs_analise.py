@@ -18,7 +18,7 @@ from apuracao_logs.criterios import CRITERIOS
 from apuracao_logs.familias import FAMILIAS, NOME_CURTO
 
 from . import logs_cadencia as C
-from . import logs_rdv
+from . import logs_clima_obs, logs_rdv
 from . import logs_reinicio as R
 from .logs_base import CHAVE, LOGS_2T, ROOT, ROTULO, carregar
 
@@ -461,6 +461,7 @@ def montar(refazer: bool = False) -> dict:
         "cadencia": C.analisar(t2, a1, bu, s2),
         "reinicios": R.reinicios(t2, s1, s2, bu, off),
         "bateria": R.bateria(t2, s1, s2, bu),
+        "clima_observado": logs_clima_obs.analisar(t2, s2, bu),
         "metadados": metadados(t2, bu, off, d["ext"]),
         "integrado": integrado(t2, bu, s2),
         "rdv": logs_rdv.resumo(),

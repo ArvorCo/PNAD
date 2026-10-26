@@ -20,6 +20,8 @@ from apuracao_2026.pagina_comum import (
     tabela,
 )
 
+from . import pagina_texto_logs_clima as TC
+
 ROTULO = "Pede explicação, não prova irregularidade."
 
 
@@ -689,7 +691,11 @@ def limites_itens(L: dict) -> list[str]:
         "Hora do log é a do relógio da urna; a conversão para Brasília usa a hora modal do primeiro voto no município.",
         f"A cadência do 1º turno é uma amostra de {inteiro(L['cadencia']['amostra_1t']['secoes'])} seções (uma em cada cinco).",
         "Diferença em diferenças compara seções com sinal às vizinhas do mesmo município; não identifica causa.",
-        "A chuva do 2º turno é previsão, não observação; o teste da bateria contra a chuva medida fica pendente.",
+        (
+            TC.LIMITE
+            if (L.get("clima_observado") or {}).get("disponivel")
+            else "A chuva do 2º turno é previsão, não observação; o teste da bateria contra a chuva medida fica pendente."
+        ),
         "Atenção dos logs e escore do BU são ordenação para fiscalização, não probabilidade de irregularidade.",
         "A série da memória de resultado repetida pede a documentação do campo e a relação de mídias por zona.",
         ROTULO,

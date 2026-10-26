@@ -175,6 +175,19 @@ def gravar(lido: dict[str, Any], saida: Path = SAIDA, mesclar: bool = False) -> 
             **(origem.get("logs_2t") or {}),
             **contagem_logs(lido, anterior.get("logs_2t")),
         },
+        "clima2": {
+            k: (md.observado() or {}).get(k)
+            for k in (
+                "gerado_em",
+                "dia",
+                "fonte",
+                "rotulos_fonte",
+                "raio_km",
+                "cortes",
+                "nota",
+            )
+        },
+        "chuva_forte_mm": md.CHUVA_FORTE_MM,
         "colunas_locais": md.COLUNAS_LOCAIS,
         "colunas_municipios": md.COLUNAS_MUNICIPIOS,
         "resumo": {**total, "bytes_ufs": sum(u["bytes"] for u in ufs.values())},

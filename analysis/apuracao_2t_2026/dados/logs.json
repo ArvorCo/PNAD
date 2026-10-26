@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-26T13:30:17+00:00",
+ "gerado_em": "2026-10-26T16:09:16+00:00",
  "rotulo": "pede explicação, não prova irregularidade",
  "fontes": {
   "metricas_2t": "data/outputs/logs_urnas_2t_2026.sqlite",
@@ -1612,6 +1612,596 @@
   },
   "fonte_chuva": "previsão Open-Meteo de 24/10 22h21 UTC para 08h–17h de 25/10, célula de 0,5°, média das células do município pelo eleitorado; não é chuva observada"
  },
+ "clima_observado": {
+  "disponivel": true,
+  "gerado_clima_em": "2026-10-26T16:09:09+00:00",
+  "cobertura_celulas": {
+   "celulas": 6539,
+   "com_modelo": 6539,
+   "por_fonte": {
+    "ifs_provisorio": 6539
+   },
+   "com_estacao_dia": 0,
+   "com_estacao_votacao": 0
+  },
+  "estacoes": {
+   "cemaden_catalogo": 5853,
+   "cemaden_com_dia": 0,
+   "cemaden_com_votacao": 0,
+   "inmet": "sem dado público de 25/10 (ver fontes/inmet_tentativas_25_10.json)"
+  },
+  "secoes_brasil": 497895,
+  "secoes_com_celula": 496069,
+  "secoes_chuva_dia_medida": 0,
+  "secoes_chuva_votacao_medida": 0,
+  "bateria": {
+   "chuva_dia_medida": [
+    {
+     "faixa": "seca",
+     "rotulo": "seca (0 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "com_bateria": 0,
+     "parcela_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "pct_local": null,
+     "pct_isolada": null
+    },
+    {
+     "faixa": "fraca",
+     "rotulo": "fraca (até 5 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "com_bateria": 0,
+     "parcela_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "pct_local": null,
+     "pct_isolada": null
+    },
+    {
+     "faixa": "moderada",
+     "rotulo": "moderada (5 a 20 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "com_bateria": 0,
+     "parcela_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "pct_local": null,
+     "pct_isolada": null
+    },
+    {
+     "faixa": "forte",
+     "rotulo": "forte (20 a 50 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "com_bateria": 0,
+     "parcela_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "pct_local": null,
+     "pct_isolada": null
+    },
+    {
+     "faixa": "muito_forte",
+     "rotulo": "muito forte (acima de 50 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "com_bateria": 0,
+     "parcela_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "pct_local": null,
+     "pct_isolada": null
+    },
+    {
+     "faixa": "20_ou_mais",
+     "rotulo": "20 mm ou mais",
+     "celulas": 0,
+     "secoes": 0,
+     "com_bateria": 0,
+     "parcela_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "pct_local": null,
+     "pct_isolada": null
+    }
+   ],
+   "chuva_votacao_medida": [],
+   "chuva_votacao_modelo": [
+    {
+     "faixa": "seca",
+     "rotulo": "seca (0 mm)",
+     "celulas": 1392,
+     "secoes": 78442,
+     "com_bateria": 11377,
+     "parcela_pct": {
+      "valor": 14.5,
+      "ic95": [
+       12.17,
+       17.15
+      ]
+     },
+     "pct_local": 7.92,
+     "pct_isolada": 3.06
+    },
+    {
+     "faixa": "fraca",
+     "rotulo": "fraca (até 5 mm)",
+     "celulas": 4085,
+     "secoes": 244045,
+     "com_bateria": 28872,
+     "parcela_pct": {
+      "valor": 11.83,
+      "ic95": [
+       9.97,
+       14.62
+      ]
+     },
+     "pct_local": 6.64,
+     "pct_isolada": 2.59,
+     "razao_vs_seca": {
+      "valor": 0.816,
+      "ic95": [
+       0.64,
+       1.063
+      ]
+     }
+    },
+    {
+     "faixa": "moderada",
+     "rotulo": "moderada (5 a 20 mm)",
+     "celulas": 958,
+     "secoes": 150205,
+     "com_bateria": 19588,
+     "parcela_pct": {
+      "valor": 13.04,
+      "ic95": [
+       11.09,
+       15.91
+      ]
+     },
+     "pct_local": 9.6,
+     "pct_isolada": 1.76,
+     "razao_vs_seca": {
+      "valor": 0.899,
+      "ic95": [
+       0.702,
+       1.176
+      ]
+     }
+    },
+    {
+     "faixa": "forte",
+     "rotulo": "forte (20 a 50 mm)",
+     "celulas": 79,
+     "secoes": 22760,
+     "com_bateria": 2168,
+     "parcela_pct": {
+      "valor": 9.53,
+      "ic95": [
+       6.88,
+       13.29
+      ]
+     },
+     "pct_local": 6.45,
+     "pct_isolada": 1.83,
+     "razao_vs_seca": {
+      "valor": 0.657,
+      "ic95": [
+       0.451,
+       0.96
+      ]
+     }
+    },
+    {
+     "faixa": "muito_forte",
+     "rotulo": "muito forte (acima de 50 mm)",
+     "celulas": 2,
+     "secoes": 617,
+     "com_bateria": 33,
+     "parcela_pct": {
+      "valor": 5.35,
+      "ic95": null
+     },
+     "pct_local": 3.08,
+     "pct_isolada": 2.27,
+     "razao_vs_seca": {
+      "valor": 0.369,
+      "ic95": null
+     }
+    },
+    {
+     "faixa": "20_ou_mais",
+     "rotulo": "20 mm ou mais",
+     "celulas": 81,
+     "secoes": 23377,
+     "com_bateria": 2201,
+     "parcela_pct": {
+      "valor": 9.42,
+      "ic95": [
+       6.85,
+       13.28
+      ]
+     },
+     "pct_local": 6.37,
+     "pct_isolada": 1.84,
+     "razao_vs_seca": {
+      "valor": 0.65,
+      "ic95": [
+       0.449,
+       0.951
+      ]
+     }
+    }
+   ]
+  },
+  "abstencao": {
+   "chuva_dia_medida": [
+    {
+     "faixa": "seca",
+     "rotulo": "seca (0 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "aptos": 0,
+     "abst_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     }
+    },
+    {
+     "faixa": "fraca",
+     "rotulo": "fraca (até 5 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "aptos": 0,
+     "abst_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     }
+    },
+    {
+     "faixa": "moderada",
+     "rotulo": "moderada (5 a 20 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "aptos": 0,
+     "abst_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     }
+    },
+    {
+     "faixa": "forte",
+     "rotulo": "forte (20 a 50 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "aptos": 0,
+     "abst_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     }
+    },
+    {
+     "faixa": "muito_forte",
+     "rotulo": "muito forte (acima de 50 mm)",
+     "celulas": 0,
+     "secoes": 0,
+     "aptos": 0,
+     "abst_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     }
+    },
+    {
+     "faixa": "20_ou_mais",
+     "rotulo": "20 mm ou mais",
+     "celulas": 0,
+     "secoes": 0,
+     "aptos": 0,
+     "abst_pct": {
+      "valor": null,
+      "ic95": null
+     },
+     "dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": null,
+      "ic95": null
+     }
+    }
+   ],
+   "chuva_votacao_medida": [],
+   "chuva_votacao_modelo": [
+    {
+     "faixa": "seca",
+     "rotulo": "seca (0 mm)",
+     "celulas": 1392,
+     "secoes": 78442,
+     "aptos": 24143953,
+     "abst_pct": {
+      "valor": 17.42,
+      "ic95": [
+       16.96,
+       17.91
+      ]
+     },
+     "dentro_uf_pp": {
+      "valor": 0.43,
+      "ic95": [
+       0.11,
+       0.86
+      ]
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": -0.04,
+      "ic95": [
+       -0.25,
+       0.19
+      ]
+     }
+    },
+    {
+     "faixa": "fraca",
+     "rotulo": "fraca (até 5 mm)",
+     "celulas": 4085,
+     "secoes": 244045,
+     "aptos": 76532917,
+     "abst_pct": {
+      "valor": 18.92,
+      "ic95": [
+       18.39,
+       19.37
+      ]
+     },
+     "dentro_uf_pp": {
+      "valor": 0.07,
+      "ic95": [
+       -0.21,
+       0.35
+      ]
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": -0.02,
+      "ic95": [
+       -0.12,
+       0.08
+      ]
+     }
+    },
+    {
+     "faixa": "moderada",
+     "rotulo": "moderada (5 a 20 mm)",
+     "celulas": 958,
+     "secoes": 150206,
+     "aptos": 48990389,
+     "abst_pct": {
+      "valor": 19.88,
+      "ic95": [
+       19.41,
+       20.35
+      ]
+     },
+     "dentro_uf_pp": {
+      "valor": -0.2,
+      "ic95": [
+       -0.51,
+       0.08
+      ]
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": -0.01,
+      "ic95": [
+       -0.17,
+       0.14
+      ]
+     }
+    },
+    {
+     "faixa": "forte",
+     "rotulo": "forte (20 a 50 mm)",
+     "celulas": 79,
+     "secoes": 22761,
+     "aptos": 7455977,
+     "abst_pct": {
+      "valor": 18.88,
+      "ic95": [
+       18.33,
+       19.46
+      ]
+     },
+     "dentro_uf_pp": {
+      "valor": -0.88,
+      "ic95": [
+       -1.44,
+       -0.27
+      ]
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": 0.4,
+      "ic95": [
+       0.25,
+       0.55
+      ]
+     }
+    },
+    {
+     "faixa": "muito_forte",
+     "rotulo": "muito forte (acima de 50 mm)",
+     "celulas": 2,
+     "secoes": 617,
+     "aptos": 183196,
+     "abst_pct": {
+      "valor": 18.42,
+      "ic95": null
+     },
+     "dentro_uf_pp": {
+      "valor": -1.4,
+      "ic95": null
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": 0.64,
+      "ic95": null
+     }
+    },
+    {
+     "faixa": "20_ou_mais",
+     "rotulo": "20 mm ou mais",
+     "celulas": 81,
+     "secoes": 23378,
+     "aptos": 7639173,
+     "abst_pct": {
+      "valor": 18.87,
+      "ic95": [
+       18.3,
+       19.47
+      ]
+     },
+     "dentro_uf_pp": {
+      "valor": -0.9,
+      "ic95": [
+       -1.44,
+       -0.33
+      ]
+     },
+     "variacao_vs_1t_dentro_uf_pp": {
+      "valor": 0.4,
+      "ic95": [
+       0.26,
+       0.54
+      ]
+     }
+    }
+   ]
+  },
+  "referencia_1t": {
+   "chuva_votacao": {
+    "seca": {
+     "parcela_pct": 12.9,
+     "razao_vs_seca": null,
+     "ic95": null
+    },
+    "fraca": {
+     "parcela_pct": 11.23,
+     "razao_vs_seca": 0.871,
+     "ic95": [
+      0.748,
+      1.006
+     ]
+    },
+    "moderada": {
+     "parcela_pct": 17.27,
+     "razao_vs_seca": 1.338,
+     "ic95": [
+      1.116,
+      1.597
+     ]
+    },
+    "forte": {
+     "parcela_pct": 29.54,
+     "razao_vs_seca": 2.289,
+     "ic95": [
+      1.441,
+      3.287
+     ]
+    },
+    "muito_forte": {
+     "parcela_pct": 0.0,
+     "razao_vs_seca": 0.0,
+     "ic95": null
+    }
+   },
+   "chuva_diaria": {
+    "seca": {
+     "parcela_pct": 14.53,
+     "razao_vs_seca": null,
+     "ic95": null
+    },
+    "fraca": {
+     "parcela_pct": 11.34,
+     "razao_vs_seca": 0.781,
+     "ic95": [
+      0.674,
+      0.896
+     ]
+    },
+    "moderada": {
+     "parcela_pct": 14.84,
+     "razao_vs_seca": 1.021,
+     "ic95": [
+      0.876,
+      1.185
+     ]
+    },
+    "forte": {
+     "parcela_pct": 22.83,
+     "razao_vs_seca": 1.572,
+     "ic95": [
+      1.22,
+      1.978
+     ]
+    },
+    "muito_forte": {
+     "parcela_pct": 31.65,
+     "razao_vs_seca": 2.179,
+     "ic95": null
+    }
+   },
+   "fonte": "analysis/clima_1t_2026/clima.json (bateria_x_chuva, ERA5)"
+  },
+  "fonte": "analysis/clima_2t_2026/clima.json: estações CEMADEN a até 50 km (1/d²); sem estação, ECMWF IFS (análise operacional, provisória) via Open-Meteo",
+  "nota": "Abstenção dentro da UF = abstenção da seção menos a média da UF ponderada por aptos; variação contra o 1º turno = (abstenção 2T − abstenção 1T) menos a mesma média da UF. IC95 por bootstrap de células (1.000 réplicas)."
+ },
  "metadados": {
   "serie_mr": {
    "valores_distintos": 496267,
@@ -2539,7 +3129,7 @@
   },
   "versao_unica": true,
   "dossie_metadados": {
-   "gerado_em": "2026-10-26T13:08:42+00:00",
+   "gerado_em": "2026-10-26T15:59:33+00:00",
    "estado": "completo",
    "coerencia_logs": {
     "secoes_com_log": 499176,
@@ -25474,7 +26064,7 @@
  },
  "rdv": {
   "fonte": "analysis/apuracao_2t_2026/dados/rdv.json",
-  "gerado_em": "2026-10-26T13:27:38Z",
+  "gerado_em": "2026-10-26T15:59:47Z",
   "parcial": false,
   "tentadas": 517179,
   "com_rdv": 499205,

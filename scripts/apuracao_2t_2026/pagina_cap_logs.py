@@ -14,6 +14,7 @@ from . import pagina_fig_logs as F
 from . import pagina_fig_logs_b as FB
 from . import pagina_fig_logs_c as FC
 from . import pagina_texto_logs as T
+from . import pagina_texto_logs_clima as TC
 from . import pagina_texto_logs_rdv as TR
 from .pagina_comum import cabeca
 
@@ -47,7 +48,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += T.tabela_sinais(L) + T.tabela_depois19(L)
     h += "<h3>Reinícios e bateria durante a votação</h3>"
     h += T.reinicios(L) + FB.fig_reinicio_hora(L)
-    h += T.bateria(L) + FB.fig_bateria_chuva(L) + FB.fig_voto(L)
+    h += T.bateria(L) + FB.fig_bateria_chuva(L) + TC.clima_observado(L) + FB.fig_voto(L)
     h += "<h3>Metadados: série da memória de resultado, carga e zerésima</h3>"
     h += T.metadados(L) + FB.fig_serie_mr(L) + T.tabela_cargas(L)
     R = L.get("rdv")

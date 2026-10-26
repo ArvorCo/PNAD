@@ -95,6 +95,39 @@ def serie_nacional() -> list[dict]:
 # ------------------------------------------------------------------ 1 e 2
 
 
+def _completo() -> bool:
+    n = dado("presidente")["nacional"]
+    return n["secoes"] >= n["secoes_total"]
+
+
+def _rot_municipios(n: int, ini: str) -> str:
+    """Universo municipal: o país inteiro quando a versão lida está completa."""
+    if _completo():
+        return f"{ini} {num(n)} municípios do país, todos completos"
+    return f"{ini} mesmos {num(n)} municípios completos"
+
+
+def _ressalva_versao() -> str:
+    conf = dado("presidente")["conferencia"]
+    zero = all(
+        v == 0
+        for chave in ("soma_ufs_menos_nacional", "soma_municipios_menos_nacional")
+        for v in conf[chave].values()
+    )
+    if _completo() and zero:
+        return (
+            "Uma ressalva de leitura. O placar acima é o do arquivo nacional na versão final, com todas as seções "
+            "totalizadas. Os arquivos de UF, de município e o nacional dessa versão somam exatamente o mesmo total, "
+            "voto a voto, e o dossiê publica essa conferência."
+        )
+    return (
+        "Uma ressalva de leitura. O placar acima é o do arquivo nacional na versão mais nova que o coletor da casa guardou. "
+        "Os arquivos de UF, de município e o nacional têm versões geradas em instantes diferentes, e por isso a soma das "
+        "partes pode diferir do nacional por algumas dezenas ou centenas de votos enquanto há seção por totalizar. O dossiê "
+        "publica essa conferência e os municípios incompletos."
+    )
+
+
 def v_resultado() -> dict:
     p = dado("presidente")
     n = p["nacional"]
@@ -102,6 +135,7 @@ def v_resultado() -> dict:
     ufs = [u for u in p["ufs"] if u["uf"] != "ZZ"]
     norte = reg["Norte"]
     v = {
+        "res_ressalva": _ressalva_versao(),
         "url_dossie": URL_DOSSIE,
         "l_pct": pct(n["pct_lula"]),
         "f_pct": pct(n["pct_flavio"]),
@@ -444,6 +478,7 @@ def v_turnos() -> dict:
         "t_h2h_2t": pct(b["t2_h2h_flavio"]),
         "t_swing": sinal(b["swing_h2h_flavio_pp"]),
         "t_mun": num(b["n_municipios"]),
+        "t_mun_rot": _rot_municipios(b["n_municipios"], "Verificado, nos"),
         "t_ufs_caiu": str(sum(1 for u in ufs if u["swing_h2h_flavio_pp"] < 0)),
         "t_ufs": str(len(ufs)),
         "t_uf_maior": NOME_UF[ufs[0]["uf"]],
@@ -506,6 +541,7 @@ def v_abstencao() -> dict:
         "ab_1t": pct(t1["abstencao_pct"]),
         "ab_mais_votaram": mi(cont["brasil"]["variacao_comparecimento"]),
         "ab_mun": num(br["n_municipios"]),
+        "ab_mun_rot": _rot_municipios(br["n_municipios"], "Nos"),
         "ab_mesmos_2t": pct(br["pa_2t"]),
         "ab_mesmos_1t": pct(br["pa_1t_mesmos"]),
         "ab_mesmos_22": pct(br["pa_2022_2t_mesmos"]),

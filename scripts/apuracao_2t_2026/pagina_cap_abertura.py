@@ -37,7 +37,8 @@ def frase_noite(d: Dados) -> str:
     enc = caminho(S, "agregados.brasil.encerramento") if S else None
     if enc:
         partes.append(
-            f"o STF prorrogou a votação até as 19h e quase nenhuma urna ficou aberta: na amostra de "
+            f"o STF prorrogou a votação até as 19h e quase nenhuma urna ficou aberta: "
+            f"{'nos boletins de' if S.get('fonte') == 'completo' else 'na amostra de'} "
             f"{inteiro(enc['n'])} seções, o encerramento mediano foi às {enc['p50_2t']} e "
             f"{num(enc['pct_apos_1900_2t'], 2)}% fecharam depois das 19h"
         )
@@ -115,7 +116,11 @@ def bloco_norte(P: dict) -> str:
         f"O Norte terminou em {num(norte['pct_lula'], 2)}% a {num(norte['pct_flavio'], 2)}%: "
         f"{lider} ficou à frente por {inteiro(abs(norte['margem_lula_votos']))} votos em "
         f"{inteiro(norte['validos'])} válidos, com {num(norte['pst'], 2)}% das seções da região. "
-        "Arredondado a duas casas, é empate; a diferença absoluta ainda pode mudar com as seções que faltam.",
+        + (
+            "Arredondado a duas casas, é empate; com todas as seções totalizadas, a diferença é a final."
+            if norte["secoes"] >= norte["secoes_total"]
+            else "Arredondado a duas casas, é empate; a diferença absoluta ainda pode mudar com as seções que faltam."
+        ),
         "verificado",
     )
 
@@ -209,9 +214,17 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += bloco_pesquisas(d)
     h += limites(
         [
-            f"Placar da versão nacional gerada às {n['gerado_brt'][11:19]} de 25/10, com {num(n['pst'], 2)}% das seções; "
-            f"faltavam {inteiro(n['secoes_total'] - n['secoes'])} seções.",
-            "Abstenção sobre o eleitorado das seções já totalizadas; brancos e nulos sobre o comparecimento.",
+            f"Placar da versão nacional gerada às {n['gerado_brt'][11:19]} de 25/10, com {num(n['pst'], 2)}% das seções"
+            + (
+                f" ({inteiro(n['secoes'])} de {inteiro(n['secoes_total'])}), todas totalizadas."
+                if n["secoes"] >= n["secoes_total"]
+                else f"; faltavam {inteiro(n['secoes_total'] - n['secoes'])} seções."
+            ),
+            (
+                "Abstenção sobre o eleitorado de todas as seções; brancos e nulos sobre o comparecimento."
+                if n["secoes"] >= n["secoes_total"]
+                else "Abstenção sobre o eleitorado das seções já totalizadas; brancos e nulos sobre o comparecimento."
+            ),
             "A frase da noite junta cinco arquivos com regras próprias; cada capítulo traz a conta e o limite de cada parte.",
             "Atipicidade pede explicação, não prova irregularidade.",
         ]

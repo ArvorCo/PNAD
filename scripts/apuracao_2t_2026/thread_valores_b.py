@@ -556,7 +556,9 @@ def v_limites() -> dict:
         "rdv_div": num(rdv["ok"] - rdv["confere"]),
         "rdv_com_bu": num(rdv["com_bu"]),
         "li_mun_inc": str(len(inc)),
-        "li_mun_inc_ex": f"{nome_proprio(inc[0]['nome'])} ({inc[0]['uf']})",
+        "li_mun_inc_ex": (
+            f"{nome_proprio(inc[0]['nome'])} ({inc[0]['uf']})" if inc else "nenhum"
+        ),
         "li_ufs_abertas": ", ".join(abertas),
         "li_ufs_abertas_n": str(len(abertas)),
         "li_n_fontes": str(len(pv["fontes"])),

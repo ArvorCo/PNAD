@@ -53,8 +53,15 @@ def _par(eixo: str, um: dict, dois: dict, nome: str) -> str:
     )
     f2 = _figura(
         f"{eixo}_lula_secoes_2t",
-        f"{nome.capitalize()} e voto em Lula por seção no 2º turno, cobertura parcial",
-        f"2º turno, {inteiro(dois['n'])} seções lidas ({num(cob['pct'], 1)}% do total): "
+        f"{nome.capitalize()} e voto em Lula por seção no 2º turno"
+        + (", cobertura parcial" if cob.get("parcial", True) else ""),
+        f"2º turno, {inteiro(dois['n'])} seções lidas"
+        + (
+            f" ({num(cob['pct'], 1)}% do total)"
+            if cob.get("parcial", True)
+            else " (todas as seções coletadas)"
+        )
+        + ": "
         f"r = {_r(dois['pearson'])} (peso igual), {_r(dois['pearson_ponderado'])} (ponderado).",
     )
     return f'<div class="galeria">{f1}{f2}</div>' if f1 or f2 else ""
@@ -83,6 +90,14 @@ def _cobertura(cob: dict) -> str:
         regs.append(f"{nome} {num(pc, 0)}%")
     ausentes = [n for n in REGIOES if not (cob["por_regiao"].get(n) or {}).get("lidas")]
     hora = (cob.get("_gerado") or "")[11:16]
+    if not cob.get("parcial", True):
+        return p(
+            f"<strong>Cobertura completa.</strong> O banco de boletins do 2º turno foi lido inteiro: "
+            f"{inteiro(cob['secoes_lidas'])} seções em {len(cob['ufs_lidas'])} UFs, contra {inteiro(cob['secoes_total_1t'])} "
+            "do 1º turno (a diferença vem do cadastro de seções de cada turno). O 1º turno é recalculado "
+            "nas mesmas seções antes de qualquer comparação.",
+            "verificado",
+        )
     return p(
         f"<strong>Cobertura parcial.</strong> O banco de boletins do 2º turno ainda está sendo lido: "
         f"{inteiro(cob['secoes_lidas'])} de {inteiro(cob['secoes_total_1t'])} seções ({num(cob['pct'], 1)}%) "
@@ -188,7 +203,7 @@ def _tabela_regioes(um: dict, dois: dict) -> str:
         ],
         linhas,
         "Pearson com peso igual dentro de cada região; médias do 2º turno ponderadas por aptos. "
-        "s/d: região sem seções suficientes na coleta parcial.",
+        "s/d: região sem seções suficientes na coleta.",
     )
 
 

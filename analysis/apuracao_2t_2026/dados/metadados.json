@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-26T13:08:42+00:00",
+ "gerado_em": "2026-10-26T15:59:33+00:00",
  "rotulo": "pede explicação, não prova irregularidade",
  "estado": "completo",
  "formato_vsc": "Arquivo DER com três blocos: assinatura de software do TSE (usuário SEVIN), assinatura de hardware da urna (usuário UEAO e a série da urna) e um rodapé com o código do modelo (13, 15, 20, 22) e o algoritmo da chave de hardware. Cada bloco lista os arquivos da seção (bu.dat, rdv.dat, jufa.dat, imgbu.dat, imgze.dat, hash.dat, wsqbio.jez, wsqman.jez, wsqmes.jez, mr.ver, log.jez; no sistema de apuração, busa.dat e logsa.jez) com tamanho, SHA-512 e assinatura. O bloco de hardware termina no certificado X.509 da urna: PEM e Ed521 nas UE2020 e UE2022 (AC UE2020 e AC UE2022), DER e ECDSA P-521 nas UE2013 e UE2015 (AC URNA). A urna assina o SHA-512 do resumo SHA-512, a mesma regra do QR Code do BU.",
@@ -7,14 +7,14 @@
   "bu_1t": 499187,
   "bu_2t": 499207,
   "vsc_2t": "517.179 seções tentadas (ok 499.207, agregada 17.931, sem_vsc 41) para 499.207 BUs",
-  "vsc_1t": "8.540 seções tentadas (ok 8.108, agregada 432) para 499.187 BUs",
+  "vsc_1t": "492.426 seções tentadas (ok 475.924, agregada 16.502) para 499.187 BUs",
   "vsc_detalhe": {
    "1t": {
     "status": {
-     "ok": 8108,
-     "agregada": 432
+     "ok": 475924,
+     "agregada": 16502
     },
-    "arquivos_listados": 89188,
+    "arquivos_listados": 5236386,
     "arquivos_com_nome_de_outra_secao": 0
    },
    "2t": {
@@ -917,8 +917,8 @@
      "fonte": ".vsc",
      "escopo": "secao",
      "descricao": "SHA-256 do arquivo .vsc",
-     "secoes_com_valor": 8108,
-     "valores_distintos": 8108,
+     "secoes_com_valor": 475904,
+     "valores_distintos": 475904,
      "grupos_repetidos": 0,
      "secoes_em_grupos": 0,
      "maior_grupo": 0,
@@ -936,8 +936,8 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "Série da urna na assinatura de hardware",
-     "secoes_com_valor": 8108,
-     "valores_distintos": 8108,
+     "secoes_com_valor": 475904,
+     "valores_distintos": 475904,
      "grupos_repetidos": 0,
      "secoes_em_grupos": 0,
      "maior_grupo": 0,
@@ -955,8 +955,8 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "SHA-256 do certificado de hardware",
-     "secoes_com_valor": 8108,
-     "valores_distintos": 8108,
+     "secoes_com_valor": 475904,
+     "valores_distintos": 475904,
      "grupos_repetidos": 0,
      "secoes_em_grupos": 0,
      "maior_grupo": 0,
@@ -974,8 +974,8 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "SHA-256 da chave pública do certificado",
-     "secoes_com_valor": 8108,
-     "valores_distintos": 8108,
+     "secoes_com_valor": 475904,
+     "valores_distintos": 475904,
      "grupos_repetidos": 0,
      "secoes_em_grupos": 0,
      "maior_grupo": 0,
@@ -993,8 +993,8 @@
      "fonte": ".vsc",
      "escopo": "urna",
      "descricao": "Número de série do certificado dentro da AC emissora",
-     "secoes_com_valor": 8108,
-     "valores_distintos": 8108,
+     "secoes_com_valor": 475904,
+     "valores_distintos": 475904,
      "grupos_repetidos": 0,
      "secoes_em_grupos": 0,
      "maior_grupo": 0,
@@ -1012,12 +1012,12 @@
      "fonte": ".vsc",
      "escopo": "global",
      "descricao": "Chave de software do TSE (série)",
-     "secoes_com_valor": 8108,
+     "secoes_com_valor": 475904,
      "valores_distintos": 1,
      "valores": [
       {
        "valor": "20260708",
-       "secoes": 8108
+       "secoes": 475904
       }
      ],
      "coerente": true
@@ -1027,12 +1027,12 @@
      "fonte": ".vsc",
      "escopo": "global",
      "descricao": "Data da chave de software do TSE",
-     "secoes_com_valor": 8108,
+     "secoes_com_valor": 475904,
      "valores_distintos": 1,
      "valores": [
       {
        "valor": "202607021654",
-       "secoes": 8108
+       "secoes": 475904
       }
      ],
      "coerente": true
@@ -1079,72 +1079,74 @@
     }
    },
    "coerencia_vsc": {
-    "secoes_vsc_ok": 8108,
+    "secoes_vsc_ok": 475904,
     "origem": {
-     "vota": 8108
+     "vota": 475902,
+     "sa": 2
     },
     "mesmo_hash_do_bu": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0,
      "sem_dado": 0
     },
-    "votacao_recuperada_assinada_por_outra_urna": 0,
+    "votacao_recuperada_assinada_por_outra_urna": 12,
     "id_bu_igual_serie_hw": {
-     "sim": 8108,
+     "sim": 475856,
      "nao": 0
     },
     "cn_do_certificado_igual_serie_hw": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0,
      "sem_dado": 0
     },
     "modelo_vsc_igual_bu": {
-     "sim": 8108,
+     "sim": 475902,
      "nao": 0
     },
     "ac_compativel_com_modelo": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0
     },
     "por_ac": {
-     "AC UE2022": 4150,
-     "AC UE2020": 3958
+     "AC UE2020": 191729,
+     "AC UE2022": 190140,
+     "AC URNA": 94035
     },
     "cadeia_ate_a_ac": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0,
      "sem_dado": 0
     },
     "autoassinatura_hw": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0,
      "sem_dado": 0
     },
     "assinatura_hw_do_bu": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0,
      "sem_dado": 0
     },
     "bu_publicado_igual_ao_vsc": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0,
      "sem_dado": 0
     },
     "listas_sw_hw_iguais": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0,
      "sem_dado": 0
     },
     "certificado_valido_no_dia": {
-     "sim": 8108,
+     "sim": 475904,
      "nao": 0
     },
     "minutos_vsc_depois_da_emissao": {
-     "n": 8108,
-     "mediana": 1.05,
-     "p99": 4.43,
-     "min": 0.62,
-     "max": 17.22
+     "n": 475854,
+     "mediana": 1.18,
+     "p99": 5.72,
+     "min": 0.55,
+     "max": 308.63
     },
     "falhas": {
      "id_bu_diferente_da_serie_hw": 0,
@@ -1160,18 +1162,18 @@
      "bu_diferente_do_vsc": 0,
      "certificado_fora_da_validade": 0,
      "vsc_antes_da_emissao_do_bu": 0,
-     "vsc_mais_de_4h_depois_da_emissao": 0
+     "vsc_mais_de_4h_depois_da_emissao": 2
     }
    }
   }
  },
  "entre_turnos_vsc": {
-  "secoes_com_vsc_nos_dois_turnos": 8108,
-  "mesma_urna_mesmo_certificado": 8009,
-  "urna_trocada_certificado_trocado": 99,
+  "secoes_com_vsc_nos_dois_turnos": 475922,
+  "mesma_urna_mesmo_certificado": 471698,
+  "urna_trocada_certificado_trocado": 4224,
   "mesma_urna_certificado_diferente": 0,
   "urna_diferente_mesmo_certificado": 0,
-  "certificado_do_1t_em_outra_secao_no_2t": 2,
+  "certificado_do_1t_em_outra_secao_no_2t": 74,
   "certificado_do_1t_em_outra_secao_no_2t_casos": [
    {
     "secao_2t": "ac/01015/2/88",
@@ -1179,9 +1181,369 @@
     "serie_hw": "2264191"
    },
    {
+    "secao_2t": "ba/36633/51/52",
+    "secao_1t": "ba/37818/181/279",
+    "serie_hw": "1767383"
+   },
+   {
+    "secao_2t": "ba/38490/5/100",
+    "secao_1t": "ba/38490/4/494",
+    "serie_hw": "2425552"
+   },
+   {
+    "secao_2t": "ba/38490/11/599",
+    "secao_1t": "ba/38490/18/482",
+    "serie_hw": "2351617"
+   },
+   {
+    "secao_2t": "ba/38490/13/339",
+    "secao_1t": "ba/38490/17/426",
+    "serie_hw": "2270014"
+   },
+   {
+    "secao_2t": "ba/38490/16/47",
+    "secao_1t": "ba/38490/7/3",
+    "serie_hw": "2288651"
+   },
+   {
+    "secao_2t": "ba/38490/16/369",
+    "secao_1t": "ba/38490/14/512",
+    "serie_hw": "2352413"
+   },
+   {
+    "secao_2t": "ba/38490/17/401",
+    "secao_1t": "ba/38490/15/387",
+    "serie_hw": "2427178"
+   },
+   {
+    "secao_2t": "ba/39934/183/320",
+    "secao_1t": "ba/39934/183/343",
+    "serie_hw": "2386005"
+   },
+   {
+    "secao_2t": "ce/13234/67/34",
+    "secao_1t": "ce/13234/67/123",
+    "serie_hw": "2322962"
+   },
+   {
+    "secao_2t": "ce/14818/79/214",
+    "secao_1t": "ce/15350/79/34",
+    "serie_hw": "1671949"
+   },
+   {
+    "secao_2t": "ce/14818/79/241",
+    "secao_1t": "ce/13064/79/246",
+    "serie_hw": "1819939"
+   },
+   {
+    "secao_2t": "es/56251/34/918",
+    "secao_1t": "es/56251/34/971",
+    "serie_hw": "1824539"
+   },
+   {
+    "secao_2t": "es/56472/24/104",
+    "secao_1t": "es/56472/24/131",
+    "serie_hw": "1751052"
+   },
+   {
+    "secao_2t": "es/56995/53/14",
+    "secao_1t": "es/56995/53/28",
+    "serie_hw": "1656698"
+   },
+   {
+    "secao_2t": "es/57053/1/574",
+    "secao_1t": "es/57053/1/46",
+    "serie_hw": "2353044"
+   },
+   {
+    "secao_2t": "go/93734/147/124",
+    "secao_1t": "go/93734/2/285",
+    "serie_hw": "2334021"
+   },
+   {
+    "secao_2t": "mg/40282/63/81",
+    "secao_1t": "mg/40282/63/198",
+    "serie_hw": "2091118"
+   },
+   {
+    "secao_2t": "mg/40282/63/140",
+    "secao_1t": "mg/40282/63/148",
+    "serie_hw": "2136884"
+   },
+   {
+    "secao_2t": "mg/41114/23/103",
+    "secao_1t": "mg/41114/23/83",
+    "serie_hw": "2472105"
+   },
+   {
+    "secao_2t": "mg/41238/29/34",
+    "secao_1t": "mg/41238/332/106",
+    "serie_hw": "2419683"
+   },
+   {
+    "secao_2t": "mg/41238/30/267",
+    "secao_1t": "mg/41238/332/28",
+    "serie_hw": "2262011"
+   },
+   {
+    "secao_2t": "mg/45136/100/119",
+    "secao_1t": "mg/45136/100/118",
+    "serie_hw": "1758263"
+   },
+   {
+    "secao_2t": "mg/45950/288/66",
+    "secao_1t": "mg/40800/288/219",
+    "serie_hw": "2453198"
+   },
+   {
+    "secao_2t": "mg/46272/141/395",
+    "secao_1t": "mg/46833/141/105",
+    "serie_hw": "2134760"
+   },
+   {
+    "secao_2t": "mg/46337/132/65",
+    "secao_1t": "mg/46337/132/78",
+    "serie_hw": "1653361"
+   },
+   {
+    "secao_2t": "mg/51578/2/73",
+    "secao_1t": "mg/40053/2/106",
+    "serie_hw": "2098259"
+   },
+   {
+    "secao_2t": "mg/54038/314/296",
+    "secao_1t": "mg/54038/314/63",
+    "serie_hw": "2084930"
+   },
+   {
+    "secao_2t": "mg/54038/314/332",
+    "secao_1t": "mg/54038/314/208",
+    "serie_hw": "2131647"
+   },
+   {
+    "secao_2t": "mt/90603/21/198",
+    "secao_1t": "mt/90689/21/124",
+    "serie_hw": "2006688"
+   },
+   {
+    "secao_2t": "mt/90670/51/240",
+    "secao_1t": "mt/90670/51/270",
+    "serie_hw": "1819757"
+   },
+   {
+    "secao_2t": "mt/90670/55/192",
+    "secao_1t": "mt/91677/49/11",
+    "serie_hw": "1839518"
+   },
+   {
+    "secao_2t": "pa/04642/78/281",
+    "secao_1t": "pa/04642/78/249",
+    "serie_hw": "2192585"
+   },
+   {
+    "secao_2t": "pa/04707/75/674",
+    "secao_1t": "pa/04707/75/672",
+    "serie_hw": "2187576"
+   },
+   {
+    "secao_2t": "pe/25356/28/61",
+    "secao_1t": "pe/25836/26/131",
+    "serie_hw": "1816369"
+   },
+   {
+    "secao_2t": "pe/25577/47/66",
+    "secao_1t": "pe/25291/47/1",
+    "serie_hw": "1814218"
+   },
+   {
+    "secao_2t": "pr/77437/91/32",
+    "secao_1t": "pr/76015/91/16",
+    "serie_hw": "1778782"
+   },
+   {
+    "secao_2t": "rj/58165/40/90",
+    "secao_1t": "rj/59153/195/303",
+    "serie_hw": "2430458"
+   },
+   {
+    "secao_2t": "rj/59013/89/101",
+    "secao_1t": "rj/59013/89/464",
+    "serie_hw": "2231771"
+   },
+   {
+    "secao_2t": "rj/60011/162/323",
+    "secao_1t": "rj/60011/162/183",
+    "serie_hw": "1750285"
+   },
+   {
+    "secao_2t": "rj/60011/185/62",
+    "secao_1t": "rj/60011/118/361",
+    "serie_hw": "1668090"
+   },
+   {
+    "secao_2t": "rj/60011/185/158",
+    "secao_1t": "rj/60011/22/202",
+    "serie_hw": "1793722"
+   },
+   {
+    "secao_2t": "rj/60011/214/100",
+    "secao_1t": "rj/60011/214/167",
+    "serie_hw": "1819594"
+   },
+   {
+    "secao_2t": "rj/60011/219/278",
+    "secao_1t": "rj/60011/185/50",
+    "serie_hw": "1825823"
+   },
+   {
+    "secao_2t": "rn/16039/29/252",
+    "secao_1t": "rn/16039/29/121",
+    "serie_hw": "2372712"
+   },
+   {
+    "secao_2t": "rn/16144/18/30",
+    "secao_1t": "rn/16055/18/46",
+    "serie_hw": "2057882"
+   },
+   {
     "secao_2t": "ro/00035/20/116",
     "secao_1t": "ro/00035/20/243",
     "serie_hw": "2251902"
+   },
+   {
+    "secao_2t": "sc/80454/2/109",
+    "secao_1t": "sc/80233/2/92",
+    "serie_hw": "2190835"
+   },
+   {
+    "secao_2t": "se/31054/2/168",
+    "secao_1t": "se/31054/1/346",
+    "serie_hw": "1791133"
+   },
+   {
+    "secao_2t": "se/31054/27/317",
+    "secao_1t": "se/31798/14/136",
+    "serie_hw": "2042066"
+   },
+   {
+    "secao_2t": "se/31054/27/392",
+    "secao_1t": "se/32336/21/264",
+    "serie_hw": "2199511"
+   },
+   {
+    "secao_2t": "se/31194/24/14",
+    "secao_1t": "se/31577/9/46",
+    "serie_hw": "2307174"
+   },
+   {
+    "secao_2t": "se/31232/28/148",
+    "secao_1t": "se/31135/15/177",
+    "serie_hw": "2175595"
+   },
+   {
+    "secao_2t": "se/31291/14/142",
+    "secao_1t": "se/32417/22/39",
+    "serie_hw": "2174534"
+   },
+   {
+    "secao_2t": "se/31453/24/102",
+    "secao_1t": "se/32115/18/114",
+    "serie_hw": "2313075"
+   },
+   {
+    "secao_2t": "se/31712/13/42",
+    "secao_1t": "se/32239/31/42",
+    "serie_hw": "2341842"
+   },
+   {
+    "secao_2t": "se/31879/15/300",
+    "secao_1t": "se/31410/6/111",
+    "serie_hw": "2044283"
+   },
+   {
+    "secao_2t": "se/32239/31/42",
+    "secao_1t": "se/31879/15/300",
+    "serie_hw": "2045938"
+   },
+   {
+    "secao_2t": "se/32336/21/75",
+    "secao_1t": "se/31950/34/385",
+    "serie_hw": "2303588"
+   },
+   {
+    "secao_2t": "sp/63134/388/113",
+    "secao_1t": "sp/63134/388/114",
+    "serie_hw": "1819392"
+   },
+   {
+    "secao_2t": "sp/63134/388/114",
+    "secao_1t": "sp/63134/388/113",
+    "serie_hw": "1817812"
+   },
+   {
+    "secao_2t": "sp/63614/227/350",
+    "secao_1t": "sp/63614/227/23",
+    "serie_hw": "1836583"
+   },
+   {
+    "secao_2t": "sp/64955/191/86",
+    "secao_1t": "sp/64955/191/68",
+    "serie_hw": "1653948"
+   },
+   {
+    "secao_2t": "sp/66397/399/236",
+    "secao_1t": "sp/66397/399/335",
+    "serie_hw": "1826264"
+   },
+   {
+    "secao_2t": "sp/68756/93/515",
+    "secao_1t": "sp/68756/93/201",
+    "serie_hw": "1786618"
+   },
+   {
+    "secao_2t": "sp/70335/187/123",
+    "secao_1t": "sp/70335/187/57",
+    "serie_hw": "1820267"
+   },
+   {
+    "secao_2t": "sp/70572/306/290",
+    "secao_1t": "sp/70572/306/115",
+    "serie_hw": "1835060"
+   },
+   {
+    "secao_2t": "sp/70718/273/195",
+    "secao_1t": "sp/70718/273/78",
+    "serie_hw": "1845124"
+   },
+   {
+    "secao_2t": "sp/70718/273/224",
+    "secao_1t": "sp/70718/273/305",
+    "serie_hw": "1823664"
+   },
+   {
+    "secao_2t": "sp/70998/412/225",
+    "secao_1t": "sp/70998/412/385",
+    "serie_hw": "1824662"
+   },
+   {
+    "secao_2t": "sp/70998/412/334",
+    "secao_1t": "sp/70998/412/371",
+    "serie_hw": "1834570"
+   },
+   {
+    "secao_2t": "sp/71072/249/561",
+    "secao_1t": "sp/71072/249/20",
+    "serie_hw": "1819671"
+   },
+   {
+    "secao_2t": "sp/71072/257/32",
+    "secao_1t": "sp/71072/257/305",
+    "serie_hw": "2362612"
+   },
+   {
+    "secao_2t": "sp/71153/132/48",
+    "secao_1t": "sp/65099/132/289",
+    "serie_hw": "1830744"
    }
   ],
   "carga": {

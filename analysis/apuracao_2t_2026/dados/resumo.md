@@ -1,21 +1,21 @@
 # Apuração do 2º turno de 2026: números do dossiê
 
-Gerado por `scripts/apuracao-2t-2026-dados.py` em 2026-10-26T01:59:29Z, a partir da versão nacional gerada pelo TSE às 2026-10-25 22:46:03 (snapshot 90388, 100,00% das seções). Banco `apuracao/data/apuracao-2t.sqlite` lido em modo somente leitura; versão vigente de cada arquivo = a mais nova pelo `gerado_em`.
+Gerado por `scripts/apuracao-2t-2026-dados.py` em 2026-10-26T16:03:53Z, a partir da versão nacional gerada pelo TSE às 2026-10-25 23:27:02 (snapshot 90584, 100,00% das seções). Banco `apuracao/data/apuracao-2t.sqlite` lido em modo somente leitura; versão vigente de cada arquivo = a mais nova pelo `gerado_em`.
 
 Rótulo de todo o conjunto: atipicidade pede explicação, não prova irregularidade.
 
 ## 1. Placar
 
-- Brasil (arquivo nacional `u:6258:1:br:::`): Lula 64.255.891 (51,79% dos válidos) × Flávio 59.825.984 (48,21%), diferença de 4.429.907 votos (3,58 pp). Seções 499.246 de 499.248. Brancos 1.430.493 (1,12% do comparecimento), nulos 2.723.298 (2,12%). Abstenção 19,22% do eleitorado das seções totalizadas. Origem: `presidente.json`, `nacional` (tabelas `snapshot`, `totais`, `voto_candidato`).
+- Brasil (arquivo nacional `u:6258:1:br:::`): Lula 64.256.232 (51,79% dos válidos) × Flávio 59.826.041 (48,21%), diferença de 4.430.191 votos (3,58 pp). Seções 499.248 de 499.248. Brancos 1.430.496 (1,12% do comparecimento), nulos 2.723.305 (2,12%). Abstenção 19,22% do eleitorado das seções totalizadas. Origem: `presidente.json`, `nacional` (tabelas `snapshot`, `totais`, `voto_candidato`).
 - Sem o exterior: Lula 51,78% × Flávio 48,22%, abstenção 18,99%. Exterior: Lula 53,86% × Flávio 46,14%, abstenção 58,37%.
 - Norte: Lula 50,01% × Flávio 49,99% (Lula menos Flávio: 1.079 votos), abstenção 21,25%.
-- Nordeste: Lula 69,37% × Flávio 30,63% (Lula menos Flávio: 13.653.472 votos), abstenção 16,49%.
+- Nordeste: Lula 69,37% × Flávio 30,63% (Lula menos Flávio: 13.653.696 votos), abstenção 16,49%.
 - Centro-Oeste: Lula 39,99% × Flávio 60,01% (Lula menos Flávio: -1.869.948 votos), abstenção 20,05%.
-- Sudeste: Lula 47,24% × Flávio 52,76% (Lula menos Flávio: -2.806.830 votos), abstenção 20,27%.
+- Sudeste: Lula 47,24% × Flávio 52,76% (Lula menos Flávio: -2.806.770 votos), abstenção 20,27%.
 - Sul: Lula 37,42% × Flávio 62,58% (Lula menos Flávio: -4.576.523 votos), abstenção 18,19%.
 - Exterior: Lula 53,86% × Flávio 46,14% (Lula menos Flávio: 28.657 votos), abstenção 58,37%.
 - Achado: o Norte terminou empatado em 50,01% a 49,99%, com 1.079 votos de diferença em 10.048.173 válidos.
-- Conferência: soma das UFs menos nacional = {'secoes': 0, 'comparecimento': 0, 'abstencao': 0, 'validos': 0, 'brancos': 0, 'nulos': 0, 'flavio': 0, 'lula': 0}; soma dos municípios menos nacional = {'secoes': -3, 'comparecimento': -649, 'abstencao': -87, 'validos': -630, 'brancos': -7, 'nulos': -12, 'flavio': -389, 'lula': -241}. Diferença não nula enquanto há seções por totalizar é defasagem entre versões geradas em instantes diferentes. Municípios incompletos: 4.
+- Conferência: soma das UFs menos nacional = {'secoes': 0, 'comparecimento': 0, 'abstencao': 0, 'validos': 0, 'brancos': 0, 'nulos': 0, 'flavio': 0, 'lula': 0}; soma dos municípios menos nacional = {'secoes': 0, 'comparecimento': 0, 'abstencao': 0, 'validos': 0, 'brancos': 0, 'nulos': 0, 'flavio': 0, 'lula': 0}. Diferença não nula enquanto há seções por totalizar é defasagem entre versões geradas em instantes diferentes. Municípios incompletos: 0.
 
 ## 2. Os fatos da noite conferidos contra o banco
 
@@ -32,7 +32,7 @@ Rótulo de todo o conjunto: atipicidade pede explicação, não prova irregulari
 - Pausa de UF AM: 21:06 a 21:49 (43,70 min; seções 8.022 para 8.156).
 - Pausa de UF AM: 22:05 a 22:45 (40,00 min; seções 8.156 para 8.157).
 - Abstenção às 21:30 (rota /api/2t/abstencao, municípios fechados): 19,25% contra 20,92% nos mesmos municípios no 1º turno (5.127 municípios).
-- Abstenção final, 5.567 municípios completos sem exterior: 19,03% contra 20,85% no 1º turno e 20,48% no 2º turno de 2022 nos mesmos municípios. Origem: `abstencao.json`, `brasil`.
+- Abstenção final, 5.571 municípios completos sem exterior: 18,99% contra 20,84% no 1º turno e 20,43% no 2º turno de 2022 nos mesmos municípios. Origem: `abstencao.json`, `brasil`.
 - Menores abstenções por UF (arquivo de UF, versão vigente): CE 13,89%; PE 15,18%; PB 15,54%; SE 15,71%; RN 16,06%; BA 16,71%; SC 16,96%. Os valores citados na noite (CE 14,8, PE 15,3, SE 15,6, PB 15,9, RN 16,4, SC 16,9) não coincidem com a versão vigente; a diferença pode vir da hora da leitura ou da base (municípios fechados contra arquivo de UF). Na versão vigente a BA entra entre as seis menores e SC sai.
 - Paralela: 177 BUs em 15 UFs; conferência {'igual': 177}.
 - Projeção da casa: primeiro ponto com projeção às 19:15 (1,58% das seções), Flávio 47,19% entre os dois (faixa de 90% de 45,72 a 48,84). Líder projetado em todos os 40 pontos: lula. Final observado: Flávio 48,21%; erro absoluto médio 0,39 pp, máximo 1,21 pp.
@@ -40,45 +40,45 @@ Rótulo de todo o conjunto: atipicidade pede explicação, não prova irregulari
 
 ## 3. Cedo contra tarde
 
-- 5.567 municípios em dez grupos pelo minuto em que fecharam. Parte de Flávio entre os dois: 44,57% no 1º decil e 47,93% no 10º. Mudança contra o 1º turno nos mesmos municípios (swing): -2,31, -2,47, -2,43, -2,43, -2,41, -2,62, -2,63, -2,49, -2,83, -3,08 pp. O swing quase constante mostra que a diferença entre cedo e tarde é de composição, não de mudança de voto. Origem: `cedo_tarde.json`, `decis_2t`.
-- O último decil tem 63.399.716 eleitores e 19 capitais; o primeiro, 3.343.418 eleitores. Correlação de postos entre tamanho e minuto de fechamento: 0,42; entre a ordem de fechamento do 1º e do 2º turno: 0,52.
-- Zonas (6.102): swing de -2,99 a -2,49 pp entre os decis.
-- Primeira UF completa: SC às 21:08; última até a rodada: AM às 22:45. Ainda com seção por totalizar: BA, MG.
+- 5.571 municípios em dez grupos pelo minuto em que fecharam. Parte de Flávio entre os dois: 44,63% no 1º decil e 47,26% no 10º. Mudança contra o 1º turno nos mesmos municípios (swing): -2,31, -2,47, -2,43, -2,47, -2,36, -2,62, -2,63, -2,50, -2,82, -3,08 pp. O swing quase constante mostra que a diferença entre cedo e tarde é de composição, não de mudança de voto. Origem: `cedo_tarde.json`, `decis_2t`.
+- O último decil tem 65.338.550 eleitores e 20 capitais; o primeiro, 3.353.996 eleitores. Correlação de postos entre tamanho e minuto de fechamento: 0,42; entre a ordem de fechamento do 1º e do 2º turno: 0,52.
+- Zonas (6.106): swing de -2,99 a -2,49 pp entre os decis.
+- Primeira UF completa: SC às 21:08; última até a rodada: BA às 23:22. Ainda com seção por totalizar: nenhuma.
 - Atípico: PONTE ALTA DO NORTE (SC, 8 seções) teve todas as seções totalizadas às 17:07, antes do fim da votação prorrogada. atipicidade pede explicação, não prova irregularidade.
 - Regressões: 0 versões genuínas com menos seções ou menos comparecimento que a anterior; versões marcadas regressivas pelo coletor por nível: br 0 (cópias antigas 0); uf 53 (cópias antigas 53); mu 5 (cópias antigas 5); zona 3 (cópias antigas 3).
 
 ## 4. Contra o 1º turno
 
-- 5.567 municípios completos: Flávio 55.539.389 para 59.201.903 (+3.662.514), Lula 52.731.403 para 62.849.441 (+10.118.038). Terceiros do 1º turno: 9.169.051. Flávio somou o equivalente a 39,94% desse estoque e Lula a 110,35% (o comparecimento cresceu 2.835.622). Parte de Flávio entre os dois: 51,30% para 48,51% (-2,79 pp). Origem: `comparacao_1t.json`, `brasil`.
-- Swing a favor de Lula em 5.407 municípios e a favor de Flávio em 159; mediana -2,37 pp, desvio 1,25.
-- Flávio perdeu votos absolutos em 938 municípios e ganhou em 4.620; Lula perdeu em 79 e ganhou em 5.487.
+- 5.571 municípios completos: Flávio 55.960.603 para 59.654.544 (+3.693.941), Lula 53.722.151 para 64.056.078 (+10.333.927). Terceiros do 1º turno: 9.287.152. Flávio somou o equivalente a 39,77% desse estoque e Lula a 111,27% (o comparecimento cresceu 2.920.562). Parte de Flávio entre os dois: 51,02% para 48,22% (-2,80 pp). Origem: `comparacao_1t.json`, `brasil`.
+- Swing a favor de Lula em 5.411 municípios e a favor de Flávio em 159; mediana -2,37 pp, desvio 1,25.
+- Flávio perdeu votos absolutos em 938 municípios e ganhou em 4.624; Lula perdeu em 79 e ganhou em 5.491.
 - Maiores perdas de Flávio: MACAPÁ (AP) -3.785; SENA MADUREIRA (AC) -2.292; TARAUACÁ (AC) -2.135; CRUZEIRO DO SUL (AC) -2.069; CAMPOS DOS GOYTACAZES (RJ) -1.389.
 - Maiores perdas de Lula: MAZAGÃO (AP) -1.135; ICATU (MA) -968; PORTO WALTER (AC) -787; BAGRE (PA) -747; TURIAÇU (MA) -717.
 - Norte: swing -2,41 pp; Flávio 2,23% e Lula 75,02% do estoque de terceiros; abstenção +1,82 pp.
-- Nordeste: swing -1,94 pp; Flávio 21,65% e Lula 161,81% do estoque de terceiros; abstenção -1,79 pp.
+- Nordeste: swing -1,98 pp; Flávio 21,96% e Lula 163,21% do estoque de terceiros; abstenção -1,90 pp.
 - Centro-Oeste: swing -3,39 pp; Flávio 47,63% e Lula 78,05% do estoque de terceiros; abstenção -1,65 pp.
-- Sudeste: swing -3,66 pp; Flávio 44,78% e Lula 110,53% do estoque de terceiros; abstenção -2,43 pp.
-- Sul: swing -3,18 pp; Flávio 57,26% e Lula 88,07% do estoque de terceiros; abstenção -2,27 pp.
-- Contrariando a tese de abstenção em queda geral: a abstenção subiu contra o 1º turno em AC (+5,65 pp), AM (+1,51 pp), AP (+8,06 pp), MA (+0,63 pp), PA (+1,22 pp), PI (+0,04 pp), RO (+0,21 pp), RR (+6,03 pp), TO (+0,89 pp). Parte do estoque de terceiros somada por Flávio nessas UFs: AC -47,93%, AM -1,03%, AP -33,94%, MA -4,81%, PA 13,23%, PI 8,36%, RO 33,22%, RR -58,81%, TO -2,46%.
+- Sudeste: swing -3,65 pp; Flávio 44,78% e Lula 110,53% do estoque de terceiros; abstenção -2,43 pp.
+- Sul: swing -3,18 pp; Flávio 57,27% e Lula 88,06% do estoque de terceiros; abstenção -2,27 pp.
+- Contrariando a tese de abstenção em queda geral: a abstenção subiu contra o 1º turno em AC (+5,65 pp), AM (+1,51 pp), AP (+8,06 pp), MA (+0,63 pp), PA (+1,22 pp), PI (+0,04 pp), RO (+0,21 pp), RR (+6,03 pp), TO (+0,89 pp). Parte do estoque de terceiros somada por Flávio nessas UFs: AC -47,93%, AM -1,03%, AP -33,94%, MA -4,42%, PA 13,23%, PI 8,36%, RO 33,22%, RR -58,81%, TO -2,46%.
 - Municípios com abstenção pelo menos 5 pp menor que no 1º turno e 5 mil eleitores ou mais: 44; com abstenção 5 pp maior: 99.
 
 ## 5. Contra o 2º turno de 2022
 
-- Mesmos 5.566 municípios, sem exterior: Lula 50,63% em 2022 contra 51,49% em 2026 (+0,86 pp); Flávio fica -0,86 pp de Bolsonaro. Abstenção 20,48% para 19,03%. Origem: `comparacao_2022.json`, `brasil`; fonte de 2022 em `fontes_2022`.
-- Achado contrário ao agregado: Lula caiu contra 2022 em 4.356 municípios e subiu em 1.202; mediana municipal -2,04 pp, média ponderada pelo eleitorado +0,57 pp: mediana negativa com média ponderada positiva indica avanço de Lula concentrado nos municípios mais populosos.
+- Mesmos 5.570 municípios, sem exterior: Lula 50,90% em 2022 contra 51,78% em 2026 (+0,88 pp); Flávio fica -0,88 pp de Bolsonaro. Abstenção 20,43% para 18,99%. Origem: `comparacao_2022.json`, `brasil`; fonte de 2022 em `fontes_2022`.
+- Achado contrário ao agregado: Lula caiu contra 2022 em 4.358 municípios e subiu em 1.204; mediana municipal -2,04 pp, média ponderada pelo eleitorado +0,60 pp: mediana negativa com média ponderada positiva indica avanço de Lula concentrado nos municípios mais populosos.
 - Municípios que trocaram de vencedor: 334 (288 de Lula para Flávio, 43 de Bolsonaro para Lula).
-- UFs com maior avanço de Lula sobre 2022: DF +4,53, AP +4,24, AC +3,73, RR +3,62, RJ +3,43; maior recuo: TO -2,73, MA -1,62, BA -1,52, RS -1,48, CE -1,04.
+- UFs com maior avanço de Lula sobre 2022: DF +4,53, AP +4,24, AC +3,73, RR +3,62, RJ +3,43; maior recuo: TO -2,73, MA -1,60, RS -1,49, CE -1,04, PI -0,98.
 
 ## 6. Abstenção
 
 - Norte: 21,25% (1º turno 19,43%, 2022 22,94%).
-- Nordeste: 16,53% (1º turno 18,32%, 2022 19,47%).
+- Nordeste: 16,49% (1º turno 18,39%, 2022 19,31%).
 - Centro-Oeste: 20,05% (1º turno 21,70%, 2022 20,64%).
 - Sudeste: 20,27% (1º turno 22,70%, 2022 21,25%).
 - Sul: 18,19% (1º turno 20,46%, 2022 18,60%).
-- Capitais 18,78% (-2,13 pp contra o 1º turno); interior 19,11% (-1,73 pp).
-- Abstenção abaixo de 15%: o Nordeste concentra 82,70% do eleitorado desses municípios; o Sul tem 33,19% dos seus municípios abaixo de 15%, com eleitorado médio de 6.825 por município.
-- A abstenção caiu contra o 1º turno em 4.434 municípios e subiu em 1.126.
+- Capitais 18,61% (-2,26 pp contra o 1º turno); interior 19,10% (-1,73 pp).
+- Abstenção abaixo de 15%: o Nordeste concentra 82,69% do eleitorado desses municípios; o Sul tem 33,25% dos seus municípios abaixo de 15%, com eleitorado médio de 6.814 por município.
+- A abstenção caiu contra o 1º turno em 4.437 municípios e subiu em 1.127.
 - Explicações legítimas para a queda: prorrogação da votação até 19h em todo o país, mobilização de segundo turno e transporte; o banco não separa essas causas.
 
 ## 7. Exterior

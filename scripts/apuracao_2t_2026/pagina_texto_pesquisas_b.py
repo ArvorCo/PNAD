@@ -12,7 +12,7 @@ from __future__ import annotations
 from html import escape
 
 from . import pagina_texto_noticias as TN
-from .pagina_comum import milhoes, nota, num, p, sinal
+from .pagina_comum import inteiro, milhoes, nota, num, p, sinal
 
 
 def s2(x: float) -> str:
@@ -41,7 +41,7 @@ def _uf(PV: dict, uf: str) -> dict | None:
     return next((x for x in ufs if x["uf"] == uf), None)
 
 
-def candidatos(f: dict, PV: dict, N: dict | None) -> str:
+def candidatos(f: dict, PV: dict, N: dict | None, logs: dict | None = None) -> str:
     h = '<h3 id="pesquisas-candidatos">Candidatos a explicar a mudança</h3>'
     h += nota(
         "juizo",
@@ -143,13 +143,27 @@ def candidatos(f: dict, PV: dict, N: dict | None) -> str:
         "contrario",
     )
     # 6. logs e BUs
-    h += "<h4>6. O que só os logs e os boletins completos vão mostrar</h4>"
-    h += p(
-        "Comparecimento e horário de votação por seção, votos registrados depois das 17h, biometria e "
-        "substituição de urnas estão nos logs e nos boletins de urna de cada seção. O dossiê completa "
-        "esta seção quando os logs de todas as urnas do 2º turno estiverem coletados e analisados.",
-        "juizo",
-    )
+    cob = (logs or {}).get("cobertura") or {}
+    if (
+        cob.get("lidos")
+        and cob.get("catalogadas")
+        and cob["lidos"] >= 0.99 * cob["catalogadas"]
+    ):
+        h += "<h4>6. O que os logs e os boletins de todas as seções mostram</h4>"
+        h += p(
+            "Comparecimento e horário de votação por seção, votos registrados depois das 17h, biometria e "
+            f"substituição de urnas estão nos logs de {inteiro(cob['lidos'])} urnas e nos boletins de cada seção, "
+            'lidos por inteiro: os capítulos <a href="#secoes">Seções</a> e <a href="#logs">Logs</a> fazem essa conta.',
+            "juizo",
+        )
+    else:
+        h += "<h4>6. O que só os logs e os boletins completos vão mostrar</h4>"
+        h += p(
+            "Comparecimento e horário de votação por seção, votos registrados depois das 17h, biometria e "
+            "substituição de urnas estão nos logs e nos boletins de urna de cada seção. O dossiê completa "
+            "esta seção quando os logs de todas as urnas do 2º turno estiverem coletados e analisados.",
+            "juizo",
+        )
     return h
 
 

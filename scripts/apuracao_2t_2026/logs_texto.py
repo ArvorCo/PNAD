@@ -17,6 +17,54 @@ def _ic(b: dict) -> str:
     return f"{_n(b['media_pp'], 2)} pp (IC95 {_n(lo, 2)} a {_n(hi, 2)}; n {_n(b['n'])})"
 
 
+def _v(x: dict | None, casas: int = 2) -> str:
+    if not x or x.get("valor") is None:
+        return "n/d"
+    ic = x.get("ic95")
+    base = _n(x["valor"], casas)
+    return base + (f" (IC95 {_n(ic[0], casas)} a {_n(ic[1], casas)})" if ic else "")
+
+
+def clima_observado_md(c: dict) -> list[str]:
+    """Bateria e abstenção contra a chuva de 25/10 por estação e por modelo."""
+    if not c.get("disponivel"):
+        return []
+    cob, est = c["cobertura_celulas"], c["estacoes"]
+    L = [
+        f"- Chuva de 25/10 medida (fonte: {c['fonte']}): {_n(est.get('cemaden_com_dia', 0))} pluviômetros com o dia e "
+        f"{_n(est.get('cemaden_com_votacao', 0))} com as horas de votação; {_n(cob['com_estacao_dia'])} de "
+        f"{_n(cob['celulas'])} células com estação a até 50 km; {_n(c['secoes_chuva_dia_medida'])} seções. INMET: {est.get('inmet')}.",
+    ]
+    ref = c.get("referencia_1t") or {}
+    for nome, chave in (
+        ("dia inteiro, estações", "chuva_dia_medida"),
+        ("horas de votação, estações", "chuva_votacao_medida"),
+        ("horas de votação, modelo IFS provisório", "chuva_votacao_modelo"),
+    ):
+        for f in c["bateria"][chave]:
+            if not f["secoes"]:
+                continue
+            L.append(
+                f"  - bateria, chuva {nome}, {f['rotulo']}: {_n(f['secoes'])} seções, "
+                f"{_v(f['parcela_pct'])}%; razão contra a seca {_v(f.get('razao_vs_seca'), 3)}."
+            )
+        for f in c["abstencao"][chave]:
+            if not f["secoes"]:
+                continue
+            L.append(
+                f"  - abstenção, chuva {nome}, {f['rotulo']}: {_n(f['secoes'])} seções, "
+                f"{_v(f['abst_pct'], 1)}%; contra a UF {_v(f['dentro_uf_pp'])} pp; variação 1º→2º contra a UF "
+                f"{_v(f['variacao_vs_1t_dentro_uf_pp'])} pp."
+            )
+    r = (ref.get("chuva_votacao") or {}).get("forte") or {}
+    rd = (ref.get("chuva_diaria") or {}).get("forte") or {}
+    L.append(
+        f"  - 1º turno (ERA5): razão da chuva forte contra a seca {_n(r.get('razao_vs_seca'), 3)} nas horas de "
+        f"votação e {_n(rd.get('razao_vs_seca'), 3)} no dia."
+    )
+    return L
+
+
 def markdown(d: dict) -> str:
     c, g, p = d["cobertura"], d["regra2"], d["persistencia"]
     cad, rei, bat, meta, ig = (
@@ -110,6 +158,7 @@ def markdown(d: dict) -> str:
         L.append(
             f"  - {v['grupo']}: diferença em diferenças {_ic(v['dif_em_dif_contra_1t'])}."
         )
+    L += clima_observado_md(d.get("clima_observado") or {})
     s = meta["serie_mr"]
     L += [
         "",

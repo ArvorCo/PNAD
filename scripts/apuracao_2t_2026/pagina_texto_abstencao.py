@@ -151,8 +151,12 @@ def tabela_capitais(A: dict) -> str:
                 "Lula 2º turno, %",
             ],
             linhas,
-            "Fonte: abstencao.json (capitais_x_interior.capitais_lista); capital com seção por totalizar na rodada fica fora"
-            + (f" ({', '.join(fora)})." if fora else "."),
+            "Fonte: abstencao.json (capitais_x_interior.capitais_lista)"
+            + (
+                f"; capital com seção por totalizar na rodada fica fora ({', '.join(fora)})."
+                if fora
+                else "; todas as capitais completas."
+            ),
         )
         + "</details>"
     )

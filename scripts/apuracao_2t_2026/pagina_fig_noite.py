@@ -599,9 +599,9 @@ def fig_mapa_fechou(L: dict) -> str:
         "Hora em que cada UF chegou a 100% das seções",
         "Mapa por UF com a hora de Brasília da primeira versão completa.",
     )
-    itens = [(ROT_FECHA[i], CORES_FECHA[i]) for i in range(5)] + [
-        ("ainda aberta na rodada", "#ece6d4")
-    ]
+    itens = [(ROT_FECHA[i], CORES_FECHA[i]) for i in range(5)] + (
+        [("ainda aberta na rodada", "#ece6d4")] if abertas else []
+    )
     leg = legenda_html(itens, "Hora de Brasília da primeira versão completa")
     fechadas = sorted(
         (
@@ -615,7 +615,7 @@ def fig_mapa_fechou(L: dict) -> str:
     if fechadas:
         txt = (
             f"{fechadas[0]['uf']} fechou primeiro, às {fechadas[0]['fechou_brt'][11:16]}; "
-            f"{fechadas[-1]['uf']} por último entre as completas, às {fechadas[-1]['fechou_brt'][11:16]}. "
+            f"{fechadas[-1]['uf']} por último{' entre as completas' if abertas else ''}, às {fechadas[-1]['fechou_brt'][11:16]}. "
         )
     if abertas:
         txt += (

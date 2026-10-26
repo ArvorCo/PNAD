@@ -373,7 +373,9 @@ def fig_ufs_vs_1t(L: dict | None) -> str:
     )
     legenda = (
         "Sem descontar nada, várias UFs fecharam mais tarde que no 1º turno; descontados os 120 minutos da "
-        "prorrogação, todas as UFs completas fecharam antes. Fonte: linha_do_tempo.json (conclusao_ufs)."
+        "prorrogação, todas as UFs"
+        + (" completas" if any(u["fechou_min"] is None for u in ufs) else "")
+        + " fecharam antes. Fonte: linha_do_tempo.json (conclusao_ufs)."
     )
     return figura_html(
         "ct_ufs_vs_1t", "".join(out), legenda, tips, modo="scroll", minw=760, apos=leg
@@ -410,7 +412,12 @@ def fig_mapa_hora(L: dict | None) -> str:
         and faixa(minuto(u), CORTES_HORA) >= 3,
     )
     leg = legenda_html(
-        [*zip(ROT_HORA, HORAS, strict=True), ("incompleta na rodada", "#d8d4c8")],
+        [*zip(ROT_HORA, HORAS, strict=True)]
+        + (
+            [("incompleta na rodada", "#d8d4c8")]
+            if any(minuto(u) is None for u in ufs.values())
+            else []
+        ),
         "Hora de Brasília",
     )
     legenda = "Hora da primeira versão do arquivo de presidente da UF com todas as seções. Fonte: linha_do_tempo.json."

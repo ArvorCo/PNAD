@@ -194,8 +194,15 @@ def render(d: Dados, cap: Capitulo) -> str:
             "verificado",
             f"No arquivo da região, o Norte terminou {num(narq['pct_lula'], 2)}% a {num(narq['pct_flavio'], 2)}%, com "
             f"{inteiro(abs(narq['margem_lula_votos']))} votos de diferença em {inteiro(narq['validos'])} válidos, a favor de "
-            f"{'Lula' if narq['margem_lula_votos'] > 0 else 'Flávio'}. Nos municípios já completos da região, Flávio fica com "
-            f"{pct(norte['t2_h2h_flavio'])}; a diferença está nas seções ainda por totalizar no Amazonas e no Pará. Flávio "
+            f"{'Lula' if narq['margem_lula_votos'] > 0 else 'Flávio'}. "
+            + (
+                f"Com todos os {inteiro(norte['n_municipios'])} municípios da região completos, a régua municipal dá o mesmo "
+                f"{pct(norte['t2_h2h_flavio'])} para Flávio. "
+                if narq["secoes"] >= narq["secoes_total"]
+                else f"Nos municípios já completos da região, Flávio fica com {pct(norte['t2_h2h_flavio'])}; a diferença está "
+                "nas seções ainda por totalizar. "
+            )
+            + "Flávio "
             f"somou o equivalente a {pct(norte['ganho_flavio_sobre_terceiros_pct'])} do estoque de terceiros do Norte; Lula, "
             f"{pct(norte['ganho_lula_sobre_terceiros_pct'])}.{_norte_2022(C22)}",
             "O Norte empatado.",

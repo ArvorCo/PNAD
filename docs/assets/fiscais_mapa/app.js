@@ -9,7 +9,7 @@
 
   const BASE = 'assets/fiscais_mapa/';
   const POLITIZE = 'assets/politize/dados/';
-  const VERSAO = '20261024-clima-horario';
+  const VERSAO = '20261026-chuva2t';
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
   // Chaves de nível na ordem de prioridade: histórico do capítulo 13 primeiro, depois a atenção dos logs.
@@ -20,7 +20,7 @@
   const NOME_NIVEL = { alta: 'Prioridade alta', media: 'Prioridade média', baixa: 'Prioridade baixa', log3: 'Conferir o arquivo', log2: 'Sinais combinados', log1: 'Um sinal no log', log0: 'Registro de rotina', mudanca: 'Mudou de endereço' };
   const NOME_RISCO = { alto: 'alto', medio: 'médio', baixo: 'baixo' };
   const CRIT_MUDANCA = 'mudanca_endereco';
-  const LIMITE_CHUVA_FORTE = 20; // mm no dia 04/10
+  const LIMITE_CHUVA_FORTE = 20; // mm no dia 25/10, chuva observada do 2º turno
   const CONFERIR_MUDANCA = 'confirme no e-Título onde a seção vota em 25/10 antes de sair de casa, porque o endereço pode ter mudado entre os turnos';
   const NOME_FONTE_MUDANCA = { ambos: 'o arquivo de locais e o painel do TSE concordam', so_zip: 'só o arquivo de locais do TSE mostra a mudança', so_painel: 'só o painel de seções alteradas do TSE mostra a mudança' };
   const UFS = { AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás', MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais', PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí', RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul', RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo', SE: 'Sergipe', TO: 'Tocantins', ZZ: 'Exterior' };
@@ -29,7 +29,7 @@
     ['local', 'Local de votação'], ['votaram', 'Votaram'], ['placar', 'Flávio × Lula'],
     ['motivos', 'Por que está no mapa'], ['risco', 'Risco do território'], ['mudanca', 'Mudou de endereço'], ['dist', 'Distância'], ['coord', 'Mapa'],
   ];
-  const COL_CHUVA = ['chuva', 'Chuva em 04/10'];
+  const COL_CHUVA = ['chuva', 'Chuva em 25/10'];
   const COL_RISCO25 = ['risco25', 'Risco climático 25/10'];
   const ZOOM_ROTULOS = 15;
   const MAX_ROTULO = 5;
@@ -37,7 +37,7 @@
   const S = {
     meta: null, locais: [], secoes: [], recorte: '',
     filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', camada: 'todas', log: '', risco25: '', choveu: false, niveis: new Set(PADRAO_NIVEIS) },
-    clima: { prev: undefined, ufs: new Map() },
+    clima: { prev: undefined, ufs: new Map(), obs: undefined },
     raio: RAIO_PADRAO, modo: 'mapa', centro: null, abrir: '',
     ordem: { col: 'nivel', dir: 1 }, pagina: 1, porPagina: 50, buscaLista: '',
     mapa: null, cluster: null, circulo: null, alvo: null, marcadores: new Map(),
@@ -175,14 +175,37 @@
     return Boolean(c) && (c.risco === 'alto' || (modo === 'alto_medio' && c.risco === 'medio'));
   }
 
+  // Chuva de 25/10 por célula de 0,25 grau: "<floor(lat*4)/4>,<floor(lon*4)/4>" com duas casas.
+  const chaveCelula25 = (lat, lon) => (Math.floor(lat * 4) / 4 + 0).toFixed(2) + ',' + (Math.floor(lon * 4) / 4 + 0).toFixed(2);
+
+  function carregarObservado2t() {
+    if (!S.clima.obsPromessa) {
+      S.clima.obsPromessa = buscar(BASE + 'clima/observado_2t.json').then((d) => {
+        if (!d || !d.celulas) return null;
+        const cols = d.colunas;
+        const celulas = new Map(Object.entries(d.celulas).map(([k, ln]) => { const r = {}; cols.forEach((c, i) => { r[c] = ln[i]; }); return [k, r]; }));
+        S.clima.obs = { gerado_em: d.gerado_em, rotulos: d.rotulos_fonte || {}, raio_km: d.raio_km, celulas };
+        return S.clima.obs;
+      }).catch(() => { S.clima.obs = null; return null; });
+    }
+    return S.clima.obsPromessa;
+  }
+
+  // Chuva observada no 2º turno no ponto do prédio (o do 2º turno quando a seção mudou).
+  function chuva2t(l) {
+    const o = S.clima.obs;
+    if (!o || !coordOk(l)) return null;
+    return o.celulas.get(chaveCelula25(l.lat, l.lon)) || null;
+  }
+
   function climaObservado(s) {
     const d = S.clima.ufResolvidos && S.clima.ufResolvidos[s.local.uf];
     return d ? d.linhas.get(id1tDe(s)) || null : null;
   }
 
   function passaChuvaForte(s) {
-    const c = climaObservado(s);
-    return Boolean(c) && typeof c.chuva_04_10_mm === 'number' && c.chuva_04_10_mm > LIMITE_CHUVA_FORTE;
+    const c = chuva2t(s.local);
+    return Boolean(c) && typeof c.chuva_dia_mm === 'number' && c.chuva_dia_mm >= LIMITE_CHUVA_FORTE;
   }
 
   function riscoPrevisto(l) {
@@ -200,18 +223,9 @@
         avisos.push('A previsão do tempo para 25/10 ainda não foi publicada; o filtro de risco climático ficou desligado.');
       }
     }
-    if (f.choveu) {
-      if (!f.uf) {
-        f.choveu = false; $('#f-choveu').checked = false;
-        avisos.push('Escolha o estado para filtrar por chuva forte no 1º turno: o arquivo de chuva é carregado por estado.');
-      } else {
-        const d = await carregarClimaUf(f.uf);
-        if (d) registrarClimaUf(f.uf, d);
-        else {
-          f.choveu = false; $('#f-choveu').checked = false;
-          avisos.push('Os dados de chuva de 04/10 para ' + (UFS[f.uf] || f.uf) + ' ainda não foram publicados; o filtro de chuva forte ficou desligado.');
-        }
-      }
+    if (f.choveu && !await carregarObservado2t()) {
+      f.choveu = false; $('#f-choveu').checked = false;
+      avisos.push('A chuva de 25/10 ainda não foi publicada; o filtro de chuva forte ficou desligado.');
     }
     $('#clima-aviso').hidden = !avisos.length;
     return avisos.join(' ') + (avisos.length ? ' ' : '');
@@ -259,11 +273,31 @@
       h('p', { class: 'ficha-meta' }, 'Valor da grade de 0,25 grau (fonte Open-Meteo), não medido no prédio. Chuva não prova efeito no comparecimento.'));
   }
 
+  // Rótulo exato da fonte: estação a X km ou modelo provisório.
+  function fonteChuva2t(fonte, c) {
+    const rede = { cemaden: 'CEMADEN', inmet: 'INMET', ambos: 'INMET/CEMADEN' }[fonte];
+    if (rede) return 'chuva medida em ' + (c.n_estacoes === 1 ? 'estação ' : 'estações ') + rede + ' a ' + nf1.format(c.distancia_min_km) + ' km';
+    if (fonte === 'era5') return 'reanálise ERA5';
+    if (fonte === 'ifs_provisorio') return 'modelo, provisório';
+    return 'sem dado';
+  }
+
+  function blocoObservado2t(c, obs) {
+    const forte = typeof c.chuva_dia_mm === 'number' && c.chuva_dia_mm >= LIMITE_CHUVA_FORTE;
+    return h('div', { class: 'ficha-clima-bloco' },
+      h('b', {}, 'No dia do 2º turno (25/10)'),
+      h('ul', {},
+        h('li', {}, 'Chuva no dia: ' + mm(c.chuva_dia_mm) + ' (' + fonteChuva2t(c.fonte_dia, c) + ')' + (forte ? '; chuva forte' : '') + '.'),
+        h('li', {}, 'Chuva das 7h às 18h de Brasília: ' + mm(c.chuva_votacao_mm) + ' (' + fonteChuva2t(c.fonte_votacao, c) + ').'),
+        h('li', {}, 'Rajada máxima das 7h às 18h: ' + kmh(c.rajada_votacao_kmh) + ' (modelo, provisório).')),
+      h('p', { class: 'ficha-meta' }, 'Pluviômetro a até ' + nf0.format(obs.raio_km || 50) + ' km é estimativa para a célula de 0,25 grau, não medição no prédio; onde não há estação, o modelo ECMWF IFS é provisório até a reanálise ERA5 cobrir 25/10.' + (obs.gerado_em ? ' Gerado em ' + formatarCarimbo(obs.gerado_em) + '.' : '')));
+  }
+
   function blocoPrevisao(cel, prev) {
     const regra = prev.regra_risco;
     const textoRegra = !regra ? '' : typeof regra === 'string' ? regra : Object.keys(regra).map((k) => k.replace(/_/g, ' ') + ': ' + (typeof regra[k] === 'object' ? JSON.stringify(regra[k]) : regra[k])).join('; ');
     return h('div', { class: 'ficha-clima-bloco' },
-      h('b', {}, 'Previsão para 25/10 · 8h–17h de Brasília'),
+      h('b', {}, 'Previsão publicada na véspera para 25/10 · 8h–17h de Brasília'),
       h('ul', {},
         h('li', {}, 'Chuva acumulada na votação: ' + mm(cel.chuva_mm) + (typeof cel.prob_pct === 'number' ? '; maior probabilidade horária de ' + nf0.format(cel.prob_pct) + '%' : '') + '.'),
         h('li', {}, 'Rajada máxima na votação: ' + kmh(cel.rajada_kmh) + '.'),
@@ -278,12 +312,13 @@
     if (!alvo) return;
     const movida = l.secoes.find((x) => x.mudanca && x.mudanca.id_1t && x.mudanca.id_1t !== l.id);
     const id1t = l.coord_fonte === 'local_2t' && movida ? movida.mudanca.id_1t : l.id;
-    const res = await Promise.all([carregarPrevisao(), carregarClimaUf(l.uf)]);
-    const prev = res[0], ufd = res[1];
+    const res = await Promise.all([carregarPrevisao(), carregarClimaUf(l.uf), carregarObservado2t()]);
+    const prev = res[0], ufd = res[1], obs = res[2];
     if (ufd) registrarClimaUf(l.uf, ufd);
     const c = ufd ? ufd.linhas.get(id1t) : null;
     const cel = prev ? riscoPrevisto(l) : null;
-    const blocos = [c ? blocoObservado(c, l.coord_fonte === 'local_2t') : null, cel ? blocoPrevisao(cel, prev) : null].filter(Boolean);
+    const c2 = obs ? chuva2t(l) : null;
+    const blocos = [c ? blocoObservado(c, l.coord_fonte === 'local_2t') : null, c2 ? blocoObservado2t(c2, obs) : null, cel ? blocoPrevisao(cel, prev) : null].filter(Boolean);
     if (blocos.length) alvo.replaceChildren(...blocos); else alvo.remove();
   }
 
@@ -808,7 +843,7 @@
     if (col === 'placar') return s.flavio_pct === null || s.flavio_pct === undefined ? -1 : s.flavio_pct;
     if (col === 'local') return s.local.local || '';
     if (col === 'mudanca') return s.mudanca ? 0 : 1;
-    if (col === 'chuva') { const c = climaObservado(s); return c && typeof c.chuva_04_10_mm === 'number' ? -c.chuva_04_10_mm : 1e9; }
+    if (col === 'chuva') { const c = chuva2t(s.local); return c && typeof c.chuva_dia_mm === 'number' ? -c.chuva_dia_mm : 1e9; }
     if (col === 'risco25') { const c = riscoPrevisto(s.local); return c ? { alto: 0, medio: 1, baixo: 2 }[c.risco] ?? 3 : 4; }
     const v = s[col];
     return v === null || v === undefined ? '' : v;
@@ -836,7 +871,7 @@
   function colunasLista() {
     const cols = COLS_LISTA.slice();
     const extra = [];
-    if (S.clima.ufResolvidos && Object.keys(S.clima.ufResolvidos).length) extra.push(COL_CHUVA);
+    if (S.clima.obs) extra.push(COL_CHUVA);
     if (S.clima.prev) extra.push(COL_RISCO25);
     cols.splice(cols.findIndex((c) => c[0] === 'mudanca') + 1, 0, ...extra);
     return cols;
@@ -855,8 +890,8 @@
     const out = [];
     cols.forEach((c) => {
       if (c[0] === 'chuva') {
-        const o = climaObservado(s);
-        out.push(h('td', { class: 'num' }, o && typeof o.chuva_04_10_mm === 'number' ? [nf1.format(o.chuva_04_10_mm) + ' mm', typeof o.chuva_votacao_mm === 'number' ? h('small', {}, nf1.format(o.chuva_votacao_mm) + ' mm na votação') : null] : ''));
+        const o = chuva2t(s.local);
+        out.push(h('td', { class: 'num' }, o && typeof o.chuva_dia_mm === 'number' ? [nf1.format(o.chuva_dia_mm) + ' mm', h('small', {}, fonteChuva2t(o.fonte_dia, o))] : ''));
       } else if (c[0] === 'risco25') {
         const p = riscoPrevisto(s.local);
         out.push(h('td', {}, p ? [NOME_RISCO[p.risco] || p.risco, typeof p.chuva_mm === 'number' ? h('small', {}, nf1.format(p.chuva_mm) + ' mm entre 8h–17h BRT') : null] : ''));
@@ -1112,7 +1147,7 @@
     else if (f.log) { const c = S.meta.logs.criterios[f.log]; link = 'logs_urnas_2026.html#' + f.log; if (c) r = { nome: c.curto, regra: c.regra, conferir: c.conferir, limite: c.limite }; }
     const exterior = rs.filter((s) => s.uf === 'ZZ').length;
     $('#recorte-ativo').textContent = (r ? r.nome : f.camada === 'logs' ? 'Só sinais do log' : f.camada === 'originais' ? 'Só critérios históricos' : 'Histórico e logs') + ' · ' + plural(rs.length, 'seção', 'seções') + (exterior ? ', ' + nf0.format(exterior) + ' no exterior' : '') + (S.modo === 'mapa' && S.centro ? ' (antes do raio)' : '') +
-      (f.risco25 ? ' · risco climático previsto ' + (f.risco25 === 'alto' ? 'alto' : 'alto ou médio') + ' em 25/10' : '') + (f.choveu ? ' · choveu forte no 1º turno' : '');
+      (f.risco25 ? ' · risco climático previsto ' + (f.risco25 === 'alto' ? 'alto' : 'alto ou médio') + ' em 25/10' : '') + (f.choveu ? ' · choveu forte em 25/10 (20 mm ou mais)' : '');
     $('#criterio-ativo').hidden = !r;
     if (r) $('#criterio-ativo').replaceChildren(...[h('strong', {}, r.nome), h('p', {}, r.regra), r.limite ? h('p', { class: 'ajuda' }, r.limite) : null, h('p', {}, h('b', {}, 'Conferir: '), r.conferir), h('a', { href: link }, 'Ler a regra completa')].filter(Boolean));
     const fixo = Boolean(f.log);

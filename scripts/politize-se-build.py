@@ -94,6 +94,7 @@ def contexto() -> montagem.Contexto:
         mapa_urnas=fontes.mapa_urnas_1t(),
         previsao=prev,
         catalogo=cat,
+        observado=fontes.observado_2t()[0],
     )
 
 
@@ -124,6 +125,7 @@ def catalogos(ctx: montagem.Contexto) -> dict[str, Any]:
             "6": "urna de reserva no encerramento",
         },
         "clima2": meta_prev,
+        "clima2o": fontes.observado_2t()[1],
     }
 
 

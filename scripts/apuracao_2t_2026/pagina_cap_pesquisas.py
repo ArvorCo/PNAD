@@ -54,7 +54,7 @@ def render(d: Dados, cap: Capitulo) -> str:
         d.aviso(
             "hipotese_autor.json ausente: capítulo pesquisas sem o bloco da hipótese"
         )
-    h += TB.candidatos(f, PV, N)
+    h += TB.candidatos(f, PV, N, d.get("logs.json"))
     h += T.medicao(f) + fig_casas(PV) + fig_erro(PV)
     h += f"<details><summary>As {f['n']} casas, uma a uma</summary>{T.tabela_casas(PV)}</details>"
     h += T.centrais(f) + T.tabela_centrais(PV)

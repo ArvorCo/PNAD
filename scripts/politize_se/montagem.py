@@ -40,6 +40,7 @@ class Contexto:
     mapa_urnas: dict[int, tuple[str, str, int, int]]
     previsao: dict[str, dict[str, Any]]
     catalogo: dict[str, Any]
+    observado: dict[str, dict[str, Any]] = field(default_factory=dict)
 
 
 @dataclass
@@ -339,6 +340,13 @@ def _celula(lat: float | None, lon: float | None) -> str | None:
     return f"{math.floor(lat * 2) / 2},{math.floor(lon * 2) / 2}"
 
 
+def _celula25(lat: float | None, lon: float | None) -> str | None:
+    """Célula de 0,25° da chuva observada: canto sudoeste com duas casas."""
+    if lat is None or lon is None:
+        return None
+    return f"{math.floor(lat * 4) / 4:.2f},{math.floor(lon * 4) / 4:.2f}"
+
+
 # ------------------------------------------------------------------ UF
 
 
@@ -618,6 +626,7 @@ def processar_uf(uf: str, ctx: Contexto) -> ResultadoUF:
             "secao_link": prim["secao"],
             "clima1": clima1.get(lid),
             "clima2": ctx.previsao.get(_celula(lat, lon) or ""),
+            "clima2o": ctx.observado.get(_celula25(lat, lon) or ""),
             **t,
         }
     for mun, rows in por_mun.items():

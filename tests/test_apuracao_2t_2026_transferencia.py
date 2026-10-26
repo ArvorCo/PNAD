@@ -7,6 +7,7 @@ import numpy as np
 import pytest
 from apuracao_2t_2026 import pagina_comum as C
 from apuracao_2t_2026 import pagina_view as V
+from apuracao_2t_2026 import transferencia_cruzamento as CZ
 from apuracao_2t_2026 import transferencia_dados as D
 from apuracao_2t_2026 import transferencia_ipf as I
 from apuracao_2t_2026 import transferencia_priors as P
@@ -35,6 +36,31 @@ def test_ras_bate_as_duas_margens_e_preserva_zero():
     assert desvio < 1e-9
     assert np.allclose(M.sum(1), linhas) and np.allclose(M.sum(0), colunas)
     assert M[0, 2] == 0.0
+
+
+def test_ras_fixas_mantem_as_fixas_e_bate_as_margens():
+    prior = np.array([[5.0, 1.0, 2.0], [2.0, 2.0, 2.0], [1.0, 3.0, 4.0]])
+    linhas = np.array([10.0, 6.0, 8.0])
+    colunas = np.array([9.0, 7.0, 8.0])
+    fixa = np.zeros((3, 3))
+    livre = np.ones((3, 3), dtype=bool)
+    fixa[0, 1], livre[0, 1] = 0.0, False  # zero estrutural
+    fixa[1, 0], livre[1, 0] = 0.5, False  # célula fixa positiva
+    M, _it, desvio = I.ras_fixas(prior, linhas, colunas, fixa, livre)
+    assert desvio < 1e-9
+    assert np.allclose(M.sum(1), linhas) and np.allclose(M.sum(0), colunas)
+    assert M[0, 1] == 0.0 and M[1, 0] == 0.5
+
+
+def test_ras_fixas_recusa_fixo_maior_que_a_margem():
+    fixa = np.zeros((2, 2))
+    fixa[0, 0] = 5.0
+    livre = np.ones((2, 2), dtype=bool)
+    livre[0, 0] = False
+    with pytest.raises(ValueError):
+        I.ras_fixas(
+            np.ones((2, 2)), np.array([6.0, 2.0]), np.array([4.0, 4.0]), fixa, livre
+        )
 
 
 def test_ras_recusa_totais_diferentes():
@@ -188,6 +214,35 @@ def test_tipos_de_elo():
     assert P.tipo_elo("cury", "flavio") == "medido"
     assert P.tipo_elo("lula", "abstencao") == "estimado"
     assert P.tipo_elo("brancos", "lula") == "estimado"
+    # O cenário só troca a natureza das duas células de cruzamento.
+    assert P.tipo_elo("lula", "flavio", "zero") == "zero"
+    assert P.tipo_elo("flavio", "lula", "estimado") == "estimado"
+    assert P.tipo_elo("lula", "lula", "zero") == "medido"
+
+
+def test_cenarios_de_cruzamento_declarados():
+    cen = P.cenarios_cruzamento()
+    assert tuple(cen) == P.ORDEM_CRUZAMENTO and P.PADRAO_CRUZAMENTO in cen
+    assert cen["sem"]["lula_para_flavio"] == cen["sem"]["flavio_para_lula"] == 0
+    assert cen["um"]["lula_para_flavio"] == cen["um"]["flavio_para_lula"] == 0.01
+    assert cen["dois"]["lula_para_flavio"] == cen["dois"]["flavio_para_lula"] == 0.02
+    # O das pesquisas é a média da onda mais recente de cada instituto (Nexus 24/10 e Quaest 21/10).
+    nx = P.LINHAS[("nexus_24", 23)]
+    qu = P.LINHAS[("quaest_21", 20)]
+    lf = (nx["lula"]["F"] / 99.5 + qu["lula"]["F"] / 99) / 2
+    fl = (nx["flavio"]["L"] / 99.5 + qu["flavio"]["L"] / 99) / 2
+    assert abs(cen["pesquisas"]["lula_para_flavio"] - lf) < 1e-9
+    assert abs(cen["pesquisas"]["flavio_para_lula"] - fl) < 1e-9
+
+
+def test_agrega_junta_brancos_e_nulos_sem_perder_voto():
+    rng = np.random.default_rng(5)
+    M = rng.uniform(0, 10, size=(len(P.ORIGENS), len(P.DESTINOS)))
+    F = CZ.agrega(M)
+    assert F.shape == (len(CZ.ORIG_FIG), len(CZ.DEST_FIG))
+    assert abs(F.sum() - M.sum()) < 1e-9
+    ib = P.ORIGENS.index("brancos"), P.ORIGENS.index("nulos")
+    assert abs(F[CZ.ORIG_FIG.index("bn")].sum() - M[list(ib)].sum()) < 1e-9
 
 
 # ------------------------------------------------------------------ margens
@@ -229,12 +284,105 @@ def test_linha_da_abstencao_fica_fixa_na_regressao(T):
 
 def test_contagem_dos_elos(T):
     n = T["ipf"]["central"]["contagem_tipos"]
+    assert T["ipf"]["central"]["cenario_cruzamento"] == "sem"
     assert (
-        n["medido"]["elos"] == 28
+        n["medido"]["elos"] == 26
+        and n["zero"]["elos"] == 2
         and n["regressao"]["elos"] == 4
         and n["estimado"]["elos"] == 18
     )
     assert abs(sum(x["pct_votos"] for x in n.values()) - 100) < 1e-6
+
+
+# ------------------------------------------------------------------ cenários de cruzamento
+
+
+def test_cada_cenario_bate_as_duas_urnas_e_fixa_o_cruzamento(T):
+    cz = T["cruzamento"]
+    o = T["margens"]["nacional"]["origens"]
+    dest = T["margens"]["nacional"]["destinos"]
+    assert cz["ordem"] == list(P.ORDEM_CRUZAMENTO)
+    for k in cz["ordem"]:
+        c = cz["cenarios"][k]
+        assert c["confere"]["linhas_max_desvio_votos"] < 1, k
+        assert c["confere"]["colunas_max_desvio_votos"] < 1, k
+        M = c["matriz"]
+        # Aptos = válidos + brancos + nulos + abstenção: cada coluna bate a urna do 2º turno.
+        for b in P.DESTINOS:
+            assert (
+                abs(sum(M[a][b] for a in P.ORIGENS) - dest[b])
+                <= 1 + len(P.ORIGENS) * 0.5
+            )
+        # As duas células ficam exatamente na fração da base declarada pelo cenário.
+        assert (
+            abs(M["lula"]["flavio"] / o["lula"] * 100 - c["lula_para_flavio_pct"])
+            < 0.01
+        )
+        assert (
+            abs(M["flavio"]["lula"] / o["flavio"] * 100 - c["flavio_para_lula_pct"])
+            < 0.01
+        )
+        for a in P.ORIGENS:
+            assert abs(sum(c["pct_origem"][a].values()) - 100) < 1e-2, (k, a)
+        for b in P.DESTINOS:
+            assert abs(sum(c["pct_destino"][a][b] for a in P.ORIGENS) - 100) < 1e-2, (
+                k,
+                b,
+            )
+        fig = c["figura"]
+        tot_fig = sum(sum(fig["votos"][a].values()) for a in fig["origens"])
+        assert (
+            abs(tot_fig - sum(sum(M[a].values()) for a in P.ORIGENS))
+            < len(P.ORIGENS) * 5
+        )
+    sem = cz["cenarios"]["sem"]["matriz"]
+    assert sem["lula"]["flavio"] == 0 and sem["flavio"]["lula"] == 0
+
+
+def test_padrao_compativel_e_declarado(T):
+    cz = T["cruzamento"]
+    pc = cz["padrao_compativel"]
+    assert cz["padrao"] == "sem"
+    assert pc["margens"] and pc["linhas_publicadas"] and pc["ufs_ajustadas"] == 28
+    zero = [
+        x
+        for x in cz["linhas_publicadas"]
+        if x["lula_para_flavio_pct"] == 0 and x["flavio_para_lula_pct"] == 0
+    ]
+    assert [x["instituto"] for x in zero] == ["Quaest"]
+
+
+def test_o_que_nao_muda_entre_os_cenarios(T):
+    cz = T["cruzamento"]
+    nm = cz["comparacao"]["nao_muda"]
+    # A linha de quem faltou no 1º turno é a mesma em todos.
+    assert nm["voltaram"][0] == nm["voltaram"][1]
+    assert nm["voltaram_lula_pct"][0] == nm["voltaram_lula_pct"][1]
+    assert nm["explica_pp"][0] == nm["explica_pp"][1]
+    # Terceira via + branco e nulo + saldo do cruzamento: quase o mesmo (menos de 0,5%).
+    lo, hi = nm["lula_de_terceira_bn_e_cruzamento"]
+    assert (hi - lo) / lo < 0.005
+    mp = cz["comparacao"]["muda_pouco"]["terceira_flavio_pct"]
+    assert mp[1] - mp[0] < 2
+    for k in cz["ordem"]:
+        m = cz["cenarios"][k]["metricas"]
+        assert (
+            abs(
+                m["cruzamento_liquido_para_lula"]
+                - (m["flavio_para_lula"] - m["lula_para_flavio"])
+            )
+            < 1
+        )
+
+
+def test_equilibrio_cresce_com_o_alvo(T):
+    eq = [e for e in T["pesquisas"]["terceira_via_2t"]["equilibrio"] if e]
+    assert len(eq) == 2
+    assert 0 < eq[0]["flavio_para_lula_pct"] < eq[1]["flavio_para_lula_pct"]
+    for e in eq:
+        assert abs(e["terceira_flavio_pct"] - e["alvo_pct"]) < 0.05
+    padrao = T["cruzamento"]["cenarios"]["sem"]["metricas"]["terceira"]["flavio_pct"]
+    assert padrao < eq[0]["alvo_pct"]
 
 
 def test_resposta_dentro_das_faixas(T):
@@ -276,10 +424,59 @@ def test_capitulo_registrado_depois_de_turnos():
 
 def test_capitulo_sem_travessao_e_com_figuras(html):
     assert "—" not in html
-    for nome in ("tr_sankey", "tr_sankey_mudou", "tr_dispersao", "tr_ufs"):
+    for nome in ("tr_sankey", "tr_dispersao", "tr_ufs"):
         assert f'id="fig-{nome}"' in html
     assert "fraude" not in html.lower()
     assert "Pede explicação, não prova" in html
+    assert "estimativa, não medição" in html.lower()
+    assert "Como ler." in html
+
+
+def test_capitulo_vai_do_simples_ao_tecnico(html):
+    ordem = [
+        "A conta que as duas urnas fecham",
+        "A resposta em três números",
+        "Quatro cenários para o cruzamento entre as bases",
+        "Quem voltou a votar: a regressão sobre as urnas",
+        "Limites do capítulo",
+    ]
+    pos = [html.index(x) for x in ordem]
+    assert pos == sorted(pos)
+
+
+def test_botoes_trocam_os_quatro_cenarios_e_sem_script_fica_o_padrao(html, T):
+    cz = T["cruzamento"]
+    i = html.index('id="fig-tr_sankey"')
+    fig = html[i : html.index("</figure>", i)]
+    for k in cz["ordem"]:
+        assert f'data-alt="{k}"' in fig
+        blocos = re.findall(rf'<div data-alt-show="{k}"( hidden)?>', fig)
+        assert blocos, k
+        # O padrão aparece sem script; os outros ficam escondidos.
+        assert all((b == "") == (k == cz["padrao"]) for b in blocos), k
+    assert "<noscript><p" in html and "cenário padrão" in html
+    assert fig.count('class="table-scroll tr-cem"') == len(cz["ordem"])
+
+
+def test_rotulo_na_fita_para_toda_fita_acima_do_limiar(html, T):
+    """No desenho largo do padrão, toda fita de meio milhão ou mais leva rótulo; as outras vão para a lista."""
+    cen = T["cruzamento"]["cenarios"]["sem"]
+    fig = cen["figura"]
+    lim = fig["limiar_rotulo_votos"]
+    acima = sum(
+        1 for a in fig["origens"] for b in fig["destinos"] if fig["votos"][a][b] >= lim
+    )
+    i = html.index('<div data-alt-show="sem">')
+    larga = html[i : html.index('<div class="fig-estreita">', i)]
+    assert larga.count('class="rot-fita"') == acima
+    for a in fig["origens"]:
+        for b in fig["destinos"]:
+            v = fig["votos"][a][b]
+            if v >= lim:
+                p_ = C.num(
+                    fig["pct_origem"][a][b], 0 if fig["pct_origem"][a][b] >= 9.95 else 1
+                )
+                assert f"{C.num(v / 1e6, 1)} mi · {p_}%" in larga, (a, b)
 
 
 def test_numeros_do_capitulo_saem_do_json(html, T):
@@ -289,11 +486,18 @@ def test_numeros_do_capitulo_saem_do_json(html, T):
     assert C.inteiro(T["contabilidade"]["disponiveis"]) in html
 
 
-def test_sankey_sem_espessura_minima(html):
+def test_sankey_sem_espessura_minima(html, T):
     i = html.index('id="fig-tr_sankey"')
     corpo = html[i : html.index("</figure>", i)]
     fitas = re.findall(r'data-votos="(\d+)" data-esp="([\d.]+)"', corpo)
-    assert len(fitas) == len(P.ORIGENS) * len(P.DESTINOS)
+    esperado = sum(
+        1
+        for c in T["cruzamento"]["cenarios"].values()
+        for a in c["figura"]["origens"]
+        for b in c["figura"]["destinos"]
+        if c["figura"]["votos"][a][b] > 0
+    )
+    assert len(fitas) == esperado
     # Uma escala só: espessura = votos × px por voto, até o arredondamento de 3 casas do atributo.
     v_max, e_max = max(((int(v), float(e)) for v, e in fitas), key=lambda x: x[0])
     escala = e_max / v_max
