@@ -11,7 +11,7 @@ from .thread_posts_a import POSTS_A
 from .thread_posts_b import POSTS_B
 
 MIN_CHARS, MAX_CHARS = 2000, 2700
-MIN_POSTS, MAX_POSTS = 16, 20
+MIN_POSTS, MAX_POSTS = 16, 21
 # TESE.md (26/10/2026): o afastamento é medida da mudança, não confissão de erro.
 VETADAS_TESE = (
     "nós erramos",
@@ -38,6 +38,7 @@ FONTES_VALORES = (
     VB.v_mudanca,
     VB.v_transferencia,
     VB.v_logs,
+    VB.v_hipoteses,
     VB.v_hipotese,
     VB.v_paralela,
     VB.v_limites,

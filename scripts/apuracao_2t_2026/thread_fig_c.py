@@ -213,4 +213,45 @@ def fig_cadencia() -> str:
     return svg("".join(out), "Cadência horária dos votos no log, 1º e 2º turno")
 
 
-__all__ = ["DESTINOS", "ORIGENS", "fig_cadencia", "fig_transferencia", "fluxos"]
+COR_ESTADO = {"descartada": "#0c7a72", "pendente": "#7d5b00", "compativel": FLAVIO}
+
+
+def fig_hipoteses() -> str:
+    """Quadro-resumo das seis hipóteses, com o estado de cada uma em cor."""
+    hp = dado("hipoteses")
+    est = hp["estados"]
+    out = [t(40, 30, "As hipóteses e o que os dados dizem de cada uma", 15, MUTED, 600)]
+    y = 60
+    for i, h in enumerate(hp["hipoteses"], 1):
+        cor = COR_ESTADO[h["estado"]]
+        out.append(r(40, y, 920, 70, "#ebe5d6", 6))
+        out.append(r(40, y, 10, 70, cor, 3))
+        out.append(t(70, y + 30, f"H{i} · {h['curto']}", 20, INK, 700))
+        alcance = h["alcance"]
+        if len(alcance) > 92:
+            alcance = alcance[: alcance.rfind(" ", 0, 90)] + " (…)"
+        out.append(t(70, y + 55, alcance, 13, MUTED, 500))
+        out.append(r(700, y + 16, 244, 34, cor, 17))
+        out.append(t(822, y + 39, est[h["estado"]], 14, "#ffffff", 700, "middle"))
+        y += 82
+    out.append(
+        t(
+            40,
+            575,
+            "Rótulo: atipicidade pede explicação, não prova irregularidade.",
+            14,
+            INK,
+            600,
+        )
+    )
+    return svg("".join(out), "Quadro-resumo das seis hipóteses")
+
+
+__all__ = [
+    "DESTINOS",
+    "ORIGENS",
+    "fig_cadencia",
+    "fig_hipoteses",
+    "fig_transferencia",
+    "fluxos",
+]

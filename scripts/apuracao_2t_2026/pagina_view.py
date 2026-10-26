@@ -83,6 +83,12 @@ CAPITULOS: list[tuple[str, str, str, tuple[str, ...]]] = [
         "Pesquisas × urna e a hipótese do autor",
         ("pesquisas_vs_urna.json",),
     ),
+    (
+        "hipoteses",
+        "Hipóteses",
+        "O que poderia ter acontecido, e o que os dados dizem de cada hipótese",
+        ("hipoteses.json",),
+    ),
     ("paralela", "Paralela", "Totalização paralela", ("paralela.json",)),
     ("noticias", "Notícias", "O dia nas fontes", (NOTICIAS,)),
     ("auditoria", "Auditoria", "O acompanhamento, auditado", ("linha_do_tempo.json",)),

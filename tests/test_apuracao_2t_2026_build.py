@@ -37,10 +37,10 @@ def pagina(tmp_path_factory):
     return saida.read_text(encoding="utf-8"), estado, motivos
 
 
-def test_registro_dos_dezoito():
+def test_registro_dos_dezenove():
     assert IDS == [
         "abertura", "noite", "projecao", "boletins", "cedo_tarde", "turnos", "transferencia", "abstencao",
-        "secoes", "logs", "exterior", "governadores", "pesquisas", "paralela", "noticias",
+        "secoes", "logs", "exterior", "governadores", "pesquisas", "hipoteses", "paralela", "noticias",
         "auditoria", "video", "fontes",
     ]  # fmt: skip
 

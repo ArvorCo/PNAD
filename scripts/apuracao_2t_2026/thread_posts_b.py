@@ -129,6 +129,23 @@ POSTS_B: list[dict] = [
         ],
     },
     {
+        "tag": "O que poderia ter acontecido",
+        "tom": "flavio",
+        "titulo": "{hi_n} hipóteses para o domingo. Os dados descartam {hi_desc_n}.",
+        "metrica": "{hi_desc_n} · {hi_pend_n} · {hi_comp_n}",
+        "metrica_rot": "{hi_est_desc}, {hi_est_pend}, {hi_est_comp}",
+        "fig": C.fig_hipoteses,
+        "fonte": "hipoteses.json (matriz hipótese × teste, cronologia da tarde, precedentes)",
+        "texto": [
+            "O dossiê testou {hi_n} hipóteses para o que aconteceu entre o último campo das pesquisas e a urna, cada uma contra os mesmos arquivos: votos tardios, totalização no silêncio, transporte e comparecimento, narrativa, software e metadados, e a mudança real, que é a tese do autor. O estado de cada uma está no quadro: {hi_est_desc}, {hi_est_pend} ou {hi_est_comp}.",
+            "O que os dados descartam. As urnas fecharam: só {hi_17_19} dos votos entraram entre {fim_oficial} e {fim_novo}, contra {hi_17_19_1t} no 1º turno, e {hi_bu19_cedo} dos {hi_bu19} BUs encerrados depois das {fim_novo} tiveram o último voto até {lg_h1715}. A totalização fecha: {hi_vsc} BUs assinados pela urna iguais ao publicado, registro digital do voto igual ao BU em {hi_rdv} seções, soma conferida nas {hi_zonas} zonas. E a abstenção caiu quase o mesmo nos três terços de municípios, {hi_ab_fraco}, {hi_ab_meio} e {hi_ab_forte} pontos, inclusive onde Flávio é mais forte, que foi onde ele mais perdeu: {hi_desl_forte}, contra {hi_desl_fraco} onde é mais fraco. Transporte não explica o deslocamento inteiro.",
+            "O que fica pendente de documento. A justificativa do TSE para os {hi_sil} minutos sem arquivo algum. A hora de produção do vídeo de artistas publicado às {hi_video}, {hi_video_antes} minutos antes de o pedido chegar ao STF: o propósito não se lê nos arquivos de urna, só na íntegra da Reclamação, no original do vídeo e na resposta do TSE. E, para software e metadados, a assinatura do software conferida contra o TSE e a série repetida da memória de resultado, em {hi_mr_n} seções do Brasil, que pede explicação ao TSE.",
+            "O que fica compatível, sem identificação: a mudança real de opinião e de comparecimento entre sábado e domingo. Nenhum teste a exclui, e nenhum a identifica, porque não há medição entre o último campo e a urna.",
+            "Os precedentes ajudam a ler a decisão, não a julgá-la. Na Venezuela, em {hi_ve_ano}, a autoridade eleitoral estendeu o horário com urnas abertas e fila, e um dos próprios reitores chamou a medida de ilegal. No condado de Harris, no Texas, em {hi_us_ano}, os votos depositados na hora extra foram separados e testados antes de contar. No Brasil, em 2020 e 2022, os presidentes do TSE negaram prorrogar.",
+            "Juízo editorial do autor, como no card anterior: se foi isso mesmo, não saberemos.",
+        ],
+    },
+    {
         "tag": "Paralela e boletins",
         "tom": "outros",
         "titulo": "{pa_bus} boletins de urna conferidos pelo cidadão. {pa_div} divergências.",

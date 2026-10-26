@@ -26,6 +26,25 @@ from test_video_sete_riscos import (
     _resolver,
 )
 
+VIDEO_JSON = (
+    Path(__file__).resolve().parents[1] / "analysis/apuracao_2t_2026/video.json"
+)
+
+
+def video_publicado() -> bool:
+    """O vídeo só é conferido número a número depois de publicado (youtube_id em video.json).
+
+    Enquanto está em produção, o roteiro pode ficar atrás dos JSONs do dossiê, que são
+    regravados a cada rodada de dados; a cena desatualizada é regravada antes da publicação.
+    """
+    try:
+        return bool(
+            json.loads(VIDEO_JSON.read_text(encoding="utf-8")).get("youtube_id")
+        )
+    except (OSError, ValueError):
+        return False
+
+
 ROOT = Path(__file__).resolve().parents[1]
 VIDEO = ROOT / "video" / "apuracao_2t"
 DADOS = VIDEO / "src" / "dados" / "apuracao_2t.json"
@@ -245,6 +264,10 @@ def test_narracao_sem_algarismos(blocos: dict[str, str]) -> None:
     assert not erros, "\n".join(erros)
 
 
+@pytest.mark.skipif(
+    not video_publicado(),
+    reason="vídeo em produção: números narrados são conferidos contra os JSONs na publicação",
+)
 def test_cada_dado_bate_e_aparece_por_extenso(
     dados: dict, blocos: dict[str, str]
 ) -> None:

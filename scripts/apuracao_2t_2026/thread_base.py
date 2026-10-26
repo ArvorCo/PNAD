@@ -53,7 +53,7 @@ def min_hhmm(m: float) -> str:
 # ------------------------------------------------------------------ verificação
 
 PERMITIDOS = re.compile(
-    r"\b[12]º|\b(?:2002|2006|2010|2014|2018|2022|2026|2027)\b|brasil\.arvor\.co"
+    r"\b[12]º|\b(?:2002|2006|2010|2014|2018|2020|2022|2026|2027)\b|brasil\.arvor\.co"
     r"|SHA-256|[a-z0-9_\-]+\.(?:json|py|md|html)|\bv4\b"
     # convenções estatísticas (nível de confiança e nome de percentil), não medições
     r"|\b(?:90|95)%|\b(?:10|90|99)º"

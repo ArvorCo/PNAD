@@ -390,6 +390,52 @@ def v_logs() -> dict:
     }
 
 
+def v_hipoteses() -> dict:
+    """Card "O que poderia ter acontecido": ``hipoteses.json`` (estados e testes)."""
+    hp = dado("hipoteses")
+    est = hp["estados"]
+    hs = {h["id"]: h for h in hp["hipoteses"]}
+    h1, h2, h3, h4, h5 = hp["h1"], hp["h2"], hp["h3"], hp["h4"], hp["h5"]
+    terc = {x["grupo"]: x for x in h3["tercos"]}
+    fraco = next(x for k, x in terc.items() if "fraco" in k)
+    forte = next(x for k, x in terc.items() if "forte" in k)
+    meio = next(x for k, x in terc.items() if x not in (fraco, forte))
+    ve = next(
+        x for x in hp["precedentes"]["itens"] if x["id"] == "ve_2015_legislativas"
+    )
+    us = next(x for x in hp["precedentes"]["itens"] if x["id"] == "us_2022_harris")
+    sil = hp["cronologia"]["silencio"]
+    vid = hp["cronologia"]["video"]
+    return {
+        "hi_n": str(len(hs)),
+        "hi_desc_n": str(sum(1 for h in hs.values() if h["estado"] == "descartada")),
+        "hi_pend_n": str(sum(1 for h in hs.values() if h["estado"] == "pendente")),
+        "hi_comp_n": str(sum(1 for h in hs.values() if h["estado"] == "compativel")),
+        "hi_est_desc": est["descartada"],
+        "hi_est_pend": est["pendente"],
+        "hi_est_comp": est["compativel"],
+        "hi_17_19": pct(h1["pct_17_19"], 3),
+        "hi_17_19_1t": pct(h1["pct_17_19_1t"], 1),
+        "hi_bu19": num(h1["bus_apos_19h"]),
+        "hi_bu19_cedo": num(h1["bus_apos_19h_ultimo_voto_ate_1715"]),
+        "hi_bus": num(h2["bus"]),
+        "hi_vsc": num(h2["vsc_bu_igual"]),
+        "hi_rdv": num(h2["rdv_confere"]),
+        "hi_zonas": num(h2["zona"]["zonas_conferem"]),
+        "hi_ab_fraco": sinal(fraco["abstencao_variacao_pp"]),
+        "hi_ab_meio": sinal(meio["abstencao_variacao_pp"]),
+        "hi_ab_forte": sinal(forte["abstencao_variacao_pp"]),
+        "hi_desl_fraco": sinal(fraco["deslocamento_flavio_pp"]),
+        "hi_desl_forte": sinal(forte["deslocamento_flavio_pp"]),
+        "hi_sil": num(sil["minutos"], 1),
+        "hi_video": vid["publicado_brt_segundos"],
+        "hi_video_antes": str(h4["video_antes_da_peticao_min"]),
+        "hi_mr_n": num(h5["mr_repetida_secoes"]),
+        "hi_ve_ano": ve["data"][:4],
+        "hi_us_ano": us["data"][:4],
+    }
+
+
 def v_hipotese() -> dict:
     h = dado("hipotese_autor")
     cen = {x["nome"]: x for x in h["cenarios"]}

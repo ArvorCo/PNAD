@@ -1,0 +1,1161 @@
+{
+ "gerado_em": "2026-10-26T15:23:42+00:00",
+ "gerado_por": "scripts/apuracao-2t-2026-hipoteses.py",
+ "rotulo": "atipicidade pede explicação, não prova irregularidade",
+ "fontes": {
+  "presidente.json": "9eec711a4b12318a38687953d2f6159a93d8009280be90fc1b9e54b4d738f9e9",
+  "linha_do_tempo.json": "ab46f9656382cafb52f476b28e5752af692eb4cdbac3baab9b4ef1323cc2e04c",
+  "secoes.json": "018057ee1603232b8edfffb78fbbe75ef33ea4444b0f0bfd3ff65a48fcd8d200",
+  "secoes_voto.json": "b537b9705fc6de9bf5a6f430da0c70f4c108abce3fabd67dd9304f11cb5c1f1d",
+  "logs.json": "f8ba10821f3e7606ce8bcea835339fd9cdf10a7f948aa8737d6df65ec7b796cb",
+  "metadados.json": "c6f2667ec9a87cfdcd26e936298c2a30cddc192063111c21b78701cec9a48d37",
+  "rdv.json": "c1f13846cd93e3bd37c3426fc84d3e4d2d385aa21ea1a1a417206e2a1f202835",
+  "paralela.json": "3dc4bb1918d0cf8984f5dcb89c6b233ef5f5e8e323fed4d7ecb39b1daa5c3168",
+  "urnas.json": "e119b9e75df2111e08970b07ddf7d5b92f48d3801a08f5d65a6e8f0c62bab77d",
+  "comparacao_1t.json": "9b7a742b2710e715f5b4f7f8d670aa198655050207765c8a8760b48f85b1ba67",
+  "transferencia.json": "318c6853172d31f3a71fb71f887efa185747bfbde1d6c697e6bdfb6f372af467",
+  "pesquisas_vs_urna.json": "832554ecbe3e0460072ee46a5379cea3d534254c830c397418095633481163ad",
+  "projecao_pre_urna.json": "63313e31c394507e2b93f6f6c0c10c939f2cad1b324f0f475f6a792b769985b0",
+  "noticias_noite.json": "67cda70ce34fcd06a669e3bb0c4237cd28aa5f12d742c6857e649563b861d79c",
+  "prorrogacao_video/fonte.json": "8034eaa8d8fcbc54955a7712673f215717a0f773d03abf79e1dab6a0e639f653"
+ },
+ "banco": {
+  "origem": "banco local, somente leitura",
+  "zona": {
+   "zonas": 6252,
+   "zonas_conferem": 6252,
+   "zonas_divergem": 0,
+   "zonas_sem_arquivo": 0,
+   "secoes_conferidas": 499207,
+   "regra": "soma dos BUs de presidente de cada zona contra o arquivo de zona do TSE (tabela conferencia_zona)"
+  },
+  "modelo": {
+   "secoes": 499097,
+   "minimo_votos": 20,
+   "deslocamento_brasil_pp": -2.953,
+   "modelos": [
+    {
+     "modelo": "UE2013",
+     "secoes": 12449,
+     "municipios": 904,
+     "deslocamento_pp": -2.736,
+     "dentro_do_municipio_pp": -0.038,
+     "ep_pp": 0.02,
+     "ic95_pp": [
+      -0.077,
+      0.001
+     ]
+    },
+    {
+     "modelo": "UE2015",
+     "secoes": 87451,
+     "municipios": 1371,
+     "deslocamento_pp": -2.937,
+     "dentro_do_municipio_pp": 0.015,
+     "ep_pp": 0.012,
+     "ic95_pp": [
+      -0.008,
+      0.039
+     ]
+    },
+    {
+     "modelo": "UE2020",
+     "secoes": 200452,
+     "municipios": 2756,
+     "deslocamento_pp": -2.975,
+     "dentro_do_municipio_pp": 0.008,
+     "ep_pp": 0.01,
+     "ic95_pp": [
+      -0.012,
+      0.028
+     ]
+    },
+    {
+     "modelo": "UE2022",
+     "secoes": 198703,
+     "municipios": 2632,
+     "deslocamento_pp": -2.951,
+     "dentro_do_municipio_pp": -0.013,
+     "ep_pp": 0.006,
+     "ic95_pp": [
+      -0.025,
+      -0.001
+     ]
+    },
+    {
+     "modelo": "sem modelo",
+     "secoes": 42,
+     "municipios": 26,
+     "deslocamento_pp": -2.613,
+     "dentro_do_municipio_pp": -0.066,
+     "ep_pp": 0.317,
+     "ic95_pp": [
+      -0.687,
+      0.555
+     ]
+    }
+   ],
+   "regra": "fatia de Flávio entre os dois finalistas no 2º turno menos a do 1º, na mesma seção, ponderada pelos votos dos dois no 2º; modelo da urna do 2º turno; sem exterior"
+  }
+ },
+ "cronologia": {
+  "marcos": [
+   {
+    "hora": "12:47",
+    "rotulo": "TRE-BA manda prender o secretário de Mobilidade de Salvador",
+    "raia": "transporte",
+    "tipo": "fato",
+    "veiculo": "O Globo",
+    "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/10/25/justica-eleitoral-bahia-transporte-publico-salvador.ghtml",
+    "resumo": "TRE-BA mandou prender Pablo Souza, secretário de Mobilidade de Salvador, que estaria em Paris, e restabelecer o transporte; multa de R$ 1 milhão por hora. G1 cita cerca de 75 ônibus impedidos de sair.",
+    "quando_tipo": "publicacao",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "16:16",
+    "rotulo": "Procon-BA conta 370 ônibus parados",
+    "raia": "transporte",
+    "tipo": "fato",
+    "veiculo": "Agência Brasil",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/procon-identifica-370-onibus-parados-em-garagens-de-salvador",
+    "resumo": "Procon-BA identificou 370 ônibus parados em quatro garagens de Salvador.",
+    "quando_tipo": "publicacao",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "16:23:49",
+    "rotulo": "Pedido da coligação de Lula chega ao STF (16:23:49 ou 16:32:49)",
+    "raia": "justica",
+    "tipo": "fato",
+    "veiculo": "O Globo",
+    "url": "https://oglobo.globo.com/politica/noticia/2026/10/25/zanin-do-stf-determina-extensao-da-votacao-em-todo-o-pais-ate-as-19h-apos-problemas-no-transporte.ghtml",
+    "resumo": "Trecho da decisão: fatos graves que chegaram ao STF às 16:32:49, prorrogação por duas horas até 19h em todas as seções, cabendo ao TSE cumprir. O MPE se manifestara contra no TSE.",
+    "quando_tipo": "evento_ou_horario_citado",
+    "origem": "noticias_noite.json",
+    "carimbos_citados": [
+     "16:23:49",
+     "16:32:49"
+    ],
+    "poder360_citado": [
+     "16h22",
+     "16h33"
+    ]
+   },
+   {
+    "hora": "16:54",
+    "rotulo": "As duas campanhas pedem prorrogação ao TSE",
+    "raia": "justica",
+    "tipo": "fato",
+    "veiculo": "Poder360",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/campanhas-de-lula-e-flavio-pedem-mais-tempo-de-votacao/",
+    "resumo": "As campanhas de Lula (ônibus) e de Flávio (chuvas, alagamentos, interdições e falta de energia) pediram ao TSE a prorrogação; Flávio também pediu que a divulgação só começasse após o fim da votação nesses locais.",
+    "quando_tipo": "publicacao",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "17:01",
+    "rotulo": "PGE opina contra a prorrogação, no TSE",
+    "raia": "justica",
+    "tipo": "fato",
+    "veiculo": "Estadão",
+    "url": "https://www.estadao.com.br/politica/eleicoes/antes-de-decisao-de-zanin-procuradoria-geral-eleitoral-defendeu-manter-votacao-ate-17h/",
+    "resumo": "A Procuradoria-Geral Eleitoral opinou por manter o fim da votação às 17h, apesar da gravidade da retenção de ônibus; o parecer chegou ao TSE às 17h01, quando saiu a liminar.",
+    "quando_tipo": "evento_ou_horario_citado",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "17:03",
+    "rotulo": "Zanin prorroga a votação até 19h",
+    "raia": "justica",
+    "tipo": "fato",
+    "veiculo": "STF (Notícias)",
+    "url": "https://noticias.stf.jus.br/postsnoticias/stf-prorroga-votacao-ate-as-19h-em-locais-onde-urnas-permaneceram-abertas-apos-as-17h/",
+    "resumo": "Zanin, na Reclamação 101673 da Coligação Brasil Pronto Pra Mais (Salvador, Feira de Santana, Lauro de Freitas; ADPF 1013), estendeu a votação até 19h onde as urnas não fecharam às 17h. Notícia do STF publicada às 18h28.",
+    "quando_tipo": "evento_ou_horario_citado",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "17:09",
+    "rotulo": "Procon-BA atualiza para 544 ônibus parados",
+    "raia": "transporte",
+    "tipo": "fato",
+    "veiculo": "Agência Brasil",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/salvador-procon-atualiza-para-544-total-de-onibus-parados-em-garagens",
+    "resumo": "Procon-BA atualizou para 544 o total de ônibus parados em cinco garagens de Salvador; o governador Jerônimo Rodrigues ofereceu policiais para dirigir ônibus.",
+    "quando_tipo": "publicacao",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "17:49",
+    "rotulo": "TSE avisa as seções",
+    "raia": "tse",
+    "tipo": "fato",
+    "veiculo": "Poder360",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/tse-avisou-secoes-sobre-prorrogacao-as-17h49/",
+    "resumo": "TSE avisou as seções às 17h49, 46 minutos após a decisão; urnas já fechadas não foram reabertas. Alguns grupos receberam aviso por WhatsApp às 17h13 (zona 211 do RJ; Ceub, DF).",
+    "quando_tipo": "evento_ou_horario_citado",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "18:08",
+    "rotulo": "Zanin restringe às seções ainda abertas",
+    "raia": "justica",
+    "tipo": "fato",
+    "veiculo": "Agência Brasil",
+    "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-10/horario-de-votacao-ampliado-sera-apenas-onde-urnas-nao-foram-fechadas",
+    "resumo": "Após o TSE informar ao STF que as urnas fecharam no horário oficial, Zanin reajustou a decisão para valer só às seções ainda abertas.",
+    "quando_tipo": "publicacao",
+    "origem": "noticias_noite.json"
+   },
+   {
+    "hora": "18:17",
+    "rotulo": "TRE-SP recebe o aviso com mais de 80% das seções fechadas",
+    "raia": "tse",
+    "tipo": "fato",
+    "veiculo": "Agência Brasil",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/em-sp-80-das-urnas-estavam-encerradas-quando-votacao-foi-prorrogada",
+    "resumo": "TRE-SP: mais de 80% das seções de SP já estavam fechadas quando chegou o aviso oficial do STF, às 18h17; ele soube pela imprensa às 17h.",
+    "quando_tipo": "evento_ou_horario_citado",
+    "origem": "noticias_noite.json"
+   }
+  ],
+  "silencio": {
+   "inicio": "17:07:09",
+   "fim": "19:01:44",
+   "minutos": 114.6,
+   "versoes_geradas_dentro": 0,
+   "leituras_no_intervalo": 65792,
+   "secoes_antes": 1225,
+   "lula_pct_antes": 57.66,
+   "fonte_secoes": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-10/zanin-manda-ampliar-horario-de-votacao-ate-19h"
+  },
+  "urnas": {
+   "encerramento_p50": "17:01",
+   "encerramento_p90": "17:05",
+   "emissao_p50": "17:03",
+   "pct_ate_1715": 98.22,
+   "pct_bu_emitido_ate_1730": 98.29,
+   "pct_apos_1900": 0.9,
+   "recebimento_p50": "20:27",
+   "pct_recebido_antes_1900": 0.3
+  },
+  "video": {
+   "perfil": "caetanoveloso",
+   "url": "https://www.instagram.com/reel/De7XG2tt8x1/",
+   "publicado_utc": "2026-10-25T18:34:58.000Z",
+   "publicado_brt": "15:34",
+   "publicado_brt_segundos": "15:34:58",
+   "metricas_na_captura": {
+    "curtidas": "1.728.544",
+    "comentarios": "90.059"
+   },
+   "capturado_em": "2026-10-26T04:08:22-03:00",
+   "coautores": "e outras 4 pessoas (nomes não exibidos sem login)",
+   "pede_extensao": true,
+   "republicacoes": [
+    {
+     "veiculo": "bnews.com.br",
+     "url": "https://www.bnews.com.br/noticias/entretenimento/caetano-veloso-gilberto-gil-e-outros-famosos-denunciam-reducao-de-onibus-durante-votacao-em-salvador-e-sao-paulo.html",
+     "hora_brt": "16:18",
+     "carimbo": "2026-10-25T16:18:54-03:00",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p9.html"
+    },
+    {
+     "veiculo": "aratuon.com.br",
+     "url": "https://aratuon.com.br/eleicoes2026/caetano-veloso-gilberto-gil-e-outros-artistas-denunciam-reducao-de-onibus-durante-eleicao-na-bahia-e-em-sp/",
+     "hora_brt": "16:32",
+     "carimbo": "2026-10-25T16:32:00",
+     "fuso_inferido": true,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p2.html"
+    },
+    {
+     "veiculo": "agendadopoder.com.br",
+     "url": "https://agendadopoder.com.br/gilberto-gil-caetano-veloso-e-outros-artistas-denunciam-escandalo-dos-onibus-e-cobram-punicao-por-possivel-crime-eleitoral/",
+     "hora_brt": "16:44",
+     "carimbo": "2026-10-25T19:44:10+00:00",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p4.html"
+    },
+    {
+     "veiculo": "atarde.com.br",
+     "url": "https://atarde.com.br/entretenimento/famosos-detonam-prefeito-de-salvador-apos-reducao-de-onibus-1407078",
+     "hora_brt": "16:49",
+     "carimbo": "2026-10-25T16:49:24.217-03:00",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p5.html"
+    },
+    {
+     "veiculo": "brasil247.com",
+     "url": "https://www.brasil247.com/brasil/caetano-gil-e-artistas-denunciam-falta-de-onibus-em-sp-e-salvador-ataque-a-democracia/",
+     "hora_brt": "16:58",
+     "carimbo": "2026-10-25T19:58:11Z",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p6.html"
+    },
+    {
+     "veiculo": "tmc.com.br",
+     "url": "https://tmc.com.br/entretenimento/artistas-caetano-gil-denuncia-crime-eleitoral-onibus-segundo-turno/",
+     "hora_brt": "17:05",
+     "carimbo": "2026-10-25T17:05:23-03:00",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p7.html"
+    },
+    {
+     "veiculo": "bahia.ba",
+     "url": "https://bahia.ba/entretenimento/caetano-gil-artistas-onibus-segundo-turno/",
+     "hora_brt": "17:23",
+     "carimbo": "2026-10-25T20:23:02+00:00",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p3.html"
+    },
+    {
+     "veiculo": "falagenefax.com",
+     "url": "https://falagenefax.com/2026/10/25/famosos-criticam-bruno-reis-falta-onibus-salvador/",
+     "hora_brt": "18:04",
+     "carimbo": "2026-10-25T21:04:11+00:00",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p8.html"
+    },
+    {
+     "veiculo": "otempo.com.br",
+     "url": "https://www.otempo.com.br/entretenimento/2026/10/25/caetano-veloso-gilberto-gil-e-outros-artistas-pedem-extensao-do-horario-de-votacao",
+     "hora_brt": "18:57",
+     "carimbo": "2026-10-25T18:57:13.329-03:00",
+     "fuso_inferido": false,
+     "arquivo": "data/originals/prorrogacao_video/capturas/p1.html"
+    }
+   ],
+   "primeira_republicacao": {
+    "veiculo": "bnews.com.br",
+    "url": "https://www.bnews.com.br/noticias/entretenimento/caetano-veloso-gilberto-gil-e-outros-famosos-denunciam-reducao-de-onibus-durante-votacao-em-salvador-e-sao-paulo.html",
+    "hora_brt": "16:18",
+    "carimbo": "2026-10-25T16:18:54-03:00",
+    "fuso_inferido": false,
+    "arquivo": "data/originals/prorrogacao_video/capturas/p9.html"
+   },
+   "copia_recebida": {
+    "sha256": "4fd834fee4f239c364395874a24e47773798026cd10843fd36ba60f31284e700",
+    "creation_time_utc": "2026-10-26T07:04:43Z",
+    "conserva_original": false,
+    "leitura": "Todos os carimbos são de 26/10 às 04:04 BRT, hora em que a copia foi exportada pelo iPhone (QuickTime) para envio. Esta copia NAO conserva a data de criacao original nem o dispositivo de captura; a reexportacao pelo app Fotos ou pelo WhatsApp/Instagram apaga esses campos. A hora de producao so pode ser estabelecida pelo arquivo original de quem gravou ou pelo carimbo da primeira publicacao na plataforma (342 Artes no Instagram/X) e por republicações com hora."
+   }
+  }
+ },
+ "h1": {
+  "computados": 127818872,
+  "pct_17_19": 0.0268,
+  "computados_17_19": 34312,
+  "computados_depois_19": 11,
+  "pct_17_19_1t": 2.8929,
+  "bus_apos_19h": 4468,
+  "bus_apos_19h_ultimo_voto_ate_1715": 2705,
+  "ultimo_voto_depois_19": 11,
+  "tardias": {
+   "secoes": 7257,
+   "contra_vizinhas_pp": 1.89,
+   "did_pp": 0.03,
+   "ep_pp": 0.18,
+   "ic95_pp": [
+    -0.32,
+    0.38
+   ],
+   "n_did": 7229
+  },
+  "pct_17_19_por_sinal": {
+   "todas": 0.0268,
+   "sem nenhum diagnóstico no log": 0.0229,
+   "sistema religado durante a votação": 0.0439,
+   "bateria durante a votação": 0.0295,
+   "liberação sem biometria alta (BU)": 0.0389,
+   "habilitação por ano de nascimento alta (BU)": 0.0219,
+   "atenção 2 ou 3 nos logs": 0.0848,
+   "escore do BU 2 ou mais": 0.074
+  },
+  "apos_19h": {
+   "secoes": 4468,
+   "contra_vizinhas_pp": 1.65,
+   "did_pp": -0.02,
+   "ep_pp": 0.22,
+   "ic95_pp": [
+    -0.45,
+    0.41
+   ],
+   "n_did": 4468
+  },
+  "margem_votos": 4429907
+ },
+ "h2": {
+  "bus": 499207,
+  "vsc_ok": 499207,
+  "vsc_bu_igual": 499207,
+  "vsc_cadeia": 499207,
+  "vsc_assinatura_bu": 499207,
+  "vsc_falhas": 0,
+  "rdv_ok": 499205,
+  "rdv_confere": 499205,
+  "rdv_divergencias": 0,
+  "log_lidos": 499176,
+  "log_confere": 499170,
+  "log_nao_confere": 6,
+  "zona": {
+   "zonas": 6252,
+   "zonas_conferem": 6252,
+   "zonas_divergem": 0,
+   "zonas_sem_arquivo": 0,
+   "secoes_conferidas": 499207,
+   "regra": "soma dos BUs de presidente de cada zona contra o arquivo de zona do TSE (tabela conferencia_zona)"
+  },
+  "paralela": {
+   "igual": 177
+  },
+  "sistema_apuracao": 29,
+  "sistema_apuracao_ufs": [
+   "ZZ"
+  ],
+  "sistema_apuracao_secoes": 29,
+  "sistema_apuracao_rdv_conferidas": 29,
+  "soma_ufs_menos_nacional": {
+   "secoes": 0,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "validos": 0,
+   "brancos": 0,
+   "nulos": 0,
+   "flavio": 0,
+   "lula": 0
+  },
+  "recebimento_p50": "20:27",
+  "pct_recebido_antes_1900": 0.3
+ },
+ "h3": {
+  "tercos": [
+   {
+    "grupo": "Flávio mais fraco",
+    "municipios": 2467,
+    "eleitores": 60213375,
+    "flavio_1t_min": 8.84,
+    "flavio_1t_max": 47.49,
+    "abstencao_variacao_pp": -1.78,
+    "deslocamento_flavio_pp": -2.12
+   },
+   {
+    "grupo": "meio",
+    "municipios": 1146,
+    "eleitores": 43809039,
+    "flavio_1t_min": 47.5,
+    "flavio_1t_max": 59.97,
+    "abstencao_variacao_pp": -1.91,
+    "deslocamento_flavio_pp": -3.41
+   },
+   {
+    "grupo": "Flávio mais forte",
+    "municipios": 1954,
+    "eleitores": 51748693,
+    "flavio_1t_min": 59.99,
+    "flavio_1t_max": 92.18,
+    "abstencao_variacao_pp": -1.8,
+    "deslocamento_flavio_pp": -3.64
+   }
+  ],
+  "correlacao_uf_abstencao_residuo": 0.023603,
+  "teto_comparecimento_pp": 2.356434,
+  "f_menos_l_sem_aumento": -1.213715,
+  "regioes": {
+   "Norte": {
+    "comparecimento_pp": -1.82,
+    "deslocamento_flavio_pp": -2.41
+   },
+   "Nordeste": {
+    "comparecimento_pp": 1.79,
+    "deslocamento_flavio_pp": -1.94
+   },
+   "Centro-Oeste": {
+    "comparecimento_pp": 1.65,
+    "deslocamento_flavio_pp": -3.39
+   },
+   "Sudeste": {
+    "comparecimento_pp": 2.43,
+    "deslocamento_flavio_pp": -3.66
+   },
+   "Sul": {
+    "comparecimento_pp": 2.27,
+    "deslocamento_flavio_pp": -3.18
+   }
+  },
+  "bahia": {
+   "deslocamento_flavio_pp": -1.2,
+   "comparecimento_pp": 3.02
+  },
+  "brasil_deslocamento_pp": -2.79,
+  "ipf_explica_pp": 0.280866,
+  "ipf_explica_ic": [
+   0.110428,
+   0.451305
+  ],
+  "ultima_hora_2t": 5.179,
+  "ultima_hora_1t": 8.949
+ },
+ "h4": {
+  "stf_carimbos": [
+   "16:23:49",
+   "16:32:49"
+  ],
+  "video_antes_da_peticao_min": 48,
+  "aviso_depois_da_decisao_min": 46,
+  "video_antes_da_decisao_min": 88,
+  "video_antes_da_peticao_faixa_min": [
+   48,
+   57
+  ],
+  "silencio_min": 114.6
+ },
+ "h5": {
+  "versoes": 1,
+  "versao": "10.23.0.0 - Praia da Barra do Cahy",
+  "versao_secoes": 499207,
+  "ids_repetidos_sem_explicacao": 0,
+  "ids_repetidos_secoes": 29,
+  "id_bu_no_log": 499176,
+  "carga_bu_no_log": 499176,
+  "carga_depois_da_abertura": 0,
+  "cargas_antes_1t": 498344,
+  "cargas_entre_turnos": 812,
+  "mr_repetida": {
+   "media_pp": 0.187,
+   "ic95_pp": [
+    -0.065,
+    0.44
+   ],
+   "n": 306
+  },
+  "mr_repetida_secoes": 306,
+  "reinicios_secoes": 12271,
+  "reinicios": {
+   "media_pp": -0.028,
+   "ic95_pp": [
+    -0.064,
+    0.008
+   ],
+   "n": 12198
+  },
+  "urnas_trocadas": {
+   "media_pp": 0.022,
+   "ic95_pp": [
+    -0.039,
+    0.084
+   ],
+   "n": 4425
+  },
+  "mr_antes_zeresima": 478127,
+  "secoes_com_erro": 497705,
+  "assinatura_software_verificada": false,
+  "modelo_amplitude_pp": 0.053
+ },
+ "h6": {
+  "casas": 20,
+  "casas_mesmo_sentido": 20,
+  "erro_medio_pp": 5.528851,
+  "dispersao_pp": 1.685289,
+  "dispersao_amostral_pp": 2.062599,
+  "ufs": 27,
+  "ufs_flavio_abaixo": 27,
+  "vies_comum_pp": 3.015768,
+  "rmse_sem_vies_pp": 0.751766,
+  "correlacao_previsto_urna": 0.999459,
+  "voltaram_milhoes": 3.620555,
+  "voltaram_lula_pct": 59.671252,
+  "voltaram_lula_ic": [
+   53.995684,
+   65.34682
+  ],
+  "por_100_lula_secoes": 56.169295,
+  "por_100_lula_municipios": 61.806143,
+  "terceira_flavio_pct": 37.337513,
+  "terceira_flavio_faixa": [
+   30.486972,
+   41.858996
+  ],
+  "pesquisas_flavio_do_estoque": [
+   43.0,
+   50.5
+  ],
+  "tendencia_pp_dia": -0.150433,
+  "tendencia_extrapolada_f_menos_l": 1.476513,
+  "urna_f_menos_l": -3.570148,
+  "teto_comparecimento_pp": 2.356434,
+  "presenca_declarada": [
+   {
+    "instituto": "Ipespe",
+    "deslocamento_f_menos_l": 2.173175
+   },
+   {
+    "instituto": "PoderData",
+    "deslocamento_f_menos_l": 1.051944
+   }
+  ],
+  "presenca_relativa_necessaria_pct": -13.884685,
+  "autor_cenario_pct": -12.5
+ },
+ "precedentes": {
+  "titulo": "Precedentes de prorrogação do horário de votação",
+  "manifesto_fontes": "analysis/apuracao_2t_2026/precedentes_fontes/fontes.json",
+  "itens": [
+   {
+    "id": "ve_2015_legislativas",
+    "pais": "Venezuela",
+    "eleicao": "Assembleia Nacional (legislativas)",
+    "data": "2015-12-06",
+    "quem_decidiu": "CNE (autoridade eleitoral). Anúncio da reitora Sandra Oblitas; o reitor Luis Emilio Rondón disse não ter sido informado e chamou a medida de ilegal. Minutos antes, Diosdado Cabello (PSUV, presidente da Assembleia) havia defendido ampliar o horário (AFP).",
+    "hora_e_alcance": "Nacional: de 18h para 19h, hora local, \"ou até que haja eleitores na fila\". Hora exata do anúncio não localizada; matérias de 6/12 o situam no fim da tarde, perto do fechamento.",
+    "resultado": "A MUD venceu: 109 cadeiras gerais mais as 3 indígenas, 112 de 167 (maioria de dois terços); GPP 55. Comparecimento 74,25% segundo o primeiro boletim (CIDH). Primeiro boletim às 0h30 de 7/12, mais de seis horas depois do fechamento; Maduro reconheceu a derrota.",
+    "relatorios": [
+     "CIDH, Informe Anual 2015, cap. IV.B, §111: eleições em condições \"relativamente normais\", com incidentes, entre eles \"the highly-questioned extension of the closing time for the polling places\".",
+     "UNASUL: o secretário-geral Ernesto Samper elogiou o trabalho da missão (100 centros e 300 mesas visitados); relatório final da missão não localizado."
+    ],
+    "oposicao": [
+     "Jesús Torrealba (MUD): \"se está pasando por encima de la ley\"; a eleição \"entra en una zona gris\".",
+     "Julio Borges (MUD): decisão \"ilegal\"; não aceitariam \"más prórrogas generalizadas\"; a maioria dos centros já estava praticamente fechada.",
+     "Henrique Capriles, no Twitter: \"COLAS simuladas\"; \"¡sigamos cerrando centros!\".",
+     "Líderes da oposição suspeitavam de uma \"operación remate\" para buscar votantes de última hora (relato do LM Neuquén, sem fonte nominal)."
+    ],
+    "fontes": [
+     {
+      "url": "https://www.tvn-2.com/mundo/suramerica/oposicion-venezolana-rechazo-prorrogar-votacion_1_1710004.html",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.t13.cl/noticia/mundo/amplian-horario-votacion-legislativas-venezolanas-oposicion-rechaza",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.revistaeyn.com/lasclavesdeldia/venezuela-amplian-horario-de-votacion-oposicion-rechaza-GCEN908608",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.lmneuquen.com/maduro-ordeno-sufragar-la-hora-que-sea-n496518",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.vozdeamerica.com/a/venezuela-extienden-hora-votacion-/3091242.html",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.izquierdadiario.es/Consejo-Nacional-Electoral-de-Venezuela-extendio-el-cierre-de-los-comicios-por-una-hora",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "http://www.oas.org/en/iachr/docs/annual/2015/doc-en/InformeAnual2015-cap4-Venezuela-EN.pdf",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://oas.org/es/acerca/discurso_secretario_general.asp?sCodigo=15-0100",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://eldia.com.do/samper-agradece-a-leonel-fernandez-su-labor-como-representante-de-unasur-en-elecciones-de-venezuela/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://es.wikipedia.org/wiki/Elecciones_parlamentarias_de_Venezuela_de_2015",
+      "tipo": "indice"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/2015_Venezuelan_parliamentary_election",
+      "tipo": "indice"
+     }
+    ]
+   },
+   {
+    "id": "ve_2013_presidencial",
+    "pais": "Venezuela",
+    "eleicao": "Presidencial (Maduro × Capriles)",
+    "data": "2013-04-14",
+    "quem_decidiu": "CNE. Segundo o Centro Carter, o CNE anunciou o fim da jornada \"well past the 6 p.m. deadline\", como em 7/10/2012; cerca de 30 minutos depois do fechamento oficial a reitora Sandra Oblitas anunciou que os centros deviam fechar, salvo se houvesse fila.",
+    "hora_e_alcance": "Sem extensão geral formal localizada; encerramento anunciado depois das 18h.",
+    "resultado": "Primeiro boletim 23h15: Maduro 50,66% × Capriles 49,07% (Carter); final 50,61% × 49,12% (Wikipédia).",
+    "relatorios": [
+     "Centro Carter, relatório final: confiança alta nas máquinas; auditoria de comprovantes funcionou; sem consenso sobre a qualidade das condições de votação; vantagem do incumbente.",
+     "OEA (SG, 30/07/2024) lembra que o governo se comprometeu com a UNASUL, em 18/04/2013, a auditar 100% das atas e diz que isso não se cumpriu."
+    ],
+    "oposicao": [
+     "Capriles pediu recontagem e depois auditoria; rejeitou a auditoria ampliada do CNE por discordar do escopo (Carter).",
+     "A expressão \"operación remate\" não foi localizada em fonte de 2013 lida."
+    ],
+    "fontes": [
+     {
+      "url": "https://web.archive.org/web/20250824112700/https://www.cartercenter.org/resources/pdfs/news/peace_publications/election_reports/venezuela-final-rpt-2013-elections.pdf",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://www.oas.org/es/centro_noticias/comunicado_prensa.asp?sCodigo=C-046%2F24",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Venezuela_de_2013",
+      "tipo": "indice"
+     }
+    ]
+   },
+   {
+    "id": "ve_2018_presidencial",
+    "pais": "Venezuela",
+    "eleicao": "Presidencial",
+    "data": "2018-05-20",
+    "quem_decidiu": "Nenhuma extensão oficial anunciada até 18h55 (Efecto Cocuyo).",
+    "hora_e_alcance": "Sem extensão formal; segundo Falcón e Bertucci, centros ficaram abertos até duas horas depois do fechamento formal para \"acarreo de votos\" (Pulzo/EFE, alegação).",
+    "resultado": "Maduro 67,84%; comparecimento 46,07% (Wikipédia).",
+    "relatorios": [
+     "OEA, AG/RES. 2929 (5/6/2018): o processo \"carece de legitimidad\" por não cumprir padrões internacionais.",
+     "Declaração da UE de 22/05/2018: página do Conselho bloqueou a coleta; texto não lido."
+    ],
+    "oposicao": [
+     "Henri Falcón exigiu fechamento às 18h para evitar a \"conocida operación remate\" do governo nas últimas horas (Efecto Cocuyo).",
+     "Falcón: \"puntos rojos\" generalizados como pressão ligada ao Carnet de la Patria; abuso de voto assistido; \"más de 142 mil denuncias de voto asistido\".",
+     "Lucena disse ter atendido de forma imediata as denúncias, a maioria sobre \"puntos rojos\" perto dos centros."
+    ],
+    "fontes": [
+     {
+      "url": "https://web.archive.org/web/20180521104400/http://efectococuyo.com/cocuyo-electoral/tras-mas-de-12-horas-proceso-electoral-sigue-sin-anuncio-oficial-de-extension-de-horario/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.pulzo.com/mundo/henri-falcon-desconoce-resultados-elecciones-presidenciales-venezuela-PP488338",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.bluradio.com/mundo/candidato-venezolano-henri-falcon-denuncia-mas-de-350-violaciones-a-norma-electoral",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.ntn24.com/noticias-actualidad/tibisay-lucena-asegura-que-han-atendido-denuncias-sobre-puntos-rojos-88824",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.oas.org/es/centro_noticias/comunicado_prensa.asp?sCodigo=D-032/18",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Venezuela_de_2018",
+      "tipo": "indice"
+     }
+    ]
+   },
+   {
+    "id": "ve_2024_presidencial",
+    "pais": "Venezuela",
+    "eleicao": "Presidencial (Maduro × González Urrutia)",
+    "data": "2024-07-28",
+    "quem_decidiu": "Nenhuma extensão geral formal localizada.",
+    "hora_e_alcance": "Fechamentos a partir das 18h; alguns depois, por fila (El Diario). A EFE constatou centros de Caracas já sem fila à tarde e chamou de \"improbable\" o cenário de fila que justificaria mantê-los abertos.",
+    "resultado": "Primeiro boletim do CNE: Maduro 51,20% × González 44,20%; sem resultados por mesa (Wikipédia, Carter).",
+    "relatorios": [
+     "Centro Carter (30/07/2024): eleição não cumpriu padrões internacionais e não pode ser considerada democrática; não pode verificar os resultados; falta de resultados por mesa é violação grave.",
+     "OEA, SG e DECO (30/07/2024): resultado \"a disposición de la manipulación más aberrante\".",
+     "UE, Alto Representante (06/08/2024): resultados do CNE não podem ser reconhecidos sem as atas; cópias da oposição indicam vitória de González Urrutia."
+    ],
+    "oposicao": [
+     "María Corina Machado: às 18h, \"si no hay gente en cola, hay que cerrar las mesas\"; pediu às testemunhas que levassem a ata.",
+     "Testemunhas barradas no escrutínio em alguns centros (El Diario); MUD dizia ter 30% das atas às 23h30."
+    ],
+    "fontes": [
+     {
+      "url": "https://web.archive.org/web/20251117081001/https://www.cartercenter.org/news/pr/2024/venezuela-073024.html",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://www.oas.org/es/centro_noticias/comunicado_prensa.asp?sCodigo=C-046%2F24",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://www.eeas.europa.eu/delegations/chile/venezuela-statement-high-representative-behalf-eu-post-election-developments_en",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://www.laprensa.hn/mundo/elecciones-venezuela-cierre-centros-electorales-KE20601759",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://eldiario.com/2024/07/28/cierre-de-centros-de-votacion-en-venezuela/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.elheraldo.co/mundo/elecciones-venezuela-2024-rector-principal-del-cne-confeso-que-si-hubo-irregularidades-en-los",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Venezuela_de_2024",
+      "tipo": "indice"
+     }
+    ]
+   },
+   {
+    "id": "pe_2026_gerais",
+    "pais": "Peru",
+    "eleicao": "Gerais, 1º turno",
+    "data": "2026-04-12",
+    "quem_decidiu": "Pleno ampliado do JNE (autoridade eleitoral), com o chefe da ONPE presente.",
+    "hora_e_alcance": "Decisão por volta das 11h: votação nacional até 18h (uma hora a mais) e instalação de mesas até 14h; boca de urna adiada para 18h. Segundo acordo antes das 18h: mesas que não abriram (211 mesas, 63.300 eleitores segundo a ONPE; 187 mesas em 13 locais segundo o JNE) votam na segunda, 13/04, das 7h às 18h, também em Orlando e Paterson (EUA).",
+    "resultado": "Não conferido nesta rodada.",
+    "relatorios": [
+     "JNE: 3.605 mesas com atraso (12,32% das previstas nos distritos afetados), todas instaladas até 13/04."
+    ],
+    "oposicao": [
+     "Rafael López Aliaga (Renovación Popular) pediu a prisão do chefe da ONPE, Piero Corvetto."
+    ],
+    "fontes": [
+     {
+      "url": "https://forbes.pe/actualidad/2026-04-12/jne-amplio-el-horario-de-votacion-al-lunes-en-mesas-que-no-abrieron-por-falta-de-material-electoral",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://elbuho.pe/?p=418852",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.diarioconstitucional.cl/2026/05/05/peru-eg-2026-por-que-no-habra-elecciones-complementarias-por-rafael-rodriguez-campos/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.exitosanoticias.pe/elige-bien/atencion-jne-confirma-ampliacion-horario-votar-600-tarde-n173325",
+      "tipo": "veiculo"
+     }
+    ]
+   },
+   {
+    "id": "us_2022_harris",
+    "pais": "EUA (Texas, condado de Harris)",
+    "eleicao": "Gerais de meio de mandato",
+    "data": "2022-11-08",
+    "quem_decidiu": "Juiz distrital, a pedido de Texas Organizing Project, Texas Civil Rights Project e ACLU do Texas.",
+    "hora_e_alcance": "Uma hora a mais, das 19h às 20h, no condado.",
+    "resultado": "Nenhuma disputa alterada pelos votos tardios.",
+    "relatorios": [
+     "A Suprema Corte do Texas mandou separar os votos depositados depois das 19h (provisórios), depois permitiu contar os mais de 2.000 e exigiu verificar se mudariam algum resultado. Nenhuma disputa foi afetada (Texas Tribune)."
+    ],
+    "oposicao": [
+     "O procurador-geral Ken Paxton pediu à Suprema Corte do Texas que descartasse os votos tardios."
+    ],
+    "fontes": [
+     {
+      "url": "https://www.texastribune.org/2022/11/22/harris-county-midterm-count-2022-late-ballots/",
+      "tipo": "veiculo"
+     }
+    ]
+   },
+   {
+    "id": "bo_2019_geral",
+    "pais": "Bolívia",
+    "eleicao": "Gerais",
+    "data": "2019-10-20",
+    "quem_decidiu": "Não houve extensão do horário de votação. O caso entra pela interrupção da divulgação: o TREP (contagem rápida) parou às 19h40 com 83,76% das atas.",
+    "hora_e_alcance": "Interrupção da divulgação preliminar por quase um dia.",
+    "resultado": "Crise política; anulação e nova eleição em 2020 (não conferido nas fontes arquivadas).",
+    "relatorios": [
+     "OEA, auditoria final: \"manipulación dolosa\" em dois planos (atas alteradas e fluxo de dados desviado para servidores ocultos depois da interrupção).",
+     "Idrobo, Kronick e Rodríguez (Journal of Politics, versão de 28/01/2022): a virada nos votos contados por último se explica sem fraude e a mudança suspeita era artefato de erros de método e codificação dos observadores. As duas conclusões tratam de partes diferentes (estatística da ordem da contagem contra perícia de atas e servidores)."
+    ],
+    "oposicao": [],
+    "fontes": [
+     {
+      "url": "https://www.oas.org/es/sap/deco/Informe-Bolivia-2019/0.1%20Informe%20Final%20-%20Analisis%20de%20Integridad%20Electoral%20Bolivia%202019%20(OSG).pdf",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://dorothykronick.com/Bolivia.pdf",
+      "tipo": "academico"
+     }
+    ]
+   },
+   {
+    "id": "ar_regra",
+    "pais": "Argentina",
+    "eleicao": "Regra legal",
+    "data": null,
+    "quem_decidiu": "Lei.",
+    "hora_e_alcance": "Sem previsão de prorrogação geral nesse artigo.",
+    "resultado": null,
+    "relatorios": [],
+    "oposicao": [],
+    "fontes": [
+     {
+      "url": "http://servicios.infoleg.gob.ar/infolegInternet/anexos/15000-19999/19442/texact.htm",
+      "tipo": "primaria"
+     }
+    ]
+   },
+   {
+    "id": "br_regra_e_precedentes",
+    "pais": "Brasil",
+    "eleicao": "Regra e precedentes",
+    "data": null,
+    "quem_decidiu": "Lei e TSE.",
+    "hora_e_alcance": "Precedentes: (a) 2020, TSE mudou o horário com antecedência (7h às 17h, 7h-10h preferencial para 60+), anunciado em 28/08/2020; Barroso descartou estender além das 17h \"porque em muitas partes do Brasil, após essa hora, há dificuldades de transporte e problemas de violência\". (b) 30/10/2022, Moraes, presidente do TSE, negou adiar o fim da votação pedido pela campanha de Lula por operações da PRF. (c) 02/10/2022, filas e votação depois das 19h30 em cinco cidades do CE, pela regra das senhas, sem prorrogação.",
+    "resultado": null,
+    "relatorios": [],
+    "oposicao": [],
+    "fontes": [
+     {
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l4737compilado.htm",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://static.poder360.com.br/2026/03/Atos-gerais-da-eleicao-TSE-.pdf",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://jus.com.br/noticias/85175/tse-amplia-horario-da-votacao-das-eleicoes-2020-em-uma-hora",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.poder360.com.br/poder-eleicoes-2026/em-2022-moraes-negou-prorrogar-votacao-por-causa-de-operacoes-da-prf/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://diariodonordeste.verdesmares.com.br/pontopoder/eleicoes-2022/pelo-menos-5-cidades-do-ce-mantem-filas-e-votacoes-apos-as-19h30-veja-locais-1.3284780",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.jornaldocomercio.com/politica/2026/10/1265639-quem-estiver-na-fila-apos-as-17h-podera-votar.html",
+      "tipo": "veiculo"
+     }
+    ]
+   },
+   {
+    "id": "br_2026_2t",
+    "pais": "Brasil",
+    "eleicao": "Presidencial, 2º turno",
+    "data": "2026-10-25",
+    "quem_decidiu": "Ministro Cristiano Zanin (STF), liminar na Reclamação 101673 da Coligação Brasil Pronto Pra Mais (Lula), alegando descumprimento da ADPF 1013 (transporte gratuito) por Salvador, Feira de Santana e Lauro de Freitas. O ministro registrou que as duas campanhas alegaram problemas de transporte.",
+    "hora_e_alcance": "Decisão por volta das 17h03 (16h57 a 17h03 conforme a fonte): até 19h em todo o país; às 18h, esclarecida para valer só nas seções que não fecharam às 17h. TSE avisou as seções às 17h49; TRE-SP diz ter recebido às 18h17 com mais de 80% das seções de SP fechadas.",
+    "resultado": "Lula 51,77% × Flávio 48,23% com 99,93% apurados (CNN).",
+    "relatorios": [
+     "Acervo Arvor (HIPOTESES_PRORROGACAO.md): último voto mediano 17h01, p99 17h15; 99,18% dos BUs emitidos até 17h30; 0,027% dos votos depois das 17h; TSE sem publicar de 17h07:09 a 19h01:44."
+    ],
+    "oposicao": [
+     "Aliados de Flávio falaram em \"golpe judiciário\" e \"chicana\"; Marinho chamou a decisão de \"vergonhosa e intempestiva\"; Lupa registrou acusações sem prova em grupos bolsonaristas."
+    ],
+    "fontes": [
+     {
+      "url": "https://noticias.stf.jus.br/postsnoticias/stf-prorroga-votacao-ate-as-19h-em-locais-onde-urnas-permaneceram-abertas-apos-as-17h/",
+      "tipo": "primaria"
+     },
+     {
+      "url": "https://www.estadao.com.br/politica/eleicoes/antes-de-decisao-de-zanin-procuradoria-geral-eleitoral-defendeu-manter-votacao-ate-17h/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.poder360.com.br/poder-eleicoes-2026/tse-avisou-secoes-sobre-prorrogacao-as-17h49/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://www.poder360.com.br/poder-eleicoes-2026/prorrogacao-ate-19h-e-so-para-urnas-que-nao-fecharam-diz-zanin/",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/em-sp-80-das-urnas-estavam-encerradas-quando-votacao-foi-prorrogada",
+      "tipo": "veiculo"
+     },
+     {
+      "url": "https://g1.globo.com/politica/eleicoes/2026/noticia/2026/10/25/nunes-marques-pronunciamento-resultado-eleicao.ghtml",
+      "tipo": "veiculo"
+     }
+    ]
+   }
+  ],
+  "nao_localizado": {
+   "turquia_quenia": "Não pesquisados nesta rodada (limite de buscas compartilhado).",
+   "lopre_venezuela": "Texto da LOPRE e do art. 308 citado pela Wikipédia não obtido: cne.gob.ve não respondeu; OEA, ACE, ACNUR e Refworld devolveram HTML em vez do PDF.",
+   "unasul_2015_relatorio": "Relatório final da missão UNASUL 2015 não localizado; consulta: WebSearch \"UNASUR misión electoral Venezuela 6 diciembre 2015 informe Leonel Fernández cierre mesas voto asistido puntos rojos\".",
+   "voto_assistido_2015": "Sem fonte de 2015; consulta: WebSearch \"6 diciembre 2015 Venezuela \\\"puntos rojos\\\" \\\"voto asistido\\\" denuncias MUD jornada parlamentarias\" (resultados eram de 2017 e 2018).",
+   "operacion_remate_2013": "Termo não localizado para 2013.",
+   "ue_2018": "Declaração da UE de 22/05/2018 bloqueada (HTTP 403 ao WebFetch; curl recebeu página de bloqueio).",
+   "votos_depois_das_18h_venezuela": "Nenhuma fonte com contagem de votos depois das 18h por mesa em qualquer eleição venezuelana."
+  },
+  "sha256": "854f7564140011ad36a0fa268dde7ea5b16e9ec38397dc48d91077fc74e05cfa"
+ },
+ "hipoteses": [
+  {
+   "id": "h1",
+   "curto": "Votos tardios",
+   "alcance": "como explicação do deslocamento: o que entrou depois das 17h é uma fração mínima da margem",
+   "titulo": "Votos tardios com a urna aberta depois das 17h",
+   "estado": "descartada",
+   "regra": "votos entre 17h e 19h abaixo de 1% da margem e seções encerradas depois das 19h sem deslocamento (IC com zero)"
+  },
+  {
+   "id": "h2",
+   "curto": "Totalização no silêncio",
+   "alcance": "como lugar do deslocamento: a soma fecha e cada BU é o que a urna assinou",
+   "titulo": "Intervenção na totalização durante o silêncio de 114 minutos",
+   "estado": "descartada",
+   "regra": "BU assinado pela urna igual ao publicado em todas as seções, RDV igual ao BU e soma por zona fechada"
+  },
+  {
+   "id": "h3",
+   "curto": "Transporte e comparecimento",
+   "alcance": "como explicação do deslocamento inteiro; uma parte pequena (estimada em décimos de ponto) continua compatível",
+   "titulo": "Transporte e comparecimento diferencial",
+   "estado": "descartada",
+   "regra": "teto do comparecimento menor que o erro médio das pesquisas e correlação por UF próxima de zero; vale para o deslocamento inteiro, não para uma parte pequena"
+  },
+  {
+   "id": "h4",
+   "curto": "Narrativa",
+   "alcance": "o propósito não se lê nos arquivos de urna",
+   "titulo": "Prorrogação e silêncio como construção de narrativa",
+   "estado": "pendente",
+   "regra": "a cronologia prova coordenação jurídica e de comunicação; o propósito só se lê em documento (íntegra da Reclamação, original do vídeo, justificativa do TSE)"
+  },
+  {
+   "id": "h5",
+   "curto": "Software e metadados",
+   "alcance": "descartada nos sinais com marca; a alteração uniforme sem marca depende da assinatura de software",
+   "titulo": "Software e metadados da urna",
+   "estado": "pendente",
+   "regra": "sinais com marca (IDs, cargas, certificados, reinícios, MR) sem efeito; alteração uniforme sem marca só se exclui com a assinatura de software e os resumos do sistema conferidos contra o TSE",
+   "modelo_testado": true
+  },
+  {
+   "id": "h6",
+   "curto": "Mudança real (tese do autor)",
+   "alcance": "tese do autor; nenhum dado público a confirma ou exclui",
+   "titulo": "Mudança real de opinião e de comparecimento entre sábado e domingo",
+   "estado": "compativel",
+   "regra": "nenhum teste exclui e nenhum identifica: não há medição entre o último campo e a urna"
+  }
+ ],
+ "discriminador": [
+  {
+   "id": "somas",
+   "teste": "Somas assinadas",
+   "pergunta": "Os BUs assinados pela urna somam o que o TSE publicou?",
+   "resultado": "exclui",
+   "o_que": "a totalização como lugar do deslocamento",
+   "celulas": {
+    "h1": "não exclui",
+    "h2": "exclui",
+    "h3": "não se aplica",
+    "h4": "não se aplica",
+    "h5": "não exclui",
+    "h6": "não exclui"
+   }
+  },
+  {
+   "id": "modelo",
+   "teste": "Heterogeneidade por modelo de urna",
+   "pergunta": "O deslocamento é o mesmo nos quatro modelos, dentro do mesmo município?",
+   "resultado": "exclui",
+   "o_que": "alteração restrita a um modelo; não exclui alteração igual em todos",
+   "celulas": {
+    "h1": "não se aplica",
+    "h2": "não se aplica",
+    "h3": "não se aplica",
+    "h4": "não se aplica",
+    "h5": "não exclui",
+    "h6": "não exclui"
+   }
+  },
+  {
+   "id": "versao",
+   "teste": "Heterogeneidade por versão do software",
+   "pergunta": "Há mais de uma versão de software para comparar?",
+   "resultado": "não exclui",
+   "o_que": "nada: com uma versão só, o teste não tem contraste",
+   "celulas": {
+    "h1": "não se aplica",
+    "h2": "não se aplica",
+    "h3": "não se aplica",
+    "h4": "não se aplica",
+    "h5": "não exclui",
+    "h6": "não exclui"
+   }
+  },
+  {
+   "id": "cadencia",
+   "teste": "Cadência por hora",
+   "pergunta": "O 2º turno tem rajada de votos depois das 17h ou uma última hora inchada?",
+   "resultado": "exclui",
+   "o_que": "inserção de votos depois das 17h e mobilização concentrada no fim do dia",
+   "celulas": {
+    "h1": "exclui",
+    "h2": "não se aplica",
+    "h3": "exclui",
+    "h4": "não se aplica",
+    "h5": "não exclui",
+    "h6": "não exclui"
+   }
+  },
+  {
+   "id": "tardias",
+   "teste": "Seções tardias contra vizinhas e contra o 1º turno",
+   "pergunta": "As seções que encerraram depois das 19h mudaram de voto mais que as vizinhas?",
+   "resultado": "exclui",
+   "o_que": "deslocamento produzido nas seções que ficaram abertas",
+   "celulas": {
+    "h1": "exclui",
+    "h2": "não se aplica",
+    "h3": "não exclui",
+    "h4": "não se aplica",
+    "h5": "não se aplica",
+    "h6": "não exclui"
+   }
+  },
+  {
+   "id": "abstencao",
+   "teste": "Abstenção × força de Flávio",
+   "pergunta": "A abstenção caiu mais onde Lula é forte?",
+   "resultado": "exclui",
+   "o_que": "comparecimento extra concentrado onde Lula é forte como motor do resultado",
+   "celulas": {
+    "h1": "não se aplica",
+    "h2": "não se aplica",
+    "h3": "exclui",
+    "h4": "não se aplica",
+    "h5": "não se aplica",
+    "h6": "não exclui"
+   }
+  },
+  {
+   "id": "metadados",
+   "teste": "Metadados e eventos da urna",
+   "pergunta": "Seções com ID, carga, MR repetida, reinício ou urna trocada votaram diferente?",
+   "resultado": "exclui",
+   "o_que": "intervenção por urna que deixe marca no log ou no BU",
+   "celulas": {
+    "h1": "não se aplica",
+    "h2": "não se aplica",
+    "h3": "não se aplica",
+    "h4": "não se aplica",
+    "h5": "exclui",
+    "h6": "não exclui"
+   }
+  },
+  {
+   "id": "documentos",
+   "teste": "Documentos que não temos",
+   "pergunta": "Ata das seções, íntegra da Reclamação, original do vídeo, justificativa do TSE, assinatura de software",
+   "resultado": "pendente",
+   "o_que": "o propósito da prorrogação e do silêncio, e a alteração uniforme sem marca",
+   "celulas": {
+    "h1": "pendente",
+    "h2": "não se aplica",
+    "h3": "pendente",
+    "h4": "pendente",
+    "h5": "pendente",
+    "h6": "não se aplica"
+   }
+  }
+ ],
+ "estados": {
+  "descartada": "descartada pelos dados",
+  "compativel": "compatível, mas não identificada",
+  "pendente": "pendente de documento"
+ },
+ "resultados": [
+  "exclui",
+  "não exclui",
+  "pendente",
+  "não se aplica"
+ ]
+}

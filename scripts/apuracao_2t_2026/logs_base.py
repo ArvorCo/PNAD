@@ -21,8 +21,20 @@ import json
 import sqlite3
 from pathlib import Path
 
-import orjson
 import pandas as pd
+
+try:  # orjson acelera a leitura dos 499 mil resumos; sem ele vale o json da biblioteca padrão
+    import orjson as _orjson
+
+    def _loads(b):
+        return _orjson.loads(b)
+
+except ImportError:  # pragma: no cover
+
+    def _loads(b):
+        return json.loads(b)
+
+
 from apuracao_logs.familias import atencao
 from apuracao_logs.pleito import PLEITOS, ROOT
 
@@ -146,7 +158,7 @@ def linha_1t(uf: str, mun: str, z: int, s: int, r: dict) -> dict:
 def _ler_metricas(caminho: Path, fn) -> pd.DataFrame:
     con = _conectar(caminho)
     linhas = [
-        fn(uf, mun, z, s, orjson.loads(txt))
+        fn(uf, mun, z, s, _loads(txt))
         for uf, mun, z, s, txt in con.execute(
             "SELECT uf,mun,zona,secao,resumo FROM metricas WHERE status='ok'"
         )
@@ -181,7 +193,7 @@ def _ler_sinais(publico: Path) -> pd.DataFrame:
 
 
 def _ler_secoes_bu() -> pd.DataFrame:
-    d = orjson.loads((DADOS / "secoes.json").read_bytes())
+    d = _loads((DADOS / "secoes.json").read_bytes())
     s = secoes_linhas.bloco(d)
     df = pd.DataFrame(s["linhas"], columns=s["colunas"])
     df["mun"] = df["mun"].astype(str).str.zfill(5)

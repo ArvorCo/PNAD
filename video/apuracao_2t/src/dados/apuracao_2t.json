@@ -1,17 +1,17 @@
 {
- "gerado_em": "2026-10-26T13:23:34Z",
+ "gerado_em": "2026-10-26T15:27:40Z",
  "fontes": {
   "analysis/apuracao_2t_2026/dados/abstencao.json": "14dbad7cca8e1c2975717fde1f68a1faee2a949cd73649f2799e198863b23dbb",
   "analysis/apuracao_2t_2026/dados/comparacao_1t.json": "9b7a742b2710e715f5b4f7f8d670aa198655050207765c8a8760b48f85b1ba67",
   "analysis/apuracao_2t_2026/dados/hipotese_autor.json": "0e9d3ccb893d130dea384c5d9f49fe2c16c64a98755a076e43df14dee887f8e3",
   "analysis/apuracao_2t_2026/dados/linha_do_tempo.json": "ab46f9656382cafb52f476b28e5752af692eb4cdbac3baab9b4ef1323cc2e04c",
-  "analysis/apuracao_2t_2026/dados/logs.json": "fd6e31b5304acbe6df5c9fd83616ea03e6a8dfce22444935335647a78b612ea7",
+  "analysis/apuracao_2t_2026/dados/logs.json": "f8ba10821f3e7606ce8bcea835339fd9cdf10a7f948aa8737d6df65ec7b796cb",
   "analysis/apuracao_2t_2026/dados/metadados.json": "c6f2667ec9a87cfdcd26e936298c2a30cddc192063111c21b78701cec9a48d37",
   "analysis/apuracao_2t_2026/dados/paralela.json": "3dc4bb1918d0cf8984f5dcb89c6b233ef5f5e8e323fed4d7ecb39b1daa5c3168",
   "analysis/apuracao_2t_2026/dados/pesquisas_vs_urna.json": "832554ecbe3e0460072ee46a5379cea3d534254c830c397418095633481163ad",
   "analysis/apuracao_2t_2026/dados/presidente.json": "9eec711a4b12318a38687953d2f6159a93d8009280be90fc1b9e54b4d738f9e9",
   "analysis/apuracao_2t_2026/dados/projecao_noite.json": "fccfc39596e08dd88ead8a1c4e8f55ba26c7390c763973f256634dee131da7a0",
-  "analysis/apuracao_2t_2026/dados/rdv.json": "c728659e2f5de74b1e84a7e2f583cfaad01ef7961649b8557ed49460b99a9816",
+  "analysis/apuracao_2t_2026/dados/rdv.json": "c1f13846cd93e3bd37c3426fc84d3e4d2d385aa21ea1a1a417206e2a1f202835",
   "analysis/apuracao_2t_2026/dados/secoes.json": "018057ee1603232b8edfffb78fbbe75ef33ea4444b0f0bfd3ff65a48fcd8d200",
   "analysis/apuracao_2t_2026/dados/secoes_ranking.json": "d87dfb43d903e299b98ab8a599853ffeec364b78ec79d1decd2dac541e8ae422",
   "analysis/apuracao_2t_2026/dados/secoes_voto.json": "b537b9705fc6de9bf5a6f430da0c70f4c108abce3fabd67dd9304f11cb5c1f1d",
@@ -73735,7 +73735,7 @@
   ]
  },
  "logs": {
-  "gerado_em": "2026-10-26T13:16:22+00:00",
+  "gerado_em": "2026-10-26T13:30:17+00:00",
   "rotulo": "pede explicação, não prova irregularidade",
   "fontes": {
    "metricas_2t": "data/outputs/logs_urnas_2t_2026.sqlite",
@@ -76428,18 +76428,360 @@
      }
     }
    }
+  },
+  "rdv": {
+   "fonte": "analysis/apuracao_2t_2026/dados/rdv.json",
+   "gerado_em": "2026-10-26T13:27:38Z",
+   "parcial": false,
+   "tentadas": 517179,
+   "com_rdv": 499205,
+   "sem_aux": 17931,
+   "aux_sem_rdv": 43,
+   "conferem": 499205,
+   "divergencias": 0,
+   "listas_fora_de_ordem": 0,
+   "contra_busa": 29,
+   "busa_sem_votos": 2,
+   "seis_ufs": {
+    "nulos_governador": 452800,
+    "governador_com_numero_de_presidente": 231121,
+    "governador_com_numero_de_presidente_pct": 51.043,
+    "nulos_presidente": 287613,
+    "presidente_com_numero_de_governador": 119562,
+    "presidente_com_numero_de_governador_pct": 41.57,
+    "nota": "piso: onde um candidato a governador tem o número de um finalista presidencial (13 ou 22, em numero_compartilhado), esse número é voto válido nos dois campos e a troca não aparece como nulo"
+   },
+   "ufs": [
+    {
+     "uf": "AC",
+     "secoes": 2270,
+     "votantes": 453654,
+     "nulos_governador": 29612,
+     "governador_com_13": 9454,
+     "governador_com_22": 12082,
+     "governador_com_finalista_pct": 72.727,
+     "nulos_presidente": 16410,
+     "presidente_com_governador": 10484,
+     "presidente_com_governador_pct": 63.888,
+     "presidente_com_governador_numeros": {
+      "11": 7197,
+      "10": 3287
+     },
+     "numero_compartilhado": [],
+     "transito": 320,
+     "limites": [
+      {
+       "presidente": "13",
+       "governador": "10",
+       "partido": "REPUBLICANOS",
+       "min_pct": 0.097,
+       "max_pct": 26.435,
+       "independencia_pct": 9.524
+      },
+      {
+       "presidente": "13",
+       "governador": "11",
+       "partido": "PP",
+       "min_pct": 1.947,
+       "max_pct": 31.618,
+       "independencia_pct": 19.34
+      },
+      {
+       "presidente": "22",
+       "governador": "10",
+       "partido": "REPUBLICANOS",
+       "min_pct": 2.552,
+       "max_pct": 30.491,
+       "independencia_pct": 19.698
+      },
+      {
+       "presidente": "22",
+       "governador": "11",
+       "partido": "PP",
+       "min_pct": 23.951,
+       "max_pct": 56.842,
+       "independencia_pct": 37.933
+      }
+     ]
+    },
+    {
+     "uf": "AM",
+     "secoes": 8156,
+     "votantes": 2191846,
+     "nulos_governador": 75945,
+     "governador_com_13": 37861,
+     "governador_com_22": 0,
+     "governador_com_finalista_pct": 49.853,
+     "nulos_presidente": 52705,
+     "presidente_com_governador": 23907,
+     "presidente_com_governador_pct": 45.36,
+     "presidente_com_governador_numeros": {
+      "55": 23907
+     },
+     "numero_compartilhado": [
+      "22"
+     ],
+     "transito": 2199,
+     "limites": [
+      {
+       "presidente": "13",
+       "governador": "22",
+       "partido": "PL",
+       "min_pct": 0.01,
+       "max_pct": 32.608,
+       "independencia_pct": 16.964
+      },
+      {
+       "presidente": "13",
+       "governador": "55",
+       "partido": "PSD",
+       "min_pct": 17.154,
+       "max_pct": 52.166,
+       "independencia_pct": 32.654
+      },
+      {
+       "presidente": "22",
+       "governador": "22",
+       "partido": "PL",
+       "min_pct": 2.784,
+       "max_pct": 36.481,
+       "independencia_pct": 18.364
+      },
+      {
+       "presidente": "22",
+       "governador": "55",
+       "partido": "PSD",
+       "min_pct": 3.325,
+       "max_pct": 39.311,
+       "independencia_pct": 23.593
+      }
+     ]
+    },
+    {
+     "uf": "DF",
+     "secoes": 6969,
+     "votantes": 1868280,
+     "nulos_governador": 72280,
+     "governador_com_13": 0,
+     "governador_com_22": 25859,
+     "governador_com_finalista_pct": 35.776,
+     "nulos_presidente": 41128,
+     "presidente_com_governador": 9089,
+     "presidente_com_governador_pct": 22.099,
+     "presidente_com_governador_numeros": {
+      "11": 9089
+     },
+     "numero_compartilhado": [
+      "13"
+     ],
+     "transito": 13957,
+     "limites": [
+      {
+       "presidente": "13",
+       "governador": "11",
+       "partido": "PP",
+       "min_pct": 0.146,
+       "max_pct": 42.312,
+       "independencia_pct": 22.98
+      },
+      {
+       "presidente": "13",
+       "governador": "13",
+       "partido": "PT",
+       "min_pct": 0.707,
+       "max_pct": 39.554,
+       "independencia_pct": 17.793
+      },
+      {
+       "presidente": "22",
+       "governador": "11",
+       "partido": "PP",
+       "min_pct": 7.907,
+       "max_pct": 51.617,
+       "independencia_pct": 28.058
+      },
+      {
+       "presidente": "22",
+       "governador": "13",
+       "partido": "PT",
+       "min_pct": 0.0,
+       "max_pct": 38.557,
+       "independencia_pct": 20.432
+      }
+     ]
+    },
+    {
+     "uf": "ES",
+     "secoes": 9844,
+     "votantes": 2409214,
+     "nulos_governador": 132846,
+     "governador_com_13": 50546,
+     "governador_com_22": 32225,
+     "governador_com_finalista_pct": 62.306,
+     "nulos_presidente": 79665,
+     "presidente_com_governador": 38944,
+     "presidente_com_governador_pct": 48.885,
+     "presidente_com_governador_numeros": {
+      "10": 15048,
+      "15": 23896
+     },
+     "numero_compartilhado": [],
+     "transito": 3560,
+     "limites": [
+      {
+       "presidente": "13",
+       "governador": "10",
+       "partido": "REPUBLICANOS",
+       "min_pct": 0.128,
+       "max_pct": 37.273,
+       "independencia_pct": 19.169
+      },
+      {
+       "presidente": "13",
+       "governador": "15",
+       "partido": "MDB",
+       "min_pct": 1.998,
+       "max_pct": 40.012,
+       "independencia_pct": 18.873
+      },
+      {
+       "presidente": "22",
+       "governador": "10",
+       "partido": "REPUBLICANOS",
+       "min_pct": 7.867,
+       "max_pct": 47.341,
+       "independencia_pct": 26.434
+      },
+      {
+       "presidente": "22",
+       "governador": "15",
+       "partido": "MDB",
+       "min_pct": 1.767,
+       "max_pct": 40.775,
+       "independencia_pct": 22.909
+      }
+     ]
+    },
+    {
+     "uf": "RN",
+     "secoes": 8115,
+     "votantes": 2232823,
+     "nulos_governador": 80214,
+     "governador_com_13": 0,
+     "governador_com_22": 26671,
+     "governador_com_finalista_pct": 33.25,
+     "nulos_presidente": 61879,
+     "presidente_com_governador": 18282,
+     "presidente_com_governador_pct": 29.545,
+     "presidente_com_governador_numeros": {
+      "44": 18282
+     },
+     "numero_compartilhado": [
+      "13"
+     ],
+     "transito": 3313,
+     "limites": [
+      {
+       "presidente": "13",
+       "governador": "13",
+       "partido": "PT",
+       "min_pct": 14.428,
+       "max_pct": 48.052,
+       "independencia_pct": 31.204
+      },
+      {
+       "presidente": "13",
+       "governador": "44",
+       "partido": "UNIÃO",
+       "min_pct": 10.108,
+       "max_pct": 44.999,
+       "independencia_pct": 28.791
+      },
+      {
+       "presidente": "22",
+       "governador": "13",
+       "partido": "PT",
+       "min_pct": 0.0,
+       "max_pct": 30.973,
+       "independencia_pct": 15.114
+      },
+      {
+       "presidente": "22",
+       "governador": "44",
+       "partido": "UNIÃO",
+       "min_pct": 1.039,
+       "max_pct": 32.976,
+       "independencia_pct": 16.084
+      }
+     ]
+    },
+    {
+     "uf": "TO",
+     "secoes": 4384,
+     "votantes": 954763,
+     "nulos_governador": 61903,
+     "governador_com_13": 22412,
+     "governador_com_22": 14011,
+     "governador_com_finalista_pct": 58.839,
+     "nulos_presidente": 35826,
+     "presidente_com_governador": 18856,
+     "presidente_com_governador_pct": 52.632,
+     "presidente_com_governador_numeros": {
+      "45": 12069,
+      "44": 6787
+     },
+     "numero_compartilhado": [],
+     "transito": 1378,
+     "limites": [
+      {
+       "presidente": "13",
+       "governador": "44",
+       "partido": "UNIÃO",
+       "min_pct": 1.393,
+       "max_pct": 31.432,
+       "independencia_pct": 15.194
+      },
+      {
+       "presidente": "13",
+       "governador": "45",
+       "partido": "PSDB",
+       "min_pct": 8.531,
+       "max_pct": 43.682,
+       "independencia_pct": 27.154
+      },
+      {
+       "presidente": "22",
+       "governador": "44",
+       "partido": "UNIÃO",
+       "min_pct": 0.458,
+       "max_pct": 30.198,
+       "independencia_pct": 15.699
+      },
+      {
+       "presidente": "22",
+       "governador": "45",
+       "partido": "PSDB",
+       "min_pct": 11.91,
+       "max_pct": 47.043,
+       "independencia_pct": 29.016
+      }
+     ]
+    }
+   ],
+   "formato": "votos guardados por eleição e cargo; cada lista ordenada por tipoVoto e digitação (README do pacote oficial, p. 7); sem vínculo entre cargos",
+   "rotulo": "limites, não medição: o RDV guarda presidente e governador em listas separadas e ordenadas, sem ligar o voto de um eleitor nos dois cargos"
   }
  },
  "rdv": {
   "meta": {
-   "gerado_em": "2026-10-26T06:56:44Z",
+   "gerado_em": "2026-10-26T13:27:38Z",
    "script": "scripts/apuracao-2t-2026-rdv.py",
    "banco": "apuracao/data/rdv_2t_2026.sqlite",
    "especificacao": "data/originals/tse_formato_bu_rdv_2026/ (rdv.asn1 sha256 282dcde0c7ba1f1bb128fe27443ad8d18f7490416c9546d033910a7ec557a465)",
    "arquivo": "rdv.json",
    "rotulo": "atipicidade pede explicação, não prova irregularidade",
-   "parcial": true,
-   "secoes_tentadas": 145400
+   "parcial": false,
+   "secoes_tentadas": 517179
   },
   "rotulo": "limites, não medição: o RDV guarda presidente e governador em listas separadas e ordenadas, sem ligar o voto de um eleitor nos dois cargos",
   "formato": "votos guardados por eleição e cargo; cada lista ordenada por tipoVoto e digitação (README do pacote oficial, p. 7); sem vínculo entre cargos",
@@ -76449,13 +76791,13 @@
   },
   "cobertura": {
    "total": {
-    "aux_404": 5838,
-    "ok": 139561,
-    "confere": 139561,
+    "aux_404": 17931,
+    "ok": 499205,
+    "confere": 499205,
     "secoes_cs": 517179,
     "com_bu": 499207,
     "listas_fora_de_ordem": 0,
-    "sem_rdv": 1
+    "sem_rdv": 43
    },
    "ufs": {
     "ac": {
@@ -76492,11 +76834,18 @@
      "listas_fora_de_ordem": 0
     },
     "ba": {
+     "aux_404": 2474,
+     "ok": 35476,
+     "confere": 35476,
      "secoes_cs": 37950,
      "com_bu": 35476,
      "listas_fora_de_ordem": 0
     },
     "ce": {
+     "aux_404": 1885,
+     "ok": 23764,
+     "confere": 23764,
+     "sem_rdv": 1,
      "secoes_cs": 25650,
      "com_bu": 23765,
      "listas_fora_de_ordem": 0
@@ -76526,11 +76875,17 @@
      "listas_fora_de_ordem": 0
     },
     "ma": {
+     "aux_404": 1701,
+     "ok": 18093,
+     "confere": 18093,
      "secoes_cs": 19794,
      "com_bu": 18093,
      "listas_fora_de_ordem": 0
     },
     "mg": {
+     "aux_404": 2131,
+     "ok": 52062,
+     "confere": 52062,
      "secoes_cs": 54193,
      "com_bu": 52062,
      "listas_fora_de_ordem": 0
@@ -76568,6 +76923,9 @@
      "listas_fora_de_ordem": 0
     },
     "pe": {
+     "aux_404": 673,
+     "ok": 21418,
+     "confere": 21418,
      "secoes_cs": 22091,
      "com_bu": 21418,
      "listas_fora_de_ordem": 0
@@ -76581,11 +76939,17 @@
      "listas_fora_de_ordem": 0
     },
     "pr": {
+     "aux_404": 194,
+     "ok": 27142,
+     "confere": 27142,
      "secoes_cs": 27336,
      "com_bu": 27142,
      "listas_fora_de_ordem": 0
     },
     "rj": {
+     "aux_404": 1063,
+     "ok": 37675,
+     "confere": 37675,
      "secoes_cs": 38738,
      "com_bu": 37675,
      "listas_fora_de_ordem": 0
@@ -76615,14 +76979,17 @@
      "listas_fora_de_ordem": 0
     },
     "rs": {
+     "aux_404": 191,
+     "ok": 27547,
+     "confere": 27547,
      "secoes_cs": 27738,
      "com_bu": 27547,
      "listas_fora_de_ordem": 0
     },
     "sc": {
-     "aux_404": 63,
-     "ok": 5825,
-     "confere": 5825,
+     "aux_404": 232,
+     "ok": 17326,
+     "confere": 17326,
      "secoes_cs": 17558,
      "com_bu": 17326,
      "listas_fora_de_ordem": 0
@@ -76636,6 +77003,9 @@
      "listas_fora_de_ordem": 0
     },
     "sp": {
+     "aux_404": 248,
+     "ok": 103656,
+     "confere": 103656,
      "secoes_cs": 103904,
      "com_bu": 103656,
      "listas_fora_de_ordem": 0
@@ -76649,6 +77019,10 @@
      "listas_fora_de_ordem": 0
     },
     "zz": {
+     "aux_404": 1364,
+     "ok": 1310,
+     "confere": 1310,
+     "sem_rdv": 41,
      "secoes_cs": 2715,
      "com_bu": 1310,
      "listas_fora_de_ordem": 0
@@ -76656,6 +77030,28 @@
    }
   },
   "divergencias_bu": [],
+  "conferencia_busa": {
+   "conferidas_pelo_busa_com_votos": 27,
+   "conferidas_pelo_busa_sem_votos": 2,
+   "secoes_sem_votos": [
+    {
+     "uf": "zz",
+     "mun": "29564",
+     "zona": 1,
+     "secao": 91,
+     "bu": "o03221zz2956400010091-busa.dat",
+     "motivo": "seção do exterior apurada pelo Sistema de Apuração (totalmente manual, motivo 99, outros) sem nenhum voto: o busa.dat decodifica com o cargo 1 e lista de votáveis vazia, comparecimento 0, e o RDV do SA traz o cargo 1 com zero votos; votos iguais (zero). A divergência 'cargo 1 ausente do BU' vinha do comparador, que inferia o cargo pelas linhas de voto e cargo sem voto não gera linha; corrigido e reconferido"
+    },
+    {
+     "uf": "zz",
+     "mun": "30686",
+     "zona": 1,
+     "secao": 443,
+     "bu": "o03221zz3068600010443-busa.dat",
+     "motivo": "seção do exterior apurada pelo Sistema de Apuração (totalmente manual, motivo 99, outros) sem nenhum voto: o busa.dat decodifica com o cargo 1 e lista de votáveis vazia, comparecimento 0, e o RDV do SA traz o cargo 1 com zero votos; votos iguais (zero). A divergência 'cargo 1 ausente do BU' vinha do comparador, que inferia o cargo pelas linhas de voto e cargo sem voto não gera linha; corrigido e reconferido"
+    }
+   ]
+  },
   "nulos_digitados": {
    "ac": {
     "1": {
@@ -77155,6 +77551,172 @@
      "tipos_especiais": {}
     }
    },
+   "ba": {
+    "1": {
+     "nulos": 235307,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 124803,
+       "pct": 53.038
+      },
+      {
+       "digitacao": "11",
+       "votos": 20813,
+       "pct": 8.845
+      },
+      {
+       "digitacao": "31",
+       "votos": 14424,
+       "pct": 6.13
+      },
+      {
+       "digitacao": "12",
+       "votos": 10731,
+       "pct": 4.56
+      },
+      {
+       "digitacao": "14",
+       "votos": 7413,
+       "pct": 3.15
+      },
+      {
+       "digitacao": "73",
+       "votos": 4495,
+       "pct": 1.91
+      },
+      {
+       "digitacao": "33",
+       "votos": 4326,
+       "pct": 1.838
+      },
+      {
+       "digitacao": "15",
+       "votos": 3671,
+       "pct": 1.56
+      },
+      {
+       "digitacao": "99",
+       "votos": 3312,
+       "pct": 1.408
+      },
+      {
+       "digitacao": "55",
+       "votos": 2619,
+       "pct": 1.113
+      },
+      {
+       "digitacao": "23",
+       "votos": 2051,
+       "pct": 0.872
+      },
+      {
+       "digitacao": "77",
+       "votos": 1856,
+       "pct": 0.789
+      },
+      {
+       "digitacao": "01",
+       "votos": 1847,
+       "pct": 0.785
+      },
+      {
+       "digitacao": "10",
+       "votos": 1712,
+       "pct": 0.728
+      },
+      {
+       "digitacao": "70",
+       "votos": 1695,
+       "pct": 0.72
+      }
+     ],
+     "tipos_especiais": {}
+    }
+   },
+   "ce": {
+    "1": {
+     "nulos": 112851,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 53960,
+       "pct": 47.815
+      },
+      {
+       "digitacao": "11",
+       "votos": 11038,
+       "pct": 9.781
+      },
+      {
+       "digitacao": "12",
+       "votos": 6838,
+       "pct": 6.059
+      },
+      {
+       "digitacao": "31",
+       "votos": 6665,
+       "pct": 5.906
+      },
+      {
+       "digitacao": "14",
+       "votos": 6503,
+       "pct": 5.762
+      },
+      {
+       "digitacao": "73",
+       "votos": 2750,
+       "pct": 2.437
+      },
+      {
+       "digitacao": "15",
+       "votos": 2128,
+       "pct": 1.886
+      },
+      {
+       "digitacao": "33",
+       "votos": 1657,
+       "pct": 1.468
+      },
+      {
+       "digitacao": "23",
+       "votos": 1354,
+       "pct": 1.2
+      },
+      {
+       "digitacao": "99",
+       "votos": 1291,
+       "pct": 1.144
+      },
+      {
+       "digitacao": "45",
+       "votos": 1108,
+       "pct": 0.982
+      },
+      {
+       "digitacao": "70",
+       "votos": 1060,
+       "pct": 0.939
+      },
+      {
+       "digitacao": "55",
+       "votos": 965,
+       "pct": 0.855
+      },
+      {
+       "digitacao": "10",
+       "votos": 935,
+       "pct": 0.829
+      },
+      {
+       "digitacao": "01",
+       "votos": 856,
+       "pct": 0.759
+      }
+     ],
+     "tipos_especiais": {}
+    }
+   },
    "df": {
     "1": {
      "nulos": 41128,
@@ -77565,6 +78127,172 @@
        "digitacao": "20",
        "votos": 490,
        "pct": 0.67
+      }
+     ],
+     "tipos_especiais": {}
+    }
+   },
+   "ma": {
+    "1": {
+     "nulos": 58714,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 20376,
+       "pct": 34.704
+      },
+      {
+       "digitacao": "11",
+       "votos": 7921,
+       "pct": 13.491
+      },
+      {
+       "digitacao": "31",
+       "votos": 4805,
+       "pct": 8.184
+      },
+      {
+       "digitacao": "12",
+       "votos": 4617,
+       "pct": 7.864
+      },
+      {
+       "digitacao": "14",
+       "votos": 2746,
+       "pct": 4.677
+      },
+      {
+       "digitacao": "73",
+       "votos": 2482,
+       "pct": 4.227
+      },
+      {
+       "digitacao": "15",
+       "votos": 2045,
+       "pct": 3.483
+      },
+      {
+       "digitacao": "33",
+       "votos": 1157,
+       "pct": 1.971
+      },
+      {
+       "digitacao": "23",
+       "votos": 793,
+       "pct": 1.351
+      },
+      {
+       "digitacao": "55",
+       "votos": 645,
+       "pct": 1.099
+      },
+      {
+       "digitacao": "78",
+       "votos": 580,
+       "pct": 0.988
+      },
+      {
+       "digitacao": "01",
+       "votos": 552,
+       "pct": 0.94
+      },
+      {
+       "digitacao": "77",
+       "votos": 552,
+       "pct": 0.94
+      },
+      {
+       "digitacao": "10",
+       "votos": 548,
+       "pct": 0.933
+      },
+      {
+       "digitacao": "70",
+       "votos": 488,
+       "pct": 0.831
+      }
+     ],
+     "tipos_especiais": {}
+    }
+   },
+   "mg": {
+    "1": {
+     "nulos": 287177,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 157046,
+       "pct": 54.686
+      },
+      {
+       "digitacao": "11",
+       "votos": 17833,
+       "pct": 6.21
+      },
+      {
+       "digitacao": "14",
+       "votos": 13552,
+       "pct": 4.719
+      },
+      {
+       "digitacao": "12",
+       "votos": 11312,
+       "pct": 3.939
+      },
+      {
+       "digitacao": "31",
+       "votos": 8296,
+       "pct": 2.889
+      },
+      {
+       "digitacao": "99",
+       "votos": 7896,
+       "pct": 2.75
+      },
+      {
+       "digitacao": "15",
+       "votos": 6687,
+       "pct": 2.329
+      },
+      {
+       "digitacao": "55",
+       "votos": 4859,
+       "pct": 1.692
+      },
+      {
+       "digitacao": "33",
+       "votos": 4585,
+       "pct": 1.597
+      },
+      {
+       "digitacao": "23",
+       "votos": 3706,
+       "pct": 1.29
+      },
+      {
+       "digitacao": "70",
+       "votos": 3231,
+       "pct": 1.125
+      },
+      {
+       "digitacao": "10",
+       "votos": 3023,
+       "pct": 1.053
+      },
+      {
+       "digitacao": "01",
+       "votos": 2317,
+       "pct": 0.807
+      },
+      {
+       "digitacao": "25",
+       "votos": 2197,
+       "pct": 0.765
+      },
+      {
+       "digitacao": "35",
+       "votos": 2009,
+       "pct": 0.7
       }
      ],
      "tipos_especiais": {}
@@ -78008,6 +78736,89 @@
      "tipos_especiais": {}
     }
    },
+   "pe": {
+    "1": {
+     "nulos": 119642,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 62763,
+       "pct": 52.459
+      },
+      {
+       "digitacao": "11",
+       "votos": 10182,
+       "pct": 8.51
+      },
+      {
+       "digitacao": "31",
+       "votos": 6435,
+       "pct": 5.379
+      },
+      {
+       "digitacao": "14",
+       "votos": 5718,
+       "pct": 4.779
+      },
+      {
+       "digitacao": "12",
+       "votos": 5216,
+       "pct": 4.36
+      },
+      {
+       "digitacao": "73",
+       "votos": 2933,
+       "pct": 2.451
+      },
+      {
+       "digitacao": "15",
+       "votos": 1878,
+       "pct": 1.57
+      },
+      {
+       "digitacao": "33",
+       "votos": 1601,
+       "pct": 1.338
+      },
+      {
+       "digitacao": "55",
+       "votos": 1475,
+       "pct": 1.233
+      },
+      {
+       "digitacao": "99",
+       "votos": 1417,
+       "pct": 1.184
+      },
+      {
+       "digitacao": "23",
+       "votos": 1242,
+       "pct": 1.038
+      },
+      {
+       "digitacao": "70",
+       "votos": 1179,
+       "pct": 0.985
+      },
+      {
+       "digitacao": "77",
+       "votos": 903,
+       "pct": 0.755
+      },
+      {
+       "digitacao": "10",
+       "votos": 841,
+       "pct": 0.703
+      },
+      {
+       "digitacao": "78",
+       "votos": 806,
+       "pct": 0.674
+      }
+     ],
+     "tipos_especiais": {}
+    }
+   },
    "pi": {
     "1": {
      "nulos": 43845,
@@ -78089,6 +78900,384 @@
       }
      ],
      "tipos_especiais": {}
+    }
+   },
+   "pr": {
+    "1": {
+     "nulos": 118819,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 64568,
+       "pct": 54.341
+      },
+      {
+       "digitacao": "14",
+       "votos": 8767,
+       "pct": 7.378
+      },
+      {
+       "digitacao": "11",
+       "votos": 5985,
+       "pct": 5.037
+      },
+      {
+       "digitacao": "12",
+       "votos": 5713,
+       "pct": 4.808
+      },
+      {
+       "digitacao": "99",
+       "votos": 4233,
+       "pct": 3.563
+      },
+      {
+       "digitacao": "55",
+       "votos": 2737,
+       "pct": 2.304
+      },
+      {
+       "digitacao": "15",
+       "votos": 2150,
+       "pct": 1.809
+      },
+      {
+       "digitacao": "31",
+       "votos": 2015,
+       "pct": 1.696
+      },
+      {
+       "digitacao": "23",
+       "votos": 1635,
+       "pct": 1.376
+      },
+      {
+       "digitacao": "33",
+       "votos": 1598,
+       "pct": 1.345
+      },
+      {
+       "digitacao": "70",
+       "votos": 1200,
+       "pct": 1.01
+      },
+      {
+       "digitacao": "67",
+       "votos": 1054,
+       "pct": 0.887
+      },
+      {
+       "digitacao": "25",
+       "votos": 980,
+       "pct": 0.825
+      },
+      {
+       "digitacao": "88",
+       "votos": 906,
+       "pct": 0.763
+      },
+      {
+       "digitacao": "10",
+       "votos": 810,
+       "pct": 0.682
+      }
+     ],
+     "tipos_especiais": {}
+    },
+    "11": {
+     "nulos": 89,
+     "digitacoes": [
+      {
+       "digitacao": "22",
+       "votos": 34,
+       "pct": 38.202
+      },
+      {
+       "digitacao": "00",
+       "votos": 33,
+       "pct": 37.079
+      },
+      {
+       "digitacao": "12",
+       "votos": 4,
+       "pct": 4.494
+      },
+      {
+       "digitacao": "31",
+       "votos": 3,
+       "pct": 3.371
+      },
+      {
+       "digitacao": "11",
+       "votos": 2,
+       "pct": 2.247
+      },
+      {
+       "digitacao": "15",
+       "votos": 2,
+       "pct": 2.247
+      },
+      {
+       "digitacao": "14",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "20",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "23",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "24",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "25",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "28",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "33",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "37",
+       "votos": 1,
+       "pct": 1.124
+      },
+      {
+       "digitacao": "54",
+       "votos": 1,
+       "pct": 1.124
+      }
+     ],
+     "tipos_especiais": {}
+    },
+    "25": {
+     "nulos": 102,
+     "digitacoes": [
+      {
+       "digitacao": "0",
+       "votos": 61,
+       "pct": 59.804
+      },
+      {
+       "digitacao": "3",
+       "votos": 11,
+       "pct": 10.784
+      },
+      {
+       "digitacao": "4",
+       "votos": 9,
+       "pct": 8.824
+      },
+      {
+       "digitacao": "5",
+       "votos": 9,
+       "pct": 8.824
+      },
+      {
+       "digitacao": "7",
+       "votos": 4,
+       "pct": 3.922
+      },
+      {
+       "digitacao": "(sem digitação)",
+       "votos": 3,
+       "pct": 2.941
+      },
+      {
+       "digitacao": "8",
+       "votos": 3,
+       "pct": 2.941
+      },
+      {
+       "digitacao": "6",
+       "votos": 2,
+       "pct": 1.961
+      }
+     ],
+     "tipos_especiais": {
+      "6": 3
+     }
+    }
+   },
+   "rj": {
+    "1": {
+     "nulos": 231341,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 156519,
+       "pct": 67.657
+      },
+      {
+       "digitacao": "14",
+       "votos": 11477,
+       "pct": 4.961
+      },
+      {
+       "digitacao": "12",
+       "votos": 8437,
+       "pct": 3.647
+      },
+      {
+       "digitacao": "99",
+       "votos": 6798,
+       "pct": 2.939
+      },
+      {
+       "digitacao": "11",
+       "votos": 5595,
+       "pct": 2.419
+      },
+      {
+       "digitacao": "55",
+       "votos": 3535,
+       "pct": 1.528
+      },
+      {
+       "digitacao": "15",
+       "votos": 2864,
+       "pct": 1.238
+      },
+      {
+       "digitacao": "31",
+       "votos": 2417,
+       "pct": 1.045
+      },
+      {
+       "digitacao": "23",
+       "votos": 2177,
+       "pct": 0.941
+      },
+      {
+       "digitacao": "33",
+       "votos": 2012,
+       "pct": 0.87
+      },
+      {
+       "digitacao": "01",
+       "votos": 1651,
+       "pct": 0.714
+      },
+      {
+       "digitacao": "70",
+       "votos": 1519,
+       "pct": 0.657
+      },
+      {
+       "digitacao": "56",
+       "votos": 1333,
+       "pct": 0.576
+      },
+      {
+       "digitacao": "10",
+       "votos": 1314,
+       "pct": 0.568
+      },
+      {
+       "digitacao": "67",
+       "votos": 1294,
+       "pct": 0.559
+      }
+     ],
+     "tipos_especiais": {}
+    },
+    "11": {
+     "nulos": 2786,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 1390,
+       "pct": 49.892
+      },
+      {
+       "digitacao": "22",
+       "votos": 895,
+       "pct": 32.125
+      },
+      {
+       "digitacao": "21",
+       "votos": 49,
+       "pct": 1.759
+      },
+      {
+       "digitacao": "99",
+       "votos": 34,
+       "pct": 1.22
+      },
+      {
+       "digitacao": "55",
+       "votos": 32,
+       "pct": 1.149
+      },
+      {
+       "digitacao": "11",
+       "votos": 27,
+       "pct": 0.969
+      },
+      {
+       "digitacao": "14",
+       "votos": 27,
+       "pct": 0.969
+      },
+      {
+       "digitacao": "15",
+       "votos": 25,
+       "pct": 0.897
+      },
+      {
+       "digitacao": "23",
+       "votos": 22,
+       "pct": 0.79
+      },
+      {
+       "digitacao": "25",
+       "votos": 20,
+       "pct": 0.718
+      },
+      {
+       "digitacao": "20",
+       "votos": 19,
+       "pct": 0.682
+      },
+      {
+       "digitacao": "33",
+       "votos": 19,
+       "pct": 0.682
+      },
+      {
+       "digitacao": "88",
+       "votos": 13,
+       "pct": 0.467
+      },
+      {
+       "digitacao": "71",
+       "votos": 12,
+       "pct": 0.431
+      },
+      {
+       "digitacao": "(sem digitação)",
+       "votos": 11,
+       "pct": 0.395
+      }
+     ],
+     "tipos_especiais": {
+      "6": 11
+     }
     }
    },
    "rn": {
@@ -78423,84 +79612,250 @@
      "tipos_especiais": {}
     }
    },
-   "sc": {
+   "rs": {
     "1": {
-     "nulos": 24633,
+     "nulos": 101245,
      "digitacoes": [
       {
        "digitacao": "00",
-       "votos": 13395,
-       "pct": 54.378
+       "votos": 50023,
+       "pct": 49.408
       },
       {
        "digitacao": "14",
-       "votos": 2239,
-       "pct": 9.089
-      },
-      {
-       "digitacao": "99",
-       "votos": 1154,
-       "pct": 4.685
-      },
-      {
-       "digitacao": "11",
-       "votos": 1137,
-       "pct": 4.616
-      },
-      {
-       "digitacao": "15",
-       "votos": 652,
-       "pct": 2.647
+       "votos": 8265,
+       "pct": 8.163
       },
       {
        "digitacao": "12",
-       "votos": 635,
-       "pct": 2.578
+       "votos": 6249,
+       "pct": 6.172
+      },
+      {
+       "digitacao": "11",
+       "votos": 5957,
+       "pct": 5.884
+      },
+      {
+       "digitacao": "99",
+       "votos": 4166,
+       "pct": 4.115
+      },
+      {
+       "digitacao": "15",
+       "votos": 3140,
+       "pct": 3.101
       },
       {
        "digitacao": "55",
-       "votos": 516,
-       "pct": 2.095
-      },
-      {
-       "digitacao": "33",
-       "votos": 334,
-       "pct": 1.356
+       "votos": 1951,
+       "pct": 1.927
       },
       {
        "digitacao": "23",
-       "votos": 295,
-       "pct": 1.198
+       "votos": 1369,
+       "pct": 1.352
       },
       {
-       "digitacao": "70",
-       "votos": 295,
-       "pct": 1.198
-      },
-      {
-       "digitacao": "88",
-       "votos": 227,
-       "pct": 0.922
-      },
-      {
-       "digitacao": "25",
-       "votos": 221,
-       "pct": 0.897
+       "digitacao": "33",
+       "votos": 1347,
+       "pct": 1.33
       },
       {
        "digitacao": "31",
-       "votos": 221,
-       "pct": 0.897
+       "votos": 1319,
+       "pct": 1.303
       },
       {
-       "digitacao": "01",
-       "votos": 198,
-       "pct": 0.804
+       "digitacao": "70",
+       "votos": 1056,
+       "pct": 1.043
+      },
+      {
+       "digitacao": "45",
+       "votos": 821,
+       "pct": 0.811
       },
       {
        "digitacao": "67",
-       "votos": 198,
-       "pct": 0.804
+       "votos": 821,
+       "pct": 0.811
+      },
+      {
+       "digitacao": "10",
+       "votos": 788,
+       "pct": 0.778
+      },
+      {
+       "digitacao": "88",
+       "votos": 780,
+       "pct": 0.77
+      }
+     ],
+     "tipos_especiais": {}
+    },
+    "11": {
+     "nulos": 241,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 95,
+       "pct": 39.419
+      },
+      {
+       "digitacao": "13",
+       "votos": 57,
+       "pct": 23.651
+      },
+      {
+       "digitacao": "22",
+       "votos": 51,
+       "pct": 21.162
+      },
+      {
+       "digitacao": "99",
+       "votos": 5,
+       "pct": 2.075
+      },
+      {
+       "digitacao": "12",
+       "votos": 4,
+       "pct": 1.66
+      },
+      {
+       "digitacao": "14",
+       "votos": 3,
+       "pct": 1.245
+      },
+      {
+       "digitacao": "18",
+       "votos": 2,
+       "pct": 0.83
+      },
+      {
+       "digitacao": "29",
+       "votos": 2,
+       "pct": 0.83
+      },
+      {
+       "digitacao": "55",
+       "votos": 2,
+       "pct": 0.83
+      },
+      {
+       "digitacao": "70",
+       "votos": 2,
+       "pct": 0.83
+      },
+      {
+       "digitacao": "71",
+       "votos": 2,
+       "pct": 0.83
+      },
+      {
+       "digitacao": "(sem digitação)",
+       "votos": 1,
+       "pct": 0.415
+      },
+      {
+       "digitacao": "09",
+       "votos": 1,
+       "pct": 0.415
+      },
+      {
+       "digitacao": "16",
+       "votos": 1,
+       "pct": 0.415
+      },
+      {
+       "digitacao": "20",
+       "votos": 1,
+       "pct": 0.415
+      }
+     ],
+     "tipos_especiais": {
+      "6": 1
+     }
+    }
+   },
+   "sc": {
+    "1": {
+     "nulos": 75244,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 42226,
+       "pct": 56.119
+      },
+      {
+       "digitacao": "14",
+       "votos": 7012,
+       "pct": 9.319
+      },
+      {
+       "digitacao": "11",
+       "votos": 3389,
+       "pct": 4.504
+      },
+      {
+       "digitacao": "99",
+       "votos": 3293,
+       "pct": 4.376
+      },
+      {
+       "digitacao": "15",
+       "votos": 1833,
+       "pct": 2.436
+      },
+      {
+       "digitacao": "12",
+       "votos": 1695,
+       "pct": 2.253
+      },
+      {
+       "digitacao": "55",
+       "votos": 1502,
+       "pct": 1.996
+      },
+      {
+       "digitacao": "33",
+       "votos": 987,
+       "pct": 1.312
+      },
+      {
+       "digitacao": "70",
+       "votos": 886,
+       "pct": 1.178
+      },
+      {
+       "digitacao": "23",
+       "votos": 781,
+       "pct": 1.038
+      },
+      {
+       "digitacao": "67",
+       "votos": 706,
+       "pct": 0.938
+      },
+      {
+       "digitacao": "88",
+       "votos": 678,
+       "pct": 0.901
+      },
+      {
+       "digitacao": "31",
+       "votos": 623,
+       "pct": 0.828
+      },
+      {
+       "digitacao": "25",
+       "votos": 583,
+       "pct": 0.775
+      },
+      {
+       "digitacao": "01",
+       "votos": 552,
+       "pct": 0.734
       }
      ],
      "tipos_especiais": {}
@@ -78584,6 +79939,170 @@
        "digitacao": "35",
        "votos": 229,
        "pct": 0.736
+      }
+     ],
+     "tipos_especiais": {}
+    }
+   },
+   "sp": {
+    "1": {
+     "nulos": 716331,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 474500,
+       "pct": 66.24
+      },
+      {
+       "digitacao": "14",
+       "votos": 41734,
+       "pct": 5.826
+      },
+      {
+       "digitacao": "99",
+       "votos": 35551,
+       "pct": 4.963
+      },
+      {
+       "digitacao": "11",
+       "votos": 19652,
+       "pct": 2.743
+      },
+      {
+       "digitacao": "12",
+       "votos": 12725,
+       "pct": 1.776
+      },
+      {
+       "digitacao": "55",
+       "votos": 9756,
+       "pct": 1.362
+      },
+      {
+       "digitacao": "15",
+       "votos": 9168,
+       "pct": 1.28
+      },
+      {
+       "digitacao": "33",
+       "votos": 7753,
+       "pct": 1.082
+      },
+      {
+       "digitacao": "10",
+       "votos": 6219,
+       "pct": 0.868
+      },
+      {
+       "digitacao": "23",
+       "votos": 6165,
+       "pct": 0.861
+      },
+      {
+       "digitacao": "31",
+       "votos": 6091,
+       "pct": 0.85
+      },
+      {
+       "digitacao": "67",
+       "votos": 4857,
+       "pct": 0.678
+      },
+      {
+       "digitacao": "88",
+       "votos": 4734,
+       "pct": 0.661
+      },
+      {
+       "digitacao": "70",
+       "votos": 4441,
+       "pct": 0.62
+      },
+      {
+       "digitacao": "01",
+       "votos": 4428,
+       "pct": 0.618
+      }
+     ],
+     "tipos_especiais": {}
+    },
+    "11": {
+     "nulos": 709,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 208,
+       "pct": 29.337
+      },
+      {
+       "digitacao": "13",
+       "votos": 173,
+       "pct": 24.401
+      },
+      {
+       "digitacao": "22",
+       "votos": 173,
+       "pct": 24.401
+      },
+      {
+       "digitacao": "25",
+       "votos": 14,
+       "pct": 1.975
+      },
+      {
+       "digitacao": "45",
+       "votos": 14,
+       "pct": 1.975
+      },
+      {
+       "digitacao": "99",
+       "votos": 10,
+       "pct": 1.41
+      },
+      {
+       "digitacao": "10",
+       "votos": 8,
+       "pct": 1.128
+      },
+      {
+       "digitacao": "11",
+       "votos": 8,
+       "pct": 1.128
+      },
+      {
+       "digitacao": "14",
+       "votos": 8,
+       "pct": 1.128
+      },
+      {
+       "digitacao": "40",
+       "votos": 8,
+       "pct": 1.128
+      },
+      {
+       "digitacao": "54",
+       "votos": 8,
+       "pct": 1.128
+      },
+      {
+       "digitacao": "55",
+       "votos": 8,
+       "pct": 1.128
+      },
+      {
+       "digitacao": "24",
+       "votos": 6,
+       "pct": 0.846
+      },
+      {
+       "digitacao": "42",
+       "votos": 4,
+       "pct": 0.564
+      },
+      {
+       "digitacao": "88",
+       "votos": 4,
+       "pct": 0.564
       }
      ],
      "tipos_especiais": {}
@@ -78837,6 +80356,89 @@
       "6": 1
      }
     }
+   },
+   "zz": {
+    "1": {
+     "nulos": 5117,
+     "digitacoes": [
+      {
+       "digitacao": "00",
+       "votos": 2595,
+       "pct": 50.713
+      },
+      {
+       "digitacao": "14",
+       "votos": 484,
+       "pct": 9.459
+      },
+      {
+       "digitacao": "99",
+       "votos": 389,
+       "pct": 7.602
+      },
+      {
+       "digitacao": "11",
+       "votos": 143,
+       "pct": 2.795
+      },
+      {
+       "digitacao": "12",
+       "votos": 115,
+       "pct": 2.247
+      },
+      {
+       "digitacao": "55",
+       "votos": 84,
+       "pct": 1.642
+      },
+      {
+       "digitacao": "70",
+       "votos": 71,
+       "pct": 1.388
+      },
+      {
+       "digitacao": "01",
+       "votos": 63,
+       "pct": 1.231
+      },
+      {
+       "digitacao": "77",
+       "votos": 61,
+       "pct": 1.192
+      },
+      {
+       "digitacao": "67",
+       "votos": 57,
+       "pct": 1.114
+      },
+      {
+       "digitacao": "88",
+       "votos": 56,
+       "pct": 1.094
+      },
+      {
+       "digitacao": "15",
+       "votos": 52,
+       "pct": 1.016
+      },
+      {
+       "digitacao": "10",
+       "votos": 51,
+       "pct": 0.997
+      },
+      {
+       "digitacao": "69",
+       "votos": 50,
+       "pct": 0.977
+      },
+      {
+       "digitacao": "23",
+       "votos": 49,
+       "pct": 0.958
+      }
+     ],
+     "tipos_especiais": {}
+    }
    }
   },
   "troca_de_campo": {
@@ -78849,7 +80451,8 @@
     "presidente_com_numero_de_governador": {
      "11": 7197,
      "10": 3287
-    }
+    },
+    "numero_compartilhado": []
    },
    "am": {
     "nulos_governador": 75945,
@@ -78858,9 +80461,11 @@
     "governador_com_numero_de_presidente_pct": 49.853,
     "nulos_presidente": 52705,
     "presidente_com_numero_de_governador": {
-     "55": 23907,
-     "22": 0
-    }
+     "55": 23907
+    },
+    "numero_compartilhado": [
+     "22"
+    ]
    },
    "df": {
     "nulos_governador": 72280,
@@ -78869,9 +80474,11 @@
     "governador_com_numero_de_presidente_pct": 35.776,
     "nulos_presidente": 41128,
     "presidente_com_numero_de_governador": {
-     "11": 9089,
-     "13": 0
-    }
+     "11": 9089
+    },
+    "numero_compartilhado": [
+     "13"
+    ]
    },
    "es": {
     "nulos_governador": 132846,
@@ -78882,7 +80489,8 @@
     "presidente_com_numero_de_governador": {
      "10": 15048,
      "15": 23896
-    }
+    },
+    "numero_compartilhado": []
    },
    "rn": {
     "nulos_governador": 80214,
@@ -78891,9 +80499,11 @@
     "governador_com_numero_de_presidente_pct": 33.25,
     "nulos_presidente": 61879,
     "presidente_com_numero_de_governador": {
-     "13": 0,
      "44": 18282
-    }
+    },
+    "numero_compartilhado": [
+     "13"
+    ]
    },
    "to": {
     "nulos_governador": 61903,
@@ -78904,7 +80514,17 @@
     "presidente_com_numero_de_governador": {
      "45": 12069,
      "44": 6787
-    }
+    },
+    "numero_compartilhado": []
+   },
+   "seis_ufs": {
+    "nulos_governador": 452800,
+    "governador_com_numero_de_presidente": 231121,
+    "governador_com_numero_de_presidente_pct": 51.043,
+    "nulos_presidente": 287613,
+    "presidente_com_numero_de_governador": 119562,
+    "presidente_com_numero_de_governador_pct": 41.57,
+    "nota": "piso: onde um candidato a governador tem o número de um finalista presidencial (13 ou 22, em numero_compartilhado), esse número é voto válido nos dois campos e a troca não aparece como nulo"
    }
   },
   "cruzado_limites": {}

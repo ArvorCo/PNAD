@@ -56,7 +56,7 @@ CAMINHOS=(
   totalizacao/src/relato/ totalizacao/tests/relato.test.ts totalizacao/tests/relato_desafio.test.ts totalizacao/README.md
   video/apuracao_2t/
   # raiz
-  AGENTS.md .gitignore .gitattributes
+  AGENTS.md .gitignore .gitattributes requirements.txt
 )
 # scripts soltos do dossiê, pelo padrão de nome
 for f in scripts/apuracao-2t-2026-*.py scripts/politize-se-*.py scripts/video-apuracao-2t-*.py tests/test_apuracao_2t_*.py tests/test_politize_se*.py; do
