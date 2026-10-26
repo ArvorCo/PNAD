@@ -138,8 +138,13 @@ def ler_vsc(banco: Path, turno: int) -> tuple[pd.DataFrame, dict]:
     }
 
 
+def _ausente(valor) -> bool:
+    """None ou NaN: o pandas devolve NaN (float) para json_extract nulo em versões recentes."""
+    return valor is None or (isinstance(valor, float) and valor != valor)
+
+
 def _conjunto(valor) -> list[str]:
-    if valor is None:
+    if _ausente(valor):
         return []
     obj = json.loads(valor) if isinstance(valor, str) else valor
     if isinstance(obj, dict):
@@ -150,7 +155,7 @@ def _conjunto(valor) -> list[str]:
 
 
 def _meta(valor, campo: str) -> list[str]:
-    if valor is None:
+    if _ausente(valor):
         return []
     obj = json.loads(valor) if isinstance(valor, str) else (valor or {})
     saida = set()
@@ -164,7 +169,7 @@ def _meta(valor, campo: str) -> list[str]:
 
 def _carga_por_urna(valor) -> dict[int, str]:
     """{número interno da urna: data e hora da carga registrada no log (dd/mm/aaaa hh:mm:ss)}."""
-    if valor is None:
+    if _ausente(valor):
         return {}
     saida = {}
     for urna, meta in (

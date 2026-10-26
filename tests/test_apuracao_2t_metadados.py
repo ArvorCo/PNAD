@@ -305,3 +305,11 @@ def test_leitores_toleram_ausencia_e_lem_resumo(tmp_path):
     assert r.loc[1, "log_carga_por_urna"] == {}
     assert r.loc[1, "log_ids"] == ["02468149"]
     assert r.loc[2, "log_versao"] == []
+
+
+def test_leitores_toleram_nan_do_pandas():
+    """`json_extract` nulo vira NaN (float) em versões recentes do pandas; o leitor trata como ausente."""
+    nan = float("nan")
+    assert mb._conjunto(nan) == []
+    assert mb._meta(nan, "versao_aplicacao") == []
+    assert mb._carga_por_urna(nan) == {}
