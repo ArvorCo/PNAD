@@ -59,7 +59,7 @@ CAMINHOS=(
   scripts/clima-2t.py scripts/clima-2t-modelo.py scripts/clima-2t-cemaden.py scripts/clima-2t-fotos-cemaden.py scripts/clima-2t-atualizar.sh scripts/clima_2t/ analysis/clima_2t_2026/
   docs/assets/fiscais_mapa/clima/observado_2t.json docs/assets/fiscais_mapa/app.js docs/fiscais_mapa.html tests/test_clima_2t_observado.py tests/test_clima_1t.py tests/test_fiscais_mapa_mudancas.py
   # raiz
-  AGENTS.md .gitignore .gitattributes requirements.txt
+  AGENTS.md .gitignore .gitattributes requirements.txt .github/workflows/totalizacao.yml
 )
 # scripts soltos do dossiê, pelo padrão de nome
 for f in scripts/video-masterclass-*.py tests/test_video_masterclass.py scripts/apuracao-2t-2026-*.py scripts/politize-se-*.py scripts/video-apuracao-2t-*.py tests/test_apuracao_2t_*.py tests/test_politize_se*.py; do

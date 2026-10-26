@@ -41,6 +41,7 @@ jobs:
             echo "mudou=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "totalizacao: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase
             git push
             echo "mudou=true" >> "$GITHUB_OUTPUT"
           fi
