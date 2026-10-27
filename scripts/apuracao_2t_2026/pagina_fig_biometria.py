@@ -8,6 +8,9 @@ gráfico das categorias pela contagem do log da urna, marcada como tal.
 
 from __future__ import annotations
 
+import re
+from html import escape
+
 from apuracao_2026.pagina_comum import CINZA, INK, MUTED, inteiro, tabela
 from apuracao_2026.pagina_fig_base import (
     Tips,
@@ -35,6 +38,32 @@ COR_SEM = "#0c7a72"
 COR_EXT = "#6b4a92"
 COR_1T = CINZA
 FONTE = "Fonte: biometria.json (BUs de todas as seções dos dois turnos)."
+N_ROTULOS = 8
+PATH_UF = re.compile(r'<path [^>]*data-uf="([A-Z]{2})"><title>[^<]*</title></path>')
+CIRCULO = re.compile(r"<circle [^>]*><title>([^<]*)</title></circle>")
+
+
+def _com_fichas(svg: str, padrao: re.Pattern, chaves: dict[str, str]) -> str:
+    """Põe cada elemento do ``padrao`` cujo grupo 1 está em ``chaves`` num ``hit`` com a ficha."""
+
+    def troca(m: re.Match) -> str:
+        k = chaves.get(m.group(1))
+        return hit(m.group(0), k, foco=True) if k else m.group(0)
+
+    return padrao.sub(troca, svg)
+
+
+def _ficha_uf(u: dict) -> str:
+    return ficha(
+        nome_uf(u["uf"]),
+        "habilitados por ano de nascimento",
+        [
+            ("2º turno", pct(u["ano_nascimento_pct_2t"])),
+            ("1º turno", pct(u["ano_nascimento_pct_1t"])),
+            ("diferença", pp(u["ano_nascimento_delta_pp"])),
+            ("sem cadastro, 2º turno", pct(u["sem_cadastro_pct_2t"])),
+        ],
+    )
 
 
 def _segmentos(B: dict, turno: str) -> list[tuple[str, str, int, str]]:
@@ -124,10 +153,13 @@ def fig_categorias(B: dict) -> str:
         [(f"{n} (fonte {f})", c) for n, c, _, f in _segmentos(B, "2t")], "Categoria"
     )
     t2 = B["totais"]["2t"]
+    tot2 = sum(s[2] for s in _segmentos(B, "2t")) or 1
     legenda = (
         f"As três categorias do BU fecham o comparecimento com categoria "
         f"({inteiro(t2['comparecimento_com_categoria'])} no 2º turno). O exterior vem do log "
-        f"das urnas, não do BU, que não publica as categorias. {FONTE}"
+        f"das urnas, não do BU, que não publica as categorias. A barra divide o comparecimento total, com o "
+        f"exterior (biometria {pct(100 * t2['biometria'] / tot2)} no 2º turno); o texto usa o Brasil sem o "
+        f"exterior ({pct(t2['biometria_pct'])}). {FONTE}"
     )
     return figura_html(
         "bio_categorias", "".join(out), legenda, tips, modo="scroll", minw=760, apos=leg
@@ -154,18 +186,7 @@ def fig_ufs(B: dict) -> str:
     for i, u in enumerate(ufs):
         y = topo + i * passo
         v2, v1 = u["ano_nascimento_pct_2t"], u["ano_nascimento_pct_1t"]
-        k = tips.add(
-            ficha(
-                nome_uf(u["uf"]),
-                "habilitados por ano de nascimento",
-                [
-                    ("2º turno", pct(v2)),
-                    ("1º turno", pct(v1)),
-                    ("diferença", pp(u["ano_nascimento_delta_pp"])),
-                    ("sem cadastro, 2º turno", pct(u["sem_cadastro_pct_2t"])),
-                ],
-            )
-        )
+        k = tips.add(_ficha_uf(u))
         partes = [
             t(esq - 8, y + 15, nome_uf(u["uf"]), 13, INK, "end"),
             r(esq, y + 3, x(v2) - esq, 16, COR_ANO),
@@ -208,6 +229,10 @@ def fig_mapa_uf(B: dict) -> str:
         "Mapa do Brasil por UF, cor pela parcela do comparecimento habilitada por ano de nascimento.",
         escuro=lambda uf, u: bool(u) and faixa(u["ano_nascimento_pct_2t"], CORTES) >= 3,
     )
+    tips = Tips()
+    svg = _com_fichas(
+        svg, PATH_UF, {uf: tips.add(_ficha_uf(u)) for uf, u in vals.items()}
+    )
     leg = legenda_html(
         list(zip(ROTULOS, CORES, strict=True)), "Ano de nascimento, % do comparecimento"
     )
@@ -215,7 +240,7 @@ def fig_mapa_uf(B: dict) -> str:
         "bio_mapa_uf",
         svg,
         f"Exterior fora: sem categoria no BU. {FONTE}",
-        Tips(),
+        tips,
         modo="fit",
         apos=leg,
     )
@@ -236,22 +261,44 @@ def fig_mapa_mun(B: dict) -> str:
                 f"{m['nome']} ({m['uf']}): {pct(m['ano_nascimento_pct_2t'])} por ano de "
                 f"nascimento no 2º turno, {pct(m['ano_nascimento_pct_1t'])} no 1º"
             ),
-            "rotulo": m["nome"] if i < 8 else "",
+            "rotulo": m["nome"] if i < N_ROTULOS else "",
         }
         for i, m in enumerate(ms)
     ]
     svg = pontos_brasil(
         pontos,
-        "Os 30 municípios com maior parcela por ano de nascimento",
+        f"Os {len(ms)} municípios com maior parcela por ano de nascimento",
         "Pontos nos municípios com 20 mil eleitores ou mais de maior parcela habilitada por ano de nascimento; raio pelo eleitorado.",
-        rotulos=8,
+        rotulos=N_ROTULOS,
     )
     svg = svg.replace('viewBox="0 0 640 640"', 'viewBox="0 0 800 640"', 1)
+    desenhados = sum(
+        1 for m in ms[:N_ROTULOS] if m["nome"] and f">{escape(m['nome'])}</text>" in svg
+    )
+    tips = Tips()
+    chaves = {
+        escape(q["titulo"]): tips.add(
+            ficha(
+                f"{nome_bonito(m['nome'] or m['mun'])} ({m['uf']})",
+                "habilitados por ano de nascimento",
+                [
+                    ("2º turno", pct(m["ano_nascimento_pct_2t"])),
+                    ("1º turno", pct(m["ano_nascimento_pct_1t"])),
+                    ("diferença", pp(m["ano_nascimento_delta_pp"])),
+                    ("sem cadastro, 2º turno", pct(m["sem_cadastro_pct_2t"])),
+                    ("aptos, 2º turno", inteiro(m["aptos_2t"])),
+                ],
+            )
+        )
+        for q, m in zip(pontos, ms, strict=True)
+    }
+    svg = _com_fichas(svg, CIRCULO, chaves)
     legenda = (
         f"{len(ms)} municípios entre os {inteiro(B['municipios']['n_municipios'])} com 20 mil "
-        f"aptos ou mais; raio pelo eleitorado; rótulo nos oito primeiros. {FONTE}"
+        f"aptos ou mais; raio pelo eleitorado; rótulo em {desenhados} dos {N_ROTULOS} de maior parcela "
+        f"(os outros se sobreporiam). {FONTE}"
     )
-    return figura_html("bio_mapa_mun", svg, legenda, Tips(), modo="fit", dim=False)
+    return figura_html("bio_mapa_mun", svg, legenda, tips, modo="fit", dim=False)
 
 
 def fig_histograma(B: dict) -> str:

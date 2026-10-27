@@ -76,8 +76,11 @@ def noticias(d: Dados) -> dict | None:
     return None
 
 
-def habilitacao(B: dict | None) -> str:
-    """Subseção "Como o eleitor foi habilitado" (vazia sem ``biometria.json``)."""
+def habilitacao(B: dict | None, V: dict | None = None) -> str:
+    """Subseção "Como o eleitor foi habilitado" (vazia sem ``biometria.json``).
+
+    ``V`` (``secoes_voto.json``, opcional) entra na comparação com o bloco de sinais.
+    """
     if not B:
         return ""
     h = "<h3>Como o eleitor foi habilitado</h3>"
@@ -87,7 +90,7 @@ def habilitacao(B: dict | None) -> str:
     h += TBIO.municipios(B) + FBIO.fig_mapa_mun(B) + FBIO.tabela_municipios(B)
     h += TBIO.histograma(B) + FBIO.fig_histograma(B)
     h += TBIO.modelos(B) + FBIO.fig_modelos(B)
-    h += TBIO.voto(B)
+    h += TBIO.voto(B, V)
     return h
 
 
@@ -109,7 +112,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += T.noticias(noticias(d)) + T.leitura_horario(S)
     h += "<h3>Comparecimento: alta geral, pequena</h3>"
     h += T.comparecimento(S) + F.fig_comparecimento(S, P)
-    h += habilitacao(d.get("biometria.json"))
+    h += habilitacao(d.get("biometria.json"), V)
     h += "<h3>Biometria: cadastro, leitor e a hipótese do “pianista”</h3>"
     h += T.biometria(S, R, V)
     h += TP.bloco(d.get("angulo_pianista.json"))

@@ -59,8 +59,8 @@ COR_RES = {
     "não se aplica": (PAPER, MUTED),
 }
 ROT_RES = {
-    "exclui": "exclui",
-    "não exclui": "não exclui",
+    "exclui": "marca ausente",
+    "não exclui": "não alcança",
     "pendente": "pendente",
     "não se aplica": "fora do teste",
 }
@@ -237,8 +237,10 @@ def fig_tarde(H: dict) -> str:
     )
     legenda = (
         f"Cada linha é um marco com fonte. Os horários do pedido ao STF vêm de duas fontes que divergem "
-        f"({' e '.join(H['h4']['stf_carimbos'])}); a figura usa o primeiro. Antes da pausa o TSE tinha totalizado "
-        f"{inteiro(s['secoes_antes'])} seções, com Lula a {num(s['lula_pct_antes'], 2)}% nessa fração. "
+        f"({' e '.join(H['h4']['stf_carimbos'])}); a figura usa o primeiro. "
+        f"A última versão nacional antes da pausa, às {s['banco']['versao_brt']}, tinha "
+        f"{inteiro(s['banco']['secoes'])} seções totalizadas, com Lula a {num(s['banco']['lula_pct'], 2)}% nessa "
+        "fração (banco do coletor). "
         "Fonte: hipoteses.json (cronologia), que lê noticias_noite.json, secoes.json, linha_do_tempo.json "
         "e as páginas do vídeo arquivadas em data/originals/prorrogacao_video/."
     )
@@ -259,8 +261,8 @@ def fig_matriz(H: dict) -> str:
             w,
             h,
             "Hipótese × teste",
-            "Linhas: as seis hipóteses. Colunas: os oito testes. Cada célula diz se o teste exclui a hipótese, "
-            "não a exclui, depende de documento ou não se aplica a ela.",
+            "Linhas: as seis hipóteses. Colunas: os oito testes. Cada célula diz se a marca esperada da hipótese "
+            "não aparece nos arquivos públicos, se o teste não a alcança, se depende de documento ou se não se aplica.",
         )
     ]
     tips = Tips()
@@ -307,7 +309,7 @@ def fig_matriz(H: dict) -> str:
                 ficha(
                     te["teste"],
                     f"{hp['id'].upper()} {hp['titulo']}",
-                    [("Resultado", res)],
+                    [("Resultado", ROT_RES[res])],
                     te["o_que"],
                 )
             )
@@ -324,9 +326,9 @@ def fig_matriz(H: dict) -> str:
     out.append("</svg>")
     leg = legenda_html([(ROT_RES[k], v[0]) for k, v in COR_RES.items()])
     legenda = (
-        "Leitura da casa sobre o que cada teste alcança. Exclui: o teste encontraria a marca do mecanismo, e ela "
-        "não está nos dados. Não exclui: o mecanismo passaria pelo teste sem deixar marca. Pendente: só um documento "
-        "responde. Fonte: hipoteses.json (discriminador)."
+        "Leitura da casa sobre o que cada teste alcança. Marca ausente: o teste encontraria a marca do mecanismo, e "
+        "ela não aparece nos arquivos públicos. Não alcança: o mecanismo passaria pelo teste sem deixar marca. "
+        "Pendente: só um documento responde. Fonte: hipoteses.json (discriminador)."
     )
     return figura_html(
         "hipoteses_matriz", "".join(out), legenda, tips, minw=900, apos=leg
@@ -389,7 +391,8 @@ def fig_cadencia(L: dict) -> str:
     legenda = (
         f"Depois das 17h o 2º turno computou {inteiro(c['brasil_2t']['computados_17_19'])} votos, "
         f"{num(c['brasil_2t']['pct_17_19'], 3)}% do dia, contra {num(c['amostra_1t']['brasil_1t']['pct_17_19'], 2)}% "
-        "no 1º turno, que tinha seis cargos e fila mais lenta. A mesma figura, maior e por região, está no capítulo "
+        "no 1º turno (amostra de uma seção em cinco), que tinha cinco cargos, seis votos e fila mais lenta. A mesma "
+        "figura, maior e por região, está no capítulo "
         "dos logs. Fonte: logs.json (cadencia)."
     )
     return figura_html(

@@ -40,7 +40,7 @@ from .pagina_fig_turnos_util import faixa, nome_uf
 
 T1 = "#8a7a3a"
 HORAS = ["#ece6d4", "#c5dccf", "#7fb19e", "#2f7a66", "#0d3f35"]
-CORTES_HORA = [21 * 60 + 15, 21 * 60 + 30, 21 * 60 + 45, 22 * 60]
+CORTES_HORA: list[float] = [21 * 60 + 15, 21 * 60 + 30, 21 * 60 + 45, 22 * 60]
 ROT_HORA = [
     "até 21:15",
     "21:15 a 21:30",
@@ -191,17 +191,24 @@ def fig_decis(C: dict) -> str:
         + corpo
         + "</svg>"
     )
-    sw = [dd["swing_h2h_flavio_pp"] for dd in C["decis_2t"]]
+
+    def faixas(decis: list[dict], unidade: str) -> str:
+        nv = [dd["h2h_flavio"] for dd in decis]
+        sw = [dd["swing_h2h_flavio_pp"] for dd in decis]
+        return f"{unidade}: nível de {num(min(nv), 2)}% a {num(max(nv), 2)}%, mudança de {pp(max(sw))} a {pp(min(sw))}"
+
     leg = legenda_html(
         [
             ("2º turno, Flávio entre os dois", FLAVIO),
             ("1º turno, mesmos municípios", T1),
         ],
     )
+    partes = [faixas(C["decis_2t"], "Municípios")]
+    if zonas:
+        partes.append(faixas(zonas, "zonas eleitorais"))
     legenda = (
-        f"O nível sobe e desce de um decil a outro (de {num(min(dd['h2h_flavio'] for dd in C['decis_2t']), 2)}% "
-        f"a {num(max(dd['h2h_flavio'] for dd in C['decis_2t']), 2)}%), e o 1º turno nos mesmos lugares desenha a mesma serra; "
-        f"a mudança fica entre {pp(max(sw))} e {pp(min(sw))} em todos os decis. Fonte: cedo_tarde.json (decis_2t e zonas.decis)."
+        "O nível sobe e desce de um decil a outro, e o 1º turno nos mesmos lugares desenha a mesma serra; a mudança "
+        f"varia bem menos que o nível. {'; '.join(partes)}. Fonte: cedo_tarde.json (decis_2t e zonas.decis)."
     )
     return figura_html(
         "ct_decis",
@@ -307,7 +314,7 @@ def fig_ufs_vs_1t(L: dict | None) -> str:
             1000,
             h,
             "Minuto em que cada UF fechou, 1º turno contra 2º turno",
-            "Ponto dourado: 1º turno. Ponto azul: 2º turno descontados os 120 minutos da prorrogação. "
+            "Ponto dourado: 1º turno. Ponto azul: 2º turno descontados os 120 minutos da prorrogação informada pelo noticiário. "
             "Contorno azul: 2º turno no relógio.",
         )
     ]
@@ -373,7 +380,7 @@ def fig_ufs_vs_1t(L: dict | None) -> str:
     )
     legenda = (
         "Sem descontar nada, várias UFs fecharam mais tarde que no 1º turno; descontados os 120 minutos da "
-        "prorrogação, todas as UFs"
+        "prorrogação (horário do noticiário, não do banco), todas as UFs"
         + (" completas" if any(u["fechou_min"] is None for u in ufs) else "")
         + " fecharam antes. Fonte: linha_do_tempo.json (conclusao_ufs)."
     )
@@ -408,8 +415,8 @@ def fig_mapa_hora(L: dict | None) -> str:
         tit,
         "Hora em que cada UF completou o 2º turno",
         "Mapa do Brasil por UF com a hora de Brasília em que a última seção do estado entrou.",
-        escuro=lambda uf, u: minuto(u) is not None
-        and faixa(minuto(u), CORTES_HORA) >= 3,
+        escuro=lambda uf, u: (m := minuto(u)) is not None
+        and faixa(m, CORTES_HORA) >= 3,
     )
     leg = legenda_html(
         [*zip(ROT_HORA, HORAS, strict=True)]

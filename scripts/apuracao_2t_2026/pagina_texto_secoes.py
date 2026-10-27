@@ -30,6 +30,7 @@ from .pagina_fig_secoes_base import (
     min_de,
     secoes_pais,
 )
+from .pagina_texto_noticias import tipo_exibido
 from .secoes_linhas import LinhasAusentes
 
 ROTULO = "Sinal pede explicação, não prova irregularidade."
@@ -203,7 +204,7 @@ def noticias(N: dict | None) -> str:
     lis = "".join(
         f"<li><b>{_hora_item(i)}</b> {escape(i.get('resumo') or '')} "
         f'(<a href="{escape(i["url"])}" rel="noopener">{escape(i.get("veiculo") or "fonte")}</a>; '
-        f"{TIPO_NOTICIA.get(i.get('tipo'), i.get('tipo') or '')})</li>"
+        f"{TIPO_NOTICIA.get(tipo_exibido(i), i.get('tipo') or '')})</li>"
         for i in itens
     )
     return (

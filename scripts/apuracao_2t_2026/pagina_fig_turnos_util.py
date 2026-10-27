@@ -11,7 +11,7 @@ import math
 from html import escape
 from itertools import pairwise
 
-from apuracao_2026.pagina_comum import NOME_UF
+from apuracao_2026.pagina_comum import NOME_UF, inteiro
 from apuracao_2026.pagina_fig_base import (
     INK,
     LINE,
@@ -63,6 +63,50 @@ def ibge_por_tse(d) -> dict[str, str]:
 
 def municipio(nome: str, uf: str) -> str:
     return f"{nome_bonito(nome)} ({uf})"
+
+
+def _e(xs: list[str]) -> str:
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " e " + xs[-1]
+
+
+def universo_municipios(C1: dict | None, C22: dict | None = None) -> str:
+    """Nota de universo dos municípios, lida de ``comparacao_1t.json`` e ``comparacao_2022.json``.
+
+    Explica as três contagens do dossiê: todos os municípios sem exterior (1º × 2º
+    turno), os que favoreceram cada candidato (mudança arredondada a 0,00 pp fica
+    de fora das duas) e os que existem nos arquivos de 2022.
+    """
+    if not C1:
+        return ""
+    ms = linhas_de(C1["municipios"])
+    disp = C1["dispersao_municipal"]
+    pf, pl = disp["n_swing_h2h_pro_flavio"], disp["n_swing_h2h_pro_lula"]
+    zeros = [m for m in ms if not (m.get("swing_h2h_flavio_pp") or 0)]
+    txt = (
+        f"Universo: os {inteiro(len(ms))} municípios do Brasil, sem o exterior, com o arquivo de "
+        "presidente completo nos dois turnos de 2026. A mudança contra o 1º turno favoreceu Lula em "
+        f"{inteiro(pl)} e Flávio em {inteiro(pf)}"
+    )
+    if len(zeros) == 1:
+        txt += (
+            f"; em {municipio(zeros[0]['nome'], zeros[0]['uf'])} ficou em 0,00 pp, arredondada a duas "
+            "casas, e o município não entra em nenhuma das duas contagens"
+        )
+    elif zeros:
+        txt += (
+            f"; em {inteiro(len(zeros))} municípios ({_e([municipio(m['nome'], m['uf']) for m in zeros])}) "
+            "ficou em 0,00 pp, arredondada a duas casas, e eles não entram em nenhuma das duas contagens"
+        )
+    txt += "."
+    sem = [m for m in (C22 or {}).get("sem_2022", []) if m.get("uf") != "ZZ"]
+    n22 = ((C22 or {}).get("brasil") or {}).get("n_municipios")
+    if sem and n22 is not None:
+        txt += (
+            f" Contra o 2º turno de 2022 são {inteiro(n22)}: "
+            f"{_e([municipio(m['nome'], m['uf']) for m in sem])} "
+            f"{'não está' if len(sem) == 1 else 'não estão'} nos arquivos de 2022 do TSE."
+        )
+    return txt
 
 
 def tabela_compacta(cabecalho: list[str], linhas: list[list], legenda: str = "") -> str:

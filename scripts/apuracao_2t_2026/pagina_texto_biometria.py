@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from html import escape
 
-from apuracao_2026.pagina_comum import inteiro, num
+from apuracao_2026.pagina_comum import inteiro, num, p
 from apuracao_2026.pagina_fig_base import nome_bonito, pct, pp
 
 from .pagina_fig_turnos_util import nome_uf
@@ -61,8 +61,10 @@ def ufs(B: dict) -> str:
     return _p(
         f"Por UF, a parcela por ano de nascimento vai de {fim.split(', ')[-1]} até "
         f"{top.split(', ')[0]}. As maiores: {top}. As menores: {fim}. A maior mudança entre os "
-        f"turnos é de {pp(dmax['ano_nascimento_delta_pp'])} ({nome_uf(dmax['uf'])}): a parcela "
-        "é característica do lugar, não do dia."
+        f"turnos é de {pp(dmax['ano_nascimento_delta_pp'])} ({nome_uf(dmax['uf'])})."
+    ) + p(
+        "Com mudança tão pequena entre os turnos, a parcela é característica do lugar, não do dia.",
+        "inferencia",
     )
 
 
@@ -98,7 +100,7 @@ def modelos(B: dict) -> str:
     M = B["modelos"]
     d2 = M["dentro_do_municipio"]["2t"]
     lin = {(x["turno"], x["modelo"]): x for x in M["por_modelo"]}
-    a13, a22 = lin.get(("2t", "UE2013")), lin.get(("2t", "UE2022"))
+    a13, a22 = lin[("2t", "UE2013")], lin[("2t", "UE2022")]
     troca = next(
         (x for x in M["mesma_secao_troca"] if x["grupo"].startswith("antiga no 1T")),
         None,
@@ -108,8 +110,12 @@ def modelos(B: dict) -> str:
         f"por ano de nascimento e a UE2022, {pct(a22['ano_nascimento_pct'])}. Dentro do mesmo "
         f"município, a urna antiga (UE2013 e UE2015) fica {pp(d2['dif_ano_nascimento_antiga_menos_nova_pp'])} "
         f"acima da nova (erro-padrão {num(d2['ep_pp'], 2)}; {inteiro(d2['municipios'])} municípios "
-        f"com os dois tipos). O mesmo aparece no 1º turno. A leitura provável é o leitor "
-        "biométrico mais antigo reconhecendo menos digitais, hipótese que só o log confirma."
+        f"com os dois tipos). O mesmo aparece no 1º turno."
+    )
+    h += p(
+        "A leitura provável é o leitor biométrico mais antigo reconhecendo menos digitais; só o "
+        "log confirma.",
+        "hipotese",
     )
     if troca and troca["variacao_ano_nascimento_media_pp"] is not None:
         h += _p(
@@ -124,23 +130,92 @@ def modelos(B: dict) -> str:
     return h
 
 
-def voto(B: dict) -> str:
-    g = {v["grupo"]: v for v in B["voto"]}
-    a, s = g["ano_nascimento_alto"], g["sem_cadastro_alto"]
+def _fr(v: dict) -> str:
+    return (
+        f"{inteiro(v['n_sinal_total'])} seções; fatia de Flávio "
+        f"{pp(v.get('dif_fatia_flavio_vs_vizinhas_pp'))} contra as vizinhas do mesmo município "
+        f"(erro-padrão {num(v.get('ep_fatia_flavio_vs_vizinhas_pp'), 2)}) e diferença em diferenças "
+        f"contra o 1º turno de {pp(v.get('did_fatia_flavio_pp'))} (erro-padrão aproximado, entre "
+        f"municípios, {num(v.get('ep_did_fatia_flavio_pp'), 2)}; n {inteiro(v['n_did'])})"
+    )
 
-    def fr(v: dict) -> str:
+
+def _no_1t(v: dict) -> float:
+    """Diferença contra as vizinhas implícita no 1º turno: a de hoje menos a diferença em diferenças."""
+    return v["dif_fatia_flavio_vs_vizinhas_pp"] - v["did_fatia_flavio_pp"]
+
+
+def _duas_reguas(a: dict, s: dict, sal: dict | None, V: dict | None) -> str:
+    """Compara com o bloco de sinais (secoes_voto.json), que usa outra régua e outra definição de salto."""
+    sv = {x["sinal"]: x for x in (V or {}).get("sinais", [])}
+    an, sb, sl = (
+        sv.get("sinal_ano_nasc"),
+        sv.get("sinal_sem_bio"),
+        sv.get("sinal_salto_bio"),
+    )
+    if not (an and sb):
+        return ""
+
+    def dentro(v: dict) -> bool:
         return (
-            f"{inteiro(v['n_sinal_total'])} seções; fatia de Flávio "
-            f"{pp(v.get('dif_fatia_flavio_vs_vizinhas_pp'))} contra as vizinhas do mesmo município "
-            f"e diferença em diferenças contra o 1º turno de {pp(v.get('did_fatia_flavio_pp'))} "
-            f"(erro-padrão {num(v.get('ep_did_fatia_flavio_pp'), 2)}, n {inteiro(v['n_did'])})"
+            abs(v["dif_fatia_flavio_vs_vizinhas_pp"])
+            <= v["ep_fatia_flavio_vs_vizinhas_pp"]
         )
 
-    return _p(
-        f"Voto. Ano de nascimento alto (10% ou mais e o dobro da mediana do município): {fr(a)}. "
-        f"Sem cadastro alto: {fr(s)}. São diferenças de menos de dois pontos, em direções opostas, "
-        "e quase todas já existiam no 1º turno. Parcela alta pede explicação, não prova "
-        "irregularidade. Os mesmos sinais aparecem com contagens um pouco diferentes no bloco de "
-        "sinais mais abaixo: lá a régua é a mediana do município no 1º turno, como na API do "
-        "coletor; aqui, a mediana do próprio turno. Direção e tamanho coincidem nas duas réguas."
+    mesmo = (a["dif_fatia_flavio_vs_vizinhas_pp"] > 0) == (
+        an["dif_fatia_flavio_vs_vizinhas_pp"] > 0
     )
+    h = (
+        "Os mesmos sinais aparecem com contagens um pouco diferentes no bloco de sinais mais abaixo: lá a "
+        "régua é a mediana do município no 1º turno, como na API do coletor; aqui, a mediana do próprio turno. "
+        f"Para sem cadastro, as duas réguas coincidem: {pp(s['dif_fatia_flavio_vs_vizinhas_pp'])} aqui contra "
+        f"{pp(sb['dif_fatia_flavio_vs_vizinhas_pp'])} lá, e {pp(s['did_fatia_flavio_pp'])} contra "
+        f"{pp(sb['did_fatia_flavio_pp'])} em diferença em diferenças. Para ano de nascimento, "
+        + ("o sinal coincide" if mesmo else "o sinal difere")
+        + f": {pp(a['dif_fatia_flavio_vs_vizinhas_pp'])} aqui ({inteiro(a['n_sinal_total'])} seções) contra "
+        f"{pp(an['dif_fatia_flavio_vs_vizinhas_pp'])} lá ({inteiro(an['n_sinal_total'])})"
+        + (", ambos dentro de um erro-padrão" if dentro(a) and dentro(an) else "")
+        + f"; em diferença em diferenças, {pp(a['did_fatia_flavio_pp'])} contra {pp(an['did_fatia_flavio_pp'])}."
+    )
+    if sal and sl and sl.get("did_fatia_flavio_pp") is not None:
+        h += (
+            " O salto também tem definição diferente: aqui, só o ano de nascimento, 5 pp ou mais acima da própria "
+            f"seção no 1º turno ({inteiro(sal['n_sinal_total'])} seções, {pp(sal['dif_fatia_flavio_vs_vizinhas_pp'])} "
+            f"contra as vizinhas, {pp(sal['did_fatia_flavio_pp'])} em diferença em diferenças); na figura de diferença "
+            f"em diferenças mais abaixo, {sl['descricao']} ({inteiro(sl['n_did'])} seções, "
+            f"{pp(sl['dif_fatia_flavio_vs_vizinhas_pp'])} e {pp(sl['did_fatia_flavio_pp'])})."
+        )
+    return p(h, "verificado")
+
+
+def voto(B: dict, V: dict | None = None) -> str:
+    g = {v["grupo"]: v for v in B["voto"]}
+    a, s = g["ano_nascimento_alto"], g["sem_cadastro_alto"]
+    sal = g.get("ano_nascimento_salto")
+    grupos = [x for x in (a, s, sal) if x]
+    maior = max(abs(x["dif_fatia_flavio_vs_vizinhas_pp"]) for x in grupos)
+    h = p(
+        f"Voto. Ano de nascimento alto (10% ou mais e o dobro da mediana do município): {_fr(a)}. "
+        f"Sem cadastro alto, mesma regra: {_fr(s)}."
+        + (
+            f" Salto do ano de nascimento (5 pp ou mais acima da própria seção no 1º turno): {_fr(sal)}."
+            if sal
+            else ""
+        ),
+        "verificado",
+    )
+    s1, a1 = _no_1t(s), _no_1t(a)
+    parte = 100 * s1 / s["dif_fatia_flavio_vs_vizinhas_pp"]
+    virou = (a1 > 0) != (a["dif_fatia_flavio_vs_vizinhas_pp"] > 0)
+    h += p(
+        f"Contra as vizinhas, as diferenças vão até {num(maior, 2)} pp em módulo e em boa parte já existiam "
+        f"no 1º turno: no sem cadastro, {pp(s['dif_fatia_flavio_vs_vizinhas_pp'])} hoje menos "
+        f"{pp(s['did_fatia_flavio_pp'])} de diferença em diferenças deixa cerca de {pp(s1)} no 1º turno, "
+        f"{num(parte, 0)}% da de hoje. No ano de nascimento alto, {pp(a['dif_fatia_flavio_vs_vizinhas_pp'])} hoje e "
+        f"{pp(a['did_fatia_flavio_pp'])} de diferença em diferenças deixam cerca de {pp(a1)} no 1º turno"
+        + (": o sinal virou entre os turnos." if virou else ".")
+        + " A conta é aproximada, porque as duas medidas não usam os mesmos pesos. Parcela alta pede "
+        "explicação, não prova irregularidade.",
+        "inferencia",
+    )
+    return h + _duas_reguas(a, s, sal, V)

@@ -8,6 +8,8 @@ devolvem "". Todo número sai do JSON.
 
 from __future__ import annotations
 
+from typing import TypeGuard
+
 from apuracao_2026.pagina_comum import (
     FLAVIO,
     caixa,
@@ -39,13 +41,30 @@ T1 = "#8a7a3a"
 ROTULO = "pede explicação, não prova irregularidade"
 
 
-def _ok(d: dict | None) -> bool:
+def _ok(d: dict | None) -> TypeGuard[dict]:
     return bool(d) and "transporte" in d and "ordem" in d
 
 
 def _ic(x: dict) -> str:
     ic = x.get("ic95") or [None, None]
     return f"{sinal(x.get('did_pp'), 2)} pp (IC95 de {sinal(ic[0], 2)} a {sinal(ic[1], 2)})"
+
+
+def _fora_do_zero(T: dict, regra: str) -> list[tuple[int, dict]]:
+    """Quintis em que o IC95 da diferença em diferenças da regra não contém o zero."""
+    out = []
+    for q in T["quintis"]:
+        b = (q.get("did") or {}).get(regra) or {}
+        lo, hi = (b.get("ic95") or [None, None])[:2]
+        if b.get("did_pp") is None or lo is None or hi is None:
+            continue
+        if lo > 0 or hi < 0:
+            out.append((q["quintil"], b))
+    return out
+
+
+def _lista_q(xs: list[tuple[int, dict]]) -> str:
+    return "; ".join(f"quintil {q}, {_ic(b)}" for q, b in xs)
 
 
 # ------------------------------------------------------------------ H3
@@ -96,21 +115,27 @@ def _bahia(B: dict) -> str:
         )
         + p(
             f"Bahia inteira: abstenção {num(ba['abst_1t'], 2)}% → {num(ba['abst_2t'], 2)}% (2022: "
-            f"{num(ba['abst_2022_mun'], 2)}%), Flávio {sinal(ba['swing_f_pp'], 2)} pp, votos 15h–17h "
-            f"{num(ba['fim_dia_2t_pct'], 2)}%.",
+            f"{num(ba['abst_2022_mun'], 2)}%), Flávio {sinal(ba['swing_f_pp'], 2)} pp na parte entre os dois "
+            f"finalistas, 2º turno menos 1º, somadas as seções (o país, na mesma régua: {sinal(br['swing_f_pp'], 2)}), "
+            f"votos 15h–17h {num(ba['fim_dia_2t_pct'], 2)}%.",
             "verificado",
         )
         + p(
-            "O ônibus parado não deixou abstenção alta nem voto concentrado no fim do dia; o comparecimento a mais "
-            "veio antes das 15h, como no resto do país.",
+            "O ônibus parado não deixou abstenção alta nem voto concentrado no fim do dia. Pela parcela das 15h às "
+            "17h, menor que a do país, o comparecimento a mais veio antes das 15h; essa parte é inferência, porque o "
+            "comparecimento extra não foi medido hora a hora.",
             "inferencia",
         )
     )
     return caixa("io", "Bahia e Salvador", corpo)
 
 
-def bloco_hipotese(d: dict | None) -> str:
-    """Bloco do H3 (transporte e comparecimento diferencial)."""
+def bloco_hipotese(d: dict | None, V: dict | None = None) -> str:
+    """Bloco do H3 (transporte e comparecimento diferencial).
+
+    ``V`` é ``secoes_voto.json``, opcional: com ele o texto cita também a régua de
+    salto do capítulo Seção por seção, que marca seções diferentes.
+    """
     if not _ok(d):
         return ""
     T = d["transporte"]
@@ -141,16 +166,18 @@ def bloco_hipotese(d: dict | None) -> str:
     sal = br["did"]["salto"]
     fim = br["did"]["fim"]
     txt += p(
-        f"<strong>Onde o comparecimento saltou, o voto andou como nas vizinhas.</strong> Nas "
+        f"<strong>Onde o comparecimento saltou, o voto andou, no agregado, como nas vizinhas.</strong> Nas "
         f"{inteiro(sal['n_secoes_marcadas'])} seções com comparecimento ao menos 5 pp acima da mediana do próprio "
         f"município, a fatia de Flávio variou {sinal(sal['swing_marcadas_pp'], 2)} pp contra "
         f"{sinal(sal['swing_vizinhas_pp'], 2)} nas vizinhas: diferença em diferenças de {_ic(sal)}. Nas "
         f"{inteiro(fim['n_secoes_marcadas'])} seções com o fim do dia 10 pp acima da mediana do município: {_ic(fim)}. "
         f"No quintil mais forte de Lula, {_ic(q5['did']['salto'])}. Dentro de cada município, a correlação entre a "
-        f"variação do comparecimento e a da fatia de Flávio é {sinal(c['corr_dentro_municipio'], 3)}.",
+        f"variação do comparecimento e a da fatia de Flávio é {sinal(c['corr_dentro_municipio'], 3)}."
+        + _outra_regua(V),
         "verificado",
     )
     txt += _tabela_quintis(T)
+    txt += _contrario_quintis(T)
     txt += _bahia(d["bahia"])
     txt += nota(
         "contrario",
@@ -161,13 +188,64 @@ def bloco_hipotese(d: dict | None) -> str:
         "turnos de 2026, que é a que acompanha o deslocamento.",
         "O que um leitor hostil vai calcular.",
     )
+    q5s, q5f = q5["did"]["salto"], q5["did"].get("fim") or {}
+    por_q = ""
+    if _fora_do_zero(T, "salto") or _fora_do_zero(T, "fim"):
+        por_q = (
+            " Por quintil aparece pequena, de décimos de ponto, e fora do desenho esperado: no quintil mais forte "
+            f"de Lula, as seções que saltaram votaram como as vizinhas, {_ic(q5s)}"
+            + (
+                f", e as de fim do dia pesado andaram para Flávio, {_ic(q5f)}: sinal contrário ao da hipótese."
+                if q5f.get("did_pp") is not None and q5f["did_pp"] > 0
+                else "."
+            )
+        )
     txt += nota(
         "juizo",
         "A marca de transporte de última hora (abstenção caindo mais e voto concentrado no fim do dia onde Lula é "
-        "forte, com voto deslocado nas seções que saltaram) não aparece. Mobilização ao longo do dia, antes das "
-        f"15h, não se separa nestes dados. Atipicidade {ROTULO}.",
+        f"forte, com voto deslocado nas seções que saltaram) não aparece no agregado.{por_q} Mobilização ao longo do "
+        f"dia, antes das 15h, não se separa nestes dados. Atipicidade {ROTULO}.",
     )
     return txt
+
+
+def _contrario_quintis(T: dict) -> str:
+    """Achado contrário: quintis com diferença em diferenças fora do zero, nas duas regras."""
+    sal, fim = _fora_do_zero(T, "salto"), _fora_do_zero(T, "fim")
+    if not sal and not fim:
+        return ""
+    partes = []
+    if sal:
+        partes.append(
+            "Nas seções em que o comparecimento saltou, a diferença em diferenças fica fora do zero em "
+            f"{len(sal)} dos {len(T['quintis'])} quintis: {_lista_q(sal)}."
+        )
+    if fim:
+        partes.append(
+            "Nas seções com o fim do dia pesado, fica fora do zero em "
+            f"{len(fim)}: {_lista_q(fim)}."
+        )
+    partes.append(
+        "Negativo é Flávio perdendo mais que nas vizinhas do município; positivo, menos. O agregado esconde "
+        "esses sinais porque eles têm direções diferentes entre os quintis."
+    )
+    return nota("contrario", " ".join(partes), "O que a tabela por quintil mostra.")
+
+
+def _outra_regua(V: dict | None) -> str:
+    """Frase com a régua de salto do capítulo Seção por seção (contra a própria seção), quando existe."""
+    s = next(
+        (x for x in (V or {}).get("sinais", []) if x.get("sinal") == "delta"),
+        None,
+    )
+    if not s or s.get("did_fatia_flavio_pp") is None:
+        return ""
+    return (
+        " O capítulo Seção por seção usa outra régua de salto: a seção com comparecimento 5 pp ou mais acima do "
+        f"dela mesma no 1º turno, sem comparar com o município ({inteiro(s['n_did'])} seções), com diferença em "
+        f"diferenças de {sinal(s['did_fatia_flavio_pp'], 2)} pp (erro-padrão aproximado "
+        f"{num(s.get('ep_did_fatia_flavio_pp'), 2)}). As duas réguas marcam seções diferentes."
+    )
 
 
 # ------------------------------------------------------------------ cedo e tarde
@@ -253,11 +331,18 @@ def _figura(od: dict) -> str:
     leg = legenda_html(
         [("2º turno", FLAVIO), ("1º turno, mesmas seções", T1), ("diferença", MUTED)]
     )
+    rs = od.get("resumo") or {}
+    varia = (
+        f"varia {num(rs['dif_amplitude_pp'], 2)} pp entre os grupos, contra {num(rs['fatia_2t_amplitude_pp'], 2)} pp "
+        "no nível"
+        if rs.get("dif_amplitude_pp") is not None
+        and rs.get("fatia_2t_amplitude_pp") is not None
+        else "varia bem menos que o nível"
+    )
     return figura_html(
         "angulo_ordem_recebimento",
         "".join(out),
-        "Os grupos que chegaram primeiro eram mais de Flávio nos dois turnos; a diferença entre os turnos "
-        "quase não muda com a hora de chegada.",
+        f"Os grupos que chegaram primeiro eram mais de Flávio nos dois turnos; a diferença entre os turnos {varia}.",
         tips,
         apos=leg,
     )
@@ -304,7 +389,7 @@ def bloco_ordem(d: dict | None) -> str:
     ult_ufs = ", ".join(V[-1]["ufs_principais"])
     prim_ufs = ", ".join(V[0]["ufs_principais"])
     txt = p(
-        f"<strong>A virada da noite veio da ordem de chegada, não de mudança dentro das seções.</strong> Em 20 grupos "
+        f"Em {len(V)} grupos "
         f"de mesmo número de votos, pela hora em que o TSE recebeu cada BU, Flávio tem {num(V[0]['fatia_f_2t'], 2)}% no "
         f"primeiro ({V[0]['de']} a {V[0]['ate']}), {num(pico['fatia_f_2t'], 2)}% no {pico['vintil']}º ({pico['de']} a "
         f"{pico['ate']}, com {', '.join(pico['ufs_principais'])} à frente) e {num(V[-1]['fatia_f_2t'], 2)}% no último "
@@ -315,11 +400,19 @@ def bloco_ordem(d: dict | None) -> str:
         "verificado",
     )
     txt += p(
+        "<strong>A virada da noite veio sobretudo da ordem de chegada, e pouco de mudança dentro das seções.</strong> "
+        f"A diferença contra o 1º turno varia pouco: {num(rr['dif_amplitude_pp'], 2)} pp de amplitude na mudança, "
+        f"contra {num(rr['fatia_2t_amplitude_pp'], 2)} pp no nível.",
+        "inferencia",
+    )
+    txt += p(
         f"Somando na ordem de recebimento, a partir de 100 mil votos, Flávio fica à frente de {ac['frente_de']} a "
         f"{ac['frente_ate']}, com máximo de {num(ac['maximo_pct'], 2)}% às {ac['maximo_em']}, e termina em "
-        f"{num(ac['final_pct'], 2)}%. A diferença entre os turnos fica cerca de meio ponto mais negativa nos últimos grupos "
-        f"(correlação com a ordem {sinal(rr['corr_ordem_dif'], 2)}), onde pesam {ult_ufs}; a deriva é "
-        f"pequena perto dos {num(rr['fatia_2t_amplitude_pp'], 2)} pp que separam os grupos.",
+        f"{num(ac['final_pct'], 2)}%. A diferença entre os turnos é {num(abs(V[-1]['dif_pp'] - V[0]['dif_pp']), 2)} pp "
+        f"{'mais negativa' if V[-1]['dif_pp'] < V[0]['dif_pp'] else 'menos negativa'} no último grupo que no primeiro "
+        f"({sinal(V[-1]['dif_pp'], 2)} contra {sinal(V[0]['dif_pp'], 2)}; correlação com a ordem "
+        f"{sinal(rr['corr_ordem_dif'], 2)}), e nos últimos grupos pesam {ult_ufs}; a deriva é "
+        f"pequena perto dos {num(rr['fatia_2t_amplitude_pp'], 2)} pp que separam os grupos no nível.",
         "verificado",
     )
     txt += _figura(R)
@@ -336,8 +429,10 @@ def bloco_ordem(d: dict | None) -> str:
         "inferencia",
         f"A ordem de recebimento segue a transmissão de cada UF ({prim_ufs} nos primeiros grupos; {ult_ufs} nos "
         "últimos); ela muda o placar parcial e não o resultado. Um atraso seletivo deixaria a "
-        "diferença contra o 1º turno variando com a hora de chegada, e ela fica estável. Atipicidade "
-        f"{ROTULO}.",
+        "diferença contra o 1º turno variando com a hora de chegada. Ela varia, com tendência "
+        f"(correlação {sinal(rr['corr_ordem_dif'], 2)} com a ordem), mas pouco: {num(rr['dif_amplitude_pp'], 2)} pp de "
+        f"amplitude contra {num(rr['fatia_2t_amplitude_pp'], 2)} pp no nível. Isso descarta um atraso seletivo grande, "
+        f"não um pequeno. Atipicidade {ROTULO}.",
     )
     txt += _tabela_vintis(
         R, "Flávio por ordem de recebimento do BU, 20 grupos de mesmo número de votos"

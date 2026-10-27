@@ -21,6 +21,7 @@ from .pagina_fig_noite import (
     serie,
     trechos_flavio_frente,
 )
+from .pagina_texto_noticias import tipo_exibido
 
 NOTICIAS = "../noticias_noite.json"
 L1T = "../../apuracao_2026/dados/linha_do_tempo.json"
@@ -67,11 +68,13 @@ def cronologia(N: dict | None) -> str:
     )
     for it in achados:
         selo = (
-            rotulo("relato") + " " if it.get("tipo") in ("relato", "declaracao") else ""
+            rotulo("relato") + " "
+            if tipo_exibido(it) in ("relato", "declaracao")
+            else ""
         )
         itens.append(
             f'<li>{selo}<b>{hora_item(it)}</b> · <a href="{escape(it["url"])}">{escape(it.get("veiculo", ""))}</a>'
-            f" ({TIPO.get(it.get('tipo', ''), it.get('tipo', ''))}): {escape(it.get('resumo', ''))}</li>"
+            f" ({TIPO.get(tipo_exibido(it), it.get('tipo', ''))}): {escape(it.get('resumo', ''))}</li>"
         )
     if not itens:
         return ""
@@ -216,6 +219,8 @@ def tabela_latencia(L: dict) -> str:
 
 def render(d: Dados, cap: Capitulo) -> str:
     L = d.get("linha_do_tempo.json")
+    if L is None:
+        raise KeyError("linha_do_tempo.json")
     N = d.get(NOTICIAS)
     sil = L["pausas"]["silencio_geral"]
     vs = serie(L)

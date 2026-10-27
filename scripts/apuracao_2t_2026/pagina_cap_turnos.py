@@ -25,7 +25,7 @@ from apuracao_2026.pagina_fig_base import FLAVIO, LULA, pct, pp
 from . import pagina_fig_turnos as F
 from . import pagina_texto_turnos as T
 from .pagina_comum import cabeca
-from .pagina_fig_turnos_util import ESTILO, municipio
+from .pagina_fig_turnos_util import ESTILO, municipio, universo_municipios
 
 ARQ1 = "comparacao_1t.json"
 ARQ22 = "comparacao_2022.json"
@@ -92,6 +92,8 @@ def render(d: Dados, cap: Capitulo) -> str:
             "lula_perdeu_votos",
         ],
     )
+    if C1 is None:
+        raise KeyError(ARQ1)
     b = C1["brasil"]
     disp = C1["dispersao_municipal"]
     ufs = C1["ufs"]
@@ -138,10 +140,11 @@ def render(d: Dados, cap: Capitulo) -> str:
         f"A casa esperava que a consolidação da direita levasse Flávio para cima no 2º turno. A urna não sustenta: a parte "
         f"dele entre os dois caiu em {caiu_uf} de {len(ufs)} UFs, da menor queda em {menor['nome_uf']} "
         f"({pp(menor['swing_h2h_flavio_pp'])}) à maior em {maior['nome_uf']} ({pp(maior['swing_h2h_flavio_pp'])}). "
-        f"Entre os municípios, a mudança favoreceu Flávio em só {inteiro(disp['n_swing_h2h_pro_flavio'])} de "
-        f"{inteiro(disp['n_swing_h2h_pro_flavio'] + disp['n_swing_h2h_pro_lula'])}.",
+        f"Entre os {inteiro(b['n_municipios'])} municípios, a mudança favoreceu Flávio em só "
+        f"{inteiro(disp['n_swing_h2h_pro_flavio'])}.",
         "O achado que contraria a tese da casa.",
     )
+    h += p(universo_municipios(C1, C22), "verificado")
     h += F.fig_barras_uf(C1, C22)
     h += p(
         "Um esclarecimento de régua. Sobre todos os válidos do 1º turno, que incluíam os terceiros, a parte de Flávio subiu "

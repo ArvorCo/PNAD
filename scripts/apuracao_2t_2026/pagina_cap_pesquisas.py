@@ -43,9 +43,10 @@ def render(d: Dados, cap: Capitulo) -> str:
     f = T.fatos(PV, PP, PE, H)
     h = cabeca(
         cap,
-        "O que mudou entre sábado e domingo.<br><em>Pesquisas, urna e a hipótese do autor.</em>",
+        "O que mudou entre sábado e domingo?<br><em>Pesquisas, urna e a hipótese do autor.</em>",
         f"{sinal(f['erro'], 2)} pontos na diferença Flávio menos Lula entre o último campo das "
-        f"{f['n']} casas e a urna, no mesmo sentido em todas: a medida do que mudou.",
+        f"{f['n']} casas e a urna, no mesmo sentido em todas. Para o autor do dossiê, é a medida do que "
+        "mudou; o capítulo mostra o que sustenta e o que contraria essa leitura.",
     )
     h += T.tese() + T.cartoes(f) + T.abertura(f)
     if H is not None:

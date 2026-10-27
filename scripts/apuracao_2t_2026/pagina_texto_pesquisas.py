@@ -207,7 +207,7 @@ def cartoes(f: dict) -> str:
 
 
 def abertura(f: dict) -> str:
-    h = '<h3 id="pesquisas-mudanca">O que mudou entre sábado e domingo</h3>'
+    h = '<h3 id="pesquisas-mudanca">O que mudou entre sábado e domingo?</h3>'
     h += p(
         f"No sábado, as {f['n']} casas com campo encerrado na última semana mediam, em média, Flávio "
         f"{s2(f['erro'] + f['urna_fl'])} pontos à frente nos válidos. No domingo, a urna deu Lula "
@@ -295,9 +295,12 @@ def sinal_invertido(f: dict) -> str:
         "verificado",
     )
     h += p(
-        "Quem mais pôs Lula à frente no 1º turno não é quem mais pôs Flávio à frente no 2º: não há viés "
-        "fixo de cada instituto. Um movimento que atinge todas as casas igual, depois do último campo, "
-        "produz exatamente esse desenho.",
+        f"Quem mais pôs Lula à frente no 1º turno não é quem mais pôs Flávio à frente no 2º (correlação "
+        f"{sinal(f['painel_r'], 2)}): na leitura da casa, o dado não sustenta viés fixo de cada instituto. Um "
+        "movimento que atinge todas as casas igual, depois do último campo, produz esse desenho. O precedente "
+        f"acima pede cautela: nos 1º turnos de 2022 ({s2(f['e2022'])}) e de 2026 ({s2(f['t1_erro'])}) as casas "
+        "também erraram juntas, sem mudança de última hora medida, e erro comum assim é compatível com viés de "
+        "método compartilhado ou com casas que convergem umas para as outras (herding).",
         "juizo",
     )
     return h
@@ -317,8 +320,10 @@ def geografia(f: dict) -> str:
         "verificado",
     )
     h += p(
-        "A geografia ficou onde estava; o nível mudou em todas as UFs juntas. É o desenho de um "
-        "deslocamento nacional, não de um erro localizado.",
+        "A geografia ficou onde estava; o nível mudou em todas as UFs juntas. Na leitura da casa, é o "
+        "desenho de um deslocamento nacional, não de um erro localizado em algumas UFs. Um viés de método "
+        "comum às pesquisas também deslocaria todas as UFs juntas, como o erro comum dos 1º turnos de 2022 "
+        "e 2026; o desenho não separa as duas leituras.",
         "juizo",
     )
     return h

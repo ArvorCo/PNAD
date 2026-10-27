@@ -109,8 +109,9 @@ def candidatos(f: dict, PV: dict, N: dict | None, logs: dict | None = None) -> s
             else "Flávio perdeu tanto ou mais terreno ali que no resto do país."
         )
         h += p(
-            f"Na Bahia, a diferença entre a urna e a repetição do 1º turno na parcela de Flávio foi de "
-            f"{s2(r_ba)} pontos, contra {s2(media)} na média das UFs. {leitura}",
+            f"Na Bahia, a urna menos a repetição do 1º turno seção a seção (transporte proporcional), na parte de "
+            f"Flávio entre os dois finalistas, deu {s2(r_ba)} pontos, contra {s2(media)} na média simples das UFs, "
+            f"na mesma régua. {leitura}",
             "contrario",
         )
     # 4. indecisos

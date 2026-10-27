@@ -14,6 +14,7 @@ from functools import cache
 
 from apuracao_2026.thread_base import mi, nome_proprio, num, pct, sinal
 
+from .pagina_cap_cedo_tarde import prorrogacao
 from .thread_base import (
     URL_DOSSIE,
     dado,
@@ -73,6 +74,14 @@ def _lista(itens: list[str]) -> str:
 @cache
 def noticias() -> list[dict]:
     return dado("analysis/apuracao_2t_2026/noticias_noite.json")["itens"]
+
+
+def achar(padrao: str, texto: str) -> str:
+    """Primeiro grupo de ``padrao`` em ``texto``; falha alto se o registro mudou."""
+    m = re.search(padrao, texto)
+    if m is None:
+        raise ValueError(f"padrão não encontrado: {padrao}")
+    return m.group(1)
 
 
 def noticia(padrao: str) -> dict:
@@ -239,8 +248,6 @@ def v_noite() -> dict:
         "pausa_uf_max_uf": NOME_UF[maior_uf["uf"]],
         "pausa_uf_max_min": num(maior_uf["minutos"], 1),
         "susp_veic": susp["veiculo"],
-        "susp_hora": re.search(r"às (\d+h\d+)", susp["resumo"]).group(1),
-        "susp_st": re.search(r"com ([\d.]+) de", susp["resumo"]).group(1),
         "regressivas": num(
             sum(
                 x["marcadas_regressivas"]
@@ -270,19 +277,19 @@ def v_prorrogacao() -> dict:
     aviso = noticia(r"TSE avisou as seções")
     reaj = noticia(r"Zanin reajustou a decisão")
     sp = noticia(r"TRE-SP: mais de")
-    relogio = re.search(r"(\d{2}:\d{2})", lt["relogio"]).group(1)
+    relogio = achar(r"(\d{2}:\d{2})", lt["relogio"])
     v = {
         "fim_oficial": hora_h(relogio),
         "fim_novo": hora_h(s["regras"]["apos_hhmm"]),
         "dec_hora": _hora_noticia(dec),
         "dec_veic": dec["veiculo"].split(" (")[0],
-        "aviso_hora": re.search(r"às (\d+h\d+)", aviso["resumo"]).group(1),
-        "aviso_atraso": re.search(r"(\d+) minutos após", aviso["resumo"]).group(1),
+        "aviso_hora": achar(r"às (\d+h\d+)", aviso["resumo"]),
+        "aviso_atraso": achar(r"(\d+) minutos após", aviso["resumo"]),
         "aviso_veic": aviso["veiculo"],
         "reaj_hora": _hora_noticia(reaj),
         "reaj_veic": reaj["veiculo"],
-        "sp_pct": re.search(r"mais de (\d+%)", sp["resumo"]).group(1),
-        "sp_hora": re.search(r"às (\d+h\d+)", sp["resumo"]).group(1),
+        "sp_pct": achar(r"mais de (\d+%)", sp["resumo"]),
+        "sp_hora": achar(r"às (\d+h\d+)", sp["resumo"]),
         "sp_veic": sp["veiculo"],
         "enc_p50": pb["encerramento_p50"],
         "enc_p90": pb["encerramento_p90"],
@@ -435,6 +442,10 @@ def v_cedo_tarde() -> dict:
         "ct_d10_ate": d[-1]["fechou_hhmm_ate"],
         "ct_sw_menor": sinal(max(sw)),
         "ct_sw_maior": sinal(min(sw)),
+        "ct_amp_sw": num(max(sw) - min(sw), 2),
+        "ct_amp_niv": num(
+            max(x["h2h_flavio"] for x in d) - min(x["h2h_flavio"] for x in d), 2
+        ),
         "ct_sw_d1": sinal(d[0]["swing_h2h_flavio_pp"]),
         "ct_sw_d10": sinal(d[-1]["swing_h2h_flavio_pp"]),
         "ct_zonas_n": num(ct["zonas"]["n"]),
@@ -458,6 +469,13 @@ def v_cedo_tarde() -> dict:
         v["ct_pa_uf"] = pa["uf"]
         v["ct_pa_secoes"] = str(pa["secoes"])
         v["ct_pa_hora"] = pa["fechou_hhmm"]
+        pr = prorrogacao(dado("linha_do_tempo"))
+        v["ct_pa_janela"] = (
+            f"O minuto {'coincide com o' if pr['de'] <= pa['fechou_hhmm'] <= pr['ate'] else 'fica fora do'} "
+            f"intervalo de {pr['de']} a {pr['ate']} em que, segundo o noticiário, a prorrogação foi anunciada."
+            if pr["de"] and pr["ate"]
+            else ""
+        )
     return v
 
 
@@ -550,8 +568,8 @@ def v_abstencao() -> dict:
         "ab_d22_abs": num(abs(br["delta_2022_pp"]), 2),
         "ab_cnn_veic": cnn["veiculo"],
         "ab_cnn_hora": _hora_noticia(cnn),
-        "ab_cnn_valor": re.search(r"2006 \(([\d,]+%)\)", cnn["resumo"]).group(1),
-        "ab_tse": re.search(r"Abstenção de ([\d,]+%)", cnn["resumo"]).group(1),
+        "ab_cnn_valor": achar(r"2006 \(([\d,]+%)\)", cnn["resumo"]),
+        "ab_tse": achar(r"Abstenção de ([\d,]+%)", cnn["resumo"]),
         "ab_subiu_n": str(len(subiu)),
         "ab_sub1": NOME_UF[subiu[0]["uf"]],
         "ab_sub1_v": sinal(subiu[0]["arquivo_uf"]["delta_1t_pp"]),

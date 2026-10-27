@@ -10,9 +10,12 @@ Sem travessão; nunca "fraude".
 
 from __future__ import annotations
 
+import re
 from html import escape
 
 from apuracao_2026.pagina_comum import caixa, inteiro, nota, num, p, tabela
+
+from .pagina_texto_noticias import limpa
 
 ARQ = "angulo_boca_urna.json"
 ROTULO_TIPO = {
@@ -28,6 +31,16 @@ ROTULO_TIPO = {
     "secao_fechou_tarde": "seção fechou tarde",
     "outro": "outro",
 }
+ROTULO_SUBTEMA = {
+    "boca_de_urna": "boca de urna",
+    "sigilo_ou_venda_do_voto": "sigilo ou venda do voto",
+    "transporte": "transporte",
+    "violencia": "violência",
+    "outro": "outro",
+}
+PARTIDOS = re.compile(
+    r"\b(PL|PT|PSOL|PSD|PP|MDB|União|Novo|Republicanos|PSDB|PDT|PSB)\b"
+)
 ROTULO_CLASSE = {
     "registro_oficial": "registro oficial",
     "relato_imprensa": "relato de imprensa",
@@ -108,27 +121,51 @@ def _oficial(D: dict) -> str:
     return h
 
 
+def _caso(c: dict) -> str:
+    """Um caso nominal: registro oficial sai em nome de quem registrou; o veículo é só o meio."""
+    if c["classe"] == "registro_oficial" and c.get("quem_disse"):
+        quem = f"{escape(c['quem_disse'])}, pelo veículo {escape(c['veiculo'])}"
+        meta = escape(ROTULO_CLASSE[c["classe"]])
+    else:
+        quem = escape(c["veiculo"])
+        meta = (
+            f"{escape(ROTULO_CLASSE[c['classe']])}; "
+            f"{escape(c['quem_disse'] or 'sem fonte nomeada')}"
+        )
+    return (
+        f"<li>{escape(c['quando'][11:16])}, {quem}: {escape(limpa(c['resumo']))} "
+        f'<span class="nt-meta">({meta}) '
+        f'<a href="{escape(c["url"])}" rel="noopener">fonte</a></span></li>'
+    )
+
+
 def _nominais(oc: dict) -> str:
     casos = oc.get("boca_de_urna_nominais") or []
     if not casos:
         return ""
-    itens = "".join(
-        f"<li>{escape(c['quando'][11:16])}, {escape(c['veiculo'])}: {escape(c['resumo'])} "
-        f"<span class=\"nt-meta\">({escape(ROTULO_CLASSE[c['classe']])}; "
-        f"{escape(c['quem_disse'] or 'sem fonte nomeada')}) "
-        f'<a href="{escape(c["url"])}" rel="noopener">fonte</a></span></li>'
-        for c in casos
-    )
     oficiais = sum(c["classe"] == "registro_oficial" for c in casos)
+    partidos = sorted(
+        {
+            m
+            for c in casos
+            for m in PARTIDOS.findall(f"{c.get('titulo') or ''} {c['resumo']}")
+        }
+    )
+    lado = (
+        f" Os casos com partido citado envolvem só um lado ({escape(partidos[0])}): isso descreve o que a "
+        "imprensa arquivada nomeou, não a distribuição das ocorrências, que o MJSP não divide por candidatura."
+        if len(partidos) == 1
+        else ""
+    )
     return (
         p(
             f"Casos nominais de boca de urna no acervo do dia: {len(casos)}, "
             f"{inteiro(oficiais)} com registro oficial e {inteiro(len(casos) - oficiais)} por relato de "
-            "imprensa, listados abaixo com a fonte. O acervo é o que a casa arquivou na noite; ausência "
-            "no acervo não é ausência de ocorrência.",
+            f"imprensa, listados abaixo com a fonte.{lado} O acervo é o que a casa arquivou na noite; "
+            "ausência no acervo não é ausência de ocorrência.",
             "relato",
         )
-        + f'<ul class="nt-lista">{itens}</ul>'
+        + f'<ul class="nt-lista">{"".join(_caso(c) for c in casos)}</ul>'
     )
 
 
@@ -136,7 +173,10 @@ def _classes(oc: dict) -> str:
     c = oc["por_classe"]
     partes = [f"{inteiro(n)} {ROTULO_CLASSE[k]}" for k, n in c.items() if n]
     s = oc["por_subtema"]
-    sub = ", ".join(f"{escape(k.replace('_', ' '))} {inteiro(n)}" for k, n in s.items())
+    sub = ", ".join(
+        f"{escape(ROTULO_SUBTEMA.get(k) or k.replace('_', ' '))} {inteiro(n)}"
+        for k, n in s.items()
+    )
     return p(
         f"Dos {inteiro(oc['n'])} itens do acervo do dia que tratam de ocorrência, prisão, apreensão "
         f"ou pressão sobre o eleitor, {', '.join(partes)}. Por assunto: {sub}. Registro oficial é o "

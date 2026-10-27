@@ -241,7 +241,7 @@ def persistencia(L: dict) -> str:
             f"O que persiste é do lugar ou do cadastro, não do dia. “Eleitores sem biometria acima da referência” "
             f"repetiu em {num(sb.get('pct_persiste'), 1)}% das seções: é o cadastro da seção que não tem digital, e o "
             "cadastro não muda em três semanas. O que é do dia some: “retomadas após inatividade” marcou "
-            f"{inteiro(ret.get('total_1t'))} seções no 1º turno, com seis cargos na tela, e {inteiro(ret.get('total_2t'))} no 2º. "
+            f"{inteiro(ret.get('total_1t'))} seções no 1º turno, com seis votos em cinco cargos, e {inteiro(ret.get('total_2t'))} no 2º. "
             f"A inspeção de cinco minutos ou mais foi ao contrário: {inteiro(ins.get('total_1t'))} no 1º turno, "
             f"{inteiro(ins.get('total_2t'))} no 2º.",
             "inferencia",

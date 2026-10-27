@@ -9,7 +9,16 @@ from __future__ import annotations
 
 from html import escape
 
-from apuracao_2026.pagina_comum import caixa, inteiro, nota, num, p, sinal, tabela
+from apuracao_2026.pagina_comum import (
+    caixa,
+    inteiro,
+    nota,
+    num,
+    p,
+    rotulo,
+    sinal,
+    tabela,
+)
 
 ROTULO_PAIS = {
     "ve_2015_legislativas": "Venezuela, legislativas de 2015",
@@ -37,7 +46,20 @@ def _fontes(it: dict) -> str:
     return " ".join(links)
 
 
-def tabela_precedentes(P: dict) -> str:
+def _resultado(it: dict, nac: dict | None) -> str:
+    """Resultado do caso com selo: o do Brasil sai do arquivo nacional do TSE; o da Wikipédia é relato."""
+    if it["id"] == "br_2026_2t" and nac:
+        return (
+            f"{rotulo('verificado')} Lula {num(nac['pct_lula'], 2)}% × Flávio {num(nac['pct_flavio'], 2)}% dos "
+            f"válidos, {num(nac['pst'], 2)}% das seções totalizadas (arquivo nacional do TSE gerado às "
+            f"{escape(nac['gerado_brt'][11:19])} de {escape(nac['gerado_brt'][8:10])}/{escape(nac['gerado_brt'][5:7])}; "
+            "presidente.json)"
+        )
+    r = escape(it["resultado"] or "")
+    return f"{rotulo('relato')} {r}" if "Wikipédia" in r else r
+
+
+def tabela_precedentes(P: dict, nac: dict | None = None) -> str:
     linhas = []
     for it in P["itens"]:
         registro = (
@@ -51,7 +73,7 @@ def tabela_precedentes(P: dict) -> str:
                 _data(it["data"]),
                 escape(it["hora_e_alcance"] or ""),
                 escape(registro),
-                escape(it["resultado"] or ""),
+                _resultado(it, nac),
                 _fontes(it),
             ]
         )
@@ -65,14 +87,17 @@ def tabela_precedentes(P: dict) -> str:
             "Fontes",
         ],
         linhas,
-        f"{len(P['itens'])} casos; páginas arquivadas com SHA-256 em {escape(P['manifesto_fontes'])}",
+        f"{len(P['itens'])} casos; páginas arquivadas com SHA-256 em {escape(P['manifesto_fontes'])}. "
+        "Resultado citado da Wikipédia leva o selo de relato; o do Brasil vem do arquivo nacional do TSE",
     )
 
 
-def precedentes(H: dict) -> str:
+def precedentes(H: dict, PR: dict | None = None) -> str:
+    """Bloco dos precedentes; ``PR`` é ``presidente.json``, de onde sai o resultado do Brasil."""
     P = H.get("precedentes")
     if not P:
         return ""
+    nac = (PR or {}).get("nacional")
     h1, h2 = H["h1"], H["h2"]
     z = h2.get("zona") or {}
     ps = h1["pct_17_19_por_sinal"]
@@ -119,13 +144,14 @@ def precedentes(H: dict) -> str:
         "localizamos.",
         "verificado",
     )
-    h += f"<details><summary>Os {len(P['itens'])} casos, com fonte</summary>{tabela_precedentes(P)}</details>"
+    h += f"<details><summary>Os {len(P['itens'])} casos, com fonte</summary>{tabela_precedentes(P, nac)}</details>"
     h += p(
         "O expediente denunciado na Venezuela precisa de urnas abertas, sem fila, depois do horário. No Brasil, "
         f"{num(h1['pct_17_19'], 3)}% dos votos do dia entraram entre 17h e 19h ({inteiro(h1['computados_17_19'])} "
         f"votos, contra uma diferença de {inteiro(h1['margem_votos'])}) e {inteiro(h1['computados_depois_19'])} depois "
-        "das 19h. Mesmo todos de um só lado, não mudariam o resultado. Isso exclui a extensão como canal de votos; não "
-        "testa a totalização nem as urnas, que têm testes próprios (H2 e H5).",
+        "das 19h. Mesmo todos de um só lado, não mudariam o resultado. A marca que a extensão deixaria como canal de "
+        "votos não aparece nos arquivos públicos; o teste não alcança a totalização nem as urnas, que têm testes "
+        "próprios (H2 e H5).",
         "inferencia",
     )
     testes = [

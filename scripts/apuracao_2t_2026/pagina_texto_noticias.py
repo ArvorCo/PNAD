@@ -11,7 +11,7 @@ import re
 from collections.abc import Callable
 from html import escape
 
-from .pagina_comum import MEMOS, caixa, limites, p, tabela
+from .pagina_comum import MEMOS, caixa, inteiro, limites, p, tabela
 
 ARQ = "noticias_noite.json"
 
@@ -60,11 +60,22 @@ def grupo(item: dict) -> str:
 
 
 def limpa(s: str) -> str:
-    """Regra de escrita da casa: o termo das fontes para a acusação vira 'irregularidade'."""
+    """Regras de escrita da casa sobre o resumo da coleta.
+
+    O termo das fontes para a acusação vira 'irregularidade'. Condução à polícia por
+    suspeita não vira prisão por crime: 'presa por boca de urna ..., levada à PF'
+    (palavras do presidente do TRE-RJ na Agência Brasil) vira 'levada à PF por
+    suspeita de boca de urna ...'; o link leva ao texto original.
+    """
     s = re.sub(
         r"'[Ff]raude'",
         "palavras de ordem que acusavam irregularidade na eleição",
         s or "",
+    )
+    s = re.sub(
+        r"\bpresa por boca de urna([^,.]*), levada à PF",
+        r"levada à PF por suspeita de boca de urna\1",
+        s,
     )
     return re.sub(r"\b[Ff]raude\b", "irregularidade", s)
 
@@ -103,8 +114,24 @@ def ordenados(N: dict) -> list[dict]:
     )
 
 
+CONTA_DE_SECOES = re.compile(r"\b\d[\d.]* (?:de|das) [\d.]+ seç")
+
+
+def tipo_exibido(item: dict) -> str:
+    """Tipo de evidência na página.
+
+    Contagem de seções totalizadas é dado que o banco do coletor mede: quando a
+    imprensa a publica, o registro entra como relato, nunca como fato do dossiê,
+    e o número do dossiê é o do banco (regra de 27/10).
+    """
+    if CONTA_DE_SECOES.search(item.get("resumo") or ""):
+        return "relato"
+    return item.get("tipo") or "relato"
+
+
 def selo(item: dict) -> str:
-    css, nome = TIPO.get(item["tipo"], ("relato", item["tipo"]))
+    tipo = tipo_exibido(item)
+    css, nome = TIPO.get(tipo, ("relato", tipo))
     return f'<span class="selo selo-{css}">{nome}</span>'
 
 
@@ -228,20 +255,24 @@ def janela_parada(N: dict) -> tuple[float, float] | None:
     return (ini, ms["retomada"]["min"]) if ini is not None else None
 
 
-def secoes_na_parada(N: dict) -> str | None:
-    ms = {m["chave"]: m for m in marcos(N)}
-    if "retomada" not in ms:
-        return None
-    m = re.search(r"com ([\d.]+) das ([\d.]+) seções", ms["retomada"]["item"]["resumo"])
-    return f"{m.group(1)} das {m.group(2)}" if m else None
-
-
 # ------------------------------------------------------------------ blocos
 
 
-def abertura(N: dict) -> str:
+def _parada_do_banco(LT: dict | None) -> str:
+    """Parada do arquivo nacional de presidente pelo banco do coletor (``linha_do_tempo.json``)."""
+    lac = ((LT or {}).get("pausas") or {}).get("maior_lacuna_nacional")
+    if not lac:
+        return ""
+    return (
+        " Pelo banco do coletor, o arquivo nacional de presidente ficou sem versão nova de "
+        f"{escape(lac['de_brt'][11:19])} a {escape(lac['ate_brt'][11:19])}, parado em {inteiro(lac['st_antes'])} "
+        "seções totalizadas."
+    )
+
+
+def abertura(N: dict, LT: dict | None = None) -> str:
     itens = N["itens"]
-    cont = {k: sum(1 for i in itens if i["tipo"] == k) for k in TIPO}
+    cont = {k: sum(1 for i in itens if tipo_exibido(i) == k) for k in TIPO}
     ms = {m["chave"]: m for m in marcos(N)}
     partes = []
     for k in ("zanin", "aviso", "tresp"):
@@ -249,25 +280,19 @@ def abertura(N: dict) -> str:
             partes.append(
                 f"{escape(ms[k]['rotulo'])} ({_hm(ms[k]['min'])}, segundo {escape(ms[k]['item']['veiculo'])})"
             )
-    secoes = secoes_na_parada(N)
-    jan = janela_parada(N)
     h = p(
         f"O levantamento reúne {len(itens)} registros da imprensa e de órgãos públicos, fechado às "
         f"{escape(N['gerado_em'][11:13])}h{escape(N['gerado_em'][14:16])} de 25/10: {cont['fato']} fatos documentados, "
         f"{cont['declaracao']} declarações, {cont['relato']} relatos e {cont['hipotese']} análises. "
-        "Cada um tem link, hora, tipo de evidência e o texto bruto guardado com SHA-256.",
+        "Cada um tem link, hora, tipo de evidência e o texto bruto guardado com SHA-256. Registro que traz "
+        "contagem de seções totalizadas entra como relato: esse número é do banco do coletor.",
         "verificado",
     )
     if partes:
         txt = (
             "A sequência que decidiu a noite, pelas fontes: " + "; ".join(partes) + "."
         )
-        if jan and secoes:
-            txt += (
-                f" O TSE ficou sem divulgar entre {_hm(jan[0])} e {_hm(jan[1])}, parado com "
-                f"{secoes} seções apuradas."
-            )
-        h += p(txt, "verificado")
+        h += p(txt + _parada_do_banco(LT), "verificado")
     return h
 
 
@@ -352,7 +377,7 @@ def _prioridade(i: dict) -> tuple:
     ordem = {"fato": 0, "declaracao": 1, "relato": 2, "hipotese": 3}
     return (
         i["quando"][:10] != "2026-10-25",
-        ordem.get(i["tipo"], 9),
+        ordem.get(tipo_exibido(i), 9),
         not i.get("nota"),
         i["quando"],
     )

@@ -53,7 +53,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += (
         T.h2(H)
         + T.h3(H)
-        + TA.bloco_hipotese(d.get("angulo_transporte.json"))
+        + TA.bloco_hipotese(d.get("angulo_transporte.json"), d.get("secoes_voto.json"))
         + T.tabela_tercos(H)
         + T.h4(H)
         + TBU.bloco(d)
@@ -61,7 +61,7 @@ def render(d: Dados, cap: Capitulo) -> str:
         + T.tabela_modelos(H)
         + T.h6(H)
     )
-    h += TB.precedentes(H)
+    h += TB.precedentes(H, d.get("presidente.json"))
     h += T.discriminador(H) + T.tabela_testes(H) + fig_matriz(H)
     h += T.quadro(H) + T.fecho(H)
     return h

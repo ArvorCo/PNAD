@@ -164,7 +164,7 @@ def fig_linha(N: dict) -> str:
         texto = f"{_rot_h(m['min'])} {m['rotulo']}"
         largura = 7.1 * len(texto)
         direita = x + 12 + largura < dir_
-        cor = COR_TIPO.get(it["tipo"], INK)
+        cor = COR_TIPO.get(TN.tipo_exibido(it), INK)
         g = [
             ln(esq - 6, y, dir_, y, GRADE, 0.5, ' stroke-dasharray="1 4"'),
             f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{cor}"/>',
@@ -184,7 +184,7 @@ def fig_linha(N: dict) -> str:
                 it["veiculo"],
                 [
                     ("Hora no eixo", _rot_h(m["min"])),
-                    ("Tipo", NOME_TIPO.get(it["tipo"], it["tipo"])),
+                    ("Tipo", NOME_TIPO.get(TN.tipo_exibido(it), TN.tipo_exibido(it))),
                     ("Registro", TN.limpa(it["resumo"])[:220]),
                 ],
                 TN.limpa(it.get("nota", "")),
@@ -208,16 +208,18 @@ def fig_linha(N: dict) -> str:
         f = _faixa(i)
         j = FAIXAS.index(f)
         m = TN.minutos(i)
+        if m is None:
+            continue
         bal = int(m // 6)
         n = ocup.get((f, bal), 0)
         ocup[(f, bal)] = n + 1
         y = y_fx + j * passo_f + passo_f / 2 + (n % 3 - 1) * 8
         x = X(m)
-        cor = COR_TIPO.get(i["tipo"], INK)
+        cor = COR_TIPO.get(TN.tipo_exibido(i), INK)
         k_ = tips.add(
             ficha(
                 i["veiculo"],
-                f"{TN.rotulo_hora(i)} · {NOME_TIPO.get(i['tipo'], i['tipo'])}",
+                f"{TN.rotulo_hora(i)} · {NOME_TIPO.get(TN.tipo_exibido(i), TN.tipo_exibido(i))}",
                 [("Tema", TN.grupo(i)), ("Registro", TN.limpa(i["resumo"])[:240])],
                 TN.limpa(i.get("nota", "")),
             )

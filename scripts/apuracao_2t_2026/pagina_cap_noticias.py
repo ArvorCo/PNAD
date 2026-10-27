@@ -53,7 +53,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     h = T.CSS + cabeca(
         cap, "O dia nas fontes.<br><em>Hora, veículo e tipo de evidência.</em>", lead
     )
-    h += T.abertura(N) + fig_linha(N)
+    h += T.abertura(N, d.get("linha_do_tempo.json")) + fig_linha(N)
     h += T.cronologia(N) + T.blocos(N) + T.divergencias(N) + T.nao_encontrado(N)
     h += T.tabela_filtravel(N) + T.JS + T.limites_cap(N)
     return h

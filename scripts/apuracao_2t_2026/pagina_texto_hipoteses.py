@@ -34,6 +34,14 @@ ESTILO_RES = {
     "pendente": ("#dcd6ec", "#33295a"),
     "não se aplica": ("#f4f0e6", "#535b54"),
 }
+# Na página, o código "exclui" do JSON diz só que a marca esperada não aparece nos
+# arquivos públicos; "não exclui", que o teste não alcança o mecanismo.
+ROTULO_RES = {
+    "exclui": "marca ausente",
+    "não exclui": "não alcança",
+    "pendente": "pendente",
+    "não se aplica": "não se aplica",
+}
 
 
 def chip(texto: str, fundo: str, letra: str) -> str:
@@ -51,7 +59,7 @@ def estado(H: dict, ident: str, alcance: bool = True) -> str:
 
 
 def resultado(res: str) -> str:
-    return chip(res, *ESTILO_RES[res])
+    return chip(ROTULO_RES.get(res, res), *ESTILO_RES[res])
 
 
 def ic(b: dict, casas: int = 2) -> str:
@@ -148,11 +156,15 @@ def documentado(H: dict) -> str:
         "ainda abertas.",
         "verificado",
     )
+    b = s["banco"]
     h += p(
         f"Entre {s['inicio']} e {s['fim']} o TSE não gerou nenhum arquivo, de nenhum tipo, nos dois pleitos: "
         f"{num(s['minutos'], 1)} minutos, com {inteiro(s['leituras_no_intervalo'])} leituras do nosso coletor no "
-        f"intervalo e {s['versoes_geradas_dentro']} versões novas. Antes da pausa havia {inteiro(s['secoes_antes'])} "
-        f"seções totalizadas, com Lula a {num(s['lula_pct_antes'], 2)}% nessa fração. Nas urnas, o encerramento do BU (último cômputo registrado) teve "
+        f"intervalo e {s['versoes_geradas_dentro']} versões novas. Só no arquivo nacional de presidente, a lacuna vai "
+        f"da versão de {b['versao_brt']} à de {b['proxima_brt']}, {num(b['lacuna_min'], 1)} minutos: a primeira conta "
+        "olha todos os arquivos; a segunda, só esse. A última versão antes da pausa tinha "
+        f"{inteiro(b['secoes'])} seções totalizadas, com Lula a {num(b['lula_pct'], 2)}% nessa fração. "
+        "Nas urnas, o encerramento do BU (último cômputo registrado) teve "
         f"mediana às {u['encerramento_p50']} e a emissão do BU às {u['emissao_p50']}; {num(u['pct_ate_1715'], 2)}% "
         f"das seções encerraram até 17:15 e só {num(u['pct_apos_1900'], 2)}% depois das 19h. O recebimento dos BUs "
         f"pelo TSE teve mediana às {u['recebimento_p50']}: {num(u['pct_recebido_antes_1900'], 2)}% chegaram antes das 19h.",
@@ -175,9 +187,12 @@ def documentado(H: dict) -> str:
     )
     h += nota(
         "hipotese",
-        "Que o vídeo tenha sido gravado de manhã e guardado até o fim da tarde é hipótese do autor. A cópia "
-        "recebida não sustenta nem derruba isso: a hora de gravação só aparece no arquivo original de quem gravou. "
-        "O carimbo da plataforma prova a hora da publicação, não a da produção.",
+        "Que o vídeo tenha sido gravado de manhã, antes do fato que denuncia, e guardado até o fim da tarde é "
+        f"hipótese do autor. Contra ela, o documentado: a ordem de prisão do secretário saiu em matéria às "
+        f"{m['12:47']['hora']} e os ônibus parados eram notícia desde o início da tarde, horas antes da publicação "
+        f"às {v['publicado_brt_segundos']}. A cópia recebida não sustenta nem derruba a hipótese: a hora de gravação "
+        "só aparece no arquivo original de quem gravou. O carimbo da plataforma prova a hora da publicação, não a da "
+        "produção.",
     )
     return h
 
@@ -260,7 +275,7 @@ def h1(H: dict) -> str:
         [
             f"Entre 17h e 19h de Brasília as urnas computaram {inteiro(x['computados_17_19'])} votos, "
             f"{num(x['pct_17_19'], 3)}% dos {num(x['computados'] / 1e6, 1)} milhões do dia; depois das 19h, "
-            f"{inteiro(x['computados_depois_19'])}. No 1º turno, com seis cargos, a parcela entre 17h e 19h foi "
+            f"{inteiro(x['computados_depois_19'])}. No 1º turno, com cinco cargos e seis votos, a parcela entre 17h e 19h foi "
             f"{num(x['pct_17_19_1t'], 2)}%. A margem de Lula é de {inteiro(x['margem_votos'])} votos.",
             f"{inteiro(x['bus_apos_19h'])} BUs foram encerrados depois das 19h; em "
             f"{inteiro(x['bus_apos_19h_ultimo_voto_ate_1715'])} deles o último voto foi até 17:15. A urna ficou "
@@ -319,7 +334,8 @@ def h2(H: dict) -> str:
         nota(
             "inferencia",
             "Se as somas fecham e cada BU é o que a urna assinou, qualquer deslocamento teria de ter acontecido "
-            "antes da assinatura, dentro das urnas ou entre os eleitores. A totalização sai da lista de lugares possíveis.",
+            "antes da assinatura, dentro das urnas ou entre os eleitores. Na totalização, a marca esperada não "
+            "aparece nos arquivos públicos; o teste não alcança o que veio antes da assinatura.",
         ),
     )
 
@@ -343,15 +359,17 @@ def h3(H: dict) -> str:
             f"O comparecimento subiu mais no Sudeste ({sinal(reg['Sudeste']['comparecimento_pp'], 2)} pp) e no Sul "
             f"({sinal(reg['Sul']['comparecimento_pp'], 2)}) que no Nordeste ({sinal(reg['Nordeste']['comparecimento_pp'], 2)}); "
             f"no Norte caiu ({sinal(reg['Norte']['comparecimento_pp'], 2)}).",
-            f"Na Bahia, onde os ônibus pararam, Flávio perdeu {num(-x['bahia']['deslocamento_flavio_pp'], 2)} pp entre os "
-            f"dois finalistas, menos que a média do país ({num(-x['brasil_deslocamento_pp'], 2)}).",
+            f"Na Bahia, onde os ônibus pararam, Flávio perdeu {num(-x['bahia']['deslocamento_flavio_pp'], 2)} pp na parte "
+            "entre os dois finalistas, do 1º para o 2º turno, somados os municípios, menos que o país na mesma régua "
+            f"({num(-x['brasil_deslocamento_pp'], 2)}).",
             f"Entre as UFs, a correlação da variação da abstenção com o resíduo de Flávio é "
             f"{num(x['correlacao_uf_abstencao_residuo'], 2)}. Mesmo dando a Lula todo o aumento líquido de "
             f"comparecimento, ele explica no máximo {num(x['teto_comparecimento_pp'], 2)} pp; a matriz de transferência "
             f"estima {num(x['ipf_explica_pp'], 2)} pp (IC de {num(x['ipf_explica_ic'][0], 2)} a "
             f"{num(x['ipf_explica_ic'][1], 2)}).",
             f"A última hora do dia (16h) teve {num(x['ultima_hora_2t'], 2)}% dos votos, contra "
-            f"{num(x['ultima_hora_1t'], 2)}% no 1º turno: o fim do dia não inchou.",
+            f"{num(x['ultima_hora_1t'], 2)}% no 1º turno, na amostra de uma seção em cinco lida nos dois turnos: "
+            "o fim do dia não inchou.",
         ],
         "O inquérito da Polícia Federal sobre retenção de ônibus e as listas de frota das empresas. Mobilização "
         "antes das 17h não deixa marca própria no BU; o que os dados dizem é que ela, se houve, não tem o tamanho "
@@ -383,13 +401,35 @@ def h4(H: dict) -> str:
         "A íntegra da Reclamação 101673 e dos anexos, a justificativa do TSE para suspender a divulgação, e o "
         "arquivo original do vídeo com a data de gravação.",
         nota(
+            "hipotese",
+            "A sequência de horários é compatível com ação coordenada e com ações independentes; só a íntegra da "
+            "Reclamação e o original do vídeo separam as duas. Pedir prorrogação à Justiça e publicar um vídeo são "
+            "atos permitidos a qualquer campanha.",
+        )
+        + p(
+            "A cronologia não prova intervenção em voto, e os dados de urna não ligam a prorrogação ao resultado: "
+            "quase nenhuma urna recebeu voto depois das 17h.",
             "inferencia",
-            "A cronologia mostra coordenação jurídica e de comunicação entre uma campanha e artistas que a apoiam. "
-            "Pedir prorrogação à Justiça e publicar um vídeo são atos permitidos a qualquer campanha. A cronologia não "
-            "prova intervenção em voto, e os dados de urna não ligam a prorrogação ao resultado: quase nenhuma urna "
-            "recebeu voto depois das 17h.",
         ),
     )
+
+
+def _cargas(x: dict) -> str:
+    """Cargas entre os turnos: contagem do log e separação pelos ``.vsc`` dos dois turnos."""
+    if x.get("cargas_entre_turnos") is None:
+        return ""
+    t = f" Entre os turnos, {inteiro(x['cargas_entre_turnos'])} urnas têm carga registrada no log."
+    v = x.get("cargas_vsc")
+    if v:
+        de, ate = v["carga_nova_de"], v["carga_nova_ate"]
+        t += (
+            " A comparação dos <code>.vsc</code> dos dois turnos separa os casos: "
+            f"{inteiro(v['mesma_urna_carga_nova'])} seções mantiveram a urna e receberam carga nova, de "
+            f"{de[8:10]}/{de[5:7]} a {ate[8:10]}/{ate[5:7]}, e {inteiro(v['urna_trocada'])} trocaram de urna; "
+            f"nenhuma carga nova cai fora do intervalo entre os turnos ({v['carga_nova_fora_do_intervalo']}). "
+            "O motivo de cada recarga e de cada troca não está nos arquivos lidos."
+        )
+    return t
 
 
 def h5(H: dict) -> str:
@@ -412,7 +452,8 @@ def h5(H: dict) -> str:
         [
             f"Uma única versão de software em todas as {inteiro(x['versao_secoes'])} seções: {escape(x['versao'])}.",
             f"O ID da urna do BU está no log em {inteiro(x['id_bu_no_log'])} seções, e o código de carga em "
-            f"{inteiro(x['carga_bu_no_log'])}. Nenhuma carga depois da abertura ({x['carga_depois_da_abertura']}). "
+            f"{inteiro(x['carga_bu_no_log'])}. Nenhuma carga depois da abertura da votação "
+            f"({x['carga_depois_da_abertura']}).{_cargas(x)} "
             f"IDs repetidos: {x['ids_repetidos_secoes']} seções, todas do sistema de apuração; sem explicação, "
             f"{x['ids_repetidos_sem_explicacao']}.",
             mod,
@@ -427,7 +468,43 @@ def h5(H: dict) -> str:
         ],
         "A assinatura de software das urnas (bloco do TSE no <code>.vsc</code>) não foi verificada aqui; só o resumo. "
         "Conferir essa assinatura e os resumos do sistema contra os publicados pelo TSE na cerimônia de lacração é o "
-        "que exclui uma alteração igual em todas as urnas, que não deixaria marca por modelo nem por versão.",
+        "que testaria uma alteração igual em todas as urnas, que não deixaria marca por modelo nem por versão.",
+    )
+
+
+def _presenca(x: dict) -> str:
+    """Presença relativa necessária, comparada dentro do mesmo motor quando o número existe."""
+    fora = (
+        f"Por fora do motor, sem o ajuste de presença que a casa já aplicava, a razão entre os votos de Flávio e "
+        f"de Lula na Média Arvor teria de cair {num(-x['presenca_relativa_necessaria_pct'], 1)}%."
+    )
+    if x.get("presenca_necessaria_motor_pct") is None:
+        return (
+            f"<li>{fora} O cenário do autor usou {sinal(x['autor_cenario_pct'], 1)}%. Nenhuma pesquisa mediu "
+            "presença diferencial desse tamanho.</li>"
+        )
+    return (
+        "<li>No motor da casa, com o comparecimento e os brancos e nulos da urna, a presença relativa de Flávio que "
+        f"reproduz a urna é {sinal(x['presenca_necessaria_motor_pct'], 1)}%; o cenário do autor usou "
+        f"{sinal(x['autor_cenario_pct'], 1)}% no mesmo motor. {fora} Nenhuma pesquisa mediu presença diferencial "
+        "desse tamanho.</li>"
+    )
+
+
+def _erro_comum(x: dict) -> str:
+    """Precedente: erro comum das casas a favor de Lula nos 1º turnos de 2022 e de 2026."""
+    pr = x.get("erro_comum_precedentes") or []
+    if not pr:
+        return ""
+    casos = "; ".join(
+        f"no {c['turno']}, {sinal(c['erro_pp'], 2)} pp em {c['diferenca']}, com {c['mesmo_sentido']} de "
+        f"{c['casas']} casas do mesmo lado"
+        for c in pr
+    )
+    return (
+        "<li>Erro comum, com a maioria das casas do mesmo lado, não exige mudança de última hora: apareceu também "
+        f"{casos}. Nesses turnos, o desenho é compatível com viés de método comum às casas ou com casas que "
+        "convergem umas para as outras (herding), e as mesmas duas leituras cabem aqui.</li>"
     )
 
 
@@ -465,10 +542,9 @@ def h6(H: dict) -> str:
         f"<li>O comparecimento sozinho explica no máximo {num(x['teto_comparecimento_pp'], 2)} pp do erro.</li>"
         f"<li>Os filtros de presença declarada publicados apontaram para Flávio ({pd}), na direção oposta à urna: "
         "a presença declarada não antecipou quem compareceu.</li>"
-        "<li>Para reproduzir a urna, a razão entre os votos de Flávio e de Lula na Média Arvor teria de cair "
-        f"{num(-x['presenca_relativa_necessaria_pct'], 1)}%, sem contar o ajuste de presença que a casa já aplicava; "
-        f"o cenário do autor usou {sinal(x['autor_cenario_pct'], 1)}%. Nenhuma pesquisa mediu presença diferencial "
-        "desse tamanho.</li></ul>"
+        + _presenca(x)
+        + _erro_comum(x)
+        + "</ul>"
     )
     return (
         f'<h3 id="hip-h6">H6. {escape(next(h["titulo"] for h in H["hipoteses"] if h["id"] == "h6"))}</h3>'

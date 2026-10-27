@@ -120,7 +120,10 @@ def fig_cadencia(L: dict) -> str:
     _barras_horas(out, tips, 70, 30, w - 100, h - 90, p1, p2, vmax)
     out.append("</svg>")
     leg = legenda_html(
-        [("1º turno (seis cargos)", COR_1T), ("2º turno (um ou dois cargos)", COR_2T)]
+        [
+            ("1º turno (cinco cargos, seis votos)", COR_1T),
+            ("2º turno (um ou dois votos)", COR_2T),
+        ]
     )
     legenda = (
         f"Parcela dos cômputos do dia em cada hora, nas {inteiro(a['secoes'])} seções da amostra do 1º turno "

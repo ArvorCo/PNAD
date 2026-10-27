@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-27T21:00:29+00:00",
+ "gerado_em": "2026-10-27T22:04:31+00:00",
  "gerado_por": "scripts/apuracao-2t-2026-hipoteses.py",
  "rotulo": "atipicidade pede explicação, não prova irregularidade",
  "fontes": {
@@ -16,7 +16,9 @@
   "transferencia.json": "60772dc718dd3fc1afb70ea71b9bab1fe6db8acb3084978cf302db9439351435",
   "pesquisas_vs_urna.json": "f631509d09b7045da06b42e2b2c87d826ba188f61f0107ac0d0fd9264f0d1733",
   "projecao_pre_urna.json": "e432c21761ffabf391d59a8944a42bb1c204dae75dd6908b29a2ed737468e773",
+  "hipotese_autor.json": "86ce7f4ce8bdec1f6b32e7d5f2820596eff7391571392b11b8867c9aa61d39c0",
   "noticias_noite.json": "67cda70ce34fcd06a669e3bb0c4237cd28aa5f12d742c6857e649563b861d79c",
+  "apuracao_2026/pesquisas_vs_urna.json": "0f4391d21352041fc6fbf994472d65738ebfe8e04a93ba61e96c0be16a22c7c4",
   "prorrogacao_video/fonte.json": "8034eaa8d8fcbc54955a7712673f215717a0f773d03abf79e1dab6a0e639f653"
  },
  "banco": {
@@ -225,9 +227,14 @@
    "minutos": 114.6,
    "versoes_geradas_dentro": 0,
    "leituras_no_intervalo": 65792,
-   "secoes_antes": 1225,
-   "lula_pct_antes": 57.66,
-   "fonte_secoes": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-10/zanin-manda-ampliar-horario-de-votacao-ate-19h"
+   "banco": {
+    "regra": "lacuna entre versões consecutivas do arquivo nacional de presidente (linha_do_tempo.json, pausas.maior_lacuna_nacional)",
+    "versao_brt": "17:07:01",
+    "proxima_brt": "19:01:56",
+    "lacuna_min": 114.9,
+    "secoes": 1456,
+    "lula_pct": 56.7
+   }
   },
   "urnas": {
    "encerramento_p50": "17:01",
@@ -521,6 +528,13 @@
   "carga_depois_da_abertura": 0,
   "cargas_antes_1t": 498344,
   "cargas_entre_turnos": 812,
+  "cargas_vsc": {
+   "mesma_urna_carga_nova": 359,
+   "urna_trocada": 4434,
+   "carga_nova_fora_do_intervalo": 0,
+   "carga_nova_de": "2026-10-14",
+   "carga_nova_ate": "2026-10-24"
+  },
   "mr_repetida": {
    "media_pp": 0.187,
    "ic95_pp": [
@@ -595,7 +609,26 @@
    }
   ],
   "presenca_relativa_necessaria_pct": -13.88506,
-  "autor_cenario_pct": -12.5
+  "autor_cenario_pct": -12.5,
+  "presenca_necessaria_motor_pct": -13.732552,
+  "erro_comum_precedentes": [
+   {
+    "turno": "1º turno de 2022",
+    "diferenca": "Lula menos Bolsonaro",
+    "erro_pp": 3.918615,
+    "casas": 12,
+    "mesmo_sentido": 10,
+    "fonte": "analysis/apuracao_2026/dados/pesquisas_vs_urna.json"
+   },
+   {
+    "turno": "1º turno de 2026",
+    "diferenca": "Lula menos Flávio",
+    "erro_pp": 3.545846,
+    "casas": 13,
+    "mesmo_sentido": 10,
+    "fonte": "analysis/apuracao_2026/dados/pesquisas_vs_urna.json"
+   }
+  ]
  },
  "precedentes": {
   "titulo": "Precedentes de prorrogação do horário de votação",
@@ -1005,7 +1038,7 @@
    "alcance": "o propósito não se lê nos arquivos de urna",
    "titulo": "Prorrogação e silêncio como construção de narrativa",
    "estado": "pendente",
-   "regra": "a cronologia prova coordenação jurídica e de comunicação; o propósito só se lê em documento (íntegra da Reclamação, original do vídeo, justificativa do TSE)"
+   "regra": "a sequência de horários é compatível com ação coordenada e com ações independentes; o propósito só se lê em documento (íntegra da Reclamação, original do vídeo, justificativa do TSE)"
   },
   {
    "id": "h5",

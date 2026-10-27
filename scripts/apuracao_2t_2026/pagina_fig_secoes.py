@@ -131,7 +131,7 @@ def fig_encerramento(S: dict, P: dict | None) -> str:
     )
     legenda = (
         f"Último voto de cada seção, hora de Brasília, nas mesmas seções nos dois turnos ({pond}). "
-        "No 1º turno a fila andava com seis cargos; no 2º, com um ou dois. "
+        "No 1º turno a fila andava com seis votos em cinco cargos; no 2º, com um ou dois. "
         "Fonte: secoes.json (enc_min, enc1_min)."
     )
     leg = legenda_html([("1º turno", COR_1T), ("2º turno", COR_2T)])
@@ -164,12 +164,12 @@ def fig_emissao_recebimento(S: dict, L: dict | None = None) -> str:
         for u in S["prorrogacao"]["por_uf"]
         if min_de(u.get("recebimento_p50")) is not None
     ]
-    ufs.sort(key=lambda u: min_de(u["recebimento_p50"]))
+    ufs.sort(key=lambda u: min_de(u["recebimento_p50"]) or 0)
     br = S["prorrogacao"]["brasil"]
     w, esq, dir_ = 1100, 70, 30
     topo, passo = 70, 26
     h = topo + passo * (len(ufs) + 1) + 46
-    fim = max(min_de(u["recebimento_p50"]) for u in ufs)
+    fim = max(min_de(u["recebimento_p50"]) or 0 for u in ufs)
     fim = 30 * math.ceil((fim + 10) / 30)
     x = escala(-10, fim, esq, w - dir_)
     out = [

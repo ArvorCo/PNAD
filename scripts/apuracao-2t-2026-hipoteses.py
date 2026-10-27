@@ -27,6 +27,7 @@ import sqlite3
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 MEMOS = ROOT / "analysis/apuracao_2t_2026"
@@ -59,6 +60,7 @@ ARQUIVOS = [
     "transferencia.json",
     "pesquisas_vs_urna.json",
     "projecao_pre_urna.json",
+    "hipotese_autor.json",
 ]
 
 
@@ -165,7 +167,6 @@ def cronologia(N: dict, LT: dict, S: dict, V: dict) -> dict:
     stf = item(N, "17:03", "O Globo", "16:32:49")
     carimbos = re.findall(r"\d{2}:\d{2}:\d{2}", stf["nota"])
     poder = re.findall(r"\d{2}h\d{2}", stf["nota"])
-    suspensao = item(N, "17:07", "Agência Brasil", "1.225")
     m = [
         marco(
             item(N, "12:47", "O Globo", "prender"),
@@ -230,8 +231,10 @@ def cronologia(N: dict, LT: dict, S: dict, V: dict) -> dict:
             "tse",
         ),
     ]
-    num_ab = re.search(r"([\d.]+) de ([\d.]+) seç", suspensao["resumo"])
-    lula = re.search(r"Lula ([\d,]+)%", suspensao["resumo"])
+    lac = LT["pausas"]["maior_lacuna_nacional"]
+    serie = LT["nacional"]["serie"]
+    linhas = [dict(zip(serie["colunas"], r, strict=True)) for r in serie["linhas"]]
+    antes = next(r for r in linhas if r["gerado_brt"] == lac["de_brt"])
     return {
         "marcos": m,
         "silencio": {
@@ -240,9 +243,14 @@ def cronologia(N: dict, LT: dict, S: dict, V: dict) -> dict:
             "minutos": sil["minutos"],
             "versoes_geradas_dentro": sil["versoes_geradas_dentro"],
             "leituras_no_intervalo": sil["leituras_no_intervalo"],
-            "secoes_antes": int(num_ab.group(1).replace(".", "")),
-            "lula_pct_antes": float(lula.group(1).replace(",", ".")),
-            "fonte_secoes": suspensao["url"],
+            "banco": {
+                "regra": "lacuna entre versões consecutivas do arquivo nacional de presidente (linha_do_tempo.json, pausas.maior_lacuna_nacional)",
+                "versao_brt": lac["de_brt"][11:19],
+                "proxima_brt": lac["ate_brt"][11:19],
+                "lacuna_min": lac["minutos"],
+                "secoes": lac["st_antes"],
+                "lula_pct": antes["pct_lula"],
+            },
         },
         "urnas": {
             "encerramento_p50": pr["encerramento_p50"],
@@ -452,6 +460,39 @@ def sinal(V: dict, ident: str) -> dict:
     }
 
 
+def precedentes_erro_comum(PV: dict) -> list[dict]:
+    """Erro comum das pesquisas nos 1º turnos de 2022 e de 2026, do JSON do dossiê do 1º turno.
+
+    O arquivo é o que ``pesquisas_vs_urna.json`` do 2º turno já cita em
+    ``primeiro_turno.fonte``; a média lida aqui é conferida contra a que ele copia.
+    """
+    arq = ROOT / PV["primeiro_turno"]["fonte"]["arquivo"]
+    P1 = json.loads(arq.read_text(encoding="utf-8"))
+    r22, pub = P1["referencia_2022"], P1["resumo_ultimas_ondas"]["publicado"]
+    if abs(pub["media"] - PV["primeiro_turno"]["erro_comum_lula_menos_flavio"]) > 1e-6:
+        raise ValueError(
+            f"{arq}: erro comum do 1º turno diverge do pesquisas_vs_urna.json"
+        )
+    return [
+        {
+            "turno": "1º turno de 2022",
+            "diferenca": "Lula menos Bolsonaro",
+            "erro_pp": r22["erro_comum_diferenca_lula_menos_bolsonaro"],
+            "casas": r22["n_casas"],
+            "mesmo_sentido": r22["casas_que_superestimaram_lula"],
+            "fonte": str(arq.relative_to(ROOT)),
+        },
+        {
+            "turno": "1º turno de 2026",
+            "diferenca": "Lula menos Flávio",
+            "erro_pp": pub["media"],
+            "casas": pub["n"],
+            "mesmo_sentido": pub["positivos"],
+            "fonte": str(arq.relative_to(ROOT)),
+        },
+    ]
+
+
 def ic(bloco: dict) -> dict:
     return {"media_pp": bloco["media_pp"], "ic95_pp": bloco["ic95_pp"], "n": bloco["n"]}
 
@@ -565,7 +606,7 @@ def montar(anterior: dict | None = None, usar_banco: bool = True) -> dict:
         "ultima_hora_2t": cad["brasil_2t"]["pct_ultima_hora"],
         "ultima_hora_1t": cad["amostra_1t"]["brasil_1t"]["pct_ultima_hora"],
     }
-    h4 = {"stf_carimbos": None}
+    h4: dict[str, Any] = {"stf_carimbos": None}
     h5 = {
         "versoes": rep["versao_votacao"]["valores_distintos"],
         "versao": rep["versao_votacao"]["valores"][0]["valor"],
@@ -581,6 +622,17 @@ def montar(anterior: dict | None = None, usar_banco: bool = True) -> dict:
         ],
         "cargas_antes_1t": L["metadados"]["cargas"]["antes_do_1t"],
         "cargas_entre_turnos": L["metadados"]["cargas"]["entre_turnos"],
+        "cargas_vsc": {
+            "mesma_urna_carga_nova": M["entre_turnos_vsc"]["carga"][
+                "mesma_urna_carga_nova"
+            ],
+            "urna_trocada": M["entre_turnos_vsc"]["carga"]["urna_trocada"],
+            "carga_nova_fora_do_intervalo": M["entre_turnos_vsc"]["carga"][
+                "carga_nova_fora_do_intervalo"
+            ],
+            "carga_nova_de": min(M["entre_turnos_vsc"]["carga"]["carga_nova_por_dia"]),
+            "carga_nova_ate": max(M["entre_turnos_vsc"]["carga"]["carga_nova_por_dia"]),
+        },
         "mr_repetida": ic(
             L["metadados"]["serie_mr"]["voto_estruturais_brasil"][
                 "dif_em_dif_contra_1t"
@@ -655,6 +707,10 @@ def montar(anterior: dict | None = None, usar_banco: bool = True) -> dict:
         "autor_cenario_pct": PV["hipoteses"]["presenca_relativa_necessaria"][
             "autor_cenario_pct"
         ],
+        "presenca_necessaria_motor_pct": D["hipotese_autor.json"][
+            "presenca_necessaria_a"
+        ],
+        "erro_comum_precedentes": precedentes_erro_comum(PV),
     }
     crono = cronologia(N, LT, S, video())
     h4["stf_carimbos"] = crono["marcos"][2]["carimbos_citados"]
@@ -680,6 +736,9 @@ def montar(anterior: dict | None = None, usar_banco: bool = True) -> dict:
         "fontes": {
             **{n: sha(DADOS / n) for n in ARQUIVOS},
             "noticias_noite.json": sha(MEMOS / "noticias_noite.json"),
+            "apuracao_2026/pesquisas_vs_urna.json": sha(
+                ROOT / PV["primeiro_turno"]["fonte"]["arquivo"]
+            ),
             "prorrogacao_video/fonte.json": sha(VIDEO / "fonte.json"),
         },
         "banco": {"origem": origem_banco, "zona": zona, "modelo": modelo},
@@ -755,7 +814,7 @@ def classificar(h1, h2, h3, h4, h5, h6, modelo) -> list[dict]:
             "alcance": "o propósito não se lê nos arquivos de urna",
             "titulo": "Prorrogação e silêncio como construção de narrativa",
             "estado": "pendente",
-            "regra": "a cronologia prova coordenação jurídica e de comunicação; o propósito só se lê em documento (íntegra da Reclamação, original do vídeo, justificativa do TSE)",
+            "regra": "a sequência de horários é compatível com ação coordenada e com ações independentes; o propósito só se lê em documento (íntegra da Reclamação, original do vídeo, justificativa do TSE)",
         },
         {
             "id": "h5",
