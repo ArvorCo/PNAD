@@ -193,6 +193,13 @@ def test_every_second_round_is_preserved_and_first_round_selection_is_enforced(
             assert actual_recomposed == pytest.approx(
                 saved_recomposed, rel=0, abs=0.00100000001
             )
+            # o resíduo máximo é o mesmo número arredondado a 3 casas: mesma tolerância
+            saved_residuo = saved_2t.pop("residuo_max", None)
+            actual_residuo = actual_2t.pop("residuo_max", None)
+            if saved_residuo is not None or actual_residuo is not None:
+                assert actual_residuo == pytest.approx(
+                    saved_residuo, rel=0, abs=0.00100000001
+                )
         assert_json_close(actual_2t, saved_2t)
         if "1t" in poll["turnos"]:
             assert "marcal" not in poll["turnos"]["1t"]["opcoes"]
