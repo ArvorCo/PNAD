@@ -307,18 +307,20 @@ CARDS: list[dict] = [
     },
     {
         "slug": "hub",
-        "eyebrow": "Arvor Intelligence · acervo aberto",
-        "title": "Toda pesquisa",
-        "title_em": "deixa rastro",
-        "lede": "<b>Centrais atualizadas em 21/10.</b> Veritá, Palver, Quaest, Meio/Ideia e Futura. Quatro íntegras arquivadas; perfil atual da Quaest ainda pendente.",
+        "eyebrow": "Arvor Intelligence · dados abertos do Brasil",
+        "title": "Brasil,",
+        "title_em": "conhece-te a ti mesmo",
+        "lede": "Eleições, economia e segurança pública lidas nos dados oficiais, com a conta aberta: <b>TSE, IBGE, Banco Central e boletins por seção, município e estado.</b> Cada número reproduzível, cada limite declarado.",
         "stats": [
-            ("4", "dossiês do 2º turno"),
-            ("128", "páginas na nova íntegra Nexus"),
-            ("853", "municípios no atlas"),
+            ("5.570", "municípios"),
+            ("499 mil", "seções eleitorais"),
+            ("100%", "código e dados abertos"),
         ],
-        "foot": "prova de opacidade, não de fraude",
+        "foot": "eleições · economia · segurança pública",
         "accent": "lime",
-        "photo": "img/atlas_072026/web/urna-fila.jpg",
+        # Foto de fundo inteira (não o painel lateral): imagem aérea gerada localmente com
+        # FLUX 2 Klein (mflux), sem direitos de terceiros; prompt em docs/img/hub/README.md.
+        "bg": "img/hub/brasil_fundo.jpg",
     },
     {
         "slug": "mg_082026",
@@ -1002,12 +1004,18 @@ TEMPLATE = """<!doctype html>
     background:linear-gradient(transparent,rgba(0,0,0,.88));font-family:"IBM Plex Mono",monospace;
     font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#e7e3d8}}
   .duo figcaption b{{display:block;font-family:"Archivo Black",sans-serif;font-size:34px;letter-spacing:-.02em;color:#fff}}
+  .bg{{position:absolute;inset:0;z-index:0}}
+  .bg img{{width:100%;height:100%;object-fit:cover;object-position:center 40%}}
+  .bg::after{{content:"";position:absolute;inset:0;
+    background:linear-gradient(100deg,rgba(7,17,31,.93) 0%,rgba(7,17,31,.8) 44%,rgba(7,17,31,.18) 100%),
+               linear-gradient(0deg,rgba(7,17,31,.9) 0%,rgba(7,17,31,0) 44%)}}
+  .card.com-fundo::before{{opacity:.6}}
   .tag{{position:absolute;top:0;right:0;z-index:4;padding:10px 20px;background:{accent};color:#07111f;
     font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}}
 </style>
 </head>
 <body>
-  <div class="card">{tag}
+  <div class="card{card_class}">{tag}
     <div class="left">
       <div>
         <span class="eyebrow"><i></i>{eyebrow}</span>
@@ -1038,7 +1046,9 @@ def render_card(card: dict) -> str:
         f'<div class="s{i}"><b>{escape(value)}</b><span>{escape(label)}</span></div>'
         for i, (value, label) in enumerate(card.get("stats", []))
     )
-    if card.get("duo"):
+    if card.get("bg"):
+        right = f'\n    <div class="bg"><img src="../../{card["bg"]}" alt=""></div>'
+    elif card.get("duo"):
         values = card.get("duo_values", ("41", "37"))
         right = DUO_PANEL.format(left_value=values[0], right_value=values[1])
     elif card.get("photo"):
@@ -1058,7 +1068,8 @@ def render_card(card: dict) -> str:
         slug=card["slug"],
         accent=accent,
         columns="1fr 392px" if has_panel else "1fr",
-        lede_width=620 if has_panel else 900,
+        lede_width=620 if has_panel else 740 if card.get("bg") else 900,
+        card_class=" com-fundo" if card.get("bg") else "",
         title_size=title_size,
         eyebrow=escape(card["eyebrow"]),
         title=title,
