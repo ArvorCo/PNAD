@@ -63,7 +63,12 @@ def texto_publico(h: str) -> str:
 
 def cap() -> Capitulo:
     return Capitulo(
-        "anomalia", "10", "Grupos", "Os grupos de seções nos dois turnos", (), CA.render
+        "anomalia",
+        "10",
+        "Grupos",
+        "Os grupos de seções nos dois turnos",
+        (),
+        lambda d: CA.render(d, cap()),
     )
 
 
@@ -255,3 +260,14 @@ def test_capitulo_poe_o_bloco_antes_dos_limites():
     assert i_contra < i_bloco < i_lim
     assert "Seções com zero voto: seção sem voto" in h[i_lim:]
     assert "—" not in h
+
+
+def test_coluna_da_folha_arquivada_e_regioes_conferem():
+    Z = json.loads((DADOS / "zeros.json").read_text(encoding="utf-8"))
+    m = Z["manchete"]
+    assert m["url"].startswith("https://www1.folha.uol.com.br/colunas/painel/2026/10/")
+    assert Path(m["arquivo"]).name in " ".join(Z["fontes"])
+    nossa = {x["regiao"]: x["zero_direita_2026_2t"] for x in Z["por_regiao"]}
+    assert all(nossa[r] == n for r, n in m["por_regiao"].items())
+    h = FZ.bloco(Dados(pasta=DADOS))
+    assert "coincide região a região" in h and "Paris Group" in h and "—" not in h

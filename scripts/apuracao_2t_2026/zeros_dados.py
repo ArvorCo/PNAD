@@ -597,6 +597,9 @@ def montar() -> dict[str, Any]:
         rel(CSV_2022): sha256(CSV_2022),
         rel(INDICE): sha256(INDICE),
     }
+    coluna = ROOT / MANCHETE["arquivo"]
+    if coluna.exists():
+        fontes[rel(coluna)] = sha256(coluna)
     if ANOMALIA.exists():
         fontes[rel(ANOMALIA)] = sha256(ANOMALIA)
     if mistura.get("disponivel"):

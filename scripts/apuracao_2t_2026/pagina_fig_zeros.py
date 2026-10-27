@@ -398,6 +398,32 @@ def tabela_secoes(Z: dict, lado: str) -> str:
 # ------------------------------------------------------------------ textos
 
 
+def _regioes_conferem(Z: dict) -> str:
+    """A distribuição regional publicada na coluna contra a contada nos BUs."""
+    pub = Z["manchete"].get("por_regiao") or {}
+    if not pub:
+        return ""
+    nossa = {x["regiao"]: x["zero_direita_2026_2t"] for x in Z["por_regiao"]}
+    pares = [(r, pub[r], nossa.get(r)) for r in pub]
+    iguais = all(a == b for _, a, b in pares)
+    lista = "; ".join(f"{escape(r)} {inteiro(a)}" for r, a, _ in pares)
+    if iguais:
+        return p(
+            f"A coluna também publica a distribuição por região ({lista}), e ela coincide região a região com a "
+            "contagem dos boletins de urna feita aqui.",
+            "verificado",
+        )
+    dif = "; ".join(
+        f"{escape(r)} {inteiro(a)} na coluna, {inteiro(b)} nos BUs"
+        for r, a, b in pares
+        if a != b
+    )
+    return p(
+        f"A distribuição por região da coluna diverge da contagem dos BUs em: {dif}.",
+        "verificado",
+    )
+
+
 def _confere(Z: dict) -> str:
     m = Z["manchete"]
     r26 = recorte(Z, 2026, 2, "direita")
@@ -411,10 +437,12 @@ def _confere(Z: dict) -> str:
         and ex.get("zero_lula_2t_sem_comparecimento") == a_mais_l == sc
     )
     h = p(
-        f"A {escape(m['veiculo'])} publicou em {_data(m['data'])} a manchete “{escape(m['titulo'])}”. É o ponto de "
-        "partida deste bloco.",
+        f"A {escape(m['veiculo'])} publicou em {_data(m['data'])}, na coluna {escape(m['coluna'])}, a manchete "
+        f"“{escape(m['titulo'])}”, atribuída a {escape(m['atribuicao'])}. A coluna está arquivada com SHA-256 "
+        f"(<a href=\"{escape(m['url'])}\">matéria</a>) e é o ponto de partida deste bloco.",
         "relato",
     )
+    h += _regioes_conferem(Z)
     frase_ex = ""
     if a_mais or a_mais_l:
         frase_ex = (

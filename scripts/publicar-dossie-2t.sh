@@ -49,7 +49,7 @@ CAMINHOS=(
   # análise (sem os pesados ignorados)
   analysis/apuracao_2t_2026/ analysis/politize_se/ analysis/apuracao_2026/logs_urnas/CONTRATO.md
   # fontes arquivadas
-  data/originals/prorrogacao_video/ data/originals/tse_formato_bu_rdv_2026/ data/originals/rdv_2022_alegacoes/
+  data/originals/prorrogacao_video/ data/originals/tse_formato_bu_rdv_2026/ data/originals/rdv_2022_alegacoes/ data/originals/folha_102026_27/
   # coletores, telão e totalização
   apuracao/scripts/ apuracao/src/ apuracao/tests/ apuracao/README.md apuracao/package.json apuracao/bunfig.toml apuracao/public/playlist-2t.json apuracao/public/img/ apuracao/public/boletim.html
   totalizacao/supabase/migrations/ totalizacao/supabase/functions/receber-relato/ totalizacao/supabase/config.toml

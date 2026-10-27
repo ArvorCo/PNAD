@@ -57,11 +57,28 @@ ROTULO = "atipicidade pede explicação, não prova irregularidade"
 
 MANCHETE = {
     "veiculo": "Folha de S.Paulo",
+    "coluna": "Painel",
+    "autor": "Carlos Petrocilo",
     "data": "2026-10-27",
     "titulo": "Flávio teve zero voto em 106 urnas, nas quais Lula somou quase 15 mil",
+    "url": (
+        "https://www1.folha.uol.com.br/colunas/painel/2026/10/"
+        "flavio-teve-zero-voto-em-106-urnas-nas-quais-somou-quase-15-mil.shtml"
+    ),
+    "arquivo": "data/originals/folha_102026_27/painel_27102026.html",
+    "atribuicao": "levantamento da Paris Group, com mapeamento das seções por inteligência artificial",
+    # Números publicados na coluna, conferidos abaixo contra os BUs.
+    "por_regiao": {
+        "Norte": 65,
+        "Nordeste": 29,
+        "Centro-Oeste": 6,
+        "Sudeste": 3,
+        "Sul": 3,
+    },
+    "amazonas_cidades": 13,
     "nota": (
-        "manchete informada pelo autor; o texto da matéria não está arquivado no "
-        "repositório. O número é refeito abaixo a partir dos bancos de BUs."
+        "coluna arquivada com SHA-256 em data/originals/folha_102026_27/fonte.json. "
+        "O número é refeito abaixo a partir dos bancos de BUs."
     ),
 }
 

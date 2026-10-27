@@ -1,12 +1,25 @@
 {
- "gerado_em": "2026-10-27T20:13:30Z",
+ "gerado_em": "2026-10-27T21:00:22Z",
  "script": "scripts/apuracao-2t-2026-zeros.py",
  "rotulo": "atipicidade pede explicação, não prova irregularidade",
  "manchete": {
   "veiculo": "Folha de S.Paulo",
+  "coluna": "Painel",
+  "autor": "Carlos Petrocilo",
   "data": "2026-10-27",
   "titulo": "Flávio teve zero voto em 106 urnas, nas quais Lula somou quase 15 mil",
-  "nota": "manchete informada pelo autor; o texto da matéria não está arquivado no repositório. O número é refeito abaixo a partir dos bancos de BUs."
+  "url": "https://www1.folha.uol.com.br/colunas/painel/2026/10/flavio-teve-zero-voto-em-106-urnas-nas-quais-somou-quase-15-mil.shtml",
+  "arquivo": "data/originals/folha_102026_27/painel_27102026.html",
+  "atribuicao": "levantamento da Paris Group, com mapeamento das seções por inteligência artificial",
+  "por_regiao": {
+   "Norte": 65,
+   "Nordeste": 29,
+   "Centro-Oeste": 6,
+   "Sudeste": 3,
+   "Sul": 3
+  },
+  "amazonas_cidades": 13,
+  "nota": "coluna arquivada com SHA-256 em data/originals/folha_102026_27/fonte.json. O número é refeito abaixo a partir dos bancos de BUs."
  },
  "definicao": "Seção com BU do cargo presidente e nenhum voto nominal do candidato (sem linha em voto_secao). Brasil sem o exterior no número principal; exterior à parte. Em 2022, linha do arquivo por seção com votos preenchidos.",
  "regra_tipo_local": {
@@ -6878,6 +6891,7 @@
   "apuracao/data/secoes_2026.sqlite": "2cfbf8259e7461ec313f3554716d6f6b86079eaa10310b3230aabd3fed1941c8",
   "data/outputs/presidente_secao_2022.csv.gz": "d10766833596c67ce15f2ed3978d78f5a60bab6329c1c436f3ca394f58d1852d",
   "docs/assets/politize/dados/indice.json": "2c84028148ba2c054cb23a27892a44e31d53b42c2c6df1e32c2a6f2c5713a33e",
+  "data/originals/folha_102026_27/painel_27102026.html": "f8afda191920ca6239de826980a2cbd605c1d71527deb36d92c5a9ede1eea7f1",
   "analysis/apuracao_2t_2026/dados/anomalia_ml.json": "4f749f7db7590a673b80a02cdbbaa986b81616f79d09928a0f83ee3576d3f2f7",
   "data/outputs/apuracao_2t_2026/anomalia_secoes.json.gz": "d535c27e91514b43928b31c83618dd3c2b6a7a4a92d93e0321dfe06a031adade"
  },
