@@ -65,7 +65,13 @@ if os.path.exists("docs/assets/apuracao_2t/dataset/DICIONARIO.md"):
     arqs.append("docs/assets/apuracao_2t/dataset/DICIONARIO.md")
     arqs.append("docs/assets/apuracao_2t/dataset/secoes_1t_2t_2026.csv.gz")
 nomes={a: ("hashes_sha256.json" if a=="$HASHES" else os.path.basename(a)) for a in arqs}
+from internetarchive import get_item
+remotos={f["name"]: int(f.get("size") or 0) for f in get_item("$ITEM").files}
 for a in arqs:
+    tam=os.path.getsize(a)
+    if remotos.get(nomes[a]) == tam:
+        print("já no item, mesmo tamanho; pulando", a, flush=True)
+        continue
     print("enviando", a, flush=True)
     r=upload("$ITEM", files={nomes[a]: a}, metadata=m, checksum=True, retries=10, retries_sleep=30, verbose=True, verify=True)
     print("  ->", [getattr(x, "status_code", x) for x in r], flush=True)

@@ -41,8 +41,12 @@ jobs:
             echo "mudou=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "totalizacao: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
-            git pull --rebase
-            git push
+            # A main recebe pushes de outras sessões a cada poucos minutos: o push pode ser
+            # rejeitado entre o pull e o envio. Tenta de novo, rebaseando sobre a main atual.
+            for tentativa in 1 2 3 4 5; do
+              git pull --rebase origin main && git push && break
+              echo "push rejeitado (tentativa $tentativa); aguardando"; sleep $((tentativa * 10))
+            done
             echo "mudou=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Publicar no Pages
