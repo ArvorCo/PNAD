@@ -42,6 +42,14 @@ def render(d: Dados, cap: Capitulo) -> str:
         h += iframe_youtube(str(vid), "O vídeo da apuração do 2º turno, Arvor")
         if cfg.get("titulo"):
             h += p(escape(str(cfg["titulo"])))
+        h += p(
+            "O vídeo cobre o que a live não cobriu: os logs das urnas, os metadados, o registro "
+            "digital do voto, os arquivos de assinatura, a transferência entre turnos e as pesquisas "
+            "contra a urna. A live cobriu os seis segundos turnos estaduais, o exterior e o transporte "
+            "no dia, que o vídeo deixa para o dossiê. Gravado antes dos capítulos sobre os grupos de "
+            "seções e das rodadas por ângulo, que estão só na página.",
+            "verificado",
+        )
     else:
         h += '<div class="pendente-bloco">Vídeo em produção. O link entra aqui assim que for publicado.</div>'
         if CARTAZ.exists():

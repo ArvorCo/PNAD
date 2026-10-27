@@ -30,6 +30,7 @@ from .pagina_fig_secoes_base import (
     min_de,
     secoes_pais,
 )
+from .secoes_linhas import LinhasAusentes
 
 ROTULO = "Sinal pede explicação, não prova irregularidade."
 
@@ -307,13 +308,13 @@ def biometria(S: dict, R: dict, V: dict | None = None) -> str:
         f"país{pi} ({inteiro(n13)} na base lida). É o padrão mais próximo da hipótese do mesário "
         "que libera eleitor ausente, o “pianista”. A combinação também aparece quando o leitor falha "
         "num dia de fila maior; só a ata, o caderno de votação e o log separam as duas coisas."
-        + _voto_celula_pianista(V),
+        + _voto_celula_pianista(V, S),
         "inferencia",
     )
     return h
 
 
-def _voto_celula_pianista(V: dict | None) -> str:
+def _voto_celula_pianista(V: dict | None, S: dict | None = None) -> str:
     """O voto da célula do pianista (`secoes_voto.json`, sinal ``pianista``), quando existe."""
     c = next(
         (x for x in (V or {}).get("sinais") or [] if x.get("sinal") == "pianista"), None
@@ -325,6 +326,31 @@ def _voto_celula_pianista(V: dict | None) -> str:
         f"contra as vizinhas do município e, descontado o 1º turno, {sinal(c['did_fatia_flavio_pp'], 2)} pp "
         f"(erro-padrão {num(c['ep_did_fatia_flavio_pp'], 2)}, n {inteiro(c['n_did'])}): a célula votava "
         "assim antes e andou como as vizinhas entre os turnos."
+        + _contingencia_celula(S)
+    )
+
+
+def _contingencia_celula(S: dict | None) -> str:
+    """Urna de contingência na célula do pianista contra o país: explicação concorrente."""
+    if not S:
+        return ""
+    try:
+        ls = linhas(S)
+    except LinhasAusentes:
+        return ""
+    cel = [
+        x
+        for x in ls
+        if x.get("sinal_delta") and x.get("sinal_salto_bio") and x.get("uf") != "ZZ"
+    ]
+    pais = [x for x in ls if x.get("uf") != "ZZ"]
+    if not cel or not pais:
+        return ""
+    pc = 100 * sum(1 for x in cel if x.get("contingencia")) / len(cel)
+    pp_ = 100 * sum(1 for x in pais if x.get("contingencia")) / len(pais)
+    return (
+        f" Explicação concorrente: urna de contingência em {num(pc, 1)}% das seções da célula, "
+        f"contra {num(pp_, 1)}% no país; a troca de urna muda leitor e cadastro no meio do dia."
     )
 
 

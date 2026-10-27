@@ -140,5 +140,7 @@ def voto(B: dict) -> str:
         f"Voto. Ano de nascimento alto (10% ou mais e o dobro da mediana do município): {fr(a)}. "
         f"Sem cadastro alto: {fr(s)}. São diferenças de menos de dois pontos, em direções opostas, "
         "e quase todas já existiam no 1º turno. Parcela alta pede explicação, não prova "
-        "irregularidade."
+        "irregularidade. Os mesmos sinais aparecem com contagens um pouco diferentes no bloco de "
+        "sinais mais abaixo: lá a régua é a mediana do município no 1º turno, como na API do "
+        "coletor; aqui, a mediana do próprio turno. Direção e tamanho coincidem nas duas réguas."
     )
