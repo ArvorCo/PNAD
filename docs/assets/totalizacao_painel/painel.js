@@ -121,7 +121,7 @@
       var b = el('button', '', 'Atualizar agora');
       b.type = 'button';
       b.id = 'btn-atualiza';
-      b.addEventListener('click', atualizarAoVivo);
+      b.addEventListener('click', function () { atualizarAoVivo(false); });
       bar.appendChild(b);
       var s = el('span', '', 'Lê as views públicas do banco, sem passar por arquivo.');
       s.id = 'atualiza-msg';
@@ -462,8 +462,12 @@
     });
   }
 
-  function atualizarAoVivo() {
+  var EM_CURSO = false;
+  function atualizarAoVivo(auto) {
+    if (EM_CURSO) return;
+    auto = auto === true;
     var btn = $('btn-atualiza'), msg = $('atualiza-msg');
+    EM_CURSO = true;
     btn.disabled = true; msg.textContent = 'Consultando o banco…';
     var h = { apikey: CHAVE, Authorization: 'Bearer ' + CHAVE, Accept: 'application/json' };
     var chaves = Object.keys(VIVAS);
@@ -477,17 +481,25 @@
       meta.gerado = new Date().toISOString(); meta.origem = 'ao vivo (views públicas)';
       limparAvisos();
       renderTudo();
-      $('atualiza-msg').textContent = 'Atualizado às ' + hora(meta.gerado) + '. Município por município segue nos arquivos estáticos.';
+      $('atualiza-msg').textContent = 'Atualizado às ' + hora(meta.gerado) + ' (renova sozinho a cada 30 s). Município por município segue nos arquivos estáticos.';
       $('btn-atualiza').disabled = false;
+      EM_CURSO = false;
     }).catch(function (e) {
-      aviso('Não foi possível ler o banco ao vivo (' + e.message + '). Os números abaixo continuam sendo os dos arquivos estáticos.', true);
+      if (!auto) aviso('Não foi possível ler o banco ao vivo (' + e.message + '). Os números abaixo continuam sendo os dos arquivos estáticos.', true);
       $('atualiza-msg').textContent = 'Falhou. Tente de novo em instantes.';
       $('btn-atualiza').disabled = false;
+      EM_CURSO = false;
     });
   }
 
+  function acompanharAoVivo() {
+    atualizarAoVivo(true);
+    setInterval(function () { if (!document.hidden) atualizarAoVivo(true); }, 30000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) atualizarAoVivo(true); });
+  }
+
   function iniciar() {
-    carregarEstatico().then(renderTudo).catch(function (e) {
+    carregarEstatico().then(renderTudo).then(acompanharAoVivo).catch(function (e) {
       aviso('Não foi possível carregar os arquivos de dados (' + e.message + '). Abra a página por um servidor, não por arquivo do disco.', true);
       renderTudo();
     });

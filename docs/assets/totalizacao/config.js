@@ -8,5 +8,5 @@ window.TOTALIZACAO_CONFIG = {
   publishableKey: "sb_publishable_OdrY6f2C-CdRzkorgyaudQ_taVWSIKw",
   funcaoUrl: "https://brvjvizqbyfamtxogvqf.supabase.co/functions/v1/receber-bu",
   turnstileSiteKey: null,
-  versao: "2026-10-15.2"
+  versao: "2026-10-27.1"
 };

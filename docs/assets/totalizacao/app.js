@@ -323,7 +323,7 @@ const ui = {};
 let tela = 'ler';
 let aguardandoId = null;
 function ligarDom() {
-  for (const id of ['tela', 'tela-ler', 'tela-conferir', 'tela-enviado', 'leitor-status', 'partes', 'camera-caixa', 'video', 'pre-camera', 'pre-icone', 'pre-texto', 'btn-camera', 'btn-parar', 'btn-foto', 'arquivo', 'btn-lanterna', 'btn-recomecar', 'btn-conferir', 'cartao', 'btn-voltar', 'btn-enviar', 'resultado', 'btn-outro', 'texto-lido', 'toast', 'chip-pendentes', 'btn-info', 'ficha', 'btn-fechar-ficha', 'rede', 'fila-status', 'btn-reenviar', 'fila-lista', 'historico', 'turnstile']) {
+  for (const id of ['tela', 'tela-ler', 'tela-conferir', 'tela-enviado', 'leitor-status', 'partes', 'camera-caixa', 'video', 'pre-camera', 'pre-icone', 'pre-texto', 'btn-camera', 'btn-parar', 'btn-foto', 'arquivo', 'btn-lanterna', 'btn-recomecar', 'btn-conferir', 'cartao', 'btn-voltar', 'btn-enviar', 'btn-enviar-outro', 'btn-enviar-outro-ler', 'resultado', 'btn-outro', 'texto-lido', 'toast', 'chip-pendentes', 'btn-info', 'ficha', 'btn-fechar-ficha', 'rede', 'fila-status', 'btn-reenviar', 'fila-lista', 'historico', 'turnstile']) {
     ui[id] = document.getElementById(id);
   }
 }
@@ -369,17 +369,20 @@ function renderPartes() {
   const total = esperados(c);
   let texto;
   if (n === 0) texto = 'Nenhum QR lido ainda.';
-  else if (completo(c)) texto = `QR ${n} de ${total} lido. Tudo lido: toque em Conferir.`;
+  else if (completo(c)) texto = `QR ${n} de ${total} lido. Tudo lido: envie e leia o próximo, ou confira antes.`;
   else if (total === null) texto = `${n} QR lido${n > 1 ? 's' : ''}. Falta o QRBU para saber o total.`;
   else texto = `QR ${n} de ${total} lido${n > 1 ? 's' : ''}. Falta: ${faltam(c).join(', ')}.`;
   ui['leitor-status'].textContent = texto;
   const pronto = completo(c);
   ui['btn-conferir'].disabled = !pronto;
   ui['btn-enviar'].disabled = !pronto || aguardandoId !== null;
+  ui['btn-enviar-outro'].disabled = !pronto || aguardandoId !== null;
+  ui['btn-enviar-outro-ler'].hidden = !pronto;
+  ui['btn-foto'].hidden = pronto;
   ui['pre-camera'].classList.toggle('completo', pronto);
   ui['pre-icone'].innerHTML = pronto ? ICONES.check : ICONES.camera;
   ui['pre-texto'].textContent = pronto
-    ? 'Todos os QR lidos. Toque em Conferir.'
+    ? 'Todos os QR lidos. Envie e leia o próximo, ou confira antes.'
     : n > 0 ? `Falta: ${faltam(c).join(', ')}.` : 'Aponte para os QR do fim do boletim, um por vez, até o quadro.';
   ui['btn-camera'].textContent = n > 0 && !pronto ? 'Continuar na câmera' : 'Abrir câmera';
   ui['btn-camera'].hidden = pronto;
@@ -394,7 +397,7 @@ function registrar(texto, origem) {
     setTimeout(() => ui['camera-caixa'].classList.remove('lido'), 700);
     if (completo(conjunto)) {
       pararCamera();
-      toast('Tudo lido. Toque em Conferir.', 'ok');
+      toast('Tudo lido. Toque em Enviar e ler outro ou em Conferir.', 'ok');
     } else {
       toast(r.mensagem, 'ok', 2500);
     }
@@ -822,7 +825,7 @@ async function processarFila(forcar = false) {
         };
         await historicoApi.gravar(reg);
         if (item.id === aguardandoId) mostrarResultado(reg);
-        else if (tela === 'ler') toast(`Boletim da seção ${reg.resumo && reg.resumo.secao ? reg.resumo.secao : '?'} enviado: ${TITULOS[reg.status] || reg.status}.`, 'ok');
+        else if (tela !== 'enviado') avisarEnvioSegundoPlano(reg);
       } else {
         item.tentativas = (item.tentativas || 0) + 1;
         item.proximo = Date.now() + espera(item.tentativas);
@@ -837,10 +840,21 @@ async function processarFila(forcar = false) {
     await renderFila();
   }
 }
-async function aoEnviar() {
-  if (!completo(conjunto) || aguardandoId !== null) return;
+function avisarEnvioSegundoPlano(reg) {
+  const secao = reg.resumo && reg.resumo.secao ? reg.resumo.secao : '?';
+  const titulo = TITULOS[reg.status] || reg.status;
+  if (reg.status === 'aceito') {
+    toast(`Seção ${secao}: ${titulo}.`, 'ok', 3000);
+  } else if (reg.status === 'rejeitado') {
+    vibrar([40, 60, 40]);
+    toast(`Seção ${secao} rejeitada: ${reg.motivo || 'motivo não informado'}. Leia de novo esse boletim.`, 'erro', 0);
+  } else {
+    toast(`Seção ${secao}: ${titulo}. ${MENSAGENS[reg.status] || ''}`, 'aviso', 8000);
+  }
+}
+function montarItem() {
   const r = resumir(conjunto) || {};
-  const item = {
+  return {
     id: uuid(),
     qr: textos(conjunto),
     resumo: { uf: r.UNFE, muni: r.MUNI, zona: r.ZONA, secao: r.SECA, turno: r.TURN },
@@ -849,6 +863,22 @@ async function aoEnviar() {
     proximo: 0,
     ultimoErro: null,
   };
+}
+async function aoEnviarEOutro() {
+  if (!completo(conjunto) || aguardandoId !== null) return;
+  const item = montarItem();
+  await filaApi.gravar(item);
+  const secao = item.resumo.secao || '?';
+  conjunto = novoConjunto();
+  renderPartes();
+  irPara('ler');
+  toast(`Seção ${secao} enviada em segundo plano. Pode ler o próximo boletim.`, 'ok', 2500);
+  processarFila(false);
+  abrirCamera();
+}
+async function aoEnviar() {
+  if (!completo(conjunto) || aguardandoId !== null) return;
+  const item = montarItem();
   aguardandoId = item.id;
   ui['btn-enviar'].disabled = true;
   limparToast();
@@ -909,6 +939,8 @@ function iniciar() {
   ui['btn-conferir'].addEventListener('click', () => { if (completo(conjunto)) irPara('conferir'); });
   ui['btn-voltar'].addEventListener('click', () => irPara('ler'));
   ui['btn-enviar'].addEventListener('click', aoEnviar);
+  ui['btn-enviar-outro'].addEventListener('click', aoEnviarEOutro);
+  ui['btn-enviar-outro-ler'].addEventListener('click', aoEnviarEOutro);
   ui['btn-outro'].addEventListener('click', recomecar);
   ui['btn-reenviar'].addEventListener('click', () => processarFila(true));
   ui['btn-info'].addEventListener('click', () => abrirFicha());

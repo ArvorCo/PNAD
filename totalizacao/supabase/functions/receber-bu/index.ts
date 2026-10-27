@@ -10,7 +10,7 @@ const VERSAO_MOTOR = "receber-bu/2026-10-15.1";
 const ORIGENS = new Set(["https://brasil.arvor.co", "http://localhost:4173", "http://127.0.0.1:4173", "http://localhost:8000", "http://127.0.0.1:8000"]);
 const MAX_QR = 12;
 const MAX_CHARS = 1200;
-const LIMITE_POR_MINUTO = 30;
+const LIMITE_POR_MINUTO = 120;
 
 const MODO = Deno.env.get("MODO") ?? "oficial"; // "teste" aceita FASE S/T e qualquer pleito
 const SAL_IP = Deno.env.get("SAL_IP") ?? "";
