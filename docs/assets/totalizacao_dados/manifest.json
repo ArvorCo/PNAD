@@ -1,71 +1,71 @@
 {
- "gerado_em": "2026-10-27T20:28:01+00:00",
+ "gerado_em": "2026-10-27T20:35:47+00:00",
  "cadeia": {
-  "bus": 265,
+  "bus": 266,
   "cadeia_integra": true,
   "quebras": [],
-  "ultimo_elo": "c430a11e074b340f27b6f7d20748ad23f720eaceef70ccda5fc5225d631ba5a2"
+  "ultimo_elo": "b3e1869d9ae6ceb6cf7f02cc174c799f4c16a49917962f351344d0f6e37f20b8"
  },
  "arquivos": {
   "bus.csv": {
-   "sha256": "af4dae3ff52326719eb75c645032b96285ff56a61c492eb87f7ef225446dc2fc",
-   "bytes": 727730
+   "sha256": "7ac611e67db3ad4726d2434240a7d0dcaa7ad888c4a5179a024a038f45e369bf",
+   "bytes": 730378
   },
   "candidatos_2t.json": {
    "sha256": "4f0ca2bcd5087e6ca2bbc521a85c5a185f531594c9b4d5cda874fb6eb103b7bf",
    "bytes": 2624
   },
   "cargos.csv": {
-   "sha256": "f8341ce67c7405ea24458b3a64e6b2932d414cc386c1b8a69f2b9e33cba6ed90",
-   "bytes": 8562
+   "sha256": "ffa6684466ae962c950e7f3806ab4221eb285f152cf98c2bc81ab9ab3b308cc3",
+   "bytes": 8593
   },
   "cobertura_muni.json": {
-   "sha256": "c9fb686c318243ccc73d78955d3d7e91fb0f5a47e0c03dba52181c1c14bd37ec",
-   "bytes": 785799
+   "sha256": "0b29168b5a20fb411d964e927ab6273f5bd3a811b00d99f6485bb47ab8c41f48",
+   "bytes": 785800
   },
   "cobertura_uf.json": {
-   "sha256": "79949cf3632295644c914d537d691bdf5d3012f695724e69495b6c41f25f0819",
+   "sha256": "3ddc8d937b453708776adc0068eec8c89a4a4c7cb080431265bdac6b87633e44",
    "bytes": 4347
   },
   "conferencia_tse.csv": {
-   "sha256": "8a3d4c782b868b2cbe818f9690df99387e4e78c5e034ac4364531df1964b79c2",
-   "bytes": 103162
+   "sha256": "1d73998e202b4af73e0eb7b1a6a11053cb26deea05ed53fa4bb30c21840af27b",
+   "bytes": 103550
   },
   "conferencia_tse.json": {
-   "sha256": "b5abf2074d184d826ffb5b2e83fc6c6c2e42811edcc815ce863e0996ceaab7b5",
-   "bytes": 164476
+   "sha256": "4ffbcfb04990fd8af0c76516294320a43187c3b8301236fd6c158d4b92771760",
+   "bytes": 165094
   },
   "conflitos.json": {
-   "sha256": "5c43cdf11cc9d274c96b4c0e554ecaf6c71f033ca9b6919663abf3fa12d43cc6",
+   "sha256": "9f5d55a81c379b34daf1a8b2afb1607f9ed2e18ce9a4da2fbe810c776b24fbc0",
    "bytes": 99
   },
   "envios.csv": {
-   "sha256": "674f232f558a9febb6cc1ffd6292e0803fe01c9cbe9ebb96085312ea7093be0c",
-   "bytes": 40651
+   "sha256": "869a6005ab289554b9dc2b4bcc1bd5f18390a69055118c8ace1c2cdea96ce66e",
+   "bytes": 41683
   },
   "estatisticas.json": {
-   "sha256": "60d26dffec123e3ee1ef3bf945e29a6351fbced91669a541610885e9c28ee3cb",
+   "sha256": "0754e914b028987500eb7f597de3e8feb470ef1274a4899be8c3b42a92c84545",
    "bytes": 343
   },
   "resumo_cargo_uf.json": {
-   "sha256": "9808e59b786569515008d6a3d900f97aee09f275d8a803630a43558d36fbc6bf",
-   "bytes": 3205
+   "sha256": "f9e307e732a852c779334ab567db5fc0caf44d1b9426fd2e2f55817609132f54",
+   "bytes": 3208
   },
   "totais_br.json": {
-   "sha256": "cac414139b34eabbcbeb7fef6ffef01a6a81914a388cef5030dea796e74ce2be",
+   "sha256": "29605070a58e2fbb06d4e8165237fe1af15f5c214ea20c075e70065d75e28e10",
    "bytes": 268
   },
   "totais_muni.json": {
-   "sha256": "c2153255c030fe630d359266e90e533f3cdf5ad155348b0e4a9d36ab7dcaf815",
+   "sha256": "27ae14778410839fdf8a53307b7606ddb695d2c88b84358a5fa9e3bf0e35d071",
    "bytes": 11867
   },
   "totais_uf.json": {
-   "sha256": "687a8b7ba6d9b2b54555427e1fa5e517709ca306728211dc9868df54174a45f6",
+   "sha256": "344d2b0a6d9cbf7a81bd4e592bb479da8ba9caba532a34c1fbca4ea5974c784f",
    "bytes": 3931
   },
   "votos.csv": {
-   "sha256": "15fe388dc5a8ca9b197248e91f2f5be7e5bddb7ed302d226534650c321cd6932",
-   "bytes": 10298
+   "sha256": "290429302bdee27aff513b4610d7317036b98f8255c1f24a191c446d1944fc24",
+   "bytes": 10335
   }
  },
  "como_reproduzir": "Some votos.csv por candidato dentro dos BUs de bus.csv cuja secao tem um unico hash_final e fase O; reverifique cada BU com totalizacao/ (lerBoletim) a partir de conteudo, assi e cert_hex."
