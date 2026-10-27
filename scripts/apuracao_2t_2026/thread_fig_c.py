@@ -468,10 +468,139 @@ def fig_grupos() -> str:
     return svg("".join(out), "Grupos de seções nos dois turnos e o grupo atípico")
 
 
+def fig_dispersao() -> str:
+    """Dispersão das seções nos dois componentes principais, cor por grupo, elipse do atípico."""
+    import math
+
+    A = dado("anomalia_ml")
+    P = A["pca"]
+    cols = P["colunas"]
+    pts = [dict(zip(cols, p, strict=False)) for p in P["pontos"]]
+    anom = int(P.get("anomalo", A["mais_anomalo"]["id"]))
+    xs = [p["x"] for p in pts]
+    ys = [p["y"] for p in pts]
+    x0, x1, y0, y1 = 70, 700, 40, 520
+    lox, hix = min(xs) - 0.3, max(xs) + 0.3
+    loy, hiy = min(ys) - 0.3, max(ys) + 0.3
+
+    def X(v):
+        return x0 + (x1 - x0) * (v - lox) / (hix - lox)
+
+    def Y(v):
+        return y1 - (y1 - y0) * (v - loy) / (hiy - loy)
+
+    ve = P.get("variancia_explicada") or [None, None]
+    out = [
+        t(
+            60,
+            28,
+            "Cada ponto é uma seção; a cor é o grupo da mistura gaussiana",
+            15,
+            MUTED,
+            600,
+        ),
+        f'<rect x="{x0}" y="{y0}" width="{x1 - x0}" height="{y1 - y0}" fill="#f7f4ec" stroke="#d6cfbd"/>',
+    ]
+    grupos: dict[int, list[str]] = {}
+    tops = []
+    for p in pts:
+        k = int(p["cluster"])
+        if p.get("top"):
+            tops.append((X(p["x"]), Y(p["y"]), k))
+        else:
+            grupos.setdefault(k, []).append(f"M{X(p['x']):.1f} {Y(p['y']):.1f}h0.01")
+    # o atípico por cima dos demais
+    for k in sorted(grupos, key=lambda k: k == anom):
+        cor = CORES_GRUPOS[k % len(CORES_GRUPOS)]
+        out.append(
+            f'<path d="{"".join(grupos[k])}" stroke="{cor}" stroke-width="{4.2 if k == anom else 3.2}" '
+            f'stroke-linecap="round" fill="none" opacity="{0.95 if k == anom else 0.55}"/>'
+        )
+    for x, y, k in tops:
+        cor = CORES_GRUPOS[k % len(CORES_GRUPOS)]
+        out.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3.2" fill="{cor}" stroke="{INK}" stroke-width="0.9"/>'
+        )
+    el = next((e for e in P.get("elipses") or [] if int(e["cluster"]) == anom), None)
+    if el:
+        cx, cy = X(el["cx"]), Y(el["cy"])
+        rx = el["rx"] * (x1 - x0) / (hix - lox)
+        ry = el["ry"] * (y1 - y0) / (hiy - loy)
+        ang = -float(el["ang"])
+        out.append(
+            f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{rx:.1f}" ry="{ry:.1f}" transform="rotate({ang:.1f} {cx:.1f} {cy:.1f})" '
+            'fill="#6b4a92" fill-opacity="0.05" stroke="#6b4a92" stroke-width="2.4" stroke-dasharray="8 5"/>'
+        )
+    v1 = f"{100 * ve[0]:.0f}%" if ve[0] is not None else "s/d"
+    v2 = f"{100 * ve[1]:.0f}%" if ve[1] is not None else "s/d"
+    out.append(
+        t(
+            (x0 + x1) / 2,
+            y1 + 26,
+            f"componente principal 1 ({v1} da variância)",
+            14,
+            INK,
+            600,
+            "middle",
+        )
+    )
+    out.append(
+        t(
+            x0 - 8,
+            (y0 + y1) / 2,
+            f"componente 2 ({v2})",
+            14,
+            INK,
+            600,
+            "middle",
+            extra=f' transform="rotate(-90 {x0 - 8} {(y0 + y1) / 2:.0f})"',
+        )
+    )
+    # legenda à direita
+    lx, ly = 730, 70
+    comps = A["componentes"]
+    for i, c in enumerate(comps):
+        k = int(c["id"])
+        cor = CORES_GRUPOS[k % len(CORES_GRUPOS)]
+        out.append(r(lx, ly + i * 34 - 11, 13, 13, cor, 2))
+        rot = f"Grupo {k + 1}" + (" (atípico)" if k == anom else "")
+        out.append(t(lx + 20, ly + i * 34, rot, 14, INK, 700 if k == anom else 500))
+        out.append(
+            t(
+                lx + 20,
+                ly + i * 34 + 15,
+                f"{c['secoes']:,}".replace(",", ".") + " seções",
+                12,
+                MUTED,
+                500,
+            )
+        )
+    out.append(t(lx, 372, "Ponto com contorno preto:", 13, INK, 700))
+    out.append(t(lx, 390, "uma das 300 seções menos", 13, INK, 500))
+    out.append(t(lx, 406, "prováveis do país.", 13, INK, 500))
+    out.append(t(lx, 436, "Tracejado: o grupo atípico,", 13, INK, 700))
+    out.append(t(lx, 454, "dois desvios no plano.", 13, INK, 500))
+    out.append(
+        t(
+            60,
+            588,
+            "Atipicidade estatística não é irregularidade; o grupo pede explicação, não prova nada.",
+            14,
+            MUTED,
+            600,
+        )
+    )
+    _ = math
+    return svg(
+        "".join(out), "Seções nos dois componentes principais, por grupo da mistura"
+    )
+
+
 __all__ = [
     "DESTINOS",
     "ORIGENS",
     "fig_cadencia",
+    "fig_dispersao",
     "fig_grupos",
     "fig_habilitacao",
     "fig_hipoteses",

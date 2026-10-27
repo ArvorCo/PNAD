@@ -514,6 +514,12 @@ def v_anomalia() -> dict:
         "an_segundo_secoes": num(segundo["secoes"]),
         "an_segundo_comp": sinal(segundo["centro_delta_pp"]["comp"], 1),
         "an_ari_kmeans": num(A["kmeans"]["ari_com_mistura_k_estrela"]["niveis"], 2),
+        "an_pca_n": num(A["pca"]["n_pontos"]),
+        "an_pca_top": num(A["pca"]["top"]),
+        "an_pca_v1": pct(100 * A["pca"]["variancia_explicada"][0], 0),
+        "an_pca_v2": pct(100 * A["pca"]["variancia_explicada"][1], 0),
+        "an_mapa_url": "https://brasil.arvor.co/politizese_mapa.html?camada=anomalia",
+        "an_politize_url": "https://brasil.arvor.co/politizese.html",
     }
 
 

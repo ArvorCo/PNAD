@@ -43,7 +43,7 @@ CAMINHOS=(
   scripts/apuracao_2t_2026/ scripts/politize_se/ scripts/apuracao_logs/
   scripts/social-cards.py scripts/social-card-politizese-mapa.py scripts/abstencao-lula-secoes.py
   scripts/apuracao-2026-logs-coletar.py scripts/apuracao-2026-logs-processar.py scripts/apuracao-2026-logs-build.py
-  scripts/video-sete-riscos-capa.py scripts/publicar-dossie-2t.sh scripts/render-audit.py
+  scripts/video-sete-riscos-capa.py scripts/publicar-dossie-2t.sh scripts/render-audit.py scripts/deposito-archive.sh
   # testes
   tests/test_apuracao_logs_2t.py tests/test_video_apuracao_2t.py tests/test_video_sete_riscos.py
   # análise (sem os pesados ignorados)

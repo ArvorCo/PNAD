@@ -1,0 +1,15 @@
+{
+ "identificador": "arvor-apuracao-2026-urnas-brasil",
+ "metadata": {
+  "title": "Eleição presidencial brasileira de 2026: boletins de urna, RDV, assinaturas e logs de todas as seções (bancos de trabalho da Arvor)",
+  "mediatype": "data",
+  "collection": "opensource_media",
+  "creator": "Arvor (brasil.arvor.co)",
+  "date": "2026-10-26",
+  "language": "por",
+  "licenseurl": "https://creativecommons.org/licenses/by/4.0/",
+  "subject": "eleições 2026; Brasil; boletim de urna; TSE; urna eletrônica; logs; RDV; apuração; dados abertos",
+  "description": "Bancos SQLite de trabalho usados nos dossiês da apuração do 1º e do 2º turno de 2026 em brasil.arvor.co. Conteúdo: boletins de urna decodificados de todas as seções (1º turno: secoes_2026.sqlite; 2º turno: secoes_2t_2026.sqlite), registro digital do voto do 2º turno (rdv_2t_2026.sqlite), arquivos de assinatura e certificados de cada urna nos dois turnos (vsc_2t_2026.sqlite), métricas por seção extraídas dos logs do 2º turno (logs_urnas_2t_2026.sqlite), os logs compactos do 2º turno (logs_2t.sqlite, com o trecho do 1º turno por referência), os logs originais do 1º turno (logs.sqlite) e as métricas por seção dos logs do 1º turno (logs_urnas_2026.sqlite). Tudo vem dos arquivos oficiais publicados pelo TSE em resultados.tse.jus.br, identificados por hash de transmissão; cada seção traz a URL oficial e o SHA-256 do arquivo lido. O arquivo hashes_sha256.json lista o SHA-256 de cada banco; o DICIONARIO.md descreve o dataset derivado por seção publicado no repositório. Reprodução, esquema e scripts: github.com/ArvorCo/PNAD (pasta apuracao/ e scripts/). Leitura obrigatória: sinal pede explicação, não prova irregularidade; atipicidade estatística não é irregularidade."
+ },
+ "nota": "Metadados enviados por scripts/deposito-archive.sh. O identificador é fixo; o archive.org não permite renomear. Licença CC BY 4.0 vale para o trabalho da Arvor; os dados de origem são públicos do TSE."
+}

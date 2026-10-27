@@ -18,7 +18,8 @@ from . import pagina_fig_secoes as F
 from . import pagina_fig_secoes_b as FB
 from . import pagina_texto_biometria as TBIO
 from . import pagina_texto_secoes as T
-from .pagina_comum import MEMOS, cabeca
+from .dataset import DICIONARIO, MANIFESTO, ler_manifesto
+from .pagina_comum import MEMOS, ROOT, cabeca, inteiro
 
 ARQUIVOS = ("secoes.json", "secoes_voto.json", "secoes_ranking.json")
 
@@ -31,6 +32,36 @@ BOTAO_MAPA = (
     'background:#151812;color:#fff;font-weight:700;text-decoration:none">'
     "Explorar todos os locais de votação no mapa do Brasil</a></p>"
 )
+
+
+def bloco_dataset(m: dict | None = None) -> str:
+    """Download do dataset por seção; sem ``manifesto.json`` o bloco não aparece."""
+    m = m or ler_manifesto()
+    if not m:
+        return ""
+    csv_rel = m["arquivo"]
+    pasta = MANIFESTO.parent.relative_to(ROOT / "docs")
+    mb = f"{m['bytes'] / 1_000_000:.1f}".replace(".", ",")
+    partes = ""
+    if m.get("partes_por_uf"):
+        partes = (
+            f" Há também uma parte por estado em <code>{pasta}/uf/</code>, "
+            "com as mesmas colunas."
+        )
+    return (
+        '<p class="dataset"><a href="'
+        + csv_rel.removeprefix("docs/")
+        + '" download style="display:inline-flex;align-items:center;min-height:48px;'
+        "padding:10px 18px;border-radius:8px;border:2px solid #151812;color:#151812;"
+        'font-weight:700;text-decoration:none">Baixe os dados por seção '
+        "(CSV, dicionário e hash)</a><br>"
+        f"CSV comprimido com {mb} MB e {inteiro(m['n_linhas'])} linhas, uma por seção "
+        "do Brasil e do exterior com boletim em ao menos um turno: votos, horários, "
+        "urna, sinais e nível de atenção dos logs nos dois turnos. "
+        f'<a href="{DICIONARIO.relative_to(ROOT / "docs")}">Dicionário das colunas</a>, '
+        f'<a href="{pasta}/manifesto.json">manifesto com SHA-256</a>.{partes} '
+        "Sinal pede explicação, não prova irregularidade.</p>"
+    )
 
 
 def noticias(d: Dados) -> dict | None:
@@ -84,7 +115,8 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += T.voto(V) + FB.fig_did(V)
     h += T.tabela_2x2x2_texto(V) + FB.tabela_2x2x2(V) + T.tabela_e_extras(S, V)
     h += "<h3>As mais atípicas</h3>"
-    h += T.ranking(R) + FB.fig_mapa(R) + BOTAO_MAPA + FB.tabela_ranking(R)
+    h += T.ranking(R) + FB.fig_mapa(R) + BOTAO_MAPA + bloco_dataset()
+    h += FB.tabela_ranking(R)
     h += T.fiscal_e_log()
     h += limites(T.limites_itens(S))
     return h

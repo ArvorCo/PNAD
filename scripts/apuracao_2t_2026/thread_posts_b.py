@@ -230,4 +230,21 @@ POSTS_B: list[dict] = [
             "Arvor Intelligence. O dossiê completo, com fonte de cada número, mapas, tabelas, boletins e a lista de seções para conferir, está em {url_dossie}.",
         ],
     },
+    {
+        "tag": "O mapa dos grupos",
+        "tom": "outros",
+        "titulo": "Oito nuvens, uma delas roxa: as seções do Brasil vistas pela mistura.",
+        "metrica": "{an_pca_n}",
+        "metrica_rot": "seções na projeção; a elipse tracejada é o grupo atípico",
+        "fig": C.fig_dispersao,
+        "fonte": "anomalia_ml.json (projeção em dois componentes principais das nove frações; mapa do Brasil, camada Grupo atípico)",
+        "texto": [
+            "A imagem é a mistura gaussiana vista de cima. Cada ponto é uma seção, numa amostra de {an_pca_n} sorteada por estado mais as {an_pca_top} seções menos prováveis do país, que levam contorno preto. Os dois eixos são os componentes principais das nove frações do eleitorado nos dois turnos: o primeiro guarda {an_pca_v1} da variância e separa, da esquerda para a direita, as seções de Lula das de Flávio; o segundo guarda {an_pca_v2} e sobe com brancos, nulos e abstenção. A cor é o grupo que a mistura atribuiu a cada seção, {an_k} ao todo.",
+            "As nuvens se sobrepõem, e isso não é defeito do desenho: é o que o ICL avisou. O eleitorado brasileiro não forma blocos separados; forma um contínuo, e a mistura corta esse contínuo em regiões. Por isso uma seção perto da fronteira poderia cair no grupo vizinho, e por isso o dossiê fala em grupo, nunca em rótulo definitivo de uma seção.",
+            "A elipse tracejada marca o grupo atípico, o roxo: {an_secoes} seções, {an_pct} do país, dois desvios no plano. Ele fica alto no segundo eixo, onde brancos e nulos pesam, e é largo porque suas seções são pequenas e instáveis: {an_aptos_grupo} aptos em média contra {an_aptos_pais}. Os pontos de contorno preto, as seções menos prováveis, concentram-se nele e nas bordas das outras nuvens.",
+            "O que não aparece na imagem também conta. Não há uma nuvem de um estado, nem de um modelo de urna: V de Cramér do grupo atípico com a região de {an_vcr_regiao} e com o modelo de {an_vcr_modelo}. E a fatia de Flávio entre os turnos, descontadas as vizinhas, mudou {an_did} ponto nele, com intervalo de {an_did_ic}: o zero está dentro.",
+            "Agora o mapa. Cada uma dessas {an_secoes} seções está no mapa do Brasil do Politize-se, na camada Grupo atípico (estatística): {an_mapa_url}. O prédio aparece colorido quando ao menos uma seção dele está no grupo; a ficha lista as seções, e cada seção abre no Politize-se ({an_politize_url}) com o 1º e o 2º turno lado a lado, os seis sinais, o registro da urna e a densidade em palavras. Procure a sua: a leitura é agregada, o voto é secreto, e o que a estatística marca é uma pergunta, não uma resposta.",
+            "O dossiê inteiro, com os oito grupos descritos, o BIC e o ICL por k, a convergência, o k-means de contraste, as cinquenta amostras e os limites, está em {url_dossie}. Atipicidade estatística não é irregularidade; o grupo pede explicação, não prova nada.",
+        ],
+    },
 ]

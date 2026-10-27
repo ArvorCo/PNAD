@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
 
+from .dataset import DEPOSITO_BRUTO, ler_manifesto
 from .pagina_comum import (
     DADOS,
     MEMOS,
@@ -53,6 +54,27 @@ def item_arquivo(c: Path, d: Dados) -> str:
     return (
         f'<li><a href="{REPO}/blob/main/{_rel(c)}"><code>{escape(c.name)}</code></a> · {_tam(len(bruto))}{gerado}'
         f'<br><span class="hash">SHA-256 {sha}</span></li>'
+    )
+
+
+def item_dataset(m: dict | None = None) -> str:
+    """Item "Dataset aberto por seção": hash do CSV e nota sobre o depósito bruto."""
+    m = m or ler_manifesto()
+    if not m:
+        return ""
+    csv_rel = m["arquivo"]
+    deposito = (
+        f'em <a href="{REPO}/blob/main/{_rel(DEPOSITO_BRUTO)}"><code>{escape(_rel(DEPOSITO_BRUTO))}</code></a>'
+        if DEPOSITO_BRUTO.exists()
+        else f"em <code>{escape(_rel(DEPOSITO_BRUTO))}</code> quando o depósito for enviado"
+    )
+    return (
+        f'<li>Dataset aberto por seção: <a href="{csv_rel.removeprefix("docs/")}"><code>{escape(Path(csv_rel).name)}</code></a> '
+        f"· {_tam(m['bytes'])} · {inteiro(m['n_linhas'])} linhas · dicionário em "
+        f'<a href="{Path(csv_rel).parent.relative_to("docs")}/DICIONARIO.md"><code>DICIONARIO.md</code></a>.'
+        f'<br><span class="hash">SHA-256 {escape(m["sha256"])}</span><br>'
+        "Os bancos brutos (BUs decodificados, RDV, arquivos .vsc e logs) ficam em depósito à parte "
+        f"(Internet Archive, item arvor-apuracao-2026-urnas-brasil, a enviar), com hashes {deposito}.</li>"
     )
 
 
@@ -111,7 +133,9 @@ def render(d: Dados, cap: Capitulo) -> str:
         "<li>Régua do 1º turno: <code>apuracao/data/referencia_1t.json</code> e <code>analysis/apuracao_2026/dados/</code>.</li>"
         "<li>Matérias da noite: <code>analysis/apuracao_2t_2026/noticias_noite.json</code>, com veículo, hora, URL e SHA-256 da cópia salva.</li>"
         "<li>Boletins falados: <code>docs/assets/apuracao_2t/boletins/</code> (áudio, roteiro e metadados).</li>"
-        "<li>Malhas do IBGE: <code>data/originals/ibge_malhas/</code> e <code>apuracao/public/geo/</code>.</li></ul>"
+        "<li>Malhas do IBGE: <code>data/originals/ibge_malhas/</code> e <code>apuracao/public/geo/</code>.</li>"
+        + item_dataset()
+        + "</ul>"
     )
     h += (
         "<details><summary>Reproduzir no repositório</summary><pre>"

@@ -12,7 +12,7 @@
 
   const BASE = 'assets/politize_se_mapa/';
   const SECOES = 'assets/politize_se/dados/zona/';
-  const VERSAO = '20261026e';
+  const VERSAO = '20261026f';
   const FORMATO = 3;
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
@@ -933,7 +933,8 @@
   }
 
   function lerHash() {
-    const q = new URLSearchParams(location.hash.slice(1));
+    // o estado vive no #; um link com ?camada=... (sem #) também é aceito na abertura
+    const q = new URLSearchParams(location.hash.slice(1) || location.search.slice(1));
     let uf = q.get('uf') && S.meta.ufs[q.get('uf').toUpperCase()] ? q.get('uf').toUpperCase() : '';
     const l = q.get('l') || '';
     if (l && !uf && /^[A-Z]{2}-/.test(l) && S.meta.ufs[l.slice(0, 2)]) uf = l.slice(0, 2);
