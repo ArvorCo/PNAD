@@ -8,6 +8,7 @@ comandos de reprodução. A lista é lida do disco, não digitada.
 from __future__ import annotations
 
 import hashlib
+import json
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
@@ -35,6 +36,8 @@ COMANDOS = [
 
 
 def _tam(n: int) -> str:
+    if n >= 1_000_000_000:
+        return f"{n / 1_000_000_000:.2f} GB".replace(".", ",")
     if n >= 1_000_000:
         return f"{n / 1_000_000:.2f} MB".replace(".", ",")
     return f"{n / 1000:.1f} kB".replace(".", ",")
@@ -57,24 +60,64 @@ def item_arquivo(c: Path, d: Dados) -> str:
     )
 
 
-def item_dataset(m: dict | None = None) -> str:
-    """Item "Dataset aberto por seção": hash do CSV e nota sobre o depósito bruto."""
+def _deposito_bruto() -> dict | None:
+    """Registro do depósito dos bancos brutos no Internet Archive, se já foi gravado."""
+    if not DEPOSITO_BRUTO.exists():
+        return None
+    return json.loads(DEPOSITO_BRUTO.read_text(encoding="utf-8"))
+
+
+def _linhas_deposito(dep: dict) -> str:
+    """Uma linha por banco: nome, tamanho, SHA-256 local e o link direto, ou o estado na fila."""
+    out = []
+    for a in dep.get("arquivos", []):
+        nome = escape(a["nome"])
+        if a.get("no_archive"):
+            link = f'<a href="{escape(a["url"])}"><code>{nome}</code></a>'
+            estado = ""
+        else:
+            link = f"<code>{nome}</code>"
+            estado = " · aceito pelo archive.org, ainda na fila de ingestão; o link direto passa a valer quando o arquivo aparecer no item"
+        out.append(
+            f"<li>{link} · {_tam(a['bytes'])}{estado}"
+            f'<br><span class="hash">SHA-256 {escape(a["sha256"])}</span></li>'
+        )
+    return "".join(out)
+
+
+def item_dataset(m: dict | None = None, dep: dict | None = None) -> str:
+    """Item "Dataset aberto por seção": hash do CSV e o depósito bruto, com links quando registrado."""
     m = m or ler_manifesto()
     if not m:
         return ""
     csv_rel = m["arquivo"]
-    deposito = (
-        f'em <a href="{REPO}/blob/main/{_rel(DEPOSITO_BRUTO)}"><code>{escape(_rel(DEPOSITO_BRUTO))}</code></a>'
+    dep = dep or _deposito_bruto()
+    hashes = (
+        f'<a href="{REPO}/blob/main/{_rel(DEPOSITO_BRUTO)}"><code>{escape(_rel(DEPOSITO_BRUTO))}</code></a>'
         if DEPOSITO_BRUTO.exists()
-        else f"em <code>{escape(_rel(DEPOSITO_BRUTO))}</code> quando o depósito for enviado"
+        else f"<code>{escape(_rel(DEPOSITO_BRUTO))}</code>"
     )
+    if dep:
+        listados = sum(1 for a in dep.get("arquivos", []) if a.get("no_archive"))
+        total = len(dep.get("arquivos", []))
+        registrado = escape(str(dep.get("registrado_em", ""))[:16].replace("T", " "))
+        deposito = (
+            "Os bancos brutos (BUs decodificados, RDV, arquivos .vsc e logs dos dois turnos) estão depositados no "
+            f'Internet Archive, item <a href="{escape(dep["url"])}"><code>{escape(dep["item"])}</code></a> '
+            f"({listados} de {total} arquivos já listados no item em {registrado}; hashes locais em {hashes}). "
+            "Download direto por arquivo, sem torrent:"
+            f'<ul class="deposito">{_linhas_deposito(dep)}</ul>'
+        )
+    else:
+        deposito = (
+            "Os bancos brutos (BUs decodificados, RDV, arquivos .vsc e logs) ficam em depósito à parte "
+            f"(Internet Archive, item arvor-apuracao-2026-urnas-brasil, a enviar), com hashes em {hashes} quando o depósito for enviado."
+        )
     return (
         f'<li>Dataset aberto por seção: <a href="{csv_rel.removeprefix("docs/")}"><code>{escape(Path(csv_rel).name)}</code></a> '
         f"· {_tam(m['bytes'])} · {inteiro(m['n_linhas'])} linhas · dicionário em "
         f'<a href="{Path(csv_rel).parent.relative_to("docs")}/DICIONARIO.md"><code>DICIONARIO.md</code></a>.'
-        f'<br><span class="hash">SHA-256 {escape(m["sha256"])}</span><br>'
-        "Os bancos brutos (BUs decodificados, RDV, arquivos .vsc e logs) ficam em depósito à parte "
-        f"(Internet Archive, item arvor-apuracao-2026-urnas-brasil, a enviar), com hashes {deposito}.</li>"
+        f'<br><span class="hash">SHA-256 {escape(m["sha256"])}</span><br>{deposito}</li>'
     )
 
 

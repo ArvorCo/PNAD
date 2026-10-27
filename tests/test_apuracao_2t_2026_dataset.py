@@ -99,7 +99,38 @@ def test_blocos_da_pagina_com_manifesto_sintetico():
     item = CF.item_dataset(m)
     assert "Dataset aberto por seção" in item and "a" * 64 in item
     assert "deposito_bruto.json" in item and "Internet Archive" in item
-    for h in (bloco, item):
+    dep = {
+        "item": "arvor-apuracao-2026-urnas-brasil",
+        "url": "https://archive.org/details/arvor-apuracao-2026-urnas-brasil",
+        "registrado_em": "2026-10-27T14:22:21-0300",
+        "arquivos": [
+            {
+                "nome": "x.sqlite",
+                "bytes": 1_504_579_584,
+                "sha256": "b" * 64,
+                "no_archive": True,
+                "url": "https://archive.org/download/arvor-apuracao-2026-urnas-brasil/x.sqlite",
+            },
+            {
+                "nome": "y.sqlite",
+                "bytes": 54_555_512_832,
+                "sha256": "c" * 64,
+                "no_archive": False,
+                "url": None,
+            },
+        ],
+    }
+    com_dep = CF.item_dataset(m, dep)
+    assert (
+        'href="https://archive.org/download/arvor-apuracao-2026-urnas-brasil/x.sqlite"'
+        in com_dep
+    )
+    assert "1 de 2 arquivos" in com_dep and "b" * 64 in com_dep and "c" * 64 in com_dep
+    assert (
+        "fila de ingestão" in com_dep
+        and "download/arvor-apuracao-2026-urnas-brasil/y.sqlite" not in com_dep
+    )
+    for h in (bloco, item, com_dep):
         assert TRAVESSAO not in h and "fraude" not in h.lower()
 
 
