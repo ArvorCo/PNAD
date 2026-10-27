@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-27T21:00:22Z",
+ "gerado_em": "2026-10-27T22:32:04Z",
  "script": "scripts/apuracao-2t-2026-zeros.py",
  "rotulo": "atipicidade pede explicação, não prova irregularidade",
  "manchete": {
@@ -6875,6 +6875,2604 @@
    "comparecimento": 99
   }
  ],
+ "cauda": {
+  "titulo": "A cauda: de onde o voto sumiu",
+  "regras": {
+   "universo": "Brasil sem o exterior, seções com BU de presidente nos dois turnos de 2026",
+   "piso_nominal_2t": 30,
+   "queda_ate_1": {
+    "flavio_1t_min": 6,
+    "flavio_2t_max": 1
+   },
+   "queda_80": {
+    "flavio_1t_min": 10,
+    "queda_min_pct": 80
+   },
+   "espelho": "as mesmas duas regras com Lula no lugar de Flávio",
+   "limite_numero_pequeno": 5,
+   "fatia_1t": "votos do candidato / válidos do 1º turno (comparecimento menos brancos e nulos)",
+   "independencia": "(1 − p)^n para zero e a soma binomial até o voto do 2º turno para a chance de ficar com tão pouco; p = fatia do 1º turno, n = Lula + Flávio no 2º turno; aproximação e^−k",
+   "corte_chernoff": 1e-12,
+   "governador_direita": [
+    "direita",
+    "centro-direita"
+   ],
+   "governador_topo_1t": 4,
+   "por_dentro": "a seção da cauda com zero no 2º turno e mais votos de Flávio no 1º, e a seção da cauda com mais votos de Flávio no 1º"
+  },
+  "numero_pequeno": {
+   "secoes_zero_2t": 106,
+   "com_voto_1t": 56,
+   "votos_1t": 118,
+   "por_k": [
+    {
+     "k": 0,
+     "secoes": 50
+    },
+    {
+     "k": 1,
+     "secoes": 30
+    },
+    {
+     "k": 2,
+     "secoes": 10
+    },
+    {
+     "k": 3,
+     "secoes": 9
+    },
+    {
+     "k": 4,
+     "secoes": 5
+    },
+    {
+     "k": 5,
+     "secoes": 1
+    },
+    {
+     "k": 16,
+     "secoes": 1
+    }
+   ],
+   "taxa_base": [
+    {
+     "k": 0,
+     "secoes_pais": 79,
+     "chegaram_a_zero": 50,
+     "pct_observado": 63.29,
+     "chance_aprox_pct": 100.0,
+     "zeros_esperados": 79.0
+    },
+    {
+     "k": 1,
+     "secoes_pais": 129,
+     "chegaram_a_zero": 30,
+     "pct_observado": 23.26,
+     "chance_aprox_pct": 36.7879,
+     "zeros_esperados": 46.3309
+    },
+    {
+     "k": 2,
+     "secoes_pais": 150,
+     "chegaram_a_zero": 10,
+     "pct_observado": 6.67,
+     "chance_aprox_pct": 13.5335,
+     "zeros_esperados": 19.9216
+    },
+    {
+     "k": 3,
+     "secoes_pais": 201,
+     "chegaram_a_zero": 9,
+     "pct_observado": 4.48,
+     "chance_aprox_pct": 4.97871,
+     "zeros_esperados": 9.2461
+    },
+    {
+     "k": 4,
+     "secoes_pais": 241,
+     "chegaram_a_zero": 5,
+     "pct_observado": 2.07,
+     "chance_aprox_pct": 1.83156,
+     "zeros_esperados": 3.8524
+    },
+    {
+     "k": 5,
+     "secoes_pais": 263,
+     "chegaram_a_zero": 1,
+     "pct_observado": 0.38,
+     "chance_aprox_pct": 0.673795,
+     "zeros_esperados": 1.5403
+    },
+    {
+     "k": 6,
+     "secoes_pais": 297,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.247875,
+     "zeros_esperados": 0.6201
+    },
+    {
+     "k": 7,
+     "secoes_pais": 336,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.0911882,
+     "zeros_esperados": 0.2438
+    },
+    {
+     "k": 8,
+     "secoes_pais": 352,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.0335463,
+     "zeros_esperados": 0.081
+    },
+    {
+     "k": 9,
+     "secoes_pais": 429,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.012341,
+     "zeros_esperados": 0.0375
+    },
+    {
+     "k": 10,
+     "secoes_pais": 437,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.00453999,
+     "zeros_esperados": 0.0125
+    },
+    {
+     "k": 11,
+     "secoes_pais": 461,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.00167017,
+     "zeros_esperados": 0.0054
+    },
+    {
+     "k": 12,
+     "secoes_pais": 508,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.000614421,
+     "zeros_esperados": 0.0019
+    },
+    {
+     "k": 13,
+     "secoes_pais": 507,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 0.000226033,
+     "zeros_esperados": 0.0007
+    },
+    {
+     "k": 14,
+     "secoes_pais": 574,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 8.31529e-05,
+     "zeros_esperados": 0.0002
+    },
+    {
+     "k": 15,
+     "secoes_pais": 635,
+     "chegaram_a_zero": 0,
+     "pct_observado": 0.0,
+     "chance_aprox_pct": 3.05902e-05,
+     "zeros_esperados": 0.0001
+    },
+    {
+     "k": 16,
+     "secoes_pais": 659,
+     "chegaram_a_zero": 1,
+     "pct_observado": 0.15,
+     "chance_aprox_pct": 1.12535e-05,
+     "zeros_esperados": 0.0
+    }
+   ],
+   "faixas": [
+    {
+     "de": 1,
+     "ate": 5,
+     "secoes_pais": 984,
+     "chegaram_a_zero": 55,
+     "zeros_esperados": 80.8912
+    },
+    {
+     "de": 6,
+     "ate": 15,
+     "secoes_pais": 4536,
+     "chegaram_a_zero": 0,
+     "zeros_esperados": 1.0032
+    },
+    {
+     "de": 16,
+     "ate": 16,
+     "secoes_pais": 659,
+     "chegaram_a_zero": 1,
+     "zeros_esperados": 0.0
+    }
+   ],
+   "secoes_com_voto_1t": [
+    {
+     "uf": "AM",
+     "mun": "02615",
+     "municipio": "Maués",
+     "zona": 5,
+     "secao": 176,
+     "flavio_1t": 16,
+     "validos_1t": 329,
+     "nominal_2t": 333,
+     "chance_zero": 6.16638e-08
+    },
+    {
+     "uf": "MA",
+     "mun": "09415",
+     "municipio": "Turiaçu",
+     "zona": 39,
+     "secao": 206,
+     "flavio_1t": 5,
+     "validos_1t": 91,
+     "nominal_2t": 91,
+     "chance_zero": 0.00584241
+    },
+    {
+     "uf": "AC",
+     "mun": "01104",
+     "municipio": "Jordão",
+     "zona": 5,
+     "secao": 125,
+     "flavio_1t": 4,
+     "validos_1t": 144,
+     "nominal_2t": 123,
+     "chance_zero": 0.0312724
+    },
+    {
+     "uf": "AM",
+     "mun": "02054",
+     "municipio": "Atalaia do Norte",
+     "zona": 42,
+     "secao": 29,
+     "flavio_1t": 4,
+     "validos_1t": 284,
+     "nominal_2t": 325,
+     "chance_zero": 0.00995175
+    },
+    {
+     "uf": "AM",
+     "mun": "02739",
+     "municipio": "Santo Antônio do Içá",
+     "zona": 47,
+     "secao": 9,
+     "flavio_1t": 4,
+     "validos_1t": 324,
+     "nominal_2t": 329,
+     "chance_zero": 0.0167894
+    },
+    {
+     "uf": "AM",
+     "mun": "02879",
+     "municipio": "Urucurituba",
+     "zona": 3,
+     "secao": 252,
+     "flavio_1t": 4,
+     "validos_1t": 117,
+     "nominal_2t": 101,
+     "chance_zero": 0.0297955
+    },
+    {
+     "uf": "MA",
+     "mun": "07005",
+     "municipio": "Água Doce do Maranhão",
+     "zona": 12,
+     "secao": 145,
+     "flavio_1t": 4,
+     "validos_1t": 177,
+     "nominal_2t": 189,
+     "chance_zero": 0.0132974
+    },
+    {
+     "uf": "AM",
+     "mun": "02054",
+     "municipio": "Atalaia do Norte",
+     "zona": 42,
+     "secao": 30,
+     "flavio_1t": 3,
+     "validos_1t": 136,
+     "nominal_2t": 142,
+     "chance_zero": 0.0421122
+    },
+    {
+     "uf": "AM",
+     "mun": "02470",
+     "municipio": "Juruá",
+     "zona": 50,
+     "secao": 19,
+     "flavio_1t": 3,
+     "validos_1t": 142,
+     "nominal_2t": 149,
+     "chance_zero": 0.0415185
+    },
+    {
+     "uf": "AM",
+     "mun": "02690",
+     "municipio": "Parintins",
+     "zona": 4,
+     "secao": 130,
+     "flavio_1t": 3,
+     "validos_1t": 250,
+     "nominal_2t": 220,
+     "chance_zero": 0.0702308
+    },
+    {
+     "uf": "AM",
+     "mun": "98477",
+     "municipio": "Tabatinga",
+     "zona": 36,
+     "secao": 61,
+     "flavio_1t": 3,
+     "validos_1t": 358,
+     "nominal_2t": 354,
+     "chance_zero": 0.0508447
+    },
+    {
+     "uf": "MA",
+     "mun": "08524",
+     "municipio": "Serrano do Maranhão",
+     "zona": 107,
+     "secao": 87,
+     "flavio_1t": 3,
+     "validos_1t": 85,
+     "nominal_2t": 83,
+     "chance_zero": 0.0506733
+    },
+    {
+     "uf": "MT",
+     "mun": "90352",
+     "municipio": "Barra do Garças",
+     "zona": 9,
+     "secao": 531,
+     "flavio_1t": 3,
+     "validos_1t": 116,
+     "nominal_2t": 119,
+     "chance_zero": 0.0442419
+    },
+    {
+     "uf": "MT",
+     "mun": "99058",
+     "municipio": "Guarantã do Norte",
+     "zona": 44,
+     "secao": 284,
+     "flavio_1t": 3,
+     "validos_1t": 150,
+     "nominal_2t": 145,
+     "chance_zero": 0.0534295
+    },
+    {
+     "uf": "PA",
+     "mun": "04936",
+     "municipio": "Moju",
+     "zona": 37,
+     "secao": 120,
+     "flavio_1t": 3,
+     "validos_1t": 51,
+     "nominal_2t": 41,
+     "chance_zero": 0.0832748
+    },
+    {
+     "uf": "RR",
+     "mun": "03107",
+     "municipio": "Uiramutã",
+     "zona": 7,
+     "secao": 113,
+     "flavio_1t": 3,
+     "validos_1t": 189,
+     "nominal_2t": 190,
+     "chance_zero": 0.0478318
+    },
+    {
+     "uf": "AM",
+     "mun": "02739",
+     "municipio": "Santo Antônio do Içá",
+     "zona": 47,
+     "secao": 87,
+     "flavio_1t": 2,
+     "validos_1t": 312,
+     "nominal_2t": 315,
+     "chance_zero": 0.131897
+    },
+    {
+     "uf": "CE",
+     "mun": "13196",
+     "municipio": "Aquiraz",
+     "zona": 66,
+     "secao": 334,
+     "flavio_1t": 2,
+     "validos_1t": 31,
+     "nominal_2t": 32,
+     "chance_zero": 0.118348
+    },
+    {
+     "uf": "MA",
+     "mun": "08397",
+     "municipio": "Montes Altos",
+     "zona": 103,
+     "secao": 80,
+     "flavio_1t": 2,
+     "validos_1t": 289,
+     "nominal_2t": 298,
+     "chance_zero": 0.126255
+    },
+    {
+     "uf": "MA",
+     "mun": "09075",
+     "municipio": "São Bento",
+     "zona": 38,
+     "secao": 167,
+     "flavio_1t": 2,
+     "validos_1t": 96,
+     "nominal_2t": 96,
+     "chance_zero": 0.132506
+    },
+    {
+     "uf": "MA",
+     "mun": "09415",
+     "municipio": "Turiaçu",
+     "zona": 39,
+     "secao": 58,
+     "flavio_1t": 2,
+     "validos_1t": 169,
+     "nominal_2t": 164,
+     "chance_zero": 0.141932
+    },
+    {
+     "uf": "PA",
+     "mun": "04073",
+     "municipio": "Alenquer",
+     "zona": 21,
+     "secao": 234,
+     "flavio_1t": 2,
+     "validos_1t": 68,
+     "nominal_2t": 60,
+     "chance_zero": 0.166764
+    },
+    {
+     "uf": "PA",
+     "mun": "05053",
+     "municipio": "Oriximiná",
+     "zona": 38,
+     "secao": 259,
+     "flavio_1t": 2,
+     "validos_1t": 144,
+     "nominal_2t": 133,
+     "chance_zero": 0.155646
+    },
+    {
+     "uf": "PA",
+     "mun": "05835",
+     "municipio": "Parauapebas",
+     "zona": 106,
+     "secao": 330,
+     "flavio_1t": 2,
+     "validos_1t": 128,
+     "nominal_2t": 212,
+     "chance_zero": 0.0354848
+    },
+    {
+     "uf": "RR",
+     "mun": "03000",
+     "municipio": "Caroebe",
+     "zona": 4,
+     "secao": 141,
+     "flavio_1t": 2,
+     "validos_1t": 68,
+     "nominal_2t": 44,
+     "chance_zero": 0.268869
+    },
+    {
+     "uf": "RR",
+     "mun": "03107",
+     "municipio": "Uiramutã",
+     "zona": 7,
+     "secao": 63,
+     "flavio_1t": 2,
+     "validos_1t": 262,
+     "nominal_2t": 256,
+     "chance_zero": 0.14062
+    },
+    {
+     "uf": "AC",
+     "mun": "01104",
+     "municipio": "Jordão",
+     "zona": 5,
+     "secao": 65,
+     "flavio_1t": 1,
+     "validos_1t": 129,
+     "nominal_2t": 126,
+     "chance_zero": 0.375105
+    },
+    {
+     "uf": "AM",
+     "mun": "02054",
+     "municipio": "Atalaia do Norte",
+     "zona": 42,
+     "secao": 26,
+     "flavio_1t": 1,
+     "validos_1t": 290,
+     "nominal_2t": 302,
+     "chance_zero": 0.352333
+    },
+    {
+     "uf": "AM",
+     "mun": "02054",
+     "municipio": "Atalaia do Norte",
+     "zona": 42,
+     "secao": 28,
+     "flavio_1t": 1,
+     "validos_1t": 133,
+     "nominal_2t": 136,
+     "chance_zero": 0.358287
+    },
+    {
+     "uf": "AM",
+     "mun": "02135",
+     "municipio": "Benjamin Constant",
+     "zona": 20,
+     "secao": 117,
+     "flavio_1t": 1,
+     "validos_1t": 239,
+     "nominal_2t": 231,
+     "chance_zero": 0.379631
+    },
+    {
+     "uf": "AM",
+     "mun": "02216",
+     "municipio": "Carauari",
+     "zona": 21,
+     "secao": 96,
+     "flavio_1t": 1,
+     "validos_1t": 113,
+     "nominal_2t": 113,
+     "chance_zero": 0.366246
+    },
+    {
+     "uf": "AM",
+     "mun": "02372",
+     "municipio": "Santa Isabel do Rio Negro",
+     "zona": 30,
+     "secao": 30,
+     "flavio_1t": 1,
+     "validos_1t": 54,
+     "nominal_2t": 72,
+     "chance_zero": 0.260323
+    },
+    {
+     "uf": "AM",
+     "mun": "02615",
+     "municipio": "Maués",
+     "zona": 5,
+     "secao": 179,
+     "flavio_1t": 1,
+     "validos_1t": 127,
+     "nominal_2t": 123,
+     "chance_zero": 0.378198
+    },
+    {
+     "uf": "AM",
+     "mun": "02755",
+     "municipio": "São Paulo de Olivença",
+     "zona": 22,
+     "secao": 71,
+     "flavio_1t": 1,
+     "validos_1t": 298,
+     "nominal_2t": 298,
+     "chance_zero": 0.367261
+    },
+    {
+     "uf": "AM",
+     "mun": "02836",
+     "municipio": "São Gabriel da Cachoeira",
+     "zona": 19,
+     "secao": 1,
+     "flavio_1t": 1,
+     "validos_1t": 172,
+     "nominal_2t": 167,
+     "chance_zero": 0.377659
+    },
+    {
+     "uf": "MA",
+     "mun": "07030",
+     "municipio": "Alcântara",
+     "zona": 52,
+     "secao": 86,
+     "flavio_1t": 1,
+     "validos_1t": 45,
+     "nominal_2t": 44,
+     "chance_zero": 0.372021
+    },
+    {
+     "uf": "MA",
+     "mun": "08524",
+     "municipio": "Serrano do Maranhão",
+     "zona": 107,
+     "secao": 89,
+     "flavio_1t": 1,
+     "validos_1t": 76,
+     "nominal_2t": 74,
+     "chance_zero": 0.375256
+    },
+    {
+     "uf": "MA",
+     "mun": "08850",
+     "municipio": "Primeira Cruz",
+     "zona": 32,
+     "secao": 90,
+     "flavio_1t": 1,
+     "validos_1t": 49,
+     "nominal_2t": 42,
+     "chance_zero": 0.420626
+    },
+    {
+     "uf": "MA",
+     "mun": "08850",
+     "municipio": "Primeira Cruz",
+     "zona": 32,
+     "secao": 193,
+     "flavio_1t": 1,
+     "validos_1t": 51,
+     "nominal_2t": 42,
+     "chance_zero": 0.435304
+    },
+    {
+     "uf": "MA",
+     "mun": "09415",
+     "municipio": "Turiaçu",
+     "zona": 39,
+     "secao": 162,
+     "flavio_1t": 1,
+     "validos_1t": 176,
+     "nominal_2t": 157,
+     "chance_zero": 0.408775
+    },
+    {
+     "uf": "MA",
+     "mun": "09415",
+     "municipio": "Turiaçu",
+     "zona": 39,
+     "secao": 195,
+     "flavio_1t": 1,
+     "validos_1t": 69,
+     "nominal_2t": 73,
+     "chance_zero": 0.344482
+    },
+    {
+     "uf": "MA",
+     "mun": "09490",
+     "municipio": "Viana",
+     "zona": 20,
+     "secao": 258,
+     "flavio_1t": 1,
+     "validos_1t": 98,
+     "nominal_2t": 100,
+     "chance_zero": 0.358563
+    },
+    {
+     "uf": "PA",
+     "mun": "05053",
+     "municipio": "Oriximiná",
+     "zona": 38,
+     "secao": 243,
+     "flavio_1t": 1,
+     "validos_1t": 38,
+     "nominal_2t": 35,
+     "chance_zero": 0.393219
+    },
+    {
+     "uf": "PA",
+     "mun": "05096",
+     "municipio": "Paragominas",
+     "zona": 42,
+     "secao": 214,
+     "flavio_1t": 1,
+     "validos_1t": 48,
+     "nominal_2t": 54,
+     "chance_zero": 0.320817
+    },
+    {
+     "uf": "PA",
+     "mun": "05452",
+     "municipio": "São Félix do Xingu",
+     "zona": 53,
+     "secao": 217,
+     "flavio_1t": 1,
+     "validos_1t": 131,
+     "nominal_2t": 145,
+     "chance_zero": 0.329191
+    },
+    {
+     "uf": "PA",
+     "mun": "05452",
+     "municipio": "São Félix do Xingu",
+     "zona": 53,
+     "secao": 218,
+     "flavio_1t": 1,
+     "validos_1t": 216,
+     "nominal_2t": 273,
+     "chance_zero": 0.281725
+    },
+    {
+     "uf": "PB",
+     "mun": "22071",
+     "municipio": "Sapé",
+     "zona": 4,
+     "secao": 290,
+     "flavio_1t": 1,
+     "validos_1t": 12,
+     "nominal_2t": 10,
+     "chance_zero": 0.418904
+    },
+    {
+     "uf": "PE",
+     "mun": "24139",
+     "municipio": "Floresta",
+     "zona": 72,
+     "secao": 119,
+     "flavio_1t": 1,
+     "validos_1t": 221,
+     "nominal_2t": 227,
+     "chance_zero": 0.357193
+    },
+    {
+     "uf": "PR",
+     "mun": "77275",
+     "municipio": "Ortigueira",
+     "zona": 167,
+     "secao": 96,
+     "flavio_1t": 1,
+     "validos_1t": 303,
+     "nominal_2t": 314,
+     "chance_zero": 0.354156
+    },
+    {
+     "uf": "RR",
+     "mun": "03107",
+     "municipio": "Uiramutã",
+     "zona": 7,
+     "secao": 62,
+     "flavio_1t": 1,
+     "validos_1t": 216,
+     "nominal_2t": 216,
+     "chance_zero": 0.367026
+    },
+    {
+     "uf": "RR",
+     "mun": "03107",
+     "municipio": "Uiramutã",
+     "zona": 7,
+     "secao": 104,
+     "flavio_1t": 1,
+     "validos_1t": 146,
+     "nominal_2t": 138,
+     "chance_zero": 0.387338
+    },
+    {
+     "uf": "RR",
+     "mun": "03107",
+     "municipio": "Uiramutã",
+     "zona": 7,
+     "secao": 108,
+     "flavio_1t": 1,
+     "validos_1t": 132,
+     "nominal_2t": 126,
+     "chance_zero": 0.383591
+    },
+    {
+     "uf": "RS",
+     "mun": "89630",
+     "municipio": "Viamão",
+     "zona": 59,
+     "secao": 590,
+     "flavio_1t": 1,
+     "validos_1t": 37,
+     "nominal_2t": 39,
+     "chance_zero": 0.343503
+    },
+    {
+     "uf": "TO",
+     "mun": "95338",
+     "municipio": "Goiatins",
+     "zona": 32,
+     "secao": 61,
+     "flavio_1t": 1,
+     "validos_1t": 174,
+     "nominal_2t": 162,
+     "chance_zero": 0.393089
+    },
+    {
+     "uf": "TO",
+     "mun": "95338",
+     "municipio": "Goiatins",
+     "zona": 32,
+     "secao": 84,
+     "flavio_1t": 1,
+     "validos_1t": 175,
+     "nominal_2t": 174,
+     "chance_zero": 0.368934
+    },
+    {
+     "uf": "TO",
+     "mun": "96199",
+     "municipio": "Tocantínia",
+     "zona": 5,
+     "secao": 55,
+     "flavio_1t": 1,
+     "validos_1t": 191,
+     "nominal_2t": 196,
+     "chance_zero": 0.357409
+    }
+   ],
+   "nota": "taxa_base: seções do Brasil, sem o exterior, com BU nos dois turnos e exatamente k votos em Flávio no 1º turno; chegaram_a_zero: com zero no 2º; chance_aprox_pct: 100·e^−k; zeros_esperados: soma de (1 − p)^n nas mesmas seções, com p = k / válidos do 1º turno e n = Lula + Flávio no 2º turno"
+  },
+  "cauda": {
+   "queda_ate_1": 6,
+   "queda_80": 6,
+   "uniao": 10,
+   "nas_duas": 2,
+   "esperado_independencia": {
+    "queda_ate_1": 7.6313,
+    "queda_80": 1.661,
+    "espelho_queda_ate_1": 0.8972,
+    "espelho_queda_80": 0.2519
+   },
+   "sem_piso": {
+    "queda_ate_1": 7,
+    "queda_80": 7,
+    "extras": [
+     {
+      "chave": [
+       "PR",
+       "75990",
+       34,
+       133
+      ],
+      "municipio": "Inácio Martins",
+      "aptos_2t": 215,
+      "comparecimento_1t": 170,
+      "comparecimento_2t": 18,
+      "nominal_2t": 18
+     },
+     {
+      "chave": [
+       "SP",
+       "64254",
+       291,
+       381
+      ],
+      "municipio": "Franca",
+      "aptos_2t": 21,
+      "comparecimento_1t": 16,
+      "comparecimento_2t": 15,
+      "nominal_2t": 14
+     }
+    ]
+   }
+  },
+  "espelho": {
+   "queda_ate_1": 0,
+   "queda_80": 0,
+   "secoes": [],
+   "sem_piso": {
+    "queda_ate_1": 0,
+    "queda_80": 1,
+    "extras": [
+     {
+      "chave": [
+       "PR",
+       "75990",
+       34,
+       133
+      ],
+      "municipio": "Inácio Martins",
+      "aptos_2t": 215,
+      "comparecimento_1t": 170,
+      "comparecimento_2t": 18,
+      "nominal_2t": 18
+     }
+    ]
+   }
+  },
+  "fichas": [
+   {
+    "uf": "AM",
+    "mun": "02399",
+    "municipio": "Ipixuna",
+    "zona": 45,
+    "secao": 63,
+    "local": "E. M. MARECHAL CANDIDO RONDON ALDEIA PIAU",
+    "tipo": "aldeia_indigena",
+    "tipo_regra": "nome",
+    "criterios": [
+     "queda_80"
+    ],
+    "aptos_1t": 335,
+    "aptos_2t": 335,
+    "comparecimento_1t": 227,
+    "comparecimento_2t": 197,
+    "flavio_1t": 61,
+    "flavio_2t": 2,
+    "lula_1t": 135,
+    "lula_2t": 167,
+    "outros_1t": 12,
+    "brancos_nulos_1t": 19,
+    "brancos_nulos_2t": 28,
+    "validos_1t": 208,
+    "nominal_2t": 169,
+    "queda_flavio_pct": 96.7,
+    "chance_independencia": 8.40569e-23,
+    "secao_nova": false,
+    "t2022": {
+     "local": "E. M. MARECHAL CANDIDO RONDON ALDEIA PIAU",
+     "aptos": 328,
+     "comparecimento": 142,
+     "lula_2t": 86,
+     "bolsonaro_2t": 3
+    },
+    "politize_bolsonaro22_2t_pct_validos": 3.4,
+    "governador": {
+     "uf_tem_2t": true,
+     "t1": {
+      "aptos": 335,
+      "comparecimento": 227,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "OMAR AZIZ",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": "coligação com o PT",
+        "votos": 177
+       },
+       {
+        "numero": 22,
+        "nome_urna": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 6
+       },
+       {
+        "numero": 70,
+        "nome_urna": "DAVID ALMEIDA",
+        "partido": "AVANTE",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 4
+       }
+      ],
+      "brancos": 0,
+      "nulos": 40,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 6,
+      "outros_candidatos": 0
+     },
+     "t2": {
+      "aptos": 335,
+      "comparecimento": 197,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "OMAR AZIZ",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": "coligação com o PT",
+        "votos": 172
+       },
+       {
+        "numero": 22,
+        "nome_urna": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 1
+       }
+      ],
+      "brancos": 0,
+      "nulos": 24,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 1
+     }
+    },
+    "urna": {
+     "t1": 2018717,
+     "t2": 2018717,
+     "modelo_t1": "UE2020",
+     "modelo_t2": "UE2020",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "e130371d43a10ed0b34ea15afc7f342d00c7d22568826dc01117488d60a65814",
+     "bu_sha256_t2": "3bdb779300b13f625f4abc1ab2f3bc77782abb14adb3c7d9cae93e205cffaa2e"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "ea4345b79ddb6f101a18eb763d2e40c1d02f9abbe0b52762bea15586c4bf96b7",
+     "numero_interno_urna": 2018717
+    },
+    "link": "politizese.html#uf=AM&zona=45&secao=63"
+   },
+   {
+    "uf": "AP",
+    "mun": "06041",
+    "municipio": "Itaubal",
+    "zona": 10,
+    "secao": 408,
+    "local": "ESCOLA ESTADUAL ADELANO NUNES LACERDA",
+    "tipo": "outro",
+    "tipo_regra": null,
+    "criterios": [
+     "queda_80"
+    ],
+    "aptos_1t": 210,
+    "aptos_2t": 210,
+    "comparecimento_1t": 194,
+    "comparecimento_2t": 139,
+    "flavio_1t": 33,
+    "flavio_2t": 5,
+    "lula_1t": 155,
+    "lula_2t": 134,
+    "outros_1t": 4,
+    "brancos_nulos_1t": 2,
+    "brancos_nulos_2t": 0,
+    "validos_1t": 192,
+    "nominal_2t": 139,
+    "queda_flavio_pct": 84.8,
+    "chance_independencia": 7.70518e-07,
+    "secao_nova": true,
+    "t2022": null,
+    "politize_bolsonaro22_2t_pct_validos": null,
+    "governador": {
+     "uf_tem_2t": false,
+     "t1": {
+      "aptos": 210,
+      "comparecimento": 194,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "DR. FURLAN",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 106
+       },
+       {
+        "numero": 44,
+        "nome_urna": "CLÉCIO",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "comparacao": null,
+        "votos": 80
+       }
+      ],
+      "brancos": 0,
+      "nulos": 8,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 80,
+      "outros_candidatos": 0
+     },
+     "t2": null
+    },
+    "urna": {
+     "t1": 2341252,
+     "t2": 2341252,
+     "modelo_t1": "UE2022",
+     "modelo_t2": "UE2022",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "6e5437c869afe5919f0573dbe3029736c5be0fda5244cbd5a82c95fa09edfe51",
+     "bu_sha256_t2": "8c4ea986a14161df0d91baf3ce1a04ab70c4ba27eece3943adead1ff1128e623"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "5a71ee2cf7671b599db6c86a1fa6e5c14e82c06f0f95592a74893b68e3fccff5",
+     "numero_interno_urna": 2341252
+    },
+    "link": "politizese.html#uf=AP&zona=10&secao=408"
+   },
+   {
+    "uf": "PA",
+    "mun": "04723",
+    "municipio": "Anapu",
+    "zona": 80,
+    "secao": 254,
+    "local": "EMEF TRINCHEIRA BACAJÁ",
+    "tipo": "outro",
+    "tipo_regra": null,
+    "criterios": [
+     "queda_80"
+    ],
+    "aptos_1t": 238,
+    "aptos_2t": 238,
+    "comparecimento_1t": 158,
+    "comparecimento_2t": 162,
+    "flavio_1t": 29,
+    "flavio_2t": 4,
+    "lula_1t": 127,
+    "lula_2t": 158,
+    "outros_1t": 0,
+    "brancos_nulos_1t": 2,
+    "brancos_nulos_2t": 0,
+    "validos_1t": 156,
+    "nominal_2t": 162,
+    "queda_flavio_pct": 86.2,
+    "chance_independencia": 2.85202e-10,
+    "secao_nova": false,
+    "t2022": {
+     "local": "EMEF TRINCHEIRA BACAJÁ",
+     "aptos": 250,
+     "comparecimento": 168,
+     "lula_2t": 157,
+     "bolsonaro_2t": 0
+    },
+    "politize_bolsonaro22_2t_pct_validos": 0.0,
+    "governador": {
+     "uf_tem_2t": false,
+     "t1": {
+      "aptos": 238,
+      "comparecimento": 158,
+      "candidatos": [
+       {
+        "numero": 15,
+        "nome_urna": "HANA GHASSAN",
+        "partido": "MDB",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 133
+       },
+       {
+        "numero": 20,
+        "nome_urna": "DR. DANIEL",
+        "partido": "PODE",
+        "campo": "indefinido",
+        "comparacao": null,
+        "votos": 18
+       }
+      ],
+      "brancos": 1,
+      "nulos": 6,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 0,
+      "outros_candidatos": 0
+     },
+     "t2": null
+    },
+    "urna": {
+     "t1": 1805903,
+     "t2": 1805903,
+     "modelo_t1": "UE2015",
+     "modelo_t2": "UE2015",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "b31becf4a14d90196618e495c2337253584d7afb77b55ca578c4f0a27c22b4e5",
+     "bu_sha256_t2": "7c9077a35ce23fa93d3c6967dfd533d3f505e816b48994ec5e5808cdb477f27f"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "42fe44145dd94837e40061d9730ebcb20218eee1921cf69011928a01287d9160",
+     "numero_interno_urna": 1805903
+    },
+    "link": "politizese.html#uf=PA&zona=80&secao=254"
+   },
+   {
+    "uf": "AM",
+    "mun": "02755",
+    "municipio": "São Paulo de Olivença",
+    "zona": 22,
+    "secao": 70,
+    "local": "E. M. INDÍGENA TIKUNA DUGUE SEBASTIÃO GASPAR ATCHIGUCUNGUTCHAUCU",
+    "tipo": "aldeia_indigena",
+    "tipo_regra": "nome",
+    "criterios": [
+     "queda_ate_1",
+     "queda_80"
+    ],
+    "aptos_1t": 195,
+    "aptos_2t": 195,
+    "comparecimento_1t": 183,
+    "comparecimento_2t": 184,
+    "flavio_1t": 20,
+    "flavio_2t": 1,
+    "lula_1t": 154,
+    "lula_2t": 180,
+    "outros_1t": 6,
+    "brancos_nulos_1t": 3,
+    "brancos_nulos_2t": 3,
+    "validos_1t": 180,
+    "nominal_2t": 181,
+    "queda_flavio_pct": 95.0,
+    "chance_independencia": 1.30246e-08,
+    "secao_nova": false,
+    "t2022": {
+     "local": "E. M. INDÍGENA TIKUNA DUGUE SEBASTIÃO GASPAR ATCHIGUCUNGUTCHAUCU",
+     "aptos": 307,
+     "comparecimento": 252,
+     "lula_2t": 226,
+     "bolsonaro_2t": 3
+    },
+    "politize_bolsonaro22_2t_pct_validos": 1.3,
+    "governador": {
+     "uf_tem_2t": true,
+     "t1": {
+      "aptos": 195,
+      "comparecimento": 183,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "OMAR AZIZ",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": "coligação com o PT",
+        "votos": 142
+       },
+       {
+        "numero": 44,
+        "nome_urna": "ROBERTO CIDADE",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "comparacao": null,
+        "votos": 13
+       },
+       {
+        "numero": 22,
+        "nome_urna": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 11
+       },
+       {
+        "numero": 18,
+        "nome_urna": "ISAEL MUNDURUKU",
+        "partido": "REDE",
+        "campo": "esquerda",
+        "comparacao": null,
+        "votos": 1
+       }
+      ],
+      "brancos": 1,
+      "nulos": 15,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 24,
+      "outros_candidatos": 0
+     },
+     "t2": {
+      "aptos": 195,
+      "comparecimento": 184,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "OMAR AZIZ",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": "coligação com o PT",
+        "votos": 178
+       },
+       {
+        "numero": 22,
+        "nome_urna": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 2
+       }
+      ],
+      "brancos": 1,
+      "nulos": 3,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 2
+     }
+    },
+    "urna": {
+     "t1": 2340018,
+     "t2": 2340018,
+     "modelo_t1": "UE2022",
+     "modelo_t2": "UE2022",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "6b26831ef2a109365bd0b0270c226b9b1677ba489115976622689a5aa7d01288",
+     "bu_sha256_t2": "65ca2aee1f2f2f43f91c4f7372f77f2cebe95b91e93f099e8e100c4f58b1a117"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "c49aa806689b1f1250989138238c53611346774b25b11450d01f7de1365da120",
+     "numero_interno_urna": 2340018
+    },
+    "link": "politizese.html#uf=AM&zona=22&secao=70"
+   },
+   {
+    "uf": "AM",
+    "mun": "02615",
+    "municipio": "Maués",
+    "zona": 5,
+    "secao": 176,
+    "local": "E. M. INDÍGENA UNIAWASAP'I",
+    "tipo": "aldeia_indigena",
+    "tipo_regra": "nome",
+    "criterios": [
+     "queda_ate_1",
+     "queda_80"
+    ],
+    "aptos_1t": 382,
+    "aptos_2t": 382,
+    "comparecimento_1t": 331,
+    "comparecimento_2t": 337,
+    "flavio_1t": 16,
+    "flavio_2t": 0,
+    "lula_1t": 310,
+    "lula_2t": 333,
+    "outros_1t": 3,
+    "brancos_nulos_1t": 2,
+    "brancos_nulos_2t": 4,
+    "validos_1t": 329,
+    "nominal_2t": 333,
+    "queda_flavio_pct": 100.0,
+    "chance_independencia": 6.16638e-08,
+    "secao_nova": true,
+    "t2022": null,
+    "politize_bolsonaro22_2t_pct_validos": null,
+    "governador": {
+     "uf_tem_2t": true,
+     "t1": {
+      "aptos": 382,
+      "comparecimento": 331,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "OMAR AZIZ",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": "coligação com o PT",
+        "votos": 176
+       },
+       {
+        "numero": 44,
+        "nome_urna": "ROBERTO CIDADE",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "comparacao": null,
+        "votos": 118
+       },
+       {
+        "numero": 18,
+        "nome_urna": "ISAEL MUNDURUKU",
+        "partido": "REDE",
+        "campo": "esquerda",
+        "comparacao": null,
+        "votos": 12
+       },
+       {
+        "numero": 22,
+        "nome_urna": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 11
+       }
+      ],
+      "brancos": 0,
+      "nulos": 14,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 129,
+      "outros_candidatos": 0
+     },
+     "t2": {
+      "aptos": 382,
+      "comparecimento": 337,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "OMAR AZIZ",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": "coligação com o PT",
+        "votos": 328
+       },
+       {
+        "numero": 22,
+        "nome_urna": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 1
+       }
+      ],
+      "brancos": 0,
+      "nulos": 8,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 1
+     }
+    },
+    "urna": {
+     "t1": 2341225,
+     "t2": 2341225,
+     "modelo_t1": "UE2022",
+     "modelo_t2": "UE2022",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "6a2ee15cae1e9f415a2d2f2f7ae99bf48a8ab538d0ba945fd801f45feb69dae1",
+     "bu_sha256_t2": "0c5c030da696f8251bb3b683ab0ac3c62ff56e096a02d2897c572144b2391c40"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "1573061f2730566aa065dfe97906fc77022b0f714bbf3b4981c68f7feab6a324",
+     "numero_interno_urna": 2341225
+    },
+    "link": "politizese.html#uf=AM&zona=5&secao=176"
+   },
+   {
+    "uf": "MA",
+    "mun": "07994",
+    "municipio": "Icatu",
+    "zona": 31,
+    "secao": 32,
+    "local": "ESCOLA MUNICIPAL OLAVO BILAC",
+    "tipo": "outro",
+    "tipo_regra": null,
+    "criterios": [
+     "queda_80"
+    ],
+    "aptos_1t": 219,
+    "aptos_2t": 219,
+    "comparecimento_1t": 185,
+    "comparecimento_2t": 156,
+    "flavio_1t": 12,
+    "flavio_2t": 2,
+    "lula_1t": 164,
+    "lula_2t": 154,
+    "outros_1t": 2,
+    "brancos_nulos_1t": 7,
+    "brancos_nulos_2t": 0,
+    "validos_1t": 178,
+    "nominal_2t": 156,
+    "queda_flavio_pct": 83.3,
+    "chance_independencia": 0.0014094,
+    "secao_nova": false,
+    "t2022": {
+     "local": "ESCOLA MUNICIPAL OLAVO BILAC",
+     "aptos": 256,
+     "comparecimento": 222,
+     "lula_2t": 170,
+     "bolsonaro_2t": 5
+    },
+    "politize_bolsonaro22_2t_pct_validos": 2.9,
+    "governador": {
+     "uf_tem_2t": false,
+     "t1": {
+      "aptos": 219,
+      "comparecimento": 185,
+      "candidatos": [
+       {
+        "numero": 15,
+        "nome_urna": "ORLEANS BRANDÃO",
+        "partido": "MDB",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 108
+       },
+       {
+        "numero": 55,
+        "nome_urna": "EDUARDO BRAIDE",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 54
+       },
+       {
+        "numero": 13,
+        "nome_urna": "FELIPE CAMARÃO",
+        "partido": "PT",
+        "campo": "esquerda",
+        "comparacao": null,
+        "votos": 16
+       }
+      ],
+      "brancos": 3,
+      "nulos": 4,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 0,
+      "outros_candidatos": 0
+     },
+     "t2": null
+    },
+    "urna": {
+     "t1": 2305473,
+     "t2": 2305473,
+     "modelo_t1": "UE2022",
+     "modelo_t2": "UE2022",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "bc94a6c41d094b90c020ec11a471898a881c6995ac6a269a5e98482569b9ba74",
+     "bu_sha256_t2": "860b4cda6384001a3b15e895fc4863e00781890fd79a6ebd900dd6dc3b914cc0"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "a29f9ab4cf1120aa193daa6a873bc9f88e844caa82ca71ca5b3649296dcaf098",
+     "numero_interno_urna": 2305473
+    },
+    "link": "politizese.html#uf=MA&zona=31&secao=32"
+   },
+   {
+    "uf": "MT",
+    "mun": "91979",
+    "municipio": "Santa Terezinha",
+    "zona": 16,
+    "secao": 86,
+    "local": "ESCOLA ESTADUAL INDÍGENA IT'XALÁ",
+    "tipo": "aldeia_indigena",
+    "tipo_regra": "nome",
+    "criterios": [
+     "queda_ate_1"
+    ],
+    "aptos_1t": 317,
+    "aptos_2t": 317,
+    "comparecimento_1t": 282,
+    "comparecimento_2t": 297,
+    "flavio_1t": 7,
+    "flavio_2t": 1,
+    "lula_1t": 271,
+    "lula_2t": 293,
+    "outros_1t": 2,
+    "brancos_nulos_1t": 2,
+    "brancos_nulos_2t": 3,
+    "validos_1t": 280,
+    "nominal_2t": 294,
+    "queda_flavio_pct": 85.7,
+    "chance_independencia": 0.00499731,
+    "secao_nova": false,
+    "t2022": {
+     "local": "ESCOLA ESTADUAL INDÍGENA ITXALÁ",
+     "aptos": 291,
+     "comparecimento": 253,
+     "lula_2t": 248,
+     "bolsonaro_2t": 0
+    },
+    "politize_bolsonaro22_2t_pct_validos": 0.0,
+    "governador": {
+     "uf_tem_2t": false,
+     "t1": {
+      "aptos": 317,
+      "comparecimento": 282,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "DOUTORA NATASHA",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 212
+       },
+       {
+        "numero": 10,
+        "nome_urna": "OTAVIANO PIVETTA",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "comparacao": null,
+        "votos": 30
+       },
+       {
+        "numero": 22,
+        "nome_urna": "WELLINGTON FAGUNDES",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": null,
+        "votos": 3
+       }
+      ],
+      "brancos": 5,
+      "nulos": 32,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 33,
+      "outros_candidatos": 0
+     },
+     "t2": null
+    },
+    "urna": {
+     "t1": 2251116,
+     "t2": 2251116,
+     "modelo_t1": "UE2022",
+     "modelo_t2": "UE2022",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "293c4dfa9935e5b2a3a3fdba9a2ec97aa5366a95d436230c8e7d76ae5252a52e",
+     "bu_sha256_t2": "e8543125494172b90050ce756d1417d3c63f2276e04a6bd419d744f28283da1a"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "5e81a2b46add24ac621c2507353eead7eec52e306f63905fc45843d0d062ef4f",
+     "numero_interno_urna": 2251116
+    },
+    "link": "politizese.html#uf=MT&zona=16&secao=86"
+   },
+   {
+    "uf": "AC",
+    "mun": "01040",
+    "municipio": "Marechal Thaumaturgo",
+    "zona": 4,
+    "secao": 384,
+    "local": "ESCOLA SAMUEL PIYÃKO",
+    "tipo": "outro",
+    "tipo_regra": null,
+    "criterios": [
+     "queda_ate_1"
+    ],
+    "aptos_1t": 205,
+    "aptos_2t": 203,
+    "comparecimento_1t": 148,
+    "comparecimento_2t": 139,
+    "flavio_1t": 6,
+    "flavio_2t": 1,
+    "lula_1t": 125,
+    "lula_2t": 122,
+    "outros_1t": 1,
+    "brancos_nulos_1t": 16,
+    "brancos_nulos_2t": 16,
+    "validos_1t": 132,
+    "nominal_2t": 123,
+    "queda_flavio_pct": 83.3,
+    "chance_independencia": 0.0224454,
+    "secao_nova": false,
+    "t2022": {
+     "local": "ESCOLA SAMUEL PINYÃKO",
+     "aptos": 185,
+     "comparecimento": 131,
+     "lula_2t": 101,
+     "bolsonaro_2t": 0
+    },
+    "politize_bolsonaro22_2t_pct_validos": 0.0,
+    "governador": {
+     "uf_tem_2t": true,
+     "t1": {
+      "aptos": 205,
+      "comparecimento": 148,
+      "candidatos": [
+       {
+        "numero": 40,
+        "nome_urna": "THOR DANTAS",
+        "partido": "PSB",
+        "campo": "esquerda",
+        "comparacao": null,
+        "votos": 94
+       },
+       {
+        "numero": 11,
+        "nome_urna": "MAILZA ASSIS",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "comparacao": "mesmo bloco",
+        "votos": 15
+       },
+       {
+        "numero": 10,
+        "nome_urna": "ALAN RICK",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 5
+       },
+       {
+        "numero": 45,
+        "nome_urna": "TIÃO BOCALOM",
+        "partido": "PSDB",
+        "campo": "centro-esquerda",
+        "comparacao": null,
+        "votos": 1
+       }
+      ],
+      "brancos": 0,
+      "nulos": 33,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 20,
+      "outros_candidatos": 0
+     },
+     "t2": {
+      "aptos": 203,
+      "comparecimento": 139,
+      "candidatos": [
+       {
+        "numero": 11,
+        "nome_urna": "MAILZA ASSIS",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "comparacao": "mesmo bloco",
+        "votos": 123
+       },
+       {
+        "numero": 10,
+        "nome_urna": "ALAN RICK",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "comparacao": "mesmo bloco",
+        "votos": 2
+       }
+      ],
+      "brancos": 1,
+      "nulos": 13,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 125
+     }
+    },
+    "urna": {
+     "t1": 2279772,
+     "t2": 2279772,
+     "modelo_t1": "UE2022",
+     "modelo_t2": "UE2022",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "41a7d82d461b3723dff990a23ed03ae9948e29a17edc7b8169d96500851e16ed",
+     "bu_sha256_t2": "92ea0428bf3ae0bffb2e7074012b007f8b923406a8593118c6cfdba9532fb424"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "8b4451b5b0307ceaa483be973799c120b971262aad31ac4958a7fbeeecf11221",
+     "numero_interno_urna": 2279772
+    },
+    "link": "politizese.html#uf=AC&zona=4&secao=384"
+   },
+   {
+    "uf": "MT",
+    "mun": "90352",
+    "municipio": "Barra do Garças",
+    "zona": 9,
+    "secao": 461,
+    "local": "ESCOLA ESTADUAL INDÍGENA DEPUTADO MÁRIO JURUNA",
+    "tipo": "aldeia_indigena",
+    "tipo_regra": "nome",
+    "criterios": [
+     "queda_ate_1"
+    ],
+    "aptos_1t": 182,
+    "aptos_2t": 182,
+    "comparecimento_1t": 138,
+    "comparecimento_2t": 135,
+    "flavio_1t": 6,
+    "flavio_2t": 1,
+    "lula_1t": 128,
+    "lula_2t": 133,
+    "outros_1t": 1,
+    "brancos_nulos_1t": 3,
+    "brancos_nulos_2t": 1,
+    "validos_1t": 135,
+    "nominal_2t": 134,
+    "queda_flavio_pct": 83.3,
+    "chance_independencia": 0.0163526,
+    "secao_nova": false,
+    "t2022": {
+     "local": "ESCOLA ESTADUAL INDÍGENA DEPUTADO MÁRIO JURUNA",
+     "aptos": 130,
+     "comparecimento": 89,
+     "lula_2t": 81,
+     "bolsonaro_2t": 1
+    },
+    "politize_bolsonaro22_2t_pct_validos": 1.2,
+    "governador": {
+     "uf_tem_2t": false,
+     "t1": {
+      "aptos": 182,
+      "comparecimento": 138,
+      "candidatos": [
+       {
+        "numero": 55,
+        "nome_urna": "DOUTORA NATASHA",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 69
+       },
+       {
+        "numero": 10,
+        "nome_urna": "OTAVIANO PIVETTA",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "comparacao": null,
+        "votos": 33
+       },
+       {
+        "numero": 22,
+        "nome_urna": "WELLINGTON FAGUNDES",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": null,
+        "votos": 12
+       }
+      ],
+      "brancos": 8,
+      "nulos": 16,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 45,
+      "outros_candidatos": 0
+     },
+     "t2": null
+    },
+    "urna": {
+     "t1": 2134932,
+     "t2": 2134932,
+     "modelo_t1": "UE2020",
+     "modelo_t2": "UE2020",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "135a804e840bb9f143c60f2bd39a4d9dd89bec6932a7d07e402377e0be8512b3",
+     "bu_sha256_t2": "938b947f3f24958a53a23269de4b440bfd1140f8cd32fdab77e32558c263a96c"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "bd1a3102345ba3341e014f6584d1353e5193813293f13edabc1a678848d70cf3",
+     "numero_interno_urna": 2134932
+    },
+    "link": "politizese.html#uf=MT&zona=9&secao=461"
+   },
+   {
+    "uf": "MT",
+    "mun": "90824",
+    "municipio": "Gaúcha do Norte",
+    "zona": 57,
+    "secao": 78,
+    "local": "ESCOLA ESTADUAL KARIB",
+    "tipo": "outro",
+    "tipo_regra": null,
+    "criterios": [
+     "queda_ate_1"
+    ],
+    "aptos_1t": 231,
+    "aptos_2t": 231,
+    "comparecimento_1t": 179,
+    "comparecimento_2t": 200,
+    "flavio_1t": 6,
+    "flavio_2t": 1,
+    "lula_1t": 170,
+    "lula_2t": 196,
+    "outros_1t": 0,
+    "brancos_nulos_1t": 3,
+    "brancos_nulos_2t": 3,
+    "validos_1t": 176,
+    "nominal_2t": 197,
+    "queda_flavio_pct": 83.3,
+    "chance_independencia": 0.00856978,
+    "secao_nova": false,
+    "t2022": {
+     "local": "ESCOLA ESTADUAL KARIB",
+     "aptos": 156,
+     "comparecimento": 123,
+     "lula_2t": 130,
+     "bolsonaro_2t": 1
+    },
+    "politize_bolsonaro22_2t_pct_validos": 0.8,
+    "governador": {
+     "uf_tem_2t": false,
+     "t1": {
+      "aptos": 231,
+      "comparecimento": 179,
+      "candidatos": [
+       {
+        "numero": 10,
+        "nome_urna": "OTAVIANO PIVETTA",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "comparacao": null,
+        "votos": 138
+       },
+       {
+        "numero": 22,
+        "nome_urna": "WELLINGTON FAGUNDES",
+        "partido": "PL",
+        "campo": "direita",
+        "comparacao": null,
+        "votos": 21
+       },
+       {
+        "numero": 55,
+        "nome_urna": "DOUTORA NATASHA",
+        "partido": "PSD",
+        "campo": "centro",
+        "comparacao": null,
+        "votos": 5
+       }
+      ],
+      "brancos": 0,
+      "nulos": 15,
+      "outros_tipos": {},
+      "direita_e_centro_direita": 159,
+      "outros_candidatos": 0
+     },
+     "t2": null
+    },
+    "urna": {
+     "t1": 2135755,
+     "t2": 2135755,
+     "modelo_t1": "UE2020",
+     "modelo_t2": "UE2020",
+     "mesma_urna": true,
+     "mesma_carga": true,
+     "bu_sha256_t1": "2c55e3cfbb760103468d27989ada5e1a62b9a07e345bfb7048fa9fe1ea9cf228",
+     "bu_sha256_t2": "04ac25171c729db546e7977d8bfdff708f34473331dbfc851c1ee46559e36a53"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "confere_hash": true,
+     "sha256": "aa109eaf7d5e92abc2ba26e87c7bc2698c83bdcb5e13819ce011cd6ab64a7a29",
+     "numero_interno_urna": 2135755
+    },
+    "link": "politizese.html#uf=MT&zona=57&secao=78"
+   }
+  ],
+  "fluxo": {
+   "lula_subiu": 7,
+   "lula_e_comparecimento_cairam": [
+    {
+     "chave": [
+      "AP",
+      "06041",
+      10,
+      408
+     ],
+     "municipio": "Itaubal",
+     "comparecimento_caiu": 55,
+     "lula_caiu": 21
+    },
+    {
+     "chave": [
+      "MA",
+      "07994",
+      31,
+      32
+     ],
+     "municipio": "Icatu",
+     "comparecimento_caiu": 29,
+     "lula_caiu": 10
+    },
+    {
+     "chave": [
+      "AC",
+      "01040",
+      4,
+      384
+     ],
+     "municipio": "Marechal Thaumaturgo",
+     "comparecimento_caiu": 9,
+     "lula_caiu": 3
+    }
+   ]
+  },
+  "governador": {
+   "ufs_com_2t": [
+    "AC",
+    "AM",
+    "DF",
+    "ES",
+    "RN",
+    "TO"
+   ],
+   "secoes_com_2t": 4,
+   "direita_caiu": [
+    [
+     "AM",
+     "02399",
+     45,
+     63
+    ],
+    [
+     "AM",
+     "02755",
+     22,
+     70
+    ],
+    [
+     "AM",
+     "02615",
+     5,
+     176
+    ]
+   ],
+   "direita_subiu": [
+    [
+     "AC",
+     "01040",
+     4,
+     384
+    ]
+   ],
+   "nota": "direita_e_centro_direita soma os candidatos de governador com campo direita ou centro-direita na classificação editorial da casa (tse_candidatos.json e governadores.json); no 1º turno conta todos os candidatos, não só os quatro primeiros"
+  },
+  "por_dentro": [
+   {
+    "chave": [
+     "AM",
+     "02615",
+     5,
+     176
+    ],
+    "municipio": "Maués",
+    "local": "E. M. INDÍGENA UNIAWASAP'I",
+    "regra_de_escolha": "zero no 2º turno com mais votos de Flávio no 1º",
+    "secao_nova": true,
+    "bu_1t": {
+     "numero_interno_urna": 2341225,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "aptos": 382,
+     "comparecimento": 331,
+     "hab_biometria": 323,
+     "hab_ano_nascimento": 5,
+     "comp_sem_biometria": 3,
+     "abertura": "2026-10-04 07:00:01",
+     "encerramento": "2026-10-04 19:31:46",
+     "carga_em": "2026-09-29 18:24:00",
+     "codigo_carga": "860241105902238895738404",
+     "n_cargas": 1,
+     "cargos": [
+      1,
+      3,
+      5,
+      6,
+      7
+     ],
+     "votos_por_eleitor": 6.0,
+     "bu_sha256": "6a2ee15cae1e9f415a2d2f2f7ae99bf48a8ab538d0ba945fd801f45feb69dae1",
+     "bu_confere_hash": true,
+     "log_sha256": "2473c3b01e4272b1b637e43898762bfba1fb256b89a66cafaf6298e47b996628"
+    },
+    "bu_2t": {
+     "numero_interno_urna": 2341225,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "aptos": 382,
+     "comparecimento": 337,
+     "hab_biometria": 328,
+     "hab_ano_nascimento": 6,
+     "comp_sem_biometria": 3,
+     "abertura": "2026-10-25 07:00:01",
+     "encerramento": "2026-10-25 16:05:52",
+     "carga_em": "2026-09-29 18:24:00",
+     "codigo_carga": "860241105902238895738404",
+     "n_cargas": 1,
+     "cargos": [
+      1,
+      3
+     ],
+     "votos_por_eleitor": 2.0,
+     "bu_sha256": "0c5c030da696f8251bb3b683ab0ac3c62ff56e096a02d2897c572144b2391c40",
+     "bu_confere_hash": true,
+     "log_sha256": "f30e139c258c63452a11d49d98b0c179b0cbe93103a3852a8e396a76223b4e79"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "mesmo_hash_bu": 1,
+     "sha256": "1573061f2730566aa065dfe97906fc77022b0f714bbf3b4981c68f7feab6a324",
+     "confere_hash": true,
+     "numero_interno_urna": 2341225,
+     "origem": "vota",
+     "tipo_urna": 1,
+     "gerado_em": "20261025T160744",
+     "por_cargo": {
+      "1": {
+       "nominais": {
+        "13": 333
+       },
+       "brancos": 0,
+       "nulos": 4,
+       "nulos_digitados": {
+        "55": 4
+       }
+      },
+      "3": {
+       "nominais": {
+        "22": 1,
+        "55": 328
+       },
+       "brancos": 0,
+       "nulos": 8,
+       "nulos_digitados": {
+        "13": 7,
+        "15": 1
+       }
+      }
+     },
+     "presidente": {
+      "lula": 333,
+      "flavio": 0,
+      "brancos": 0,
+      "nulos": 4,
+      "nulos_digitados": {
+       "55": 4
+      }
+     }
+    },
+    "log_1t": {
+     "versao_parser": "12",
+     "urnas_log": [
+      "02341225"
+     ],
+     "cargas_log": {
+      "02341225": [
+       "860241105902238895738404"
+      ]
+     },
+     "modelos": [
+      "UE2022"
+     ],
+     "votos_por_eleitor": 6,
+     "computados": 331,
+     "habilitacao": {
+      "biometrica": 323,
+      "biografica": 5,
+      "sem_biometria": 3
+     },
+     "processo_p50_s": 99.0,
+     "cadencia_p50_s": 123.0,
+     "reinicios_durante_votacao": 0,
+     "inspecoes": 10,
+     "por_hora": {
+      "7": 19,
+      "8": 21,
+      "9": 24,
+      "10": 24,
+      "11": 26,
+      "12": 25,
+      "13": 24,
+      "14": 29,
+      "15": 32,
+      "16": 30,
+      "17": 30,
+      "18": 31,
+      "19": 16
+     },
+     "por_hora_confiavel": true,
+     "primeiro_computo": "07:05",
+     "ultimo_computo": "19:30",
+     "partidas_dia": [
+      {
+       "tipo": "sistema",
+       "urna": "02341225",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      },
+      {
+       "tipo": "vota",
+       "urna": "02341225",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      }
+     ],
+     "fonte": "data/raw/tse_logs_2026/logs.sqlite",
+     "leitor": "apuracao_logs.parser.analisar (versão 12), dia 04/10/2026",
+     "status": "ok",
+     "log_sha256": "2473c3b01e4272b1b637e43898762bfba1fb256b89a66cafaf6298e47b996628",
+     "zip_confere_hash": true
+    },
+    "log_2t": {
+     "versao_parser": "12",
+     "urnas_log": [
+      "02341225"
+     ],
+     "cargas_log": {
+      "02341225": [
+       "860241105902238895738404"
+      ]
+     },
+     "modelos": [
+      "UE2022"
+     ],
+     "votos_por_eleitor": 2,
+     "computados": 337,
+     "habilitacao": {
+      "biometrica": 328,
+      "sem_biometria": 3,
+      "biografica": 6
+     },
+     "processo_p50_s": 32.0,
+     "cadencia_p50_s": 59.0,
+     "reinicios_durante_votacao": 0,
+     "inspecoes": 5,
+     "por_hora": {
+      "7": 47,
+      "8": 56,
+      "9": 58,
+      "10": 62,
+      "11": 60,
+      "12": 49,
+      "13": 4,
+      "15": 1
+     },
+     "por_hora_confiavel": true,
+     "primeiro_computo": "07:01",
+     "ultimo_computo": "15:02",
+     "partidas_dia": [
+      {
+       "tipo": "sistema",
+       "urna": "02341225",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      },
+      {
+       "tipo": "vota",
+       "urna": "02341225",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      }
+     ],
+     "fonte": "data/outputs/logs_urnas_2t_2026.sqlite",
+     "status": "ok",
+     "versao": "12",
+     "log_sha256": "f30e139c258c63452a11d49d98b0c179b0cbe93103a3852a8e396a76223b4e79",
+     "resumo_sha256": "3eaccf419489160fbd1982a158fbdcf57e45a5c87a5596bd4906335dfd91ffbd"
+    },
+    "hashes_conferem": {
+     "bu_1t": true,
+     "bu_2t": true,
+     "rdv": true,
+     "log_1t_zip": true,
+     "log_1t_igual_bancos": true,
+     "log_2t_igual_bancos": true
+    },
+    "troca_de_campo_uf": {
+     "uf": "AM",
+     "nulos_presidente": 52705,
+     "presidente_com_numero_de_governador": {
+      "55": 23907
+     },
+     "fonte": "analysis/apuracao_2t_2026/dados/rdv.json"
+    }
+   },
+   {
+    "chave": [
+     "AM",
+     "02399",
+     45,
+     63
+    ],
+    "municipio": "Ipixuna",
+    "local": "E. M. MARECHAL CANDIDO RONDON ALDEIA PIAU",
+    "regra_de_escolha": "mais votos de Flávio no 1º turno na cauda",
+    "secao_nova": false,
+    "bu_1t": {
+     "numero_interno_urna": 2018717,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 4,
+     "aptos": 335,
+     "comparecimento": 227,
+     "hab_biometria": 172,
+     "hab_ano_nascimento": 6,
+     "comp_sem_biometria": 49,
+     "abertura": "2026-10-04 06:48:13",
+     "encerramento": "2026-10-04 18:58:19",
+     "carga_em": "2026-09-18 09:49:00",
+     "codigo_carga": "900973901415646241309326",
+     "n_cargas": 2,
+     "cargos": [
+      1,
+      3,
+      5,
+      6,
+      7
+     ],
+     "votos_por_eleitor": 6.0,
+     "bu_sha256": "e130371d43a10ed0b34ea15afc7f342d00c7d22568826dc01117488d60a65814",
+     "bu_confere_hash": true,
+     "log_sha256": "b1dbd905d56a4d0e4e103b481cae4a41445c2824a7ad74ee31836d6fb46176fb"
+    },
+    "bu_2t": {
+     "numero_interno_urna": 2018717,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 4,
+     "aptos": 335,
+     "comparecimento": 197,
+     "hab_biometria": 156,
+     "hab_ano_nascimento": 8,
+     "comp_sem_biometria": 33,
+     "abertura": "2026-10-25 06:00:01",
+     "encerramento": "2026-10-25 15:02:07",
+     "carga_em": "2026-09-18 09:49:00",
+     "codigo_carga": "900973901415646241309326",
+     "n_cargas": 2,
+     "cargos": [
+      1,
+      3
+     ],
+     "votos_por_eleitor": 2.0,
+     "bu_sha256": "3bdb779300b13f625f4abc1ab2f3bc77782abb14adb3c7d9cae93e205cffaa2e",
+     "bu_confere_hash": true,
+     "log_sha256": "806a93d582881592f76e578bdea29491e98289abafeff1bb2dc3a7d91df5b8cd"
+    },
+    "rdv": {
+     "status": "ok",
+     "confere": 1,
+     "mesmo_hash_bu": 1,
+     "sha256": "ea4345b79ddb6f101a18eb763d2e40c1d02f9abbe0b52762bea15586c4bf96b7",
+     "confere_hash": true,
+     "numero_interno_urna": 2018717,
+     "origem": "vota",
+     "tipo_urna": 4,
+     "gerado_em": "20261025T150735",
+     "por_cargo": {
+      "1": {
+       "nominais": {
+        "13": 167,
+        "22": 2
+       },
+       "brancos": 0,
+       "nulos": 28,
+       "nulos_digitados": {
+        "10": 1,
+        "12": 1,
+        "15": 2,
+        "17": 1,
+        "31": 2,
+        "37": 1,
+        "45": 1,
+        "51": 1,
+        "55": 15,
+        "73": 1,
+        "78": 1,
+        "93": 1
+       }
+      },
+      "3": {
+       "nominais": {
+        "22": 1,
+        "55": 172
+       },
+       "brancos": 0,
+       "nulos": 24,
+       "nulos_digitados": {
+        "12": 1,
+        "13": 14,
+        "15": 2,
+        "21": 1,
+        "25": 2,
+        "45": 1,
+        "51": 1,
+        "56": 1,
+        "58": 1
+       }
+      }
+     },
+     "presidente": {
+      "lula": 167,
+      "flavio": 2,
+      "brancos": 0,
+      "nulos": 28,
+      "nulos_digitados": {
+       "10": 1,
+       "12": 1,
+       "15": 2,
+       "17": 1,
+       "31": 2,
+       "37": 1,
+       "45": 1,
+       "51": 1,
+       "55": 15,
+       "73": 1,
+       "78": 1,
+       "93": 1
+      }
+     }
+    },
+    "log_1t": {
+     "versao_parser": "12",
+     "urnas_log": [
+      "02018634",
+      "02018717"
+     ],
+     "cargas_log": {
+      "02018634": [
+       "486731236045715218826886"
+      ],
+      "02018717": [
+       "900973901415646241309326"
+      ]
+     },
+     "modelos": [
+      "UE2020"
+     ],
+     "votos_por_eleitor": 6,
+     "computados": 227,
+     "habilitacao": {
+      "biometrica": 172,
+      "sem_biometria": 49,
+      "biografica": 6
+     },
+     "processo_p50_s": 110.0,
+     "cadencia_p50_s": 158.5,
+     "reinicios_durante_votacao": 1,
+     "inspecoes": 7,
+     "por_hora": {
+      "6": 2,
+      "7": 14,
+      "8": 15,
+      "9": 17,
+      "10": 17,
+      "11": 18,
+      "12": 16,
+      "13": 25,
+      "14": 22,
+      "15": 22,
+      "16": 9,
+      "17": 25,
+      "18": 25
+     },
+     "por_hora_confiavel": true,
+     "primeiro_computo": "06:51",
+     "ultimo_computo": "18:53",
+     "partidas_dia": [
+      {
+       "tipo": "sistema",
+       "urna": "02018634",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      },
+      {
+       "tipo": "vota",
+       "urna": "02018634",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      },
+      {
+       "tipo": "sistema",
+       "urna": "02018717",
+       "fase": "pre_votacao",
+       "votos_antes": 83
+      },
+      {
+       "tipo": "sistema",
+       "urna": "02018634",
+       "fase": "votacao",
+       "votos_antes": 168
+      },
+      {
+       "tipo": "vota",
+       "urna": "02018634",
+       "fase": "votacao",
+       "votos_antes": 168
+      },
+      {
+       "tipo": "sistema",
+       "urna": "02018717",
+       "fase": "pre_votacao",
+       "votos_antes": 175
+      },
+      {
+       "tipo": "sistema",
+       "urna": "02018717",
+       "fase": "pre_votacao",
+       "votos_antes": 175
+      },
+      {
+       "tipo": "vota",
+       "urna": "02018717",
+       "fase": "pre_votacao",
+       "votos_antes": 175
+      }
+     ],
+     "fonte": "data/raw/tse_logs_2026/logs.sqlite",
+     "leitor": "apuracao_logs.parser.analisar (versão 12), dia 04/10/2026",
+     "status": "ok",
+     "log_sha256": "b1dbd905d56a4d0e4e103b481cae4a41445c2824a7ad74ee31836d6fb46176fb",
+     "zip_confere_hash": true
+    },
+    "log_2t": {
+     "versao_parser": "12",
+     "urnas_log": [
+      "02018717"
+     ],
+     "cargas_log": {
+      "02018717": [
+       "900973901415646241309326"
+      ]
+     },
+     "modelos": [
+      "UE2020"
+     ],
+     "votos_por_eleitor": 2,
+     "computados": 197,
+     "habilitacao": {
+      "biometrica": 156,
+      "sem_biometria": 33,
+      "biografica": 8
+     },
+     "processo_p50_s": 44.0,
+     "cadencia_p50_s": 79.0,
+     "reinicios_durante_votacao": 1,
+     "inspecoes": 6,
+     "por_hora": {
+      "6": 36,
+      "7": 42,
+      "8": 33,
+      "9": 43,
+      "10": 39,
+      "11": 3,
+      "13": 1
+     },
+     "por_hora_confiavel": true,
+     "primeiro_computo": "06:01",
+     "ultimo_computo": "13:44",
+     "partidas_dia": [
+      {
+       "tipo": "sistema",
+       "urna": "02018717",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      },
+      {
+       "tipo": "vota",
+       "urna": "02018717",
+       "fase": "pre_zeresima",
+       "votos_antes": 0
+      },
+      {
+       "tipo": "sistema",
+       "urna": "02018717",
+       "fase": "votacao",
+       "votos_antes": 196
+      },
+      {
+       "tipo": "vota",
+       "urna": "02018717",
+       "fase": "votacao",
+       "votos_antes": 196
+      }
+     ],
+     "fonte": "data/outputs/logs_urnas_2t_2026.sqlite",
+     "status": "ok",
+     "versao": "12",
+     "log_sha256": "806a93d582881592f76e578bdea29491e98289abafeff1bb2dc3a7d91df5b8cd",
+     "resumo_sha256": "a895ba01a785a34fe0fc891a457792e5b669fa7e30c0c141eb17f998d0e9c19d"
+    },
+    "hashes_conferem": {
+     "bu_1t": true,
+     "bu_2t": true,
+     "rdv": true,
+     "log_1t_zip": true,
+     "log_1t_igual_bancos": true,
+     "log_2t_igual_bancos": true
+    },
+    "troca_de_campo_uf": {
+     "uf": "AM",
+     "nulos_presidente": 52705,
+     "presidente_com_numero_de_governador": {
+      "55": 23907
+     },
+     "fonte": "analysis/apuracao_2t_2026/dados/rdv.json"
+    }
+   }
+  ],
+  "bancos": {
+   "apuracao/data/secoes_2026.sqlite": "bu, secao, bu_cargo e voto_secao (cargo 3) das seções da cauda",
+   "apuracao/data/secoes_2t_2026.sqlite": "bu, secao, bu_cargo e voto_secao (cargo 3) das seções da cauda",
+   "apuracao/data/rdv_2t_2026.sqlite": "rdv e rdv_voto; hash de cada RDV conferido contra o conteúdo",
+   "data/outputs/logs_urnas_2t_2026.sqlite": "metricas.resumo (leitor da casa, 2º turno)",
+   "data/raw/tse_logs_2026/logs.sqlite": "arquivos.zip, relido pelo leitor da casa com dia 04/10/2026"
+  },
+  "rotulo": "atipicidade pede explicação, não prova irregularidade"
+ },
  "conferencia_csv": {
   "arquivo": "analysis/apuracao_2t_2026/dados/flavio_zero_2t_2026.csv",
   "sha256": "1ab059c62f0c2b73d7b33869c0abfb4500db004eb31118a8a61b3620f6cbec3c",
@@ -6893,7 +9491,10 @@
   "docs/assets/politize/dados/indice.json": "2c84028148ba2c054cb23a27892a44e31d53b42c2c6df1e32c2a6f2c5713a33e",
   "data/originals/folha_102026_27/painel_27102026.html": "f8afda191920ca6239de826980a2cbd605c1d71527deb36d92c5a9ede1eea7f1",
   "analysis/apuracao_2t_2026/dados/anomalia_ml.json": "4f749f7db7590a673b80a02cdbbaa986b81616f79d09928a0f83ee3576d3f2f7",
-  "data/outputs/apuracao_2t_2026/anomalia_secoes.json.gz": "d535c27e91514b43928b31c83618dd3c2b6a7a4a92d93e0321dfe06a031adade"
+  "data/outputs/apuracao_2t_2026/anomalia_secoes.json.gz": "d535c27e91514b43928b31c83618dd3c2b6a7a4a92d93e0321dfe06a031adade",
+  "analysis/apuracao_2t_2026/dados/governadores.json": "359eaed377f7efed086890ff5d536ee5dce04b31a380616af83568dc62b4a48f",
+  "analysis/governador_2026/tse_candidatos.json": "fddc0860067a88bb958f07d4633e019056a63c252e4821b939345a499aa13852",
+  "analysis/apuracao_2t_2026/dados/rdv.json": "243aba58b24bbaa4783c3c372894d7cd6b80241c031e7c01f1c0e41fac74da76"
  },
  "fontes_politize_zonas": {
   "docs/assets/politize/dados/zona/AC/4.json": "48092ced1c7666a04cc8b80e3dd17c88fd4fef0bd187bca312bed9eaa92855ca",
@@ -6910,10 +9511,12 @@
   "docs/assets/politize/dados/zona/AM/4.json": "b23faa4e9882bf37b57ad11f5fd5862cc0200b9b5cb0d857d9459a443884629a",
   "docs/assets/politize/dados/zona/AM/42.json": "27ce8f63216a98258688a0be9383ae54d2b80ee8bebb6146a49efc1d29a60c48",
   "docs/assets/politize/dados/zona/AM/43.json": "402f6fa6b4225bb76fc7fd2fa834f38ee31bcbf46bcfb96bf4c621e5b62d4f0b",
+  "docs/assets/politize/dados/zona/AM/45.json": "0b2ee4acca5ab80ee82d9318252c82d64cf86c4cecaaf7a713ec3d1141b85901",
   "docs/assets/politize/dados/zona/AM/47.json": "9c636ae35a1022e22efd4efeecae51976ebbbbd11a76a67bf36511ecb9db5236",
   "docs/assets/politize/dados/zona/AM/48.json": "607d06eab6a7898cccf778b2bbe7f82f71980c9a0024939a2e131aaef7aadf25",
   "docs/assets/politize/dados/zona/AM/5.json": "7fb527dd7d0e86cf4ba3768e597ca3a55754d820c06f2b5db37bbbf13389da15",
   "docs/assets/politize/dados/zona/AM/50.json": "36837227d5c6e53e82e1941a236fe5a35ba62ffebd764c0cdd13f645cee041bc",
+  "docs/assets/politize/dados/zona/AP/10.json": "e7e02aed62ec3753c71293cf8dfa1b9efe0717464a245583699f86755111e9e3",
   "docs/assets/politize/dados/zona/AP/5.json": "fe54e7c817b0a063bd34525c9e60661ebdcb15de86391b160097356dd76df4c6",
   "docs/assets/politize/dados/zona/BA/111.json": "db213624a105fd86b54fb5b25e22540989221057db3d355817180e3fcc56495f",
   "docs/assets/politize/dados/zona/BA/171.json": "77196fa55cd21cd82d478fd030a203db27b2c15c3e0d0c7cccdb217db51e0d55",
@@ -6947,9 +9550,11 @@
   "docs/assets/politize/dados/zona/MG/255.json": "8f08ac2b538b770aad7a792ac91d8e26a9b680d8dcf9e1a6af37e3183a3cea3c",
   "docs/assets/politize/dados/zona/MG/50.json": "c53943283106174467e67724c031bdad72f4003cb5f553afdcfe62ff2da06654",
   "docs/assets/politize/dados/zona/MS/19.json": "9257358d3f7aaa5f8cabe96372c27549c6656e24c191e8ed2a8811e012772f09",
+  "docs/assets/politize/dados/zona/MT/16.json": "7fbd438ae0fae869fa5ad0480d0b7053258e0c34751820abdbb73ffafd9c0057",
   "docs/assets/politize/dados/zona/MT/28.json": "501201551415ec898f73ecdb42120afa166a612d6aa1d59ff7738d169bf1beaa",
   "docs/assets/politize/dados/zona/MT/33.json": "682b161c231f13860c7ae186d2cee2effe6709a21c1cfa99cdc1029bcce553fa",
   "docs/assets/politize/dados/zona/MT/44.json": "f297bd8c14aedb90fd0cdcd82aadcaebb96ed61f850a73170d7be917204b9ee6",
+  "docs/assets/politize/dados/zona/MT/57.json": "3fbee36e81631c3b6506c92c9f3a5fe2f54637d034068296b6d2a5ca0380e169",
   "docs/assets/politize/dados/zona/MT/9.json": "99b6b939e7a871e6ddacc58894ab5e45016f59f145d403047b0ccc8afd57208a",
   "docs/assets/politize/dados/zona/PA/101.json": "76115c6def666bfb92b50f3ffc6838ef3cdb267230883dd1f3f6902746987fee",
   "docs/assets/politize/dados/zona/PA/102.json": "d806d02595c4a12a2046ebe297b54790c0cd3ed7fd3170030ee92c8b1cb28f47",
@@ -6966,6 +9571,7 @@
   "docs/assets/politize/dados/zona/PA/42.json": "dd4e919211535778b85d8f5cdc6c0047f56fe96c15bb23709f3ded21d2c17b6f",
   "docs/assets/politize/dados/zona/PA/53.json": "538949d7fd506bea5c21108ae55f42fa9cc4fd2a55a828907b9a6300a3fcf0c9",
   "docs/assets/politize/dados/zona/PA/55.json": "e7b6f004cac016605439c3e2177f27f25b2f21421bad592162c14274c13e7f5b",
+  "docs/assets/politize/dados/zona/PA/80.json": "47f19438fa421bf25e4ccbc7b90b9d736d24304903f2c701ec185b2886ddd9eb",
   "docs/assets/politize/dados/zona/PB/4.json": "eecc8dd970ee87769cc374d206d3dc1eeb73bc7ea6760c7bd1ca27cba673e566",
   "docs/assets/politize/dados/zona/PE/72.json": "35994e12ae512d07b49ddab19097bc478b477f5f8fa4fdd3f81ce5cfe52b4192",
   "docs/assets/politize/dados/zona/PI/64.json": "95377bb93baaf628e91c6514e308c3ec63dca74c523cd4e4842a17434947e4db",

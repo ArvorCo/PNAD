@@ -17,8 +17,9 @@ Definições declaradas:
 - **Tipo do local**: regra de ``zeros_base.TIPOS``, pelo nome do prédio.
 
 ``ESPERADO`` guarda os números conferidos antes da execução; ``conferir`` levanta
-``AssertionError`` com a lista de divergências, sem ajustar nada. Rótulo de tudo:
-atipicidade pede explicação, não prova irregularidade.
+``AssertionError`` com a lista de divergências, sem ajustar nada, inclusive as da
+subparte "A cauda: de onde o voto sumiu" (``zeros_cauda.ESPERADO_CAUDA``), gravada
+em ``cauda``. Rótulo de tudo: atipicidade pede explicação, não prova irregularidade.
 """
 
 from __future__ import annotations
@@ -31,6 +32,7 @@ from typing import Any
 
 from apuracao_2026.dados import REGIOES, regiao
 
+from . import zeros_cauda
 from .zeros_base import (
     ANOMALIA,
     BANCO_1T,
@@ -525,6 +527,10 @@ def conferir(d: dict[str, Any]) -> None:
         for campo in ("so_no_csv", "so_no_script", "divergencias"):
             if ref[campo]:
                 falhas.append(f"conferencia_csv.{campo}: {ref[campo][:5]}")
+    if "cauda" in d:
+        falhas += zeros_cauda.falhas(d["cauda"])
+    else:
+        falhas.append("cauda: bloco ausente")
     assert not falhas, "zeros.json diverge do conferido:\n" + "\n".join(falhas)
 
 
@@ -590,6 +596,7 @@ def montar() -> dict[str, Any]:
         ]
     zf = listas["zero_flavio_2t"]
     zl = listas["zero_lula_2t"]
+    cauda = zeros_cauda.montar(secoes1, secoes2, s22, pol, muns)
 
     fontes = {
         rel(BANCO_2T): sha256(BANCO_2T),
@@ -604,6 +611,7 @@ def montar() -> dict[str, Any]:
         fontes[rel(ANOMALIA)] = sha256(ANOMALIA)
     if mistura.get("disponivel"):
         fontes[rel(mistura["arquivo"])] = mistura["sha256"]
+    fontes |= zeros_cauda.fontes_leves()
     sem_local = [x for x in [*zf, *zl] if x["local"] is None]
 
     d: dict[str, Any] = {
@@ -673,6 +681,7 @@ def montar() -> dict[str, Any]:
         "lista_zero_flavio": zf,
         "lista_zero_lula": zl,
         "lista_zero_bolsonaro_2022_2t": lista_22[2],
+        "cauda": cauda,
         "conferencia_csv": conferir_referencia(zf),
         "secoes_sem_local_no_politize": len(sem_local),
         "fontes": fontes,

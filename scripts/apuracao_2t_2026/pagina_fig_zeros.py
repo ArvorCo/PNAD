@@ -7,7 +7,8 @@ Resposta à manchete da Folha de S.Paulo de 27/10/2026 ("Flávio teve zero voto 
 sai de ``analysis/apuracao_2t_2026/dados/zeros.json``, gerado por
 ``python3 scripts/apuracao-2t-2026-zeros.py``; nada é digitado aqui. Sem o JSON, o
 bloco mostra o título e o aviso padrão de figura pendente, e o capítulo renderiza o
-resto. Selos pelo padrão da casa; sem travessão; nunca "fraude"; leitura sempre do
+resto. A subparte "A cauda: de onde o voto sumiu" vem de ``pagina_fig_zeros_cauda``.
+Selos pelo padrão da casa; sem travessão; nunca "fraude"; leitura sempre do
 eleitorado da seção, nunca do voto de uma pessoa.
 """
 
@@ -47,6 +48,7 @@ from apuracao_2026.pagina_fig_base import (
     ticks,
 )
 
+from . import pagina_fig_zeros_cauda as cauda
 from .pagina_fig_anomalia_b import pendente
 
 ARQ = "zeros.json"
@@ -674,6 +676,7 @@ def bloco(d) -> str:
             f"{inteiro(len(Z['lista_zero_flavio']))} seções sem voto em Flávio, uma a uma</summary>"
             f"{tabela_secoes(Z, 'direita')}</details>"
         )
+        corpo += cauda.bloco(Z)
     except ERROS_DE_DADO as erro:
         return h + pendente(NOME, f"zeros.json: {type(erro).__name__} {erro}")
     return h + corpo
@@ -697,6 +700,7 @@ def limites_itens(d) -> list[str]:
         f"das {inteiro(n)} seções sem voto em Flávio ficam como outro local.",
         f"A comparação seção a seção com 2022 usa a mesma chave (UF, município, zona e seção) e perde as "
         f"renumeradas ou criadas depois: {inteiro(aus)} das {inteiro(n)}.",
+        *cauda.limites_itens(Z),
     ]
 
 

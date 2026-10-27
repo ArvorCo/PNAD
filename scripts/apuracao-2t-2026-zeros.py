@@ -31,6 +31,34 @@ def _linha(r: dict) -> str:
     )
 
 
+def _cauda(c: dict) -> None:
+    np_ = c["numero_pequeno"]
+    print(
+        f"cauda: {np_['com_voto_1t']} das {np_['secoes_zero_2t']} com voto no 1º turno, "
+        + ", ".join(f"k={x['k']}: {x['secoes']}" for x in np_["por_k"] if x["k"])
+    )
+    for x in np_["taxa_base"]:
+        if x["k"] and (x["chegaram_a_zero"] or x["k"] <= 6):
+            print(
+                f"  k={x['k']}: {x['secoes_pais']} seções, {x['chegaram_a_zero']} a zero "
+                f"(e^-k {x['chance_aprox_pct']:.3g}%, esperado {x['zeros_esperados']:.2f})"
+            )
+    ca, es = c["cauda"], c["espelho"]
+    print(
+        f"  queda até 1: {ca['queda_ate_1']}, queda de 80%: {ca['queda_80']}, "
+        f"união {ca['uniao']}; espelho {es['queda_ate_1']} e {es['queda_80']}; "
+        f"esperado pela independência {ca['esperado_independencia']}"
+    )
+    for f in c["fichas"]:
+        print(
+            f"  {f['uf']} {f['municipio']} {f['zona']}/{f['secao']}: Flávio "
+            f"{f['flavio_1t']}→{f['flavio_2t']}, Lula {f['lula_1t']}→{f['lula_2t']}, "
+            f"{f['local']}"
+        )
+    for x in c["por_dentro"]:
+        print(f"  por dentro: {x['chave']} ({x['regra_de_escolha']})")
+
+
 def main() -> None:
     argparse.ArgumentParser(description=__doc__).parse_args()
     t0 = time.time()
@@ -78,6 +106,7 @@ def main() -> None:
         )
     else:
         print(f"mistura: indisponível ({m['motivo']})")
+    _cauda(d["cauda"])
     print(f"conferência: tudo igual ao esperado; {time.time() - t0:.0f} s")
     print(zd.SAIDA.relative_to(zd.ROOT))
 
