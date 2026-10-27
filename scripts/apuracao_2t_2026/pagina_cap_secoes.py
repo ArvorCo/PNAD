@@ -16,6 +16,7 @@ from apuracao_2026.pagina_comum import Capitulo, Dados, caixa, limites
 from . import pagina_fig_biometria as FBIO
 from . import pagina_fig_secoes as F
 from . import pagina_fig_secoes_b as FB
+from . import pagina_texto_angulo_pianista as TP
 from . import pagina_texto_biometria as TBIO
 from . import pagina_texto_secoes as T
 from .dataset import DICIONARIO, MANIFESTO, ler_manifesto
@@ -111,6 +112,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += habilitacao(d.get("biometria.json"))
     h += "<h3>Biometria: cadastro, leitor e a hipótese do “pianista”</h3>"
     h += T.biometria(S, R, V)
+    h += TP.bloco(d.get("angulo_pianista.json"))
     h += "<h3>O voto nas seções com sinal</h3>"
     h += T.voto(V) + FB.fig_did(V)
     h += T.tabela_2x2x2_texto(V) + FB.tabela_2x2x2(V) + T.tabela_e_extras(S, V)

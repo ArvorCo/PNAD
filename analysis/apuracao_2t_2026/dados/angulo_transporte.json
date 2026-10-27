@@ -1,0 +1,1572 @@
+{
+ "gerado_em": "2026-10-27T00:20:52Z",
+ "script": "scripts/apuracao-2t-2026-angulo-transporte.py",
+ "fontes": {
+  "secoes": "data/outputs/apuracao_2t_2026/secoes_linhas.json.gz",
+  "secoes_sha256": "707b1dc2bf88949086e082e9bae1ff58bead7bd701611967901932ad68e427da",
+  "logs_2t": "data/outputs/logs_2t_capitulo/metricas_2t.parquet",
+  "logs_1t_amostra": "data/outputs/logs_2t_capitulo/amostra_1t.jsonl",
+  "tse_2022": "data/outputs/apuracao_2t_2026/tse2022_2t_municipios.json"
+ },
+ "rotulo": "pede explicação, não prova irregularidade",
+ "definicoes": {
+  "quintil": "seções do Brasil (sem exterior) por fatia de Lula entre os dois finalistas no 1º turno, cinco grupos de mesmo eleitorado (aptos do 2T)",
+  "abstencao": "100 − comparecimento/aptos da seção; 2022 é o 2º turno do município da seção (seções de 2022 não são pareadas), pesada pelos aptos de 2026",
+  "fim_do_dia": "parcela dos cômputos do log entre 15h e 16h59 de Brasília (as duas últimas horas da votação regular); 1T só na amostra de uma seção em cinco",
+  "fatia_f": "Flávio / (Flávio + Lula), soma dos votos do grupo",
+  "salto": "comparecimento 2T−1T da seção ao menos 5 pp acima da mediana do município",
+  "fim": "parcela 15h–17h da seção ao menos 10 pp acima da mediana do município",
+  "did": "(fatia de Flávio 2T−1T nas marcadas) − (o mesmo nas vizinhas do município), municípios com 10+ seções; IC95 por reamostragem de municípios",
+  "vintis": "20 grupos de mesmo número de votos nos dois finalistas, pela ordem de rec_min (recebimento do BU pelo TSE) ou enc_min (encerramento do BU), horário de Brasília"
+ },
+ "base": {
+  "secoes": 497806,
+  "aptos": 157820029
+ },
+ "transporte": {
+  "brasil": {
+   "secoes": 497806,
+   "aptos": 157820029,
+   "lula1_min": 0.0,
+   "lula1_max": 100.0,
+   "abst_1t": 20.84,
+   "abst_2t": 18.99,
+   "abst_2022_mun": 20.38,
+   "delta_abst_1t_pp": -1.85,
+   "delta_abst_2022_pp": -1.39,
+   "fatia_f_1t": 51.02,
+   "fatia_f_2t": 48.22,
+   "swing_f_pp": -2.8,
+   "fim_dia_2t_pct": 12.8,
+   "ultima_hora_2t_pct": 5.18,
+   "secoes_amostra_1t": 99276,
+   "fim_dia_1t_pct": 19.11,
+   "fim_dia_2t_mesmas_pct": 12.8,
+   "delta_fim_dia_pp": -6.31,
+   "did": {
+    "salto": {
+     "reamostragem": "municípios",
+     "n_secoes_marcadas": 6408,
+     "n_municipios": 2219,
+     "did_pp": 0.04,
+     "ic95": [
+      -0.07,
+      0.15
+     ],
+     "swing_marcadas_pp": -2.64,
+     "swing_vizinhas_pp": -2.68
+    },
+    "fim": {
+     "reamostragem": "municípios",
+     "n_secoes_marcadas": 1588,
+     "n_municipios": 899,
+     "did_pp": 0.06,
+     "ic95": [
+      -0.13,
+      0.22
+     ],
+     "swing_marcadas_pp": -2.01,
+     "swing_vizinhas_pp": -2.07
+    },
+    "salto_e_fim": {
+     "reamostragem": "municípios",
+     "n_secoes_marcadas": 44,
+     "n_municipios": 43,
+     "did_pp": -0.55,
+     "ic95": [
+      -1.69,
+      0.43
+     ],
+     "swing_marcadas_pp": -2.72,
+     "swing_vizinhas_pp": -2.17
+    }
+   }
+  },
+  "quintis": [
+   {
+    "quintil": 1,
+    "secoes": 100383,
+    "aptos": 31563691,
+    "lula1_min": 0.0,
+    "lula1_max": 33.19,
+    "abst_1t": 20.31,
+    "abst_2t": 18.66,
+    "abst_2022_mun": 20.33,
+    "delta_abst_1t_pp": -1.65,
+    "delta_abst_2022_pp": -1.67,
+    "fatia_f_1t": 73.84,
+    "fatia_f_2t": 70.11,
+    "swing_f_pp": -3.73,
+    "fim_dia_2t_pct": 12.25,
+    "ultima_hora_2t_pct": 4.92,
+    "secoes_amostra_1t": 19949,
+    "fim_dia_1t_pct": 17.87,
+    "fim_dia_2t_mesmas_pct": 12.29,
+    "delta_fim_dia_pp": -5.58,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 530,
+      "n_municipios": 339,
+      "did_pp": -0.55,
+      "ic95": [
+       -0.72,
+       -0.32
+      ],
+      "swing_marcadas_pp": -4.21,
+      "swing_vizinhas_pp": -3.66
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 151,
+      "n_municipios": 111,
+      "did_pp": 0.18,
+      "ic95": [
+       -0.33,
+       0.67
+      ],
+      "swing_marcadas_pp": -2.85,
+      "swing_vizinhas_pp": -3.03
+     },
+     "salto_e_fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 5,
+      "n_municipios": 5,
+      "did_pp": -0.12,
+      "ic95": [
+       -1.13,
+       4.95
+      ],
+      "swing_marcadas_pp": -2.77,
+      "swing_vizinhas_pp": -2.65
+     }
+    }
+   },
+   {
+    "quintil": 2,
+    "secoes": 97127,
+    "aptos": 31564012,
+    "lula1_min": 33.19,
+    "lula1_max": 42.06,
+    "abst_1t": 21.56,
+    "abst_2t": 19.72,
+    "abst_2022_mun": 20.47,
+    "delta_abst_1t_pp": -1.85,
+    "delta_abst_2022_pp": -0.75,
+    "fatia_f_1t": 62.28,
+    "fatia_f_2t": 58.51,
+    "swing_f_pp": -3.77,
+    "fim_dia_2t_pct": 12.53,
+    "ultima_hora_2t_pct": 5.05,
+    "secoes_amostra_1t": 19311,
+    "fim_dia_1t_pct": 18.46,
+    "fim_dia_2t_mesmas_pct": 12.5,
+    "delta_fim_dia_pp": -5.96,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 649,
+      "n_municipios": 334,
+      "did_pp": -0.38,
+      "ic95": [
+       -0.59,
+       -0.18
+      ],
+      "swing_marcadas_pp": -4.34,
+      "swing_vizinhas_pp": -3.96
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 71,
+      "n_municipios": 57,
+      "did_pp": -0.51,
+      "ic95": [
+       -1.11,
+       0.32
+      ],
+      "swing_marcadas_pp": -4.28,
+      "swing_vizinhas_pp": -3.77
+     },
+     "salto_e_fim": {
+      "reamostragem": "seções, dentro de marcadas e vizinhas",
+      "n_secoes_marcadas": 3,
+      "n_municipios": 3,
+      "did_pp": 0.29,
+      "ic95": [
+       -2.17,
+       4.65
+      ],
+      "swing_marcadas_pp": -3.01,
+      "swing_vizinhas_pp": -3.29
+     }
+    }
+   },
+   {
+    "quintil": 3,
+    "secoes": 96213,
+    "aptos": 31564109,
+    "lula1_min": 42.06,
+    "lula1_max": 51.63,
+    "abst_1t": 21.81,
+    "abst_2t": 19.87,
+    "abst_2022_mun": 20.29,
+    "delta_abst_1t_pp": -1.94,
+    "delta_abst_2022_pp": -0.42,
+    "fatia_f_1t": 53.37,
+    "fatia_f_2t": 50.04,
+    "swing_f_pp": -3.33,
+    "fim_dia_2t_pct": 12.77,
+    "ultima_hora_2t_pct": 5.17,
+    "secoes_amostra_1t": 19326,
+    "fim_dia_1t_pct": 18.79,
+    "fim_dia_2t_mesmas_pct": 12.76,
+    "delta_fim_dia_pp": -6.03,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 887,
+      "n_municipios": 351,
+      "did_pp": -0.36,
+      "ic95": [
+       -0.54,
+       -0.16
+      ],
+      "swing_marcadas_pp": -3.87,
+      "swing_vizinhas_pp": -3.51
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 114,
+      "n_municipios": 85,
+      "did_pp": -0.92,
+      "ic95": [
+       -1.45,
+       -0.29
+      ],
+      "swing_marcadas_pp": -4.19,
+      "swing_vizinhas_pp": -3.27
+     },
+     "salto_e_fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 6,
+      "n_municipios": 6,
+      "did_pp": -2.98,
+      "ic95": [
+       -6.62,
+       -0.16
+      ],
+      "swing_marcadas_pp": -5.3,
+      "swing_vizinhas_pp": -2.31
+     }
+    }
+   },
+   {
+    "quintil": 4,
+    "secoes": 97313,
+    "aptos": 31563942,
+    "lula1_min": 51.63,
+    "lula1_max": 64.63,
+    "abst_1t": 20.62,
+    "abst_2t": 18.58,
+    "abst_2022_mun": 19.82,
+    "delta_abst_1t_pp": -2.04,
+    "delta_abst_2022_pp": -1.24,
+    "fatia_f_1t": 42.21,
+    "fatia_f_2t": 39.57,
+    "swing_f_pp": -2.64,
+    "fim_dia_2t_pct": 13.23,
+    "ultima_hora_2t_pct": 5.43,
+    "secoes_amostra_1t": 19533,
+    "fim_dia_1t_pct": 19.71,
+    "fim_dia_2t_mesmas_pct": 13.23,
+    "delta_fim_dia_pp": -6.48,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 1096,
+      "n_municipios": 438,
+      "did_pp": -0.24,
+      "ic95": [
+       -0.43,
+       -0.04
+      ],
+      "swing_marcadas_pp": -2.91,
+      "swing_vizinhas_pp": -2.67
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 214,
+      "n_municipios": 153,
+      "did_pp": -0.87,
+      "ic95": [
+       -1.28,
+       -0.42
+      ],
+      "swing_marcadas_pp": -3.37,
+      "swing_vizinhas_pp": -2.5
+     },
+     "salto_e_fim": {
+      "reamostragem": "seções, dentro de marcadas e vizinhas",
+      "n_secoes_marcadas": 1,
+      "n_municipios": 1,
+      "did_pp": 2.08,
+      "ic95": [
+       1.3,
+       1.33
+      ],
+      "swing_marcadas_pp": -1.36,
+      "swing_vizinhas_pp": -3.44
+     }
+    }
+   },
+   {
+    "quintil": 5,
+    "secoes": 106770,
+    "aptos": 31564275,
+    "lula1_min": 64.64,
+    "lula1_max": 100.0,
+    "abst_1t": 19.91,
+    "abst_2t": 18.14,
+    "abst_2022_mun": 21.01,
+    "delta_abst_1t_pp": -1.77,
+    "delta_abst_2022_pp": -2.88,
+    "fatia_f_1t": 24.51,
+    "fatia_f_2t": 23.21,
+    "swing_f_pp": -1.29,
+    "fim_dia_2t_pct": 13.21,
+    "ultima_hora_2t_pct": 5.33,
+    "secoes_amostra_1t": 21157,
+    "fim_dia_1t_pct": 20.71,
+    "fim_dia_2t_mesmas_pct": 13.23,
+    "delta_fim_dia_pp": -7.48,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 2616,
+      "n_municipios": 999,
+      "did_pp": 0.05,
+      "ic95": [
+       -0.04,
+       0.15
+      ],
+      "swing_marcadas_pp": -1.38,
+      "swing_vizinhas_pp": -1.42
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 842,
+      "n_municipios": 474,
+      "did_pp": 0.25,
+      "ic95": [
+       0.11,
+       0.41
+      ],
+      "swing_marcadas_pp": -0.87,
+      "swing_vizinhas_pp": -1.12
+     },
+     "salto_e_fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 22,
+      "n_municipios": 22,
+      "did_pp": -0.11,
+      "ic95": [
+       -1.6,
+       1.36
+      ],
+      "swing_marcadas_pp": -1.39,
+      "swing_vizinhas_pp": -1.29
+     }
+    }
+   }
+  ],
+  "regioes": [
+   {
+    "regiao": "Norte",
+    "secoes": 43756,
+    "aptos": 13100549,
+    "lula1_min": 0.0,
+    "lula1_max": 100.0,
+    "abst_1t": 19.44,
+    "abst_2t": 21.25,
+    "abst_2022_mun": 22.93,
+    "delta_abst_1t_pp": 1.81,
+    "delta_abst_2022_pp": -1.68,
+    "fatia_f_1t": 52.4,
+    "fatia_f_2t": 49.99,
+    "swing_f_pp": -2.41,
+    "fim_dia_2t_pct": 13.51,
+    "ultima_hora_2t_pct": 5.81,
+    "secoes_amostra_1t": 8746,
+    "fim_dia_1t_pct": 20.54,
+    "fim_dia_2t_mesmas_pct": 13.49,
+    "delta_fim_dia_pp": -7.05,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 767,
+      "n_municipios": 242,
+      "did_pp": 0.2,
+      "ic95": [
+       -0.03,
+       0.42
+      ],
+      "swing_marcadas_pp": -1.97,
+      "swing_vizinhas_pp": -2.17
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 352,
+      "n_municipios": 147,
+      "did_pp": -0.12,
+      "ic95": [
+       -0.48,
+       0.25
+      ],
+      "swing_marcadas_pp": -2.34,
+      "swing_vizinhas_pp": -2.22
+     },
+     "salto_e_fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 8,
+      "n_municipios": 8,
+      "did_pp": 1.04,
+      "ic95": [
+       -0.72,
+       4.44
+      ],
+      "swing_marcadas_pp": -1.1,
+      "swing_vizinhas_pp": -2.14
+     }
+    }
+   },
+   {
+    "regiao": "Nordeste",
+    "secoes": 140807,
+    "aptos": 43510345,
+    "lula1_min": 1.49,
+    "lula1_max": 100.0,
+    "abst_1t": 18.39,
+    "abst_2t": 16.49,
+    "abst_2022_mun": 19.22,
+    "delta_abst_1t_pp": -1.9,
+    "delta_abst_2022_pp": -2.73,
+    "fatia_f_1t": 32.61,
+    "fatia_f_2t": 30.63,
+    "swing_f_pp": -1.97,
+    "fim_dia_2t_pct": 13.45,
+    "ultima_hora_2t_pct": 5.49,
+    "secoes_amostra_1t": 28075,
+    "fim_dia_1t_pct": 20.89,
+    "fim_dia_2t_mesmas_pct": 13.44,
+    "delta_fim_dia_pp": -7.44,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 2506,
+      "n_municipios": 863,
+      "did_pp": 0.08,
+      "ic95": [
+       -0.02,
+       0.19
+      ],
+      "swing_marcadas_pp": -1.95,
+      "swing_vizinhas_pp": -2.03
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 789,
+      "n_municipios": 445,
+      "did_pp": 0.32,
+      "ic95": [
+       0.15,
+       0.5
+      ],
+      "swing_marcadas_pp": -1.16,
+      "swing_vizinhas_pp": -1.49
+     },
+     "salto_e_fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 16,
+      "n_municipios": 16,
+      "did_pp": -0.08,
+      "ic95": [
+       -1.05,
+       1.11
+      ],
+      "swing_marcadas_pp": -1.67,
+      "swing_vizinhas_pp": -1.59
+     }
+    }
+   },
+   {
+    "regiao": "Centro-Oeste",
+    "secoes": 38040,
+    "aptos": 12001500,
+    "lula1_min": 2.25,
+    "lula1_max": 100.0,
+    "abst_1t": 21.7,
+    "abst_2t": 20.05,
+    "abst_2022_mun": 20.64,
+    "delta_abst_1t_pp": -1.65,
+    "delta_abst_2022_pp": -0.59,
+    "fatia_f_1t": 63.4,
+    "fatia_f_2t": 60.01,
+    "swing_f_pp": -3.39,
+    "fim_dia_2t_pct": 12.47,
+    "ultima_hora_2t_pct": 5.18,
+    "secoes_amostra_1t": 7563,
+    "fim_dia_1t_pct": 19.59,
+    "fim_dia_2t_mesmas_pct": 12.54,
+    "delta_fim_dia_pp": -7.05,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 455,
+      "n_municipios": 156,
+      "did_pp": 0.05,
+      "ic95": [
+       -0.25,
+       0.35
+      ],
+      "swing_marcadas_pp": -3.22,
+      "swing_vizinhas_pp": -3.27
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 71,
+      "n_municipios": 56,
+      "did_pp": 0.7,
+      "ic95": [
+       -0.1,
+       1.56
+      ],
+      "swing_marcadas_pp": -2.33,
+      "swing_vizinhas_pp": -3.03
+     },
+     "salto_e_fim": {
+      "reamostragem": "seções, dentro de marcadas e vizinhas",
+      "n_secoes_marcadas": 1,
+      "n_municipios": 1,
+      "did_pp": 4.18,
+      "ic95": [
+       5.06,
+       5.1
+      ],
+      "swing_marcadas_pp": 1.68,
+      "swing_vizinhas_pp": -2.5
+     }
+    }
+   },
+   {
+    "regiao": "Sudeste",
+    "secoes": 203196,
+    "aptos": 66337193,
+    "lula1_min": 2.74,
+    "lula1_max": 100.0,
+    "abst_1t": 22.71,
+    "abst_2t": 20.27,
+    "abst_2022_mun": 21.22,
+    "delta_abst_1t_pp": -2.43,
+    "delta_abst_2022_pp": -0.95,
+    "fatia_f_1t": 56.42,
+    "fatia_f_2t": 52.76,
+    "swing_f_pp": -3.66,
+    "fim_dia_2t_pct": 12.36,
+    "ultima_hora_2t_pct": 4.95,
+    "secoes_amostra_1t": 40577,
+    "fim_dia_1t_pct": 17.73,
+    "fim_dia_2t_mesmas_pct": 12.35,
+    "delta_fim_dia_pp": -5.38,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 2160,
+      "n_municipios": 671,
+      "did_pp": -0.0,
+      "ic95": [
+       -0.28,
+       0.26
+      ],
+      "swing_marcadas_pp": -3.45,
+      "swing_vizinhas_pp": -3.45
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 235,
+      "n_municipios": 140,
+      "did_pp": -0.65,
+      "ic95": [
+       -1.02,
+       -0.11
+      ],
+      "swing_marcadas_pp": -3.69,
+      "swing_vizinhas_pp": -3.05
+     },
+     "salto_e_fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 10,
+      "n_municipios": 10,
+      "did_pp": -2.47,
+      "ic95": [
+       -4.86,
+       -0.46
+      ],
+      "swing_marcadas_pp": -5.15,
+      "swing_vizinhas_pp": -2.68
+     }
+    }
+   },
+   {
+    "regiao": "Sul",
+    "secoes": 72007,
+    "aptos": 22870442,
+    "lula1_min": 0.0,
+    "lula1_max": 100.0,
+    "abst_1t": 20.46,
+    "abst_2t": 18.19,
+    "abst_2022_mun": 18.56,
+    "delta_abst_1t_pp": -2.27,
+    "delta_abst_2022_pp": -0.37,
+    "fatia_f_1t": 65.76,
+    "fatia_f_2t": 62.58,
+    "swing_f_pp": -3.19,
+    "fim_dia_2t_pct": 12.55,
+    "ultima_hora_2t_pct": 4.88,
+    "secoes_amostra_1t": 14315,
+    "fim_dia_1t_pct": 18.46,
+    "fim_dia_2t_mesmas_pct": 12.6,
+    "delta_fim_dia_pp": -5.86,
+    "did": {
+     "salto": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 520,
+      "n_municipios": 287,
+      "did_pp": -0.23,
+      "ic95": [
+       -0.45,
+       0.0
+      ],
+      "swing_marcadas_pp": -3.2,
+      "swing_vizinhas_pp": -2.97
+     },
+     "fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 141,
+      "n_municipios": 111,
+      "did_pp": -0.05,
+      "ic95": [
+       -0.6,
+       0.58
+      ],
+      "swing_marcadas_pp": -2.95,
+      "swing_vizinhas_pp": -2.9
+     },
+     "salto_e_fim": {
+      "reamostragem": "municípios",
+      "n_secoes_marcadas": 9,
+      "n_municipios": 8,
+      "did_pp": 0.25,
+      "ic95": [
+       -2.22,
+       1.99
+      ],
+      "swing_marcadas_pp": -2.37,
+      "swing_vizinhas_pp": -2.61
+     }
+    }
+   }
+  ],
+  "q5_menos_q1": {
+   "delta_abst_1t_pp": -0.12,
+   "delta_abst_2022_pp": -1.21,
+   "fim_dia_2t_pct": 0.96,
+   "delta_fim_dia_pp": -1.9,
+   "swing_f_pp": 2.44
+  },
+  "correlacao_secao": {
+   "secoes": 497806,
+   "corr_dentro_municipio": -0.024,
+   "inclinacao_pp_por_pp": -0.023,
+   "nota": "variação da fatia de Flávio (pp) por ponto de comparecimento a mais, ambas centradas no município"
+  }
+ },
+ "bahia": {
+  "Salvador": {
+   "secoes": 5124,
+   "aptos": 1955471,
+   "lula1_min": 37.92,
+   "lula1_max": 91.13,
+   "abst_1t": 20.14,
+   "abst_2t": 15.77,
+   "abst_2022_mun": 16.08,
+   "delta_abst_1t_pp": -4.37,
+   "delta_abst_2022_pp": -0.31,
+   "fatia_f_1t": 29.29,
+   "fatia_f_2t": 26.76,
+   "swing_f_pp": -2.53,
+   "fim_dia_2t_pct": 10.64,
+   "ultima_hora_2t_pct": 4.25,
+   "secoes_amostra_1t": 983,
+   "fim_dia_1t_pct": 20.37,
+   "fim_dia_2t_mesmas_pct": 10.65,
+   "delta_fim_dia_pp": -9.72,
+   "did_salto": {
+    "reamostragem": "seções, dentro de marcadas e vizinhas",
+    "n_secoes_marcadas": 162,
+    "n_municipios": 1,
+    "did_pp": -0.26,
+    "ic95": [
+     -0.52,
+     0.02
+    ],
+    "swing_marcadas_pp": -2.76,
+    "swing_vizinhas_pp": -2.51
+   },
+   "bolsonaro_2022_h2h": 29.27
+  },
+  "Bahia sem Salvador": {
+   "secoes": 30350,
+   "aptos": 9357369,
+   "lula1_min": 1.49,
+   "lula1_max": 100.0,
+   "abst_1t": 19.93,
+   "abst_2t": 16.91,
+   "abst_2022_mun": 21.27,
+   "delta_abst_1t_pp": -3.02,
+   "delta_abst_2022_pp": -4.36,
+   "fatia_f_1t": 30.29,
+   "fatia_f_2t": 29.09,
+   "swing_f_pp": -1.2,
+   "fim_dia_2t_pct": 13.4,
+   "ultima_hora_2t_pct": 5.65,
+   "secoes_amostra_1t": 6048,
+   "fim_dia_1t_pct": 20.78,
+   "fim_dia_2t_mesmas_pct": 13.42,
+   "delta_fim_dia_pp": -7.36,
+   "did_salto": {
+    "reamostragem": "municípios",
+    "n_secoes_marcadas": 749,
+    "n_municipios": 248,
+    "did_pp": 0.11,
+    "ic95": [
+     -0.02,
+     0.28
+    ],
+    "swing_marcadas_pp": -1.33,
+    "swing_vizinhas_pp": -1.45
+   }
+  },
+  "Bahia": {
+   "secoes": 35474,
+   "aptos": 11312840,
+   "lula1_min": 1.49,
+   "lula1_max": 100.0,
+   "abst_1t": 19.97,
+   "abst_2t": 16.71,
+   "abst_2022_mun": 20.38,
+   "delta_abst_1t_pp": -3.26,
+   "delta_abst_2022_pp": -3.66,
+   "fatia_f_1t": 30.13,
+   "fatia_f_2t": 28.69,
+   "swing_f_pp": -1.44,
+   "fim_dia_2t_pct": 12.92,
+   "ultima_hora_2t_pct": 5.41,
+   "secoes_amostra_1t": 7031,
+   "fim_dia_1t_pct": 20.71,
+   "fim_dia_2t_mesmas_pct": 12.95,
+   "delta_fim_dia_pp": -7.76,
+   "did_salto": {
+    "reamostragem": "municípios",
+    "n_secoes_marcadas": 911,
+    "n_municipios": 249,
+    "did_pp": 0.04,
+    "ic95": [
+     -0.11,
+     0.21
+    ],
+    "swing_marcadas_pp": -1.63,
+    "swing_vizinhas_pp": -1.66
+   },
+   "bolsonaro_2022_h2h": 27.88
+  },
+  "Brasil": {
+   "secoes": 497806,
+   "aptos": 157820029,
+   "lula1_min": 0.0,
+   "lula1_max": 100.0,
+   "abst_1t": 20.84,
+   "abst_2t": 18.99,
+   "abst_2022_mun": 20.38,
+   "delta_abst_1t_pp": -1.85,
+   "delta_abst_2022_pp": -1.39,
+   "fatia_f_1t": 51.02,
+   "fatia_f_2t": 48.22,
+   "swing_f_pp": -2.8,
+   "fim_dia_2t_pct": 12.8,
+   "ultima_hora_2t_pct": 5.18,
+   "secoes_amostra_1t": 99276,
+   "fim_dia_1t_pct": 19.11,
+   "fim_dia_2t_mesmas_pct": 12.8,
+   "delta_fim_dia_pp": -6.31,
+   "did_salto": {
+    "reamostragem": "municípios",
+    "n_secoes_marcadas": 6408,
+    "n_municipios": 2219,
+    "did_pp": 0.04,
+    "ic95": [
+     -0.08,
+     0.14
+    ],
+    "swing_marcadas_pp": -2.64,
+    "swing_vizinhas_pp": -2.68
+   }
+  }
+ },
+ "ordem": {
+  "recebimento": {
+   "vintis": [
+    {
+     "vintil": 1,
+     "secoes": 24747,
+     "votos_2t": 6185102,
+     "de": "17:00",
+     "ate": "19:29",
+     "fatia_f_2t": 49.41,
+     "fatia_f_1t": 51.93,
+     "dif_pp": -2.52,
+     "ufs_principais": [
+      "PR",
+      "PA",
+      "PB"
+     ],
+     "pct_votos_nordeste": 21.19
+    },
+    {
+     "vintil": 2,
+     "secoes": 24697,
+     "votos_2t": 6185272,
+     "de": "19:29",
+     "ate": "19:38",
+     "fatia_f_2t": 50.3,
+     "fatia_f_1t": 52.95,
+     "dif_pp": -2.65,
+     "ufs_principais": [
+      "PR",
+      "PB",
+      "MG"
+     ],
+     "pct_votos_nordeste": 26.41
+    },
+    {
+     "vintil": 3,
+     "secoes": 24987,
+     "votos_2t": 6185167,
+     "de": "19:38",
+     "ate": "19:48",
+     "fatia_f_2t": 51.26,
+     "fatia_f_1t": 53.93,
+     "dif_pp": -2.67,
+     "ufs_principais": [
+      "PR",
+      "RS",
+      "MG"
+     ],
+     "pct_votos_nordeste": 26.27
+    },
+    {
+     "vintil": 4,
+     "secoes": 25366,
+     "votos_2t": 6185077,
+     "de": "19:48",
+     "ate": "19:58",
+     "fatia_f_2t": 51.62,
+     "fatia_f_1t": 54.31,
+     "dif_pp": -2.68,
+     "ufs_principais": [
+      "PR",
+      "RS",
+      "MG"
+     ],
+     "pct_votos_nordeste": 24.96
+    },
+    {
+     "vintil": 5,
+     "secoes": 25369,
+     "votos_2t": 6185124,
+     "de": "19:58",
+     "ate": "20:04",
+     "fatia_f_2t": 50.22,
+     "fatia_f_1t": 52.9,
+     "dif_pp": -2.68,
+     "ufs_principais": [
+      "PR",
+      "RS",
+      "MG"
+     ],
+     "pct_votos_nordeste": 28.66
+    },
+    {
+     "vintil": 6,
+     "secoes": 25240,
+     "votos_2t": 6185261,
+     "de": "20:04",
+     "ate": "20:09",
+     "fatia_f_2t": 50.21,
+     "fatia_f_1t": 52.94,
+     "dif_pp": -2.73,
+     "ufs_principais": [
+      "SP",
+      "PR",
+      "MG"
+     ],
+     "pct_votos_nordeste": 29.22
+    },
+    {
+     "vintil": 7,
+     "secoes": 25109,
+     "votos_2t": 6185155,
+     "de": "20:09",
+     "ate": "20:14",
+     "fatia_f_2t": 49.55,
+     "fatia_f_1t": 52.29,
+     "dif_pp": -2.74,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "RS"
+     ],
+     "pct_votos_nordeste": 30.03
+    },
+    {
+     "vintil": 8,
+     "secoes": 24988,
+     "votos_2t": 6185181,
+     "de": "20:14",
+     "ate": "20:18",
+     "fatia_f_2t": 49.41,
+     "fatia_f_1t": 52.2,
+     "dif_pp": -2.8,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "PE"
+     ],
+     "pct_votos_nordeste": 31.42
+    },
+    {
+     "vintil": 9,
+     "secoes": 25027,
+     "votos_2t": 6185200,
+     "de": "20:18",
+     "ate": "20:23",
+     "fatia_f_2t": 48.99,
+     "fatia_f_1t": 51.75,
+     "dif_pp": -2.76,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "RS"
+     ],
+     "pct_votos_nordeste": 31.11
+    },
+    {
+     "vintil": 10,
+     "secoes": 24939,
+     "votos_2t": 6185370,
+     "de": "20:23",
+     "ate": "20:27",
+     "fatia_f_2t": 48.13,
+     "fatia_f_1t": 50.84,
+     "dif_pp": -2.7,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "BA"
+     ],
+     "pct_votos_nordeste": 33.41
+    },
+    {
+     "vintil": 11,
+     "secoes": 25002,
+     "votos_2t": 6185153,
+     "de": "20:27",
+     "ate": "20:32",
+     "fatia_f_2t": 47.45,
+     "fatia_f_1t": 50.19,
+     "dif_pp": -2.73,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "BA"
+     ],
+     "pct_votos_nordeste": 33.53
+    },
+    {
+     "vintil": 12,
+     "secoes": 24906,
+     "votos_2t": 6185192,
+     "de": "20:32",
+     "ate": "20:36",
+     "fatia_f_2t": 47.36,
+     "fatia_f_1t": 50.11,
+     "dif_pp": -2.76,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "BA"
+     ],
+     "pct_votos_nordeste": 32.8
+    },
+    {
+     "vintil": 13,
+     "secoes": 24717,
+     "votos_2t": 6185126,
+     "de": "20:36",
+     "ate": "20:40",
+     "fatia_f_2t": 46.26,
+     "fatia_f_1t": 48.9,
+     "dif_pp": -2.64,
+     "ufs_principais": [
+      "SP",
+      "BA",
+      "MG"
+     ],
+     "pct_votos_nordeste": 34.76
+    },
+    {
+     "vintil": 14,
+     "secoes": 24998,
+     "votos_2t": 6185139,
+     "de": "20:40",
+     "ate": "20:45",
+     "fatia_f_2t": 46.81,
+     "fatia_f_1t": 49.63,
+     "dif_pp": -2.82,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "BA"
+     ],
+     "pct_votos_nordeste": 31.18
+    },
+    {
+     "vintil": 15,
+     "secoes": 24856,
+     "votos_2t": 6185189,
+     "de": "20:45",
+     "ate": "20:49",
+     "fatia_f_2t": 46.84,
+     "fatia_f_1t": 49.7,
+     "dif_pp": -2.86,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "BA"
+     ],
+     "pct_votos_nordeste": 28.68
+    },
+    {
+     "vintil": 16,
+     "secoes": 24861,
+     "votos_2t": 6185189,
+     "de": "20:49",
+     "ate": "20:54",
+     "fatia_f_2t": 45.77,
+     "fatia_f_1t": 48.63,
+     "dif_pp": -2.86,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "RJ"
+     ],
+     "pct_votos_nordeste": 29.09
+    },
+    {
+     "vintil": 17,
+     "secoes": 24900,
+     "votos_2t": 6185257,
+     "de": "20:54",
+     "ate": "20:58",
+     "fatia_f_2t": 46.81,
+     "fatia_f_1t": 49.82,
+     "dif_pp": -3.01,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "MG"
+     ],
+     "pct_votos_nordeste": 25.03
+    },
+    {
+     "vintil": 18,
+     "secoes": 24742,
+     "votos_2t": 6185250,
+     "de": "20:58",
+     "ate": "21:03",
+     "fatia_f_2t": 45.68,
+     "fatia_f_1t": 48.54,
+     "dif_pp": -2.86,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "BA"
+     ],
+     "pct_votos_nordeste": 29.55
+    },
+    {
+     "vintil": 19,
+     "secoes": 24286,
+     "votos_2t": 6185020,
+     "de": "21:03",
+     "ate": "21:07",
+     "fatia_f_2t": 46.07,
+     "fatia_f_1t": 49.27,
+     "dif_pp": -3.2,
+     "ufs_principais": [
+      "RJ",
+      "SP",
+      "BA"
+     ],
+     "pct_votos_nordeste": 25.12
+    },
+    {
+     "vintil": 20,
+     "secoes": 24069,
+     "votos_2t": 6185426,
+     "de": "21:07",
+     "ate": "23:22",
+     "fatia_f_2t": 46.28,
+     "fatia_f_1t": 49.28,
+     "dif_pp": -3.0,
+     "ufs_principais": [
+      "RJ",
+      "SP",
+      "BA"
+     ],
+     "pct_votos_nordeste": 17.44
+    }
+   ],
+   "resumo": {
+    "fatia_2t_amplitude_pp": 5.94,
+    "dif_amplitude_pp": 0.68,
+    "fatia_2t_desvio_pp": 1.87,
+    "dif_desvio_pp": 0.15,
+    "corr_ordem_fatia_2t": -0.92,
+    "corr_ordem_dif": -0.826,
+    "primeiro": {
+     "vintil": 1,
+     "secoes": 24747,
+     "votos_2t": 6185102,
+     "de": "17:00",
+     "ate": "19:29",
+     "fatia_f_2t": 49.41,
+     "fatia_f_1t": 51.93,
+     "dif_pp": -2.52,
+     "ufs_principais": [
+      "PR",
+      "PA",
+      "PB"
+     ],
+     "pct_votos_nordeste": 21.19
+    },
+    "ultimo": {
+     "vintil": 20,
+     "secoes": 24069,
+     "votos_2t": 6185426,
+     "de": "21:07",
+     "ate": "23:22",
+     "fatia_f_2t": 46.28,
+     "fatia_f_1t": 49.28,
+     "dif_pp": -3.0,
+     "ufs_principais": [
+      "RJ",
+      "SP",
+      "BA"
+     ],
+     "pct_votos_nordeste": 17.44
+    }
+   },
+   "acumulado": {
+    "minimo_votos": 100000,
+    "frente_de": "19:42",
+    "frente_ate": "20:26",
+    "maximo_pct": 50.66,
+    "maximo_em": "19:58",
+    "final_pct": 48.22
+   },
+   "antes_17h": 1
+  },
+  "encerramento": {
+   "vintis": [
+    {
+     "vintil": 1,
+     "secoes": 25082,
+     "votos_2t": 6185144,
+     "de": "17:00",
+     "ate": "17:00",
+     "fatia_f_2t": 52.9,
+     "fatia_f_1t": 55.7,
+     "dif_pp": -2.8,
+     "ufs_principais": [
+      "MG",
+      "RS",
+      "SP"
+     ],
+     "pct_votos_nordeste": 22.42
+    },
+    {
+     "vintil": 2,
+     "secoes": 25370,
+     "votos_2t": 6185077,
+     "de": "17:00",
+     "ate": "17:01",
+     "fatia_f_2t": 51.49,
+     "fatia_f_1t": 54.26,
+     "dif_pp": -2.77,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "RS"
+     ],
+     "pct_votos_nordeste": 22.97
+    },
+    {
+     "vintil": 3,
+     "secoes": 25530,
+     "votos_2t": 6185290,
+     "de": "17:01",
+     "ate": "17:01",
+     "fatia_f_2t": 48.63,
+     "fatia_f_1t": 51.15,
+     "dif_pp": -2.52,
+     "ufs_principais": [
+      "SP",
+      "CE",
+      "BA"
+     ],
+     "pct_votos_nordeste": 32.55
+    },
+    {
+     "vintil": 4,
+     "secoes": 25472,
+     "votos_2t": 6185144,
+     "de": "17:01",
+     "ate": "17:01",
+     "fatia_f_2t": 50.21,
+     "fatia_f_1t": 52.94,
+     "dif_pp": -2.73,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "RS"
+     ],
+     "pct_votos_nordeste": 25.04
+    },
+    {
+     "vintil": 5,
+     "secoes": 25630,
+     "votos_2t": 6185151,
+     "de": "17:01",
+     "ate": "17:01",
+     "fatia_f_2t": 48.94,
+     "fatia_f_1t": 51.62,
+     "dif_pp": -2.68,
+     "ufs_principais": [
+      "MG",
+      "SP",
+      "PA"
+     ],
+     "pct_votos_nordeste": 25.55
+    },
+    {
+     "vintil": 6,
+     "secoes": 25309,
+     "votos_2t": 6185225,
+     "de": "17:01",
+     "ate": "17:01",
+     "fatia_f_2t": 51.04,
+     "fatia_f_1t": 53.85,
+     "dif_pp": -2.81,
+     "ufs_principais": [
+      "SP",
+      "RS",
+      "PR"
+     ],
+     "pct_votos_nordeste": 24.62
+    },
+    {
+     "vintil": 7,
+     "secoes": 25312,
+     "votos_2t": 6185181,
+     "de": "17:01",
+     "ate": "17:01",
+     "fatia_f_2t": 50.03,
+     "fatia_f_1t": 52.85,
+     "dif_pp": -2.82,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "SC"
+     ],
+     "pct_votos_nordeste": 25.46
+    },
+    {
+     "vintil": 8,
+     "secoes": 25371,
+     "votos_2t": 6185189,
+     "de": "17:01",
+     "ate": "17:01",
+     "fatia_f_2t": 47.05,
+     "fatia_f_1t": 49.63,
+     "dif_pp": -2.58,
+     "ufs_principais": [
+      "MG",
+      "SP",
+      "PR"
+     ],
+     "pct_votos_nordeste": 32.83
+    },
+    {
+     "vintil": 9,
+     "secoes": 25133,
+     "votos_2t": 6185173,
+     "de": "17:01",
+     "ate": "17:02",
+     "fatia_f_2t": 49.25,
+     "fatia_f_1t": 52.04,
+     "dif_pp": -2.78,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "BA"
+     ],
+     "pct_votos_nordeste": 28.07
+    },
+    {
+     "vintil": 10,
+     "secoes": 25118,
+     "votos_2t": 6185060,
+     "de": "17:02",
+     "ate": "17:02",
+     "fatia_f_2t": 48.64,
+     "fatia_f_1t": 51.4,
+     "dif_pp": -2.76,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "BA"
+     ],
+     "pct_votos_nordeste": 30.08
+    },
+    {
+     "vintil": 11,
+     "secoes": 24955,
+     "votos_2t": 6185392,
+     "de": "17:02",
+     "ate": "17:02",
+     "fatia_f_2t": 48.49,
+     "fatia_f_1t": 51.28,
+     "dif_pp": -2.79,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "RJ"
+     ],
+     "pct_votos_nordeste": 28.78
+    },
+    {
+     "vintil": 12,
+     "secoes": 24988,
+     "votos_2t": 6185135,
+     "de": "17:02",
+     "ate": "17:02",
+     "fatia_f_2t": 48.29,
+     "fatia_f_1t": 51.15,
+     "dif_pp": -2.85,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "RJ"
+     ],
+     "pct_votos_nordeste": 28.07
+    },
+    {
+     "vintil": 13,
+     "secoes": 24846,
+     "votos_2t": 6185143,
+     "de": "17:02",
+     "ate": "17:02",
+     "fatia_f_2t": 48.37,
+     "fatia_f_1t": 51.21,
+     "dif_pp": -2.85,
+     "ufs_principais": [
+      "SP",
+      "MG",
+      "BA"
+     ],
+     "pct_votos_nordeste": 27.98
+    },
+    {
+     "vintil": 14,
+     "secoes": 24691,
+     "votos_2t": 6185283,
+     "de": "17:02",
+     "ate": "17:03",
+     "fatia_f_2t": 47.87,
+     "fatia_f_1t": 50.71,
+     "dif_pp": -2.83,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "MG"
+     ],
+     "pct_votos_nordeste": 30.13
+    },
+    {
+     "vintil": 15,
+     "secoes": 24636,
+     "votos_2t": 6185282,
+     "de": "17:03",
+     "ate": "17:03",
+     "fatia_f_2t": 47.61,
+     "fatia_f_1t": 50.47,
+     "dif_pp": -2.86,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "MG"
+     ],
+     "pct_votos_nordeste": 28.45
+    },
+    {
+     "vintil": 16,
+     "secoes": 24545,
+     "votos_2t": 6185090,
+     "de": "17:03",
+     "ate": "17:04",
+     "fatia_f_2t": 46.7,
+     "fatia_f_1t": 49.57,
+     "dif_pp": -2.87,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "BA"
+     ],
+     "pct_votos_nordeste": 28.69
+    },
+    {
+     "vintil": 17,
+     "secoes": 24415,
+     "votos_2t": 6185194,
+     "de": "17:04",
+     "ate": "17:04",
+     "fatia_f_2t": 46.58,
+     "fatia_f_1t": 49.46,
+     "dif_pp": -2.88,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "PE"
+     ],
+     "pct_votos_nordeste": 28.22
+    },
+    {
+     "vintil": 18,
+     "secoes": 24198,
+     "votos_2t": 6185212,
+     "de": "17:04",
+     "ate": "17:06",
+     "fatia_f_2t": 45.08,
+     "fatia_f_1t": 47.91,
+     "dif_pp": -2.83,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "BA"
+     ],
+     "pct_votos_nordeste": 31.79
+    },
+    {
+     "vintil": 19,
+     "secoes": 23957,
+     "votos_2t": 6185098,
+     "de": "17:06",
+     "ate": "17:08",
+     "fatia_f_2t": 44.21,
+     "fatia_f_1t": 47.08,
+     "dif_pp": -2.86,
+     "ufs_principais": [
+      "SP",
+      "BA",
+      "RJ"
+     ],
+     "pct_votos_nordeste": 32.89
+    },
+    {
+     "vintil": 20,
+     "secoes": 23248,
+     "votos_2t": 6185387,
+     "de": "17:08",
+     "ate": "23:05",
+     "fatia_f_2t": 43.04,
+     "fatia_f_1t": 45.97,
+     "dif_pp": -2.93,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "BA"
+     ],
+     "pct_votos_nordeste": 35.26
+    }
+   ],
+   "resumo": {
+    "fatia_2t_amplitude_pp": 9.86,
+    "dif_amplitude_pp": 0.41,
+    "fatia_2t_desvio_pp": 2.34,
+    "dif_desvio_pp": 0.1,
+    "corr_ordem_fatia_2t": -0.887,
+    "corr_ordem_dif": -0.659,
+    "primeiro": {
+     "vintil": 1,
+     "secoes": 25082,
+     "votos_2t": 6185144,
+     "de": "17:00",
+     "ate": "17:00",
+     "fatia_f_2t": 52.9,
+     "fatia_f_1t": 55.7,
+     "dif_pp": -2.8,
+     "ufs_principais": [
+      "MG",
+      "RS",
+      "SP"
+     ],
+     "pct_votos_nordeste": 22.42
+    },
+    "ultimo": {
+     "vintil": 20,
+     "secoes": 23248,
+     "votos_2t": 6185387,
+     "de": "17:08",
+     "ate": "23:05",
+     "fatia_f_2t": 43.04,
+     "fatia_f_1t": 45.97,
+     "dif_pp": -2.93,
+     "ufs_principais": [
+      "SP",
+      "RJ",
+      "BA"
+     ],
+     "pct_votos_nordeste": 35.26
+    }
+   },
+   "acumulado": {
+    "minimo_votos": 100000,
+    "frente_de": "17:00",
+    "frente_ate": "17:02",
+    "maximo_pct": 54.34,
+    "maximo_em": "17:00",
+    "final_pct": 48.22
+   }
+  }
+ }
+}

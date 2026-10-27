@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from apuracao_2026.pagina_comum import Capitulo, Dados
 
+from . import pagina_texto_angulo_boca_urna as TBU
+from . import pagina_texto_angulo_transporte as TA
 from . import pagina_texto_hipoteses as T
 from . import pagina_texto_hipoteses_b as TB
 from .pagina_comum import cabeca, checar
@@ -51,8 +53,10 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += (
         T.h2(H)
         + T.h3(H)
+        + TA.bloco_hipotese(d.get("angulo_transporte.json"))
         + T.tabela_tercos(H)
         + T.h4(H)
+        + TBU.bloco(d)
         + T.h5(H)
         + T.tabela_modelos(H)
         + T.h6(H)

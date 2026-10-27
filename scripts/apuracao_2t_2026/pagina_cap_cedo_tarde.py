@@ -21,6 +21,7 @@ from apuracao_2026.pagina_comum import (
 from apuracao_2026.pagina_fig_base import FLAVIO, pct, pp
 
 from . import pagina_fig_cedo_tarde as F
+from . import pagina_texto_angulo_transporte as TA
 from .pagina_comum import cabeca
 from .pagina_fig_turnos_util import ESTILO, linhas_de, municipio, tabela_compacta
 
@@ -220,6 +221,7 @@ def render(d: Dados, cap: Capitulo) -> str:
         "verificado",
     )
     h += _tabela_ultimos(C)
+    h += TA.bloco_ordem(d.get("angulo_transporte.json"))
     h += limites(
         [
             "O minuto de fechamento é o da primeira versão gerada pelo TSE com todas as seções do município, não o da leitura pelo coletor.",

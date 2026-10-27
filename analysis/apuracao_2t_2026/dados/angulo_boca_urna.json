@@ -1,0 +1,509 @@
+{
+ "gerado_em": "2026-10-27T00:28:01Z",
+ "script": "scripts/apuracao-2t-2026-angulo-boca-urna.py",
+ "rotulo": "relato pede explicação, não prova irregularidade; contagem não é verificação",
+ "o_que_a_totalizacao_nao_mede": "nenhum BU, log de urna ou RDV registra abordagem, pressão ou propaganda junto ao eleitor; este ângulo é documental, não estatístico",
+ "relatos": {
+  "consultado_em": "2026-10-27T00:28:01Z",
+  "fonte": "Supabase PNAD, tabelas relato_secao e relato_moderacao, só contagens",
+  "total": 8,
+  "por_status": {
+   "novo": 2,
+   "lido": 0,
+   "descartado": 6
+  },
+  "por_tipo": {
+   "fila_longa": 0,
+   "urna_trocada": 0,
+   "biometria_falhou": 0,
+   "votou_sem_biometria": 0,
+   "mesario_conduta": 0,
+   "boca_de_urna": 0,
+   "transporte_irregular": 0,
+   "local_mudou": 0,
+   "secao_fechou_cedo": 0,
+   "secao_fechou_tarde": 0,
+   "outro": 8
+  },
+  "por_uf": {
+   "AC": 6,
+   "CE": 1,
+   "DF": 1
+  },
+  "por_turno": {
+   "2": 8
+  },
+  "presenciou": {
+   "sim": 3,
+   "nao": 5
+  },
+  "secao_no_cadastro": {
+   "sim": 3,
+   "nao": 5
+  },
+  "moderacao_por_destino": {
+   "descartado": 6
+  },
+  "pressao_sobre_o_eleitor": 0,
+  "ativos": 2,
+  "primeiro_relato_utc_hora": "2026-10-26 04h",
+  "ultimo_relato_utc_hora": "2026-10-26 21h",
+  "limites": [
+   "contagem de declarações de quem enviou; nenhuma foi verificada por documento",
+   "texto, contato, hora exata e hash nunca saem do banco para este arquivo",
+   "o canal abriu em 26/10/2026, depois do dia da votação"
+  ]
+ },
+ "balancos_mjsp": [
+  {
+   "id": "mjsp_12h",
+   "corte": "25/10/2026, relatório do CICCN das 12h (Brasília)",
+   "publicado": "gov.br/mj, 25/10/2026 14h09 (atualizado 26/10 09h56)",
+   "arquivo": "mj_seguranca-monitorada-tempo-real.html",
+   "url": "https://www.gov.br/mj/pt-br/assuntos/noticias/segundo-turno-das-eleicoes-ocorre-com-a-seguranca-monitorada-em-tempo-real",
+   "ocorrencias": 89,
+   "flagrantes": 9,
+   "termos_circunstanciados": 16,
+   "conduzidos": 16,
+   "boca_de_urna_pct": null,
+   "nota": "sem divisão por tipo; a pasta cita a propaganda irregular como a principal questão",
+   "boca_de_urna_n_derivado": null,
+   "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/mj_seguranca-monitorada-tempo-real.html",
+   "sha256": "c9277e94988a13f88bda6c7f76541b85faf1eccc23b67be82476ee57676720df",
+   "total_conferido_no_arquivo": true
+  },
+  {
+   "id": "mjsp_19h",
+   "corte": "25/10/2026, balanço preliminar do MJSP até as 19h",
+   "publicado": "Agência Brasil, 25/10/2026 19h37",
+   "arquivo": "ab_pf-vai-apurar-ataque-vereadora.html",
+   "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/pf-vai-apurar-ataque-vereadora-de-montes-claros-diz-diretor-geral",
+   "ocorrencias": 618,
+   "flagrantes": 57,
+   "termos_circunstanciados": null,
+   "conduzidos": 152,
+   "boca_de_urna_pct": 13.3,
+   "propaganda_irregular_pct": 11.3,
+   "outros_crimes_eleitorais_pct": 7.6,
+   "desordem_pct": 7.4,
+   "desobediencia_pct": 6.6,
+   "ufs_mais_ocorrencias": {
+    "MG": 91,
+    "RS": 59,
+    "GO": 48,
+    "MT": 42
+   },
+   "apreensoes": "R$ 1.897 em dinheiro, 9 veículos e 1 arma de fogo",
+   "nota": "preliminar; a mesma matéria registra que a PF chamou de mais grave o ataque em Montes Claros",
+   "boca_de_urna_n_derivado": 82,
+   "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/ab_pf-vai-apurar-ataque-vereadora.html",
+   "sha256": "86793152b69d853deaa87fadf2cc9f44ba3d7c702bb71444d2c035708bcd6b37",
+   "total_conferido_no_arquivo": true
+  },
+  {
+   "id": "mjsp_final",
+   "corte": "2º turno completo, relatório do CICCN",
+   "publicado": "gov.br/mj, 26/10/2026 20h01",
+   "arquivo": "mj_balanco-operacoes-seguranca-2o-turno.html",
+   "url": "https://www.gov.br/mj/pt-br/assuntos/noticias/ministerio-da-justica-divulga-balanco-das-operacoes-de-seguranca-no-segundo-turno-das-eleicoes",
+   "ocorrencias": 733,
+   "flagrantes": 61,
+   "termos_circunstanciados": 254,
+   "conduzidos": 173,
+   "boca_de_urna_pct": 12.8,
+   "sigilo_do_voto_pct": 39.1,
+   "propaganda_irregular_pct": 10.4,
+   "outros_crimes_eleitorais_pct": 9.6,
+   "apreensoes": "1 arma de fogo, 864 materiais de campanha, 10 veículos e R$ 1.897 em espécie",
+   "nota": "a pasta diz que o total de ocorrências criminais foi menor que no 1º turno, sem publicar o número do 1º turno nesta página",
+   "boca_de_urna_n_derivado": 94,
+   "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/mj_balanco-operacoes-seguranca-2o-turno.html",
+   "sha256": "dc21caf11cff89b108c636fc47865d07a390e78e679e13cf3e90b839c9ad70e1",
+   "total_conferido_no_arquivo": true
+  }
+ ],
+ "ocorrencias": {
+  "fonte": "analysis/apuracao_2t_2026/noticias_noite.json",
+  "gerado_em_acervo": "2026-10-25T22:45:00-03:00",
+  "regra": "entram os itens de tema ocorrencias_policiais, boca_de_urna e violencia_politica, mais qualquer item cujo título ou resumo cite boca de urna, venda ou compra de voto, aliciamento, coação, prisão, detenção, flagrante, apreensão ou crime eleitoral",
+  "n": 16,
+  "por_classe": {
+   "registro_oficial": 12,
+   "relato_imprensa": 4,
+   "relato_anonimo": 0
+  },
+  "por_subtema": {
+   "boca_de_urna": 3,
+   "outro": 1,
+   "sigilo_ou_venda_do_voto": 2,
+   "transporte": 7,
+   "violencia": 3
+  },
+  "boca_de_urna_nominais": [
+   {
+    "quando": "2026-10-25T14:41:01-03:00",
+    "veiculo": "Poder360",
+    "titulo": "Fiscais do PL são levados à PF no Rio por suspeita de boca de urna",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/fiscais-do-pl-sao-levados-a-pf-no-rio-por-suspeita-de-boca-de-urna/",
+    "tipo_acervo": "relato",
+    "tema_acervo": "boca_de_urna",
+    "subtema": "boca_de_urna",
+    "classe": "relato_imprensa",
+    "quem_disse": "Poder360; PL diz desconhecer os casos",
+    "resumo": "Dois fiscais do PL foram levados à PF na Praça Mauá (RJ) por ordem do juiz eleitoral, sob suspeita de pedir votos para Flávio (boca de urna). O PL disse desconhecer os casos.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360_fiscais-do-pl-sao-levados-a-pf-no-rio-por-suspeita-de-b.html",
+    "sha256": "22b10dab20b4613676e8264e905b8ed4d53011762cb97d8b37e315e069500046"
+   },
+   {
+    "quando": "2026-10-25T17:28:00-03:00",
+    "veiculo": "Agência Brasil",
+    "titulo": "Policial militar prende acusado de venda de voto no estado do Rio",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/policial-militar-prende-acusado-de-venda-de-voto-no-estado-do-rio",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "boca_de_urna",
+    "classe": "registro_oficial",
+    "quem_disse": "TRE-RJ",
+    "resumo": "TRE-RJ relatou um idoso que passou mal na fila e morreu em Maricá (infarto) e uma fiscal do PL presa por boca de urna no Largo do Machado, levada à PF.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/abx_policial-militar-prende-acusado-de-venda-de-voto-n.html",
+    "sha256": "75f471d574d60961eb9023f201b047b061c8a4e0bcd4aa700bb956e03afa7798"
+   },
+   {
+    "quando": "2026-10-25T19:37:00-03:00",
+    "veiculo": "Agência Brasil",
+    "titulo": "PF vai apurar ataque a vereadora de Montes Claros, diz diretor-geral",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/pf-vai-apurar-ataque-vereadora-de-montes-claros-diz-diretor-geral",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "boca_de_urna",
+    "classe": "registro_oficial",
+    "quem_disse": "Ministério da Justiça (balanço preliminar até 19h) e PF",
+    "resumo": "MJSP até 19h: 618 ocorrências, 57 presos em flagrante, 152 conduzidos; R$ 1.897 em dinheiro, 9 veículos e 1 arma apreendidos. Mais frequentes: boca de urna 13,3%, propaganda irregular 11,3%. PF diz que a ocorrência mais grave foi o ataque em Montes Claros.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/ab_pf-vai-apurar-ataque-vereadora.html",
+    "sha256": "86793152b69d853deaa87fadf2cc9f44ba3d7c702bb71444d2c035708bcd6b37"
+   }
+  ],
+  "itens": [
+   {
+    "quando": "2026-10-25T12:14:00-03:00",
+    "veiculo": "O Globo",
+    "titulo": "PF apreendeu R$ 51,9 milhões em dinheiro e bens durante operações eleitorais em 2026",
+    "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/10/25/andrei-fala-balanco-da-manha.ghtml",
+    "tipo_acervo": "declaracao",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "outro",
+    "classe": "registro_oficial",
+    "quem_disse": "Andrei Rodrigues (diretor-geral da PF)",
+    "resumo": "PF: R$ 51,9 milhões apreendidos em 2026 em operações do período eleitoral (R$ 31,7 milhões em espécie); 97 operações, 6.610 inquéritos (mais de 2.400 eleitorais), 12 operações contra facções, 104 inquéritos de violência política de gênero.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/gl_andrei-fala-balanco-da-manha.html",
+    "sha256": "435e9d19c325c87f9975dc20d26f2627437c6ff5e5985674f33f96300bad3643"
+   },
+   {
+    "quando": "2026-10-25T12:47:00-03:00",
+    "veiculo": "O Globo",
+    "titulo": "Justiça manda prender secretário de mobilidade de Salvador, que está em Paris",
+    "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/10/25/justica-eleitoral-bahia-transporte-publico-salvador.ghtml",
+    "tipo_acervo": "fato",
+    "tema_acervo": "transporte_eleitores",
+    "subtema": "transporte",
+    "classe": "registro_oficial",
+    "quem_disse": "Maurício Kertzman Szporer (presidente do TRE-BA)",
+    "resumo": "TRE-BA mandou prender Pablo Souza, secretário de Mobilidade de Salvador, que estaria em Paris, e restabelecer o transporte; multa de R$ 1 milhão por hora. G1 cita cerca de 75 ônibus impedidos de sair.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/gl_justica-eleitoral-bahia-transporte-publico-salvador.html",
+    "sha256": "ab163578a92a22be83a7664bcdefe936679a31b7fd47df751311e45fb37d17fe"
+   },
+   {
+    "quando": "2026-10-25T13:32:00-03:00",
+    "veiculo": "Agência Brasil",
+    "titulo": "Vereadora do PT é atacada durante carreata em Montes Claros",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/vereadora-do-pt-e-atacada-durante-carreata-em-montes-claros",
+    "tipo_acervo": "relato",
+    "tema_acervo": "violencia_politica",
+    "subtema": "violencia",
+    "classe": "relato_imprensa",
+    "quem_disse": "Agência Brasil, relato da vítima e testemunhas",
+    "resumo": "Vereadora Iara Pimentel (PT), de Montes Claros (MG), foi atingida no rosto por objeto arremessado contra carro de som em ato pró-Lula na noite de sábado (24); testemunhas citam garrafas e tijolos.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/abx_vereadora-do-pt-e-atacada-durante-carreata-em-mont.html",
+    "sha256": "860a538d1a88e4c70fd1de181688576a75b8f98eb4128b92b58651dd3f3e46e9"
+   },
+   {
+    "quando": "2026-10-25T13:39:40-03:00",
+    "veiculo": "Poder360",
+    "titulo": "Justiça determina prisão de secretário por redução de ônibus na BA",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/justica-determina-prisao-de-secretario-por-reducao-de-onibus-na-ba/",
+    "tipo_acervo": "fato",
+    "tema_acervo": "transporte_eleitores",
+    "subtema": "transporte",
+    "classe": "registro_oficial",
+    "quem_disse": "TRE-BA",
+    "resumo": "Justiça Eleitoral da Bahia determinou a prisão do secretário Pablo Souza por redução da frota em Salvador, a pedido do PT.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360_justica-determina-prisao-de-secretario-por-reducao-de-o.html",
+    "sha256": "a302ad831c30d3d8dee446e4ff199887d02e06c6cfde29251c47bf9c734d5ded"
+   },
+   {
+    "quando": "2026-10-25T14:41:01-03:00",
+    "veiculo": "Poder360",
+    "titulo": "Fiscais do PL são levados à PF no Rio por suspeita de boca de urna",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/fiscais-do-pl-sao-levados-a-pf-no-rio-por-suspeita-de-boca-de-urna/",
+    "tipo_acervo": "relato",
+    "tema_acervo": "boca_de_urna",
+    "subtema": "boca_de_urna",
+    "classe": "relato_imprensa",
+    "quem_disse": "Poder360; PL diz desconhecer os casos",
+    "resumo": "Dois fiscais do PL foram levados à PF na Praça Mauá (RJ) por ordem do juiz eleitoral, sob suspeita de pedir votos para Flávio (boca de urna). O PL disse desconhecer os casos.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360_fiscais-do-pl-sao-levados-a-pf-no-rio-por-suspeita-de-b.html",
+    "sha256": "22b10dab20b4613676e8264e905b8ed4d53011762cb97d8b37e315e069500046"
+   },
+   {
+    "quando": "2026-10-25T15:07:00-03:00",
+    "veiculo": "Agência Brasil",
+    "titulo": "PM detém cinco pessoas por crimes eleitorais em São Paulo",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/pm-detem-cinco-pessoas-por-crimes-eleitorais-em-sao-paulo",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "sigilo_ou_venda_do_voto",
+    "classe": "registro_oficial",
+    "quem_disse": "Polícia Militar de SP",
+    "resumo": "PM-SP deteve cinco pessoas por crimes eleitorais; a maioria por fotografar a urna ou usar celular na cabine (capital, São Caetano do Sul, Osasco); houve um desacato em Marília.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/abx_pm-detem-cinco-pessoas-por-crimes-eleitorais-em-sa.html",
+    "sha256": "6b756885d5a4797937958cb07d28eed404f207ba787747ae6554f27082b396e1"
+   },
+   {
+    "quando": "2026-10-25T15:18:07-03:00",
+    "veiculo": "Poder360",
+    "titulo": "Campanha de Lula pede prisão de secretário e chefe da SPTrans",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/campanha-de-lula-pede-prisao-de-secretario-e-chefe-da-sptrans/",
+    "tipo_acervo": "relato",
+    "tema_acervo": "transporte_eleitores",
+    "subtema": "transporte",
+    "classe": "relato_imprensa",
+    "quem_disse": "Federação Brasil da Esperança (PT, PCdoB, PV), citando Infobus/Metrópoles",
+    "resumo": "Às 13h20, segundo o Infobus citado na petição do PT, 9.892 de 13.790 ônibus de SP circulavam e 3.898 estavam nas garagens; o PT pediu a prisão do secretário e do presidente da SPTrans.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360x_campanha-de-lula-pede-prisao-de-secretario-e-chefe-da-s.html",
+    "sha256": "db8ca6380710790a00808822f55ab22b1f3e13b5a52978307db8d74d929db377"
+   },
+   {
+    "quando": "2026-10-25T16:11:06-03:00",
+    "veiculo": "Poder360",
+    "titulo": "Mulher é levada à delegacia por alegações de injúria racial em Teresina",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/mulher-e-levada-a-delegacia-por-alegacoes-de-injuria-racial-em-teresina/",
+    "tipo_acervo": "relato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "violencia",
+    "classe": "registro_oficial",
+    "quem_disse": "Guarda Civil Municipal de Teresina (via G1)",
+    "resumo": "Mulher foi levada à delegacia em Teresina após alegação de injúria racial contra um guarda civil em seção eleitoral; segundo a GCM, também o agrediu levemente.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360x_mulher-e-levada-a-delegacia-por-alegacoes-de-injuria-ra.html",
+    "sha256": "1aa07f7d6af89a0dc2e98bb4bfb039cb7fea8442f97ddec584076e4a48d5ad6e"
+   },
+   {
+    "quando": "2026-10-25T16:50:44-03:00",
+    "veiculo": "Poder360",
+    "titulo": "PM do Maranhão identifica homens com camisas com símbolos nazistas",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/pm-do-maranhao-identifica-homens-com-camisas-de-simbolos-nazistas/",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "violencia",
+    "classe": "registro_oficial",
+    "quem_disse": "Carlos Brandão (governador do MA)",
+    "resumo": "PM do Maranhão identificou três homens com camisetas de símbolos nazistas; caso encaminhado ao TRE-MA e à PF.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360x_pm-do-maranhao-identifica-homens-com-camisas-de-simbolo.html",
+    "sha256": "6b34ff6da191c30071ff9829e161f0dc92f4d8d52b09582fa1cb34ee4c1b97ae"
+   },
+   {
+    "quando": "2026-10-25T17:28:00-03:00",
+    "veiculo": "Agência Brasil",
+    "titulo": "Policial militar prende acusado de venda de voto no estado do Rio",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/policial-militar-prende-acusado-de-venda-de-voto-no-estado-do-rio",
+    "tipo_acervo": "relato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "sigilo_ou_venda_do_voto",
+    "classe": "registro_oficial",
+    "quem_disse": "Claudio de Mello Tavares (presidente do TRE-RJ)",
+    "resumo": "Em Três Rios (RJ), subtenente da PM foi detido ao tentar fotografar o voto, com R$ 114; segundo o TRE-RJ teria vendido o voto. Nota corrigida às 20h58: o PM prendeu o acusado. TRE-RJ registrou ao menos cinco crimes eleitorais.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/abx_policial-militar-prende-acusado-de-venda-de-voto-n.html",
+    "sha256": "75f471d574d60961eb9023f201b047b061c8a4e0bcd4aa700bb956e03afa7798"
+   },
+   {
+    "quando": "2026-10-25T17:28:00-03:00",
+    "veiculo": "Agência Brasil",
+    "titulo": "Policial militar prende acusado de venda de voto no estado do Rio",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/policial-militar-prende-acusado-de-venda-de-voto-no-estado-do-rio",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "boca_de_urna",
+    "classe": "registro_oficial",
+    "quem_disse": "TRE-RJ",
+    "resumo": "TRE-RJ relatou um idoso que passou mal na fila e morreu em Maricá (infarto) e uma fiscal do PL presa por boca de urna no Largo do Machado, levada à PF.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/abx_policial-militar-prende-acusado-de-venda-de-voto-n.html",
+    "sha256": "75f471d574d60961eb9023f201b047b061c8a4e0bcd4aa700bb956e03afa7798"
+   },
+   {
+    "quando": "2026-10-25T17:41:40-03:00",
+    "veiculo": "Poder360",
+    "titulo": "Falta de ônibus mobiliza PT e artistas no 2º turno; entenda",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/artistas-pro-lula-e-pt-pressionaram-por-extensao-do-horario-da-votacao/",
+    "tipo_acervo": "fato",
+    "tema_acervo": "transporte_eleitores",
+    "subtema": "transporte",
+    "classe": "relato_imprensa",
+    "quem_disse": "Poder360",
+    "resumo": "Poder360: campanha do PT e artistas (Caetano Veloso e outros) pressionaram por extensão do horário na Bahia e em SP; federação pediu prisão em flagrante do secretário de SP e do presidente da SPTrans.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360x_artistas-pro-lula-e-pt-pressionaram-por-extensao-do-hor.html",
+    "sha256": "a78e72ae284e464d60d061d7b54ed043b7273e137bdc8774fcb68a68369da184"
+   },
+   {
+    "quando": "2026-10-25T19:21:25-03:00",
+    "veiculo": "Poder360",
+    "titulo": "Justiça nega pedido do PT para prender gestores do transporte de SP",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/justica-nega-pedido-do-pt-para-prender-gestores-do-transporte-de-sp/",
+    "tipo_acervo": "fato",
+    "tema_acervo": "transporte_eleitores",
+    "subtema": "transporte",
+    "classe": "registro_oficial",
+    "quem_disse": "Juiz Tiago Ducatti Lino Machado (1ª Zona Eleitoral de SP)",
+    "resumo": "Justiça Eleitoral de SP negou prisão do secretário de Mobilidade e do presidente da SPTrans por considerar insuficientes as provas de descumprimento da ordem de 100% da frota.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360x_justica-nega-pedido-do-pt-para-prender-gestores-do-tran.html",
+    "sha256": "d60a14325b9743bab27cbfa3dda492b6285a42a3b8d174632e534df5d061b973"
+   },
+   {
+    "quando": "2026-10-25T19:37:00-03:00",
+    "veiculo": "Agência Brasil",
+    "titulo": "PF vai apurar ataque a vereadora de Montes Claros, diz diretor-geral",
+    "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/pf-vai-apurar-ataque-vereadora-de-montes-claros-diz-diretor-geral",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "boca_de_urna",
+    "classe": "registro_oficial",
+    "quem_disse": "Ministério da Justiça (balanço preliminar até 19h) e PF",
+    "resumo": "MJSP até 19h: 618 ocorrências, 57 presos em flagrante, 152 conduzidos; R$ 1.897 em dinheiro, 9 veículos e 1 arma apreendidos. Mais frequentes: boca de urna 13,3%, propaganda irregular 11,3%. PF diz que a ocorrência mais grave foi o ataque em Montes Claros.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/ab_pf-vai-apurar-ataque-vereadora.html",
+    "sha256": "86793152b69d853deaa87fadf2cc9f44ba3d7c702bb71444d2c035708bcd6b37"
+   },
+   {
+    "quando": "2026-10-25T19:39-03:00",
+    "veiculo": "Carta Capital",
+    "titulo": "PF abre inquérito para apurar falta de ônibus durante eleições em cinco estados",
+    "url": "https://www.cartacapital.com.br/politica/pf-abre-inquerito-para-apurar-falta-de-onibus-durante-eleicoes-em-cinco-estados/",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "transporte",
+    "classe": "registro_oficial",
+    "quem_disse": "Dennis Cali (PF) e André Garcia (Ministério da Justiça)",
+    "resumo": "Carta Capital: confirmado inquérito em Sergipe; ocorrências em SP, AL, PI e BA em apuração; Ministério da Justiça aponta indícios de retenção de ônibus onde havia ordem judicial.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/cc_pf5.html",
+    "sha256": "c726bca9a05e446788059d12ece94a7ed3987a523a823969fac81f021334cd8d"
+   },
+   {
+    "quando": "2026-10-25T19:58:09-03:00",
+    "veiculo": "Poder360",
+    "titulo": "PF abre inquérito para apurar falta de ônibus nas eleições em Sergipe",
+    "url": "https://www.poder360.com.br/poder-eleicoes-2026/pf-abre-inquerito-para-apurar-falta-de-onibus-nas-eleicoes-em-sergipe/",
+    "tipo_acervo": "fato",
+    "tema_acervo": "ocorrencias_policiais",
+    "subtema": "transporte",
+    "classe": "registro_oficial",
+    "quem_disse": "Dennis Cali (diretor da PF)",
+    "resumo": "PF disse ter inquérito instaurado em Sergipe por embaraço ao voto e acompanhar casos em SP, AL, PI e BA sobre mobilidade urbana.",
+    "fonte_arquivo": "analysis/apuracao_2t_2026/noticias_fontes/p360_pf-abre-inquerito-para-apurar-falta-de-onibus-nas-eleic.html",
+    "sha256": "4b87a69ed1599fc0c60ffd7913a0cc43ac99a93ec4c46ece2803b9a192fa5132"
+   }
+  ]
+ },
+ "base_legal": {
+  "lei_9504": {
+   "arquivo": "data/originals/apuracao_2026/fiscais/lei_9504.html",
+   "existe": true,
+   "sha256_arquivo": "3164caa590b465ed46d1a34c72ff66c648f2cb64d732152039d4503f83e381b0",
+   "sha256_manifesto": "3164caa590b465ed46d1a34c72ff66c648f2cb64d732152039d4503f83e381b0",
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/l9504.htm",
+   "titulo": "Lei nº 9.504, de 30 de setembro de 1997, texto compilado",
+   "publicacao": null,
+   "dispositivos": [
+    {
+     "dispositivo": "art. 39, § 5º, II",
+     "texto": "É crime, no dia da eleição, a arregimentação de eleitor ou a propaganda de boca de urna, com detenção de seis meses a um ano, alternativa de prestação de serviços à comunidade pelo mesmo período e multa de 5.000 a 15.000 UFIR (redação da Lei 11.300/2006). O inciso I alcança alto-falantes, comício e carreata; o III, a divulgação de propaganda de partidos ou candidatos.",
+     "trecho_conferido": "a arregimentação de eleitor ou a propaganda de boca de urna",
+     "conferido_no_arquivo": true
+    },
+    {
+     "dispositivo": "art. 39-A",
+     "texto": "É permitida a manifestação individual e silenciosa da preferência do eleitor, só por bandeira, broche, dístico e adesivo. É vedada, até o fim da votação, a aglomeração com vestuário padronizado ou esses instrumentos de modo a caracterizar manifestação coletiva. Fiscais só podem ter nome e sigla no crachá.",
+     "trecho_conferido": "manifestação individual e silenciosa da preferência do eleitor",
+     "conferido_no_arquivo": true
+    }
+   ]
+  },
+  "res_23751": {
+   "arquivo": "data/originals/apuracao_2026/fiscais/p360_atos_gerais_2026.pdf",
+   "existe": true,
+   "sha256_arquivo": "355af2af0791c11ffb5879065d50649311b3f06d5d6d11b477f2c7333d35413c",
+   "sha256_manifesto": "355af2af0791c11ffb5879065d50649311b3f06d5d6d11b477f2c7333d35413c",
+   "url": "https://static.poder360.com.br/2026/03/Atos-gerais-da-eleicao-TSE-.pdf",
+   "titulo": "Resolução TSE nº 23.751 (atos gerais do processo eleitoral, Eleições 2026), DJE/TSE n. 30, 03/03/2026",
+   "publicacao": "DJE/TSE n. 30, 03/03/2026",
+   "dispositivos": [
+    {
+     "dispositivo": "art. 126, VIII a X",
+     "texto": "Cabe ao presidente da mesa manter a ordem na seção, dispondo de força pública (CE, art. 127, III); comunicar ao juiz eleitoral as ocorrências cuja solução dele dependa (CE, art. 127, VI); e receber as impugnações de fiscais e de qualquer eleitor, consignando-as na Ata da Mesa Receptora (CE, art. 127, VII).",
+     "trecho_conferido": "manter a ordem na seção, para o que disporá de força pública",
+     "conferido_no_arquivo": true
+    },
+    {
+     "dispositivo": "art. 128, V",
+     "texto": "Cabe aos mesários lavrar a Ata da Mesa Receptora, anotando, durante os trabalhos, todas as ocorrências que se verificarem (CE, art. 128, II).",
+     "trecho_conferido": "todas as ocorrências que se verificarem",
+     "conferido_no_arquivo": true
+    },
+    {
+     "dispositivo": "art. 137, § 5º",
+     "texto": "Quem recusa entregar celular ou câmera não vota; o presidente faz constar em ata os detalhes e, se preciso, aciona a força policial e comunica o juiz.",
+     "trecho_conferido": "acionará a força policial para adoção das",
+     "conferido_no_arquivo": true
+    },
+    {
+     "dispositivo": "art. 161",
+     "texto": "Encerrada a votação, o presidente finaliza a Ata da Mesa Receptora, da qual constam, sem prejuízo de outras ocorrências significativas, ao menos os itens listados (CE, art. 154, III).",
+     "trecho_conferido": "sem prejuízo de outras ocorrências significativas",
+     "conferido_no_arquivo": true
+    },
+    {
+     "dispositivo": "arts. 176 e 177",
+     "texto": "Candidatos, delegados e fiscais são admitidos a fiscalizar a votação, formular protestos e fazer impugnações (CE, art. 132). No dia da votação o fiscal usa crachá só com nome e sigla, vedada a padronização do vestuário (Lei 9.504, art. 39-A, § 3º).",
+     "trecho_conferido": "a formular protestos e a fazer impugnações",
+     "conferido_no_arquivo": true
+    }
+   ]
+  }
+ },
+ "caminho_documental": [
+  {
+   "passo": "Na seção, na hora",
+   "quem": "qualquer eleitor, fiscal ou delegado de partido",
+   "como": "pede ao presidente da mesa que registre a ocorrência na Ata da Mesa Receptora (Res. 23.751, art. 128, V); fiscal pode formular protesto e impugnação (art. 176); o presidente pode chamar a força pública e comunica o juiz eleitoral (art. 126, VIII e IX).",
+   "vira": "Ata da Mesa Receptora, que acompanha o BU até a Junta Eleitoral (art. 161).",
+   "fonte": "Resolução TSE 23.751/2026, PDF arquivado"
+  },
+  {
+   "passo": "Fora da seção, no mesmo dia",
+   "quem": "qualquer pessoa, pela polícia que estiver no local ou na delegacia",
+   "como": "boca de urna é crime do dia da eleição (Lei 9.504, art. 39, § 5º, II); a polícia lavra auto de prisão em flagrante ou termo circunstanciado e conduz à autoridade. São esses registros que o CICCN/MJSP soma no balanço.",
+   "vira": "boletim de ocorrência, auto de prisão em flagrante ou termo circunstanciado, encaminhados ao juiz eleitoral.",
+   "fonte": "Lei 9.504/1997 arquivada; balanço do MJSP de 26/10/2026"
+  },
+  {
+   "passo": "Depois do dia",
+   "quem": "eleitor, partido ou Ministério Público Eleitoral",
+   "como": "representação ao juiz eleitoral da zona ou ouvidoria do TRE da UF; os endereços e prazos de cada TRE não foram conferidos nesta rodada.",
+   "vira": "procedimento na Justiça Eleitoral, com número e andamento públicos.",
+   "fonte": "não conferida nesta rodada"
+  },
+  {
+   "passo": "Canal da casa",
+   "quem": "quem votou e notou algo na própria seção",
+   "como": "bloco 'Notou algo na sua seção?' na ficha da seção do Politize-se, tipo 'boca_de_urna' ou 'mesario_conduta', texto de até 1.000 caracteres, hora aproximada e se presenciou. Relato anônimo por padrão; contato só se informado; texto nunca publicado.",
+   "vira": "linha imutável em relato_secao, contada nas views públicas por UF, tipo e seção; moderação registrada em relato_moderacao. Não substitui a ata nem o boletim de ocorrência.",
+   "fonte": "analysis/politize_se/CONTRATO.md, seção Relatos; migrações 0005 e 0006"
+  }
+ ]
+}
