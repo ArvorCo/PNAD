@@ -4,7 +4,9 @@ Interface: ``render(d, cap) -> str`` (``analysis/apuracao_2t_2026/CONTRATO_DOSSI
 Lê ``anomalia_ml.json`` (``analysis/apuracao_2t_2026/CONTRATO_ANOMALIA.md``, seção 6);
 ausente, levanta ``KeyError`` e o esqueleto mostra "capítulo em preparação". O arquivo
 pesado ``anomalia_secoes.json.gz`` só alimenta o mapa de pontos: sem ele, a figura
-mostra o aviso padrão e o resto renderiza. Ordem fixa da seção 8 do contrato.
+mostra o aviso padrão e o resto renderiza. Ordem fixa da seção 8 do contrato, mais o
+bloco "Seções com zero voto" (``pagina_fig_zeros``, lê ``zeros.json``) depois do
+achado contrário e antes dos limites; sem esse JSON, o bloco fica pendente.
 """
 
 from __future__ import annotations
@@ -14,6 +16,7 @@ from apuracao_2026.pagina_comum import Capitulo, Dados, limites
 from . import pagina_fig_anomalia as F
 from . import pagina_fig_anomalia_b as FB
 from . import pagina_fig_anomalia_base as B
+from . import pagina_fig_zeros as Z
 from . import pagina_texto_anomalia as T
 from .pagina_comum import cabeca
 
@@ -44,5 +47,6 @@ def render(d: Dados, cap: Capitulo) -> str:
     h += FB.tabela_sinais(A) + FB.tabela_modelo(A)
     h += FB.fig_mapa(A) + BOTAO_POLITIZE + FB.tabela_amostras(A)
     h += T.contrario(A)
-    h += limites(T.limites_itens(A))
+    h += Z.bloco(d)
+    h += limites(T.limites_itens(A) + Z.limites_itens(d))
     return h

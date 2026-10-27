@@ -506,6 +506,11 @@ def test_sintetico_numeros_vem_do_json(sint):
         < h.index("an_mapa")
     )
     assert h.rfind("Limites do capítulo") > h.rfind("an_mapa")
+    assert (
+        h.index("O que a mistura não separa")
+        < h.index('id="zeros"')
+        < h.rfind("Limites do capítulo")
+    )
 
 
 def test_sintetico_barras_dos_grupos_sao_block(sint):
