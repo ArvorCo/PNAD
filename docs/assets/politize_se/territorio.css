@@ -1,0 +1,49 @@
+/* Painéis territoriais: a mesma linguagem editorial nas fichas e no mapa. */
+.territorio{--teal:#17635e;--rust:#944126;--t-paper:#fffdf7;color:#202820;background:var(--t-paper);border:1px solid #c9cbbd;margin:24px 0;padding:24px;border-radius:12px;max-width:100%;text-align:left}
+.territorio *{box-sizing:border-box}
+.territorio .territorio-eyebrow{font:500 11px/1.5 "IBM Plex Mono",monospace;letter-spacing:.09em;text-transform:uppercase;color:#536156;margin:0 0 8px}
+.territorio .territorio-cab h2{font:700 clamp(23px,3vw,34px)/1.13 Georgia,serif;margin:0 0 10px;color:#202820}
+.territorio .territorio-cab>p:last-child{max-width:78ch;font-size:16px;line-height:1.45;margin:0 0 22px}
+.territorio-grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 16px}
+.territorio-card{min-width:0;border:1px solid #d4d6c9;border-top:4px solid var(--teal);padding:20px;background:#f5f6ee;border-radius:3px}
+.territorio-seguranca,.territorio-registros{border-top-color:var(--rust);background:#faf2e9}
+.territorio .territorio-card h3{font:700 21px/1.2 Georgia,serif;margin:0 0 12px;color:#202820}
+.territorio .territorio-numero{font:500 clamp(32px,4vw,46px)/1.1 "IBM Plex Mono",monospace;letter-spacing:-.055em;margin:8px 0;color:var(--teal)}
+.territorio-seguranca .territorio-numero{color:var(--rust)}
+.territorio .territorio-numero small{font:400 13px/1.4 "IBM Plex Sans Condensed",sans-serif;letter-spacing:0;white-space:nowrap}
+.territorio .territorio-sub{font:400 12px/1.5 "IBM Plex Mono",monospace;color:#536156;margin:0 0 20px}
+.territorio .territorio-nota,.territorio .territorio-citacao,.territorio .territorio-fontes{font-size:13px;line-height:1.5;color:#465044;overflow-wrap:anywhere}
+.territorio .territorio-nota{margin:14px 0 0}
+.territorio-barras{margin:18px 0}
+.territorio-pilha{height:18px;display:flex;gap:2px;overflow:hidden;border-radius:2px}
+.territorio .territorio-barras ul{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.territorio-barras li{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:14px;line-height:1.35}
+.territorio-barras li b{font:500 13px "IBM Plex Mono",monospace;white-space:nowrap}
+.territorio-barras li i{width:9px;height:9px;display:inline-block;margin-right:7px}
+.territorio .t-cor-0{background:#17635e}.territorio .t-cor-1{background:#658b65}.territorio .t-cor-2{background:#c79a3d}.territorio .t-cor-3{background:#8b7b57}
+.territorio-regua{display:flex;gap:4px;margin-top:22px;height:26px}
+.territorio-regua span{flex:1;background:#ddd9c9;text-align:center;color:#fff;font:18px/24px sans-serif;border-radius:2px}
+.territorio-regua .atual{background:#944126;outline:2px solid #944126;outline-offset:2px}
+.territorio .territorio-extremos{display:flex;justify-content:space-between;font-size:12px;margin:9px 0 14px;color:#655347}
+.territorio .territorio-documentado{font-size:19px;font-weight:700;line-height:1.3}
+.territorio summary{cursor:pointer;font-size:14px;font-weight:600;min-height:44px;padding:12px 0}
+.territorio-fontes{border-top:1px solid #d4d6c9;margin-top:14px}
+.territorio a{color:#175c63;text-decoration:underline;text-underline-offset:3px}
+.territorio a:focus-visible,.territorio summary:focus-visible,.territorio button:focus-visible{outline:3px solid #17635e;outline-offset:3px}
+.territorio-abrir{display:block;font-weight:700;font-size:15px;padding:12px 0}
+.territorio-compacto{padding:14px;margin:18px 0}
+.territorio-compacto .territorio-grade{gap:10px}
+.territorio-compacto .territorio-card{padding:12px}
+.territorio-compacto .territorio-numero{font-size:29px}
+.territorio-compacto .territorio-cab h2{font-size:23px}
+.territorio-compacto .territorio-card h3{font-size:18px}
+.territorio-compacto .territorio-cab>p:last-child{font-size:13px;margin-bottom:16px}
+.territorio-compacto .territorio-barras li{font-size:12px}
+.territorio-compacto .territorio-barras li b{font-size:11px}
+.territorio-retry{font:inherit;border:1px solid #17635e;color:#17635e;background:#fff;min-height:44px;padding:8px 16px;cursor:pointer}
+@media(max-width:600px){.territorio{padding:16px}.territorio-grade{grid-template-columns:1fr}.territorio .territorio-numero{font-size:36px}.territorio-card{padding:18px}.territorio-compacto{padding:12px}.territorio-compacto .territorio-numero{font-size:32px}}
+.territorio-atalho{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;width:100%;margin:18px 0;padding:16px 20px;border:1px solid #c2ccba;border-left:4px solid #17635e;border-radius:4px;background:#f0f3e8;color:#314c42;cursor:pointer;font:400 14px/1.5 "IBM Plex Sans Condensed",sans-serif}
+.territorio-atalho b{display:block;font:600 21px/1.2 "IBM Plex Mono",monospace;margin-bottom:4px}.territorio-atalho>span:last-child{font-weight:700}
+.territorio-atalho:focus-visible{outline:3px solid #17635e;outline-offset:3px}
+.ficha-contexto-resumo{border-left:3px solid #17635e;background:#f0f3e8;padding:10px;font-size:13px;line-height:1.5;color:#314c42}
+@media(max-width:600px){.territorio-atalho{display:grid;grid-template-columns:1fr 1fr;padding:12px;font-size:12px}.territorio-atalho>span:last-child{grid-column:1/-1}.territorio-atalho b{font-size:20px}}

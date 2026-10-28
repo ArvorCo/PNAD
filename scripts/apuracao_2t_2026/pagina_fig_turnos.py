@@ -50,12 +50,12 @@ UFS_MAPA = ["SP", "MG", "BA", "PE", "PA", "AM"]
 SW_CORES = ["#8f2618", "#c85a46", "#e5a596", "#f3ddd5", "#bfd0ea", "#2f63ad"]
 SW_CORTES = [-6, -4, -2, 0, 2]
 SW_ROT = [
-    "Flávio −6 pp ou mais",
-    "−6 a −4 pp",
-    "−4 a −2 pp",
-    "−2 a 0 pp",
-    "0 a +2 pp",
-    "Flávio +2 pp ou mais",
+    "Flávio ≤ −6 / Lula ≥ +6 pp",
+    "Flávio −6 a −4 / Lula +4 a +6 pp",
+    "Flávio −4 a −2 / Lula +2 a +4 pp",
+    "Flávio −2 a 0 / Lula 0 a +2 pp",
+    "Flávio 0 a +2 / Lula −2 a 0 pp",
+    "Flávio ≥ +2 / Lula ≤ −2 pp",
 ]
 AZUL_CLARO = "#7fa3d6"
 
@@ -71,13 +71,17 @@ def fig_barras_uf(C1: dict, C22: dict | None) -> str:
                 "uf": uf,
                 "rot": nome_uf(uf),
                 "s1": u["swing_h2h_flavio_pp"],
+                "l1": -u["swing_h2h_flavio_pp"],
                 "s22": v22,
+                "l22": r22.get(uf, {}).get("swing_lula_pp"),
                 "sub": f"{inteiro(u['n_municipios'])} municípios",
                 "ficha": [
                     ("Flávio, 1º turno (entre os dois)", pct(u["t1_h2h_flavio"])),
                     ("Flávio, 2º turno", pct(u["t2_h2h_flavio"])),
                     ("Mudança contra o 1º turno", pp(u["swing_h2h_flavio_pp"])),
+                    ("Lula: mudança contra o 1º turno", pp(-u["swing_h2h_flavio_pp"])),
                     ("Flávio menos Bolsonaro 2022", pp(v22)),
+                    ("Lula: 2026 menos 2022", pp(r22.get(uf, {}).get("swing_lula_pp"))),
                     (
                         "Votos de Flávio, 1º para 2º turno",
                         f"{inteiro(u['t1_flavio'])} → {inteiro(u['t2_flavio'])}",
@@ -91,32 +95,47 @@ def fig_barras_uf(C1: dict, C22: dict | None) -> str:
         )
     itens.sort(key=lambda it: it["s1"])
     tips = Tips()
-    series = [("s1", "Contra o 1º turno de 2026", FLAVIO)]
+    series = [("s1", "Flávio · 1T→2T", FLAVIO), ("l1", "Lula · 1T→2T", LULA)]
     if r22:
-        series.append(("s22", "Contra Bolsonaro no 2º turno de 2022", AZUL_CLARO))
+        series += [
+            ("s22", "F · 2022→2026", AZUL_CLARO),
+            ("l22", "L · 2022→2026", "#c87568"),
+        ]
     svg = barras_uf(
         itens,
         series,
         tips,
-        "Mudança da parte de Flávio por UF",
-        "Barras divergentes de um zero central: à esquerda, Flávio perdeu parte; à direita, ganhou.",
+        "Mudança da participação de Lula e Flávio por UF",
+        "Barras dos dois candidatos partem do zero: à esquerda, perda de participação; à direita, ganho.",
     )
     neg = sum(it["s1"] < 0 for it in itens)
     pos22 = sum((it["s22"] or 0) > 0 for it in itens)
     legenda = (
         f"Contra o 1º turno, a parte de Flávio entre os dois caiu em {neg} de {len(itens)} UFs. Contra Bolsonaro em 2022, "
-        f"Flávio ficou acima em {pos22} UFs. Pontos dos válidos. Fontes: comparacao_1t.json e comparacao_2022.json (ufs)."
+        f"Flávio ficou acima em {pos22} UFs. Vermelho: Lula; azul: Flávio. Tons claros comparam o 2º turno de 2026 ao de 2022 "
+        "(Lula contra ele mesmo; Flávio contra Bolsonaro). Entre os turnos de 2026, o 1º é normalizado apenas entre Lula e Flávio. "
+        "Pontos percentuais. Fontes: comparacao_1t.json e comparacao_2022.json (ufs)."
     )
     return figura_html("tu_barras_uf", svg, legenda, tips, modo="scroll", minw=760)
 
 
-def fig_dispersao(C1: dict) -> str:
+def _dispersao_candidato(C1: dict, candidato: str) -> str:
     """Cada município: parte de Flávio no 1º turno (entre os dois) contra o 2º turno."""
     ms = [
         m
         for m in linhas_de(C1["municipios"])
         if m.get("completo") and m.get("t1_h2h_flavio") is not None
     ]
+    if candidato == "Lula":
+        ms = [
+            {
+                **m,
+                "t1_h2h_flavio": 100 - m["t1_h2h_flavio"],
+                "t2_h2h_flavio": 100 - m["t2_h2h_flavio"],
+                "swing_h2h_flavio_pp": -m["swing_h2h_flavio_pp"],
+            }
+            for m in ms
+        ]
     w = h = 700
     x0, x1, y0, y1 = 70, 680, 30, 640
     fx = escala(0, 100, x0, x1)
@@ -125,9 +144,9 @@ def fig_dispersao(C1: dict) -> str:
         svg_abre(
             w,
             h,
-            "Parte de Flávio por município, 1º turno contra 2º turno",
+            f"Parte de {candidato} por município, 1º turno contra 2º turno",
             "Cada ponto é um município; a reta diagonal marca a mesma parte nos dois turnos. "
-            "Ponto abaixo da reta: Flávio perdeu parte entre os turnos.",
+            f"Ponto abaixo da reta: {candidato} perdeu participação entre os turnos.",
         )
     ]
     for v in ticks(0, 100, 5):
@@ -141,7 +160,7 @@ def fig_dispersao(C1: dict) -> str:
         t(
             (x0 + x1) / 2,
             h - 6,
-            "Flávio no 1º turno, % entre Flávio e Lula",
+            f"{candidato} no 1º turno, % entre Flávio e Lula",
             13,
             INK,
             "middle",
@@ -151,7 +170,7 @@ def fig_dispersao(C1: dict) -> str:
         t(
             18,
             (y0 + y1) / 2,
-            "Flávio no 2º turno, %",
+            f"{candidato} no 2º turno, %",
             13,
             INK,
             "middle",
@@ -179,8 +198,8 @@ def fig_dispersao(C1: dict) -> str:
                 f"{nome_bonito(m['nome'])} ({m['uf']})",
                 "capital",
                 [
-                    ("Flávio, 1º turno (entre os dois)", pct(m["t1_h2h_flavio"])),
-                    ("Flávio, 2º turno", pct(m["t2_h2h_flavio"])),
+                    (f"{candidato}, 1º turno (entre os dois)", pct(m["t1_h2h_flavio"])),
+                    (f"{candidato}, 2º turno", pct(m["t2_h2h_flavio"])),
                     ("Mudança", pp(m["swing_h2h_flavio_pp"])),
                     ("Eleitores", inteiro(m["aptos"])),
                 ],
@@ -215,12 +234,22 @@ def fig_dispersao(C1: dict) -> str:
             if len(ms) == len(linhas_de(C1["municipios"]))
             else " completos"
         )
-        + f"; só {inteiro(acima)} ficam acima da reta. A nuvem desce inteira por "
-        "um degrau quase constante: a geografia do voto se manteve e o nível de Flávio caiu. Fonte: comparacao_1t.json (municipios)."
+        + f"; {inteiro(acima)} ficam acima da reta para {candidato}. "
+        "Os painéis de Lula e Flávio são complementares: a subida de um é a queda do outro. "
+        "No 1º turno, o denominador inclui apenas os dois finalistas. Fonte: comparacao_1t.json (municipios)."
     )
     return figura_html(
-        "tu_dispersao", "".join(out), legenda, tips, modo="fit", apos=leg
+        "tu_dispersao" if candidato == "Flávio" else "tu_dispersao_lula",
+        "".join(out),
+        legenda,
+        tips,
+        modo="fit",
+        apos=leg,
     )
+
+
+def fig_dispersao(C1: dict) -> str:
+    return _dispersao_candidato(C1, "Flávio") + _dispersao_candidato(C1, "Lula")
 
 
 def fig_hist_2022(C22: dict) -> str:
@@ -360,14 +389,15 @@ def fig_mapas_swing(d, C1: dict) -> str:
             v = m["swing_h2h_flavio_pp"]
             cor[ib] = SW_CORES[faixa(v, SW_CORTES)]
             tip[ib] = (
-                f"{nome_bonito(m['nome'])}: Flávio {num(m['t1_h2h_flavio'], 1)} → {num(m['t2_h2h_flavio'], 1)} ({pp(v, 1)})"
+                f"{nome_bonito(m['nome'])}: Flávio {num(m['t1_h2h_flavio'], 1)} → {num(m['t2_h2h_flavio'], 1)} ({pp(v, 1)}); "
+                f"Lula {num(100-m['t1_h2h_flavio'], 1)} → {num(100-m['t2_h2h_flavio'], 1)} ({pp(-v, 1)})"
             )
         svg = mapa_mun(
             uf,
             cor,
             tip,
-            f"{nome_uf(uf)}: mudança da parte de Flávio",
-            f"Municípios de {nome_uf(uf)} pela mudança da parte de Flávio entre os dois turnos.",
+            f"{nome_uf(uf)}: mudança entre Lula e Flávio",
+            f"Municípios de {nome_uf(uf)} pelo deslocamento entre os candidatos, do primeiro para o segundo turno.",
             560,
             520,
         )
@@ -381,11 +411,12 @@ def fig_mapas_swing(d, C1: dict) -> str:
     controles = botoes(abas, abas[0][0], "Estado", "tab")
     leg = legenda_html(
         list(zip(SW_ROT, SW_CORES, strict=True)),
-        "Mudança da parte de Flávio entre os dois, pontos",
+        "Mudanças complementares dos dois candidatos, pontos percentuais",
     )
     legenda = (
-        "Cada município pela mudança da parte de Flávio entre Flávio e Lula, do 1º para o 2º turno. Vermelho: andou para "
-        "Lula; azul: para Flávio. Abas trocam o estado. Fontes: comparacao_1t.json, presidente.json (código IBGE) e malha do IBGE."
+        "Cada município pelo deslocamento entre Lula e Flávio, do 1º para o 2º turno, normalizando o primeiro apenas entre os finalistas. "
+        "Vermelho: ganho de Lula e perda de Flávio; azul: o inverso. A legenda e a ficha mostram os dois valores. "
+        "Abas trocam o estado. Fontes: comparacao_1t.json, presidente.json (código IBGE) e malha do IBGE."
     )
     return figura_html(
         "tu_mapas_swing",

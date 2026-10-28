@@ -177,6 +177,12 @@ def pontos_proj(J: dict) -> list[dict]:
     return [p for p in J["pontos"] if p.get("p_f_projetado") is not None]
 
 
+def faixa_candidato(faixa: list[float], candidato: str) -> tuple[float, float]:
+    """Complemento de uma faixa entre os dois: inverte também os extremos."""
+    lo, hi = faixa
+    return (lo, hi) if candidato == "flavio" else (100 - hi, 100 - lo)
+
+
 def fig_projecao(J: dict) -> str:
     pts = J["pontos"]
     proj = pontos_proj(J)
@@ -185,131 +191,135 @@ def fig_projecao(J: dict) -> str:
     vivo = [
         v
         for v in tabela_linhas(J["serie_ao_vivo"])
-        if v["p_f_proj"] is not None and v["min"] >= 120
+        if v["p_f_proj"] is not None and 120 <= v["min"] <= max(330, pts[-1]["min"])
     ]
-    vals = (
-        [p["p_f_observado"] for p in obs]
-        + [p["faixa90"][0] for p in proj]
-        + [p["faixa90"][1] for p in proj]
-    )
-    lo = min(44.0, min(vals) - 0.5)
-    hi = max(51.5, max(vals) + 0.5)
-    H, ml, mr, mt, mb = 440, 70, 40, 26, 50
+    vals = [p["p_f_observado"] for p in obs]
+    vals += [v for p in proj for v in p["faixa90"]]
+    vals += [v["p_f_proj"] for v in vivo]
+    vals += [100 - v for v in vals]
+    lo, hi = min(44, min(vals) - 1), max(56, max(vals) + 1)
+    H, ml, mr, panel = 640, 70, 40, 290
     m0, m1 = 120, max(330, pts[-1]["min"])
     x = escala(m0, m1, ml, W - mr)
-    y = escala(lo, hi, H - mb, mt)
     out = [
         svg_abre(
             W,
             H,
-            "Projeção da casa contra o observado, noite do 2º turno",
-            "Parte de Flávio entre os dois: projeção com faixa de 90%, contagem observada e resultado final.",
+            "Projeção da casa: Flávio e Lula na noite do 2º turno",
+            "Dois painéis na mesma escala: projeção relida com faixa de 90%, contagem observada, série ao vivo e resultado final.",
         )
     ]
-    for tk in ticks(lo, hi, 6):
-        out.append(ln(ml, y(tk), W - mr, y(tk), GRADE, 1))
-        out.append(
-            t(ml - 8, y(tk) + 4, f"{num(tk, 0)}%", 12.5, MUTED, "end", mono=True)
-        )
-    m = m0
-    while m <= m1:
-        out.append(ln(x(m), mt, x(m), H - mb, GRADE, 1))
-        out.append(t(x(m), H - mb + 20, hhmm(m), 12.5, MUTED, "middle", mono=True))
-        m += 30
-    # faixa de 90%
-    if proj:
-        topo = " ".join(f"{x(p['min']):.1f},{y(p['faixa90'][1]):.1f}" for p in proj)
-        base = " ".join(
-            f"{x(p['min']):.1f},{y(p['faixa90'][0]):.1f}" for p in reversed(proj)
-        )
-        out.append(
-            f'<polygon points="{topo} {base}" fill="{FAIXA_COR}" opacity="0.85"/>'
-        )
-    out.append(ln(ml, y(50), W - mr, y(50), INK, 1.2))
-    out.append(t(ml + 6, y(50) - 6, "50%", 12.5, INK, weight="700", extra=HALO))
-    out.append(
-        ln(ml, y(final), W - mr, y(final), "#0b6650", 1.6, ' stroke-dasharray="6 4"')
-    )
-    out.append(
-        t(
-            W - mr - 4,
-            y(final) + 18,
-            f"final {pct(final)}",
-            13,
-            "#0b6650",
-            "end",
-            "700",
-            extra=HALO,
-        )
-    )
-    pl = " ".join(f"{x(p['min']):.1f},{y(p['p_f_observado']):.1f}" for p in obs)
-    out.append(
-        f'<polyline points="{pl}" fill="none" stroke="{MUTED}" stroke-width="2.2"/>'
-    )
-    if vivo:
-        pv = " ".join(f"{x(v['min']):.1f},{y(v['p_f_proj']):.1f}" for v in vivo)
-        out.append(
-            f'<polyline points="{pv}" fill="none" stroke="{AO_VIVO}" stroke-width="1.6" stroke-dasharray="2 3"/>'
-        )
-    pp_ = " ".join(f"{x(p['min']):.1f},{y(p['p_f_projetado']):.1f}" for p in proj)
-    out.append(
-        f'<polyline points="{pp_}" fill="none" stroke="{FLAVIO}" stroke-width="2.8"/>'
-    )
-    p0 = J.get("primeiro_ponto_com_projecao")
-    if p0:
-        out.append(
-            f'<circle cx="{x(p0["min"]):.1f}" cy="{y(p0["p_f_projetado"]):.1f}" r="5" fill="{FLAVIO}"/>'
-        )
-        out.append(
-            t(
-                x(p0["min"]) + 8,
-                y(p0["p_f_projetado"]) + 20,
-                f"{p0['hhmm']}: {pct(p0['p_f_projetado'])} com {num(p0['pst'], 2)}% das seções",
-                13,
-                FLAVIO,
-                weight="700",
-                extra=HALO,
-            )
-        )
     tips = Tips()
-    for p in pts:
-        if p["pst"] < 0.3:
-            continue
-        xa = x(p["min"] - 2.5)
-        linhas = [
-            ("Observado", pct(p["p_f_observado"])),
-            ("Seções", f"{num(p['pst'], 2)}%"),
-        ]
-        if p.get("p_f_projetado") is not None:
-            linhas.insert(0, ("Projetado", pct(p["p_f_projetado"])))
-            linhas.insert(
-                1,
-                (
-                    "Faixa de 90%",
-                    f"{num(p['faixa90'][0], 2)} a {num(p['faixa90'][1], 2)}",
-                ),
+    for i, (cand, nome, cor) in enumerate(
+        (("flavio", "Flávio", FLAVIO), ("lula", "Lula", LULA))
+    ):
+        mt, bottom = 42 + i * panel, 270 + i * panel
+        y = escala(lo, hi, bottom, mt)
+
+        def valor(v, candidato=cand):
+            return v if candidato == "flavio" else 100 - v
+
+        out.append(t(ml, mt - 15, nome, 19, cor, weight="700"))
+        for tk in ticks(lo, hi, 5):
+            out.append(ln(ml, y(tk), W - mr, y(tk), GRADE, 1))
+            out.append(
+                t(ml - 8, y(tk) + 4, f"{num(tk, 0)}%", 12, MUTED, "end", mono=True)
             )
-            linhas.append(("Erro contra o final", pp(p["p_f_projetado"] - final)))
-        else:
-            linhas.append(("Sem projeção", p.get("motivo_sem_projecao") or ""))
-        k = tips.add(ficha(p["hhmm"], "Flávio entre os dois", linhas))
-        out.append(hit(area(xa, mt, x(p["min"] + 2.5) - xa, H - mb - mt), k))
+        for m in range(m0, int(m1) + 1, 30):
+            out.append(ln(x(m), mt, x(m), bottom, GRADE, 1))
+            out.append(t(x(m), bottom + 19, hhmm(m), 12, MUTED, "middle", mono=True))
+        if proj:
+            topo = " ".join(
+                f"{x(p['min']):.1f},{y(faixa_candidato(p['faixa90'], cand)[1]):.1f}"
+                for p in proj
+            )
+            base = " ".join(
+                f"{x(p['min']):.1f},{y(faixa_candidato(p['faixa90'], cand)[0]):.1f}"
+                for p in reversed(proj)
+            )
+            out.append(f'<polygon points="{topo} {base}" fill="{cor}" opacity="0.15"/>')
+        out.append(ln(ml, y(50), W - mr, y(50), INK, 1))
+        out.append(
+            ln(
+                ml,
+                y(valor(final)),
+                W - mr,
+                y(valor(final)),
+                cor,
+                1.2,
+                ' stroke-dasharray="8 5"',
+            )
+        )
+        for series, field, color, width, dash in (
+            (obs, "p_f_observado", MUTED, 1.8, ""),
+            (vivo, "p_f_proj", AO_VIVO, 1.8, ' stroke-dasharray="2 4"'),
+            (proj, "p_f_projetado", cor, 2.8, ""),
+        ):
+            pl = " ".join(f"{x(p['min']):.1f},{y(valor(p[field])):.1f}" for p in series)
+            out.append(
+                f'<polyline points="{pl}" fill="none" stroke="{color}" stroke-width="{width}"{dash}/>'
+            )
+        p0 = J.get("primeiro_ponto_com_projecao")
+        if p0:
+            out.append(
+                f'<circle cx="{x(p0["min"]):.1f}" cy="{y(valor(p0["p_f_projetado"])):.1f}" r="4" fill="{cor}"/>'
+            )
+            out.append(
+                t(
+                    x(p0["min"]) + 8,
+                    y(valor(p0["p_f_projetado"])) + (20 if i == 0 else -14),
+                    f"{pct(valor(p0['p_f_projetado']))} com {num(p0['pst'], 2)}% das seções",
+                    12,
+                    cor,
+                    weight="700",
+                    extra=HALO,
+                )
+            )
+        out.append(
+            t(W - mr, mt - 15, f"Final: {pct(valor(final))}", 14, cor, "end", "700")
+        )
+        for p in obs:
+            linhas = [
+                ("Observado", pct(valor(p["p_f_observado"]))),
+                ("Seções", pct(p["pst"])),
+            ]
+            if p.get("p_f_projetado") is not None:
+                a, b = faixa_candidato(p["faixa90"], cand)
+                linhas += [
+                    ("Projetado", pct(valor(p["p_f_projetado"]))),
+                    ("Faixa de 90%", f"{num(a, 2)} a {num(b, 2)}%"),
+                    (
+                        "Erro contra o final",
+                        pp(valor(p["p_f_projetado"]) - valor(final)),
+                    ),
+                ]
+            k = tips.add(ficha(p["hhmm"], f"{nome} entre os dois", linhas))
+            out.append(
+                hit(
+                    area(
+                        x(p["min"] - 2.5),
+                        mt,
+                        x(p["min"] + 2.5) - x(p["min"] - 2.5),
+                        bottom - mt,
+                    ),
+                    k,
+                )
+            )
     out.append("</svg>")
     leg = legenda_html(
         [
-            ("Projeção relida", FLAVIO),
-            ("Faixa de 90%", FAIXA_COR),
+            ("Flávio: projeção relida", FLAVIO),
+            ("Lula: projeção relida", LULA),
             ("Contagem observada", MUTED),
-            ("Exibida ao vivo", AO_VIVO),
-            ("Resultado final", "#0b6650"),
+            ("Exibida ao vivo (pontilhada)", AO_VIVO),
         ]
     )
     legenda = (
-        f"Parte de Flávio entre os dois. Linha azul: projeção da casa relida a cada 5 minutos sobre o banco; "
-        f"faixa: 90%; cinza: o que já estava contado; pontilhado dourado: a série que o telão exibiu ao vivo. "
-        f"A projeção abaixo de 50% em todos os {J['pontos_com_projecao']} pontos significa Lula à frente. "
-        "Projeção estatística a partir do que já foi totalizado; não é resultado nem previsão de vitória. Fonte: projecao_noite.json."
+        "Mesma escala nos dois painéis. Linha colorida: projeção relida; área: faixa de 90%; "
+        "cinza: contagem; dourado pontilhado: projeção exibida ao vivo, no mesmo intervalo de tempo; tracejado: resultado final. "
+        "As participações somam 100%; a faixa de Lula é [100 − limite superior de Flávio, 100 − limite inferior]. "
+        "A faixa descreve a projeção, não uma probabilidade de vitória. Fonte: projecao_noite.json."
     )
     return figura_html(
-        "projecao_noite_2t", "".join(out), legenda, tips, apos=leg, minw=760
+        "projecao_noite_2t", "".join(out), legenda, tips, apos=leg, minw=680
     )

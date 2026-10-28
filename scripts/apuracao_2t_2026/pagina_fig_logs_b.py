@@ -15,14 +15,11 @@ from __future__ import annotations
 
 from apuracao_2026.pagina_comum import (
     CINZA,
-    FLAVIO,
     GOLD,
     INK,
-    LULA,
     MUTED,
     inteiro,
     num,
-    sinal,
 )
 from apuracao_2026.pagina_fig_base import (
     GRADE,
@@ -40,6 +37,7 @@ from apuracao_2026.pagina_fig_base import (
 )
 from apuracao_2026.pagina_mapas import pontos_brasil
 
+from .pagina_fig_espelho import efeitos
 from .pagina_fig_logs import COR_1T, COR_2T, VERMELHO, barras_h
 
 HORAS = [str(h) for h in range(8, 20)]
@@ -231,96 +229,28 @@ def _linhas_voto(L: dict) -> list[tuple[str, dict]]:
 
 
 def fig_voto(L: dict) -> str:
-    linhas = [
-        (n, v)
-        for n, v in _linhas_voto(L)
-        if v["dif_em_dif_contra_1t"]["media_pp"] is not None
-    ]
-    w, esq, dir_ = 1100, 470, 170
-    topo, passo = 60, 40
-    h = topo + passo * len(linhas) + 46
-    lim = max(
-        [
-            max(
-                abs(v["dif_em_dif_contra_1t"]["ic95_pp"][0]),
-                abs(v["dif_em_dif_contra_1t"]["ic95_pp"][1]),
-            )
-            for _, v in linhas
-        ]
-        + [0.5]
+    itens = []
+    for nome, v in _linhas_voto(L):
+        dd, cv = v["dif_em_dif_contra_1t"], v["contra_vizinhas_2t"]
+        if dd["media_pp"] is None:
+            continue
+        itens.append(
+            {
+                "nome": nome,
+                "n": dd["n"],
+                "valor": dd["media_pp"],
+                "intervalo": dd["ic95_pp"],
+                "bruto": cv["media_pp"],
+            }
+        )
+    return efeitos(
+        "logs_voto",
+        itens,
+        "Lula e Flávio: mudanças associadas aos sinais dos logs",
+        "Média ponderada pelos votos dos finalistas: mudança entre turnos nas seções com sinal menos a mudança "
+        "nas vizinhas do município sem o sinal (cinco ou mais); exterior fora. Traços: intervalos de 95%. "
+        "A ficha de cada ponto mostra também a diferença bruta do 2º turno. Fonte: logs.json.",
     )
-    lim = round(lim + 0.1, 1)
-    x = escala(-lim, lim, esq, w - dir_)
-    out = [
-        svg_abre(
-            w,
-            h,
-            "Fatia de Flávio nas seções com sinal: diferença em diferenças contra o 1º turno",
-            "Para cada grupo de seções, a variação da fatia de Flávio do 1º para o 2º turno menos a "
-            "variação nas vizinhas do mesmo município sem o sinal, com intervalo de 95%.",
-        )
-    ]
-    passo_t = 0.1 if lim <= 0.6 else 0.25
-    v = -lim
-    while v <= lim + 1e-9:
-        out.append(ln(x(v), topo - 10, x(v), h - 40, GRADE, 1))
-        out.append(t(x(v), h - 22, sinal(v, 2), 11, MUTED, "middle", mono=True))
-        v = round(v + passo_t, 6)
-    out.append(ln(x(0), topo - 16, x(0), h - 40, INK, 1.4))
-    out.append(t(x(-lim), topo - 28, "← na direção de Lula", 13, LULA))
-    out.append(t(x(lim), topo - 28, "na direção de Flávio →", 13, FLAVIO, "end"))
-    out.append(t(w - dir_ + 14, topo - 28, "contra vizinhas, 2T", 12, MUTED))
-    tips = Tips()
-    for i, (nome, v) in enumerate(linhas):
-        y = topo + i * passo + 12
-        dd = v["dif_em_dif_contra_1t"]
-        cv = v["contra_vizinhas_2t"]
-        lo, hi = dd["ic95_pp"]
-        cor = LULA if dd["media_pp"] < 0 else FLAVIO
-        rot = nome if len(nome) <= 60 else nome[:58] + "…"
-        partes = [
-            t(esq - 12, y + 5, f"{rot} ({inteiro(dd['n'])})", 13, INK, "end"),
-            ln(x(lo), y, x(hi), y, INK, 1.6),
-            ln(x(lo), y - 6, x(lo), y + 6, INK, 1.4),
-            ln(x(hi), y - 6, x(hi), y + 6, INK, 1.4),
-            f'<circle cx="{x(dd["media_pp"]):.1f}" cy="{y:.1f}" r="5.5" fill="{cor}"/>',
-            t(
-                w - dir_ + 14,
-                y + 5,
-                f"{sinal(cv['media_pp'], 2)} pp",
-                13,
-                INK,
-                mono=True,
-            ),
-        ]
-        k = tips.add(
-            ficha(
-                nome,
-                f"{inteiro(dd['n'])} seções comparáveis",
-                [
-                    ("diferença em diferenças", f"{sinal(dd['media_pp'], 3)} pp"),
-                    ("IC95", f"{sinal(lo, 3)} a {sinal(hi, 3)} pp"),
-                    ("contra vizinhas no 2º turno", f"{sinal(cv['media_pp'], 3)} pp"),
-                    (
-                        "IC95 contra vizinhas",
-                        f"{sinal(cv['ic95_pp'][0], 3)} a {sinal(cv['ic95_pp'][1], 3)} pp",
-                    ),
-                ],
-                "Vizinhas: seções do mesmo município sem o sinal (municípios com 5 ou mais).",
-            )
-        )
-        out.append(
-            hit("".join(partes) + area(0, y - passo / 2, w, passo), k, foco=True)
-        )
-    out.append("</svg>")
-    legenda = (
-        "Pontos percentuais da fatia de Flávio entre os dois finalistas (BU). O ponto é a média, ponderada pelos "
-        "votos dos dois finalistas na seção, de (fatia no 2º turno menos fatia no 1º) menos a mesma variação média "
-        "das vizinhas do município sem o sinal (cinco ou mais); exterior fora; o "
-        "traço é o intervalo de 95%. A coluna da direita é a diferença crua contra as vizinhas no 2º turno, "
-        "que mistura o que já era próprio do lugar. Fonte: logs.json."
-    )
-    return figura_html("logs_voto", "".join(out), legenda, tips, minw=900)
 
 
 def fig_bateria_chuva(L: dict) -> str:

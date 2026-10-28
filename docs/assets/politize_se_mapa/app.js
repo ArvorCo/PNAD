@@ -12,7 +12,7 @@
 
   const BASE = 'assets/politize_se_mapa/';
   const SECOES = 'assets/politize_se/dados/zona/';
-  const VERSAO = '20261026f';
+  const VERSAO = '20261028';
   const FORMATO = 3;
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
@@ -21,6 +21,7 @@
   const UFS = { AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás', MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais', PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí', RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul', RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo', SE: 'Sergipe', TO: 'Tocantins', ZZ: 'Exterior' };
   // Cores das camadas. Divergentes vão do lado "baixo" ao "alto" passando pelo neutro.
   const COR = {
+    renda: ['#eef3dc', '#145d57'], renda_ate2: ['#f6efdb', '#946c14'], homicidios: ['#f7e8d6', '#8a321b'],
     neutro: '#ece8dc', semDado: '#a9a9a3',
     resultado: ['#c8412f', '#1f5f9e'], d_fatia: ['#c8412f', '#1f5f9e'], d_comp: ['#b8560f', '#0b7a3b'],
     // Modelo da urna: uma cor por modelo, distintas entre si e do cinza "sem dado".
@@ -37,6 +38,7 @@
   const COLS_LISTA = [
     ['uf', 'UF'], ['municipio', 'Cidade'], ['zona', 'Zona'], ['nome', 'Local de votação'], ['secoes', 'Seções'],
     ['fatia_f2', 'Flávio × Lula, 2º turno'], ['d_fatia_pp', 'Mudança contra o 1º turno'], ['comp_pct2', 'Comparecimento'], ['abst_pct2', 'Abstenção'],
+    ['renda_mediana_brl', 'Renda domiciliar estimada (R$)'], ['renda_ate2', 'Até 2 salários (%)'], ['homicidios_taxa_100mil', 'Homicídios municipais / 100 mil (2024)'],
     ['escore_max', 'Sinais'], ['log2_max', 'Registro da urna, 2º turno'], ['modelo', 'Modelo da urna'], ['urnas_trocadas', 'Urna trocada'], ['secoes_mudaram', 'Mudou de endereço'], ['secoes_anomalas', 'Grupo atípico'], ['dist', 'Distância'], ['acoes', 'Abrir'],
   ];
 
@@ -214,6 +216,11 @@
       const n = validos.filter((l) => (valor(l) || 0) > 0).length;
       const t = Math.min(1, n / validos.length / TETO_PARCELA[k]);
       return misturar(COR[k][0], COR[k][1], t);
+    }
+    if (c.agregacao === 'municipios') {
+      const municipios = new Map(validos.filter((l) => !vazio(valor(l))).map((l) => [l.uf + '-' + l.mun, valor(l)]));
+      const valores = [...municipios.values()];
+      return valores.length ? corValor(valores.reduce((a, v) => a + v, 0) / valores.length) : COR.semDado;
     }
     let soma = 0, peso = 0;
     validos.forEach((l) => { const v = valor(l); if (vazio(v)) return; const w = l.aptos2 || l.aptos1 || 1; soma += v * w; peso += w; });
@@ -427,7 +434,12 @@
   function rotuloSecoes(l) {
     const nums = l.secoes;
     const txt = nums.slice(0, MAX_ROTULO).join(', ') + (nums.length > MAX_ROTULO ? ' +' + (nums.length - MAX_ROTULO) : '');
-    return (nums.length === 1 ? 'Seção ' : 'Seções ') + txt;
+    const label = h('span', {}, (nums.length === 1 ? 'Seção ' : 'Seções ') + txt);
+    if (camada().grupo) {
+      const v = valor(l);
+      label.append(h('small', {}, S.camada === 'renda' ? window.PolitizeTerritorio.reais(v) : S.camada === 'renda_ate2' ? window.PolitizeTerritorio.perc(v) + ' até 2 salários' : window.PolitizeTerritorio.fmt(v, 2) + '/100 mil · município'));
+    }
+    return label;
   }
 
   // Os números das seções aparecem escritos no mapa só a partir do zoom de quarteirão.
@@ -444,6 +456,7 @@
       const visivel = mostrar && Boolean(m._map) && limites.contains(m.getLatLng());
       if (visivel) {
         if (!t) m.bindTooltip(rotuloSecoes(m.options.local), { permanent: true, direction: 'bottom', offset: [0, 6], className: 'rotulo-secoes', interactive: false });
+        else m.setTooltipContent(rotuloSecoes(m.options.local));
         if (!m.isTooltipOpen()) m.openTooltip();
       } else if (t && m.isTooltipOpen()) m.closeTooltip();
     });
@@ -521,6 +534,9 @@
   function recolorir() {
     S.marcadores.forEach((m) => m.setStyle({ fillColor: corLocal(m.options.local) }));
     if (S.cluster) S.cluster.refreshClusters();
+    atualizarRotulos();
+    document.querySelectorAll('[data-lente]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lente === S.camada)));
+    document.querySelectorAll('input[name=camada]').forEach((b) => { b.checked = b.value === S.camada; });
     desenharLegenda();
     if (S.modo === 'lista') atualizar(false);
     gravarHash();
@@ -528,162 +544,7 @@
 
   /* ------------------------------------------------------------ ficha do prédio */
 
-  function linhaCmp(rotulo, a, b) {
-    return h('tr', {}, h('td', {}, rotulo), h('td', {}, vazio(a) ? 'sem dado' : a), h('td', {}, vazio(b) ? 'sem dado' : b));
-  }
-
-  function linkPolitize(l, secao) {
-    return 'politizese.html#uf=' + l.uf + '&z=' + l.zona + '&s=' + secao;
-  }
-
-  function ficha(l) {
-    const m = S.muni.get(l.uf + '-' + l.mun) || {};
-    const dist = S.centro && coordOk(l) ? distanciaKm(S.centro.lat, S.centro.lon, l.lat, l.lon) : null;
-    const gmaps = coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : null;
-    const link = location.origin + location.pathname + '#uf=' + l.uf + '&l=' + encodeURIComponent(l.id);
-    S.secaoSel = l.secao_link;
-    const selos = [
-      l.n_bu2 ? h('span', { class: 'selo ok' }, '2º turno lido em ' + l.n_bu2 + ' de ' + plural(l.n_secoes, 'seção', 'seções')) : h('span', { class: 'selo alerta' }, 'Ainda sem boletim do 2º turno'),
-      l.secoes_sinal ? h('span', { class: 'selo alerta' }, plural(l.secoes_sinal, 'seção com sinal', 'seções com sinal')) : null,
-      l.modelos && l.modelos.length ? h('span', { class: 'selo' }, 'Urna ' + textoModelo(l)) : null,
-      !vazio(l.log2_max) ? h('span', { class: 'selo' + (l.log2_max >= 2 ? ' alerta' : '') }, 'Registro 2º turno: ' + nomeNivel(l.log2_max)) : null,
-      l.log_subiu ? h('span', { class: 'selo alerta' }, plural(l.log_subiu, 'seção subiu de nível', 'seções subiram de nível')) : null,
-      l.urnas_trocadas ? h('span', { class: 'selo' }, plural(l.urnas_trocadas, 'urna trocada', 'urnas trocadas')) : null,
-      l.secoes_mudaram ? h('span', { class: 'selo' }, plural(l.secoes_mudaram, 'seção mudou de endereço', 'seções mudaram de endereço')) : null,
-      l.secoes_anomalas ? h('span', { class: 'selo alerta' }, plural(l.secoes_anomalas, 'seção no grupo atípico', 'seções no grupo atípico')) : null,
-    ];
-    return h('div', { class: 'ficha' },
-      h('div', { class: 'ficha-selos' }, selos),
-      h('h3', {}, caixa(l.nome) || 'Local de votação'),
-      h('p', { class: 'ficha-end' }, [caixa(l.endereco), caixa(l.bairro), caixa(l.municipio) + (l.uf === 'ZZ' ? ' (exterior)' : '/' + l.uf), l.cep ? 'CEP ' + cepFmt(l.cep) : ''].filter(Boolean).join(' · ')),
-      h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + ' · ' + plural(l.n_secoes, 'seção', 'seções') + (l.aptos2 || l.aptos1 ? ' · ' + nf0.format(l.aptos2 || l.aptos1) + ' eleitores' : '') + (dist !== null ? ' · ' + km(dist) + ' em linha reta ' + S.centro.de : '')),
-      l.aprox ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado: é a cidade do consulado, não o prédio.') : null,
-      h('table', { class: 'cmp' },
-        h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, ''), h('th', { scope: 'col' }, 'Este prédio'), h('th', { scope: 'col' }, 'A cidade'))),
-        h('tbody', {},
-          linhaCmp('Flávio entre os dois, 2º turno', pct(l.fatia_f2), pct(m.fatia_f2)),
-          linhaCmp('Flávio entre os dois, 1º turno (mesmas seções)', pct(l.fatia_f1_par), pct(m.fatia_f1_par)),
-          linhaCmp('Mudança', pp(l.d_fatia_pp), pp(m.d_fatia_pp)),
-          linhaCmp('Comparecimento, 2º turno', pct(l.comp_pct2), pct(m.comp_pct2)),
-          linhaCmp('Mudança do comparecimento', pp(l.d_comp_pp), pp(m.d_comp_pp)),
-          linhaCmp('Abstenção, 2º turno', pct(l.abst_pct2), pct(m.abst_pct2)),
-          linhaCmp('Seções com sinal', nf0.format(l.secoes_sinal || 0), nf0.format(m.secoes_sinal || 0)),
-          linhaCmp('Seções no grupo atípico (estatística)', vazio(l.secoes_anomalas) ? null : nf0.format(l.secoes_anomalas), vazio(m.secoes_anomalas) ? null : nf0.format(m.secoes_anomalas)))),
-      h('p', { class: 'ficha-meta' }, 'Flávio entre os dois: parcela de Flávio nos votos dados a Flávio e a Lula. A coluna da cidade soma só as seções com boletim do 2º turno lido. Grupo atípico: mistura estatística sobre as frações do eleitorado nos dois turnos; pede explicação, não prova nada.'),
-      blocoChuva(l),
-      h('div', { class: 'ficha-secoes' }, h('p', { class: 'ficha-meta' }, 'Carregando as seções do prédio…')),
-      h('a', { class: 'btn-politize', href: linkPolitize(l, l.secao_link), 'data-politize': '1' }, 'Entenda esta seção no Politize-se (seção ' + l.secao_link + ')'),
-      h('p', { class: 'ficha-rotulo' }, 'Sinal pede explicação, não prova irregularidade. Leitura agregada por seção: o voto é secreto e nenhum número descreve uma pessoa.'),
-      h('p', { class: 'ficha-links' },
-        gmaps ? h('a', { href: gmaps, target: '_blank', rel: 'noopener' }, 'Como chegar (Google Maps)') : null, gmaps ? ' · ' : null,
-        h('a', { href: 'politizese.html#uf=' + l.uf + '&z=' + l.zona + '&l=' + encodeURIComponent(l.id) }, 'Este prédio no Politize-se'), ' · ',
-        h('a', { href: link, onclick: (ev) => { ev.preventDefault(); copiar(link, ev.target); } }, 'Copiar link do prédio')));
-  }
-
-  // Rótulo da fonte da chuva de 25/10: estação a X km ou modelo provisório.
-  function fonteChuva(fonte, l) {
-    const rede = { cemaden: 'CEMADEN', inmet: 'INMET', ambos: 'INMET/CEMADEN' }[fonte];
-    if (rede) return 'chuva medida em ' + (l.chuva2_n === 1 ? 'estação ' : 'estações ') + rede + ' a ' + km(l.chuva2_dist_km);
-    if (fonte === 'era5') return 'reanálise climática';
-    if (fonte === 'ifs_provisorio') return 'modelo, provisório';
-    return 'sem dado';
-  }
-
-  function blocoChuva(l) {
-    if (vazio(l.chuva2_mm) && vazio(l.chuva2_vot_mm)) return null;
-    const mm = (v) => (vazio(v) ? 'sem dado' : nf1.format(v) + ' mm');
-    const forte = typeof l.chuva2_mm === 'number' && l.chuva2_mm >= (S.meta.chuva_forte_mm || 20);
-    return h('div', { class: 'ficha-chuva' },
-      h('p', {}, h('b', {}, 'No dia do 2º turno: '), mm(l.chuva2_mm) + ' de chuva em 25/10 (' + fonteChuva(l.chuva2_fonte, l) + '); ' +
-        mm(l.chuva2_vot_mm) + ' das 7h às 18h (' + fonteChuva(l.chuva2_fonte_vot, l) + ').' + (forte ? ' Chuva forte no dia.' : '')),
-      h('p', { class: 'ficha-meta' }, 'Pluviômetro a até 50 km é estimativa para a área, não medição no prédio. Chuva não prova efeito no comparecimento.'));
-  }
-
-  // Modelo predominante (o de mais seções) e texto curto do prédio, com a contagem quando é misto.
-  const predominante = (l) => (l.modelos && l.modelos.length ? l.modelos[0][0] : '');
-  function textoModelo(l) {
-    if (!l.modelos || !l.modelos.length) return '';
-    if (l.modelos.length === 1) return l.modelos[0][0];
-    return 'Misto: ' + l.modelos.map((m) => m[0] + ' em ' + plural(m[1], 'seção', 'seções')).join(', ');
-  }
-
-  const nomeNivel = (n) => ((S.meta.camadas.log2 || {}).nomes || {})[String(n)] || String(n);
-
-  // Registro da urna da seção: nível 1º → 2º turno, famílias de ocorrência e reinícios na votação.
-  function celulaLog(s) {
-    const n1 = s.log1_atencao, n2 = s.log2_atencao;
-    if (vazio(n1) && vazio(n2)) return h('small', {}, 'Sem registro lido');
-    const fam = S.meta.catalogos.log_familias || {};
-    const sinais = s.log2_sinais || [];
-    const chaves = Array.isArray(s.log2_familias) ? s.log2_familias : Object.keys(fam).filter((f) => fam[f].criterios.some((c) => sinais.indexOf(c) >= 0));
-    const familias = chaves.map((f) => (fam[f] || {}).nome || f);
-    // Reinícios na votação: [minuto em Brasília, votos antes, votos depois].
-    const rein = Array.isArray(s.log2_reinicios) ? s.log2_reinicios : [];
-    const hora = (m) => (typeof m === 'number' ? Math.floor(m / 60) + 'h' + String(m % 60).padStart(2, '0') : null);
-    const horas = rein.map((r) => hora(r[0])).filter(Boolean);
-    const bateria = { simultanea: 'bateria na votação junto com outras urnas da cidade', isolada: 'bateria na votação só nesta urna', votacao: 'bateria durante a votação' }[s.log2_bateria];
-    return [h('span', {}, (vazio(n1) ? 'sem registro' : nomeNivel(n1)) + ' → ' + (vazio(n2) ? 'ainda não lido' : nomeNivel(n2))),
-      familias.length ? h('small', {}, familias.join('; ')) : null,
-      rein.length ? h('small', {}, plural(rein.length, 'reinício na votação', 'reinícios na votação') + (horas.length ? ' (' + horas.join(', ') + ')' : '')) : null,
-      bateria ? h('small', {}, bateria) : null];
-  }
-
-  // Urna da seção nos dois turnos: o modelo de cada um e se é a mesma urna.
-  function celulaUrna(s) {
-    const mesma = s.urna_situacao === 'mesma' || s.urna_situacao === 'mesma_recarga';
-    const frase = !s.bu2 ? '' : mesma ? 'mesma urna nos dois turnos' : s.urna_situacao && s.urna_situacao !== 'sem_1t' ? 'urna trocada' : '';
-    const m1 = s.modelo1 || 'sem dado', m2 = s.bu2 ? s.modelo2 || 'sem dado' : '…';
-    return [m1 === m2 ? m1 + ' nos dois turnos' : m1 + ' → ' + m2, frase ? h('small', {}, frase) : null];
-  }
-
-  function nomeSinal(k) {
-    const t = (S.meta.catalogos.sinais || {})[k] || k;
-    return t.charAt(0).toUpperCase() + t.slice(1);
-  }
-
-  function selecionarSecao(el, l, secao) {
-    S.secaoSel = secao;
-    el.querySelectorAll('.secoes-tab tr[data-secao]').forEach((tr) => tr.classList.toggle('sel', Number(tr.dataset.secao) === secao));
-    el.querySelectorAll('.secoes-tab tr[data-secao] button').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.closest('tr').dataset.secao) === secao)));
-    const btn = el.querySelector('[data-politize]');
-    if (btn) { btn.href = linkPolitize(l, secao); btn.textContent = 'Entenda esta seção no Politize-se (seção ' + secao + ')'; }
-  }
-
-  // As seções do prédio vêm do arquivo da zona do Politize-se, 1º e 2º turno lado a lado.
-  async function carregarSecoes(l, el) {
-    const caixaSec = el && el.querySelector('.ficha-secoes');
-    if (!caixaSec) return;
-    try {
-      const z = await buscar(SECOES + l.uf + '/' + l.zona + '.json.gz');
-      const li = (z.locais.linhas || []).findIndex((r) => r[z.locais.colunas.indexOf('local_id')] === l.id);
-      const secs = tabela(z.secoes).filter((s) => s.li === li).sort((a, b) => a.secao - b.secao);
-      if (li < 0 || !secs.length) { caixaSec.replaceChildren(h('p', { class: 'ficha-meta' }, 'As seções deste prédio não estão no arquivo da zona.')); return; }
-      const expl = S.meta.catalogos.explicacoes || {};
-      const ida = (a, b, f) => (vazio(a) && vazio(b) ? 'sem dado' : (vazio(a) ? '…' : f(a)) + ' → ' + (vazio(b) ? '…' : f(b)));
-      const linhas = secs.map((s) => {
-        const pequena = Boolean(s.pequena);
-        const sinais = (s.sinais || []).map(nomeSinal);
-        const exps = (s.explicacoes || []).map((k) => expl[k]).filter(Boolean);
-        return h('tr', { 'data-secao': String(s.secao), class: s.secao === S.secaoSel ? 'sel' : null },
-          h('td', {}, h('button', { type: 'button', 'aria-pressed': String(s.secao === S.secaoSel), 'aria-label': 'Escolher a seção ' + s.secao, onclick: () => selecionarSecao(el, l, s.secao) }, String(s.secao))),
-          h('td', { class: 'txt' }, celulaUrna(s)),
-          pequena ? h('td', { colspan: '3', class: 'txt' }, h('small', {}, 'Seção com menos de 30 eleitores: não mostra voto nem comparecimento.'))
-            : [h('td', {}, ida(s.comp_pct1, s.bu2 ? s.comp_pct2 : null, pct)), h('td', {}, ida(s.fatia_f1, s.bu2 ? s.fatia_f2 : null, pct)), h('td', {}, ida(s.sem_bio_pct1, s.bu2 ? s.sem_bio_pct2 : null, pct))],
-          h('td', { class: 'txt' }, celulaLog(s)),
-          h('td', { class: 'txt' }, !s.bu2 ? h('small', {}, 'Ainda sem boletim do 2º turno') : [sinais.length
-            ? [h('b', {}, plural(sinais.length, 'sinal', 'sinais')), h('ul', { class: 'sinal-lista' }, sinais.map((t) => h('li', {}, t))), exps.length ? h('small', {}, 'Explicação provável: ' + exps.join('; ') + '.') : null]
-            : h('small', {}, 'Nenhum sinal'), s.ml_anomalo ? h('small', {}, 'Grupo atípico pela estatística dos dois turnos.') : null]));
-      });
-      caixaSec.replaceChildren(
-        h('p', { class: 'ficha-meta' }, 'As seções lado a lado, 1º turno → 2º turno, com o modelo da urna de cada turno. Toque no número para escolher a seção que o botão abre no Politize-se.'),
-        h('div', { class: 'secoes-rolagem', tabindex: '0', role: 'region', 'aria-label': 'Seções do prédio' },
-          h('table', { class: 'secoes-tab' },
-            h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, 'Seção'), h('th', { scope: 'col', class: 'txt' }, 'Urna'), h('th', { scope: 'col' }, 'Comparecimento'), h('th', { scope: 'col' }, 'Flávio entre os dois'), h('th', { scope: 'col' }, 'Sem digital'), h('th', { scope: 'col', class: 'txt' }, 'Registro da urna'), h('th', { scope: 'col', class: 'txt' }, 'Sinais no 2º turno'))),
-            h('tbody', {}, linhas))));
-    } catch (e) {
-      caixaSec.replaceChildren(h('p', { class: 'ficha-meta' }, e && e.message === 'navegador sem gzip' ? 'Este navegador não abre o arquivo das seções; use o botão abaixo para ver a seção no Politize-se.' : 'As seções não carregaram agora; o botão abaixo abre a seção no Politize-se.'));
-    }
-  }
+  const { ficha, carregarSecoes, textoModelo, linkPolitize, nomeNivel, predominante } = window.criarFichaPolitize({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar });
 
   function copiar(texto, botao) {
     const ok = () => { const t = botao.textContent; botao.textContent = 'Link copiado'; setTimeout(() => { botao.textContent = t; }, 1500); };
@@ -695,13 +556,23 @@
 
   function montarCamadas() {
     const box = $('#camadas');
-    box.replaceChildren(...Object.keys(S.meta.camadas).map((k) => h('label', { class: 'camada' },
-      h('input', { type: 'radio', name: 'camada', value: k, checked: k === S.camada, onchange: () => { S.camada = k; recolorir(); } }),
-      h('span', {}, S.meta.camadas[k].nome))));
+    const grupos = new Map();
+    Object.entries(S.meta.camadas).forEach(([k, c]) => {
+      const grupo = c.grupo || (k === 'chuva2' ? 'Clima' : 'Eleição e urnas');
+      if (!grupos.has(grupo)) grupos.set(grupo, []);
+      grupos.get(grupo).push(h('label', { class: 'camada' },
+        h('input', { type: 'radio', name: 'camada', value: k, checked: k === S.camada, onchange: () => { S.camada = k; recolorir(); } }),
+        h('span', {}, c.nome)));
+    });
+    box.replaceChildren(...['Economia e segurança', 'Clima', 'Eleição e urnas'].filter((g) => grupos.has(g)).map((g) =>
+      h('fieldset', { class: 'camada-grupo' }, h('legend', {}, g), grupos.get(g))));
   }
 
   function desenharLegenda() {
     const c = camada(), k = S.camada, par = COR[k];
+    document.querySelectorAll('[data-lente]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lente === k)));
+    const faixa = $('#mapa-escala');
+    faixa.replaceChildren(...[h('b', {}, c.nome), c.tipo === 'sequencial' || c.tipo === 'divergente' ? [h('span', { class: 'mapa-mini-escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + par[1] + ')', 'aria-hidden': 'true' }), h('span', {}, c.baixo + ' → ' + c.alto)] : null, h('small', {}, c.agregacao === 'municipios' ? 'Dado municipal · 2024 · cinza: sem dado' : c.grupo ? 'Estimativa PNAD · cinza: sem dado' : 'Cinza: sem dado aplicável')].flat().filter(Boolean));
     const itens = [];
     if (c.tipo === 'divergente') {
       itens.push(h('div', { class: 'escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + COR.neutro + ',' + par[1] + ')', role: 'img', 'aria-label': c.baixo + ' à esquerda, ' + c.alto + ' à direita' }));
@@ -733,7 +604,12 @@
       itens.push(h('p', { class: 'ajuda' }, ml.rotulo_casa || 'Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada.'));
     }
     const cinza = c.precisa_ml ? 'Cinza: a análise estatística ainda não cobre o prédio, ou ainda sem boletim do 2º turno.' : c.precisa_log2 ? 'Cinza: registro da urna do 2º turno ainda não lido.' : c.precisa_bu2 ? 'Cinza: ainda sem boletim do 2º turno, ou prédio com menos de 30 eleitores.' : 'Cinza: sem dado.';
-    const grupo = c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
+    const grupo = c.agregacao === 'municipios' ? 'Nos grupos de pontos, a cor é a média simples das taxas dos municípios representados, contados uma vez cada. Não é uma taxa regional.' : c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
+    if (c.grupo) {
+      const lista = [...S.porUf.values()].flat().filter(passaFiltro);
+      const cobertos = lista.filter((l) => !vazio(valor(l))).length;
+      itens.push(h('p', { class: 'territorio-cobertura' }, plural(cobertos, 'prédio com dado', 'prédios com dado') + ' de ' + nf0.format(lista.length) + ' no recorte selecionado.'));
+    }
     $('#legenda').replaceChildren(...itens, h('p', {}, c.explica), h('ul', { class: 'legenda-itens' }, h('li', {}, h('span', { class: 'bolinha bolinha-cinza' }), cinza)), h('p', { class: 'ajuda' }, grupo + ' O tamanho do ponto cresce com o número de eleitores.'));
   }
 
@@ -790,6 +666,9 @@
       h('td', { class: 'num' }, pp(l.d_fatia_pp)),
       h('td', { class: 'num' }, pct(l.comp_pct2), vazio(l.d_comp_pp) ? null : h('small', {}, pp(l.d_comp_pp))),
       h('td', { class: 'num' }, pct(l.abst_pct2)),
+      h('td', { class: 'num' }, window.PolitizeTerritorio.reais(l.renda_mediana_brl)),
+      h('td', { class: 'num' }, window.PolitizeTerritorio.perc(l.renda_ate2)),
+      h('td', { class: 'num' }, window.PolitizeTerritorio.fmt(l.homicidios_taxa_100mil, 2)),
       h('td', { class: 'num' }, l.n_bu2 ? String(l.escore_max || 0) : '', l.secoes_sinal ? h('small', {}, plural(l.secoes_sinal, 'seção', 'seções')) : null),
       h('td', {}, vazio(l.log2_max) ? '' : nomeNivel(l.log2_max), vazio(l.log1_max) ? null : h('small', {}, '1º turno: ' + nomeNivel(l.log1_max))),
       h('td', {}, textoModelo(l)),
@@ -821,7 +700,7 @@
   }
 
   function exportarCsv() {
-    const cab = ['uf', 'cidade', 'zona', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'secoes', 'secoes_com_2o_turno', 'eleitores', 'flavio_entre_os_dois_2t_pct', 'flavio_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_pontos', 'comparecimento_2t_pct', 'mudanca_comparecimento_pontos', 'abstencao_2t_pct', 'maior_numero_de_sinais_numa_secao', 'secoes_com_sinal', 'registro_urna_1t_nivel_max', 'registro_urna_2t_nivel_max', 'registro_urna_secoes_que_subiram', 'modelo_urna_predominante', 'modelos_urna_no_predio', 'urnas_trocadas', 'secoes_que_mudaram_de_endereco', 'secoes_no_grupo_atipico_estatistica', 'politize_se', 'google_maps'];
+    const cab = ['uf', 'cidade', 'zona', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'secoes', 'secoes_com_2o_turno', 'eleitores', 'flavio_entre_os_dois_2t_pct', 'flavio_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_pontos', 'comparecimento_2t_pct', 'mudanca_comparecimento_pontos', 'abstencao_2t_pct', 'maior_numero_de_sinais_numa_secao', 'secoes_com_sinal', 'registro_urna_1t_nivel_max', 'registro_urna_2t_nivel_max', 'registro_urna_secoes_que_subiram', 'modelo_urna_predominante', 'modelos_urna_no_predio', 'urnas_trocadas', 'secoes_que_mudaram_de_endereco', 'secoes_no_grupo_atipico_estatistica', 'renda_domiciliar_mediana_estimada_brl_202607', 'renda_domiciliar_ate2sm_estimada_pct', 'homicidios_municipio_por100mil_2024', 'politize_se', 'google_maps'];
     const dec = (v, c) => (vazio(v) ? '' : typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v));
     const esc = (v) => { const s = vazio(v) ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const linhas = [cab.join(';')];
@@ -829,6 +708,7 @@
       linhas.push([l.uf, l.municipio, l.zona, l.nome, l.endereco, l.bairro, l.cep, coordOk(l) ? dec(l.lat, 5) : '', coordOk(l) ? dec(l.lon, 5) : '', dec(l.dist, 2),
         l.n_secoes, l.n_bu2, l.aptos2 || l.aptos1, dec(l.fatia_f2, 1), dec(l.fatia_f1_par, 1), dec(l.d_fatia_pp, 1), dec(l.comp_pct2, 1), dec(l.d_comp_pp, 1), dec(l.abst_pct2, 1),
         l.n_bu2 ? l.escore_max : '', l.secoes_sinal, l.log1_max, l.log2_max, l.log_subiu, predominante(l), (l.modelos || []).map((m) => m[0] + ':' + m[1]).join('|'), l.urnas_trocadas, l.secoes_mudaram, l.secoes_anomalas,
+        dec(l.renda_mediana_brl, 0), dec(l.renda_ate2, 1), dec(l.homicidios_taxa_100mil, 2),
         'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : ''].map(esc).join(';'));
     });
     const blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
@@ -969,6 +849,10 @@
   }
 
   function ligar() {
+    document.querySelectorAll('[data-lente]').forEach((b) => b.addEventListener('click', () => {
+      if (!S.meta?.camadas[b.dataset.lente]) return;
+      S.camada = b.dataset.lente; recolorir();
+    }));
     if (typeof ResizeObserver !== 'undefined') {
       new ResizeObserver(() => {
         document.documentElement.style.setProperty('--altura-topo', $('.topo').offsetHeight + 'px');

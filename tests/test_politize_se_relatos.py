@@ -17,7 +17,7 @@ SQL = (ROOT / "totalizacao/supabase/migrations/0005_relatos_secao.sql").read_tex
     encoding="utf-8"
 )
 TS = (ROOT / "totalizacao/src/relato/validar.ts").read_text(encoding="utf-8")
-APP = (ROOT / "docs/assets/politize_se/app.js").read_text(encoding="utf-8")
+APP = (ROOT / "docs/assets/politize_se/relatos.js").read_text(encoding="utf-8")
 PAGINA = (ROOT / "docs/politizese.html").read_text(encoding="utf-8")
 
 
@@ -159,5 +159,5 @@ def test_pagina_e_app():
         and "conferirDesafio" in funcao
         and "armadilha" in funcao
     )
-    bloco = APP[APP.index("relatos da seção") : APP.index("------ fichas")]
+    bloco = APP
     assert "—" not in bloco and "fraude" not in bloco.lower()

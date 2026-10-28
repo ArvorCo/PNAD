@@ -293,15 +293,16 @@ def fig_fatia(L: dict) -> str:
     m0 = 0
     m1 = max(330, round(vs[-1]["min"] / 30 + 0.5) * 30)
     x = escala(m0, m1, ml, W - mr)
-    lo = min(40.0, min(v["pct_flavio"] for v in vs) - 1)
-    hi = max(52.0, max(v["pct_flavio"] for v in vs) + 1)
+    valores = [v[k] for v in vs for k in ("pct_flavio", "pct_lula")]
+    lo = min(40.0, min(valores) - 1)
+    hi = max(60.0, max(valores) + 1)
     y = escala(lo, hi, H - mb, mt)
     out = [
         svg_abre(
             W,
             H,
-            "Fatia de Flávio entre os dois na noite",
-            "Parte de Flávio nos votos válidos, versão a versão, com a linha de 50%.",
+            "Lula e Flávio nos votos válidos ao longo da noite",
+            "Participação dos dois candidatos, versão a versão, na mesma escala e com a linha de 50%.",
         ),
         HACHURA,
     ]
@@ -317,10 +318,14 @@ def fig_fatia(L: dict) -> str:
     for a, b in trechos_flavio_frente(vs):
         xa, xb = x(a["min"]), x(b["min"])
         out.append(r(xa, mt, max(xb - xa, 2), H - mb - mt, "#dbe5f3", ' opacity="0.9"'))
-    pts = " ".join(f"{x(v['min']):.1f},{y(v['pct_flavio']):.1f}" for v in vs)
-    out.append(
-        f'<polyline points="{pts}" fill="none" stroke="{FLAVIO}" stroke-width="2.4"/>'
-    )
+    for candidato, chave, cor in (
+        ("Flávio", "pct_flavio", FLAVIO),
+        ("Lula", "pct_lula", LULA),
+    ):
+        pts = " ".join(f"{x(v['min']):.1f},{y(v[chave]):.1f}" for v in vs)
+        out.append(
+            f'<polyline data-candidato="{candidato}" points="{pts}" fill="none" stroke="{cor}" stroke-width="2.4"/>'
+        )
     tips, linhas = Tips(), []
     for i, v in enumerate(vs):
         prox = vs[i + 1]["min"] if i + 1 < len(vs) else v["min"] + 1
@@ -346,11 +351,18 @@ def fig_fatia(L: dict) -> str:
             f"(de {frente[0][0]['gerado_brt'][11:16]} a {frente[-1][1]['gerado_brt'][11:16]}; máximo de {pct(mx)} depois das 19:00)."
         )
     legenda = (
-        "Parte de Flávio Bolsonaro nos votos válidos em cada versão do arquivo nacional."
+        "Participação de Lula e Flávio nos votos válidos em cada versão do arquivo nacional."
         + txt
         + " A fatia mostra quem já tinha sido contado, não a direção do resultado. Fonte: linha_do_tempo.json."
     )
-    return figura_html("fatia_2t", "".join(out), legenda, tips, minw=760)
+    return figura_html(
+        "fatia_2t",
+        "".join(out),
+        legenda,
+        tips,
+        minw=760,
+        apos=legenda_html([("Lula", LULA), ("Flávio", FLAVIO)]),
+    )
 
 
 # ------------------------------------------------------------------ lotes
@@ -391,6 +403,9 @@ def fig_lotes(L: dict) -> str:
                 f"{num(v['minutos_desde_anterior'] or 0, 1)} min depois da anterior",
                 inteiro(v["lote_st"]),
                 pct(v["lote_pct_flavio"]),
+                pct(
+                    None if v["lote_pct_flavio"] is None else 100 - v["lote_pct_flavio"]
+                ),
                 f"{num(v['pst'], 2)}%",
             ]
         )
@@ -402,7 +417,14 @@ def fig_lotes(L: dict) -> str:
             )
         )
     tips.tabela(
-        ["Versão", "Intervalo", "Seções no lote", "Flávio no lote", "Total"],
+        [
+            "Versão",
+            "Intervalo",
+            "Seções no lote",
+            "Flávio no lote",
+            "Lula no lote",
+            "Total",
+        ],
         linhas,
         sub=1,
     )

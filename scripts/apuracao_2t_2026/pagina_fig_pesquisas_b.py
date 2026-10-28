@@ -34,31 +34,36 @@ from .pagina_comum import NOME_UF, num
 
 CORTES = [2, 3, 4, 5]
 AZUIS = ["#dbe5f3", "#b3c9e8", "#7fa3d6", "#4f7fc2", "#1457aa"]
+VERMELHOS = ["#f2ded8", "#e4b4a9", "#d18877", "#bf5944", "#a42e1c"]
 
 
 def _sn(v: float, casas: int = 1) -> str:
     return pp(v, casas)[:-3]
 
 
-def _cor(v: float | None) -> str:
+def _cor(v: float | None, paleta=AZUIS) -> str:
     if v is None:
         return "#d8d4c8"
     if v < 0:
         return "#efc3b5"
-    return AZUIS[sum(v >= c for c in CORTES)]
+    return paleta[sum(v >= c for c in CORTES)]
 
 
-def _mapa(m: dict, rotulo: str) -> str:
-    vals = {u["uf"]: u["erro_flavio_pp"] for u in m["ufs"]}
+def _mapa(m: dict, rotulo: str, candidato: str = "Flávio") -> str:
+    sgn = 1 if candidato == "Flávio" else -1
+    paleta = AZUIS if sgn == 1 else VERMELHOS
+    vals = {u["uf"]: sgn * u["erro_flavio_pp"] for u in m["ufs"]}
     por = {u["uf"]: u for u in m["ufs"]}
 
     def titulo(uf, v):
         x = por.get(uf)
         if not x:
             return NOME_UF.get(uf, uf)
+        previsto = x["flavio_previsto"] if sgn == 1 else 100 - x["flavio_previsto"]
+        urna = x["flavio_urna"] if sgn == 1 else 100 - x["flavio_urna"]
         return (
-            f"{NOME_UF.get(uf, uf)}: previsto Flávio {num(x['flavio_previsto'], 2)}%, urna "
-            f"{num(x['flavio_urna'], 2)}%, afastamento {_sn(v, 2)} na parcela de Flávio; vencedor "
+            f"{NOME_UF.get(uf, uf)}: previsto {candidato} {num(previsto, 2)}%, urna "
+            f"{num(urna, 2)}%, afastamento {_sn(v, 2)} na parcela de {candidato}; vencedor "
             f"{'certo' if x['acertou_vencedor'] else 'errado'}"
         )
 
@@ -76,13 +81,23 @@ def _mapa(m: dict, rotulo: str) -> str:
     ]
     return mapa_uf(
         vals,
-        lambda uf, v: _cor(v),
+        lambda uf, v: _cor(None if v is None else sgn * v, paleta),
         marca,
         titulo,
-        f"Afastamento por UF: {rotulo}",
-        f"Parcela de Flávio prevista menos urna, por UF: {rotulo}. ✕ marca vencedor errado.",
-        legenda=leg,
-        escuro=lambda uf, v: v is not None and v >= CORTES[2],
+        f"{candidato}: afastamento por UF, {rotulo}",
+        f"Parcela de {candidato} prevista menos urna, por UF: {rotulo}. ✕ marca vencedor errado.",
+        legenda=(
+            leg
+            if sgn == 1
+            else [
+                ("acima de −2", VERMELHOS[0]),
+                ("−3 a −2", VERMELHOS[1]),
+                ("−4 a −3", VERMELHOS[2]),
+                ("−5 a −4", VERMELHOS[3]),
+                ("−5 ou menos", VERMELHOS[4]),
+            ]
+        ),
+        escuro=lambda uf, v: v is not None and sgn * v >= CORTES[2],
     )
 
 
@@ -96,17 +111,19 @@ def fig_mapa(PP: dict) -> str:
     blocos = []
     for i, (k, nome) in enumerate(opcoes):
         esc = " hidden" if i else ""
-        blocos.append(f'<div data-alt-show="{k}"{esc}>{_mapa(met[k], nome)}</div>')
+        blocos.append(
+            f'<div data-alt-show="{k}"{esc}><h4>Flávio: previsto menos urna</h4>{_mapa(met[k], nome)}<h4>Lula: previsto menos urna</h4>{_mapa(met[k], nome, "Lula")}</div>'
+        )
     ctl = botoes(opcoes, opcoes[0][0], "Método")
     linhas = []
     for k, nome in opcoes:
         m = met[k]
         linhas.append(
-            f"{nome}: vencedor certo em {m['acertou_vencedor']} de {m['n_ufs']}, desvio comum "
+            f"{nome}: vencedor certo em {m['acertou_vencedor']} de {m['n_ufs']}, desvio comum de Flávio "
             f"{_sn(m['vies_flavio_pp_ponderado'], 2)}, resto sem o desvio {num(m['rmse_sem_vies_pp'], 2)}"
         )
     legenda = (
-        "Afastamento na parcela de Flávio entre os dois, previsto pela casa menos urna, por UF; na diferença "
+        "Afastamento nas parcelas de Flávio e Lula entre os dois, previsto pela casa menos urna, por UF. Azul: Flávio; vermelho: Lula. O segundo mapa espelha o primeiro com sinal oposto e mesma intensidade. Na diferença "
         "F−L é o dobro. " + "; ".join(linhas) + ". Fonte: projecao_pre_urna.json."
     )
     return figura_html(

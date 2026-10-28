@@ -20,6 +20,8 @@ from typing import Any
 
 from apuracao_logs.mapa import tabela
 
+from . import territorio
+
 ROOT = Path(__file__).resolve().parents[2]
 ORIGEM = ROOT / "docs/assets/politize_se/dados"
 OBSERVADO = ROOT / "docs/assets/fiscais_mapa/clima/observado_2t.json"
@@ -81,6 +83,7 @@ COLUNAS_LOCAIS = [
     "chuva2_n",
 ]
 I_LAT = COLUNAS_LOCAIS.index("lat")
+COLUNAS_LOCAIS += territorio.CAMPOS_MAPA
 COLUNAS_MUNICIPIOS = [
     "mun",
     "nome",
@@ -290,6 +293,7 @@ CAMADAS["chuva2"] = {
     "precisa_bu2": False,
 }
 CAMADA_PADRAO = "resultado"
+CAMADAS.update(territorio.CAMADAS)
 
 
 _OBS: dict[str, Any] = {}
@@ -489,12 +493,15 @@ def ler(origem: Path = ORIGEM, ufs: set[str] | None = None) -> dict[str, Any]:
     cep8: dict[str, list[tuple[float, float]]] = defaultdict(list)
     cep5: dict[str, list[tuple[float, float]]] = defaultdict(list)
     secoes: dict[str, dict[str, dict[str, Any]]] = {}
+    seguranca = territorio.municipios() if origem == ORIGEM else {}
+    contextos: dict[str, dict] = {}
     for m in tabela(indice["municipios"]):
         uf = m["uf"]
         if ufs and uf not in ufs:
             continue
         if uf not in secoes:
             secoes[uf] = secoes_por_local(origem, uf)
+            contextos[uf] = territorio.ler_uf(uf, seguranca) if origem == ORIGEM else {}
         arq = origem / m["arquivo"]
         if not arq.exists():
             continue
@@ -506,6 +513,7 @@ def ler(origem: Path = ORIGEM, ufs: set[str] | None = None) -> dict[str, Any]:
             linha_municipio(m["mun_tse"], nome, cad.get("totais") or {})
         )
         for r in tabela(cad["locais"]):
+            r.update(territorio.resumo_local(r["local_id"], contextos[uf]))
             linha = linha_local(uf, r, secoes[uf].get(r["local_id"]))
             alvo["locais"].append(linha)
             if linha[I_LAT] is None:
@@ -531,4 +539,5 @@ def ler(origem: Path = ORIGEM, ufs: set[str] | None = None) -> dict[str, Any]:
             for uf, zs in zonas.items()
         },
         "cep": dict(cep),
+        "contextos": contextos,
     }

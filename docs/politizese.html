@@ -12,7 +12,7 @@
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Politize-se: o que aconteceu na sua seção, 1º e 2º turno | Arvor</title>
-<meta name="description" content="Digite UF, zona e seção do seu título, o CEP, a cidade ou use a localização e veja o que aconteceu na sua seção e no seu local de votação no 1º e no 2º turno de 2026: votos, comparecimento, biometria, horário, urna e sinais da régua da casa. Leitura agregada por seção, TSE.">
+<meta name="description" content="Digite UF, zona e seção do seu título, o CEP, a cidade ou use a localização e veja o que aconteceu na sua seção e no seu local de votação no 1º e no 2º turno de 2026: votos, comparecimento, clima, renda estimada e segurança do município. Leitura agregada por seção, TSE.">
 <link rel="canonical" href="https://brasil.arvor.co/politizese.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
@@ -35,9 +35,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/politize_se/app.css?v=20261026-relatos2">
+<link rel="stylesheet" href="assets/politize_se/territorio.css?v=20261028">
+<script defer src="assets/politize_se/territorio.js?v=20261028"></script>
 <script>document.documentElement.classList.add('js')</script>
 <script src="assets/totalizacao/config.js?v=20261026-relatos2"></script>
-<script type="module" src="assets/politize_se/app.js?v=20261026-chuva2"></script>
+<script type="module" src="assets/politize_se/app.js?v=20261028"></script>
 </head>
 <body>
 <a class="skip" href="#busca">Pular para a busca</a>
@@ -47,7 +49,7 @@
     <div class="marca"><a href="index.html"><img src="img/arvor_logo.png" alt="" width="26" height="26">Arvor Intelligence · Utilidade pública</a></div>
     <p class="eyebrow">Eleições 2026 · 1º e 2º turno</p>
     <h1>Politize-se</h1>
-    <p class="deck">Entenda o que aconteceu na sua seção e no seu local de votação. Os dois turnos lado a lado: votos, comparecimento, biometria, horário do último voto, a urna e os sinais que pedem explicação, com a explicação provável ao lado.</p>
+    <p class="deck">Entenda o que aconteceu na sua seção e no seu local de votação. Os dois turnos lado a lado: votos, comparecimento, biometria, horário do último voto, a urna e os sinais que pedem explicação. Conheça também a região: clima, renda estimada, escolaridade e segurança pública.</p>
     <p class="topo-mapa"><a class="btn btn-sec" href="politizese_mapa.html">Ver no mapa do Brasil</a></p>
     <dl class="numeros" id="numeros" aria-live="off"></dl>
     <p class="cobertura" id="cobertura" role="status"></p>
@@ -171,6 +173,7 @@
         <ul class="lista-texto" id="lista-limites">
           <li>Não diz como uma pessoa votou nem por que o comparecimento mudou. Variação entre turnos mistura quem foi votar, quem mudou de voto e quem anulou.</li>
           <li>A cobertura dos boletins do 2º turno aparece no topo e na ficha. Os logs das urnas mostram o nível de atenção de 0 a 3 nos dois turnos: subir de nível pede explicação, não prova irregularidade, e religar a urna ou passar para a bateria tem explicação técnica comum.</li>
+          <li>Economia e segurança: renda domiciliar estimada pela PNAD, escolaridade do cadastro eleitoral e homicídios municipais do Atlas da Violência. A ficha informa fonte, período e escala territorial. Não são características individuais nem ocorrências no local de votação.</li>
           <li>O clima do 1º turno é observado (reanálise ERA5, célula de 0,25 grau). O do 2º turno vem de pluviômetros do CEMADEN a até 50 km da célula de 0,25 grau; onde não há estação, do modelo ECMWF IFS, provisório até a reanálise ERA5 cobrir 25/10. A previsão da véspera fica como dado secundário.</li>
           <li>O nível de fiscalização é a régua que a casa publicou antes do 2º turno. Não temos registro do que cada fiscal conferiu na seção.</li>
         </ul>

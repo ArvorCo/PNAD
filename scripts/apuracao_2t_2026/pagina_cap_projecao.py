@@ -30,7 +30,10 @@ def tabela_marcos(J: dict) -> str:
                 f"{num(pt['pst'], 2)}%",
                 num(pt["p_f_observado"], 2),
                 num(pt["p_f_projetado"], 2),
+                num(100 - pt["p_f_observado"], 2),
+                num(100 - pt["p_f_projetado"], 2),
                 f"{num(pt['faixa90'][0], 2)} a {num(pt['faixa90'][1], 2)}",
+                f"{num(100 - pt['faixa90'][1], 2)} a {num(100 - pt['faixa90'][0], 2)}",
                 _pp(pt["p_f_projetado"] - final),
             ]
         )
@@ -40,11 +43,14 @@ def tabela_marcos(J: dict) -> str:
             "Seções",
             "Flávio observado",
             "Flávio projetado",
-            "Faixa de 90%",
-            "Erro contra o final",
+            "Lula observado",
+            "Lula projetado",
+            "Faixa 90% Flávio",
+            "Faixa 90% Lula",
+            "Erro de Flávio (pp)",
         ],
         linhas,
-        f"Parte de Flávio entre os dois. Final observado: {num(final, 2)}%. Fonte: projecao_noite.json, pontos.",
+        f"Percentuais entre os dois. Final: Flávio {num(final, 2)}%, Lula {num(100 - final, 2)}%. O erro de Lula tem sinal oposto e a mesma magnitude. Fonte: projecao_noite.json, pontos.",
     )
 
 
@@ -81,7 +87,7 @@ def render(d: Dados, cap: Capitulo) -> str:
             else "A projeção<br><em>da casa.</em>"
         ),
         f"Primeiro ponto às {p0['hhmm']}, com {num(p0['pst'], 2)}% das seções: Flávio {num(p0['p_f_projetado'], 2)}% "
-        f"entre os dois. Final: {num(final['p_f_entre_os_dois'], 2)}%.",
+        f"e Lula {num(p0['p_l_projetado'], 2)}% entre os dois.",
     )
     h += p(
         f"Às {p0['hhmm']}, com {inteiro(p0['st'])} seções ({num(p0['pst'], 2)}%) de {inteiro(p0['municipios_observados'])} municípios, "

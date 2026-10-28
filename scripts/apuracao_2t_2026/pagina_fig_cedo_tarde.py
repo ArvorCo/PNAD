@@ -14,8 +14,8 @@ from apuracao_2026.pagina_fig_base import (
     HALO,
     INK,
     LINE,
+    LULA,
     MUTED,
-    PAPER,
     Tips,
     area,
     botoes,
@@ -51,46 +51,64 @@ ROT_HORA = [
 
 
 def _painel_decis(decis: list[dict], ident: str, mostra: bool, tips: Tips) -> str:
-    """Nível de Flávio por decil (2º turno e 1º turno, mesmos lugares) e swing."""
-    h = 600
-    x0, x1 = 80, 980
-    ya0, ya1 = 70, 330  # painel de nível
-    yb0, yb1 = 390, 540  # painel de swing
-    niveis = [v for dd in decis for v in (dd["h2h_flavio"], dd["t1_h2h_flavio"])]
+    """Os dois candidatos, dois turnos e mudanças com escalas compartilhadas."""
+    h, x0, x1 = 600, 80, 980
+    ya0, ya1, yb0, yb1 = 70, 315, 390, 525
+    niveis = [
+        v
+        for dd in decis
+        for k in ("h2h_flavio", "t1_h2h_flavio")
+        for v in (dd[k], 100 - dd[k])
+    ]
     lo, hi = min(niveis) - 1.5, max(niveis) + 1.5
     fy = escala(lo, hi, ya1, ya0)
-    sw = [dd["swing_h2h_flavio_pp"] for dd in decis]
-    smin = min(min(sw) * 1.25, -1)
-    fs = escala(0, smin, yb0, yb1)
+    lim = max(1, max(abs(dd["swing_h2h_flavio_pp"]) for dd in decis) * 1.35)
+    fs = escala(-lim, lim, yb1, yb0)
     passo = (x1 - x0) / len(decis)
     fx = [x0 + passo * (i + 0.5) for i in range(len(decis))]
-    out = [f'<g data-alt-show="{ident}"{"" if mostra else " display=none"}>']
-    out.append(
-        t(
-            x0,
-            ya0 - 30,
-            "Parte de Flávio entre os dois finalistas, %",
-            14,
-            INK,
-            weight="700",
-        )
-    )
+    out = [
+        f'<g data-alt-show="{ident}"{"" if mostra else " display=none"}>',
+        t(x0, 30, "Participação entre os dois finalistas, %", 14, INK, weight="700"),
+    ]
     for v in ticks(lo, hi, 5):
-        y = fy(v)
-        out.append(ln(x0, y, x1, y, GRADE, 1))
-        out.append(t(x0 - 8, y + 4, num(v, 0), 12, MUTED, "end", mono=True))
-    y50 = fy(50) if lo < 50 < hi else None
-    if y50 is not None:
-        out.append(ln(x0, y50, x1, y50, INK, 1.2, ' stroke-dasharray="5 4"'))
-        out.append(t(x1, y50 - 6, "50%", 12, INK, "end", mono=True))
-    for chave, cor, tr in (
-        ("t1_h2h_flavio", T1, ' stroke-dasharray="7 5"'),
-        ("h2h_flavio", FLAVIO, ""),
-    ):
-        pts = " ".join(f"{fx[i]:.1f},{fy(dd[chave]):.1f}" for i, dd in enumerate(decis))
-        out.append(
-            f'<polyline points="{pts}" fill="none" stroke="{cor}" stroke-width="2.6"{tr}/>'
-        )
+        out += [
+            ln(x0, fy(v), x1, fy(v), GRADE, 1),
+            t(x0 - 8, fy(v) + 4, num(v, 0), 12, MUTED, "end", mono=True),
+        ]
+    out.append(ln(x0, fy(50), x1, fy(50), INK, 1.2, ' stroke-dasharray="5 4"'))
+    for candidato, cor in (("Flávio", FLAVIO), ("Lula", LULA)):
+        for chave, tr in (
+            ("t1_h2h_flavio", ' stroke-dasharray="7 5" stroke-opacity="0.65"'),
+            ("h2h_flavio", ""),
+        ):
+            vals = [
+                dd[chave] if candidato == "Flávio" else 100 - dd[chave] for dd in decis
+            ]
+            pts = " ".join(f"{fx[i]:.1f},{fy(v):.1f}" for i, v in enumerate(vals))
+            out.append(
+                f'<polyline data-candidato="{candidato}" points="{pts}" fill="none" stroke="{cor}" stroke-width="2.4"{tr}/>'
+            )
+            if chave == "h2h_flavio":
+                for i, v in enumerate(vals):
+                    out += [
+                        f'<circle cx="{fx[i]:.1f}" cy="{fy(v):.1f}" r="4" fill="{cor}"/>',
+                        t(
+                            fx[i],
+                            fy(v)
+                            + (
+                                -12
+                                if v > 50 or (v == 50 and candidato == "Lula")
+                                else 20
+                            ),
+                            num(v, 1),
+                            12,
+                            cor,
+                            "middle",
+                            "700",
+                            mono=True,
+                            extra=HALO,
+                        ),
+                    ]
     out.append(
         t(
             x0,
@@ -101,41 +119,46 @@ def _painel_decis(decis: list[dict], ident: str, mostra: bool, tips: Tips) -> st
             weight="700",
         )
     )
-    out.append(ln(x0, yb0, x1, yb0, INK, 1.2))
-    for v in ticks(smin, 0, 4):
-        y = fs(v)
-        out.append(ln(x0, y, x1, y, GRADE, 1))
-        out.append(
-            t(x0 - 8, y + 4, num(v, 0).replace("-", "−"), 12, MUTED, "end", mono=True)
-        )
+    for v in ticks(-lim, lim, 4):
+        out += [
+            ln(x0, fs(v), x1, fs(v), GRADE, 1),
+            t(
+                x0 - 8,
+                fs(v) + 4,
+                pp(v, 1).removesuffix(" pp"),
+                11,
+                MUTED,
+                "end",
+                mono=True,
+            ),
+        ]
+    out.append(ln(x0, fs(0), x1, fs(0), INK, 1.2))
     for i, dd in enumerate(decis):
         cx = fx[i]
-        y2, y1 = fy(dd["h2h_flavio"]), fy(dd["t1_h2h_flavio"])
-        ys = fs(dd["swing_h2h_flavio_pp"])
-        partes = [
-            f'<circle cx="{cx:.1f}" cy="{y1:.1f}" r="5" fill="{PAPER}" stroke="{T1}" stroke-width="2.2"/>',
-            f'<circle cx="{cx:.1f}" cy="{y2:.1f}" r="6" fill="{FLAVIO}"/>',
-            t(
-                cx,
-                y2 - 12 if y2 < y1 else y2 + 22,
-                num(dd["h2h_flavio"], 1),
-                12.5,
-                FLAVIO,
-                "middle",
-                "700",
-                mono=True,
-                extra=HALO,
-            ),
-            r(cx - passo * 0.3, yb0, passo * 0.6, ys - yb0, FLAVIO),
-            t(
-                cx,
-                ys + 16,
-                pp(dd["swing_h2h_flavio_pp"]).replace(" pp", ""),
-                12,
-                INK,
-                "middle",
-                mono=True,
-            ),
+        partes = []
+        for _candidato, cor, valor, dx in (
+            ("Flávio", FLAVIO, dd["swing_h2h_flavio_pp"], -passo * 0.17),
+            ("Lula", LULA, -dd["swing_h2h_flavio_pp"], passo * 0.17),
+        ):
+            partes += [
+                r(
+                    cx + dx - passo * 0.13,
+                    min(fs(0), fs(valor)),
+                    passo * 0.26,
+                    abs(fs(valor) - fs(0)),
+                    cor,
+                ),
+                t(
+                    cx + dx,
+                    fs(valor) + (-6 if valor >= 0 else 15),
+                    pp(valor, 1).removesuffix(" pp"),
+                    11,
+                    cor,
+                    "middle",
+                    mono=True,
+                ),
+            ]
+        partes += [
             t(cx, h - 34, f"{dd['decil']}º", 13, INK, "middle", "700"),
             t(
                 cx,
@@ -152,16 +175,17 @@ def _painel_decis(decis: list[dict], ident: str, mostra: bool, tips: Tips) -> st
             ("Fechou entre", f"{dd['fechou_hhmm_de']} e {dd['fechou_hhmm_ate']}"),
             ("Unidades", inteiro(dd["n"])),
             ("Eleitores", inteiro(dd["aptos"])),
-            ("Flávio, 2º turno", pct(dd["h2h_flavio"])),
-            ("Flávio, 1º turno (entre os dois)", pct(dd["t1_h2h_flavio"])),
-            ("Mudança", pp(dd["swing_h2h_flavio_pp"])),
-            ("Abstenção, 2º turno", pct(dd.get("pct_abstencao"))),
         ]
-        if "capitais" in dd:
-            linhas.append(("Capitais", inteiro(dd["capitais"])))
+        for candidato in ("Flávio", "Lula"):
+            v1, v2 = dd["t1_h2h_flavio"], dd["h2h_flavio"]
+            if candidato == "Lula":
+                v1, v2 = 100 - v1, 100 - v2
+            linhas += [
+                (f"{candidato}, 1º turno entre os dois", pct(v1)),
+                (f"{candidato}, 2º turno", pct(v2)),
+            ]
         k = tips.add(ficha(f"{dd['decil']}º decil", "1 = fechou mais cedo", linhas))
         out.append(hit("".join(partes), k))
-    out.append(t(x0, h - 50, "decil de fechamento (1 = mais cedo)", 11.5, MUTED))
     out.append("</g>")
     return "".join(out)
 
@@ -184,8 +208,8 @@ def fig_decis(C: dict) -> str:
         svg_abre(
             w,
             h,
-            "Parte de Flávio por decil de fechamento, 2º e 1º turno",
-            "Dez grupos de mesmo número de municípios pelo minuto em que fecharam; nível de Flávio "
+            "Lula e Flávio por decil de fechamento, 2º e 1º turno",
+            "Dez grupos de mesmo número de municípios pelo minuto em que fecharam; participação dos dois candidatos "
             "no 2º turno, no 1º turno nos mesmos lugares e a mudança entre os dois.",
         )
         + corpo
@@ -195,19 +219,19 @@ def fig_decis(C: dict) -> str:
     def faixas(decis: list[dict], unidade: str) -> str:
         nv = [dd["h2h_flavio"] for dd in decis]
         sw = [dd["swing_h2h_flavio_pp"] for dd in decis]
-        return f"{unidade}: nível de {num(min(nv), 2)}% a {num(max(nv), 2)}%, mudança de {pp(max(sw))} a {pp(min(sw))}"
+        return f"{unidade}, Flávio: nível de {num(min(nv), 2)}% a {num(max(nv), 2)}%, mudança de {pp(max(sw))} a {pp(min(sw))}"
 
     leg = legenda_html(
         [
-            ("2º turno, Flávio entre os dois", FLAVIO),
-            ("1º turno, mesmos municípios", T1),
+            ("Flávio", FLAVIO),
+            ("Lula", LULA),
         ],
     )
     partes = [faixas(C["decis_2t"], "Municípios")]
     if zonas:
         partes.append(faixas(zonas, "zonas eleitorais"))
     legenda = (
-        "O nível sobe e desce de um decil a outro, e o 1º turno nos mesmos lugares desenha a mesma serra; a mudança "
+        "Linha contínua: 2º turno; tracejada: 1º turno nos mesmos lugares, só entre os finalistas. Lula = 100 − Flávio, e a mudança troca de sinal. O nível sobe e desce de um decil a outro, e o 1º turno nos mesmos lugares desenha a mesma serra; a mudança "
         f"varia bem menos que o nível. {'; '.join(partes)}. Fonte: cedo_tarde.json (decis_2t e zonas.decis)."
     )
     return figura_html(

@@ -36,11 +36,14 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/politize_se_mapa/app.css?v=20261026d">
+<link rel="stylesheet" href="assets/politize_se_mapa/app.css?v=20261028">
+<link rel="stylesheet" href="assets/politize_se/territorio.css?v=20261028">
+<script defer src="assets/politize_se/territorio.js?v=20261028"></script>
 <script>document.documentElement.classList.add('js')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
-<script defer src="assets/politize_se_mapa/app.js?v=20261026f"></script>
+<script defer src="assets/politize_se_mapa/ficha.js?v=20261028"></script>
+<script defer src="assets/politize_se_mapa/app.js?v=20261028"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -59,7 +62,7 @@
     <div class="intro-txt">
       <p class="kicker">1º e 2º turno · 4 e 25 de outubro de 2026</p>
       <h2>Cada ponto é um prédio de votação. A cor é a camada que você escolher.</h2>
-      <p>O resultado do 2º turno no prédio, a mudança contra o 1º turno nas mesmas seções, o comparecimento, a abstenção, os sinais que pedem explicação, o modelo da urna, as urnas trocadas e as mudanças de endereço. <strong>Sinal pede explicação, não prova irregularidade.</strong> Leitura agregada por seção, como o TSE publica: o voto é secreto e nenhum número descreve uma pessoa.</p>
+      <p>Renda domiciliar estimada, homicídios do município, clima e o resultado do 2º turno no prédio, a mudança contra o 1º turno nas mesmas seções, o comparecimento, a abstenção, os sinais que pedem explicação, o modelo da urna, as urnas trocadas e as mudanças de endereço. <strong>Sinal pede explicação, não prova irregularidade.</strong> Leitura agregada por seção, como o TSE publica: o voto é secreto e nenhum número descreve uma pessoa.</p>
       <p id="cobertura" class="cobertura" role="status"></p>
     </div>
     <dl class="intro-num" aria-label="Números do mapa">
@@ -114,6 +117,14 @@
   </aside>
 
   <section class="palco" id="palco" aria-label="Resultado">
+    <nav class="lentes-territorio" aria-label="Leitura rápida do mapa">
+      <span>Olhar o território</span>
+      <button type="button" data-lente="resultado" aria-pressed="true">Votos</button>
+      <button type="button" data-lente="renda" aria-pressed="false">Renda estimada</button>
+      <button type="button" data-lente="homicidios" aria-pressed="false">Homicídios municipais</button>
+      <button type="button" data-lente="chuva2" aria-pressed="false">Chuva</button>
+    </nav>
+    <div id="mapa-escala" class="mapa-escala" aria-live="polite"></div>
     <div id="mapa" class="mapa" role="region" aria-label="Mapa dos locais de votação"></div>
     <div id="painel" class="painel" role="dialog" aria-label="Ficha do local de votação" hidden>
       <button type="button" class="painel-fechar" id="painel-fechar">Fechar ficha</button>

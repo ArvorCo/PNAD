@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from . import mapa_dados as md
+from . import territorio
 
 SAIDA = md.ROOT / "docs/assets/politize_se_mapa"
 UFS_ORDEM = [
@@ -127,6 +128,21 @@ def gravar(lido: dict[str, Any], saida: Path = SAIDA, mesclar: bool = False) -> 
             **_contagem(locais),
             "municipios": sorted(d["lista_mun"], key=lambda m: m[1]),
         }
+        ctx = lido.get("contextos", {}).get(uf, {})
+        gravar_json(
+            saida / f"contexto/{uf}.json",
+            {
+                "uf": uf,
+                "municipios": ctx.get("municipios", {}),
+                "locais": {
+                    "colunas": territorio.COLUNAS,
+                    "linhas": [
+                        [r.get(k) for k in territorio.COLUNAS]
+                        for _, r in sorted(ctx.get("locais", {}).items())
+                    ],
+                },
+            },
+        )
         if uf in lido["zonas"]:
             zonas[uf] = lido["zonas"][uf]
     # Um prefixo de CEP atravessa estados (69 = AM, AC e RR): numa amostra o índice de CEP
@@ -200,4 +216,5 @@ def gravar(lido: dict[str, Any], saida: Path = SAIDA, mesclar: bool = False) -> 
         "zonas": zonas,
     }
     gravar_json(saida / "indice.json", indice)
+    gravar_json(saida / "contexto/indice.json", territorio.metadados())
     return indice

@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 from politize_se import mapa_dados as md
 from politize_se import mapa_saida
+from social_cards_manifesto import CARDS
 
 ROOT = Path(__file__).resolve().parents[1]
 SAIDA = ROOT / "docs/assets/politize_se_mapa"
@@ -137,6 +138,9 @@ def test_camadas_contrato():
         "log_subiu",
         "chuva2",
         "anomalia",
+        "renda",
+        "renda_ate2",
+        "homicidios",
     }
     for k, c in md.CAMADAS.items():
         assert c["campo"] in md.COLUNAS_LOCAIS, k
@@ -228,7 +232,9 @@ def test_arquivos_por_uf_coerentes(indice):
 
 def test_pagina_contrato():
     html = PAGINA.read_text(encoding="utf-8")
-    js = APP.read_text(encoding="utf-8")
+    js = APP.read_text(encoding="utf-8") + (SAIDA / "ficha.js").read_text(
+        encoding="utf-8"
+    )
     css = (SAIDA / "app.css").read_text(encoding="utf-8")
     for txt in (html, js, css):
         assert TRAVESSAO not in txt
@@ -257,7 +263,9 @@ def test_pagina_contrato():
 
 
 def test_sem_jargao_na_interface():
-    js = APP.read_text(encoding="utf-8")
+    js = APP.read_text(encoding="utf-8") + (SAIDA / "ficha.js").read_text(
+        encoding="utf-8"
+    )
     interface_js = "\n".join(
         ln for ln in js.splitlines() if not ln.strip().startswith("//")
     )
@@ -283,8 +291,7 @@ def test_entradas_para_o_mapa():
     assert "FB.fig_mapa(R) + BOTAO_MAPA" in cap
     home = (ROOT / "docs/index.html").read_text(encoding="utf-8")
     assert home.count('href="politizese_mapa.html"') == 1
-    cards = (ROOT / "scripts/social-cards.py").read_text(encoding="utf-8")
-    assert '"social-card-politizese-mapa"' in cards
+    assert sum(card["slug"] == "politizese_mapa" for card in CARDS) == 1
 
 
 def test_modelo_da_urna_por_secao_e_predio():
@@ -312,7 +319,9 @@ def test_contagem_nacional_de_modelos(indice):
 def test_ficha_da_secao_mostra_modelo_e_veredito_da_urna():
     app = (ROOT / "docs/assets/politize_se/app.js").read_text(encoding="utf-8")
     assert "'Mesma urna nos dois turnos'" in app and "'Urna trocada'" in app
-    js = APP.read_text(encoding="utf-8")
+    js = APP.read_text(encoding="utf-8") + (SAIDA / "ficha.js").read_text(
+        encoding="utf-8"
+    )
     assert "mesma urna nos dois turnos" in js and "'urna trocada'" in js
     assert "'modelo_urna_predominante'" in js
 
@@ -340,14 +349,18 @@ def test_resumo_dos_logs_do_predio():
 
 
 def test_lista_e_csv_trazem_o_registro_do_2o_turno():
-    js = APP.read_text(encoding="utf-8")
+    js = APP.read_text(encoding="utf-8") + (SAIDA / "ficha.js").read_text(
+        encoding="utf-8"
+    )
     assert "['log2_max', 'Registro da urna, 2º turno']" in js
     assert "'registro_urna_2t_nivel_max'" in js
     assert "log2: { 0: '#9cb9c2', 1: '#4f8fa0', 2: '#0f5d6e', 3: '#5b2a86' }" in js
 
 
 def test_camada_do_grupo_atipico_no_app():
-    js = APP.read_text(encoding="utf-8")
+    js = APP.read_text(encoding="utf-8") + (SAIDA / "ficha.js").read_text(
+        encoding="utf-8"
+    )
     assert "anomalia: ['#d8d4c8', '#6b4a92']" in js
     assert "anomalia: 0.25" in js.split("const TETO_PARCELA")[1].split(";")[0]
     assert "['secoes_anomalas', 'Grupo atípico']" in js

@@ -17,8 +17,6 @@ from html import escape
 from pathlib import Path
 
 from apuracao_2026.pagina_comum import (
-    INK,
-    MUTED,
     ROOT,
     inteiro,
     num,
@@ -26,21 +24,14 @@ from apuracao_2026.pagina_comum import (
     tabela,
 )
 from apuracao_2026.pagina_fig_base import (
-    GRADE,
     Tips,
-    area,
-    escala,
-    ficha,
     figura_html,
-    hit,
     legenda_html,
-    ln,
     nome_bonito,
-    r,
-    svg_abre,
-    t,
 )
 from apuracao_2026.pagina_mapas import pontos_brasil
+
+from .pagina_fig_espelho import efeitos
 
 CSV_DESTINO = ROOT / "docs/assets/apuracao_2t/secoes_ranking.csv"
 CSV_URL = "assets/apuracao_2t/secoes_ranking.csv"
@@ -134,110 +125,41 @@ def fig_mapa(R: dict, escore_min: int = 2) -> str:
 
 
 def fig_did(V: dict) -> str:
-    sinais = [
-        s
-        for s in V["sinais"]
-        if s.get("did_fatia_flavio_pp") is not None
-        and (s.get("n_did") or 0) >= (V.get("n_min") or 20)
-    ]
-    sinais.sort(key=lambda s: s["did_fatia_flavio_pp"])
-    w, esq, dir_ = 1100, 470, 150
-    topo, passo = 56, 40
-    h = topo + passo * len(sinais) + 50
-    lim = max(
-        [
-            abs(s["did_fatia_flavio_pp"]) + 2 * (s.get("ep_did_fatia_flavio_pp") or 0)
-            for s in sinais
-        ]
-        + [1.0]
+    sinais = sorted(
+        (
+            s
+            for s in V["sinais"]
+            if s.get("did_fatia_flavio_pp") is not None
+            and (s.get("n_did") or 0) >= (V.get("n_min") or 20)
+        ),
+        key=lambda s: s["did_fatia_flavio_pp"],
     )
-    lim = max(1.0, round(lim + 0.25, 1))
-    x = escala(-lim, lim, esq, w - dir_)
-    out = [
-        svg_abre(
-            w,
-            h,
-            "Diferença em diferenças da fatia de Flávio, por sinal",
-            "Para cada sinal, quanto a fatia de Flávio entre os dois finalistas mudou do 1º para o 2º "
-            "turno nas seções com sinal, menos o quanto mudou nas vizinhas do mesmo município; barra "
-            "de dois erros-padrão.",
-        )
-    ]
-    v = -lim
-    passo_t = 0.5 if lim <= 2 else 1.0
-    while v <= lim + 1e-9:
-        out.append(ln(x(v), topo - 10, x(v), h - 40, GRADE, 1))
-        out.append(t(x(v), h - 22, sinal(v, 1), 12, MUTED, "middle", mono=True))
-        v = round(v + passo_t, 6)
-    out.append(ln(x(0), topo - 16, x(0), h - 40, INK, 1.4))
-    out.append(t(x(-lim), topo - 26, "← na direção de Lula", 13, "#b02f21"))
-    out.append(t(x(lim), topo - 26, "na direção de Flávio →", 13, "#1457aa", "end"))
-    out.append(
-        t(esq - 12, topo - 26, "sinal (n de seções comparáveis)", 13, MUTED, "end")
-    )
-    out.append(t(w - dir_ + 14, topo - 26, "contra vizinhas", 13, MUTED))
-    tips = Tips()
-    for i, s in enumerate(sinais):
-        y = topo + i * passo + 14
-        d = s["did_fatia_flavio_pp"]
-        ep = s.get("ep_did_fatia_flavio_pp") or 0
-        cor = "#b02f21" if d < 0 else "#1457aa"
-        desc = s.get("descricao") or s["sinal"]
-        rot = desc if len(desc) <= 58 else desc[:56] + "…"
-        partes = [
-            t(esq - 12, y + 5, f"{rot} ({inteiro(s.get('n_did'))})", 13, INK, "end"),
-            r(min(x(0), x(d)), y - 7, abs(x(d) - x(0)), 14, cor, ' fill-opacity="0.8"'),
-            ln(x(d - 2 * ep), y, x(d + 2 * ep), y, INK, 1.4),
-            ln(x(d - 2 * ep), y - 6, x(d - 2 * ep), y + 6, INK, 1.4),
-            ln(x(d + 2 * ep), y - 6, x(d + 2 * ep), y + 6, INK, 1.4),
-            t(
-                w - dir_ + 14,
-                y + 5,
-                f"{sinal(s.get('dif_fatia_flavio_vs_vizinhas_pp'), 2)} pp",
-                13,
-                INK,
-                mono=True,
-            ),
-        ]
-        kk = tips.add(
-            ficha(
-                desc,
-                f"{inteiro(s.get('n_did'))} seções comparáveis",
-                [
-                    ("diferença em diferenças", f"{sinal(d, 2)} pp"),
-                    ("erro-padrão", f"{num(ep, 2)} pp"),
-                    (
-                        "contra vizinhas no 2º turno",
-                        f"{num(s.get('dif_fatia_flavio_vs_vizinhas_pp'), 2)} pp",
-                    ),
-                    ("seções com sinal", inteiro(s.get("n_sinal_total"))),
-                    ("vizinhas", inteiro(s.get("n_vizinhas"))),
-                    ("municípios", inteiro(s.get("n_municipios"))),
+    itens = []
+    for s in sinais:
+        d, ep = s["did_fatia_flavio_pp"], s.get("ep_did_fatia_flavio_pp")
+        itens.append(
+            {
+                "nome": s.get("descricao") or s["sinal"],
+                "n": s.get("n_did"),
+                "valor": d,
+                "intervalo": None if ep is None else (d - 2 * ep, d + 2 * ep),
+                "bruto": s.get("dif_fatia_flavio_vs_vizinhas_pp"),
+                "ficha": [
+                    ("Seções com sinal", inteiro(s.get("n_sinal_total"))),
+                    ("Vizinhas", inteiro(s.get("n_vizinhas"))),
+                    ("Municípios", inteiro(s.get("n_municipios"))),
                 ],
-                "Erro-padrão aproximado, entre municípios.",
-            )
+            }
         )
-        out.append(
-            hit("".join(partes) + area(0, y - passo / 2, w, passo), kk, foco=True)
-        )
-    out.append("</svg>")
-    legenda = (
-        "Pontos percentuais da fatia de Flávio entre os dois finalistas. A coluna da direita é a "
-        "diferença crua contra as vizinhas no 2º turno; a barra é essa diferença descontada da que já "
-        "existia no 1º. Só sinais com n de 20 ou mais. Fonte: secoes_voto.json."
-    )
-    return figura_html(
+    return efeitos(
         "secoes_did",
-        "".join(out),
-        legenda,
-        tips,
-        modo="scroll",
-        minw=900,
-        foco=(esq - 40, w - dir_, x(0)),
+        itens,
+        "Lula e Flávio: diferença em diferenças por sinal",
+        "Mudança do 1º para o 2º turno nas seções com sinal, descontada a mudança nas vizinhas do mesmo município. "
+        f"Só sinais com n ≥ {V.get('n_min') or 20}. Traço: dois erros-padrão aproximados entre municípios. "
+        "A ficha de cada ponto também mostra a diferença bruta no 2º turno. Fonte: secoes_voto.json.",
+        intervalo_rotulo="Estimativa ± 2 erros-padrão",
     )
-
-
-# ------------------------------------------------------------------ 2×2×2
 
 
 def tabela_2x2x2(V: dict) -> str:

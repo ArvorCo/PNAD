@@ -23,6 +23,7 @@ from apuracao_2026.pagina_comum import (
 from apuracao_2026.pagina_fig_base import (
     GRADE,
     INK,
+    LULA,
     MUTED,
     Tips,
     area,
@@ -256,11 +257,20 @@ def _figura(od: dict) -> str:
     w, h = 1100, 520
     x0, x1, y0, y1 = 80, 1060, 70, 330
     yb0, yb1 = 380, 470
-    niveis = [v for a in V for v in (a["fatia_f_2t"], a["fatia_f_1t"])]
+    niveis = [
+        v
+        for a in V
+        for v in (
+            a["fatia_f_2t"],
+            a["fatia_f_1t"],
+            100 - a["fatia_f_2t"],
+            100 - a["fatia_f_1t"],
+        )
+    ]
     lo, hi = min([*niveis, 50]) - 1, max([*niveis, 50]) + 1
     fy = escala(lo, hi, y1, y0)
-    dmin = min(a["dif_pp"] for a in V)
-    fd = escala(0, min(dmin * 1.2, -1), yb0, yb1)
+    dlim = max(1, max(abs(a["dif_pp"]) for a in V) * 1.2)
+    fd = escala(-dlim, dlim, yb1, yb0)
     passo = (x1 - x0) / len(V)
     fx = [x0 + passo * (i + 0.5) for i in range(len(V))]
     tips = Tips()
@@ -268,14 +278,14 @@ def _figura(od: dict) -> str:
         svg_abre(
             w,
             h,
-            "Flávio por ordem de recebimento do BU",
-            "Fatia de Flávio entre os dois finalistas em 20 grupos de mesmo número de votos, pela ordem em que "
+            "Lula e Flávio por ordem de recebimento do BU",
+            "Participação dos dois candidatos em 20 grupos de mesmo número de votos, pela ordem em que "
             "o TSE recebeu o BU, no 2º turno e no 1º turno das mesmas seções, e a diferença entre os dois.",
         ),
         t(
             x0,
             y0 - 30,
-            "Parte de Flávio entre os dois finalistas, %",
+            "Participação entre os dois finalistas, %",
             14,
             INK,
             weight="700",
@@ -285,22 +295,33 @@ def _figura(od: dict) -> str:
         out.append(ln(x0, fy(v), x1, fy(v), GRADE, 1))
         out.append(t(x0 - 8, fy(v) + 5, num(v, 0), 13, MUTED, "end"))
     out.append(ln(x0, fy(50), x1, fy(50), INK, 1.2, ' stroke-dasharray="4 4"'))
-    for serie, cor in (("fatia_f_1t", T1), ("fatia_f_2t", FLAVIO)):
-        pts = " ".join(f"{fx[i]:.1f},{fy(a[serie]):.1f}" for i, a in enumerate(V))
-        out.append(
-            f'<polyline points="{pts}" fill="none" stroke="{cor}" stroke-width="2.5"/>'
-        )
-        for i, a in enumerate(V):
-            out.append(
-                f'<circle cx="{fx[i]:.1f}" cy="{fy(a[serie]):.1f}" r="4" fill="{cor}"/>'
+    for candidato, cor in (("Flávio", FLAVIO), ("Lula", LULA)):
+        for serie in ("fatia_f_1t", "fatia_f_2t"):
+            valores = [a[serie] if candidato == "Flávio" else 100 - a[serie] for a in V]
+            pts = " ".join(f"{fx[i]:.1f},{fy(v):.1f}" for i, v in enumerate(valores))
+            tr = (
+                ' stroke-dasharray="7 5" stroke-opacity="0.65"'
+                if serie.endswith("1t")
+                else ""
             )
+            out.append(
+                f'<polyline data-candidato="{candidato}" points="{pts}" fill="none" stroke="{cor}" stroke-width="2.5"{tr}/>'
+            )
+            for i, v in enumerate(valores):
+                out.append(
+                    f'<circle cx="{fx[i]:.1f}" cy="{fy(v):.1f}" r="3" fill="{cor}"/>'
+                )
     out.append(t(x0, yb0 - 14, "2º turno menos 1º turno, pp", 14, INK, weight="700"))
-    out.append(ln(x0, yb0, x1, yb0, INK, 1))
+    out.append(ln(x0, fd(0), x1, fd(0), INK, 1))
     for i, a in enumerate(V):
-        y = fd(a["dif_pp"])
-        out.append(
-            f'<rect x="{fx[i] - passo * 0.35:.1f}" y="{yb0:.1f}" width="{passo * 0.7:.1f}" height="{y - yb0:.1f}" fill="{MUTED}"/>'
-        )
+        for valor, cor, dx in (
+            (a["dif_pp"], FLAVIO, -0.17),
+            (-a["dif_pp"], LULA, 0.17),
+        ):
+            yy, yz = fd(valor), fd(0)
+            out.append(
+                f'<rect x="{fx[i]+passo*dx-passo*.13:.1f}" y="{min(yy,yz):.1f}" width="{passo*.26:.1f}" height="{abs(yy-yz):.1f}" fill="{cor}"/>'
+            )
         k = tips.add(
             ficha(
                 f"{a['vintil']}º vintil",
@@ -308,6 +329,8 @@ def _figura(od: dict) -> str:
                 [
                     ("Flávio, 2º turno", f"{num(a['fatia_f_2t'], 2)}%"),
                     ("Flávio, 1º turno", f"{num(a['fatia_f_1t'], 2)}%"),
+                    ("Lula, 2º turno", f"{num(100-a['fatia_f_2t'], 2)}%"),
+                    ("Lula, 1º turno", f"{num(100-a['fatia_f_1t'], 2)}%"),
                     ("diferença", f"{sinal(a['dif_pp'], 2)} pp"),
                     ("seções", inteiro(a["secoes"])),
                     ("UFs com mais votos", ", ".join(a["ufs_principais"])),
@@ -328,9 +351,7 @@ def _figura(od: dict) -> str:
         )
     )
     out.append("</svg>")
-    leg = legenda_html(
-        [("2º turno", FLAVIO), ("1º turno, mesmas seções", T1), ("diferença", MUTED)]
-    )
+    leg = legenda_html([("Flávio", FLAVIO), ("Lula", LULA)])
     rs = od.get("resumo") or {}
     varia = (
         f"varia {num(rs['dif_amplitude_pp'], 2)} pp entre os grupos, contra {num(rs['fatia_2t_amplitude_pp'], 2)} pp "
@@ -342,7 +363,7 @@ def _figura(od: dict) -> str:
     return figura_html(
         "angulo_ordem_recebimento",
         "".join(out),
-        f"Os grupos que chegaram primeiro eram mais de Flávio nos dois turnos; a diferença entre os turnos {varia}.",
+        f"Linha contínua: 2º turno; tracejada: 1º turno, mesmas seções, apenas entre os finalistas. A mudança de Lula é o oposto da de Flávio. Os grupos que chegaram primeiro eram mais de Flávio nos dois turnos; a diferença entre os turnos {varia}.",
         tips,
         apos=leg,
     )

@@ -207,6 +207,7 @@ def render(d: Dados, cap: Capitulo) -> str:
         f"com {num(n['pst'], 2)}% das seções.",
     )
     h += frase_noite(d)
+    h += '<p>A leitura territorial e a trilha de auditoria estão no relatório <a href="analise_realidade_eleicao.html">A geografia do voto e o que pede explicação</a>: municípios, zonas das capitais, renda, desenvolvimento e evidências entre turnos.</p>'
     h += cards(P)
     h += bloco_regioes(P) + fig_barras(P)
     h += bloco_norte(P)

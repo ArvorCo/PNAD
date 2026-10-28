@@ -35,7 +35,6 @@ from apuracao_2026.pagina_fig_base import (
     legenda_html,
     ln,
     nome_bonito,
-    r,
     svg_abre,
     t,
     ticks,
@@ -44,6 +43,7 @@ from apuracao_2026.pagina_fig_secoes_c import CINZA_ELIPSE, elipse_cov, topo_eli
 from apuracao_2026.pagina_mapas import pontos_brasil
 
 from . import pagina_fig_anomalia_base as B
+from .pagina_fig_espelho import efeitos
 
 LULA_TXT = "#b02f21"
 FLAVIO_TXT = "#1457aa"
@@ -334,94 +334,22 @@ def fig_voto(A: dict) -> str:
         raise KeyError("mais_anomalo.voto")
     v = B.voto(A)
     itens = [
-        (
-            "Fatia de Flávio no 2º turno, contra as vizinhas do mesmo município",
-            fatia,
-            ic_f,
-        ),
-        (
-            "Diferença em diferenças: a mesma fatia, 2º menos 1º turno, contra as vizinhas",
-            did,
-            ic_d,
-        ),
-    ]
-    itens = [i for i in itens if i[1] is not None]
-    w, esq, dir_ = 1100, 520, 150
-    topo, passo = 56, 44
-    h = topo + passo * len(itens) + 50
-    lim = max(
-        [
-            abs(x[1]) + (max(abs(x[2][0]), abs(x[2][1])) - abs(x[1]) if x[2] else 0)
-            for x in itens
+        {"nome": nome, "valor": val, "intervalo": ic}
+        for nome, val, ic in [
+            ("2º turno: grupo atípico contra vizinhas", fatia, ic_f),
+            ("Entre turnos: diferença em diferenças", did, ic_d),
         ]
-        + [1.0]
-    )
-    lim = max(1.0, round(lim * 1.15 + 0.25, 1))
-    x = escala(-lim, lim, esq, w - dir_)
-    out = [
-        svg_abre(
-            w,
-            h,
-            "Voto no grupo atípico contra as vizinhas",
-            "Fatia de Flávio entre os dois finalistas no grupo atípico menos a das seções vizinhas do mesmo "
-            "município, no 2º turno e em diferença em diferenças contra o 1º; barra do IC de 95% por bootstrap.",
-        )
+        if val is not None
     ]
-    passo_t = 0.5 if lim <= 2 else 1.0 if lim <= 6 else 2.0
-    vv = -lim
-    while vv <= lim + 1e-9:
-        out.append(ln(x(vv), topo - 10, x(vv), h - 40, GRADE, 1))
-        out.append(
-            t(
-                x(vv),
-                h - 22,
-                B.pp_txt(vv, 1).removesuffix(" pp"),
-                12,
-                MUTED,
-                "middle",
-                mono=True,
-            )
-        )
-        vv = round(vv + passo_t, 6)
-    out.append(ln(x(0), topo - 16, x(0), h - 40, INK, 1.4))
-    out.append(t(x(-lim), topo - 26, "← na direção de Lula", 13, LULA_TXT))
-    out.append(t(x(lim), topo - 26, "na direção de Flávio →", 13, FLAVIO_TXT, "end"))
-    out.append(t(w - dir_ + 14, topo - 26, "pp", 13, MUTED))
-    tips = Tips()
-    for i, (nome, val, ic) in enumerate(itens):
-        y = topo + i * passo + 14
-        cor = LULA_TXT if val < 0 else FLAVIO_TXT
-        rot = nome if len(nome) <= 64 else nome[:62] + "…"
-        partes = [
-            t(esq - 12, y + 5, rot, 13, INK, "end"),
-            r(
-                min(x(0), x(val)),
-                y - 7,
-                abs(x(val) - x(0)),
-                14,
-                cor,
-                ' fill-opacity="0.8"',
-            ),
-        ]
-        if ic:
-            partes += [
-                ln(x(ic[0]), y, x(ic[1]), y, INK, 1.4),
-                ln(x(ic[0]), y - 6, x(ic[0]), y + 6, INK, 1.4),
-                ln(x(ic[1]), y - 6, x(ic[1]), y + 6, INK, 1.4),
-            ]
-        partes.append(t(w - dir_ + 14, y + 5, B.pp_txt(val, 2), 13, INK, mono=True))
-        ch = tips.add(ficha_voto(nome, val, ic, v))
-        out.append(
-            f'<g class="hit" data-k="{ch}" tabindex="0">{r(esq - 300, y - 14, w - esq + 300, 28, "transparent")}{"".join(partes)}</g>'
-        )
-    out.append("</svg>")
-    legenda = (
+    return efeitos(
+        "an_voto",
+        itens,
+        "Lula e Flávio no grupo atípico contra as vizinhas",
         f"Grupo atípico: {inteiro(B.g(v, 'n', 'n_sinal_comparavel'))} seções comparáveis contra "
-        f"{inteiro(B.g(v, 'n_vizinhas'))} vizinhas em {inteiro(B.g(v, 'n_municipios'))} municípios; IC de 95% por "
-        f"bootstrap de {inteiro(B.g(v, 'bootstrap', 'reamostragens', padrao=2000))} reamostragens. Publicado seja "
-        "qual for o sinal. Fonte: anomalia_ml.json."
+        f"{inteiro(B.g(v, 'n_vizinhas'))} vizinhas em {inteiro(B.g(v, 'n_municipios'))} municípios; "
+        f"IC de 95% por bootstrap de {inteiro(B.g(v, 'bootstrap', 'reamostragens', padrao=2000))} reamostragens. "
+        "Publicado qualquer que seja o sinal. Fonte: anomalia_ml.json.",
     )
-    return figura_html("an_voto", "".join(out), legenda, tips, minw=640, dim=False)
 
 
 def ficha_voto(nome: str, val: float, ic: tuple | None, v: dict) -> str:

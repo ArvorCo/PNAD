@@ -1,0 +1,923 @@
+"""Manifesto único dos cards, separado do renderizador para manter módulos pequenos."""
+
+import importlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _agregador_counts() -> tuple[str, str]:
+    """Ondas e institutos do agregador, lidos do JSON gerado, para o card não envelhecer."""
+    path = (
+        Path(__file__).resolve().parents[1]
+        / "docs"
+        / "assets"
+        / "reponderacao_pnad.json"
+    )
+    if not path.exists():
+        return "40", "9"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return str(len(data["pesquisas"])), str(len(data["institutos"]))
+
+
+_ONDAS, _INSTITUTOS = _agregador_counts()
+
+
+def _apuracao_2t_card() -> dict:
+    """Card do dossiê da apuração do 2º turno, com os números lidos dos JSONs do dossiê."""
+    dados = ROOT / "analysis/apuracao_2t_2026/dados"
+
+    def ler(nome: str) -> dict:
+        c = dados / nome
+        return json.loads(c.read_text(encoding="utf-8")) if c.exists() else {}
+
+    n = ler("presidente.json").get("nacional", {})
+    sil = ler("linha_do_tempo.json").get("pausas", {}).get("silencio_geral", {})
+    par = ler("paralela.json")
+
+    def br(x: float, casas: int = 2) -> str:
+        return f"{x:.{casas}f}".replace(".", ",")
+
+    placar = f"{br(n['pct_lula'])}%" if n else "s/d"
+    contra = f"Lula nos válidos, contra {br(n['pct_flavio'])}% de Flávio" if n else ""
+    margem = f"{br(n['margem_lula_votos'] / 1e6)} milhões" if n else "s/d"
+    return {
+        "slug": "apuracao_2T_2026",
+        "eyebrow": "Dossiê da apuração · 2º turno de 25/10/2026",
+        "title": f"Lula vence por {margem} de votos.",
+        "title_em": "O silêncio do TSE e o método.",
+        "lede": "A noite minuto a minuto, a projeção da casa, os boletins, seções e a paralela. "
+        "<b>Entre a última pesquisa e a urna, 5,5 pontos mudaram de lado: o que aconteceu no domingo.</b>",
+        "stats": [
+            (placar, contra),
+            (
+                f"{br(sil.get('minutos', 0), 1)} min",
+                "sem nenhum arquivo gerado pelo TSE durante a prorrogação",
+            ),
+            (
+                str(par.get("conferencia", {}).get("igual", 0)),
+                "boletins de urna conferidos pela paralela, nenhuma divergência",
+            ),
+        ],
+        "foot": "atipicidade pede explicação, não prova irregularidade",
+        "accent": "red",
+        "logo": True,
+    }
+
+
+def _apuracao_2t_thread_card() -> dict:
+    """Card da thread do dossiê do 2º turno, números lidos dos JSONs do dossiê."""
+    dados = ROOT / "analysis/apuracao_2t_2026/dados"
+
+    def ler(nome: str) -> dict:
+        c = dados / nome
+        return json.loads(c.read_text(encoding="utf-8")) if c.exists() else {}
+
+    def br(x: float, casas: int = 2) -> str:
+        return f"{x:.{casas}f}".replace(".", ",")
+
+    pr = ler("projecao_noite.json")
+    pq = ler("pesquisas_vs_urna.json")
+    stats = []
+    if pr:
+        lula = sum(1 for x in pr["pontos"] if x.get("lider_projetado") == "lula")
+        stats.append(
+            (
+                f"{lula} de {pr['pontos_com_projecao']}",
+                "pontos da projeção da noite com Lula à frente",
+            )
+        )
+    if pq:
+        stats.append(
+            (
+                f"+{br(pq['resumo']['publicado_validos_do_total']['media'])}",
+                "pontos entre o último campo das pesquisas e a urna, mesmo sinal nas casas",
+            )
+        )
+        stats.append(
+            (
+                f"+{br(pq['centrais']['media_arvor']['erro_f_menos_l'])}",
+                "pela Média Arvor: o tamanho do que mudou no domingo",
+            )
+        )
+    return {
+        "slug": "apuracao_2T_2026_thread",
+        "eyebrow": "Thread · apuração do 2º turno de 2026",
+        "title": "A noite do 2º turno, card a card.",
+        "title_em": "As pesquisas mediram o sábado; a urna contou o domingo.",
+        "lede": (
+            "A parada do TSE, a prorrogação que não encontrou urna aberta, seções, "
+            "abstenção e paralela. <b>A projeção da noite acertou desde o primeiro ponto; "
+            "entre o último campo e a urna, uma mudança que o dossiê investiga.</b>"
+        ),
+        "stats": stats,
+        "foot": "arquivos públicos do TSE · cada número com fonte no dossiê",
+        "accent": "blue",
+        "thread": True,
+    }
+
+
+CARDS: list[dict] = [
+    importlib.import_module("social-card-realidade").card(ROOT),
+    _apuracao_2t_card(),
+    _apuracao_2t_thread_card(),
+    importlib.import_module("social-card-projecao-secoes").card(ROOT),
+    importlib.import_module("social-card-quaest-141026").card(ROOT),
+    *importlib.import_module("social-card-dossies-2t").cards(ROOT),
+    importlib.import_module("social-card-clima").card(ROOT),
+    importlib.import_module("social-card-mudancas").card(ROOT),
+    importlib.import_module("social-card-mudancas").card_thread(ROOT),
+    importlib.import_module("social-card-politizese").card(ROOT),
+    importlib.import_module("social-card-politizese-mapa").card(ROOT),
+    importlib.import_module("social-card-politize").card(ROOT),
+    importlib.import_module("social-card-politize-game").card(ROOT),
+    importlib.import_module("social-card-apuracao").card(ROOT),
+    importlib.import_module("social-card-apuracao").card_thread(ROOT),
+    importlib.import_module("social-card-apuracao").card_fiscais_thread(ROOT),
+    importlib.import_module("social-card-fiscais-mapa").card(ROOT),
+    importlib.import_module("social-card-predicao").card(ROOT),
+    importlib.import_module("social-card-senado").card(ROOT),
+    importlib.import_module("social-card-governador").card(ROOT),
+    {
+        "slug": "totalizacao",
+        "eyebrow": "Totalização paralela · 2º turno de 25/10/2026",
+        "title": "Leia o QR do boletim da sua seção.",
+        "title_em": "A soma é independente e verificada.",
+        "lede": "Cada BU impresso traz QR codes assinados pela própria urna. O aplicativo lê, confere a assinatura e a cadeia de certificação do TSE e soma seção a seção, ao lado do que o TSE publica. <b>Nenhuma foto sai do celular: só o texto do QR.</b>",
+        "stats": [
+            ("517.179", "seções do país à espera de um BU"),
+            ("2", "verificações antes de contar: assinatura da urna e AC do TSE"),
+            ("0", "cadastros, logins ou CPFs pedidos"),
+        ],
+        "foot": "soma dos BUs recebidos, não projeção; conta transmissão e totalização, não o interior da urna",
+        "accent": "red",
+        "logo": True,
+    },
+    {
+        "slug": "totalizacao_painel",
+        "eyebrow": "Painel · totalização paralela do 2º turno",
+        "title": "Quantas seções já conferimos",
+        "title_em": "e o que elas somam.",
+        "lede": "Cobertura por estado e município, placar dos BUs recebidos, seções em conflito e a cadeia de hashes de cada boletim aceito. <b>Todo arquivo tem SHA-256 publicado e o CSV deixa qualquer pessoa refazer a soma.</b>",
+        "stats": [
+            ("27", "estados com cobertura medida em seções e em eleitores aptos"),
+            ("1", "hash encadeado por BU aceito, conferido a cada exportação"),
+            ("10 min", "entre snapshots publicados no histórico do repositório"),
+        ],
+        "foot": "rótulo fixo: soma dos BUs recebidos, não projeção",
+        "accent": "red",
+        "logo": True,
+    },
+    {
+        "slug": "apuracao_2t_ao_vivo",
+        "eyebrow": "Ao vivo · 2º turno de 25/10/2026",
+        "title": "Apuração do 2º turno ao vivo",
+        "title_em": "ritmo, abstenção e pausas.",
+        "lede": "Regiões, ritmo de cada UF contra o 1º turno no mesmo horário, abstenção em municípios fechados, pausas do arquivo do TSE e a totalização paralela por QR. <b>Atualiza a cada minuto e pede explicação, não indica irregularidade.</b>",
+        "stats": [
+            ("6", "regiões com duelo, atraso e abstenção corrente"),
+            ("28", "UFs e exterior ordenadas das mais lentas às mais rápidas"),
+            ("60 s", "entre recargas, com a idade dos dados na tela"),
+        ],
+        "foot": "parcial de apuração, não projeção; soma dos BUs recebidos, não projeção",
+        "accent": "red",
+        "logo": True,
+    },
+    {
+        "slug": "senado_2027",
+        "eyebrow": "Senado de 2027 diante do STF · 81 fichas",
+        "title": "Os 49 votos de uma PEC existem.",
+        "title_em": "Os 54 de um impeachment, ainda não.",
+        "lede": "Exposição judicial documentada e disposição de contrapeso de cada um dos 81 senadores de 2027, com uma régua só e a fonte ao lado. <b>Quem tem processo de opinião vota contra o STF; o freio, se existir, está no centrão com caso patrimonial.</b>",
+        "stats": [
+            ("57,8", "votos esperados para uma PEC, com 91% de chance de 49"),
+            ("47,2", "votos esperados para o impeachment, 19% de chance de 54"),
+            ("59 de 81", "têm algum registro judicial localizado; 22, nenhum"),
+        ],
+        "foot": "régua declarada sobre fatos verificados, cenário condicional, não previsão",
+        "accent": "red",
+    },
+    {
+        "slug": "mapa_do_voto_util",
+        "eyebrow": "Mapa do voto útil · 1º turno de 2026",
+        "title": "O voto útil já começou.",
+        "title_em": "Falta chegar a 9,6 milhões de eleitores.",
+        "lede": "67 pesquisas estaduais de três institutos, estado por estado. Sete de cada dez pontos que a terceira via perde vão para Flávio. <b>De um terço a dois quintos da reserva põem Flávio na frente no 1º turno.</b>",
+        "stats": [
+            ("9,6 mi", "votam Flávio no 2º turno e ainda não no 1º"),
+            ("71%", "do ganho dos dois desde 26/08 foi de Flávio"),
+            ("48,2%", "é onde Lula chega se só a esquerda consolidar"),
+        ],
+        "foot": "análise de pesquisas registradas e cenário condicional, não previsão",
+        "accent": "amber",
+    },
+    {
+        "slug": "estaduais_092026",
+        "eyebrow": "Atlas estadual · setembro de 2026",
+        "title": "A direita ganha o estado.",
+        "title_em": "E perde o país no mesmo domicílio.",
+        "lede": "Quinze pesquisas estaduais e o TSE de 2022 em 5.751 municípios. O vão entre a candidatura de direita ao governo e a presidencial chega a <b>33 pontos</b>, medido na mesma entrevista.",
+        "stats": [
+            ("33", "pontos de vão no Ceará"),
+            ("26,6 mi", "de eleitores em estados sem visita"),
+            ("54", "municípios guardam metade do voto do NE"),
+        ],
+        "foot": "leitura descritiva de pesquisa, não previsão eleitoral",
+        "accent": "lime",
+    },
+    {
+        "slug": "superthread_092026",
+        "eyebrow": "Thread · rodada de setembro de 2026",
+        "title": "Quatro pesquisas, uma régua só.",
+        "title_em": "E o mapa que ninguém abriu.",
+        "lede": "Datafolha, CNT/MDA, BTG/Nexus e Quaest discordam do placar e concordam no efeito da renda. Depois, as quinze estaduais que não viraram manchete.",
+        "stats": [
+            ("7", "cards quadrados, texto pronto"),
+            ("4 / 4", "pesquisas andam para o mesmo lado"),
+            ("693 mil", "votos de Bolsonaro em Manaus"),
+        ],
+        "foot": "sensibilidade de uma margem sob régua comum",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "quaest_14092026",
+        "eyebrow": "Quaest / Globo · 14 de setembro de 2026",
+        "title": "Dois pontos.",
+        "title_em": "Menos de um com a PNAD.",
+        "lede": "O 40 × 42 publicado vira <b>Lula 40,66 × Flávio 41,40</b>. Transferência medida, adesão frágil e o inventário do questionário.",
+        "stats": [
+            ("0,74", "ponto na régua PNAD"),
+            ("4", "origens de transferência medidas"),
+            ("66", "itens registrados auditados"),
+        ],
+        "foot": "sensibilidade de renda, não previsão eleitoral",
+        "accent": "lime",
+    },
+    *importlib.import_module("social-card-reponderacao").cards(ROOT),
+    {
+        "slug": "sp_092026",
+        "eyebrow": "Atlas estadual 02 · São Paulo · setembro de 2026",
+        "title": "O voto de Tarcísio",
+        "title_em": "que ainda não é de Flávio.",
+        "lede": "Um em cada sete eleitores de Tarcísio no 2º turno não vota Flávio. <b>Reponderação, três fluxos, o vão por recorte</b> e nove corredores de campanha em SP.",
+        "stats": [
+            ("7,0", "pontos de vão"),
+            ("14%", "do eleitor de Tarcísio"),
+            ("9", "corredores"),
+        ],
+        "foot": "TSE · IBGE · pesquisas estaduais · corte em 05/09/2026",
+        "accent": "amber",
+    },
+    {
+        "slug": "hub",
+        "eyebrow": "Arvor Intelligence · dados abertos do Brasil",
+        "title": "Brasil,",
+        "title_em": "conhece-te a ti mesmo",
+        "lede": "Eleições, economia e segurança pública lidas nos dados oficiais, com a conta aberta: <b>TSE, IBGE, Banco Central e boletins por seção, município e estado.</b> Cada número reproduzível, cada limite declarado.",
+        "stats": [
+            ("5.570", "municípios"),
+            ("499 mil", "seções eleitorais"),
+            ("100%", "código e dados abertos"),
+        ],
+        "foot": "eleições · economia · segurança pública",
+        "accent": "lime",
+        # Foto de fundo inteira (não o painel lateral): imagem aérea gerada localmente com
+        # FLUX 2 Klein (mflux), sem direitos de terceiros; prompt em docs/img/hub/README.md.
+        "bg": "img/hub/brasil_fundo.jpg",
+    },
+    {
+        "slug": "mg_082026",
+        "eyebrow": "Atlas estadual 01 · Minas Gerais · agosto de 2026",
+        "title": "O estado que decidiu virar",
+        "title_em": "por 0,40 ponto.",
+        "lede": "Economia, eleitorado atual e voto oficial nos <b>853 municípios</b>. A faixa móvel que fez Minas trocar de lado entre 2018 e 2022.",
+        "stats": [
+            ("16,38 mi", "eleitores em 2026"),
+            ("160", "viradas D→E"),
+            ("50,20×49,80", "Lula e Bolsonaro em 2022"),
+        ],
+        "foot": "TSE · IBGE · PNAD · Quaest · Real Time Big Data",
+        "accent": "amber",
+        "photo": "img/atlas_072026/web/eleicao-rua.jpg",
+    },
+    {
+        "slug": "sp_092026_thread",
+        "eyebrow": "Thread · São Paulo · setembro de 2026",
+        "title": "Um em sete eleitores de Tarcísio",
+        "title_em": "não vota Flávio.",
+        "lede": "Cinco pontos em nove cards quadrados: o vazamento e seus destinos, o teste da terceira via, <b>as cidades onde o eleitor mora</b>, os puxadores e quem acompanha Flávio em cada corredor.",
+        "stats": [
+            ("7,0", "pontos de vão"),
+            ("1,1 mi", "com endereço"),
+            ("+12,3", "Pontes em Bauru"),
+        ],
+        "foot": "TSE 2022 · PNAD 2025 · Datafolha, Atlas, Quaest, Real Time · corte em 05/09/2026",
+        "accent": "blue",
+    },
+    {
+        "slug": "mg_082026_thread",
+        "eyebrow": "Thread · Minas Gerais · setembro de 2026",
+        "title": "Cleitinho não puxa mais voto.",
+        "title_em": "Ele puxa em outro lugar.",
+        "lede": "Dois posts e uma imagem: o mapa de quem vai mais longe que Bolsonaro em cada uma das <b>853 cidades</b> de Minas, e o alvo no cinturão do minério.",
+        "stats": [
+            ("431", "cidades de Cleitinho"),
+            ("42", "onde os três somam"),
+            ("R$ 3,2 bi", "de royalties em disputa"),
+        ],
+        "foot": "arvor intelligence · perícia eleitoral",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "pnad",
+        "eyebrow": "O Brasil em Números · PNAD Contínua",
+        "title": "O país que",
+        "title_em": "os dados mostram",
+        "lede": "Quinze painéis sobre renda, trabalho, escolaridade e domicílio, direto dos microdados do IBGE, com pesos oficiais e réplicas.",
+        "stats": [("15", "painéis"), ("200", "réplicas"), ("PT/EN", "duas línguas")],
+        "foot": "microdados PNAD Contínua · IBGE",
+        "accent": "blue",
+        "photo": "img/atlas_072026/web/feira.jpg",
+    },
+    {
+        "slug": "proposta",
+        "eyebrow": "Minutas de uso livre · Resolução e PL",
+        "title": "Auditar sem propor",
+        "title_em": "é reclamar",
+        "lede": "O Pacote Público de Auditoria como condição de divulgação: questionário integral, bases, pesos, <b>deff</b> e taxas de resposta.",
+        "stats": [
+            ("2", "minutas prontas"),
+            ("0", "pedido de crédito"),
+            ("1", "exigência"),
+        ],
+        "foot": "texto livre para qualquer parlamentar, partido ou o próprio TSE",
+        "accent": "lime",
+        "photo": "img/atlas_072026/web/congresso.jpg",
+    },
+    {
+        "slug": "datafolha_082026",
+        "eyebrow": "Datafolha · 21/08/2026 · BR-04496/2026",
+        "title": "Quatro ondas com Lula à frente.",
+        "title_em": "Nenhuma, sob a renda do IBGE.",
+        "lede": "O Datafolha declara 50% do eleitorado até dois salários. A PNADC mede 35,4%. Com a mesma régua, <b>maio vira Flávio +2,81 e agosto, Flávio +1,78</b>.",
+        "stats": [
+            ("4 de 4", "ondas sem vantagem de Lula"),
+            ("−1,78", "gap em agosto sob a PNADC"),
+            ("100%", "das simulações invertem"),
+        ],
+        "foot": "auditoria independente · n = 2.058 · ponto de fluxo",
+        "accent": "red",
+        "photo": "img/atlas_072026/web/eleicao-rua.jpg",
+    },
+    {
+        "slug": "datafolha_082026_thread",
+        "eyebrow": "Thread · Datafolha 21/08/2026",
+        "title": "Uma pesquisa não mente.",
+        "title_em": "Ela depende de uma régua.",
+        "lede": "Vinte e três cards que ensinam a ler qualquer pesquisa e refazem, com os números na tela, a conta que leva o 2º turno de <b>47 × 43</b> para <b>44,2 × 46,0</b>.",
+        "stats": [
+            ("3 linhas", "de média ponderada"),
+            ("4 de 4", "ondas sem vantagem de Lula"),
+            ("+3 dias", "da manchete até o relatório"),
+        ],
+        "foot": "arvor intelligence · perícia eleitoral",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "datafolha_21092026",
+        "eyebrow": "Datafolha · relatório completo · 21/09/2026",
+        "title": "O empate.",
+        "title_em": "A régua da renda.",
+        "lede": "46 × 44 publicados. Sensibilidade PNAD: <b>Lula 42,95 × Flávio 47,33</b>. O Sudeste conferido com as estaduais; os limites da reconstrução dos microdados.",
+        "stats": [
+            ("13", "tabelas extraídas"),
+            ("3 UFs", "comparadas no Sudeste"),
+            ("2 bases", "sintéticas, mesmas margens"),
+        ],
+        "foot": "campo 15–17/09 · sensibilidade, não previsão eleitoral",
+        "accent": "red",
+    },
+    {
+        "slug": "datafolha_21092026_thread",
+        "eyebrow": "Thread · Datafolha 21/09/2026",
+        "title": "O Sudeste não é",
+        "title_em": "um problema. São três.",
+        "lede": "SP, RJ e MG medidos por dentro na mesma entrevista: <b>Tarcísio 56 × Flávio 47</b>, Cleitinho 59 × 45, e no Rio o sinal inverte. Cinco cards com o texto pronto.",
+        "stats": [
+            ("5", "cards quadrados"),
+            ("13", "linhas de transferência medidas"),
+            ("+0,06", "ponto entre as duas réguas"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "datafolha_14092026",
+        "eyebrow": "Datafolha · relatório completo · BR-01833/2026",
+        "title": "A renda muda",
+        "title_em": "o placar.",
+        "lede": "46 × 44 publicados. Na sensibilidade PNAD, <b>Lula 42,41 × Flávio 47,89</b>. Histórico, transferências medidas e anexo territorial conferidos.",
+        "stats": [
+            ("15", "tabelas extraídas"),
+            ("303", "setores auditados"),
+            ("2", "origens de voto medidas"),
+        ],
+        "foot": "dossiê de 14/09/2026 · sensibilidade, não previsão eleitoral",
+        "accent": "red",
+    },
+    {
+        "slug": "nexus_btg_28092026",
+        "eyebrow": "BTG/Nexus · 28/09/2026 · BR-07557/2026",
+        "title": "A renda muda pouco.",
+        "title_em": "A ausência exige hipóteses.",
+        "lede": "46 × 44 vira <b>45,76 × 44,20</b> na sensibilidade PNAD. Transferência publicada e cenários de comparecimento com as premissas à vista.",
+        "stats": [
+            ("5", "origens publicadas"),
+            ("54", "cenários por turno"),
+            ("145", "páginas no relatório"),
+        ],
+        "foot": "sensibilidade, não previsão eleitoral · brasil.arvor.co",
+        "accent": "amber",
+    },
+    {
+        "slug": "nexus_btg_140926",
+        "eyebrow": "BTG/Nexus · 14/09/2026 · BR-04076/2026",
+        "title": "A renda encurta.",
+        "title_em": "O empate fica.",
+        "lede": "47 × 46 vira <b>46,69 × 46,40</b> na sensibilidade PNAD. Série histórica, cinco origens medidas e os limites do voto útil.",
+        "stats": [
+            ("+0,28", "diferença sob a PNAD"),
+            ("14", "rodadas na série"),
+            ("5 + 2 + 2", "medidas + bases fixadas + estimadas"),
+        ],
+        "foot": "auditoria independente · n = 2.003 · telefone/CATI",
+        "accent": "amber",
+    },
+    {
+        "slug": "nexus_btg_240826",
+        "eyebrow": "BTG/Nexus · 24/08/2026 · BR-09028/2026",
+        "title": "Há um roteiro.",
+        "title_em": "Falta o log.",
+        "lede": "O relato não prova indução. O questionário cria testes. A renda da PNADC <b>muda o sinal</b> do segundo turno.",
+        "stats": [
+            ("−0,43", "gap com a PNADC"),
+            ("4", "respostas ausentes"),
+            ("5", "transferências medidas"),
+        ],
+        "foot": "auditoria independente · n = 2.006 · CATI/RDD",
+        "accent": "amber",
+        "duo": True,
+        "duo_values": ("46", "45"),
+    },
+    {
+        "slug": "nexus_btg_082026_1",
+        "eyebrow": "BTG/Nexus · 03/08/2026 · BR-02874/2026",
+        "title": "A margem que",
+        "title_em": "troca o sinal",
+        "lede": "Quatro margens estão travadas por cota e não podem mover o placar. As duas sem cota erram sete vezes mais e puxam para lados opostos.",
+        "stats": [
+            ("−1,7", "gap com a renda da PNAD"),
+            ("8,7%", "erro sem cota"),
+            ("0,2%", "erro com cota"),
+        ],
+        "foot": "auditoria independente · n = 2.002 · CATI/RDD",
+        "accent": "lime",
+        "duo": True,
+        "duo_values": ("41", "37"),
+    },
+    {
+        "slug": "nexus_btg_082026_1_thread",
+        "eyebrow": "Thread · BTG/Nexus 03/08/2026",
+        "title": "Troque uma linha",
+        "title_em": "e o vencedor muda",
+        "lede": "Vinte e seis posts com a conta aberta: a fórmula, a cascata faixa a faixa, o teorema das margens e a transferência que o instituto mediu.",
+        "stats": [("26", "posts"), ("23", "gráficos"), ("1", "fórmula")],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "atlas_072026",
+        "eyebrow": "AtlasIntel/Bloomberg · 07/2026 · BR-08602/2026",
+        "title": "O pai: 42,3.",
+        "title_em": "O filho: 35,8.",
+        "lede": "Mesma amostra, mesma semana, mesmo questionário. Os <b>6,5 pontos</b> que separam Jair de Flávio não foram para Lula: <b>0,5</b> foram.",
+        "stats": [
+            ("24,7", "fugiram p/ a direita"),
+            ("−20,3", "direita não bolsonarista"),
+            ("±1,38", "piso real da margem"),
+        ],
+        "foot": "auditoria independente · n = 5.021 · painel online",
+        "accent": "lime",
+        "duo": True,
+        "duo_values": ("44,9", "35,8"),
+    },
+    {
+        "slug": "atlas_072026_thread",
+        "eyebrow": "Thread · AtlasIntel 07/2026",
+        "title": "A amostra que",
+        "title_em": "o algoritmo escolhe",
+        "lede": "O questionário guarda identificadores de clique do Google Ads. Uma amostra online autosselecionada descreve quem a campanha digital alcança.",
+        "stats": [
+            ("31", "posts"),
+            ("2,30×", "divergência em Renan"),
+            ("0,99", "acordo nos dois grandes"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "datafolha_072026",
+        "eyebrow": "Datafolha · 07/2026 · BR-01166/2026",
+        "title": "48×43 é a manchete.",
+        "title_em": "45×45 é o interior.",
+        "lede": "Toda a vantagem nacional de Lula é metropolitana. No interior, onde vivem <b>1.217 dos 2.004</b> entrevistados, o placar está empatado.",
+        "stats": [
+            ("45×45", "interior"),
+            ("118", "cidades fixas"),
+            ("16,6 pp", "amostra mais pobre"),
+        ],
+        "foot": "auditoria independente · n = 2.004 · ponto de fluxo",
+        "accent": "red",
+        "photo": "img/atlas_072026/web/eleicao-rua.jpg",
+    },
+    {
+        "slug": "datafolha_072026_thread",
+        "eyebrow": "Thread · Datafolha 07/2026",
+        "title": "O mapa se repete",
+        "title_em": "de uma onda a outra",
+        "lede": "Cento e trinta e nove municípios, <b>118 fixos nas três ondas</b> com a mesma cota. E 137 dos 139 de julho já estavam no anexo de junho.",
+        "stats": [
+            ("139", "municípios"),
+            ("87,4%", "das entrevistas"),
+            ("ρ=0,088", "apaga o 2º turno"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "quaest_globo_140826",
+        "eyebrow": "Quaest/Globo · 14/08/2026 · BR-06773/2026",
+        "title": "Faltam dez pontos.",
+        "title_em": "E não estão com Lula.",
+        "lede": "A imprensa leu empate técnico no segundo turno. O mesmo relatório traz a conta do primeiro: <b>83,3% da terceira via</b>, que mora exatamente onde Flávio já lidera.",
+        "stats": [
+            ("10,00", "pontos de voto válido"),
+            ("81,2%", "da terceira via em campo amigo"),
+            ("−4 × +18", "prêmio de inevitabilidade"),
+        ],
+        "foot": "auditoria independente · n = 2.004 · domiciliar",
+        "accent": "blue",
+        "duo": True,
+        "duo_values": ("43", "40"),
+    },
+    {
+        "slug": "quaest_globo_140826_thread",
+        "eyebrow": "Thread · Quaest/Globo 14/08/2026",
+        "title": "A conta que cabe",
+        "title_em": "numa linha só",
+        "lede": "Vinte posts com a fórmula aberta: os dez pontos que faltam, o voto infiel que o próprio instituto mediu e a trava que nenhuma manchete citou.",
+        "stats": [
+            ("12t + d + 0,5g", "a equação do turno único"),
+            ("77%", "do voto de Zema pode mudar"),
+            ("10,2 : 1", "compressão até a manchete"),
+        ],
+        "foot": "arvor intelligence · perícia eleitoral",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "quaest_082026",
+        "eyebrow": "Quaest/Genial · 05/08/2026 · BR-06591/2026",
+        "title": "O manual de campanha",
+        "title_em": "que a Faria Lima pagou",
+        "lede": "<b>55%</b> dizem que Lula não merece mais quatro anos. <b>39%</b> votam em Flávio. O vão não está com Lula: está fora da urna.",
+        "stats": [
+            ("7,43", "pontos sem destino"),
+            ("5 × 12", "Flávio e Zema contra Lula"),
+            ("51", "resultados ausentes"),
+        ],
+        "foot": "auditoria independente · n = 2.004 · domiciliar",
+        "accent": "lime",
+        "duo": True,
+        "duo_values": ("44", "39"),
+    },
+    {
+        "slug": "quaest_082026_thread",
+        "eyebrow": "Thread · Quaest/Genial 08/2026",
+        "title": "O mapa que a direita",
+        "title_em": "ia jogar fora",
+        "lede": "Vinte e dois posts com a conta aberta: o vão de 7,43 pontos, os quatro cenários na mesma amostra, a faixa de renda que decide e o balanço semântico das 109 perguntas.",
+        "stats": [
+            ("22", "posts"),
+            ("4", "cenários medidos"),
+            ("0", "perguntas sobre proposta"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "quaest_0726",
+        "eyebrow": "Quaest/Genial · 17/07/2026",
+        "title": "Vinte e oito perguntas",
+        "title_em": "sem topline",
+        "lede": "O suplemento acendeu 8 das 36 perguntas e reescreveu o texto de duas em relação ao instrumento registrado no TSE.",
+        "stats": [
+            ("36", "perguntas feitas"),
+            ("28", "sem resultado"),
+            ("2", "enunciados trocados"),
+        ],
+        "foot": "auditoria independente · n = 2.004 · domiciliar",
+        "accent": "amber",
+        "photo": "img/atlas_072026/web/urna-maquina.jpg",
+    },
+    {
+        "slug": "quaest_0726_thread",
+        "eyebrow": "Thread · Quaest/Genial 17/07/2026",
+        "title": "O que foi perguntado",
+        "title_em": "e nunca publicado",
+        "lede": "A pergunta existe, foi aplicada a dois mil eleitores e o resultado não chegou ao público. O arquivo é o pedido.",
+        "stats": [
+            ("28", "perguntas na gaveta"),
+            ("99,7%", "dos setores girou"),
+            ("±2", "margem de vitrine"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "quaest_0726_slides",
+        "eyebrow": "Apresentação · Quaest/Genial 17/07/2026",
+        "title": "A auditoria",
+        "title_em": "em slides",
+        "lede": "O dossiê da Quaest de julho em formato de apresentação, com cada achado numa tela e a fonte no rodapé.",
+        "stats": [
+            ("1", "deck"),
+            ("16:9", "pronto para tela"),
+            ("0", "número sem fonte"),
+        ],
+        "foot": "brasil.arvor.co/quaest_0726_slides.html",
+        "accent": "amber",
+    },
+    {
+        "slug": "atlasintel_260626",
+        "eyebrow": "AtlasIntel/Bloomberg · 26/06/2026 · BR-04582/2026",
+        "title": "O “não sei”",
+        "title_em": "quase desaparece",
+        "lede": "Apenas <b>0,3%</b> não sabem quem os assusta mais. Numa amostra de cinco mil pessoas, é a impressão digital de um painel de escolha forçada.",
+        "stats": [
+            ("0,3%", "não sabem"),
+            ("43,5×29,1", "mulheres e homens"),
+            ("1 p.p.", "tolerância estourada"),
+        ],
+        "foot": "auditoria independente · n = 4.999 · painel RDR online",
+        "accent": "amber",
+        "photo": "img/atlas_072026/web/urna-maquina.jpg",
+    },
+    {
+        "slug": "atlasintel_260626_thread",
+        "eyebrow": "Thread · AtlasIntel 26/06/2026",
+        "title": "O registro diz 5.000.",
+        "title_em": "O relatório diz 4.999.",
+        "lede": "Duas datas de campo e dois tamanhos de amostra para a mesma pesquisa, nos dois documentos do mesmo instituto.",
+        "stats": [
+            ("5.000", "no registro"),
+            ("4.999", "no relatório"),
+            ("1 dia", "de diferença"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "datafolha_062026",
+        "eyebrow": "Datafolha · 24/06/2026",
+        "title": "Lula 47 × 43",
+        "title_em": "é empate técnico",
+        "lede": "A margem da diferença é de cerca de <b>±4 pontos</b>, maior que os 4 pontos que separam os dois. A manchete não sobrevive à estatística.",
+        "stats": [
+            ("±4", "margem da diferença"),
+            ("45,6×45,9", "com a renda da PNAD"),
+            ("4", "pontos de vantagem"),
+        ],
+        "foot": "auditoria independente · n = 2.004 · ponto de fluxo",
+        "accent": "red",
+        "photo": "img/atlas_072026/web/urna-maquina.jpg",
+    },
+    {
+        "slug": "datafolha_062026_thread",
+        "eyebrow": "Thread · Datafolha 24/06/2026",
+        "title": "A vantagem nasce",
+        "title_em": "de uma amostra pobre",
+        "lede": "Reponderando a renda da amostra à PNAD por pessoas de 16 anos ou mais, o placar de segundo turno vira <b>45,6 × 45,9</b>.",
+        "stats": [
+            ("45,6×45,9", "reponderado"),
+            ("16+", "universo da régua"),
+            ("1", "margem trocada"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "nexus_btg_0726",
+        "eyebrow": "BTG/Nexus · 13/07/2026 · 6ª rodada",
+        "title": "±2 é vitrine.",
+        "title_em": "±4,18 é a conta.",
+        "lede": "O próprio instituto chama de empate técnico. A vantagem muda de <b>+1,4 a +4,0</b> conforme a régua oficial usada para reponderar.",
+        "stats": [
+            ("47×44", "publicado"),
+            ("±4,18", "margem da diferença"),
+            ("+1,4 a +4,0", "conforme a régua"),
+        ],
+        "foot": "auditoria independente · n = 2.003 · CATI/RDD",
+        "accent": "lime",
+        "photo": "img/atlas_072026/web/urna-fila.jpg",
+    },
+    {
+        "slug": "nexus_btg_0726_thread",
+        "eyebrow": "Thread · BTG/Nexus 13/07/2026",
+        "title": "O empate que",
+        "title_em": "o release não diz",
+        "lede": "A margem divulgada vale para cada percentual isolado, não para a diferença entre dois. A diferença carrega quase o dobro.",
+        "stats": [
+            ("±2", "no release"),
+            ("±4,18", "na diferença"),
+            ("2×", "a distância"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "nexus_btg_0726_slides",
+        "eyebrow": "Apresentação · BTG/Nexus 13/07/2026",
+        "title": "A sexta rodada",
+        "title_em": "em slides",
+        "lede": "O dossiê da 6ª rodada BTG/Nexus em formato de apresentação, um achado por tela.",
+        "stats": [
+            ("1", "deck"),
+            ("16:9", "pronto para tela"),
+            ("0", "número sem fonte"),
+        ],
+        "foot": "brasil.arvor.co/nexus_btg_0726_slides.html",
+        "accent": "lime",
+    },
+    {
+        "slug": "nexus_btg_150626",
+        "eyebrow": "BTG/Nexus · 15/06/2026 · BR-06645/2026",
+        "title": "A saída neutra",
+        "title_em": "está marcada “não ler”",
+        "lede": "Na pergunta do tarifaço, a opção que não empurra o entrevistado para um lado existe no questionário e o entrevistador é instruído a não lê-la.",
+        "stats": [
+            ("±2,7 a ±3,1", "margem plausível"),
+            ("±6 a ±8", "recorte pequeno"),
+            ("1", "opção não lida"),
+        ],
+        "foot": "auditoria independente · n = 2.017 · CATI/RDD",
+        "accent": "amber",
+        "photo": "img/atlas_072026/web/congresso.jpg",
+    },
+    {
+        "slug": "nexus_btg_150626_thread",
+        "eyebrow": "Thread · BTG/Nexus 15/06/2026",
+        "title": "Perguntou o voto",
+        "title_em": "antes do roteiro pesado",
+        "lede": "O que o instituto fez certo merece registro na mesma régua do que fez errado. A ordem protege o topline; a margem publicada, não.",
+        "stats": [
+            ("1º", "o voto vem antes"),
+            ("±2", "margem de vitrine"),
+            ("0", "deff publicado"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "quaest_100626",
+        "eyebrow": "Quaest/Genial · 10/06/2026 · BR-07661/2026",
+        "title": "O melhor campo",
+        "title_em": "torna a edição mais grave",
+        "lede": "Domiciliar, sorteio por setor censitário, cotas claras. E perguntou a 2.004 eleitores sobre trocar Flávio e sobre Trump: nada foi publicado.",
+        "stats": [
+            ("±2", "divulgado"),
+            ("±3 a ±3,5", "plausível"),
+            ("2.004", "eleitores ouvidos"),
+        ],
+        "foot": "auditoria independente · n = 2.004 · domiciliar",
+        "accent": "amber",
+        "photo": "img/atlas_072026/web/urna-maquina.jpg",
+    },
+    {
+        "slug": "x_thread",
+        "eyebrow": "Thread · Quaest/Genial 10/06/2026",
+        "title": "Perguntaram.",
+        "title_em": "Não publicaram.",
+        "lede": "Se Bolsonaro deveria trocar Flávio e o que o eleitor acha do apoio de Trump. Duas perguntas aplicadas, nenhum resultado divulgado.",
+        "stats": [
+            ("2", "perguntas guardadas"),
+            ("2.004", "eleitores ouvidos"),
+            ("0", "toplines publicados"),
+        ],
+        "foot": "cards prontos para publicar · brasil.arvor.co",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
+        "slug": "datafolha_090526",
+        "eyebrow": "Datafolha · 09/05/2026",
+        "title": "45 × 45",
+        "title_em": "e a renda não bate",
+        "lede": "Sexo, escolaridade e região colam na PNAD e no TSE. A faixa até dois salários mínimos dá <b>50,3%</b> na amostra contra 38,7% na PNAD.",
+        "stats": [
+            ("45×45", "segundo turno"),
+            ("50,3 × 38,7", "renda contra a PNAD"),
+            ("3", "datas que não fecham"),
+        ],
+        "foot": "auditoria independente · n = 2.004 · 139 municípios",
+        "accent": "red",
+        "photo": "img/atlas_072026/web/feira.jpg",
+    },
+    {
+        "slug": "atlas_intel_180526",
+        "eyebrow": "AtlasIntel/Bloomberg · 18/05/2026",
+        "title": "Mais de vinte itens",
+        "title_em": "saem sem topline",
+        "lede": "O topline de voto está mais protegido do que parecia. Mas o relatório publica o que convém, e o ±1 anunciado não se sustenta.",
+        "stats": [
+            ("±1", "anunciado"),
+            ("±1,38", "pior caso real"),
+            ("20+", "itens sem topline"),
+        ],
+        "foot": "auditoria independente · n = 5.032 · RDR online",
+        "accent": "amber",
+        "photo": "img/atlas_072026/web/urna-fila.jpg",
+    },
+    {
+        "slug": "margens_visuais",
+        "eyebrow": "Ferramenta aberta · margens de erro",
+        "title": "A margem que",
+        "title_em": "você não vê",
+        "lede": "Uma página para enxergar o que uma margem de erro significa antes de ler qualquer manchete de pesquisa.",
+        "stats": [
+            ("±2", "o que se anuncia"),
+            ("±4", "o que a diferença carrega"),
+            ("1", "conceito"),
+        ],
+        "foot": "brasil.arvor.co/margens_visuais.html",
+        "accent": "blue",
+    },
+    {
+        "slug": "artigo_pt",
+        "eyebrow": "Artigo · Arvor Intelligence",
+        "title": "Uma pesquisa que",
+        "title_em": "não dá para refazer",
+        "lede": "O texto que resume o método do acervo: o que é fato publicado, o que é inferência com conta aberta e o que continua fechado.",
+        "stats": [("PT", "português"), ("EN", "também em inglês"), ("1", "método")],
+        "foot": "brasil.arvor.co/artigo_pt.html",
+        "accent": "lime",
+    },
+    {
+        "slug": "artigo_en",
+        "eyebrow": "Article · Arvor Intelligence",
+        "title": "A poll you cannot",
+        "title_em": "reproduce isn't science",
+        "lede": "The method behind the archive: published fact, inference with the arithmetic shown, and everything the institutes still keep closed.",
+        "stats": [("EN", "english"), ("PT", "also in portuguese"), ("1", "method")],
+        "foot": "brasil.arvor.co/artigo_en.html",
+        "accent": "lime",
+    },
+    {
+        "slug": "artigo_quaest_100626",
+        "eyebrow": "Artigo · Quaest/Genial 10/06/2026",
+        "title": "As perguntas",
+        "title_em": "que ficaram na gaveta",
+        "lede": "O artigo sobre a rodada de junho da Quaest: o melhor campo do trio e a edição mais seletiva.",
+        "stats": [
+            ("2.004", "eleitores"),
+            ("2", "perguntas guardadas"),
+            ("0", "toplines"),
+        ],
+        "foot": "brasil.arvor.co/artigo_quaest_100626.html",
+        "accent": "amber",
+    },
+    {
+        "slug": "artigo_nexus_btg_150626",
+        "eyebrow": "Artigo · BTG/Nexus 15/06/2026",
+        "title": "A margem",
+        "title_em": "que é vitrine",
+        "lede": "O artigo sobre a 4ª rodada BTG/Nexus: sem efeito de desenho publicado, o ±2 da capa não descreve a pesquisa.",
+        "stats": [("±2", "na capa"), ("±3,1", "plausível"), ("0", "deff publicado")],
+        "foot": "brasil.arvor.co/artigo_nexus_btg_150626.html",
+        "accent": "lime",
+    },
+]

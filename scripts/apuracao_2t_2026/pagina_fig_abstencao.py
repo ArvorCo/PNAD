@@ -493,14 +493,27 @@ def _n0(v: float) -> str:
 
 
 def _painel_quintis(
-    qs: list[dict], x0: float, titulo: str, rot_q: str, cor: str, tips: Tips
+    qs: list[dict],
+    x0: float,
+    titulo: str,
+    rot_q: str,
+    cor: str,
+    tips: Tips,
+    espelho: bool = False,
 ) -> str:
     w, y0, y1 = 440, 70, 300
     vmin = min(min(q["valor"] for q in qs) * 1.25, -0.5)
-    fy = escala(0, vmin, y0, y1)
+    vmax = max([0, *[q["valor"] * 1.25 for q in qs]])
+    if espelho:
+        vmax = max(abs(vmin), abs(vmax))
+        vmin = -vmax
+    fy = escala(vmin, vmax, y1, y0)
     passo = w / len(qs)
-    out = [t(x0, 30, titulo, 13.5, INK, weight="700"), ln(x0, y0, x0 + w, y0, INK, 1.2)]
-    for v in ticks(vmin, 0, 4):
+    out = [
+        t(x0, 30, titulo, 13.5, INK, weight="700"),
+        ln(x0, fy(0), x0 + w, fy(0), INK, 1.2),
+    ]
+    for v in ticks(vmin, vmax, 4):
         out.append(ln(x0, fy(v), x0 + w, fy(v), GRADE, 1))
         out.append(
             t(
@@ -515,17 +528,31 @@ def _painel_quintis(
         )
     for i, q in enumerate(qs):
         cx = x0 + passo * (i + 0.5)
-        partes = [
-            r(cx - passo * 0.3, y0, passo * 0.6, fy(q["valor"]) - y0, cor),
-            t(
-                cx,
-                fy(q["valor"]) + 16,
-                pp(q["valor"]).replace(" pp", ""),
-                12,
-                INK,
-                "middle",
-                mono=True,
-            ),
+        partes = []
+        series = [(q["valor"], cor, -0.17)] if espelho else [(q["valor"], cor, 0)]
+        if espelho:
+            series.append((-q["valor"], "#b02f21", 0.17))
+        for valor, color, dx in series:
+            bw = passo * (0.26 if espelho else 0.6)
+            partes += [
+                r(
+                    cx + passo * dx - bw / 2,
+                    min(fy(0), fy(valor)),
+                    bw,
+                    abs(fy(valor) - fy(0)),
+                    color,
+                ),
+                t(
+                    cx + passo * dx,
+                    fy(valor) + (-6 if valor >= 0 else 16),
+                    pp(valor, 1).replace(" pp", ""),
+                    11.5,
+                    color,
+                    "middle",
+                    mono=True,
+                ),
+            ]
+        partes += [
             t(cx, y1 + 22, f"{q['q']}º", 12.5, INK, "middle", "700"),
             t(
                 cx,
@@ -545,7 +572,11 @@ def _painel_quintis(
                 [
                     ("Municípios", inteiro(q["n"])),
                     ("Eleitores", inteiro(q["aptos"])),
-                    ("Média ponderada", pp(q["valor"])),
+                    (
+                        "Média ponderada" if not espelho else "Flávio, média ponderada",
+                        pp(q["valor"]),
+                    ),
+                    *([("Lula, média ponderada", pp(-q["valor"]))] if espelho else []),
                 ],
             )
         )
@@ -567,9 +598,9 @@ def fig_quintis(C1: dict) -> tuple[str, list[dict], list[dict]]:
         svg_abre(
             1000,
             380,
-            "Queda da abstenção por força de Lula e mudança de Flávio por queda da abstenção",
+            "Abstenção e mudanças de Lula e Flávio entre turnos",
             "Esquerda: mudança média da abstenção em cinco grupos de municípios pela votação de Lula no 1º turno. "
-            "Direita: mudança da parte de Flávio em cinco grupos pela mudança da abstenção.",
+            "Direita: mudanças dos dois candidatos em cinco grupos pela mudança da abstenção.",
         )
         + _painel_quintis(
             q_lula,
@@ -582,17 +613,19 @@ def fig_quintis(C1: dict) -> tuple[str, list[dict], list[dict]]:
         + _painel_quintis(
             q_abs,
             540,
-            "Mudança da parte de Flávio, pontos",
+            "Mudança: Flávio (azul) e Lula (vermelho), pp",
             "quintos pela mudança da abstenção, pontos",
             FLAVIO,
             tips,
+            espelho=True,
         )
         + "</svg>"
     )
     legenda_txt = (
         "Cinco grupos de mesmo número de municípios; médias ponderadas pelo eleitorado. Se a queda da abstenção fosse "
         "mobilização concentrada nos redutos de Lula, a barra da esquerda cresceria para a direita; se ela explicasse a queda "
-        "de Flávio, a barra da direita cresceria para a esquerda. Fonte: comparacao_1t.json (municípios)."
+        "de Flávio, a barra azul da direita cresceria para a esquerda. As barras vermelhas espelham Lula: mesmo denominador "
+        "entre os dois finalistas, sinal oposto. Fonte: comparacao_1t.json (municípios)."
     )
     return (
         figura_html("ab_quintis", svg, legenda_txt, tips, modo="scroll", minw=760),
