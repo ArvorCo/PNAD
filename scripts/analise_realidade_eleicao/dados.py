@@ -9,6 +9,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from .desenvolvimento import ROOT, carregar
+from .faixas import faixas
 
 OUTPUT = ROOT / "analysis/analise_realidade_eleicao"
 FIELDS = ("renda_ate2", "renda_mais5", "renda_mediana_brl", "superior")
@@ -168,6 +169,7 @@ def construir():
         "municipios": ms,
         "zonas": zs,
         "cortes": cortes(ms),
+        "faixas_flavio": faixas(ms),
         "cobertura_capitais": cobertura,
         "ips": {k: v for k, v in ips.items() if k != "dados"},
         "meta_tse": presidente["meta"],

@@ -6,6 +6,7 @@
   const n = (v, places = 0) => v == null ? 's/d' : Number(v).toLocaleString('pt-BR', {minimumFractionDigits: places, maximumFractionDigits: places});
   const norm = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const M = new Map(D.municipios.map(m => [m.ibge, m]));
+  const faixas = new Map(D.faixas_flavio.map(f => [f.id, new Set(f.municipios)]));
   const labels = {
     renda_ate2: 'Renda domiciliar estimada até 2 SM (%)',
     renda_mais5: 'Renda domiciliar estimada acima de 5 SM (%)',
@@ -29,8 +30,8 @@
   const pageSize = 25;
   function municipalities(reset = true) {
     if (reset) pagina = 0;
-    const query = norm($('busca-municipio').value), uf = $('uf').value, cut = Number($('corte').value), order = $('ordem').value;
-    let rs = D.municipios.filter(m => (!uf || m.uf === uf) && (!query || norm(m.nome+' '+m.ibge).includes(query)) && (cut === 100 || 100*m.flavio < cut*m.validos));
+    const query = norm($('busca-municipio').value), uf = $('uf').value, faixa = $('faixa').value, order = $('ordem').value;
+    let rs = D.municipios.filter(m => (!uf || m.uf === uf) && (!query || norm(m.nome+' '+m.ibge).includes(query)) && (faixa === '' || faixas.get(faixa).has(m.ibge)));
     rs.sort((a,b)=> order==='nome' ? a.nome.localeCompare(b.nome, 'pt-BR') : order==='diferenca' ? b.diferenca-a.diferenca : a.pct_flavio-b.pct_flavio);
     pagina = Math.min(pagina,Math.max(0,Math.ceil(rs.length/pageSize)-1));
     const view = rs.slice(pagina*pageSize,(pagina+1)*pageSize);
@@ -42,7 +43,7 @@
     $('proxima').onclick = () => {pagina++;municipalities(false);};
   }
   for (const uf of [...new Set(D.municipios.map(m=>m.uf))].sort()) $('uf').add(new Option(uf,uf));
-  ['uf','corte','ordem'].forEach(id=>$(id).addEventListener('change',()=>municipalities()));
+  ['uf','faixa','ordem'].forEach(id=>$(id).addEventListener('change',()=>municipalities()));
   $('busca-municipio').addEventListener('input',()=>municipalities());
   function scatter() {
     const key=$('variavel').value, adjusted=$('escala').value==='uf';

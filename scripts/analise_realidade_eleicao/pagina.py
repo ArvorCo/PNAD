@@ -39,45 +39,55 @@ def fontes(d):
 
 def corpo(d, a, t):
     ms, stats = d["municipios"], d["estatisticas"]["municipios"]
-    maxd = max(m["diferenca"] for m in ms if m["ibge"] in d["cortes"]["30"])
+    maxd = max(m["diferenca"] for m in ms)
+    faixas = d["faixas_flavio"]
     rich, richcut = topo(ms, "renda_mais5")
     high, highcut = topo(ms, "ips")
     fbsp = [m for m in ms if m["crime_fbsp"]]
     h = f"""<header><p class="eyebrow">Arvor Intelligence · 2º turno de 2026 · análise territorial</p>
     <h1>A geografia do voto.<br><em>E o que pede explicação.</em></h1>
     <p class="intro">Renda, desenvolvimento, violência e mudanças entre os turnos. Um retrato dos municípios e das zonas nas capitais, com os dois candidatos à vista e uma trilha de auditoria que vai do padrão estatístico à conferência dos boletins.</p>
-    <div class="links"><a href="#mapas">Quatro mapas</a><a href="#renda">Renda e voto</a><a href="#desenvolvimento">Áreas mais favorecidas</a><a href="#seguranca">Violência</a><a href="#capitais">Capitais por zona</a><a href="#auditoria">Auditoria</a></div>
-    <div class="hero-stats"><div><strong>{num(len(ms))}</strong><span>municípios · Brasil sem exterior</span></div><div><strong>{num(len(d['zonas']))}</strong><span>zonas nas 27 capitais</span></div><div><strong>{num(len(d['cortes']['10']))}</strong><span>municípios com Flávio abaixo de 10%</span></div><div><strong>{num(stats['homicidios_taxa_100mil']['n'])}</strong><span>municípios com taxa de homicídios</span></div></div></header>
-    <section class="chapter" id="mapas"><span class="sec-no">01 · Concentração do voto</span><h2>Onde Flávio ficou<br><em>abaixo de 5, 10, 25 e 30%.</em></h2>
-    <p class="deck">Cada ponto é a sede de um município. Quanto maior a área do círculo, maior a diferença absoluta entre os votos dos candidatos. A escala dos círculos é a mesma nos quatro mapas.</p>
-    <div class="size-key"><b>Diferença de votos</b><svg viewBox="0 0 180 65" aria-label="Escala de área dos círculos">"""
-    for i, v in enumerate((1000, 10000, 50000)):
-        radius = 19 * math.sqrt(v / maxd)
-        h += f'<circle cx="{30+i*60}" cy="25" r="{radius:.3f}" fill="{ "#ae3428" }" opacity=".6"/><text x="{30+i*60}" y="58" text-anchor="middle" font-size="10">{num(v)}</text>'
-    h += '</svg><span>Toque em um ponto para abrir os números.</span></div><div class="map-grid">'
-    h += "".join(mapa(ms, t, maxd) for t in (5, 10, 25, 30)) + "</div>"
-    h += """<p class="small">Os cortes são cumulativos: um município abaixo de 10% também entra em 25% e 30%. O corte de 5% vazio é um resultado da base, não uma falha do mapa.</p>
+    <div class="links"><a href="#mapas">Sete faixas municipais</a><a href="#renda">Renda e voto</a><a href="#desenvolvimento">Áreas mais favorecidas</a><a href="#seguranca">Violência</a><a href="#capitais">Capitais por zona</a><a href="#auditoria">Auditoria</a></div>
+    <div class="hero-stats"><div><strong>{num(len(ms))}</strong><span>municípios · Brasil sem exterior</span></div><div><strong>{num(len(d['zonas']))}</strong><span>zonas nas 27 capitais</span></div><div><strong>{num(len(faixas[0]['municipios']))}</strong><span>municípios com Flávio abaixo de 12,5%</span></div><div><strong>{num(stats['homicidios_taxa_100mil']['n'])}</strong><span>municípios com taxa de homicídios</span></div></div></header>
+    <section class="chapter" id="mapas"><span class="sec-no">01 · Concentração do voto</span><h2>O voto em Flávio,<br><em>em sete faixas municipais.</em></h2>
+    <p class="deck">Cada ponto é a sede de um município, não uma seção nem um local de votação. As sete faixas cobrem de 0 a 100% dos votos válidos, sem repetir municípios. Quanto maior a área do círculo, maior a diferença absoluta entre os candidatos, na mesma escala em todos os mapas.</p>
+    <div class="key"><span>Vermelho: Lula à frente</span><span>Azul: Flávio à frente</span></div>
+    <div class="size-key"><b>Diferença de votos</b><svg viewBox="0 0 180 80" aria-label="Escala de área dos círculos">"""
+    for i, v in enumerate((10000, 100000, 500000)):
+        radius = 34 * math.sqrt(v / maxd) if maxd else 0
+        h += f'<circle cx="{30+i*60}" cy="32" r="{radius:.3f}" fill="#666" opacity=".6"/><text x="{30+i*60}" y="76" text-anchor="middle" font-size="10">{num(v)}</text>'
+    h += '</svg><span>Toque em um ponto para abrir os números. Cruz cinza: empate.</span></div><div class="map-grid">'
+    h += "".join(mapa(ms, f, maxd) for f in faixas) + "</div>"
+    h += """<p class="small">O limite inferior entra na faixa e o superior entra na seguinte: 12,5% pertence à segunda faixa, 25% à terceira, e assim por diante. A última inclui 100%. Classificação pelas contagens exatas, antes do arredondamento. Só entram municípios com totalização completa e votos válidos. A última faixa tem largura de 25 pontos percentuais; as demais, 12,5.</p>
     <div id="selecionado" class="selected" aria-live="polite"><h3>Explore um município</h3><p>Selecione um círculo ou busque pelo nome na tabela para ver voto, renda estimada, progresso social e homicídios.</p></div>
-    <div class="controls js-only"><label>Buscar município<input id="busca-municipio" type="search" placeholder="Nome ou código IBGE"></label><label>Estado<select id="uf"><option value="">Brasil</option></select></label><label>Corte de Flávio<select id="corte"><option value="100">Todos os municípios</option><option value="5">Abaixo de 5%</option><option value="10">Abaixo de 10%</option><option value="25">Abaixo de 25%</option><option value="30">Abaixo de 30%</option></select></label><label>Ordenar<select id="ordem"><option value="pct_flavio">Menor votação de Flávio</option><option value="diferenca">Maior diferença de votos</option><option value="nome">Nome do município</option></select></label></div>
+    <div class="controls js-only"><label>Buscar município<input id="busca-municipio" type="search" placeholder="Nome ou código IBGE"></label><label>Estado<select id="uf"><option value="">Brasil</option></select></label><label>Faixa de Flávio<select id="faixa"><option value="">Todos os municípios</option>"""
+    h += "".join(
+        f'<option value="{f["id"]}">{escape(f["rotulo"])}</option>' for f in faixas
+    )
+    h += """</select></label><label>Ordenar<select id="ordem"><option value="pct_flavio">Menor votação de Flávio</option><option value="diferenca">Maior diferença de votos</option><option value="nome">Nome do município</option></select></label></div>
     <div id="tabela-municipios" class="js-only"></div><div class="pager js-only" id="paginacao"></div>"""
+    h += '<details class="static-list"><summary>Distribuição completa por faixa municipal</summary>'
     h += (
-        '<details class="static-list"><summary>Os 11 municípios abaixo de 10%, nas contagens exatas</summary>'
-        + tabela(
-            ["Município", "Flávio", "Lula", "Flávio %"],
+        tabela(
+            ["Flávio · % dos válidos", "Municípios", "% dos municípios classificados"],
             [
                 [
-                    escape(m["nome"].title()) + "/" + m["uf"],
-                    num(m["flavio"]),
-                    num(m["lula"]),
-                    num(m["pct_flavio"], 2),
+                    escape(f["rotulo"]),
+                    num(len(f["municipios"])),
+                    num(
+                        100
+                        * len(f["municipios"])
+                        / sum(len(g["municipios"]) for g in faixas),
+                        2,
+                    )
+                    + "%",
                 ]
-                for m in sorted(ms, key=lambda r: r["pct_flavio"])
-                if m["ibge"] in d["cortes"]["10"]
+                for f in faixas
             ],
         )
         + "</details>"
     )
-    h += """<p><a href="assets/analise_realidade_eleicao/municipios.csv" download>Baixar a lista completa com os quatro cortes (CSV)</a></p></section>"""
+    h += """<p><a href="assets/analise_realidade_eleicao/municipios.csv" download>Baixar municípios e suas faixas (CSV)</a></p></section>"""
     h += f"""<section class="chapter" id="renda"><span class="sec-no">02 · Renda e geografia</span><h2>Uma associação forte.<br><em>Mas a região muda a leitura.</em></h2><p class="deck">Quanto maior a parcela estimada de baixa renda, maior foi, em geral, o voto municipal em Lula. A correlação cai de {num(stats['renda_ate2']['pearson'],2)} para {num(stats['renda_ate2']['dentro_grupo'],2)} ao retirar as diferenças médias entre estados.</p>
     <div class="duo">{barras_faixas(stats['renda_ate2'],'Parcela estimada com renda domiciliar até 2 SM','%')}{regua_correlacao(stats['renda_ate2'])}</div>
     <p class="note">A PNAD não mede cada município desta base. A estimativa usa escolaridade eleitoral, UF e situação urbana/rural. Uma relação com voto também pode refletir essas variáveis, além da renda. Os valores não descrevem a renda de uma pessoa nem seu voto.</p>

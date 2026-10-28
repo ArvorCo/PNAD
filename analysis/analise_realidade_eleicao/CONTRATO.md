@@ -20,9 +20,14 @@ necessário recoletar a apuração para modificar os gráficos.
 
 - Totalização: 5.571 municípios brasileiros, exterior excluído. Capitais:
   somente locais dentro da capital, mesmo quando a zona abrange outra cidade.
-- Cortes de Flávio: estritos, calculados sobre contagens inteiras, antes de
-  arredondar. A área dos círculos é proporcional à diferença absoluta de votos;
-  uma escala compartilhada permite comparar os quatro mapas.
+- Faixas municipais de Flávio: [0;12,5), [12,5;25), [25;37,5), [37,5;50),
+  [50;62,5), [62,5;75), [75;100]. Sem sobreposição; limites comparados nas
+  contagens inteiras, antes de arredondar. Totalização completa e válidos > 0.
+  A última faixa tem o dobro da largura. Mapas, filtro e CSV usam a mesma partição.
+  Área dos círculos proporcional à diferença absoluta de votos, escala nacional
+  comum; cor pelo vencedor, cruz cinza no empate. Cada ponto representa uma sede
+  municipal, não seção ou local de votação. Os cortes cumulativos antigos
+  permanecem nos dados e colunas do CSV por compatibilidade.
 - Renda: aproximação por células PNAD 2025 × perfil eleitoral, não renda
   municipal diretamente observada. Não inferir voto individual ou causalidade.
 - IPS Brasil 2026 não é IDHM nem riqueza. Preservar a falta de cobertura de Boa

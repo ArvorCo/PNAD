@@ -40,16 +40,17 @@ figure{margin:0}
 .map-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:26px 0}
 .map-card{border:1px solid var(--line);padding:22px;background:#faf7ef}
 .map-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
-.map-head h3{font:48px/1 Georgia,serif;margin:0}
+.map-head h3{font:clamp(24px,3vw,36px)/1.15 Georgia,serif;margin:0}
 .map-head p{font-size:13px;margin:0}
 .map-head b{font-size:23px}
 .map-card svg{display:block;width:100%;height:auto}
 .contorno path{fill:#e4e5da;stroke:#a2ada1;stroke-width:.7;vector-effect:non-scaling-stroke}
-.cidade{fill:var(--red);fill-opacity:.58;stroke:var(--red);stroke-width:.4;cursor:pointer;vector-effect:non-scaling-stroke}
+.map-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;color:var(--muted)}
+.cidade{fill:var(--vencedor);fill-opacity:.65;stroke:var(--vencedor);stroke-width:.4;cursor:pointer;vector-effect:non-scaling-stroke}
 .cidade:hover{fill-opacity:1;stroke:#182e28;stroke-width:2}
 .vazio{font:bold 18px sans-serif;fill:var(--muted)}
 .size-key{display:flex;align-items:center;gap:15px;flex-wrap:wrap;font-size:13px}
-.size-key svg{width:180px;height:65px}
+.size-key svg{width:180px;height:80px}
 .selected{padding:24px;background:#e4e8df;border:1px solid #a7b6a6;min-height:125px}
 .selected h3{margin-bottom:12px}
 .selected p{margin-bottom:8px}

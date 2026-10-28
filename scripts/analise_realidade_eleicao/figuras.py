@@ -44,30 +44,41 @@ def contornos():
     return '<g class="contorno">' + "".join(out) + "</g>"
 
 
-def mapa(rows, corte, max_diferenca):
-    validos = [
-        m for m in rows if m["completo"] and 100 * m["flavio"] < corte * m["validos"]
-    ]
+def mapa(rows, faixa, max_diferenca):
+    ids = set(faixa["municipios"])
+    validos = [m for m in rows if m["ibge"] in ids]
     pontos = [
         m for m in validos if m["sede_lon"] is not None and m["sede_lat"] is not None
     ]
+    rotulo = escape(faixa["rotulo"])
     out = [
-        f'<svg viewBox="0 0 520 490" role="img" aria-label="Municípios com Flávio abaixo de {corte}% dos votos válidos">',
+        f'<svg viewBox="0 0 520 490" role="img" aria-label="Municípios com Flávio: {rotulo} dos votos válidos">',
         contornos(),
     ]
     for m in sorted(pontos, key=lambda r: r["diferenca"], reverse=True):
         x, y = proj(m["sede_lon"], m["sede_lat"])
-        raio = 19 * math.sqrt(m["diferenca"] / max_diferenca)
-        titulo = f"{m['nome']}/{m['uf']}: Flávio {num(m['pct_flavio'], 2)}%, Lula {num(m['pct_lula'], 2)}%; diferença {num(m['diferenca'])} votos"
-        out.append(
-            f'<circle class="cidade" cx="{x:.2f}" cy="{y:.2f}" r="{raio:.3f}" data-ibge="{m["ibge"]}"><title>{escape(titulo)}</title></circle>'
+        raio = 34 * math.sqrt(m["diferenca"] / max_diferenca) if max_diferenca else 0
+        cor = (
+            LULA
+            if m["lula"] > m["flavio"]
+            else FLAVIO if m["flavio"] > m["lula"] else "#666"
         )
+        titulo = f"{m['nome']}/{m['uf']}: Flávio {num(m['pct_flavio'], 2)}%, Lula {num(m['pct_lula'], 2)}%; diferença {num(m['diferenca'])} votos"
+        if m["diferenca"] == 0:
+            out.append(
+                f'<path class="cidade" style="--vencedor:{cor}" d="M{x-2:.2f},{y:.2f}h4 M{x:.2f},{y-2:.2f}v4" data-ibge="{m["ibge"]}"><title>{escape(titulo)}; empate</title></path>'
+            )
+        else:
+            out.append(
+                f'<circle class="cidade" style="--vencedor:{cor}" cx="{x:.2f}" cy="{y:.2f}" r="{raio:.3f}" data-ibge="{m["ibge"]}"><title>{escape(titulo)}</title></circle>'
+            )
     if not pontos:
         out.append(
-            '<text x="260" y="220" text-anchor="middle" class="vazio">Nenhum município</text>'
+            '<text x="260" y="220" text-anchor="middle" class="vazio">Nenhum município localizado</text>'
         )
     out.append("</svg>")
-    return f'<figure class="map-card" data-corte="{corte}"><div class="map-head"><h3>&lt; {corte}%</h3><p><b>{num(len(validos))}</b> municípios</p></div>{"".join(out)}<figcaption>{num(len(pontos))} sedes localizadas. Corte estrito: percentual menor que {corte}%.</figcaption></figure>'
+    validos_total = sum(m["validos"] for m in validos)
+    return f'<figure class="map-card" data-faixa="{faixa["id"]}"><div class="map-head"><div><span class="map-label">Flávio · % dos válidos</span><h3>{rotulo}</h3></div><p><b>{num(len(validos))}</b><br>municípios</p></div>{"".join(out)}<figcaption>{num(len(pontos))} sedes localizadas · {num(validos_total)} votos válidos nos municípios desta faixa.</figcaption></figure>'
 
 
 def barras_faixas(stats, titulo, unidade):

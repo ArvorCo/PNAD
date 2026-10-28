@@ -11,6 +11,7 @@ import pytest
 from analise_realidade_eleicao import auditoria, figuras
 from analise_realidade_eleicao.dados import cortes, ponderar
 from analise_realidade_eleicao.estatistica import correlacao, dentro_grupos, resumo
+from analise_realidade_eleicao.faixas import faixas
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -168,7 +169,7 @@ def test_area_do_circulo_proporcional_a_diferenca(monkeypatch):
         }
         for i, v in enumerate((1000, 4000))
     ]
-    svg = figuras.mapa(rows, 5, 4000)
+    svg = figuras.mapa(rows, faixas(rows)[0], 4000)
     radii = [float(v) for v in re.findall(r'<circle[^>]+ r="([\d.]+)"', svg)]
     assert max(radii) / min(radii) == pytest.approx(2)
 
@@ -195,3 +196,65 @@ def test_contrato_dados_reais_e_capitais():
             assert cap[f"bus_{campo}"] == cap[f"oficial_{campo}"]
     assert sum(m["ips"] is not None for m in ms) == 5570
     assert sum(m["homicidios_taxa_100mil"] is not None for m in ms) == 3853
+
+
+def test_faixas_particionam_limites_exatos_e_preservam_100():
+    rows = [
+        {"ibge": str(v), "completo": True, "validos": 800, "flavio": v}
+        for v in (0, 99, 100, 199, 200, 299, 300, 399, 400, 499, 500, 599, 600, 800)
+    ]
+    rows += [
+        {"ibge": "incompleto", "completo": False, "validos": 800, "flavio": 50},
+        {"ibge": "vazio", "completo": True, "validos": 0, "flavio": 0},
+    ]
+    grupos = faixas(rows)
+    assert [f["municipios"] for f in grupos] == [
+        ["0", "99"],
+        ["100", "199"],
+        ["200", "299"],
+        ["300", "399"],
+        ["400", "499"],
+        ["500", "599"],
+        ["600", "800"],
+    ]
+    # Arredondados para 12,50%, mas em lados diferentes do limite.
+    quase = [
+        {"ibge": "abaixo", "completo": True, "validos": 800001, "flavio": 100000},
+        {"ibge": "acima", "completo": True, "validos": 799999, "flavio": 100000},
+    ]
+    assert faixas(quase)[0]["municipios"] == ["abaixo"]
+    assert faixas(quase)[1]["municipios"] == ["acima"]
+
+
+def test_faixas_reais_cobrem_municipios_uma_vez():
+    d = json.loads((ROOT / "analysis/analise_realidade_eleicao/dados.json").read_text())
+    grupos = faixas(d["municipios"])
+    ids = [ibge for f in grupos for ibge in f["municipios"]]
+    assert len(ids) == len(set(ids)) == 5571
+    assert set(ids) == {m["ibge"] for m in d["municipios"]}
+    assert grupos == d["faixas_flavio"]
+
+
+def test_mapas_distinguem_vencedor_e_empate(monkeypatch):
+    monkeypatch.setattr(figuras, "contornos", lambda: "")
+    rows = [
+        {
+            "ibge": str(v),
+            "uf": "SP",
+            "nome": "Teste",
+            "completo": True,
+            "flavio": v,
+            "lula": 100 - v,
+            "validos": 100,
+            "pct_flavio": v,
+            "pct_lula": 100 - v,
+            "diferenca": abs(100 - 2 * v),
+            "sede_lon": -45,
+            "sede_lat": -20,
+        }
+        for v in (20, 50, 80)
+    ]
+    grupos = faixas(rows)
+    assert figuras.LULA in figuras.mapa(rows, grupos[1], 60)
+    assert "empate" in figuras.mapa(rows, grupos[4], 60)
+    assert figuras.FLAVIO in figuras.mapa(rows, grupos[6], 60)
