@@ -60,7 +60,10 @@ PERMITIDOS = re.compile(
     # caminhos e identificadores de arquivo citados como fonte
     r"|[a-z]+(?:/[a-z0-9_]+)+|\b[a-z]+_[a-z0-9_]*\d[a-z0-9_]*"
 )
-PROIBIDOS = {"travessão": "—", "meia-risca": "–", "hashtag": "#"}
+PROIBIDOS = {"travessão": "—", "meia-risca": "–"}
+# "#" só passa como fragmento de endereço de página (".html#ancora"), que leva o
+# leitor à subparte do dossiê; em qualquer outro lugar é hashtag.
+HASHTAG = re.compile(r"(?<!\.html)#")
 PALAVRAS_PROIBIDAS = ("fraude", "fraudul", "comunista", "ladrão", "ladrao", "roubo")
 
 
@@ -73,6 +76,8 @@ def digitos_soltos(modelo: str) -> list[str]:
 
 def problemas_de_texto(texto: str) -> list[str]:
     out = [nome for nome, c in PROIBIDOS.items() if c in texto]
+    if HASHTAG.search(texto):
+        out.append("hashtag")
     if EMOJI.search(texto):
         out.append("emoji")
     baixo = texto.lower()

@@ -5,13 +5,15 @@ from __future__ import annotations
 
 from . import thread_valores as VA
 from . import thread_valores_b as VB
+from . import thread_valores_c as VC
 from .thread_base import PNG_DIR, ROOT, URL_DOSSIE, digitos_soltos, problemas_de_texto
 from .thread_fig_b import fig_fecho
 from .thread_posts_a import POSTS_A
 from .thread_posts_b import POSTS_B
+from .thread_posts_c import POSTS_C
 
 MIN_CHARS, MAX_CHARS = 2000, 2700
-MIN_POSTS, MAX_POSTS = 16, 24
+MIN_POSTS, MAX_POSTS = 16, 26
 # TESE.md (26/10/2026): o afastamento é medida da mudança, não confissão de erro.
 VETADAS_TESE = (
     "nós erramos",
@@ -45,6 +47,8 @@ FONTES_VALORES = (
     VB.v_paralela,
     VB.v_limites,
     VB.v_fecho,
+    VC.v_perdas,
+    VC.v_pendencia,
 )
 
 
@@ -62,7 +66,7 @@ def valores() -> dict:
 def montar() -> list[dict]:
     v = valores()
     posts = []
-    for p in POSTS_A + POSTS_B:
+    for p in POSTS_A + POSTS_B + POSTS_C:
         q = dict(p)
         for campo in CAMPOS_TEXTO:
             q[f"{campo}_f"] = p[campo].format_map(v)

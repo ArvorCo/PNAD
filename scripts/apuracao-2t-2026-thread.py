@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Gera docs/apuracao_2T_2026_thread.html: a thread do dossiê da apuração do 2º turno.
 
-Dezoito cards 1:1 (largura de trabalho de 1080 px) com gráfico SVG desenhado
-em Python a partir de analysis/apuracao_2t_2026/dados/, e o texto de cada post, de
-2.000 a 2.700 caracteres, pronto para copiar. Falha se algum post sair da faixa,
+Cards 1:1 (largura de trabalho de 1080 px; a quantidade é conferida por
+thread_build.MIN_POSTS e MAX_POSTS) com gráfico SVG desenhado em Python a partir de
+analysis/apuracao_2t_2026/dados/, e o texto de cada post, de 2.000 a 2.700
+caracteres, pronto para copiar. Falha se algum post sair da faixa,
 se houver travessão, hashtag, emoji ou palavra vetada, ou se algum algarismo dos
 modelos de texto não vier de um campo preenchido pelos dados.
 
@@ -48,6 +49,8 @@ def renderizar_png(n: int) -> None:
             )
             pg.evaluate(f"window.scrollTo(0, {topo} - 40)")
             caixa = card.bounding_box()
+            if caixa is None:
+                raise RuntimeError(f"card {i:02d} sem caixa na página")
             pg.screenshot(
                 path=str(PNG_DIR / f"{i:02d}.png"),
                 clip={

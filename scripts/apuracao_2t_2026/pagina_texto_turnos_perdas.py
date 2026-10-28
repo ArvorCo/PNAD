@@ -39,6 +39,7 @@ from .pagina_comum import ROOT
 from .pagina_fig_turnos_util import municipio
 
 TITULO = "Onde Flávio teve menos votos no 2º turno do que no 1º"
+ANCORA = "tu-menos-votos"
 GOV = "governadores.json"
 
 
@@ -418,7 +419,7 @@ def bloco(d, C1: dict[str, Any], antes_das_listas: str = "") -> str:
     gov = TP.ufs_governador(G)
     RF = TP.resumo(C1, "flavio", gov)
     RL = TP.resumo(C1, "lula", gov)
-    h = F.ESTILO + f'<h3 id="tu-menos-votos">{TITULO}</h3>'
+    h = F.ESTILO + f'<h3 id="{ANCORA}">{TITULO}</h3>'
     h += regua() + cartoes(RF, RL) + abertura(RF) + espelho(RL)
     h += F.fig_perdas_uf(RF, RL, sorted(gov))
     h += por_uf(RF, RL)

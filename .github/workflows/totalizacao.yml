@@ -5,10 +5,8 @@ name: Totalizacao paralela (exportacao publica)
 # snapshot auditavel da cadeia de hashes no historico do git.
 on:
   schedule:
-    # A cada 10 minutos de 25/10 a 15/11 (UTC), porque os envios seguem chegando depois do
-    # 2o turno; fora disso, so manual. Cron nao atravessa meses: uma linha por mes.
-    - cron: '*/10 * 25-31 10 *'
-    - cron: '*/10 * 1-15 11 *'
+    # A cada 10 minutos nos dias do 2o turno e seguintes (UTC); fora disso, so manual.
+    - cron: '*/10 * 25-28 10 *'
   workflow_dispatch:
 
 permissions:
