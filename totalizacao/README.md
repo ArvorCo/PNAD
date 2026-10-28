@@ -75,4 +75,4 @@ workflow antes da exportação. Igualdade comprova transmissão e soma, nunca o 
 2. Esvaziar os envios de teste (`truncate envio, bu, bu_cargo, bu_voto restart identity`).
 3. Criar o site Turnstile e preencher `turnstileSiteKey` em `docs/assets/totalizacao/config.js`
    e `TURNSTILE_SECRET` nos segredos.
-4. Conferir que o workflow `totalizacao.yml` está habilitado (ele só agenda de 25 a 28/10).
+4. Conferir que o workflow `totalizacao.yml` está habilitado (ele agenda de 25/10 a 15/11; depois disso, só manual).
