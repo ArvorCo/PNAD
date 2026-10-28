@@ -62,7 +62,46 @@ NOTA_MR = {
         "Exterior separado: a vizinhança é a cidade do consulado, onde quase todas as seções têm "
         "a mesma série; sensibilidade, não resultado."
     ),
+    "certificado_realocado": (
+        "Seções do 2º turno que receberam uma urna cujo certificado de hardware serviu outra seção "
+        "no 1º turno (urna de reserva realocada). Pendência documental: o registro de substituição "
+        "não está nos arquivos públicos; ver metadados.entre_turnos_vsc."
+    ),
 }
+
+
+def chave_de(texto: str) -> tuple:
+    """``"ac/01015/2/88"`` -> ``("ac", "01015", 2, 88)``, no formato de ``CHAVE``."""
+    uf, mun, zona, secao = texto.split("/")
+    return (uf.lower(), mun, int(zona), int(secao))
+
+
+def totais_secoes(banco: Path, chaves: list) -> dict:
+    """Aptos, comparecimento e votos dos finalistas (presidente) nas seções dadas."""
+    import sqlite3
+
+    con = sqlite3.connect(f"file:{banco}?mode=ro", uri=True)
+    out = {"secoes": 0, "aptos": 0, "comparecimento": 0, "flavio": 0, "lula": 0}
+    for uf, mun, zona, secao in chaves:
+        r = con.execute(
+            "SELECT aptos, comparecimento FROM bu_cargo WHERE uf=? AND mun=? AND zona=? AND secao=? AND cargo=1",
+            (uf, mun, zona, secao),
+        ).fetchone()
+        if r is None:
+            continue
+        out["secoes"] += 1
+        out["aptos"] += int(r[0] or 0)
+        out["comparecimento"] += int(r[1] or 0)
+        for numero, votos in con.execute(
+            "SELECT numero, votos FROM voto_secao WHERE uf=? AND mun=? AND zona=? AND secao=? AND cargo=1 AND tipo=1",
+            (uf, mun, zona, secao),
+        ):
+            if numero == 22:
+                out["flavio"] += int(votos)
+            elif numero == 13:
+                out["lula"] += int(votos)
+    con.close()
+    return out
 
 
 def _mil(n: int) -> str:
@@ -141,10 +180,43 @@ def main() -> None:
         marcas["mr_mesma_serie_na_zona_exterior"] = [
             k for k in mr if str(k[0]).lower() == "zz"
         ]
+    realocados = [
+        chave_de(c["secao_2t"])
+        for c in et.get("certificado_do_1t_em_outra_secao_no_2t_casos") or []
+    ]
+    if realocados:
+        marcas["certificado_realocado"] = realocados
+        et["certificado_realocado_totais"] = {
+            "2t": totais_secoes(a.banco_2t, realocados),
+            "1t": totais_secoes(a.banco_1t, realocados),
+            "mesmo_municipio": sum(
+                1
+                for c in et["certificado_do_1t_em_outra_secao_no_2t_casos"]
+                if c["secao_2t"].split("/")[:2] == c["secao_1t"].split("/")[:2]
+            ),
+            "mesma_zona": sum(
+                1
+                for c in et["certificado_do_1t_em_outra_secao_no_2t_casos"]
+                if c["secao_2t"].split("/")[:3] == c["secao_1t"].split("/")[:3]
+            ),
+            "ufs": len(
+                {
+                    c["secao_2t"].split("/")[0]
+                    for c in et["certificado_do_1t_em_outra_secao_no_2t_casos"]
+                }
+            ),
+            "municipios": len(
+                {
+                    tuple(c["secao_2t"].split("/")[:2])
+                    for c in et["certificado_do_1t_em_outra_secao_no_2t_casos"]
+                }
+            ),
+        }
     for nome, ch in {**t2["_falhas"], **falhas_et, **falhas_log}.items():
         if ch:
             marcas[nome] = ch
     operacionais = {
+        "certificado_realocado",
         "mesma_urna_carga_nova",
         "reinicio_durante_votacao",
         "mr_mesma_serie_na_zona",

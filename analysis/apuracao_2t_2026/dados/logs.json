@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-27T03:35:45+00:00",
+ "gerado_em": "2026-10-27T23:25:28+00:00",
  "rotulo": "pede explicação, não prova irregularidade",
  "fontes": {
   "metricas_2t": "data/outputs/logs_urnas_2t_2026.sqlite",
@@ -3237,7 +3237,7 @@
   },
   "versao_unica": true,
   "dossie_metadados": {
-   "gerado_em": "2026-10-26T19:46:19+00:00",
+   "gerado_em": "2026-10-27T23:18:43+00:00",
    "estado": "completo",
    "coerencia_logs": {
     "secoes_com_log": 499176,
@@ -3369,6 +3369,26 @@
       "2026-10-24": 3
      }
     },
+    "certificado_realocado_totais": {
+     "2t": {
+      "secoes": 85,
+      "aptos": 28377,
+      "comparecimento": 23220,
+      "flavio": 10271,
+      "lula": 12147
+     },
+     "1t": {
+      "secoes": 85,
+      "aptos": 28364,
+      "comparecimento": 22542,
+      "flavio": 9540,
+      "lula": 10068
+     },
+     "mesmo_municipio": 58,
+     "mesma_zona": 45,
+     "ufs": 16,
+     "municipios": 58
+    },
     "outra_secao_mesmo_municipio": 58,
     "outra_secao_mesma_zona": 45,
     "outra_secao_casos_listados": 85
@@ -3392,7 +3412,172 @@
      "arquivos_listados": 5487289,
      "arquivos_com_nome_de_outra_secao": 0
     }
-   }
+   },
+   "certificado_realocado_totais": {
+    "2t": {
+     "secoes": 85,
+     "aptos": 28377,
+     "comparecimento": 23220,
+     "flavio": 10271,
+     "lula": 12147
+    },
+    "1t": {
+     "secoes": 85,
+     "aptos": 28364,
+     "comparecimento": 22542,
+     "flavio": 9540,
+     "lula": 10068
+    },
+    "mesmo_municipio": 58,
+    "mesma_zona": 45,
+    "ufs": 16,
+    "municipios": 58
+   },
+   "certificado_realocado_log_nao_confere": 0,
+   "voto": [
+    {
+     "grupo": "mr_mesma_serie_na_zona",
+     "n": 306,
+     "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+      "n": 306,
+      "media_pp": 2.526,
+      "ep_pp": 0.5,
+      "ic95_pp": [
+       1.546,
+       3.507
+      ]
+     },
+     "dif_em_dif_contra_1t": {
+      "n": 306,
+      "media_pp": 0.073,
+      "ep_pp": 0.133,
+      "ic95_pp": [
+       -0.188,
+       0.334
+      ]
+     },
+     "nota": "Média simples por seção, 3+ vizinhas: sensibilidade. O número publicado no dossiê (capítulo logs, logs.json, metadados.serie_mr.voto_estruturais_brasil) usa os mesmos grupos, ponderado pelos votos dos dois finalistas e com 5+ vizinhas."
+    },
+    {
+     "grupo": "mr_mesma_serie_na_zona_exterior",
+     "n": 1212,
+     "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+      "n": 123,
+      "media_pp": -4.2,
+      "ep_pp": 1.277,
+      "ic95_pp": [
+       -6.702,
+       -1.697
+      ]
+     },
+     "dif_em_dif_contra_1t": {
+      "n": 123,
+      "media_pp": -1.679,
+      "ep_pp": 0.27,
+      "ic95_pp": [
+       -2.208,
+       -1.151
+      ]
+     },
+     "nota": "Exterior separado: a vizinhança é a cidade do consulado, onde quase todas as seções têm a mesma série; sensibilidade, não resultado."
+    },
+    {
+     "grupo": "certificado_realocado",
+     "n": 85,
+     "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+      "n": 85,
+      "media_pp": 0.732,
+      "ep_pp": 0.7,
+      "ic95_pp": [
+       -0.641,
+       2.104
+      ]
+     },
+     "dif_em_dif_contra_1t": {
+      "n": 85,
+      "media_pp": 0.161,
+      "ep_pp": 0.188,
+      "ic95_pp": [
+       -0.208,
+       0.53
+      ]
+     },
+     "nota": "Seções do 2º turno que receberam uma urna cujo certificado de hardware serviu outra seção no 1º turno (urna de reserva realocada). Pendência documental: o registro de substituição não está nos arquivos públicos; ver metadados.entre_turnos_vsc."
+    },
+    {
+     "grupo": "mesma_urna_carga_nova",
+     "n": 359,
+     "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+      "n": 359,
+      "media_pp": -0.595,
+      "ep_pp": 0.366,
+      "ic95_pp": [
+       -1.313,
+       0.123
+      ]
+     },
+     "dif_em_dif_contra_1t": {
+      "n": 359,
+      "media_pp": -0.164,
+      "ep_pp": 0.111,
+      "ic95_pp": [
+       -0.382,
+       0.054
+      ]
+     }
+    },
+    {
+     "grupo": "data_de_carga_do_log_diverge_do_bu",
+     "n": 5,
+     "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+      "n": 5,
+      "media_pp": -1.946,
+      "ep_pp": 2.55,
+      "ic95_pp": [
+       -6.945,
+       3.052
+      ]
+     },
+     "dif_em_dif_contra_1t": {
+      "n": 5,
+      "media_pp": 0.216,
+      "ep_pp": 1.842,
+      "ic95_pp": [
+       -3.394,
+       3.826
+      ]
+     }
+    },
+    {
+     "grupo": "reinicio_durante_votacao",
+     "n": 12378,
+     "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+      "n": 12334,
+      "media_pp": -0.104,
+      "ep_pp": 0.07,
+      "ic95_pp": [
+       -0.242,
+       0.034
+      ]
+     },
+     "dif_em_dif_contra_1t": {
+      "n": 12334,
+      "media_pp": -0.015,
+      "ep_pp": 0.019,
+      "ic95_pp": [
+       -0.053,
+       0.022
+      ]
+     }
+    },
+    {
+     "grupo": "qualquer sinal fora da regra (exceto recarga entre turnos, reinício, MR repetida na zona e data de carga do log)",
+     "n": 0
+    }
+   ],
+   "pendencias": [
+    "A assinatura de software (SEVIN, algoritmo 3 de 256 bits) não é verificada; só o resumo SHA-512 dela."
+   ]
   }
  },
  "integrado": {

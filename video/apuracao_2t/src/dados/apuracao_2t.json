@@ -1,12 +1,12 @@
 {
- "gerado_em": "2026-10-27T22:39:03Z",
+ "gerado_em": "2026-10-27T23:47:24Z",
  "fontes": {
   "analysis/apuracao_2t_2026/dados/abstencao.json": "42976cc037c4a9a749fb02ec54f5aed6002ae7bf325d8cf925539b7a328b1ca7",
-  "analysis/apuracao_2t_2026/dados/comparacao_1t.json": "7a25ba6662a149d2667c2535dcd8c1f5221919b84ca531685df667d094c96ce7",
+  "analysis/apuracao_2t_2026/dados/comparacao_1t.json": "ff9de9041e2c2daf3c765fc8f48f72c79367fc9b0689ed421d5c71a19765a86a",
   "analysis/apuracao_2t_2026/dados/hipotese_autor.json": "86ce7f4ce8bdec1f6b32e7d5f2820596eff7391571392b11b8867c9aa61d39c0",
   "analysis/apuracao_2t_2026/dados/linha_do_tempo.json": "d7f616e654c2c998337534c880aa549472971a55c495901456dc00c46691d1e3",
-  "analysis/apuracao_2t_2026/dados/logs.json": "719322539225d1d67d004c0173510edbe480b2898ad55135ee9990decfa57545",
-  "analysis/apuracao_2t_2026/dados/metadados.json": "a80c6580df72824dca60744141af2cb9dbecd0e45dfcd788358a3bdbaaabae07",
+  "analysis/apuracao_2t_2026/dados/logs.json": "ad4c50a465981ef670b0374661fd49eaf299569cbb87be545f6796b9b77c1cb0",
+  "analysis/apuracao_2t_2026/dados/metadados.json": "1532e7de3c7ca1837acca005953317bde702bcc5b403f798b01da9cfbd3b35cd",
   "analysis/apuracao_2t_2026/dados/paralela.json": "69f13a2a36313a3d2316dd5a8629c4ba59c85b3b010b3f916f1d31daba5928e4",
   "analysis/apuracao_2t_2026/dados/pesquisas_vs_urna.json": "f631509d09b7045da06b42e2b2c87d826ba188f61f0107ac0d0fd9264f0d1733",
   "analysis/apuracao_2t_2026/dados/presidente.json": "9713c9d0a456ada3b618d6f34279cd9da49b2717b30390255f5697be14e3833e",
@@ -24,7 +24,7 @@
  "avisos": [
   "presidente.municipios.linhas: 1231401 bytes omitidos",
   "linha_do_tempo.ufs: 1161982 bytes omitidos",
-  "comparacao_1t.municipios.linhas: 1340933 bytes omitidos",
+  "comparacao_1t.municipios.linhas: 1448840 bytes omitidos",
   "comparacao_1t.flavio_ganhou_votos.lista: 610763 bytes omitidos",
   "comparacao_1t.lula_ganhou_votos.lista: 725515 bytes omitidos",
   "abstencao.municipios_10mil.linhas: 228641 bytes omitidos",
@@ -23232,7 +23232,7 @@
  },
  "comparacao_1t": {
   "meta": {
-   "gerado_em": "2026-10-26T16:03:53Z",
+   "gerado_em": "2026-10-27T23:36:02Z",
    "script": "scripts/apuracao-2t-2026-dados.py",
    "banco": "apuracao/data/apuracao-2t.sqlite",
    "versao_nacional_snapshot_id": 90584,
@@ -23249,6 +23249,7 @@
    "h2h": "t1_h2h_flavio e t2_h2h_flavio: parte de Flávio só entre os dois finalistas; swing_h2h_flavio_pp é a mudança dessa parte, a única comparável entre turnos com e sem terceiros",
    "ganho_sobre_terceiros": "votos ganhos no 2º turno divididos pelos votos de terceiros do 1º turno no mesmo município; passa de 100% quando entra eleitor novo ou sai voto do adversário, e não identifica transferência individual",
    "abstencao": "sobre o eleitorado; 2º turno sobre as seções totalizadas",
+   "comparecimento": "t1_comparecimento e t2_comparecimento em eleitores; aptos é o eleitorado do 2º turno e t1_aptos, o do 1º",
    "base": "municípios com o arquivo presidencial completo nos dois turnos"
   },
   "brasil": {
@@ -23286,6 +23287,9 @@
    "delta_abstencao_pp": -1.85,
    "delta_comparecimento_votos": 2920562,
    "t2_validos_menos_t1": 4740716,
+   "t1_aptos": 157828968,
+   "t1_comparecimento": 124934069,
+   "t2_comparecimento": 127854631,
    "n_municipios": 5571
   },
   "regioes": [
@@ -23324,6 +23328,9 @@
     "delta_abstencao_pp": 1.82,
     "delta_comparecimento_votos": -237883,
     "t2_validos_menos_t1": -143737,
+    "t1_aptos": 13101175,
+    "t1_comparecimento": 10554993,
+    "t2_comparecimento": 10317110,
     "n_municipios": 450
    },
    {
@@ -23361,6 +23368,9 @@
     "delta_abstencao_pp": -1.9,
     "delta_comparecimento_votos": 826761,
     "t2_validos_menos_t1": 1542516,
+    "t1_aptos": 43511237,
+    "t1_comparecimento": 35508871,
+    "t2_comparecimento": 36335632,
     "n_municipios": 1794
    },
    {
@@ -23398,6 +23408,9 @@
     "delta_abstencao_pp": -1.65,
     "delta_comparecimento_votos": 199018,
     "t2_validos_menos_t1": 253589,
+    "t1_aptos": 12001141,
+    "t1_comparecimento": 9396336,
+    "t2_comparecimento": 9595354,
     "n_municipios": 468
    },
    {
@@ -23435,6 +23448,9 @@
     "delta_abstencao_pp": -2.43,
     "delta_comparecimento_votos": 1613905,
     "t2_validos_menos_t1": 2402271,
+    "t1_aptos": 66344562,
+    "t1_comparecimento": 51281350,
+    "t2_comparecimento": 52895255,
     "n_municipios": 1668
    },
    {
@@ -23472,6 +23488,9 @@
     "delta_abstencao_pp": -2.27,
     "delta_comparecimento_votos": 518761,
     "t2_validos_menos_t1": 686077,
+    "t1_aptos": 22870853,
+    "t1_comparecimento": 18192519,
+    "t2_comparecimento": 18711280,
     "n_municipios": 1191
    }
   ],
@@ -23512,6 +23531,9 @@
     "delta_abstencao_pp": 5.65,
     "delta_comparecimento_votos": -34676,
     "t2_validos_menos_t1": -36838,
+    "t1_aptos": 613742,
+    "t1_comparecimento": 488330,
+    "t2_comparecimento": 453654,
     "n_municipios": 22
    },
    {
@@ -23550,6 +23572,9 @@
     "delta_abstencao_pp": -0.55,
     "delta_comparecimento_votos": 13204,
     "t2_validos_menos_t1": 77905,
+    "t1_aptos": 2442126,
+    "t1_comparecimento": 1938428,
+    "t2_comparecimento": 1951632,
     "n_municipios": 102
    },
    {
@@ -23588,6 +23613,9 @@
     "delta_abstencao_pp": 1.51,
     "delta_comparecimento_votos": -42490,
     "t2_validos_menos_t1": -49735,
+    "t1_aptos": 2798611,
+    "t1_comparecimento": 2234549,
+    "t2_comparecimento": 2192059,
     "n_municipios": 62
    },
    {
@@ -23626,6 +23654,9 @@
     "delta_abstencao_pp": 8.06,
     "delta_comparecimento_votos": -46587,
     "t2_validos_menos_t1": -43216,
+    "t1_aptos": 576988,
+    "t1_comparecimento": 476562,
+    "t2_comparecimento": 429975,
     "n_municipios": 16
    },
    {
@@ -23664,6 +23695,9 @@
     "delta_abstencao_pp": -3.26,
     "delta_comparecimento_votos": 368446,
     "t2_validos_menos_t1": 533728,
+    "t1_aptos": 11312752,
+    "t1_comparecimento": 9053601,
+    "t2_comparecimento": 9422047,
     "n_municipios": 417
    },
    {
@@ -23702,6 +23736,9 @@
     "delta_abstencao_pp": -1.63,
     "delta_comparecimento_votos": 114372,
     "t2_validos_menos_t1": 237788,
+    "t1_aptos": 6996545,
+    "t1_comparecimento": 5910471,
+    "t2_comparecimento": 6024843,
     "n_municipios": 184
    },
    {
@@ -23740,6 +23777,9 @@
     "delta_abstencao_pp": -1.6,
     "delta_comparecimento_votos": 36884,
     "t2_validos_menos_t1": 31958,
+    "t1_aptos": 2258320,
+    "t1_comparecimento": 1831396,
+    "t2_comparecimento": 1868280,
     "n_municipios": 1
    },
    {
@@ -23778,6 +23818,9 @@
     "delta_abstencao_pp": -1.9,
     "delta_comparecimento_votos": 56932,
     "t2_validos_menos_t1": 45391,
+    "t1_aptos": 2991650,
+    "t1_comparecimento": 2352282,
+    "t2_comparecimento": 2409214,
     "n_municipios": 78
    },
    {
@@ -23816,6 +23859,9 @@
     "delta_abstencao_pp": -1.49,
     "delta_comparecimento_votos": 75693,
     "t2_validos_menos_t1": 103066,
+    "t1_aptos": 5080590,
+    "t1_comparecimento": 3971587,
+    "t2_comparecimento": 4047280,
     "n_municipios": 246
    },
    {
@@ -23854,6 +23900,9 @@
     "delta_abstencao_pp": 0.63,
     "delta_comparecimento_votos": -32572,
     "t2_validos_menos_t1": 27763,
+    "t1_aptos": 5183115,
+    "t1_comparecimento": 4160343,
+    "t2_comparecimento": 4127771,
     "n_municipios": 217
    },
    {
@@ -23892,6 +23941,9 @@
     "delta_abstencao_pp": -2.48,
     "delta_comparecimento_votos": 406929,
     "t2_validos_menos_t1": 616650,
+    "t1_aptos": 16372372,
+    "t1_comparecimento": 12637274,
+    "t2_comparecimento": 13044203,
     "n_municipios": 853
    },
    {
@@ -23930,6 +23982,9 @@
     "delta_abstencao_pp": -2.63,
     "delta_comparecimento_votos": 53240,
     "t2_validos_menos_t1": 66587,
+    "t1_aptos": 2024430,
+    "t1_comparecimento": 1541220,
+    "t2_comparecimento": 1594460,
     "n_municipios": 79
    },
    {
@@ -23968,6 +24023,9 @@
     "delta_abstencao_pp": -1.25,
     "delta_comparecimento_votos": 33201,
     "t2_validos_menos_t1": 51978,
+    "t1_aptos": 2637801,
+    "t1_comparecimento": 2052133,
+    "t2_comparecimento": 2085334,
     "n_municipios": 142
    },
    {
@@ -24006,6 +24064,9 @@
     "delta_abstencao_pp": 1.22,
     "delta_comparecimento_votos": -76931,
     "t2_validos_menos_t1": 27217,
+    "t1_aptos": 6262397,
+    "t1_comparecimento": 5066504,
+    "t2_comparecimento": 4989573,
     "n_municipios": 144
    },
    {
@@ -24044,6 +24105,9 @@
     "delta_abstencao_pp": -1.84,
     "delta_comparecimento_votos": 59572,
     "t2_validos_menos_t1": 145522,
+    "t1_aptos": 3248531,
+    "t1_comparecimento": 2683988,
+    "t2_comparecimento": 2743560,
     "n_municipios": 223
    },
    {
@@ -24082,6 +24146,9 @@
     "delta_abstencao_pp": -2.99,
     "delta_comparecimento_votos": 215405,
     "t2_validos_menos_t1": 349050,
+    "t1_aptos": 7223450,
+    "t1_comparecimento": 5911062,
+    "t2_comparecimento": 6126467,
     "n_municipios": 185
    },
    {
@@ -24120,6 +24187,9 @@
     "delta_abstencao_pp": 0.04,
     "delta_comparecimento_votos": -1053,
     "t2_validos_menos_t1": 33454,
+    "t1_aptos": 2704758,
+    "t1_comparecimento": 2240883,
+    "t2_comparecimento": 2239830,
     "n_municipios": 224
    },
    {
@@ -24158,6 +24228,9 @@
     "delta_abstencao_pp": -2.53,
     "delta_comparecimento_votos": 217882,
     "t2_validos_menos_t1": 272705,
+    "t1_aptos": 8613657,
+    "t1_comparecimento": 6841457,
+    "t2_comparecimento": 7059339,
     "n_municipios": 399
    },
    {
@@ -24196,6 +24269,9 @@
     "delta_abstencao_pp": -1.7,
     "delta_comparecimento_votos": 217647,
     "t2_validos_menos_t1": 364726,
+    "t1_aptos": 12857648,
+    "t1_comparecimento": 9859802,
+    "t2_comparecimento": 10077449,
     "n_municipios": 92
    },
    {
@@ -24234,6 +24310,9 @@
     "delta_abstencao_pp": -2.32,
     "delta_comparecimento_votos": 61810,
     "t2_validos_menos_t1": 79107,
+    "t1_aptos": 2659825,
+    "t1_comparecimento": 2171013,
+    "t2_comparecimento": 2232823,
     "n_municipios": 167
    },
    {
@@ -24272,6 +24351,9 @@
     "delta_abstencao_pp": 0.21,
     "delta_comparecimento_votos": -2591,
     "t2_validos_menos_t1": 769,
+    "t1_aptos": 1265893,
+    "t1_comparecimento": 991080,
+    "t2_comparecimento": 988489,
     "n_municipios": 52
    },
    {
@@ -24310,6 +24392,9 @@
     "delta_abstencao_pp": 6.03,
     "delta_comparecimento_votos": -24175,
     "t2_validos_menos_t1": -22365,
+    "t1_aptos": 401521,
+    "t1_comparecimento": 332772,
+    "t2_comparecimento": 308597,
     "n_municipios": 15
    },
    {
@@ -24348,6 +24433,9 @@
     "delta_abstencao_pp": -2.19,
     "delta_comparecimento_votos": 186735,
     "t2_validos_menos_t1": 275884,
+    "t1_aptos": 8522545,
+    "t1_comparecimento": 6702903,
+    "t2_comparecimento": 6889638,
     "n_municipios": 497
    },
    {
@@ -24386,6 +24474,9 @@
     "delta_abstencao_pp": -1.99,
     "delta_comparecimento_votos": 114144,
     "t2_validos_menos_t1": 137488,
+    "t1_aptos": 5734651,
+    "t1_comparecimento": 4648159,
+    "t2_comparecimento": 4762303,
     "n_municipios": 295
    },
    {
@@ -24424,6 +24515,9 @@
     "delta_abstencao_pp": -1.59,
     "delta_comparecimento_votos": 27577,
     "t2_validos_menos_t1": 58199,
+    "t1_aptos": 1740135,
+    "t1_comparecimento": 1439082,
+    "t2_comparecimento": 1466659,
     "n_municipios": 75
    },
    {
@@ -24462,6 +24556,9 @@
     "delta_abstencao_pp": -2.73,
     "delta_comparecimento_votos": 932397,
     "t2_validos_menos_t1": 1375504,
+    "t1_aptos": 34122892,
+    "t1_comparecimento": 26431992,
+    "t2_comparecimento": 27364389,
     "n_municipios": 645
    },
    {
@@ -24500,6 +24597,9 @@
     "delta_abstencao_pp": 0.89,
     "delta_comparecimento_votos": -10433,
     "t2_validos_menos_t1": -19569,
+    "t1_aptos": 1182023,
+    "t1_comparecimento": 965196,
+    "t2_comparecimento": 954763,
     "n_municipios": 139
    }
   ],
@@ -24539,7 +24639,10 @@
     "t1_pct_abstencao",
     "delta_abstencao_pp",
     "delta_comparecimento_votos",
-    "t2_validos_menos_t1"
+    "t2_validos_menos_t1",
+    "t1_aptos",
+    "t1_comparecimento",
+    "t2_comparecimento"
    ]
   },
   "n_municipios_completos": 5571,
@@ -44309,7 +44412,10 @@
     "t1_pct_abstencao": 15.88,
     "delta_abstencao_pp": 5.96,
     "delta_comparecimento_votos": -19220,
-    "t2_validos_menos_t1": -17646
+    "t2_validos_menos_t1": -17646,
+    "t1_aptos": 321597,
+    "t1_comparecimento": 270534,
+    "t2_comparecimento": 251314
    },
    {
     "cd_tse": "01457",
@@ -44346,7 +44452,10 @@
     "t1_pct_abstencao": 20.1,
     "delta_abstencao_pp": 12.23,
     "delta_comparecimento_votos": -3773,
-    "t2_validos_menos_t1": -3800
+    "t2_validos_menos_t1": -3800,
+    "t1_aptos": 30864,
+    "t1_comparecimento": 24661,
+    "t2_comparecimento": 20888
    },
    {
     "cd_tse": "01473",
@@ -44383,7 +44492,10 @@
     "t1_pct_abstencao": 24.58,
     "delta_abstencao_pp": 11.67,
     "delta_comparecimento_votos": -3491,
-    "t2_validos_menos_t1": -3479
+    "t2_validos_menos_t1": -3479,
+    "t1_aptos": 29970,
+    "t1_comparecimento": 22603,
+    "t2_comparecimento": 19112
    },
    {
     "cd_tse": "01074",
@@ -44420,7 +44532,10 @@
     "t1_pct_abstencao": 19.37,
     "delta_abstencao_pp": 6.64,
     "delta_comparecimento_votos": -4200,
-    "t2_validos_menos_t1": -4445
+    "t2_validos_menos_t1": -4445,
+    "t1_aptos": 63851,
+    "t1_comparecimento": 51482,
+    "t2_comparecimento": 47282
    },
    {
     "cd_tse": "58190",
@@ -44457,7 +44572,10 @@
     "t1_pct_abstencao": 21.6,
     "delta_abstencao_pp": 1.05,
     "delta_comparecimento_votos": -3898,
-    "t2_validos_menos_t1": 3233
+    "t2_validos_menos_t1": 3233,
+    "t1_aptos": 370466,
+    "t1_comparecimento": 290458,
+    "t2_comparecimento": 286560
    },
    {
     "cd_tse": "03085",
@@ -44494,7 +44612,10 @@
     "t1_pct_abstencao": 19.81,
     "delta_abstencao_pp": 9.48,
     "delta_comparecimento_votos": -2254,
-    "t2_validos_menos_t1": -2050
+    "t2_validos_menos_t1": -2050,
+    "t1_aptos": 23761,
+    "t1_comparecimento": 19054,
+    "t2_comparecimento": 16800
    },
    {
     "cd_tse": "02534",
@@ -44531,7 +44652,10 @@
     "t1_pct_abstencao": 21.0,
     "delta_abstencao_pp": 3.81,
     "delta_comparecimento_votos": -3088,
-    "t2_validos_menos_t1": -3535
+    "t2_validos_menos_t1": -3535,
+    "t1_aptos": 81115,
+    "t1_comparecimento": 64079,
+    "t2_comparecimento": 60991
    },
    {
     "cd_tse": "01040",
@@ -44568,7 +44692,10 @@
     "t1_pct_abstencao": 21.39,
     "delta_abstencao_pp": 19.26,
     "delta_comparecimento_votos": -2301,
-    "t2_validos_menos_t1": -2355
+    "t2_validos_menos_t1": -2355,
+    "t1_aptos": 11897,
+    "t1_comparecimento": 9352,
+    "t2_comparecimento": 7051
    },
    {
     "cd_tse": "06157",
@@ -44605,7 +44732,10 @@
     "t1_pct_abstencao": 14.81,
     "delta_abstencao_pp": 6.2,
     "delta_comparecimento_votos": -5320,
-    "t2_validos_menos_t1": -4922
+    "t2_validos_menos_t1": -4922,
+    "t1_aptos": 85900,
+    "t1_comparecimento": 73177,
+    "t2_comparecimento": 67857
    },
    {
     "cd_tse": "05053",
@@ -44642,7 +44772,10 @@
     "t1_pct_abstencao": 22.88,
     "delta_abstencao_pp": 4.13,
     "delta_comparecimento_votos": -2096,
-    "t2_validos_menos_t1": -1284
+    "t2_validos_menos_t1": -1284,
+    "t1_aptos": 50827,
+    "t1_comparecimento": 39198,
+    "t2_comparecimento": 37102
    },
    {
     "cd_tse": "01139",
@@ -44679,7 +44812,10 @@
     "t1_pct_abstencao": 24.97,
     "delta_abstencao_pp": 8.12,
     "delta_comparecimento_votos": -1966,
-    "t2_validos_menos_t1": -2107
+    "t2_validos_menos_t1": -2107,
+    "t1_aptos": 24197,
+    "t1_comparecimento": 18156,
+    "t2_comparecimento": 16190
    },
    {
     "cd_tse": "03034",
@@ -44716,7 +44852,10 @@
     "t1_pct_abstencao": 18.4,
     "delta_abstencao_pp": 13.31,
     "delta_comparecimento_votos": -2032,
-    "t2_validos_menos_t1": -1917
+    "t2_validos_menos_t1": -1917,
+    "t1_aptos": 15259,
+    "t1_comparecimento": 12452,
+    "t2_comparecimento": 10420
    },
    {
     "cd_tse": "03069",
@@ -44753,7 +44892,10 @@
     "t1_pct_abstencao": 16.91,
     "delta_abstencao_pp": 9.89,
     "delta_comparecimento_votos": -1742,
-    "t2_validos_menos_t1": -1618
+    "t2_validos_menos_t1": -1618,
+    "t1_aptos": 17613,
+    "t1_comparecimento": 14635,
+    "t2_comparecimento": 12893
    },
    {
     "cd_tse": "02259",
@@ -44790,7 +44932,10 @@
     "t1_pct_abstencao": 25.91,
     "delta_abstencao_pp": 2.71,
     "delta_comparecimento_votos": -1379,
-    "t2_validos_menos_t1": -1705
+    "t2_validos_menos_t1": -1705,
+    "t1_aptos": 51479,
+    "t1_comparecimento": 38141,
+    "t2_comparecimento": 36762
    },
    {
     "cd_tse": "04359",
@@ -44827,7 +44972,10 @@
     "t1_pct_abstencao": 19.91,
     "delta_abstencao_pp": 5.84,
     "delta_comparecimento_votos": -4505,
-    "t2_validos_menos_t1": -2902
+    "t2_validos_menos_t1": -2902,
+    "t1_aptos": 77288,
+    "t1_comparecimento": 61897,
+    "t2_comparecimento": 57392
    },
    {
     "cd_tse": "02410",
@@ -44864,7 +45012,10 @@
     "t1_pct_abstencao": 23.25,
     "delta_abstencao_pp": 3.67,
     "delta_comparecimento_votos": -2783,
-    "t2_validos_menos_t1": -3195
+    "t2_validos_menos_t1": -3195,
+    "t1_aptos": 76067,
+    "t1_comparecimento": 58385,
+    "t2_comparecimento": 55602
    },
    {
     "cd_tse": "58513",
@@ -44901,7 +45052,10 @@
     "t1_pct_abstencao": 26.71,
     "delta_abstencao_pp": 4.05,
     "delta_comparecimento_votos": -1882,
-    "t2_validos_menos_t1": -1542
+    "t2_validos_menos_t1": -1542,
+    "t1_aptos": 46501,
+    "t1_comparecimento": 34080,
+    "t2_comparecimento": 32198
    },
    {
     "cd_tse": "01082",
@@ -44938,7 +45092,10 @@
     "t1_pct_abstencao": 16.14,
     "delta_abstencao_pp": 12.05,
     "delta_comparecimento_votos": -1477,
-    "t2_validos_menos_t1": -1581
+    "t2_validos_menos_t1": -1581,
+    "t1_aptos": 12185,
+    "t1_comparecimento": 10218,
+    "t2_comparecimento": 8741
    },
    {
     "cd_tse": "03050",
@@ -44975,7 +45132,10 @@
     "t1_pct_abstencao": 15.37,
     "delta_abstencao_pp": 11.32,
     "delta_comparecimento_votos": -1517,
-    "t2_validos_menos_t1": -1396
+    "t2_validos_menos_t1": -1396,
+    "t1_aptos": 13408,
+    "t1_comparecimento": 11347,
+    "t2_comparecimento": 9830
    },
    {
     "cd_tse": "06076",
@@ -45012,7 +45172,10 @@
     "t1_pct_abstencao": 14.51,
     "delta_abstencao_pp": 15.28,
     "delta_comparecimento_votos": -3393,
-    "t2_validos_menos_t1": -3277
+    "t2_validos_menos_t1": -3277,
+    "t1_aptos": 22212,
+    "t1_comparecimento": 18989,
+    "t2_comparecimento": 15596
    },
    {
     "cd_tse": "03077",
@@ -45049,7 +45212,10 @@
     "t1_pct_abstencao": 18.15,
     "delta_abstencao_pp": 9.57,
     "delta_comparecimento_votos": -1180,
-    "t2_validos_menos_t1": -1088
+    "t2_validos_menos_t1": -1088,
+    "t1_aptos": 12329,
+    "t1_comparecimento": 10091,
+    "t2_comparecimento": 8911
    },
    {
     "cd_tse": "06041",
@@ -45086,7 +45252,10 @@
     "t1_pct_abstencao": 17.19,
     "delta_abstencao_pp": 23.82,
     "delta_comparecimento_votos": -2115,
-    "t2_validos_menos_t1": -2040
+    "t2_validos_menos_t1": -2040,
+    "t1_aptos": 8881,
+    "t1_comparecimento": 7354,
+    "t2_comparecimento": 5239
    },
    {
     "cd_tse": "03093",
@@ -45123,7 +45292,10 @@
     "t1_pct_abstencao": 16.55,
     "delta_abstencao_pp": 9.76,
     "delta_comparecimento_votos": -1403,
-    "t2_validos_menos_t1": -1272
+    "t2_validos_menos_t1": -1272,
+    "t1_aptos": 14383,
+    "t1_comparecimento": 12003,
+    "t2_comparecimento": 10600
    },
    {
     "cd_tse": "02070",
@@ -45160,7 +45332,10 @@
     "t1_pct_abstencao": 25.58,
     "delta_abstencao_pp": 6.35,
     "delta_comparecimento_votos": -2050,
-    "t2_validos_menos_t1": -2129
+    "t2_validos_menos_t1": -2129,
+    "t1_aptos": 32340,
+    "t1_comparecimento": 24067,
+    "t2_comparecimento": 22017
    },
    {
     "cd_tse": "03042",
@@ -45197,7 +45372,10 @@
     "t1_pct_abstencao": 14.56,
     "delta_abstencao_pp": 15.89,
     "delta_comparecimento_votos": -1218,
-    "t2_validos_menos_t1": -1104
+    "t2_validos_menos_t1": -1104,
+    "t1_aptos": 7631,
+    "t1_comparecimento": 6520,
+    "t2_comparecimento": 5302
    },
    {
     "cd_tse": "06130",
@@ -45234,7 +45412,10 @@
     "t1_pct_abstencao": 25.04,
     "delta_abstencao_pp": 7.73,
     "delta_comparecimento_votos": -2175,
-    "t2_validos_menos_t1": -1970
+    "t2_validos_menos_t1": -1970,
+    "t1_aptos": 28170,
+    "t1_comparecimento": 21115,
+    "t2_comparecimento": 18940
    },
    {
     "cd_tse": "01090",
@@ -45271,7 +45452,10 @@
     "t1_pct_abstencao": 17.52,
     "delta_abstencao_pp": 9.24,
     "delta_comparecimento_votos": -1357,
-    "t2_validos_menos_t1": -1389
+    "t2_validos_menos_t1": -1389,
+    "t1_aptos": 14657,
+    "t1_comparecimento": 12089,
+    "t2_comparecimento": 10732
    },
    {
     "cd_tse": "06173",
@@ -45308,7 +45492,10 @@
     "t1_pct_abstencao": 18.91,
     "delta_abstencao_pp": 15.65,
     "delta_comparecimento_votos": -1790,
-    "t2_validos_menos_t1": -1672
+    "t2_validos_menos_t1": -1672,
+    "t1_aptos": 11437,
+    "t1_comparecimento": 9274,
+    "t2_comparecimento": 7484
    },
    {
     "cd_tse": "09490",
@@ -45345,7 +45532,10 @@
     "t1_pct_abstencao": 21.94,
     "delta_abstencao_pp": 3.17,
     "delta_comparecimento_votos": -1256,
-    "t2_validos_menos_t1": -873
+    "t2_validos_menos_t1": -873,
+    "t1_aptos": 39769,
+    "t1_comparecimento": 31042,
+    "t2_comparecimento": 29786
    },
    {
     "cd_tse": "03026",
@@ -45382,7 +45572,10 @@
     "t1_pct_abstencao": 18.96,
     "delta_abstencao_pp": 13.81,
     "delta_comparecimento_votos": -1047,
-    "t2_validos_menos_t1": -981
+    "t2_validos_menos_t1": -981,
+    "t1_aptos": 7593,
+    "t1_comparecimento": 6153,
+    "t2_comparecimento": 5106
    }
   ],
   "flavio_maiores_ganhos": [
@@ -45421,7 +45614,10 @@
     "t1_pct_abstencao": 23.39,
     "delta_abstencao_pp": -3.03,
     "delta_comparecimento_votos": 277660,
-    "t2_validos_menos_t1": 409457
+    "t2_validos_menos_t1": 409457,
+    "t1_aptos": 9145124,
+    "t1_comparecimento": 7006411,
+    "t2_comparecimento": 7284071
    },
    {
     "cd_tse": "60011",
@@ -45458,7 +45654,10 @@
     "t1_pct_abstencao": 26.12,
     "delta_abstencao_pp": -3.15,
     "delta_comparecimento_votos": 155972,
-    "t2_validos_menos_t1": 211715
+    "t2_validos_menos_t1": 211715,
+    "t1_aptos": 4952612,
+    "t1_comparecimento": 3658898,
+    "t2_comparecimento": 3814870
    },
    {
     "cd_tse": "41238",
@@ -45495,7 +45694,10 @@
     "t1_pct_abstencao": 23.61,
     "delta_abstencao_pp": -2.94,
     "delta_comparecimento_votos": 57579,
-    "t2_validos_menos_t1": 75951
+    "t2_validos_menos_t1": 75951,
+    "t1_aptos": 1966966,
+    "t1_comparecimento": 1502632,
+    "t2_comparecimento": 1560211
    },
    {
     "cd_tse": "75353",
@@ -45532,7 +45734,10 @@
     "t1_pct_abstencao": 19.72,
     "delta_abstencao_pp": -2.2,
     "delta_comparecimento_votos": 30991,
-    "t2_validos_menos_t1": 33902
+    "t2_validos_menos_t1": 33902,
+    "t1_aptos": 1415148,
+    "t1_comparecimento": 1136092,
+    "t2_comparecimento": 1167083
    },
    {
     "cd_tse": "93734",
@@ -45569,7 +45774,10 @@
     "t1_pct_abstencao": 19.89,
     "delta_abstencao_pp": -1.35,
     "delta_comparecimento_votos": 13566,
-    "t2_validos_menos_t1": 13943
+    "t2_validos_menos_t1": 13943,
+    "t1_aptos": 1019261,
+    "t1_comparecimento": 816529,
+    "t2_comparecimento": 830095
    },
    {
     "cd_tse": "97012",
@@ -45606,7 +45814,10 @@
     "t1_pct_abstencao": 18.9,
     "delta_abstencao_pp": -1.6,
     "delta_comparecimento_votos": 36884,
-    "t2_validos_menos_t1": 31958
+    "t2_validos_menos_t1": 31958,
+    "t1_aptos": 2258320,
+    "t1_comparecimento": 1831396,
+    "t2_comparecimento": 1868280
    },
    {
     "cd_tse": "88013",
@@ -45643,7 +45854,10 @@
     "t1_pct_abstencao": 23.99,
     "delta_abstencao_pp": -2.9,
     "delta_comparecimento_votos": 30717,
-    "t2_validos_menos_t1": 39932
+    "t2_validos_menos_t1": 39932,
+    "t1_aptos": 1064200,
+    "t1_comparecimento": 808867,
+    "t2_comparecimento": 839584
    },
    {
     "cd_tse": "13897",
@@ -45680,7 +45894,10 @@
     "t1_pct_abstencao": 13.02,
     "delta_abstencao_pp": -2.0,
     "delta_comparecimento_votos": 35952,
-    "t2_validos_menos_t1": 61542
+    "t2_validos_menos_t1": 61542,
+    "t1_aptos": 1795713,
+    "t1_comparecimento": 1561854,
+    "t2_comparecimento": 1597806
    },
    {
     "cd_tse": "38490",
@@ -45717,7 +45934,10 @@
     "t1_pct_abstencao": 20.14,
     "delta_abstencao_pp": -4.37,
     "delta_comparecimento_votos": 85476,
-    "t2_validos_menos_t1": 128810
+    "t2_validos_menos_t1": 128810,
+    "t1_aptos": 1955479,
+    "t1_comparecimento": 1561593,
+    "t2_comparecimento": 1647069
    },
    {
     "cd_tse": "62910",
@@ -45754,7 +45974,10 @@
     "t1_pct_abstencao": 23.57,
     "delta_abstencao_pp": -2.6,
     "delta_comparecimento_votos": 22656,
-    "t2_validos_menos_t1": 30916
+    "t2_validos_menos_t1": 30916,
+    "t1_aptos": 873613,
+    "t1_comparecimento": 667699,
+    "t2_comparecimento": 690355
    },
    {
     "cd_tse": "64777",
@@ -45791,7 +46014,10 @@
     "t1_pct_abstencao": 19.25,
     "delta_abstencao_pp": -1.67,
     "delta_comparecimento_votos": 15850,
-    "t2_validos_menos_t1": 32254
+    "t2_validos_menos_t1": 32254,
+    "t1_aptos": 948908,
+    "t1_comparecimento": 766248,
+    "t2_comparecimento": 782098
    },
    {
     "cd_tse": "70750",
@@ -45828,7 +46054,10 @@
     "t1_pct_abstencao": 21.78,
     "delta_abstencao_pp": -2.85,
     "delta_comparecimento_votos": 17842,
-    "t2_validos_menos_t1": 25589
+    "t2_validos_menos_t1": 25589,
+    "t1_aptos": 626647,
+    "t1_comparecimento": 490146,
+    "t2_comparecimento": 507988
    },
    {
     "cd_tse": "70572",
@@ -45865,7 +46094,10 @@
     "t1_pct_abstencao": 23.34,
     "delta_abstencao_pp": -2.92,
     "delta_comparecimento_votos": 16708,
-    "t2_validos_menos_t1": 22582
+    "t2_validos_menos_t1": 22582,
+    "t1_aptos": 573503,
+    "t1_comparecimento": 439659,
+    "t2_comparecimento": 456367
    },
    {
     "cd_tse": "92274",
@@ -45902,7 +46134,10 @@
     "t1_pct_abstencao": 21.28,
     "delta_abstencao_pp": -2.0,
     "delta_comparecimento_votos": 6830,
-    "t2_validos_menos_t1": 8563
+    "t2_validos_menos_t1": 8563,
+    "t1_aptos": 341263,
+    "t1_comparecimento": 268635,
+    "t2_comparecimento": 275465
    },
    {
     "cd_tse": "90514",
@@ -45939,7 +46174,10 @@
     "t1_pct_abstencao": 20.11,
     "delta_abstencao_pp": -2.32,
     "delta_comparecimento_votos": 14881,
-    "t2_validos_menos_t1": 18300
+    "t2_validos_menos_t1": 18300,
+    "t1_aptos": 641185,
+    "t1_comparecimento": 512243,
+    "t2_comparecimento": 527124
    },
    {
     "cd_tse": "71455",
@@ -45976,7 +46214,10 @@
     "t1_pct_abstencao": 20.89,
     "delta_abstencao_pp": -2.61,
     "delta_comparecimento_votos": 13835,
-    "t2_validos_menos_t1": 20040
+    "t2_validos_menos_t1": 20040,
+    "t1_aptos": 531342,
+    "t1_comparecimento": 420351,
+    "t2_comparecimento": 434186
    },
    {
     "cd_tse": "25313",
@@ -46013,7 +46254,10 @@
     "t1_pct_abstencao": 15.94,
     "delta_abstencao_pp": -2.34,
     "delta_comparecimento_votos": 28629,
-    "t2_validos_menos_t1": 50573
+    "t2_validos_menos_t1": 50573,
+    "t1_aptos": 1230407,
+    "t1_comparecimento": 1034278,
+    "t2_comparecimento": 1062907
    },
    {
     "cd_tse": "76678",
@@ -46050,7 +46294,10 @@
     "t1_pct_abstencao": 20.9,
     "delta_abstencao_pp": -3.27,
     "delta_comparecimento_votos": 12910,
-    "t2_validos_menos_t1": 14899
+    "t2_validos_menos_t1": 14899,
+    "t1_aptos": 394978,
+    "t1_comparecimento": 312425,
+    "t2_comparecimento": 325335
    },
    {
     "cd_tse": "04278",
@@ -46087,7 +46334,10 @@
     "t1_pct_abstencao": 17.38,
     "delta_abstencao_pp": -0.78,
     "delta_comparecimento_votos": 7845,
-    "t2_validos_menos_t1": 26130
+    "t2_validos_menos_t1": 26130,
+    "t1_aptos": 1048781,
+    "t1_comparecimento": 866529,
+    "t2_comparecimento": 874374
    },
    {
     "cd_tse": "67890",
@@ -46124,7 +46374,10 @@
     "t1_pct_abstencao": 23.29,
     "delta_abstencao_pp": -3.04,
     "delta_comparecimento_votos": 17759,
-    "t2_validos_menos_t1": 25750
+    "t2_validos_menos_t1": 25750,
+    "t1_aptos": 583991,
+    "t1_comparecimento": 447953,
+    "t2_comparecimento": 465712
    },
    {
     "cd_tse": "81795",
@@ -46161,7 +46414,10 @@
     "t1_pct_abstencao": 17.85,
     "delta_abstencao_pp": -1.91,
     "delta_comparecimento_votos": 8449,
-    "t2_validos_menos_t1": 9309
+    "t2_validos_menos_t1": 9309,
+    "t1_aptos": 443225,
+    "t1_comparecimento": 364105,
+    "t2_comparecimento": 372554
    },
    {
     "cd_tse": "70998",
@@ -46198,7 +46454,10 @@
     "t1_pct_abstencao": 18.75,
     "delta_abstencao_pp": -2.24,
     "delta_comparecimento_votos": 12051,
-    "t2_validos_menos_t1": 15795
+    "t2_validos_menos_t1": 15795,
+    "t1_aptos": 540217,
+    "t1_comparecimento": 438934,
+    "t2_comparecimento": 450985
    },
    {
     "cd_tse": "92215",
@@ -46235,7 +46494,10 @@
     "t1_pct_abstencao": 22.28,
     "delta_abstencao_pp": -1.48,
     "delta_comparecimento_votos": 4289,
-    "t2_validos_menos_t1": 5586
+    "t2_validos_menos_t1": 5586,
+    "t1_aptos": 288292,
+    "t1_comparecimento": 224064,
+    "t2_comparecimento": 228353
    },
    {
     "cd_tse": "69698",
@@ -46272,7 +46534,10 @@
     "t1_pct_abstencao": 23.75,
     "delta_abstencao_pp": -2.73,
     "delta_comparecimento_votos": 12881,
-    "t2_validos_menos_t1": 17223
+    "t2_validos_menos_t1": 17223,
+    "t1_aptos": 473134,
+    "t1_comparecimento": 360767,
+    "t2_comparecimento": 373648
    },
    {
     "cd_tse": "54038",
@@ -46309,7 +46574,10 @@
     "t1_pct_abstencao": 20.46,
     "delta_abstencao_pp": -2.55,
     "delta_comparecimento_votos": 13759,
-    "t2_validos_menos_t1": 18209
+    "t2_validos_menos_t1": 18209,
+    "t1_aptos": 540033,
+    "t1_comparecimento": 429516,
+    "t2_comparecimento": 443275
    },
    {
     "cd_tse": "43710",
@@ -46346,7 +46614,10 @@
     "t1_pct_abstencao": 18.99,
     "delta_abstencao_pp": -1.91,
     "delta_comparecimento_votos": 8819,
-    "t2_validos_menos_t1": 14344
+    "t2_validos_menos_t1": 14344,
+    "t1_aptos": 463466,
+    "t1_comparecimento": 375467,
+    "t2_comparecimento": 384286
    },
    {
     "cd_tse": "02550",
@@ -46383,7 +46654,10 @@
     "t1_pct_abstencao": 17.2,
     "delta_abstencao_pp": 0.28,
     "delta_comparecimento_votos": -4368,
-    "t2_validos_menos_t1": -4229
+    "t2_validos_menos_t1": -4229,
+    "t1_aptos": 1477265,
+    "t1_comparecimento": 1223229,
+    "t2_comparecimento": 1218861
    },
    {
     "cd_tse": "85995",
@@ -46420,7 +46694,10 @@
     "t1_pct_abstencao": 18.74,
     "delta_abstencao_pp": -1.68,
     "delta_comparecimento_votos": 5836,
-    "t2_validos_menos_t1": 8615
+    "t2_validos_menos_t1": 8615,
+    "t1_aptos": 342998,
+    "t1_comparecimento": 278726,
+    "t2_comparecimento": 284562
    },
    {
     "cd_tse": "66192",
@@ -46457,7 +46734,10 @@
     "t1_pct_abstencao": 21.17,
     "delta_abstencao_pp": -2.25,
     "delta_comparecimento_votos": 7605,
-    "t2_validos_menos_t1": 10101
+    "t2_validos_menos_t1": 10101,
+    "t1_aptos": 337851,
+    "t1_comparecimento": 266331,
+    "t2_comparecimento": 273936
    },
    {
     "cd_tse": "81051",
@@ -46494,7 +46774,10 @@
     "t1_pct_abstencao": 20.4,
     "delta_abstencao_pp": -2.2,
     "delta_comparecimento_votos": 9358,
-    "t2_validos_menos_t1": 10278
+    "t2_validos_menos_t1": 10278,
+    "t1_aptos": 423969,
+    "t1_comparecimento": 337472,
+    "t2_comparecimento": 346830
    }
   ],
   "lula_ganhou_votos": {
@@ -48223,7 +48506,10 @@
     "t1_pct_abstencao": 14.51,
     "delta_abstencao_pp": 15.28,
     "delta_comparecimento_votos": -3393,
-    "t2_validos_menos_t1": -3277
+    "t2_validos_menos_t1": -3277,
+    "t1_aptos": 22212,
+    "t1_comparecimento": 18989,
+    "t2_comparecimento": 15596
    },
    {
     "cd_tse": "07994",
@@ -48260,7 +48546,10 @@
     "t1_pct_abstencao": 16.61,
     "delta_abstencao_pp": 11.19,
     "delta_comparecimento_votos": -2583,
-    "t2_validos_menos_t1": -2289
+    "t2_validos_menos_t1": -2289,
+    "t1_aptos": 23106,
+    "t1_comparecimento": 19268,
+    "t2_comparecimento": 16685
    },
    {
     "cd_tse": "01066",
@@ -48297,7 +48586,10 @@
     "t1_pct_abstencao": 18.82,
     "delta_abstencao_pp": 21.44,
     "delta_comparecimento_votos": -1728,
-    "t2_validos_menos_t1": -1752
+    "t2_validos_menos_t1": -1752,
+    "t1_aptos": 8032,
+    "t1_comparecimento": 6520,
+    "t2_comparecimento": 4792
    },
    {
     "cd_tse": "04219",
@@ -48334,7 +48626,10 @@
     "t1_pct_abstencao": 20.76,
     "delta_abstencao_pp": 10.4,
     "delta_comparecimento_votos": -1724,
-    "t2_validos_menos_t1": -1330
+    "t2_validos_menos_t1": -1330,
+    "t1_aptos": 16607,
+    "t1_comparecimento": 13159,
+    "t2_comparecimento": 11435
    },
    {
     "cd_tse": "09415",
@@ -48371,7 +48666,10 @@
     "t1_pct_abstencao": 19.19,
     "delta_abstencao_pp": 8.71,
     "delta_comparecimento_votos": -2450,
-    "t2_validos_menos_t1": -2079
+    "t2_validos_menos_t1": -2079,
+    "t1_aptos": 28166,
+    "t1_comparecimento": 22760,
+    "t2_comparecimento": 20310
    },
    {
     "cd_tse": "06041",
@@ -48408,7 +48706,10 @@
     "t1_pct_abstencao": 17.19,
     "delta_abstencao_pp": 23.82,
     "delta_comparecimento_votos": -2115,
-    "t2_validos_menos_t1": -2040
+    "t2_validos_menos_t1": -2040,
+    "t1_aptos": 8881,
+    "t1_comparecimento": 7354,
+    "t2_comparecimento": 5239
    },
    {
     "cd_tse": "01040",
@@ -48445,7 +48746,10 @@
     "t1_pct_abstencao": 21.39,
     "delta_abstencao_pp": 19.26,
     "delta_comparecimento_votos": -2301,
-    "t2_validos_menos_t1": -2355
+    "t2_validos_menos_t1": -2355,
+    "t1_aptos": 11897,
+    "t1_comparecimento": 9352,
+    "t2_comparecimento": 7051
    },
    {
     "cd_tse": "08850",
@@ -48482,7 +48786,10 @@
     "t1_pct_abstencao": 17.01,
     "delta_abstencao_pp": 12.64,
     "delta_comparecimento_votos": -1403,
-    "t2_validos_menos_t1": -1157
+    "t2_validos_menos_t1": -1157,
+    "t1_aptos": 11110,
+    "t1_comparecimento": 9220,
+    "t2_comparecimento": 7817
    },
    {
     "cd_tse": "08249",
@@ -48519,7 +48826,10 @@
     "t1_pct_abstencao": 18.08,
     "delta_abstencao_pp": 10.8,
     "delta_comparecimento_votos": -1440,
-    "t2_validos_menos_t1": -1253
+    "t2_validos_menos_t1": -1253,
+    "t1_aptos": 13330,
+    "t1_comparecimento": 10920,
+    "t2_comparecimento": 9480
    },
    {
     "cd_tse": "02631",
@@ -48556,7 +48866,10 @@
     "t1_pct_abstencao": 22.47,
     "delta_abstencao_pp": 7.01,
     "delta_comparecimento_votos": -1105,
-    "t2_validos_menos_t1": -1124
+    "t2_validos_menos_t1": -1124,
+    "t1_aptos": 15833,
+    "t1_comparecimento": 12275,
+    "t2_comparecimento": 11170
    },
    {
     "cd_tse": "02976",
@@ -48593,7 +48906,10 @@
     "t1_pct_abstencao": 22.24,
     "delta_abstencao_pp": 6.11,
     "delta_comparecimento_votos": -830,
-    "t2_validos_menos_t1": -907
+    "t2_validos_menos_t1": -907,
+    "t1_aptos": 13666,
+    "t1_comparecimento": 10626,
+    "t2_comparecimento": 9796
    },
    {
     "cd_tse": "98396",
@@ -48630,7 +48946,10 @@
     "t1_pct_abstencao": 23.33,
     "delta_abstencao_pp": 10.18,
     "delta_comparecimento_votos": -1555,
-    "t2_validos_menos_t1": -1580
+    "t2_validos_menos_t1": -1580,
+    "t1_aptos": 15304,
+    "t1_comparecimento": 11733,
+    "t2_comparecimento": 10178
    },
    {
     "cd_tse": "06173",
@@ -48667,7 +48986,10 @@
     "t1_pct_abstencao": 18.91,
     "delta_abstencao_pp": 15.65,
     "delta_comparecimento_votos": -1790,
-    "t2_validos_menos_t1": -1672
+    "t2_validos_menos_t1": -1672,
+    "t1_aptos": 11437,
+    "t1_comparecimento": 9274,
+    "t2_comparecimento": 7484
    },
    {
     "cd_tse": "06068",
@@ -48704,7 +49026,10 @@
     "t1_pct_abstencao": 17.6,
     "delta_abstencao_pp": 22.76,
     "delta_comparecimento_votos": -1433,
-    "t2_validos_menos_t1": -1373
+    "t2_validos_menos_t1": -1373,
+    "t1_aptos": 6300,
+    "t1_comparecimento": 5191,
+    "t2_comparecimento": 3758
    },
    {
     "cd_tse": "01473",
@@ -48741,7 +49066,10 @@
     "t1_pct_abstencao": 24.58,
     "delta_abstencao_pp": 11.67,
     "delta_comparecimento_votos": -3491,
-    "t2_validos_menos_t1": -3479
+    "t2_validos_menos_t1": -3479,
+    "t1_aptos": 29970,
+    "t1_comparecimento": 22603,
+    "t2_comparecimento": 19112
    },
    {
     "cd_tse": "11878",
@@ -48778,7 +49106,10 @@
     "t1_pct_abstencao": 14.13,
     "delta_abstencao_pp": 3.72,
     "delta_comparecimento_votos": -239,
-    "t2_validos_menos_t1": -113
+    "t2_validos_menos_t1": -113,
+    "t1_aptos": 6371,
+    "t1_comparecimento": 5471,
+    "t2_comparecimento": 5232
    },
    {
     "cd_tse": "09172",
@@ -48815,7 +49146,10 @@
     "t1_pct_abstencao": 24.95,
     "delta_abstencao_pp": 7.19,
     "delta_comparecimento_votos": -1444,
-    "t2_validos_menos_t1": -1228
+    "t2_validos_menos_t1": -1228,
+    "t1_aptos": 20103,
+    "t1_comparecimento": 15087,
+    "t2_comparecimento": 13643
    },
    {
     "cd_tse": "06114",
@@ -48852,7 +49186,10 @@
     "t1_pct_abstencao": 20.37,
     "delta_abstencao_pp": 19.03,
     "delta_comparecimento_votos": -1496,
-    "t2_validos_menos_t1": -1432
+    "t2_validos_menos_t1": -1432,
+    "t1_aptos": 7861,
+    "t1_comparecimento": 6260,
+    "t2_comparecimento": 4764
    },
    {
     "cd_tse": "04618",
@@ -48889,7 +49226,10 @@
     "t1_pct_abstencao": 15.76,
     "delta_abstencao_pp": 6.45,
     "delta_comparecimento_votos": -1582,
-    "t2_validos_menos_t1": -1097
+    "t2_validos_menos_t1": -1097,
+    "t1_aptos": 24520,
+    "t1_comparecimento": 20656,
+    "t2_comparecimento": 19074
    },
    {
     "cd_tse": "27170",
@@ -48926,7 +49266,10 @@
     "t1_pct_abstencao": 19.25,
     "delta_abstencao_pp": 3.14,
     "delta_comparecimento_votos": -187,
-    "t2_validos_menos_t1": -41
+    "t2_validos_menos_t1": -41,
+    "t1_aptos": 6030,
+    "t1_comparecimento": 4869,
+    "t2_comparecimento": 4682
    },
    {
     "cd_tse": "01457",
@@ -48963,7 +49306,10 @@
     "t1_pct_abstencao": 20.1,
     "delta_abstencao_pp": 12.23,
     "delta_comparecimento_votos": -3773,
-    "t2_validos_menos_t1": -3800
+    "t2_validos_menos_t1": -3800,
+    "t1_aptos": 30864,
+    "t1_comparecimento": 24661,
+    "t2_comparecimento": 20888
    },
    {
     "cd_tse": "06017",
@@ -49000,7 +49346,10 @@
     "t1_pct_abstencao": 16.76,
     "delta_abstencao_pp": 17.2,
     "delta_comparecimento_votos": -1291,
-    "t2_validos_menos_t1": -1215
+    "t2_validos_menos_t1": -1215,
+    "t1_aptos": 7523,
+    "t1_comparecimento": 6262,
+    "t2_comparecimento": 4971
    },
    {
     "cd_tse": "02879",
@@ -49037,7 +49386,10 @@
     "t1_pct_abstencao": 24.07,
     "delta_abstencao_pp": 6.39,
     "delta_comparecimento_votos": -903,
-    "t2_validos_menos_t1": -951
+    "t2_validos_menos_t1": -951,
+    "t1_aptos": 14200,
+    "t1_comparecimento": 10782,
+    "t2_comparecimento": 9879
    },
    {
     "cd_tse": "02992",
@@ -49074,7 +49426,10 @@
     "t1_pct_abstencao": 25.5,
     "delta_abstencao_pp": 8.54,
     "delta_comparecimento_votos": -808,
-    "t2_validos_menos_t1": -879
+    "t2_validos_menos_t1": -879,
+    "t1_aptos": 9486,
+    "t1_comparecimento": 7067,
+    "t2_comparecimento": 6259
    },
    {
     "cd_tse": "04898",
@@ -49111,7 +49466,10 @@
     "t1_pct_abstencao": 21.76,
     "delta_abstencao_pp": 8.17,
     "delta_comparecimento_votos": -1599,
-    "t2_validos_menos_t1": -1137
+    "t2_validos_menos_t1": -1137,
+    "t1_aptos": 19565,
+    "t1_comparecimento": 15307,
+    "t2_comparecimento": 13708
    },
    {
     "cd_tse": "06122",
@@ -49148,7 +49506,10 @@
     "t1_pct_abstencao": 22.43,
     "delta_abstencao_pp": 11.03,
     "delta_comparecimento_votos": -1147,
-    "t2_validos_menos_t1": -1073
+    "t2_validos_menos_t1": -1073,
+    "t1_aptos": 10405,
+    "t1_comparecimento": 8071,
+    "t2_comparecimento": 6924
    },
    {
     "cd_tse": "04499",
@@ -49185,7 +49546,10 @@
     "t1_pct_abstencao": 28.05,
     "delta_abstencao_pp": 8.95,
     "delta_comparecimento_votos": -1422,
-    "t2_validos_menos_t1": -925
+    "t2_validos_menos_t1": -925,
+    "t1_aptos": 15966,
+    "t1_comparecimento": 11487,
+    "t2_comparecimento": 10065
    },
    {
     "cd_tse": "02771",
@@ -49222,7 +49586,10 @@
     "t1_pct_abstencao": 21.9,
     "delta_abstencao_pp": 5.72,
     "delta_comparecimento_votos": -551,
-    "t2_validos_menos_t1": -628
+    "t2_validos_menos_t1": -628,
+    "t1_aptos": 9656,
+    "t1_comparecimento": 7541,
+    "t2_comparecimento": 6990
    },
    {
     "cd_tse": "06033",
@@ -49259,7 +49626,10 @@
     "t1_pct_abstencao": 21.31,
     "delta_abstencao_pp": 13.85,
     "delta_comparecimento_votos": -1236,
-    "t2_validos_menos_t1": -1182
+    "t2_validos_menos_t1": -1182,
+    "t1_aptos": 8907,
+    "t1_comparecimento": 7009,
+    "t2_comparecimento": 5773
    },
    {
     "cd_tse": "02852",
@@ -49296,7 +49666,10 @@
     "t1_pct_abstencao": 25.62,
     "delta_abstencao_pp": 5.91,
     "delta_comparecimento_votos": -744,
-    "t2_validos_menos_t1": -760
+    "t2_validos_menos_t1": -760,
+    "t1_aptos": 12648,
+    "t1_comparecimento": 9407,
+    "t2_comparecimento": 8663
    }
   ],
   "lula_maiores_ganhos": [
@@ -49335,7 +49708,10 @@
     "t1_pct_abstencao": 23.39,
     "delta_abstencao_pp": -3.03,
     "delta_comparecimento_votos": 277660,
-    "t2_validos_menos_t1": 409457
+    "t2_validos_menos_t1": 409457,
+    "t1_aptos": 9145124,
+    "t1_comparecimento": 7006411,
+    "t2_comparecimento": 7284071
    },
    {
     "cd_tse": "60011",
@@ -49372,7 +49748,10 @@
     "t1_pct_abstencao": 26.12,
     "delta_abstencao_pp": -3.15,
     "delta_comparecimento_votos": 155972,
-    "t2_validos_menos_t1": 211715
+    "t2_validos_menos_t1": 211715,
+    "t1_aptos": 4952612,
+    "t1_comparecimento": 3658898,
+    "t2_comparecimento": 3814870
    },
    {
     "cd_tse": "38490",
@@ -49409,7 +49788,10 @@
     "t1_pct_abstencao": 20.14,
     "delta_abstencao_pp": -4.37,
     "delta_comparecimento_votos": 85476,
-    "t2_validos_menos_t1": 128810
+    "t2_validos_menos_t1": 128810,
+    "t1_aptos": 1955479,
+    "t1_comparecimento": 1561593,
+    "t2_comparecimento": 1647069
    },
    {
     "cd_tse": "97012",
@@ -49446,7 +49828,10 @@
     "t1_pct_abstencao": 18.9,
     "delta_abstencao_pp": -1.6,
     "delta_comparecimento_votos": 36884,
-    "t2_validos_menos_t1": 31958
+    "t2_validos_menos_t1": 31958,
+    "t1_aptos": 2258320,
+    "t1_comparecimento": 1831396,
+    "t2_comparecimento": 1868280
    },
    {
     "cd_tse": "41238",
@@ -49483,7 +49868,10 @@
     "t1_pct_abstencao": 23.61,
     "delta_abstencao_pp": -2.94,
     "delta_comparecimento_votos": 57579,
-    "t2_validos_menos_t1": 75951
+    "t2_validos_menos_t1": 75951,
+    "t1_aptos": 1966966,
+    "t1_comparecimento": 1502632,
+    "t2_comparecimento": 1560211
    },
    {
     "cd_tse": "13897",
@@ -49520,7 +49908,10 @@
     "t1_pct_abstencao": 13.02,
     "delta_abstencao_pp": -2.0,
     "delta_comparecimento_votos": 35952,
-    "t2_validos_menos_t1": 61542
+    "t2_validos_menos_t1": 61542,
+    "t1_aptos": 1795713,
+    "t1_comparecimento": 1561854,
+    "t2_comparecimento": 1597806
    },
    {
     "cd_tse": "75353",
@@ -49557,7 +49948,10 @@
     "t1_pct_abstencao": 19.72,
     "delta_abstencao_pp": -2.2,
     "delta_comparecimento_votos": 30991,
-    "t2_validos_menos_t1": 33902
+    "t2_validos_menos_t1": 33902,
+    "t1_aptos": 1415148,
+    "t1_comparecimento": 1136092,
+    "t2_comparecimento": 1167083
    },
    {
     "cd_tse": "25313",
@@ -49594,7 +49988,10 @@
     "t1_pct_abstencao": 15.94,
     "delta_abstencao_pp": -2.34,
     "delta_comparecimento_votos": 28629,
-    "t2_validos_menos_t1": 50573
+    "t2_validos_menos_t1": 50573,
+    "t1_aptos": 1230407,
+    "t1_comparecimento": 1034278,
+    "t2_comparecimento": 1062907
    },
    {
     "cd_tse": "02550",
@@ -49631,7 +50028,10 @@
     "t1_pct_abstencao": 17.2,
     "delta_abstencao_pp": 0.28,
     "delta_comparecimento_votos": -4368,
-    "t2_validos_menos_t1": -4229
+    "t2_validos_menos_t1": -4229,
+    "t1_aptos": 1477265,
+    "t1_comparecimento": 1223229,
+    "t2_comparecimento": 1218861
    },
    {
     "cd_tse": "88013",
@@ -49668,7 +50068,10 @@
     "t1_pct_abstencao": 23.99,
     "delta_abstencao_pp": -2.9,
     "delta_comparecimento_votos": 30717,
-    "t2_validos_menos_t1": 39932
+    "t2_validos_menos_t1": 39932,
+    "t1_aptos": 1064200,
+    "t1_comparecimento": 808867,
+    "t2_comparecimento": 839584
    },
    {
     "cd_tse": "64777",
@@ -49705,7 +50108,10 @@
     "t1_pct_abstencao": 19.25,
     "delta_abstencao_pp": -1.67,
     "delta_comparecimento_votos": 15850,
-    "t2_validos_menos_t1": 32254
+    "t2_validos_menos_t1": 32254,
+    "t1_aptos": 948908,
+    "t1_comparecimento": 766248,
+    "t2_comparecimento": 782098
    },
    {
     "cd_tse": "93734",
@@ -49742,7 +50148,10 @@
     "t1_pct_abstencao": 19.89,
     "delta_abstencao_pp": -1.35,
     "delta_comparecimento_votos": 13566,
-    "t2_validos_menos_t1": 13943
+    "t2_validos_menos_t1": 13943,
+    "t1_aptos": 1019261,
+    "t1_comparecimento": 816529,
+    "t2_comparecimento": 830095
    },
    {
     "cd_tse": "04278",
@@ -49779,7 +50188,10 @@
     "t1_pct_abstencao": 17.38,
     "delta_abstencao_pp": -0.78,
     "delta_comparecimento_votos": 7845,
-    "t2_validos_menos_t1": 26130
+    "t2_validos_menos_t1": 26130,
+    "t1_aptos": 1048781,
+    "t1_comparecimento": 866529,
+    "t2_comparecimento": 874374
    },
    {
     "cd_tse": "62910",
@@ -49816,7 +50228,10 @@
     "t1_pct_abstencao": 23.57,
     "delta_abstencao_pp": -2.6,
     "delta_comparecimento_votos": 22656,
-    "t2_validos_menos_t1": 30916
+    "t2_validos_menos_t1": 30916,
+    "t1_aptos": 873613,
+    "t1_comparecimento": 667699,
+    "t2_comparecimento": 690355
    },
    {
     "cd_tse": "70750",
@@ -49853,7 +50268,10 @@
     "t1_pct_abstencao": 21.78,
     "delta_abstencao_pp": -2.85,
     "delta_comparecimento_votos": 17842,
-    "t2_validos_menos_t1": 25589
+    "t2_validos_menos_t1": 25589,
+    "t1_aptos": 626647,
+    "t1_comparecimento": 490146,
+    "t2_comparecimento": 507988
    },
    {
     "cd_tse": "67890",
@@ -49890,7 +50308,10 @@
     "t1_pct_abstencao": 23.29,
     "delta_abstencao_pp": -3.04,
     "delta_comparecimento_votos": 17759,
-    "t2_validos_menos_t1": 25750
+    "t2_validos_menos_t1": 25750,
+    "t1_aptos": 583991,
+    "t1_comparecimento": 447953,
+    "t2_comparecimento": 465712
    },
    {
     "cd_tse": "09210",
@@ -49927,7 +50348,10 @@
     "t1_pct_abstencao": 15.69,
     "delta_abstencao_pp": 0.4,
     "delta_comparecimento_votos": -3257,
-    "t2_validos_menos_t1": 2446
+    "t2_validos_menos_t1": 2446,
+    "t1_aptos": 761443,
+    "t1_comparecimento": 642000,
+    "t2_comparecimento": 638743
    },
    {
     "cd_tse": "20516",
@@ -49964,7 +50388,10 @@
     "t1_pct_abstencao": 16.11,
     "delta_abstencao_pp": -2.29,
     "delta_comparecimento_votos": 13513,
-    "t2_validos_menos_t1": 23357
+    "t2_validos_menos_t1": 23357,
+    "t1_aptos": 591750,
+    "t1_comparecimento": 496403,
+    "t2_comparecimento": 509916
    },
    {
     "cd_tse": "27855",
@@ -50001,7 +50428,10 @@
     "t1_pct_abstencao": 18.7,
     "delta_abstencao_pp": -2.02,
     "delta_comparecimento_votos": 13019,
-    "t2_validos_menos_t1": 26436
+    "t2_validos_menos_t1": 26436,
+    "t1_aptos": 646463,
+    "t1_comparecimento": 525546,
+    "t2_comparecimento": 538565
    },
    {
     "cd_tse": "70572",
@@ -50038,7 +50468,10 @@
     "t1_pct_abstencao": 23.34,
     "delta_abstencao_pp": -2.92,
     "delta_comparecimento_votos": 16708,
-    "t2_validos_menos_t1": 22582
+    "t2_validos_menos_t1": 22582,
+    "t1_aptos": 573503,
+    "t1_comparecimento": 439659,
+    "t2_comparecimento": 456367
    },
    {
     "cd_tse": "58971",
@@ -50075,7 +50508,10 @@
     "t1_pct_abstencao": 23.46,
     "delta_abstencao_pp": -1.64,
     "delta_comparecimento_votos": 10730,
-    "t2_validos_menos_t1": 19234
+    "t2_validos_menos_t1": 19234,
+    "t1_aptos": 653184,
+    "t1_comparecimento": 499941,
+    "t2_comparecimento": 510671
    },
    {
     "cd_tse": "58335",
@@ -50112,7 +50548,10 @@
     "t1_pct_abstencao": 17.97,
     "delta_abstencao_pp": -1.16,
     "delta_comparecimento_votos": 7392,
-    "t2_validos_menos_t1": 17264
+    "t2_validos_menos_t1": 17264,
+    "t1_aptos": 634694,
+    "t1_comparecimento": 520622,
+    "t2_comparecimento": 528014
    },
    {
     "cd_tse": "17612",
@@ -50149,7 +50588,10 @@
     "t1_pct_abstencao": 20.51,
     "delta_abstencao_pp": -3.89,
     "delta_comparecimento_votos": 22321,
-    "t2_validos_menos_t1": 24622
+    "t2_validos_menos_t1": 24622,
+    "t1_aptos": 573148,
+    "t1_comparecimento": 455580,
+    "t2_comparecimento": 477901
    },
    {
     "cd_tse": "12190",
@@ -50186,7 +50628,10 @@
     "t1_pct_abstencao": 14.95,
     "delta_abstencao_pp": -1.0,
     "delta_comparecimento_votos": 5930,
-    "t2_validos_menos_t1": 11766
+    "t2_validos_menos_t1": 11766,
+    "t1_aptos": 592974,
+    "t1_comparecimento": 504328,
+    "t2_comparecimento": 510258
    },
    {
     "cd_tse": "24570",
@@ -50223,7 +50668,10 @@
     "t1_pct_abstencao": 20.75,
     "delta_abstencao_pp": -2.96,
     "delta_comparecimento_votos": 14755,
-    "t2_validos_menos_t1": 24742
+    "t2_validos_menos_t1": 24742,
+    "t1_aptos": 498555,
+    "t1_comparecimento": 395112,
+    "t2_comparecimento": 409867
    },
    {
     "cd_tse": "54038",
@@ -50260,7 +50708,10 @@
     "t1_pct_abstencao": 20.46,
     "delta_abstencao_pp": -2.55,
     "delta_comparecimento_votos": 13759,
-    "t2_validos_menos_t1": 18209
+    "t2_validos_menos_t1": 18209,
+    "t1_aptos": 540033,
+    "t1_comparecimento": 429516,
+    "t2_comparecimento": 443275
    },
    {
     "cd_tse": "35157",
@@ -50297,7 +50748,10 @@
     "t1_pct_abstencao": 17.21,
     "delta_abstencao_pp": -4.24,
     "delta_comparecimento_votos": 18509,
-    "t2_validos_menos_t1": 25048
+    "t2_validos_menos_t1": 25048,
+    "t1_aptos": 435631,
+    "t1_comparecimento": 360647,
+    "t2_comparecimento": 379156
    },
    {
     "cd_tse": "90514",
@@ -50334,7 +50788,10 @@
     "t1_pct_abstencao": 20.11,
     "delta_abstencao_pp": -2.32,
     "delta_comparecimento_votos": 14881,
-    "t2_validos_menos_t1": 18300
+    "t2_validos_menos_t1": 18300,
+    "t1_aptos": 641185,
+    "t1_comparecimento": 512243,
+    "t2_comparecimento": 527124
    },
    {
     "cd_tse": "58696",
@@ -50371,7 +50828,10 @@
     "t1_pct_abstencao": 22.41,
     "delta_abstencao_pp": -0.97,
     "delta_comparecimento_votos": 5937,
-    "t2_validos_menos_t1": 15146
+    "t2_validos_menos_t1": 15146,
+    "t1_aptos": 614931,
+    "t1_comparecimento": 477139,
+    "t2_comparecimento": 483076
    },
    {
     "cd_tse": "71455",
@@ -50408,7 +50868,10 @@
     "t1_pct_abstencao": 20.89,
     "delta_abstencao_pp": -2.61,
     "delta_comparecimento_votos": 13835,
-    "t2_validos_menos_t1": 20040
+    "t2_validos_menos_t1": 20040,
+    "t1_aptos": 531342,
+    "t1_comparecimento": 420351,
+    "t2_comparecimento": 434186
    }
   ],
   "dispersao_municipal": {
@@ -74017,7 +74480,7 @@
   ]
  },
  "logs": {
-  "gerado_em": "2026-10-27T03:35:45+00:00",
+  "gerado_em": "2026-10-27T23:25:28+00:00",
   "rotulo": "pede explicação, não prova irregularidade",
   "fontes": {
    "metricas_2t": "data/outputs/logs_urnas_2t_2026.sqlite",
@@ -77255,7 +77718,7 @@
    },
    "versao_unica": true,
    "dossie_metadados": {
-    "gerado_em": "2026-10-26T19:46:19+00:00",
+    "gerado_em": "2026-10-27T23:18:43+00:00",
     "estado": "completo",
     "coerencia_logs": {
      "secoes_com_log": 499176,
@@ -77387,6 +77850,26 @@
        "2026-10-24": 3
       }
      },
+     "certificado_realocado_totais": {
+      "2t": {
+       "secoes": 85,
+       "aptos": 28377,
+       "comparecimento": 23220,
+       "flavio": 10271,
+       "lula": 12147
+      },
+      "1t": {
+       "secoes": 85,
+       "aptos": 28364,
+       "comparecimento": 22542,
+       "flavio": 9540,
+       "lula": 10068
+      },
+      "mesmo_municipio": 58,
+      "mesma_zona": 45,
+      "ufs": 16,
+      "municipios": 58
+     },
      "outra_secao_mesmo_municipio": 58,
      "outra_secao_mesma_zona": 45,
      "outra_secao_casos_listados": 85
@@ -77410,7 +77893,172 @@
       "arquivos_listados": 5487289,
       "arquivos_com_nome_de_outra_secao": 0
      }
-    }
+    },
+    "certificado_realocado_totais": {
+     "2t": {
+      "secoes": 85,
+      "aptos": 28377,
+      "comparecimento": 23220,
+      "flavio": 10271,
+      "lula": 12147
+     },
+     "1t": {
+      "secoes": 85,
+      "aptos": 28364,
+      "comparecimento": 22542,
+      "flavio": 9540,
+      "lula": 10068
+     },
+     "mesmo_municipio": 58,
+     "mesma_zona": 45,
+     "ufs": 16,
+     "municipios": 58
+    },
+    "certificado_realocado_log_nao_confere": 0,
+    "voto": [
+     {
+      "grupo": "mr_mesma_serie_na_zona",
+      "n": 306,
+      "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+       "n": 306,
+       "media_pp": 2.526,
+       "ep_pp": 0.5,
+       "ic95_pp": [
+        1.546,
+        3.507
+       ]
+      },
+      "dif_em_dif_contra_1t": {
+       "n": 306,
+       "media_pp": 0.073,
+       "ep_pp": 0.133,
+       "ic95_pp": [
+        -0.188,
+        0.334
+       ]
+      },
+      "nota": "Média simples por seção, 3+ vizinhas: sensibilidade. O número publicado no dossiê (capítulo logs, logs.json, metadados.serie_mr.voto_estruturais_brasil) usa os mesmos grupos, ponderado pelos votos dos dois finalistas e com 5+ vizinhas."
+     },
+     {
+      "grupo": "mr_mesma_serie_na_zona_exterior",
+      "n": 1212,
+      "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+       "n": 123,
+       "media_pp": -4.2,
+       "ep_pp": 1.277,
+       "ic95_pp": [
+        -6.702,
+        -1.697
+       ]
+      },
+      "dif_em_dif_contra_1t": {
+       "n": 123,
+       "media_pp": -1.679,
+       "ep_pp": 0.27,
+       "ic95_pp": [
+        -2.208,
+        -1.151
+       ]
+      },
+      "nota": "Exterior separado: a vizinhança é a cidade do consulado, onde quase todas as seções têm a mesma série; sensibilidade, não resultado."
+     },
+     {
+      "grupo": "certificado_realocado",
+      "n": 85,
+      "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+       "n": 85,
+       "media_pp": 0.732,
+       "ep_pp": 0.7,
+       "ic95_pp": [
+        -0.641,
+        2.104
+       ]
+      },
+      "dif_em_dif_contra_1t": {
+       "n": 85,
+       "media_pp": 0.161,
+       "ep_pp": 0.188,
+       "ic95_pp": [
+        -0.208,
+        0.53
+       ]
+      },
+      "nota": "Seções do 2º turno que receberam uma urna cujo certificado de hardware serviu outra seção no 1º turno (urna de reserva realocada). Pendência documental: o registro de substituição não está nos arquivos públicos; ver metadados.entre_turnos_vsc."
+     },
+     {
+      "grupo": "mesma_urna_carga_nova",
+      "n": 359,
+      "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+       "n": 359,
+       "media_pp": -0.595,
+       "ep_pp": 0.366,
+       "ic95_pp": [
+        -1.313,
+        0.123
+       ]
+      },
+      "dif_em_dif_contra_1t": {
+       "n": 359,
+       "media_pp": -0.164,
+       "ep_pp": 0.111,
+       "ic95_pp": [
+        -0.382,
+        0.054
+       ]
+      }
+     },
+     {
+      "grupo": "data_de_carga_do_log_diverge_do_bu",
+      "n": 5,
+      "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+       "n": 5,
+       "media_pp": -1.946,
+       "ep_pp": 2.55,
+       "ic95_pp": [
+        -6.945,
+        3.052
+       ]
+      },
+      "dif_em_dif_contra_1t": {
+       "n": 5,
+       "media_pp": 0.216,
+       "ep_pp": 1.842,
+       "ic95_pp": [
+        -3.394,
+        3.826
+       ]
+      }
+     },
+     {
+      "grupo": "reinicio_durante_votacao",
+      "n": 12378,
+      "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+       "n": 12334,
+       "media_pp": -0.104,
+       "ep_pp": 0.07,
+       "ic95_pp": [
+        -0.242,
+        0.034
+       ]
+      },
+      "dif_em_dif_contra_1t": {
+       "n": 12334,
+       "media_pp": -0.015,
+       "ep_pp": 0.019,
+       "ic95_pp": [
+        -0.053,
+        0.022
+       ]
+      }
+     },
+     {
+      "grupo": "qualquer sinal fora da regra (exceto recarga entre turnos, reinício, MR repetida na zona e data de carga do log)",
+      "n": 0
+     }
+    ],
+    "pendencias": [
+     "A assinatura de software (SEVIN, algoritmo 3 de 256 bits) não é verificada; só o resumo SHA-512 dela."
+    ]
    }
   },
   "integrado": {
@@ -81563,7 +82211,7 @@
   "cruzado_limites": {}
  },
  "metadados": {
-  "gerado_em": "2026-10-26T19:46:19+00:00",
+  "gerado_em": "2026-10-27T23:18:43+00:00",
   "rotulo": "pede explicação, não prova irregularidade",
   "estado": "completo",
   "formato_vsc": "Arquivo DER com três blocos: assinatura de software do TSE (usuário SEVIN), assinatura de hardware da urna (usuário UEAO e a série da urna) e um rodapé com o código do modelo (13, 15, 20, 22) e o algoritmo da chave de hardware. Cada bloco lista os arquivos da seção (bu.dat, rdv.dat, jufa.dat, imgbu.dat, imgze.dat, hash.dat, wsqbio.jez, wsqman.jez, wsqmes.jez, mr.ver, log.jez; no sistema de apuração, busa.dat e logsa.jez) com tamanho, SHA-512 e assinatura. O bloco de hardware termina no certificado X.509 da urna: PEM e Ed521 nas UE2020 e UE2022 (AC UE2020 e AC UE2022), DER e ECDSA P-521 nas UE2013 e UE2015 (AC URNA). A urna assina o SHA-512 do resumo SHA-512, a mesma regra do QR Code do BU.",
@@ -83215,6 +83863,26 @@
      "2026-10-23": 11,
      "2026-10-24": 3
     }
+   },
+   "certificado_realocado_totais": {
+    "2t": {
+     "secoes": 85,
+     "aptos": 28377,
+     "comparecimento": 23220,
+     "flavio": 10271,
+     "lula": 12147
+    },
+    "1t": {
+     "secoes": 85,
+     "aptos": 28364,
+     "comparecimento": 22542,
+     "flavio": 9540,
+     "lula": 10068
+    },
+    "mesmo_municipio": 58,
+    "mesma_zona": 45,
+    "ufs": 16,
+    "municipios": 58
    }
   },
   "coerencia_logs": {
@@ -83364,6 +84032,29 @@
      ]
     },
     "nota": "Exterior separado: a vizinhança é a cidade do consulado, onde quase todas as seções têm a mesma série; sensibilidade, não resultado."
+   },
+   {
+    "grupo": "certificado_realocado",
+    "n": 85,
+    "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+     "n": 85,
+     "media_pp": 0.732,
+     "ep_pp": 0.7,
+     "ic95_pp": [
+      -0.641,
+      2.104
+     ]
+    },
+    "dif_em_dif_contra_1t": {
+     "n": 85,
+     "media_pp": 0.161,
+     "ep_pp": 0.188,
+     "ic95_pp": [
+      -0.208,
+      0.53
+     ]
+    },
+    "nota": "Seções do 2º turno que receberam uma urna cujo certificado de hardware serviu outra seção no 1º turno (urna de reserva realocada). Pendência documental: o registro de substituição não está nos arquivos públicos; ver metadados.entre_turnos_vsc."
    },
    {
     "grupo": "mesma_urna_carga_nova",

@@ -2,7 +2,9 @@
 
 Abre pelo número que contraria a expectativa da casa: a parte de Flávio entre os
 dois finalistas caiu em todas as UFs. Depois, de onde vieram os votos novos de cada
-um, onde Flávio perdeu votos absolutos e o que 2022 mostra por baixo do agregado.
+um, onde Flávio teve menos votos absolutos no 2º turno do que no 1º (subparte de
+``pagina_texto_turnos_perdas``, com as listas completas dos dois e os CSVs) e o que
+2022 mostra por baixo do agregado.
 """
 
 from __future__ import annotations
@@ -24,6 +26,7 @@ from apuracao_2026.pagina_fig_base import FLAVIO, LULA, pct, pp
 
 from . import pagina_fig_turnos as F
 from . import pagina_texto_turnos as T
+from . import pagina_texto_turnos_perdas as TPP
 from .pagina_comum import cabeca
 from .pagina_fig_turnos_util import ESTILO, municipio, universo_municipios
 
@@ -100,10 +103,7 @@ def render(d: Dados, cap: Capitulo) -> str:
     caiu_uf = sum(u["swing_h2h_flavio_pp"] < 0 for u in ufs)
     menor = max(ufs, key=lambda u: u["swing_h2h_flavio_pp"])
     maior = min(ufs, key=lambda u: u["swing_h2h_flavio_pp"])
-    fp = C1["flavio_perdeu_votos"]["n"]
-    lp = C1["lula_perdeu_votos"]["n"]
     pior_f = C1["flavio_maiores_perdas"][0]
-    pior_l = C1["lula_maiores_perdas"][0]
 
     h = ESTILO + cabeca(
         cap,
@@ -179,16 +179,15 @@ def render(d: Dados, cap: Capitulo) -> str:
         "escolher e o que trocou de lado. O agregado diz quanto cada um ganhou, não de quem.",
         "Como ler.",
     )
-    h += "<h3>Onde cada um perdeu votos</h3>"
-    h += p(
-        f"Flávio perdeu votos absolutos em {inteiro(fp)} municípios e Lula em {inteiro(lp)}. A maior perda de Flávio foi em "
-        f"{municipio(pior_f['nome'], pior_f['uf'])}, {sinal_int(pior_f['delta_votos_flavio'])} votos; a de Lula, em "
-        f"{municipio(pior_l['nome'], pior_l['uf'])}, {sinal_int(pior_l['delta_votos_lula'])}. Entre as 30 maiores perdas "
-        f"de cada um, as UFs mais frequentes são {_ufs_top(C1['flavio_maiores_perdas'])} (Flávio) e "
+    maiores = p(
+        f"A maior perda de Flávio foi em {municipio(pior_f['nome'], pior_f['uf'])}, "
+        f"{sinal_int(pior_f['delta_votos_flavio'])} votos. Entre as 30 maiores perdas de cada um, "
+        f"as UFs mais frequentes são {_ufs_top(C1['flavio_maiores_perdas'])} (Flávio) e "
         f"{_ufs_top(C1['lula_maiores_perdas'])} (Lula)." + _abstencao_nas_ufs(C1),
         "verificado",
-    )
-    h += T.listas_votos(C1)
+    ) + T.maiores_perdas(C1)
+    h += TPP.bloco(d, C1, antes_das_listas=maiores)
+    h += T.ganhos(C1)
     h += F.fig_mapas_swing(d, C1)
     norte = _regiao(C1.get("regioes", []), "Norte")
     narq = _norte_arquivo(d)

@@ -64,12 +64,15 @@ def _par_1t(m2: dict[str, Any], m1: dict[str, Any]) -> dict[str, Any]:
         "delta_abstencao_pp": d2(m2["pct_abstencao"], pa1),
         "delta_comparecimento_votos": m2["comparecimento"] - m1["comparecimento"],
         "t2_validos_menos_t1": m2["validos"] - v1,
+        "t1_aptos": m1["eleitores"],
+        "t1_comparecimento": m1["comparecimento"],
+        "t2_comparecimento": m2["comparecimento"],
     }
 
 
 def _soma_1t(linhas: Iterable[dict[str, Any]]) -> dict[str, int]:
     chaves = ("eleitores", "comparecimento", "abstencao", "validos", "flavio", "lula")
-    s = dict.fromkeys(chaves, 0)
+    s: dict[str, int] = dict.fromkeys(chaves, 0)
     for r in linhas:
         for k in chaves:
             s[k] += r[k]
@@ -201,6 +204,10 @@ def comparacao_1t(ctx: Contexto, municipios: list[dict[str, Any]]) -> dict[str, 
                 "sai voto do adversário, e não identifica transferência individual"
             ),
             "abstencao": "sobre o eleitorado; 2º turno sobre as seções totalizadas",
+            "comparecimento": (
+                "t1_comparecimento e t2_comparecimento em eleitores; aptos é o "
+                "eleitorado do 2º turno e t1_aptos, o do 1º"
+            ),
             "base": "municípios com o arquivo presidencial completo nos dois turnos",
         },
         "brasil": brasil,
@@ -362,7 +369,7 @@ def comparacao_2022(
             "comparecimento": 0,
             "abstencao": 0,
         }
-        r = dict.fromkeys(
+        r: dict[str, int] = dict.fromkeys(
             ("bolsonaro", "lula", "validos", "aptos", "comparecimento", "abstencao"), 0
         )
         for mm in municipios:

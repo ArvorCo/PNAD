@@ -1,6 +1,6 @@
 # O que os logs das urnas dizem: 1º × 2º turno
 
-Rótulo: pede explicação, não prova irregularidade. Gerado em 2026-10-27T03:35:45+00:00 por `scripts/apuracao-2t-2026-logs.py`.
+Rótulo: pede explicação, não prova irregularidade. Gerado em 2026-10-27T23:25:28+00:00 por `scripts/apuracao-2t-2026-logs.py`.
 
 ## 1. Cobertura e integridade
 

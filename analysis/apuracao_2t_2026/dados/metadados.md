@@ -1,6 +1,6 @@
 # Metadados das urnas por seção: repetição e coerência (2º turno de 2026)
 
-Gerado em 2026-10-26T19:46:19+00:00. Rótulo: **pede explicação, não prova irregularidade**. Estado: completo.
+Gerado em 2026-10-27T23:18:43+00:00. Rótulo: **pede explicação, não prova irregularidade**. Estado: completo.
 
 ## Cobertura
 
@@ -144,6 +144,7 @@ Fatia de Flávio entre os válidos dos dois finalistas, menos a média das demai
 |---|---:|---:|---|---:|---|
 | mr_mesma_serie_na_zona | 306 | 2,53 | 1,55 a 3,51 | 0,07 | -0,19 a 0,33 |
 | mr_mesma_serie_na_zona_exterior | 1.212 | -4,20 | -6,70 a -1,70 | -1,68 | -2,21 a -1,15 |
+| certificado_realocado | 85 | 0,73 | -0,64 a 2,10 | 0,16 | -0,21 a 0,53 |
 | mesma_urna_carga_nova | 359 | -0,59 | -1,31 a 0,12 | -0,16 | -0,38 a 0,05 |
 | data_de_carga_do_log_diverge_do_bu | 5 | -1,95 | -6,95 a 3,05 | 0,22 | -3,39 a 3,83 |
 | reinicio_durante_votacao | 12.378 | -0,10 | -0,24 a 0,03 | -0,01 | -0,05 a 0,02 |

@@ -358,3 +358,17 @@ def test_certificado_da_urna_nos_dois_turnos(L):
 def test_capitulo_publica_certificado_entre_turnos(capitulo):
     assert "Certificado da urna nos dois turnos" in capitulo
     assert "a repetição alegada em 2022 não aparece em 2026" in capitulo
+
+
+def test_pendencia_tse_usa_numeros_do_banco_e_explica_como_pedir():
+    from apuracao_2t_2026 import pagina_texto_logs as T
+
+    L = json.loads((DADOS / "logs.json").read_text(encoding="utf-8"))
+    h = T.pendencia_tse(L)
+    assert "Pendência documental: como pedir ao TSE" in h
+    assert (
+        "Lei 12.527/2011" in h and "certificado_do_1t_em_outra_secao_no_2t_casos" in h
+    )
+    assert "—" not in h and "fraude" not in h.lower()
+    e = L["metadados"]["dossie_metadados"]["entre_turnos_vsc"]
+    assert str(e["certificado_do_1t_em_outra_secao_no_2t"]) in h

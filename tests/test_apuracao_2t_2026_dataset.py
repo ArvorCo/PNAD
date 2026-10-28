@@ -10,6 +10,7 @@ from pathlib import Path
 
 import pytest
 from apuracao_2t_2026 import dataset as DS
+from apuracao_2t_2026 import dataset_municipios as DM
 from apuracao_2t_2026 import pagina_cap_fontes as CF
 from apuracao_2t_2026 import pagina_cap_secoes as CS
 
@@ -144,3 +145,29 @@ def test_html_publicado_tem_os_links(manifesto):
     assert re.search(
         r"Dataset aberto por seção.*?SHA-256 " + manifesto["sha256"], html, re.DOTALL
     )
+
+
+def test_listas_municipais_no_manifesto_e_no_dicionario(manifesto):
+    entradas = manifesto.get("listas_municipais")
+    assert entradas and [e["candidato"] for e in entradas] == list(DM.ARQUIVOS)
+    texto = DS.DICIONARIO.read_text(encoding="utf-8")
+    assert DS.colunas_do_dicionario(texto, DM.SECAO) == DM.NOMES
+    assert "menos votos não identifica eleitor nem motivo" in texto
+    for e in entradas:
+        corpo = (ROOT / e["arquivo"]).read_bytes()
+        assert e["sha256"] == hashlib.sha256(corpo).hexdigest()
+        assert e["bytes"] == len(corpo)
+        linhas = corpo.decode("utf-8").splitlines()
+        assert linhas[0].split(",") == DM.NOMES == e["colunas"]
+        assert e["n_linhas"] == len(linhas) - 1
+        assert e["sha256"] in texto and Path(e["arquivo"]).name in texto
+        assert TRAVESSAO not in corpo.decode("utf-8")
+
+
+def test_listas_municipais_reproduzem_o_json():
+    lidos = DM.ler()
+    if lidos is None:
+        pytest.skip("comparacao_1t.json ausente neste checkout")
+    C1, G = lidos
+    for quem, nome in DM.ARQUIVOS.items():
+        assert (DS.PASTA / nome).read_bytes() == DM.csv_bytes(DM.linhas(C1, G, quem))

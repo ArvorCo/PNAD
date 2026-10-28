@@ -11,7 +11,11 @@ os números dão. Lê, só para leitura:
 - o capítulo 13 do dossiê da apuração (``analysis/apuracao_2026/dados/fiscais.json``)
   e a lista de zonas atípicas do capítulo 12 (``anomalias.json``);
 - o risco do território do capítulo 13 para todos os locais
-  (``data/outputs/fiscais_risco_locais.csv.gz`` e ``fiscais_risco_municipios.csv``).
+  (``data/outputs/fiscais_risco_locais.csv.gz`` e ``fiscais_risco_municipios.csv``);
+- desde a versão 1.1, o grupo atípico da mistura gaussiana dos dois turnos
+  (``data/outputs/apuracao_2t_2026/anomalia_secoes.json.gz``, pelo leitor
+  ``politize_se.fontes.anomalia_ml``, conferido pelo SHA-256 registrado em
+  ``analysis/apuracao_2t_2026/dados/anomalia_ml.json``).
 
 Grava ``docs/assets/politize/dados/fiscal/<UF>/<zona>.json`` (um por zona),
 ``fiscal/regras.json`` (critérios, níveis, contagens e fontes) e o relatório
@@ -44,6 +48,7 @@ import pandas as pd
 from apuracao_2026.secoes_base import fusos_por_municipio
 from politize import fiscal as fz
 from politize import fiscal_textos as ft
+from politize_se import fontes as fontes_se
 
 ROOT = Path(__file__).resolve().parents[1]
 DADOS = ROOT / "docs/assets/politize/dados"
@@ -54,7 +59,13 @@ ANOMALIAS = ROOT / "analysis/apuracao_2026/dados/anomalias.json"
 RISCO_LOCAIS = ROOT / "data/outputs/fiscais_risco_locais.csv.gz"
 RISCO_MUN = ROOT / "data/outputs/fiscais_risco_municipios.csv"
 RELATORIO = ROOT / "analysis/politize/relatorio_fiscal.md"
-VERSAO = "1.0"
+ANOMALIA_ML = fontes_se.ANOMALIA_ML
+ANOMALIA_ML_INDICE = fontes_se.ANOMALIA_ML_INDICE
+VERSAO = "1.1"
+HISTORICO = [
+    "1.0 (15/10/2026): primeira versão publicada",
+    "1.1 (27/10/2026): critério ml_atipico, 1 ponto, decisão editorial",
+]
 COLUNAS_SECAO = ["secao", "local_id", "pontos", "nivel", "sinais", "c13"]
 
 
@@ -163,6 +174,60 @@ def ler_csv_risco() -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]
     return locs, muns
 
 
+def ler_ml(
+    ufs: list[str],
+) -> tuple[dict[str, dict[tuple[int, int], fontes_se.SecaoML]], dict[str, Any]]:
+    """Grupo atípico da mistura dos dois turnos por (zona, seção), pelo leitor do Politize-se.
+
+    Exige o arquivo pesado e o compacto, com o SHA-256 do pesado igual ao que o compacto
+    registra e sem rascunho: sem isso a versão 1.1 sairia sem o critério, em silêncio.
+    """
+    for arq in (ANOMALIA_ML, ANOMALIA_ML_INDICE):
+        if not arq.exists():
+            raise SystemExit(
+                f"falta {arq.relative_to(ROOT)}: rode scripts/apuracao-2t-2026-anomalia.py"
+            )
+    indice = json.loads(ANOMALIA_ML_INDICE.read_text(encoding="utf-8"))
+    if indice.get("rascunho"):
+        raise SystemExit(
+            "anomalia_ml.json é rascunho (--amostra): rode o motor completo"
+        )
+    esperado = (indice.get("secoes_arquivo") or {}).get("sha256")
+    if _sha(ANOMALIA_ML) != esperado:
+        raise SystemExit(
+            f"{ANOMALIA_ML.relative_to(ROOT)} não confere com o SHA-256 de "
+            f"{ANOMALIA_ML_INDICE.relative_to(ROOT)}: rode o motor da mistura de novo"
+        )
+    return {uf: fontes_se.anomalia_ml(uf) for uf in ufs}, indice
+
+
+def _milhar(n: float) -> str:
+    return f"{int(n):,}".replace(",", ".")
+
+
+def evidencias_ml(ix: dict[str, Any]) -> dict[str, str]:
+    """Números do grupo atípico que entram nos textos, lidos de ``anomalia_ml.json``."""
+    gid = int(ix["mais_anomalo"]["id"])
+    comp = next(c for c in ix["componentes"] if int(c["id"]) == gid)
+    cen = comp["centro_pct_eleitorado"]
+    pais = ix["pais"]["centro_pct_eleitorado"]
+    return {
+        "ml_k": str(ix["k_escolhido"]),
+        "ml_grupo": str(gid),
+        "ml_universo": _milhar(ix["universo"]["secoes"]),
+        "ml_features": str(len(ix["features"]["colunas"])),
+        "ml_aptos_min": str(ix["universo"]["aptos_min"]),
+        "ml_secoes": _milhar(comp["secoes"]),
+        "ml_pct": fz.br(comp["pct_secoes"]),
+        "ml_bn1": fz.br(cen["brancos1"] + cen["nulos1"]),
+        "ml_bn2": fz.br(cen["brancos2"] + cen["nulos2"]),
+        "ml_bn1_pais": fz.br(pais["brancos1"] + pais["nulos1"]),
+        "ml_bn2_pais": fz.br(pais["brancos2"] + pais["nulos2"]),
+        "ml_aptos": fz.br(comp["aptos_medio"], 0),
+        "ml_aptos_pais": fz.br(ix["pais"]["aptos_medio"], 0),
+    }
+
+
 def ler_cap13() -> dict[str, Any]:
     d = json.loads(FISCAIS.read_text(encoding="utf-8"))
     secoes = {}
@@ -211,8 +276,11 @@ def montar(ufs: list[str]) -> dict[str, Any]:
     sec = ler_secoes(ufs, zonas)
     bu = ler_bu(ufs)
     d = sec.merge(bu, on=["uf", "zona", "secao"], how="left")
+    ml, ml_indice = ler_ml(ufs)
+    d = fz.colunas_ml(d, ml)
     print(
-        f"seções {len(d)} (com boletim {d['modelo_urna'].notna().sum()}) {time.time() - t0:.0f}s"
+        f"seções {len(d)} (com boletim {d['modelo_urna'].notna().sum()}, "
+        f"com linha na mistura {d['ml_anomalo'].notna().sum()}) {time.time() - t0:.0f}s"
     )
     d["sinais"] = pd.Series(fz.sinais_secao(d), index=d.index, dtype=object)
     locais = ler_locais(ufs, indice)
@@ -264,6 +332,9 @@ def montar(ufs: list[str]) -> dict[str, Any]:
     cont_uf: dict[str, Counter[str]] = defaultdict(Counter)
     cont_cod: Counter[str] = Counter()
     aptos_nivel: Counter[str] = Counter()
+    # nível sem o critério da versão 1.1, para medir o efeito dele com as mesmas entradas
+    cont_sem_ml: Counter[str] = Counter()
+    trans_ml: Counter[tuple[str, str]] = Counter()
     for r in d[["uf", "zona", "secao", "local_id", "aptos", "sinais"]].to_dict(
         "records"
     ):
@@ -289,6 +360,11 @@ def montar(ufs: list[str]) -> dict[str, Any]:
             loc["territorio"],
         )
         niv = fz.nivel(pts)
+        com_ml = any(k == "ml_atipico" for k, _ in r["sinais"])
+        antes = fz.nivel(pts - fz.PESOS["ml_atipico"]) if com_ml else niv
+        cont_sem_ml[antes] += 1
+        if antes != niv:
+            trans_ml[(antes, niv)] += 1
         loc.setdefault("niveis", Counter())[niv] += 1
         linhas_por_zona[chave_z].append([s, r["local_id"], pts, niv, r["sinais"], c])
         cont_nivel[niv] += 1
@@ -303,7 +379,29 @@ def montar(ufs: list[str]) -> dict[str, Any]:
             cods.add(f"territorio_{terr['nivel']}")
         cont_cod.update(cods)
 
-    evid = evidencias(bu)
+    evid = {**evidencias(bu), **evidencias_ml(ml_indice)}
+    na_mistura = sum(len(v) for v in ml.values())
+    com_linha = int(d["ml_anomalo"].notna().sum())
+    ml_resumo = {
+        "gerado_em": ml_indice.get("gerado_em"),
+        "k": ml_indice.get("k_escolhido"),
+        "grupo_atipico": int(ml_indice["mais_anomalo"]["id"]),
+        "linhas_no_arquivo": na_mistura,
+        "anomalas_no_arquivo": sum(1 for v in ml.values() for t in v.values() if t[3]),
+        "secoes_com_linha": com_linha,
+        "secoes_sem_linha": int(len(d) - com_linha),
+        "linhas_sem_secao_no_politize": int(na_mistura - com_linha),
+        "secoes_com_criterio": int((d["ml_anomalo"] == 1).sum()),
+        "niveis_sem_criterio": {k: int(cont_sem_ml.get(k, 0)) for k in fz.NIVEIS},
+        "mudaram_de_nivel": int(sum(trans_ml.values())),
+        "transicoes": [
+            {"de": a, "para": b, "secoes": int(n)}
+            for (a, b), n in sorted(
+                trans_ml.items(),
+                key=lambda x: (fz.NIVEIS.index(x[0][0]), fz.NIVEIS.index(x[0][1])),
+            )
+        ],
+    }
     return {
         "d": d,
         "por_local": por_local,
@@ -315,6 +413,7 @@ def montar(ufs: list[str]) -> dict[str, Any]:
         "aptos_nivel": aptos_nivel,
         "c13": c13,
         "evid": evid,
+        "ml": ml_resumo,
     }
 
 
@@ -423,9 +522,28 @@ def regras(m: dict[str, Any], ufs: list[str]) -> dict[str, Any]:
             RISCO_MUN,
             "risco do território por município (capítulo 13)",
         ),
+        {
+            **_fonte(
+                "anomalia_ml",
+                ANOMALIA_ML_INDICE,
+                "mistura gaussiana dos dois turnos: k, grupos e o grupo atípico "
+                "(capítulo Grupos do dossiê da apuração do 2º turno)",
+            ),
+            "gerado_em": m["ml"]["gerado_em"],
+        },
+        {
+            **_fonte(
+                "anomalia_secoes",
+                ANOMALIA_ML,
+                "grupo da mistura por seção (fora do git; SHA-256 conferido contra "
+                "secoes_arquivo de anomalia_ml.json)",
+            ),
+            "gerado_em": m["ml"]["gerado_em"],
+        },
     ]
     return {
         "versao": VERSAO,
+        "historico": HISTORICO,
         "gerado_em": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "ufs": ufs,
         "rotulos": ft.ROTULOS,
@@ -442,6 +560,7 @@ def regras(m: dict[str, Any], ufs: list[str]) -> dict[str, Any]:
         "cta": ft.CTA,
         "legal": ft.LEGAL,
         "evidencias": m["evid"],
+        "anomalia_ml": m["ml"],
         "resumo": {
             "secoes": total,
             "por_uf": {
@@ -465,7 +584,12 @@ def relatorio(m: dict[str, Any], rg: dict[str, Any], esc: dict[str, Any]) -> str
     linhas = [
         "# Politize: camada de fiscalização por seção",
         "",
-        f"Gerado em {rg['gerado_em']} por `python3 scripts/politize-fiscal.py`.",
+        f"Gerado em {rg['gerado_em']} por `python3 scripts/politize-fiscal.py`, "
+        f"versão {rg['versao']}.",
+        "",
+        "## Versões",
+        "",
+        *[f"- {h}" for h in rg["historico"]],
         "",
         f"Seções: {rg['resumo']['secoes']:,}".replace(",", "."),
         f"Arquivos: {esc['arquivos']} ({esc['bytes'] / 1e6:.1f} MB); maior {esc['maior'][1]} "
@@ -500,6 +624,10 @@ def relatorio(m: dict[str, Any], rg: dict[str, Any], esc: dict[str, Any]) -> str
         f"- Troca de urna no 1º turno: UE2013 {ev['troca_2013']}% de {ev['secoes_2013']} "
         f"seções; demais modelos {ev['troca_outras']}% de {ev['secoes_outras']}.",
         "",
+        "## Grupo atípico dos dois turnos (critério ml_atipico, versão 1.1)",
+        "",
+        *_linhas_ml(rg),
+        "",
         "## Conferência",
         "",
         f"- Seções do capítulo 13 encontradas nos fragmentos: "
@@ -508,6 +636,37 @@ def relatorio(m: dict[str, Any], rg: dict[str, Any], esc: dict[str, Any]) -> str
         "",
     ]
     return "\n".join(linhas)
+
+
+def _linhas_ml(rg: dict[str, Any]) -> list[str]:
+    a, ev = rg["anomalia_ml"], rg["evidencias"]
+    nomes = {k: rg["niveis"][k]["nome"] for k in fz.NIVEIS}
+    out = [
+        f"- Mistura gerada em {a['gerado_em']}: k = {a['k']}, grupo atípico "
+        f"{a['grupo_atipico']}; {a['linhas_no_arquivo']} linhas no arquivo, "
+        f"{a['anomalas_no_arquivo']} no grupo atípico.",
+        f"- Seções do Politize com linha na mistura: {a['secoes_com_linha']}; sem linha "
+        f"(sem o critério): {a['secoes_sem_linha']}; linhas da mistura sem seção no "
+        f"Politize: {a['linhas_sem_secao_no_politize']}.",
+        f"- Seções com o critério: {a['secoes_com_criterio']}; mudaram de nível por "
+        f"causa dele: {a['mudaram_de_nivel']}.",
+        f"- Números do texto: brancos e nulos na média do grupo {ev['ml_bn1']}% (1º "
+        f"turno) e {ev['ml_bn2']}% (2º), contra {ev['ml_bn1_pais']}% e "
+        f"{ev['ml_bn2_pais']}% no país; {ev['ml_aptos']} aptos em média, contra "
+        f"{ev['ml_aptos_pais']}.",
+        "",
+        "| nível | sem o critério | com o critério |",
+        "|---|---:|---:|",
+    ]
+    for k in fz.NIVEIS:
+        out.append(
+            f"| {nomes[k]} | {a['niveis_sem_criterio'][k]} | "
+            f"{rg['niveis'][k]['secoes']} |"
+        )
+    out += ["", "| de | para | seções |", "|---|---|---:|"]
+    for t in a["transicoes"]:
+        out.append(f"| {nomes[t['de']]} | {nomes[t['para']]} | {t['secoes']} |")
+    return out
 
 
 def main() -> None:

@@ -51,8 +51,12 @@ def tabela(lista: list[dict], quem: str, legenda: str) -> str:
     )
 
 
-def listas_votos(C1: dict) -> str:
-    """Quatro tabelas visíveis (30 maiores ganhos e perdas de cada um) e as listas completas."""
+def maiores_perdas(C1: dict) -> str:
+    """As duas tabelas visíveis das 30 maiores perdas de cada um.
+
+    As listas completas de quem perdeu votos ficam na subparte própria
+    (``pagina_texto_turnos_perdas``), com mais colunas e ordenáveis.
+    """
     h = '<div class="duas">'
     h += "<div>" + tabela(
         C1["flavio_maiores_perdas"],
@@ -64,8 +68,12 @@ def listas_votos(C1: dict) -> str:
         "lula",
         f"Os 30 municípios em que Lula mais perdeu votos absolutos ({inteiro(C1['lula_perdeu_votos']['n'])} perderam).",
     )
-    h += "</div></div>"
-    h += '<details class="ct-det"><summary>Os 30 maiores ganhos de cada um</summary><div class="duas"><div>'
+    return h + "</div></div>"
+
+
+def ganhos(C1: dict) -> str:
+    """Os 30 maiores ganhos de cada um e as listas completas de quem ganhou votos."""
+    h = '<details class="ct-det"><summary>Os 30 maiores ganhos de cada um</summary><div class="duas"><div>'
     h += tabela(
         C1["flavio_maiores_ganhos"],
         "flavio",
@@ -75,18 +83,16 @@ def listas_votos(C1: dict) -> str:
         C1["lula_maiores_ganhos"], "lula", "Os 30 maiores ganhos de votos de Lula."
     )
     h += "</div></div></details>"
-    for chave, quem, rot, desc in (
-        ("flavio_ganhou_votos", "flavio", "Flávio ganhou votos", True),
-        ("flavio_perdeu_votos", "flavio", "Flávio perdeu votos", False),
-        ("lula_ganhou_votos", "lula", "Lula ganhou votos", True),
-        ("lula_perdeu_votos", "lula", "Lula perdeu votos", False),
+    for chave, quem, rot in (
+        ("flavio_ganhou_votos", "flavio", "Flávio ganhou votos"),
+        ("lula_ganhou_votos", "lula", "Lula ganhou votos"),
     ):
         bloco = C1.get(chave) or {}
         if not bloco.get("lista"):
             continue
         ms = linhas_de(bloco["lista"])
         campo = "delta_votos_flavio" if quem == "flavio" else "delta_votos_lula"
-        ms.sort(key=lambda m, c=campo: m[c], reverse=desc)
+        ms.sort(key=lambda m, c=campo: m[c], reverse=True)
         h += lista_adiada(
             f"tu-lista-{chave.replace('_', '-')}",
             f"Lista completa: os {inteiro(len(ms))} municípios em que {rot} (ordenados pelo saldo de votos)",

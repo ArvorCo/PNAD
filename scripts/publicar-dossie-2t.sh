@@ -40,7 +40,8 @@ CAMINHOS=(
   docs/img/og/apuracao_2T_2026.png docs/img/og/apuracao_2T_2026_thread.png docs/img/og/politizese.png docs/img/og/politizese_mapa.png
   docs/assets/og/apuracao_2T_2026.html docs/assets/og/apuracao_2T_2026_thread.html docs/assets/og/politizese.html docs/assets/og/politizese_mapa.html
   # scripts e módulos
-  scripts/apuracao_2t_2026/ scripts/politize_se/ scripts/apuracao_logs/
+  scripts/apuracao_2t_2026/ scripts/politize_se/ scripts/apuracao_logs/ scripts/politize/ scripts/politize-fiscal.py tests/test_politize_fiscal.py
+  docs/assets/politize/dados/fiscal/ analysis/politize/CONTRATO.md analysis/politize/relatorio_fiscal.md
   scripts/social-cards.py scripts/social-card-politizese-mapa.py scripts/abstencao-lula-secoes.py
   scripts/apuracao-2026-logs-coletar.py scripts/apuracao-2026-logs-processar.py scripts/apuracao-2026-logs-build.py
   scripts/video-sete-riscos-capa.py scripts/publicar-dossie-2t.sh scripts/render-audit.py scripts/deposito-archive.sh

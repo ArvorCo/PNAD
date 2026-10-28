@@ -56,8 +56,11 @@ CAP13 = {
 def criterios(ev: dict[str, Any]) -> dict[str, dict[str, Any]]:
     """Textos dos critérios novos e de local, zona e território.
 
-    ``ev``: evidências medidas no build, com as chaves ``troca_2013``, ``troca_outras``,
-    ``fila_pct`` e as contagens por critério.
+    ``ev``: evidências medidas no build, com as chaves ``troca_2013`` e ``troca_outras``
+    (boletim do 1º turno) e as ``ml_*`` da mistura dos dois turnos (``ml_k``, ``ml_grupo``,
+    ``ml_universo``, ``ml_features``, ``ml_aptos_min``, ``ml_secoes``, ``ml_pct``,
+    ``ml_bn1``, ``ml_bn2``, ``ml_bn1_pais``, ``ml_bn2_pais``, ``ml_aptos``,
+    ``ml_aptos_pais``), lidas de ``anomalia_ml.json`` por ``politize-fiscal.py``.
     """
     t: dict[str, dict[str, Any]] = {
         "id_ano": {
@@ -148,6 +151,14 @@ def criterios(ev: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "regra": f"{fz.br(fz.IDOSOS_PCT, 0)}% ou mais com 60 anos ou mais, ou {fz.br(fz.FUND_INC_PCT, 0)}% ou mais sem o fundamental completo (perfil da seção do TSE)",
             "fonte": "perfil do eleitorado por seção, TSE 2026",
         },
+        "ml_atipico": {
+            "grupo": "secao",
+            "nome": "Grupo atípico nos dois turnos",
+            "porque": "Uma mistura gaussiana de {ml_k} grupos, ajustada sobre os votos das {ml_universo} seções do país nos dois turnos, pôs esta seção no grupo que o modelo menos explica ({ml_secoes} seções, {ml_pct}% do total). Na média das seções desse grupo, brancos e nulos somam {ml_bn1}% do eleitorado no 1º turno e {ml_bn2}% no 2º, contra {ml_bn1_pais}% e {ml_bn2_pais}% na média do país, e as seções são menores ({ml_aptos} aptos em média, contra {ml_aptos_pais}). Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada.",
+            "conferir": "Peça a ata e a cópia do boletim impresso e confira brancos, nulos e comparecimento contra o publicado no site do TSE. Em seção pequena, um eleitor move mais de um ponto: compare com as outras seções do prédio antes de concluir. Método e mapa no capítulo Grupos do dossiê da apuração do 2º turno (brasil.arvor.co/apuracao_2T_2026.html#anomalia).",
+            "regra": "seção no grupo mais atípico (grupo {ml_grupo} de {ml_k}) da mistura gaussiana sobre {ml_features} frações do eleitorado nos dois turnos, com {ml_aptos_min} aptos ou mais em cada e sem o exterior; seção sem linha no arquivo da mistura não recebe o critério",
+            "fonte": "brasil.arvor.co/apuracao_2T_2026.html#anomalia",
+        },
         "local_c13_alta": {
             "grupo": "local",
             "nome": "Local de votação sinalizado no capítulo 13",
@@ -215,6 +226,7 @@ def criterios(ev: dict[str, Any]) -> dict[str, dict[str, Any]]:
     }
     for v in t.values():
         v["porque"] = v["porque"].format(**ev)
+        v["regra"] = v["regra"].format(**ev)
     for k, v in t.items():
         v["peso"] = fz.PESOS[k]
     return t

@@ -24,6 +24,8 @@ from typing import Any
 
 from politize_se import fontes
 
+from . import dataset_municipios as DM
+
 ROOT = fontes.ROOT
 PASTA = ROOT / "docs/assets/apuracao_2t/dataset"
 CSV_NOME = "secoes_1t_2t_2026.csv.gz"
@@ -404,7 +406,10 @@ def linha(
     nomes: dict[tuple[str, str], str],
 ) -> list[Any]:
     z, s = chave
-    mun = (b2 or b1)["mun"]
+    base = b2 or b1
+    if base is None:
+        raise ValueError(f"{uf} {chave}: seção sem boletim nos dois turnos")
+    mun = base["mun"]
     t1 = _turno(b1)
     t2 = _turno(b2)
     # 1º turno tem a coluna "outros" entre flavio e brancos; 2º turno não
@@ -558,6 +563,7 @@ def gerar(
         ),
         "rotulo": ROTULO,
         "partes_por_uf": arq_partes,
+        "listas_municipais": DM.gravar(pasta),
         "fontes": [
             _fonte("boletins_1t", db_1t, hash_bancos),
             _fonte("boletins_2t", db_2t, hash_bancos),
@@ -657,7 +663,25 @@ quando o depósito é enviado.
 Fonte "BU": boletim de urna decodificado. "log": log da urna (modelo e diagnósticos).
 "Politize-se": camada pública em `docs/assets/politize_se/dados/`. "mistura": modelo
 estatístico dos dois turnos (`analysis/apuracao_2t_2026/CONTRATO_ANOMALIA.md`).
-"""
+{DM.secao_dicionario(m.get("listas_municipais"))}"""
+
+
+def atualizar_municipais(pasta: Path = PASTA) -> dict[str, Any]:
+    """Regrava só as listas municipais, o manifesto e o dicionário (sem os bancos).
+
+    O CSV por seção e o hash dele ficam como estão; exige o manifesto do dataset.
+    """
+    m = ler_manifesto(pasta / "manifesto.json")
+    if m is None:
+        raise FileNotFoundError(
+            f"{_rel(pasta / 'manifesto.json')} ausente: rode o dataset completo antes"
+        )
+    m["listas_municipais"] = DM.gravar(pasta)
+    (pasta / "DICIONARIO.md").write_text(dicionario(m), encoding="utf-8")
+    (pasta / "manifesto.json").write_text(
+        json.dumps(m, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    return m
 
 
 def ler_manifesto(caminho: Path = MANIFESTO) -> dict[str, Any] | None:
@@ -666,10 +690,14 @@ def ler_manifesto(caminho: Path = MANIFESTO) -> dict[str, Any] | None:
     return json.loads(caminho.read_text(encoding="utf-8"))
 
 
-def colunas_do_dicionario(texto: str) -> list[str]:
-    """Nomes das colunas na ordem da tabela do dicionário."""
+def colunas_do_dicionario(texto: str, secao: str = "## Colunas") -> list[str]:
+    """Nomes das colunas na ordem da tabela de uma seção do dicionário."""
     out = []
+    dentro = False
     for ln in texto.splitlines():
-        if ln.startswith("| `") and "` |" in ln:
+        if ln.startswith("## "):
+            dentro = ln.strip() == secao
+            continue
+        if dentro and ln.startswith("| `") and "` |" in ln:
             out.append(ln[3 : ln.index("` |")])
     return out

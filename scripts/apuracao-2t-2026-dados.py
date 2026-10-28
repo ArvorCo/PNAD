@@ -19,6 +19,10 @@ fechar.
 Uso:
     python3 scripts/apuracao-2t-2026-dados.py
     python3 scripts/apuracao-2t-2026-dados.py --sem-api   # sem o servidor local
+    python3 scripts/apuracao-2t-2026-dados.py --so comparacao_1t.json
+
+`--so` regrava só os arquivos pedidos; os demais e o `resumo.md` ficam como estão
+(útil com o servidor local desligado, que deixaria `projecao_noite.json` vazio).
 """
 
 from __future__ import annotations
@@ -26,7 +30,9 @@ from __future__ import annotations
 import argparse
 import json
 import time
+from collections.abc import Callable
 from datetime import datetime, timezone
+from functools import cache
 from pathlib import Path
 from typing import Any
 
@@ -44,6 +50,18 @@ from apuracao_2t_2026.carga import carregar
 from apuracao_2026.dados import iso_z
 
 TRAVESSAO = chr(0x2014)
+PRODUTOS = (
+    "presidente.json",
+    "linha_do_tempo.json",
+    "cedo_tarde.json",
+    "comparacao_1t.json",
+    "comparacao_2022.json",
+    "abstencao.json",
+    "exterior.json",
+    "governadores.json",
+    "projecao_noite.json",
+    "paralela.json",
+)
 COMPACTOS = {
     "presidente.json",
     "linha_do_tempo.json",
@@ -67,17 +85,24 @@ def gravar(nome: str, dados: dict[str, Any], meta: dict[str, Any]) -> Path:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser = argparse.ArgumentParser(description=(__doc__ or "").splitlines()[0])
     parser.add_argument(
         "--sem-api",
         action="store_true",
         help="não consulta o servidor local; projecao_noite.json fica só com a série ao vivo",
     )
+    parser.add_argument(
+        "--so",
+        nargs="+",
+        choices=PRODUTOS,
+        metavar="ARQUIVO",
+        help="regrava só estes arquivos; os demais e o resumo.md ficam como estão",
+    )
     args = parser.parse_args()
+    so = set(args.so or PRODUTOS)
     inicio = time.time()
     SAIDA.mkdir(parents=True, exist_ok=True)
     ctx = carregar()
-    r2022 = fontes.municipios_2022_2t()
     meta = {
         "gerado_em": iso_z(datetime.now(timezone.utc)),
         "script": "scripts/apuracao-2t-2026-dados.py",
@@ -92,31 +117,36 @@ def main() -> None:
         ),
     }
     municipios = placar.linhas_municipais(ctx)
-    produtos: dict[str, dict[str, Any]] = {}
-    produtos["presidente.json"] = placar.presidente(ctx, municipios)
-    ufs_pres = produtos["presidente.json"]["ufs"]
-    produtos["linha_do_tempo.json"] = tempo.linha_do_tempo(ctx)
-    produtos["cedo_tarde.json"] = tempo.cedo_tarde(ctx, municipios)
-    produtos["comparacao_1t.json"] = comparacoes.comparacao_1t(ctx, municipios)
-    produtos["comparacao_2022.json"] = comparacoes.comparacao_2022(
-        ctx, municipios, r2022
-    )
-    produtos["abstencao.json"] = comparacoes.abstencao(ctx, municipios, r2022, ufs_pres)
-    produtos["exterior.json"] = placar.exterior(ctx, municipios)
-    produtos["governadores.json"] = estaduais.governadores(ctx, ufs_pres)
-    if args.sem_api:
-        produtos["projecao_noite.json"] = noite.projecao_vazia()
-    else:
-        produtos["projecao_noite.json"] = noite.projecao_noite(ctx)
-    produtos["paralela.json"] = noite.paralela(ctx)
+    pres = cache(lambda: placar.presidente(ctx, municipios))
+    r2022 = cache(fontes.municipios_2022_2t)
+    fabricas: dict[str, Callable[[], dict[str, Any]]] = {
+        "presidente.json": pres,
+        "linha_do_tempo.json": lambda: tempo.linha_do_tempo(ctx),
+        "cedo_tarde.json": lambda: tempo.cedo_tarde(ctx, municipios),
+        "comparacao_1t.json": lambda: comparacoes.comparacao_1t(ctx, municipios),
+        "comparacao_2022.json": lambda: comparacoes.comparacao_2022(
+            ctx, municipios, r2022()
+        ),
+        "abstencao.json": lambda: comparacoes.abstencao(
+            ctx, municipios, r2022(), pres()["ufs"]
+        ),
+        "exterior.json": lambda: placar.exterior(ctx, municipios),
+        "governadores.json": lambda: estaduais.governadores(ctx, pres()["ufs"]),
+        "projecao_noite.json": (
+            noite.projecao_vazia if args.sem_api else lambda: noite.projecao_noite(ctx)
+        ),
+        "paralela.json": lambda: noite.paralela(ctx),
+    }
+    produtos = {nome: fabricas[nome]() for nome in PRODUTOS if nome in so}
     for nome, dados in produtos.items():
         caminho = gravar(nome, dados, meta)
         print(f"{caminho.relative_to(ROOT)}: {caminho.stat().st_size:,} bytes")
-    texto = resumo.escrever(produtos, meta)
-    if TRAVESSAO in texto:
-        raise RuntimeError("resumo.md: travessão no texto gerado")
-    (SAIDA / "resumo.md").write_text(texto, encoding="utf-8")
-    print(f"{(SAIDA / 'resumo.md').relative_to(ROOT)}: {len(texto):,} caracteres")
+    if len(produtos) == len(PRODUTOS):
+        texto = resumo.escrever(produtos, meta)
+        if TRAVESSAO in texto:
+            raise RuntimeError("resumo.md: travessão no texto gerado")
+        (SAIDA / "resumo.md").write_text(texto, encoding="utf-8")
+        print(f"{(SAIDA / 'resumo.md').relative_to(ROOT)}: {len(texto):,} caracteres")
     ctx.banco.fechar()
     print(
         f"versão nacional de {meta['versao_nacional_gerada_brt']}; {time.time() - inicio:.1f} s"

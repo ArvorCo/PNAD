@@ -1,18 +1,23 @@
 # Politize: camada de fiscalização por seção
 
-Gerado em 2026-10-15T04:51:04+00:00 por `python3 scripts/politize-fiscal.py`.
+Gerado em 2026-10-27T23:17:36+00:00 por `python3 scripts/politize-fiscal.py`, versão 1.1.
+
+## Versões
+
+- 1.0 (15/10/2026): primeira versão publicada
+- 1.1 (27/10/2026): critério ml_atipico, 1 ponto, decisão editorial
 
 Seções: 499.187
-Arquivos: 2641 (57.9 MB); maior ZZ/1.json (188 KB).
+Arquivos: 2641 (59.1 MB); maior ZZ/1.json (188 KB).
 
 ## Nível de atenção
 
 | nível | seções | % | aptos |
 |---|---:|---:|---:|
-| Prioridade máxima | 3455 | 0.69 | 1098177 |
-| Prioridade alta | 20899 | 4.19 | 7048615 |
-| Atenção reforçada | 305486 | 61.2 | 97797356 |
-| Atenção padrão | 169347 | 33.92 | 52793855 |
+| Prioridade máxima | 3801 | 0.76 | 1180442 |
+| Prioridade alta | 22109 | 4.43 | 7360813 |
+| Atenção reforçada | 306381 | 61.38 | 97979106 |
+| Atenção padrão | 166896 | 33.43 | 52217642 |
 
 ## Seções por critério (inclui sinais de local, zona e território)
 
@@ -29,6 +34,7 @@ Arquivos: 2641 (57.9 MB); maior ZZ/1.json (188 KB).
 | transito | Eleitores em trânsito | 1 | 4446 |
 | disputa | Disputa apertada | 1 | 74069 |
 | assistido | Eleitorado que mais pede ajuda | 1 | 53397 |
+| ml_atipico | Grupo atípico nos dois turnos | 1 | 10850 |
 | local_c13_alta | Local de votação sinalizado no capítulo 13 | 2 | 255 |
 | local_c13_media | Local de votação sinalizado no capítulo 13 | 1 | 2868 |
 | local_c13_baixa | Local de votação sinalizado no capítulo 13 | 1 | 52839 |
@@ -44,6 +50,26 @@ Arquivos: 2641 (57.9 MB); maior ZZ/1.json (188 KB).
 ## Evidência usada nos textos
 
 - Troca de urna no 1º turno: UE2013 8,7% de 10894 seções; demais modelos 0,4% de 486887.
+
+## Grupo atípico dos dois turnos (critério ml_atipico, versão 1.1)
+
+- Mistura gerada em 2026-10-26T22:35:53+00:00: k = 8, grupo atípico 5; 497796 linhas no arquivo, 10850 no grupo atípico.
+- Seções do Politize com linha na mistura: 497796; sem linha (sem o critério): 1391; linhas da mistura sem seção no Politize: 0.
+- Seções com o critério: 10850; mudaram de nível por causa dele: 4353.
+- Números do texto: brancos e nulos na média do grupo 6,5% (1º turno) e 4,4% (2º), contra 3,8% e 2,6% no país; 245 aptos em média, contra 317.
+
+| nível | sem o critério | com o critério |
+|---|---:|---:|
+| Prioridade máxima | 3455 | 3801 |
+| Prioridade alta | 20899 | 22109 |
+| Atenção reforçada | 305486 | 306381 |
+| Atenção padrão | 169347 | 166896 |
+
+| de | para | seções |
+|---|---|---:|
+| Prioridade alta | Prioridade máxima | 346 |
+| Atenção reforçada | Prioridade alta | 1556 |
+| Atenção padrão | Atenção reforçada | 2451 |
 
 ## Conferência
 

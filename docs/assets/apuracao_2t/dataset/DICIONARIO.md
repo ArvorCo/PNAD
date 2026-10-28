@@ -86,3 +86,48 @@ quando o depósito é enviado.
 Fonte "BU": boletim de urna decodificado. "log": log da urna (modelo e diagnósticos).
 "Politize-se": camada pública em `docs/assets/politize_se/dados/`. "mistura": modelo
 estatístico dos dois turnos (`analysis/apuracao_2t_2026/CONTRATO_ANOMALIA.md`).
+
+## Listas municipais: menos votos no 2º turno
+
+Dois arquivos com o mesmo esquema, CSV separado por vírgula, ponto como separador
+decimal, UTF-8, sem compressão, ordenados da maior perda para a menor:
+
+- `municipios_flavio_menos_votos_2t.csv`: municípios do Brasil, sem o exterior, em que Flávio teve menos votos absolutos no 2º turno do que no 1º (arquivo de presidente completo nos dois turnos); 938 linhas de dados mais o cabeçalho, 133.344 bytes, SHA-256 `a79cac30ac4ab38f1e0416ff34a1580cddfd51616c39cd0fa969c381545d0389`.
+- `municipios_lula_menos_votos_2t.csv`: municípios do Brasil, sem o exterior, em que Lula teve menos votos absolutos no 2º turno do que no 1º (arquivo de presidente completo nos dois turnos); 79 linhas de dados mais o cabeçalho, 11.720 bytes, SHA-256 `b04cca559d46d1f5be2342c70f6c3acce9ea7e143b90c21211087c596aee300d`.
+
+**Fonte.** `analysis/apuracao_2t_2026/dados/comparacao_1t.json` (gerado em 2026-10-27T23:36:02Z); `analysis/apuracao_2t_2026/dados/governadores.json` (gerado em 2026-10-26T16:03:53Z). Municípios com o arquivo de presidente completo nos dois turnos,
+sem o exterior; o código TSE casa os dois turnos.
+
+**Rótulo.** Votos absolutos, não fatia dos válidos; menos votos não identifica eleitor nem motivo. As colunas `perda_*` repartem a perda por duas réguas declaradas,
+o teto e a proporcional; são contas sob hipótese, não identificação de eleitor.
+
+| coluna | definição | unidade |
+|---|---|---|
+| `uf` | Unidade da federação | sigla |
+| `mun_tse` | Código TSE do município, cinco dígitos | código |
+| `municipio` | Nome do município como no arquivo do TSE | texto |
+| `governador_2t` | 1 quando a UF teve 2º turno de governador (UFs de governadores.json), 0 quando não | 0 ou 1 |
+| `aptos_1t` | Eleitorado do município no 1º turno | pessoas |
+| `aptos_2t` | Eleitorado do município no 2º turno | pessoas |
+| `comparecimento_1t` | Eleitores que compareceram no 1º turno | pessoas |
+| `comparecimento_2t` | Eleitores que compareceram no 2º turno | pessoas |
+| `dif_comparecimento` | comparecimento_2t menos comparecimento_1t | pessoas |
+| `pct_comparecimento_1t` | comparecimento_1t sobre aptos_1t, duas casas | % |
+| `pct_comparecimento_2t` | comparecimento_2t sobre aptos_2t, duas casas | % |
+| `validos_1t` | Votos válidos para presidente no 1º turno, todas as candidaturas | votos |
+| `validos_2t` | Votos válidos para presidente no 2º turno | votos |
+| `terceiros_1t` | Votos válidos do 1º turno em candidaturas que não Flávio e Lula | votos |
+| `flavio_1t` | Votos em Flávio Bolsonaro no 1º turno | votos |
+| `flavio_2t` | Votos em Flávio Bolsonaro no 2º turno | votos |
+| `dif_flavio` | flavio_2t menos flavio_1t | votos |
+| `lula_1t` | Votos em Lula no 1º turno | votos |
+| `lula_2t` | Votos em Lula no 2º turno | votos |
+| `dif_lula` | lula_2t menos lula_1t | votos |
+| `parte_flavio_1t` | Flávio sobre Flávio mais Lula no 1º turno, duas casas | % |
+| `parte_flavio_2t` | Flávio sobre Flávio mais Lula no 2º turno (os válidos), duas casas | % |
+| `mudanca_parte_flavio_pp` | parte_flavio_2t menos parte_flavio_1t | pontos percentuais |
+| `perda` | Votos que o candidato da lista perdeu, positivo: flavio_1t menos flavio_2t na lista de Flávio, lula_1t menos lula_2t na de Lula | votos |
+| `perda_teto_comparecimento` | Régua do teto: menor valor entre a perda e a queda do comparecimento (zero quando o comparecimento não caiu), como se todo eleitor que deixou de votar fosse do candidato | votos |
+| `perda_fora_teto` | perda menos perda_teto_comparecimento: o mínimo que a queda do comparecimento não cobre | votos |
+| `perda_proporcional_comparecimento` | Régua proporcional: menor valor entre a perda e a queda do comparecimento vezes os votos do candidato no 1º turno sobre comparecimento_1t, como se quem deixou de votar votasse como o município no 1º turno; uma casa | votos |
+| `perda_fora_proporcional` | perda menos perda_proporcional_comparecimento; uma casa | votos |

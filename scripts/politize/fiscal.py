@@ -13,7 +13,9 @@ fontes de sinal:
    que mais pede ajuda);
 3. o risco do território do capítulo 13 (crime organizado com mapeamento público,
    homicídios, favela, terra indígena ou quilombo, fronteira, garimpo, unidade
-   prisional, distância da sede), agora para todos os locais.
+   prisional, distância da sede), agora para todos os locais;
+4. desde a versão 1.1 (27/10/2026, decisão editorial), o grupo atípico da mistura
+   gaussiana dos dois turnos (``ml_atipico``, colunas de :func:`colunas_ml`).
 
 Pontos e cortes são juízo editorial por regra declarada, não medição de irregularidade.
 Atipicidade estatística não é irregularidade; a lista é de prioridade de fiscalização,
@@ -52,6 +54,8 @@ FUND_INC_PCT = 60.0  # p95
 LOCAL_GRANDE_SECOES = 15
 SEDE_KM = 50.0
 MODELO_ANTIGO = "UE2013"
+# faixas de densidade da mistura dos dois turnos, as mesmas do Politize-se
+ML_P_FAIXAS = (0.01, 0.05)
 
 PESOS: dict[str, int] = {
     "c13_alta": 6,
@@ -68,6 +72,7 @@ PESOS: dict[str, int] = {
     "transito": 1,
     "disputa": 1,
     "assistido": 1,
+    "ml_atipico": 1,
     "local_c13_alta": 2,
     "local_c13_media": 1,
     "local_c13_baixa": 1,
@@ -174,7 +179,9 @@ def sinais_secao(d: pd.DataFrame) -> list[list[list[str]]]:
     Colunas esperadas: ``uf, zona, aptos, comparecimento, ano_nasc, sem_digital,
     abertura_min, encerramento_min`` (minutos desde 0h, hora de Brasília, ``NaN`` no
     exterior), ``tipo_urna, n_cargas, tipo_arquivo, modelo_urna, aptos_tte, abst_a,
-    margem_v, validos, a60, fund_inc, perfil_fonte``. Devolve, por linha, a lista de
+    margem_v, validos, a60, fund_inc, perfil_fonte``; opcionais ``ml_anomalo`` e ``ml_p``
+    (de :func:`colunas_ml`; nulos quando a seção não tem linha na mistura dos dois turnos,
+    e aí o critério ``ml_atipico`` não entra). Devolve, por linha, a lista de
     ``[código, detalhe]``.
     """
     num = {
@@ -276,8 +283,46 @@ def sinais_secao(d: pd.DataFrame) -> list[list[list[str]]]:
                 partes.append(f"{br(fund)}% sem o fundamental completo")
             if partes:
                 s.append(["assistido", " e ".join(partes)])
+        ml = _f(r.get("ml_anomalo"))
+        if ml is not None and ml >= 1:
+            s.append(["ml_atipico", _texto_ml(_f(r.get("ml_p")))])
         saida.append(s)
     return saida
+
+
+def _texto_ml(p: float | None) -> str:
+    """Detalhe do critério ``ml_atipico``, com a densidade nas faixas do Politize-se."""
+    txt = "no grupo mais atípico da mistura gaussiana dos dois turnos"
+    if p is None:
+        return txt
+    for corte in ML_P_FAIXAS:
+        if p < corte:
+            return f"{txt}; entre as {br(100 * corte, 0)}% menos prováveis do país"
+    return txt
+
+
+def colunas_ml(
+    d: pd.DataFrame, ml: Mapping[str, Mapping[tuple[int, int], Sequence[Any]]]
+) -> pd.DataFrame:
+    """Acrescenta ``ml_grupo``, ``ml_p`` e ``ml_anomalo`` a ``d`` (colunas ``uf, zona, secao``).
+
+    ``ml``: por UF, (zona, seção) → (grupo, score, p, anomalo), como devolve
+    ``politize_se.fontes.anomalia_ml``. Seção sem linha na mistura fica com ``None`` nas três
+    colunas (nem zero nem sinal); ``ml_anomalo`` é 0 ou 1 quando há linha.
+    """
+    grupo: list[int | None] = []
+    p: list[float | None] = []
+    anomalo: list[int | None] = []
+    for uf, z, s in zip(d["uf"], d["zona"], d["secao"], strict=True):
+        t = ml.get(str(uf), {}).get((int(z), int(s)))
+        grupo.append(None if t is None else int(t[0]))
+        p.append(None if t is None else float(t[2]))
+        anomalo.append(None if t is None else int(bool(t[3])))
+    return d.assign(
+        ml_grupo=pd.Series(grupo, index=d.index, dtype=object),
+        ml_p=pd.Series(p, index=d.index, dtype=object),
+        ml_anomalo=pd.Series(anomalo, index=d.index, dtype=object),
+    )
 
 
 def _f(v: Any) -> float | None:

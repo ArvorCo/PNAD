@@ -474,8 +474,37 @@ def montar(refazer: bool = False) -> dict:
             "coerencia_logs": m.get("coerencia_logs"),
             "entre_turnos_vsc": _vsc_entre_turnos(m.get("entre_turnos_vsc") or {}),
             "vsc_detalhe": (m.get("cobertura") or {}).get("vsc_detalhe"),
+            "certificado_realocado_totais": (m.get("entre_turnos_vsc") or {}).get(
+                "certificado_realocado_totais"
+            ),
+            "certificado_realocado_log_nao_confere": _log_nao_confere(
+                (m.get("entre_turnos_vsc") or {}).get(
+                    "certificado_do_1t_em_outra_secao_no_2t_casos"
+                )
+                or [],
+                out["cobertura"].get("contagem_nao_confere") or [],
+            ),
+            "voto": m.get("voto"),
+            "pendencias": m.get("pendencias"),
         }
     return out
+
+
+def _log_nao_confere(casos: list, nao_confere: list) -> int:
+    """Quantas seções dos casos (urna realocada) estão entre as que o log não fecha com o BU."""
+    chaves = {
+        (
+            c["secao_2t"].split("/")[0].upper(),
+            int(c["secao_2t"].split("/")[2]),
+            int(c["secao_2t"].split("/")[3]),
+        )
+        for c in casos
+    }
+    return sum(
+        1
+        for x in nao_confere
+        if (str(x["uf"]).upper(), int(x["zona"]), int(x["secao"])) in chaves
+    )
 
 
 def _vsc_entre_turnos(e: dict) -> dict:

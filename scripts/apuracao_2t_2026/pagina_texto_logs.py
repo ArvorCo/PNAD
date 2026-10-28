@@ -576,7 +576,106 @@ def metadados(L: dict) -> str:
             "inferencia",
         )
         + _vsc_turnos(M)
+        + pendencia_tse(L)
     )
+
+
+def _grupo_voto(M: dict, nome: str) -> dict | None:
+    for g in (M.get("dossie_metadados") or {}).get("voto") or []:
+        if g.get("grupo") == nome and g.get("n"):
+            return g
+    return None
+
+
+def _ic_pp(bloco: dict) -> str:
+    ic = bloco.get("ic95_pp") or [None, None]
+    return (
+        f"{sinal(bloco['media_pp'], 2)} pp (IC95 {sinal(ic[0], 2)} a {sinal(ic[1], 2)})"
+        if ic[0] is not None
+        else f"{sinal(bloco['media_pp'], 2)} pp"
+    )
+
+
+def _fecham(L: dict, D: dict) -> str:
+    """Nas seções com urna realocada, o log fecha com o BU? O RDV confere? Lido de logs.json."""
+    nao = D.get("certificado_realocado_log_nao_confere")
+    rdv = L.get("rdv") or {}
+    partes = []
+    if nao is not None:
+        partes.append(
+            "Em todas, a contagem do log fecha com o BU"
+            if nao == 0
+            else f"A contagem do log não fecha com o BU em {inteiro(nao)} delas"
+        )
+    if rdv.get("conferem") and rdv.get("divergencias") == 0:
+        partes.append("o RDV confere com o BU em todo o país")
+    return (" " + " e ".join(partes) + ".") if partes else ""
+
+
+def pendencia_tse(L: dict) -> str:
+    """O que ficou sem documento público: série de MR repetida e urna de reserva realocada.
+    Números do banco; o que pedir ao TSE e como qualquer pessoa pede. Decisão editorial de
+    27/10/2026: registrar como pendência, sem pedido formal da casa."""
+    M = L["metadados"]
+    D = M.get("dossie_metadados") or {}
+    e = D.get("entre_turnos_vsc") or {}
+    tot = D.get("certificado_realocado_totais") or {}
+    s = M["serie_mr"]
+    vb = s["voto_estruturais_brasil"]
+    blocos = [x for x in s["estruturais"] if x["ufs"] != ["ZZ"] and x["secoes"] >= 5]
+    lista = "; ".join(
+        f"{escape(x['zonas'][0])} com {inteiro(x['secoes'])} seções" for x in blocos
+    )
+    g = _grupo_voto(M, "certificado_realocado")
+    if not e.get("certificado_do_1t_em_outra_secao_no_2t") or not tot or g is None:
+        return ""
+    t2, t1 = tot["2t"], tot["1t"]
+    f2 = 100 * t2["flavio"] / (t2["flavio"] + t2["lula"])
+    f1 = 100 * t1["flavio"] / (t1["flavio"] + t1["lula"])
+    h = p(
+        f"<strong>Dois pontos ficam sem documento público.</strong> Primeiro, a série da memória de resultado "
+        f"repetida: {inteiro(s['repetidos'])} valores aparecem em mais de uma seção, somando "
+        f"{inteiro(s['secoes_em_repeticao'])} seções; fora do exterior, onde uma série só cobre as urnas de todos os "
+        f"consulados, os blocos ficam em {lista}. Nas {inteiro(vb['secoes_com_sinal'])} seções do Brasil com a série "
+        f"repetida na própria zona, a fatia de Flávio no 2º turno ficou {_ic_pp(vb['contra_vizinhas_2t'])} em relação "
+        f"às vizinhas do município, e a mudança do 1º para o 2º turno foi {_ic_pp(vb['dif_em_dif_contra_1t'])}: a "
+        "diferença já existia no 1º turno e o 2º não a moveu. Segundo, a urna de reserva realocada: "
+        f"{inteiro(e['certificado_do_1t_em_outra_secao_no_2t'])} certificados de hardware que serviram uma seção no "
+        f"1º turno apareceram em outra seção no 2º, {inteiro(tot['mesmo_municipio'])} no mesmo município e "
+        f"{inteiro(tot['mesma_zona'])} na mesma zona, em {inteiro(tot['ufs'])} UFs e {inteiro(tot['municipios'])} "
+        f"municípios. Essas {inteiro(t2['secoes'])} seções somam {inteiro(t2['aptos'])} aptos e "
+        f"{inteiro(t2['comparecimento'])} votantes no 2º turno ({num(100 * t2['comparecimento'] / t2['aptos'], 2)}% "
+        f"de comparecimento, contra {num(100 * t1['comparecimento'] / t1['aptos'], 2)}% no 1º): Flávio "
+        f"{inteiro(t2['flavio'])} e Lula {inteiro(t2['lula'])}, ou {num(f2, 2)}% dos votos nos finalistas, contra "
+        f"{num(f1, 2)}% no 1º turno nas mesmas seções. Contra as vizinhas do município, a fatia de Flávio ficou "
+        f"{_ic_pp(g['fatia_flavio_2t_menos_vizinhas_do_municipio'])} e a mudança entre turnos, "
+        f"{_ic_pp(g['dif_em_dif_contra_1t'])}.{_fecham(L, D)}",
+        "verificado",
+    )
+    h += p(
+        "Como ficou: os dois achados têm explicação operacional plausível, lote de mídias com número de série "
+        "de fábrica repetido e remanejamento de urnas de contingência dentro da zona, e nenhum deixa marca no voto. "
+        "O que falta é o documento que confirme a explicação, e ele não está nos arquivos públicos do TSE: a relação "
+        "de mídias de resultado por zona e lote, e o termo de substituição ou realocação de urna de cada uma das "
+        f"{inteiro(e['certificado_do_1t_em_outra_secao_no_2t'])} seções (ata da seção e registro da junta). "
+        "Registramos como pendência documental, não como pedido formal da casa.",
+        "juizo",
+    )
+    h += caixa(
+        "io",
+        "Pendência documental: como pedir ao TSE",
+        "<p>Qualquer pessoa pode pedir esses registros pela Lei de Acesso à Informação (Lei 12.527/2011), no "
+        "serviço de informação ao cidadão do TSE ou do TRE da UF, sem precisar dizer por quê. O pedido que resolve "
+        "a pendência é curto: (1) a relação das mídias de resultado utilizadas no 2º turno de 2026, por zona, com "
+        "número de série e lote, para as zonas em que a série se repete; (2) o termo de substituição ou de "
+        "realocação da urna, com data e motivo, para cada seção listada em "
+        "<code>analysis/apuracao_2t_2026/dados/metadados.json</code> "
+        "(<code>entre_turnos_vsc.certificado_do_1t_em_outra_secao_no_2t_casos</code>, com UF, município, zona, "
+        "seção e número de série do hardware). Cite o pleito 3221 e a seção. Quem receber resposta pode enviá-la "
+        "à casa, que publica o documento com hash ao lado desta nota. Atipicidade pede explicação, não prova "
+        "irregularidade.</p>",
+    )
+    return h
 
 
 def _vsc_turnos(M: dict) -> str:
@@ -730,6 +829,6 @@ def limites_itens(L: dict) -> list[str]:
             else "A chuva do 2º turno é previsão, não observação; o teste da bateria contra a chuva medida fica pendente."
         ),
         "Atenção dos logs e escore do BU são ordenação para fiscalização, não probabilidade de irregularidade.",
-        "A série da memória de resultado repetida pede a documentação do campo e a relação de mídias por zona.",
+        "A série da memória de resultado repetida e a urna de reserva realocada são pendência documental: a relação de mídias por zona e o termo de substituição por seção não estão nos arquivos públicos.",
         ROTULO,
     ]

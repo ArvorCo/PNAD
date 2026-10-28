@@ -127,7 +127,11 @@ def lista_adiada(
 ) -> str:
     """Tabela longa dentro de ``<details>``: sem script aparece inteira; com script,
     o corpo fica cru no ``<noscript>`` e só vira DOM quando o leitor abre."""
-    tab = tabela_compacta(cabecalho, linhas)
+    return details_adiado(ident, resumo, tabela_compacta(cabecalho, linhas))
+
+
+def details_adiado(ident: str, resumo: str, tab: str) -> str:
+    """``<details>`` com a tabela pronta ``tab`` adiada em ``<noscript class="fig-src">``."""
     if "</noscript" in tab.lower():
         raise ValueError(f"lista {ident}: conteúdo com fechamento de noscript")
     return (
@@ -283,6 +287,7 @@ __all__ = [
     "MUTED",
     "SEM_DADO",
     "barras_uf",
+    "details_adiado",
     "faixa",
     "ibge_por_tse",
     "linhas_de",

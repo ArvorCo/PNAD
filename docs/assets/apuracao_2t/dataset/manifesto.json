@@ -85,5 +85,111 @@
       "sha256": "25feb7166ea6921d3628c6c85181623dd15cdd8c80d88a775996241282973a61"
     }
   ],
-  "segundos": 88.5
+  "segundos": 88.5,
+  "listas_municipais": [
+    {
+      "candidato": "flavio",
+      "arquivo": "docs/assets/apuracao_2t/dataset/municipios_flavio_menos_votos_2t.csv",
+      "bytes": 133344,
+      "sha256": "a79cac30ac4ab38f1e0416ff34a1580cddfd51616c39cd0fa969c381545d0389",
+      "n_linhas": 938,
+      "colunas": [
+        "uf",
+        "mun_tse",
+        "municipio",
+        "governador_2t",
+        "aptos_1t",
+        "aptos_2t",
+        "comparecimento_1t",
+        "comparecimento_2t",
+        "dif_comparecimento",
+        "pct_comparecimento_1t",
+        "pct_comparecimento_2t",
+        "validos_1t",
+        "validos_2t",
+        "terceiros_1t",
+        "flavio_1t",
+        "flavio_2t",
+        "dif_flavio",
+        "lula_1t",
+        "lula_2t",
+        "dif_lula",
+        "parte_flavio_1t",
+        "parte_flavio_2t",
+        "mudanca_parte_flavio_pp",
+        "perda",
+        "perda_teto_comparecimento",
+        "perda_fora_teto",
+        "perda_proporcional_comparecimento",
+        "perda_fora_proporcional"
+      ],
+      "universo": "municípios do Brasil, sem o exterior, em que Flávio teve menos votos absolutos no 2º turno do que no 1º (arquivo de presidente completo nos dois turnos)",
+      "ordem": "maior perda primeiro; empate por UF e nome",
+      "rotulo": "Votos absolutos, não fatia dos válidos; menos votos não identifica eleitor nem motivo.",
+      "fontes": [
+        {
+          "caminho": "analysis/apuracao_2t_2026/dados/comparacao_1t.json",
+          "gerado_em": "2026-10-27T23:36:02Z",
+          "sha256": "ff9de9041e2c2daf3c765fc8f48f72c79367fc9b0689ed421d5c71a19765a86a"
+        },
+        {
+          "caminho": "analysis/apuracao_2t_2026/dados/governadores.json",
+          "gerado_em": "2026-10-26T16:03:53Z",
+          "sha256": "359eaed377f7efed086890ff5d536ee5dce04b31a380616af83568dc62b4a48f"
+        }
+      ]
+    },
+    {
+      "candidato": "lula",
+      "arquivo": "docs/assets/apuracao_2t/dataset/municipios_lula_menos_votos_2t.csv",
+      "bytes": 11720,
+      "sha256": "b04cca559d46d1f5be2342c70f6c3acce9ea7e143b90c21211087c596aee300d",
+      "n_linhas": 79,
+      "colunas": [
+        "uf",
+        "mun_tse",
+        "municipio",
+        "governador_2t",
+        "aptos_1t",
+        "aptos_2t",
+        "comparecimento_1t",
+        "comparecimento_2t",
+        "dif_comparecimento",
+        "pct_comparecimento_1t",
+        "pct_comparecimento_2t",
+        "validos_1t",
+        "validos_2t",
+        "terceiros_1t",
+        "flavio_1t",
+        "flavio_2t",
+        "dif_flavio",
+        "lula_1t",
+        "lula_2t",
+        "dif_lula",
+        "parte_flavio_1t",
+        "parte_flavio_2t",
+        "mudanca_parte_flavio_pp",
+        "perda",
+        "perda_teto_comparecimento",
+        "perda_fora_teto",
+        "perda_proporcional_comparecimento",
+        "perda_fora_proporcional"
+      ],
+      "universo": "municípios do Brasil, sem o exterior, em que Lula teve menos votos absolutos no 2º turno do que no 1º (arquivo de presidente completo nos dois turnos)",
+      "ordem": "maior perda primeiro; empate por UF e nome",
+      "rotulo": "Votos absolutos, não fatia dos válidos; menos votos não identifica eleitor nem motivo.",
+      "fontes": [
+        {
+          "caminho": "analysis/apuracao_2t_2026/dados/comparacao_1t.json",
+          "gerado_em": "2026-10-27T23:36:02Z",
+          "sha256": "ff9de9041e2c2daf3c765fc8f48f72c79367fc9b0689ed421d5c71a19765a86a"
+        },
+        {
+          "caminho": "analysis/apuracao_2t_2026/dados/governadores.json",
+          "gerado_em": "2026-10-26T16:03:53Z",
+          "sha256": "359eaed377f7efed086890ff5d536ee5dce04b31a380616af83568dc62b4a48f"
+        }
+      ]
+    }
+  ]
 }

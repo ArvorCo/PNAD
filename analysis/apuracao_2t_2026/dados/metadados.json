@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-26T19:46:19+00:00",
+ "gerado_em": "2026-10-27T23:18:43+00:00",
  "rotulo": "pede explicação, não prova irregularidade",
  "estado": "completo",
  "formato_vsc": "Arquivo DER com três blocos: assinatura de software do TSE (usuário SEVIN), assinatura de hardware da urna (usuário UEAO e a série da urna) e um rodapé com o código do modelo (13, 15, 20, 22) e o algoritmo da chave de hardware. Cada bloco lista os arquivos da seção (bu.dat, rdv.dat, jufa.dat, imgbu.dat, imgze.dat, hash.dat, wsqbio.jez, wsqman.jez, wsqmes.jez, mr.ver, log.jez; no sistema de apuração, busa.dat e logsa.jez) com tamanho, SHA-512 e assinatura. O bloco de hardware termina no certificado X.509 da urna: PEM e Ed521 nas UE2020 e UE2022 (AC UE2020 e AC UE2022), DER e ECDSA P-521 nas UE2013 e UE2015 (AC URNA). A urna assina o SHA-512 do resumo SHA-512, a mesma regra do QR Code do BU.",
@@ -1651,6 +1651,26 @@
     "2026-10-23": 11,
     "2026-10-24": 3
    }
+  },
+  "certificado_realocado_totais": {
+   "2t": {
+    "secoes": 85,
+    "aptos": 28377,
+    "comparecimento": 23220,
+    "flavio": 10271,
+    "lula": 12147
+   },
+   "1t": {
+    "secoes": 85,
+    "aptos": 28364,
+    "comparecimento": 22542,
+    "flavio": 9540,
+    "lula": 10068
+   },
+   "mesmo_municipio": 58,
+   "mesma_zona": 45,
+   "ufs": 16,
+   "municipios": 58
   }
  },
  "coerencia_logs": {
@@ -1800,6 +1820,29 @@
     ]
    },
    "nota": "Exterior separado: a vizinhança é a cidade do consulado, onde quase todas as seções têm a mesma série; sensibilidade, não resultado."
+  },
+  {
+   "grupo": "certificado_realocado",
+   "n": 85,
+   "fatia_flavio_2t_menos_vizinhas_do_municipio": {
+    "n": 85,
+    "media_pp": 0.732,
+    "ep_pp": 0.7,
+    "ic95_pp": [
+     -0.641,
+     2.104
+    ]
+   },
+   "dif_em_dif_contra_1t": {
+    "n": 85,
+    "media_pp": 0.161,
+    "ep_pp": 0.188,
+    "ic95_pp": [
+     -0.208,
+     0.53
+    ]
+   },
+   "nota": "Seções do 2º turno que receberam uma urna cujo certificado de hardware serviu outra seção no 1º turno (urna de reserva realocada). Pendência documental: o registro de substituição não está nos arquivos públicos; ver metadados.entre_turnos_vsc."
   },
   {
    "grupo": "mesma_urna_carga_nova",

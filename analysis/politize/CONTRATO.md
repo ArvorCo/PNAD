@@ -345,6 +345,9 @@ Distribuição em 15/10/2026: máxima 3.455 seções (0,7%), alta 20.899 (4,2%),
 padrão 169.347 (33,9%). Pontos e cortes são juízo editorial por regra declarada, não medição de
 irregularidade; o texto público repete as três frases do capítulo 13 e nunca usa "fraude".
 
+Versão 1.1 (27/10/2026), decisão do Leonardo em 27/10/2026: critério `ml_atipico` ("Grupo atípico nos dois turnos", 1 ponto), para a seção no grupo mais atípico da mistura gaussiana dos dois turnos; fonte `data/outputs/apuracao_2t_2026/anomalia_secoes.json.gz` (leitor `politize_se.fontes.anomalia_ml`, SHA-256 conferido contra `analysis/apuracao_2t_2026/dados/anomalia_ml.json`, cujo SHA-256 e `gerado_em` vão em `regras.json` com `historico` e o bloco `anomalia_ml`); seção sem linha na mistura (exterior, menos de 30 aptos em algum turno) não recebe o critério.
+Distribuição em 27/10/2026 (versão 1.1): máxima 3.801 (0,8%), alta 22.109 (4,4%), reforçada 306.381 (61,4%), padrão 166.896 (33,4%); 10.850 seções com o critério, 4.353 subiram um nível (padrão para reforçada 2.451, reforçada para alta 1.556, alta para máxima 346).
+
 App: `docs/assets/politize/fiscal.js` (módulo ES) monta o bloco entre "Sua seção" e o boletim, em
 paralelo com o resto e com tempo-limite de 6 s (sem o arquivo, entra o convite de reserva). Seção fixa
 `#fiscalize` no HTML, com o botão para fiscaisdopl.com.br e os números nacionais de `regras.json`.

@@ -28,6 +28,7 @@ from .pagina_comum import (
 
 COMANDOS = [
     "python3 scripts/apuracao-2t-2026-dados.py",
+    "python3 scripts/apuracao-2t-2026-dataset.py --municipios",
     "python3 scripts/apuracao-2t-2026-secoes.py --fonte completo",
     "python3 scripts/apuracao-2t-2026-pesquisas.py",
     "python3 scripts/apuracao-2t-2026-build.py",
@@ -118,6 +119,26 @@ def item_dataset(m: dict | None = None, dep: dict | None = None) -> str:
         f"· {_tam(m['bytes'])} · {inteiro(m['n_linhas'])} linhas · dicionário em "
         f'<a href="{Path(csv_rel).parent.relative_to("docs")}/DICIONARIO.md"><code>DICIONARIO.md</code></a>.'
         f'<br><span class="hash">SHA-256 {escape(m["sha256"])}</span><br>{deposito}</li>'
+        + _listas_municipais(m)
+    )
+
+
+def _listas_municipais(m: dict) -> str:
+    """Item das duas listas municipais de menos votos no 2º turno, quando o manifesto as traz."""
+    itens = [
+        f'<a href="{escape(e["arquivo"].removeprefix("docs/"))}"><code>{escape(Path(e["arquivo"]).name)}</code></a> '
+        f"· {_tam(e['bytes'])} · {inteiro(e['n_linhas'])} linhas"
+        f'<br><span class="hash">SHA-256 {escape(e["sha256"])}</span>'
+        for e in m.get("listas_municipais") or []
+    ]
+    if not itens:
+        return ""
+    return (
+        "<li>Listas municipais de menos votos no 2º turno do que no 1º (capítulo 1º turno × "
+        "2º turno), geradas de <code>comparacao_1t.json</code> por "
+        "<code>python3 scripts/apuracao-2t-2026-dataset.py --municipios</code>:<br>"
+        + "<br>".join(itens)
+        + "</li>"
     )
 
 
