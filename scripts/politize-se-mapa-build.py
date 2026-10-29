@@ -38,6 +38,9 @@ def main() -> None:
     ufs = {u.upper() for u in a.uf} if a.uf else None
     lido = mapa_dados.ler(ufs=ufs)
     ind = mapa_saida.gravar(lido, mesclar=bool(ufs))
+    from politize_se.placar_mapa import publicar as publicar_placares
+
+    publicar_placares(ufs=ufs)
     if a.horarios:
         from politize_se.horarios import publicar
 

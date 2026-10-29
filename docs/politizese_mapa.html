@@ -48,11 +48,13 @@
 <script defer src="assets/politize_se/movimento.js?v=20261028-movimento1"></script>
 <script defer src="assets/politize_se_mapa/geodesia.js?v=20261028-movimento1"></script>
 <script defer src="assets/politize_se_mapa/movimento.js?v=20261028-movimento1"></script>
-<script defer src="assets/politize_se_mapa/horarios.js?v=20261029-cortes"></script>
+<script defer src="assets/politize_se_mapa/horarios.js?v=20261029-placar"></script>
 <script defer src="assets/politize_se_mapa/ultimos.js?v=20261029-cortes"></script>
-<script defer src="assets/politize_se_mapa/ficha.js?v=20261029-cortes"></script>
-<script defer src="assets/politize_se_mapa/seguranca.js?v=20261029-seguranca"></script>
-<script defer src="assets/politize_se_mapa/app.js?v=20261029-seguranca"></script>
+<script defer src="assets/politize_se_mapa/ficha.js?v=20261029-placar"></script>
+<script defer src="assets/politize_se_mapa/seguranca.js?v=20261029-placar"></script>
+<link rel="stylesheet" href="assets/politize_se_mapa/placar.css?v=20261029-placar">
+<script defer src="assets/politize_se_mapa/placar.js?v=20261029-placar"></script>
+<script defer src="assets/politize_se_mapa/app.js?v=20261029-placar"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -70,7 +72,7 @@
   <div class="intro-in">
     <div class="intro-txt">
       <p class="kicker">1º e 2º turno · 4 e 25 de outubro de 2026</p>
-      <h2>Cada ponto é um prédio de votação. A cor é a camada que você escolher.</h2>
+      <h2>O centro mostra a camada. A borda e o tamanho mostram o placar.</h2>
       <p>Renda domiciliar estimada, homicídios do município, clima e o resultado do 2º turno no prédio, a mudança contra o 1º turno nas mesmas seções, o comparecimento, a abstenção, os sinais que pedem explicação, o modelo da urna, as urnas trocadas e as mudanças de endereço. <strong>Sinal pede explicação, não prova irregularidade.</strong> Leitura agregada por seção, como o TSE publica: o voto é secreto e nenhum número descreve uma pessoa.</p>
       <p id="cobertura" class="cobertura" role="status"></p>
     </div>
@@ -157,6 +159,7 @@
       <p id="horario-resumo" class="horario-resumo" aria-live="polite" hidden></p>
     </fieldset>
     <div id="mapa-escala" class="mapa-escala" aria-live="polite"></div>
+    <div class="placar-chave"><div class="placar-exemplos" aria-hidden="true"><span style="--anel:conic-gradient(#1f5f9e 50%,#c8412f 0);--tam:22px"></span>50 × 50<span style="--anel:conic-gradient(#1f5f9e 70%,#c8412f 0);--tam:29px"></span>70 × 30<span style="--anel:conic-gradient(#1f5f9e 30%,#c8412f 0);--tam:29px"></span>30 × 70</div><p><b>Borda: <span class="tf">Flávio azul</span> e <span class="tl">Lula vermelho</span>, na proporção dos votos entre os dois.</b> Quanto maior a vantagem em pontos percentuais, maior o círculo; empate usa o tamanho mínimo. O centro mostra a camada escolhida. Nos grupos, somamos os votos antes de calcular; a contagem indica prédios. Anel cinza: sem placar publicável. Contorno tracejado: cobertura parcial. Os filtros recompõem o placar das seções selecionadas.</p></div>
     <div id="mapa" class="mapa" role="region" aria-label="Mapa dos locais de votação"></div>
     <div id="painel" class="painel" role="dialog" aria-label="Ficha do local de votação" hidden>
       <button type="button" class="painel-fechar" id="painel-fechar">Fechar ficha</button>

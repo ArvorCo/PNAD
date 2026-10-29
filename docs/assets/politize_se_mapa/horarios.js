@@ -27,6 +27,7 @@
       comp_pct1: comp(secs, 1), comp_pct2: comp(t2, 2), d_comp_pp: sub(comp(par, 2), comp(par, 1)),
       abst_pct2: sub(100, comp(t2, 2)), bn_pct2: razao(soma(t2, 'bn2'), soma(t2, 'comp2')),
       fatia_f1_par: fatia(par, 1), fatia_f2: fatia(t2, 2), d_fatia_pp: sub(fatia(par, 2), fatia(par, 1)),
+      flavio2: soma(t2, 'flavio2'), lula2: soma(t2, 'lula2'),
       escore_max: max(t2, 'escore'), secoes_sinal: t2.filter((s) => s.escore > 0).length,
       log1_max: max(secs, 'log1_atencao'), log2_max: max(secs, 'log2_atencao'),
       log_subiu: max(secs, 'log2_atencao') === null ? null : secs.filter((s) => presente(s.log1_atencao) && s.log1_atencao <= 1 && s.log2_atencao >= 2).length,
@@ -35,7 +36,7 @@
       secoes_anomalas: secs.some((s) => presente(s.anomalo)) ? secs.filter((s) => s.anomalo).length : null };
     // Uma seleção não pode revelar votos de seção pequena por subtração ou soma parcial.
     if (secs.some((s) => s.pequena) || (l.aptos2 ?? l.aptos1 ?? 0) < 30) {
-      ['comp_pct1', 'comp_pct2', 'd_comp_pp', 'abst_pct2', 'bn_pct2', 'fatia_f1_par', 'fatia_f2', 'd_fatia_pp'].forEach((k) => { l[k] = null; });
+      ['comp_pct1', 'comp_pct2', 'd_comp_pp', 'abst_pct2', 'bn_pct2', 'fatia_f1_par', 'fatia_f2', 'd_fatia_pp', 'flavio2', 'lula2'].forEach((k) => { l[k] = null; });
     }
     return l;
   }

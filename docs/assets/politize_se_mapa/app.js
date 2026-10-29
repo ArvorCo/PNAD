@@ -12,7 +12,7 @@
 
   const BASE = 'assets/politize_se_mapa/';
   const SECOES = 'assets/politize_se/dados/zona/';
-  const VERSAO = '20261029-seguranca';
+  const VERSAO = '20261029-placar';
   const FORMATO = 3;
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
@@ -37,7 +37,7 @@
   const TETO_PARCELA = { sinal: 0.5, urna: 0.25, mudanca: 0.1, log_subiu: 0.1, anomalia: 0.25 };
   const COLS_LISTA = [
     ['uf', 'UF'], ['municipio', 'Cidade'], ['zona', 'Zona'], ['nome', 'Local de votação'], ['secoes', 'Seções'],
-    ['fatia_f2', 'Flávio × Lula, 2º turno'], ['d_fatia_pp', 'Mudança contra o 1º turno'], ['comp_pct2', 'Comparecimento'], ['abst_pct2', 'Abstenção'],
+    ['fatia_f2', 'Flávio · 2º turno'], ['fatia_l2', 'Lula · 2º turno'], ['d_fatia_pp', 'Mudança Flávio'], ['d_lula_pp', 'Mudança Lula'], ['comp_pct2', 'Comparecimento'], ['abst_pct2', 'Abstenção'],
     ['renda_mediana_brl', 'Renda domiciliar estimada (R$)'], ['renda_ate2', 'Até 2 salários (%)'], ['homicidios_taxa_100mil', 'Homicídios municipais / 100 mil (2024)'],
     ['escore_max', 'Sinais'], ['log2_max', 'Registro da urna, 2º turno'], ['modelo', 'Modelo da urna'], ['urnas_trocadas', 'Urna trocada'], ['secoes_mudaram', 'Mudou de endereço'], ['secoes_anomalas', 'Grupo atípico'], ['dist', 'Distância'], ['acoes', 'Abrir'],
   ];
@@ -118,6 +118,7 @@
   const H = window.criarHorariosPolitize({ S, buscar, h, nf0 });
   const M = window.criarMovimentoMapa({ S, COR, h });
   const Q = window.criarSegurancaMapa({ S, COR, h });
+  const P = window.criarPlacarMapa({ S, buscar });
   const T = window.criarUltimosMapa({ S, COR, H, h });
 
   /* ------------------------------------------------------------ geodésia */
@@ -168,6 +169,7 @@
   function corLocal(l) {
     const c = camada();
     if (semDadoLocal(l, c)) return COR.semDado;
+    if (S.camada === 'resultado') return corValor(window.PlacarMapa.resumo([l]).pf);
     return corValor(valor(l));
   }
 
@@ -175,6 +177,7 @@
   // parcela dos prédios com o atributo (sinais, urna trocada e mudança de endereço).
   function corGrupo(filhos) {
     const k = S.camada, c = camada();
+    if (k === 'resultado') return corValor(window.PlacarMapa.resumo(filhos).pf);
     if (Q.ativo()) return corValor(Q.grupo(filhos));
     if (k === 'pico') return corValor(M.picoGrupo(filhos));
     if (T.ativo()) return corValor(T.grupo(filhos));
@@ -237,6 +240,7 @@
         if (!f.uf && seq === S.requisicao) setStatus('Carregando os locais de votação do país inteiro (' + feitos + ' de ' + faltam.length + ' estados)…');
       })));
     }
+    await P.carregar(pedidas);
     await H.carregar(pedidas);
     await M.carregar(pedidas);
     if (seq !== S.requisicao) return false;
@@ -341,7 +345,7 @@
       return;
     }
     S.mapa = L.map('mapa', { zoomControl: true, minZoom: 2, worldCopyJump: true }).setView([-14.5, -52], 4);
-    S.canvas = L.canvas({ padding: 0.5 });
+    S.canvas = window.PlacarMapa.renderer();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -356,9 +360,7 @@
       iconCreateFunction: (c) => {
         const filhos = c.getAllChildMarkers().map((m) => m.options.local);
         const cor = corGrupo(filhos);
-        const n = c.getChildCount();
-        const tam = n < 10 ? 34 : n < 100 ? 40 : n < 1000 ? 46 : 54;
-        return L.divIcon({ html: '<span style="background:' + fundoLegivel(cor) + ';border-color:' + cor + '">' + nf0.format(n) + '</span>', className: 'grupo', iconSize: [tam, tam] });
+        return P.icone(filhos, fundoLegivel(cor));
       },
     });
     S.mapa.addLayer(S.cluster);
@@ -366,14 +368,13 @@
   }
 
   function raioPonto(l) {
-    const a = l.aptos2 || l.aptos1 || 0;
-    return 5 + Math.min(4, Math.sqrt(a) / 16);
+    return P.raio(l);
   }
 
   function marcador(l) {
     let m = S.marcadores.get(l.id);
     if (!m) {
-      m = L.circleMarker([l.lat, l.lon], { renderer: S.canvas, radius: raioPonto(l), color: '#ffffff', weight: 1.5, fillOpacity: 0.95, fillColor: corLocal(l), local: l });
+      m = L.circleMarker([l.lat, l.lon], { renderer: S.canvas, radius: raioPonto(l), color: '#ffffff', weight: 4, fillOpacity: 0.95, fillColor: corLocal(l), local: l });
       if (telaPequena()) {
         // No celular a ficha é um painel fixo fora do mapa: um popup maior que a tela empurraria o ponto.
         m.on('click', (ev) => { L.DomEvent.stop(ev); abrirPainel(m.options.local, m); });
@@ -412,7 +413,7 @@
   function rotuloSecoes(l) {
     const nums = l.secoes;
     const txt = nums.slice(0, MAX_ROTULO).join(', ') + (nums.length > MAX_ROTULO ? ' +' + (nums.length - MAX_ROTULO) : '');
-    const label = h('span', {}, (nums.length === 1 ? 'Seção ' : 'Seções ') + txt);
+    const label = h('span', {}, (nums.length === 1 ? 'Seção ' : 'Seções ') + txt, h('small', {}, P.descricao(l)));
     if (S.camada === 'pico') label.append(h('small', {}, vazio(l.pico_hora) ? 'Sem horário utilizável' : 'Pico: ' + S.meta.camadas.pico.nomes[l.pico_hora]));
     if (T.ativo()) label.append(T.rotulo(l));
     if (Q.ativo()) label.append(h('small', {}, Q.texto(l)));
@@ -602,14 +603,14 @@
       itens.push(h('p', { class: 'ajuda' }, ml.rotulo_casa || 'Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada.'));
     }
     const cinza = c.precisa_ml ? 'Cinza: a análise estatística ainda não cobre o prédio, ou ainda sem boletim do 2º turno.' : c.precisa_log2 ? 'Cinza: registro da urna do 2º turno ainda não lido.' : c.precisa_bu2 ? 'Cinza: ainda sem boletim do 2º turno, ou prédio com menos de 30 eleitores.' : 'Cinza: sem dado.';
-    const grupo = T.ativo() ? 'Nos grupos, a cor mostra o horário mais tardio conhecido nas seções representadas.' : k === 'pico' ? 'Nos grupos, a cor mostra o pico da soma dos votos por hora de todas as seções cobertas.' : c.agregacao === 'municipios' ? 'Nos grupos de pontos, a cor é a média simples das taxas dos municípios representados, contados uma vez cada. Não é uma taxa regional.' : c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
+    const grupo = k === 'resultado' ? 'Nos grupos, a cor do resultado usa a soma dos votos de Flávio e Lula nos locais cobertos.' : T.ativo() ? 'Nos grupos, a cor mostra o horário mais tardio conhecido nas seções representadas.' : k === 'pico' ? 'Nos grupos, a cor mostra o pico da soma dos votos por hora de todas as seções cobertas.' : c.agregacao === 'municipios' ? 'Nos grupos de pontos, a cor é a média simples das taxas dos municípios representados, contados uma vez cada. Não é uma taxa regional.' : c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
     if (c.grupo) {
       const lista = H.filtrar(S.locais.filter(passaFiltro));
       const cobertos = lista.filter((l) => !vazio(valor(l))).length;
       itens.push(h('p', { class: 'territorio-cobertura' }, plural(cobertos, 'prédio com dado', 'prédios com dado') + ' de ' + nf0.format(lista.length) + ' no recorte selecionado.'));
     }
     if (H.ativo()) itens.push(h('p', { class: 'ajuda' }, 'As contagens nacionais desta legenda são a referência completa, sem o filtro de horários. Os pontos e seus placares consideram só as seções selecionadas.'));
-    $('#legenda').replaceChildren(...itens, h('p', {}, c.explica), h('ul', { class: 'legenda-itens' }, h('li', {}, h('span', { class: 'bolinha bolinha-cinza' }), cinza)), h('p', { class: 'ajuda' }, grupo + ' O tamanho do ponto cresce com o número de eleitores.'));
+    $('#legenda').replaceChildren(...itens, h('p', {}, c.explica), h('ul', { class: 'legenda-itens' }, h('li', {}, h('span', { class: 'bolinha bolinha-cinza' }), cinza)), h('p', { class: 'ajuda' }, grupo + ' A borda mostra Flávio e Lula; o tamanho cresce com a vantagem absoluta em pontos percentuais.'));
   }
 
   /* ------------------------------------------------------------ lista */
@@ -664,8 +665,9 @@
       h('td', {}, l.uf), h('td', {}, caixa(l.municipio)), h('td', { class: 'num' }, String(l.zona)),
       h('td', {}, caixa(l.nome), h('small', {}, [caixa(l.endereco), caixa(l.bairro)].filter(Boolean).join(' · '))),
       h('td', { class: 'num' }, String(l.n_secoes || 0), h('small', {}, l.n_bu2 ? l.n_bu2 + ' com 2º turno' : 'sem 2º turno')),
-      h('td', { class: 'num' }, vazio(l.fatia_f2) ? '' : [h('span', { class: 'tf' }, pct(l.fatia_f2)), ' × ', h('span', { class: 'tl' }, pct(100 - l.fatia_f2))]),
-      h('td', { class: 'num' }, pp(l.d_fatia_pp)),
+      h('td', { class: 'num tf' }, pct(l.fatia_f2), h('small', {}, vazio(l.flavio2) ? 'Sem contagem publicável' : nf0.format(l.flavio2) + ' votos')),
+      h('td', { class: 'num tl' }, pct(l.fatia_l2), h('small', {}, vazio(l.lula2) ? 'Sem contagem publicável' : nf0.format(l.lula2) + ' votos')),
+      h('td', { class: 'num tf' }, pp(l.d_fatia_pp)), h('td', { class: 'num tl' }, pp(l.d_lula_pp)),
       h('td', { class: 'num' }, pct(l.comp_pct2), vazio(l.d_comp_pp) ? null : h('small', {}, pp(l.d_comp_pp))),
       h('td', { class: 'num' }, pct(l.abst_pct2)),
       h('td', { class: 'num' }, window.PolitizeTerritorio.reais(l.renda_mediana_brl)),
@@ -709,7 +711,7 @@
     const cab = ['uf', 'cidade', 'zona', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'secoes', 'secoes_com_2o_turno', 'eleitores', 'flavio_entre_os_dois_2t_pct', 'flavio_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_pontos', 'comparecimento_2t_pct', 'mudanca_comparecimento_pontos', 'abstencao_2t_pct', 'maior_numero_de_sinais_numa_secao', 'secoes_com_sinal', 'registro_urna_1t_nivel_max', 'registro_urna_2t_nivel_max', 'registro_urna_secoes_que_subiram', 'modelo_urna_predominante', 'modelos_urna_no_predio', 'urnas_trocadas', 'secoes_que_mudaram_de_endereco', 'secoes_no_grupo_atipico_estatistica', 'renda_domiciliar_mediana_estimada_brl_202607', 'renda_domiciliar_ate2sm_estimada_pct', 'homicidios_municipio_por100mil_2024', 'politize_se', 'google_maps'];
     const dec = (v, c) => (vazio(v) ? '' : typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v));
     const esc = (v) => { const s = vazio(v) ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
-    cab.push(...H.colunasCsv, ...Q.colunasCsv);
+    cab.push('lula_entre_os_dois_2t_pct', 'lula_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_lula_pontos', 'flavio_votos_2t', 'lula_votos_2t', ...H.colunasCsv, ...Q.colunasCsv);
     if (S.camada === 'pico') cab.push(...M.colunasCsv);
     const linhas = [cab.join(';')];
     (S.listaAtual || []).forEach((l) => {
@@ -717,7 +719,7 @@
         l.n_secoes, l.n_bu2, l.aptos2 || l.aptos1, dec(l.fatia_f2, 1), dec(l.fatia_f1_par, 1), dec(l.d_fatia_pp, 1), dec(l.comp_pct2, 1), dec(l.d_comp_pp, 1), dec(l.abst_pct2, 1),
         l.n_bu2 ? l.escore_max : '', l.secoes_sinal, l.log1_max, l.log2_max, l.log_subiu, predominante(l), (l.modelos || []).map((m) => m[0] + ':' + m[1]).join('|'), l.urnas_trocadas, l.secoes_mudaram, l.secoes_anomalas,
         dec(l.renda_mediana_brl, 0), dec(l.renda_ate2, 1), dec(l.homicidios_taxa_100mil, 2),
-        'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : '', ...H.csv(l), ...Q.csv(l), ...M.csv(l)].map(esc).join(';'));
+        'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : '', dec(l.fatia_l2, 1), dec(vazio(l.fatia_f1_par) ? null : 100 - l.fatia_f1_par, 1), dec(l.d_lula_pp, 1), l.flavio2, l.lula2, ...H.csv(l), ...Q.csv(l), ...M.csv(l)].map(esc).join(';'));
     });
     const blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const a = h('a', { href: URL.createObjectURL(blob), download: 'locais_de_votacao_' + new Date().toISOString().slice(0, 10) + '.csv' });
@@ -736,7 +738,7 @@
 
   function atualizar(enquadrar) {
     if (!S.meta) return;
-    const ls = comDistancia(T.aplicar(M.aplicar(H.filtrar(S.locais.filter(passaFiltro)))));
+    const ls = comDistancia(P.aplicar(T.aplicar(M.aplicar(H.filtrar(S.locais.filter(passaFiltro))))));
     H.resumo(ls);
     desenharLegenda();
     const semCoord = ls.filter((l) => !coordOk(l)).length;

@@ -556,3 +556,33 @@ O último voto não equivale ao encerramento formal.
   cobertura FBSP, hashes, paridade com as interseções auditadas e categorias
   ausentes/mistas no cliente. QA de ambas as páginas, quatro níveis geográficos,
   sobreposição, troca de camadas e telas móveis em `tmp/seguranca-politize/`.
+
+## Anéis proporcionais e leitura simétrica do placar (29/10/2026)
+
+- `placar.js` separa três canais: centro = camada selecionada; borda azul/vermelha
+  = votos de Flávio/Lula entre os dois no 2º turno; tamanho = vantagem absoluta
+  em pontos percentuais. Mesma escala para prédios e agrupamentos: raio de 18 a
+  32 px, `sqrt(18² + (32²−18²) × abs(F−L)/(F+L))`. A área adicional à do empate
+  cresce linearmente com a vantagem; o mínimo mantém empates visíveis. Inverter
+  o vencedor não muda o tamanho. Volume de eleitores não determina mais o raio.
+- Agrupamentos somam contagens antes de calcular os percentuais. Nunca média
+  de percentuais, nem ponderação por aptos. Na camada de resultado, o centro
+  usa a mesma soma. Nas demais camadas, o centro conserva sua regra específica.
+  O número dentro do grupo conta prédios; em milhares recebe abreviação.
+- `scripts/politize_se/placar_mapa.py` exporta `placares/<UF>.json.gz` com as
+  contagens exatas já publicadas por local no Politize-se. A chamada faz parte
+  de `politize-se-mapa-build.py`; dispensa alterar as bases de clima ou território.
+  Sem BU, contagem ausente ou prédio pequeno mantêm `null`, nunca zero imputado.
+- Os filtros de relógio recompõem também `flavio2` e `lula2` em `horarios.js`.
+  Seleção com seção pequena suprime ambas as contagens, assim como os percentuais.
+  Cinza indica falta de placar publicável; tracejado indica cobertura parcial
+  (locais sem contagem ou algum prédio com boletins incompletos). A proporção
+  de grupos parciais usa apenas os votos cobertos, explicitada no rótulo.
+- A lista de locais, o comparativo da ficha e o CSV incluem ambos os candidatos
+  e suas mudanças. A tabela de seções começa por seção, Flávio e Lula, com
+  contagem, percentual e delta de cada um. No 1º turno, percentuais entre os dois
+  excluem outras candidaturas; comparação pareada respeita as seções equivalentes.
+- Validação em `tests/test_politize_se_placar_mapa.py`: paridade de contagens em
+  todas as UFs, proteção de tamanho, simetria, soma ponderada por votos, recorte
+  horário e ausências. QA desktop/móvel, CSV, tabelas e anéis Canvas/CSS em
+  `tmp/placar-mapa/`. O recorte CE após 17h continua com 955 seções.
