@@ -1,0 +1,197 @@
+{
+  "evento": "O voto do eleitor foi computado",
+  "regra": "Cômputos de todas as seções com logs utilizáveis no intervalo exato (início, fim]. Não identifica candidato, chegada à fila ou recebimento pelo TSE.",
+  "criterios": "Mesmo hash do log associado ao BU, fase 2 e pleito 3221, relógio confiável, contagem reconciliada com comparecimento e ciclos, carimbos no dia em Brasília.",
+  "fonte_metricas": "data/outputs/logs_urnas_2t_2026.sqlite",
+  "fonte_logs": "data/raw/tse_logs_2026/logs_2t.sqlite",
+  "extrato_sha256": "6ac4ceecc2f989d1d764b396501f916da9e70640bae9c04ed171eabdb794abad",
+  "secoes": 497897,
+  "comparecimento_total": 127854631,
+  "cobertas": 497725,
+  "computados": 127812804,
+  "inteiras_ate_17": 468126,
+  "comparecimento_excluido": 41827,
+  "logs_relidos": 29599,
+  "cobertura_secoes_pct": 99.96545470247862,
+  "cobertura_comparecimento_pct": 99.96728550254859,
+  "exclusoes": {
+    "contagem": 5,
+    "relogio": 141,
+    "sem_log_utilizavel": 2,
+    "sem_hash_no_catalogo": 24
+  },
+  "ufs": {
+    "AC": {
+      "secoes": 2270,
+      "cobertas": 2249,
+      "computados": 449411
+    },
+    "AL": {
+      "secoes": 7101,
+      "cobertas": 7101,
+      "computados": 1951632
+    },
+    "AM": {
+      "secoes": 8157,
+      "cobertas": 8157,
+      "computados": 2192059
+    },
+    "AP": {
+      "secoes": 1914,
+      "cobertas": 1912,
+      "computados": 429419
+    },
+    "BA": {
+      "secoes": 35476,
+      "cobertas": 35474,
+      "computados": 9421596
+    },
+    "CE": {
+      "secoes": 23765,
+      "cobertas": 23765,
+      "computados": 6024843
+    },
+    "DF": {
+      "secoes": 6969,
+      "cobertas": 6969,
+      "computados": 1868280
+    },
+    "ES": {
+      "secoes": 9844,
+      "cobertas": 9844,
+      "computados": 2409214
+    },
+    "GO": {
+      "secoes": 15686,
+      "cobertas": 15685,
+      "computados": 4047114
+    },
+    "MA": {
+      "secoes": 18093,
+      "cobertas": 18092,
+      "computados": 4127547
+    },
+    "MG": {
+      "secoes": 52062,
+      "cobertas": 52062,
+      "computados": 13044203
+    },
+    "MS": {
+      "secoes": 7106,
+      "cobertas": 7105,
+      "computados": 1594180
+    },
+    "MT": {
+      "secoes": 8287,
+      "cobertas": 8285,
+      "computados": 2084795
+    },
+    "PA": {
+      "secoes": 20827,
+      "cobertas": 20826,
+      "computados": 4989276
+    },
+    "PB": {
+      "secoes": 10712,
+      "cobertas": 10707,
+      "computados": 2742072
+    },
+    "PE": {
+      "secoes": 21418,
+      "cobertas": 21418,
+      "computados": 6126467
+    },
+    "PI": {
+      "secoes": 10225,
+      "cobertas": 10223,
+      "computados": 2239306
+    },
+    "PR": {
+      "secoes": 27142,
+      "cobertas": 27140,
+      "computados": 7059043
+    },
+    "RJ": {
+      "secoes": 37675,
+      "cobertas": 37668,
+      "computados": 10075631
+    },
+    "RN": {
+      "secoes": 8115,
+      "cobertas": 8115,
+      "computados": 2232823
+    },
+    "RO": {
+      "secoes": 4698,
+      "cobertas": 4698,
+      "computados": 988489
+    },
+    "RR": {
+      "secoes": 1519,
+      "cobertas": 1518,
+      "computados": 308400
+    },
+    "RS": {
+      "secoes": 27547,
+      "cobertas": 27546,
+      "computados": 6889546
+    },
+    "SC": {
+      "secoes": 17326,
+      "cobertas": 17326,
+      "computados": 4762303
+    },
+    "SE": {
+      "secoes": 5923,
+      "cobertas": 5923,
+      "computados": 1466659
+    },
+    "SP": {
+      "secoes": 103656,
+      "cobertas": 103533,
+      "computados": 27333733
+    },
+    "TO": {
+      "secoes": 4384,
+      "cobertas": 4384,
+      "computados": 954763
+    }
+  },
+  "intervalos": [
+    127778764,
+    13852,
+    8422,
+    3850,
+    1775,
+    828,
+    468,
+    264,
+    162,
+    132,
+    90,
+    346,
+    248,
+    187,
+    198,
+    1225,
+    678,
+    617,
+    453,
+    234,
+    11
+  ],
+  "arquivos": {
+    "apuracao/data/secoes_2t_2026.sqlite": {
+      "bytes": 1504579584,
+      "mtime_ns": 1793027067687304198
+    },
+    "data/outputs/logs_urnas_2t_2026.sqlite": {
+      "bytes": 4354043904,
+      "mtime_ns": 1793016288425207952
+    },
+    "data/raw/tse_logs_2026/logs_2t.sqlite": {
+      "bytes": 30715490304,
+      "mtime_ns": 1793015218073133077
+    }
+  }
+}

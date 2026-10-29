@@ -34,6 +34,16 @@ def main() -> None:
         action="store_true",
         help="atualiza histogramas por hora para os dois aplicativos",
     )
+    ap.add_argument(
+        "--transmissao",
+        action="store_true",
+        help="atualiza os intervalos de recebimento nacionais",
+    )
+    ap.add_argument(
+        "--relogios",
+        action="store_true",
+        help="atualiza os sinais de cronologia nacionais",
+    )
     a = ap.parse_args()
     ufs = {u.upper() for u in a.uf} if a.uf else None
     lido = mapa_dados.ler(ufs=ufs)
@@ -49,6 +59,14 @@ def main() -> None:
         from politize_se.movimento import publicar as publicar_movimento
 
         publicar_movimento()
+    if a.transmissao:
+        from politize_se.transmissao import gerar
+
+        gerar()
+    if a.relogios:
+        from politize_se.relogios import gerar as gerar_relogios
+
+        gerar_relogios()
     r = ind["resumo"]
     cob = ind["cobertura"].get("nacional", {})
     print(

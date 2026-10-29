@@ -1,5 +1,5 @@
 /* Ficha do prédio e tabela de seções do mapa. */
-window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H, T }) {
+window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H, T, D, R }) {
   function linhaCmp(rotulo, a, b) {
     return h('tr', {}, h('td', {}, rotulo), h('td', {}, vazio(a) ? 'sem dado' : a), h('td', {}, vazio(b) ? 'sem dado' : b));
   }
@@ -18,6 +18,7 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
     const link = location.origin + location.pathname + '#' + params.join('&');
     S.secaoSel = l.secao_link;
     const selos = [
+      R.badge(l), D.badge(l),
       l.n_bu2 ? h('span', { class: 'selo ok' }, '2º turno lido em ' + l.n_bu2 + ' de ' + plural(l.n_secoes, 'seção', 'seções')) : h('span', { class: 'selo alerta' }, 'Ainda sem boletim do 2º turno'),
       l.secoes_sinal ? h('span', { class: 'selo alerta' }, plural(l.secoes_sinal, 'seção com sinal', 'seções com sinal')) : null,
       l.modelos && l.modelos.length ? h('span', { class: 'selo' }, 'Urna ' + textoModelo(l)) : null,
@@ -33,6 +34,7 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       h('p', { class: 'ficha-end' }, [caixa(l.endereco), caixa(l.bairro), caixa(l.municipio) + (l.uf === 'ZZ' ? ' (exterior)' : '/' + l.uf), l.cep ? 'CEP ' + cepFmt(l.cep) : ''].filter(Boolean).join(' · ')),
       h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + ' · ' + plural(l.n_secoes, 'seção', 'seções') + (l.aptos2 || l.aptos1 ? ' · ' + nf0.format(l.aptos2 || l.aptos1) + ' eleitores' : '') + (dist !== null ? ' · ' + km(dist) + ' em linha reta ' + S.centro.de : '')),
       l.aprox ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado: é a cidade do consulado, não o prédio.') : null,
+      R.painel(l), D.painel(l),
       T.ficha(l),
       h('details', {class:'ficha-distribuicao',open:['mulheres','jovens','idosos'].includes(S.camada)}, h('summary',{},'Idade e sexo · pirâmide etária'),
         window.PolitizePerfil.painel({uf:l.uf,local:l.id,escolherSecao:true,...(l.horario?{secoes:l.secoes}:{})},l.horario?'Seções selecionadas deste local':caixa(l.nome))),

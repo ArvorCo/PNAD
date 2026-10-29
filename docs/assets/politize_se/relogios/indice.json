@@ -1,0 +1,4257 @@
+{
+  "formato": 1,
+  "dia": "2026-10-25",
+  "fuso": "Brasília",
+  "criterio_existente": "relogio",
+  "titulo": "Recuos de horário no log",
+  "regra": "Carimbo retrocede dentro do mesmo arquivo e urna. Sinal já existente de conferência do arquivo; não soma outro ponto ao diagnóstico.",
+  "limite": "Pode refletir relógio ou ordem de gravação. Não identifica causa nem alteração do voto. Fase é comparação de carimbos inconsistentes, não prova do instante real.",
+  "fontes": [
+    "data/outputs/logs_urnas_2t_2026.sqlite",
+    "data/raw/tse_logs_2026/logs_2t.sqlite"
+  ],
+  "extrato_sha256": "016d01fbc2b565a723d31971d51036be1833c3f1df286ec81a4fe7a7199f8ab7",
+  "cobertura": {
+    "ok": 497871,
+    "sem_vinculo": 24,
+    "sem_log": 2
+  },
+  "secoes": 497897,
+  "sinalizadas": 141,
+  "locais_sinalizados": 59,
+  "eventos_por_fase": {
+    "antes_primeiro": 18,
+    "intersecta_votacao": 123
+  },
+  "ufs": {
+    "AC": {
+      "arquivo": "AC.json.gz",
+      "sha256": "579a03d599054430c1afbe830f8c1ee9c4634ab8af7526329be965b54121dd44",
+      "bytes": 9219
+    },
+    "AL": {
+      "arquivo": "AL.json.gz",
+      "sha256": "44d94b98726fbba00a32be20e597d8b026ddb63dda6ceff25e8f419d658a5f94",
+      "bytes": 19609
+    },
+    "AM": {
+      "arquivo": "AM.json.gz",
+      "sha256": "7d4d068dbbff23cad7b11c3c41d4270dc3740eb5e83e7067c1f928b176423359",
+      "bytes": 26834
+    },
+    "AP": {
+      "arquivo": "AP.json.gz",
+      "sha256": "94a0c684caba833942c943b62a9164300c38114dc84780dbb5a4764f000240aa",
+      "bytes": 6702
+    },
+    "BA": {
+      "arquivo": "BA.json.gz",
+      "sha256": "1728b7b00dd7386c17692eeef5e53b70b86a41c110880a7ea08ef67a22e945fb",
+      "bytes": 121157
+    },
+    "CE": {
+      "arquivo": "CE.json.gz",
+      "sha256": "bcac1b0168de51ae62aec342c220db37025d95254afe40daf06711319442dcbb",
+      "bytes": 85765
+    },
+    "DF": {
+      "arquivo": "DF.json.gz",
+      "sha256": "863fbfb3d7bf301975f1212f4753b4182aed07866252c100ba6ad7fe0eadd2f3",
+      "bytes": 16917
+    },
+    "ES": {
+      "arquivo": "ES.json.gz",
+      "sha256": "c21cbe5ab5880a0be9c80d9bc6c3b62263524bf0fcf602687a3b573d58e84dff",
+      "bytes": 30209
+    },
+    "GO": {
+      "arquivo": "GO.json.gz",
+      "sha256": "2d2305ce24e0473a54e06a252ba598118d1dae8dd63569113496691a0cf7f2f5",
+      "bytes": 43962
+    },
+    "MA": {
+      "arquivo": "MA.json.gz",
+      "sha256": "a73bc8a55f7e12103113f18a8bdcea3060652b2e06748024d4332182d7954f98",
+      "bytes": 68849
+    },
+    "MG": {
+      "arquivo": "MG.json.gz",
+      "sha256": "a34a3e9e1a65009f25adad0263308e8de6497c14adf7706a8949f07b4022063d",
+      "bytes": 150944
+    },
+    "MS": {
+      "arquivo": "MS.json.gz",
+      "sha256": "eb99ae91877162f5261f07b660156def159eec111175568eab386fe7eca01884",
+      "bytes": 19426
+    },
+    "MT": {
+      "arquivo": "MT.json.gz",
+      "sha256": "dac0aa5e1ce703f21e752bbe00dc24ba1780fe29b98a235e590c72a1abc3feec",
+      "bytes": 27057
+    },
+    "PA": {
+      "arquivo": "PA.json.gz",
+      "sha256": "3a1d9817bf650ed4238bcdc2b3c4ea4fa0ad751fa2eb9c0eb0727dfedf430999",
+      "bytes": 75541
+    },
+    "PB": {
+      "arquivo": "PB.json.gz",
+      "sha256": "b08b9b615eb6428c406a3ac3c3f5c1828f6a6ae5fbb7836c35dae8bd589d713f",
+      "bytes": 31410
+    },
+    "PE": {
+      "arquivo": "PE.json.gz",
+      "sha256": "84809056d5addb2be13b6062b90510f7c7c23ba52f66442fadba73926be8a0b9",
+      "bytes": 57926
+    },
+    "PI": {
+      "arquivo": "PI.json.gz",
+      "sha256": "987b48efbf85b262ccbc8b299471942755ab383026a4655249b6af7044aaf6b3",
+      "bytes": 39384
+    },
+    "PR": {
+      "arquivo": "PR.json.gz",
+      "sha256": "6445b7539e53825370276eb73957bbd444ece57b542bb81f8610e1aa863c664a",
+      "bytes": 79369
+    },
+    "RJ": {
+      "arquivo": "RJ.json.gz",
+      "sha256": "fc5f562936da29496d7ede9cfd58b7cc68b38fe342a0afd08afd4beaaf9d86ca",
+      "bytes": 94332
+    },
+    "RN": {
+      "arquivo": "RN.json.gz",
+      "sha256": "512c42de84d1ba9329d906fd8db66b8502cc9fad1d10277c44ac75e8c6ba9628",
+      "bytes": 24073
+    },
+    "RO": {
+      "arquivo": "RO.json.gz",
+      "sha256": "d94e6bc782f20d0de4d1e7502f862485f28d253eb737b4ac6a986f5db022824d",
+      "bytes": 12672
+    },
+    "RR": {
+      "arquivo": "RR.json.gz",
+      "sha256": "efa20b03f0dcec1e648097f6a078166b767583becf5a7f7f640db701027484f6",
+      "bytes": 5816
+    },
+    "RS": {
+      "arquivo": "RS.json.gz",
+      "sha256": "88fc0e873805dca025e528f35be7fba212f76640bc6efac4518f4ccda7e2f08f",
+      "bytes": 102669
+    },
+    "SC": {
+      "arquivo": "SC.json.gz",
+      "sha256": "338ee5c5b5c3276815a100e8acf5bd5448be7b7362a337b0816d15136468d120",
+      "bytes": 54098
+    },
+    "SE": {
+      "arquivo": "SE.json.gz",
+      "sha256": "77b8983dd9c5cbf1d822e1b2234e6ce2445bdf7347c4f180accdb5cdc3c32ee3",
+      "bytes": 19138
+    },
+    "SP": {
+      "arquivo": "SP.json.gz",
+      "sha256": "3779ef231d005f5e7ffd3af3a6734db3d573f86780032f37b253c3f6867b58b6",
+      "bytes": 257147
+    },
+    "TO": {
+      "arquivo": "TO.json.gz",
+      "sha256": "0a928b341911ce95f27995badbe635208705b41a2e8e671fb3f55247b905956a",
+      "bytes": 14281
+    }
+  },
+  "sinais": [
+    {
+      "id": "SP-66079-63-1490",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFª CLEOMAR DE BARROS CASTILHO MARQUES",
+      "municipio": "Jaú",
+      "secoes_catalogo": 7,
+      "local": "SP-66079-63-1490",
+      "secao": 315,
+      "recuos": 1,
+      "max_s": 120213,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "6e1fe49a366ae16d3dac8db177758cb7fa5ed5c713aa075502c502d84b383251",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 146344,
+          "seguinte_s": 26131,
+          "recuo_s": 120213,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1082",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº BENEDICTO MONTENEGRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1082",
+      "secao": 58,
+      "recuos": 1,
+      "max_s": 119395,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "d8b7fac677012d83827d38d272ea611533faf2b6180f0f5f01412bd19379c5df",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 145398,
+          "seguinte_s": 26003,
+          "recuo_s": 119395,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1490",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFª CLEOMAR DE BARROS CASTILHO MARQUES",
+      "municipio": "Jaú",
+      "secoes_catalogo": 7,
+      "local": "SP-66079-63-1490",
+      "secao": 280,
+      "recuos": 1,
+      "max_s": 119329,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "d2a78620ee392e495100a49d9ac97996f9b1b23b03f786ffd01801c85e33f1d5",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 145686,
+          "seguinte_s": 26357,
+          "recuo_s": 119329,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-70335-187-1015",
+      "uf": "SP",
+      "mun": "70335",
+      "zona": 187,
+      "nome": "EE PROF ITAEL DE MATTOS",
+      "municipio": "Santa Fé do Sul",
+      "secoes_catalogo": 11,
+      "local": "SP-70335-187-1015",
+      "secao": 107,
+      "recuos": 1,
+      "max_s": 118190,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "3dd998f24ddb1747516209acf5e4013cbf58663193629bac9d08d9ecb09c619f",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 143756,
+          "seguinte_s": 25566,
+          "recuo_s": 118190,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1031",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "FUNDAÇÃO EDUCACIONAL DR. RAUL BAUAB",
+      "municipio": "Jaú",
+      "secoes_catalogo": 14,
+      "local": "SP-66079-63-1031",
+      "secao": 318,
+      "recuos": 1,
+      "max_s": 118013,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "5b607854f3f1314bb41c271e1f047a66b1044bf4d0da39a2ba1af1f38ce9bac0",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 144234,
+          "seguinte_s": 26221,
+          "recuo_s": 118013,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1112",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. LAUDELINO DE ABREU",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1112",
+      "secao": 72,
+      "recuos": 1,
+      "max_s": 117671,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a0afd9c0e3108b5fa89d7962e4bd1677d4fa763fae4924ad08dac8b3a858783c",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 144527,
+          "seguinte_s": 26856,
+          "recuo_s": 117671,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1082",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº BENEDICTO MONTENEGRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1082",
+      "secao": 55,
+      "recuos": 1,
+      "max_s": 117597,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "96af8155c671e06b12a91d5270bcebe45dc1418eb1666e221b9fe8849c319557",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 144691,
+          "seguinte_s": 27094,
+          "recuo_s": 117597,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1031",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "FUNDAÇÃO EDUCACIONAL DR. RAUL BAUAB",
+      "municipio": "Jaú",
+      "secoes_catalogo": 14,
+      "local": "SP-66079-63-1031",
+      "secao": 260,
+      "recuos": 1,
+      "max_s": 117560,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "f5c7cba13ecb11c650344bb73e7e2f2c38357397a1909419a7c1571c8843a450",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 143217,
+          "seguinte_s": 25657,
+          "recuo_s": 117560,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1260",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFº MÁRIO ROMEU PELEGRINO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1260",
+      "secao": 164,
+      "recuos": 1,
+      "max_s": 117473,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "b9c4b002e25a25bacd21c277efb2705240603b3099e03d4cab7124f7c7383452",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 142988,
+          "seguinte_s": 25515,
+          "recuo_s": 117473,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1031",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "FUNDAÇÃO EDUCACIONAL DR. RAUL BAUAB",
+      "municipio": "Jaú",
+      "secoes_catalogo": 14,
+      "local": "SP-66079-63-1031",
+      "secao": 310,
+      "recuos": 1,
+      "max_s": 116889,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1eada673dff10ac8c0705cff7ae40900046a7da75c6ca168d82f8c854c44b7a0",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 143888,
+          "seguinte_s": 26999,
+          "recuo_s": 116889,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1031",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "FUNDAÇÃO EDUCACIONAL DR. RAUL BAUAB",
+      "municipio": "Jaú",
+      "secoes_catalogo": 14,
+      "local": "SP-66079-63-1031",
+      "secao": 285,
+      "recuos": 1,
+      "max_s": 116859,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a81ae427c622eeceab275951ec966e864f219dd9f14ce7e06906c3042a0c812f",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 143620,
+          "seguinte_s": 26761,
+          "recuo_s": 116859,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1198",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª CARLOTA MEIRA MARSIGLIO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1198",
+      "secao": 230,
+      "recuos": 1,
+      "max_s": 115094,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "8ab75dda66419ce4299f2515ad3c381984c917313bd6356dd369d6f1af78d46a",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 142108,
+          "seguinte_s": 27014,
+          "recuo_s": 115094,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 229,
+      "recuos": 1,
+      "max_s": 113480,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "7bf8e6a9357e60df0ae528e10ddee006e37258f9eb053f94910eeec53366273d",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 140953,
+          "seguinte_s": 27473,
+          "recuo_s": 113480,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 200,
+      "recuos": 1,
+      "max_s": 113360,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "77dded4469abe90e7fb9b0bf9a4829cb57d4790af59ddb3b0a28b6592048bf57",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 140415,
+          "seguinte_s": 27055,
+          "recuo_s": 113360,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 169,
+      "recuos": 1,
+      "max_s": 113100,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "f606ea2ec674d90f426be9bc71517a7d3887d15e079cdb929ddf5b0024830f96",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 139497,
+          "seguinte_s": 26397,
+          "recuo_s": 113100,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "PB-19810-17-1686",
+      "uf": "PB",
+      "mun": "19810",
+      "zona": 17,
+      "nome": "EEEF MAJOR VENEZIANO VITAL DO REGO",
+      "municipio": "Campina Grande",
+      "secoes_catalogo": 14,
+      "local": "PB-19810-17-1686",
+      "secao": 77,
+      "recuos": 1,
+      "max_s": 112799,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "99ab94c8f780dce9588dc7c4e8e1ba9d2d131867fd0b50dbfe60b5951b405266",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 139053,
+          "seguinte_s": 26254,
+          "recuo_s": 112799,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1198",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª CARLOTA MEIRA MARSIGLIO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1198",
+      "secao": 128,
+      "recuos": 1,
+      "max_s": 111964,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "c1e65e39568c8d3788e08c5faaf493b5c421112172b8867d543adfdda5f62487",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 139513,
+          "seguinte_s": 27549,
+          "recuo_s": 111964,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1180",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª HELENA DE CASTRO PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1180",
+      "secao": 225,
+      "recuos": 1,
+      "max_s": 111720,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "7f593e6babda910991bd8716317b55ff24949c2872a6f697b8baa0426103ae72",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 137505,
+          "seguinte_s": 25785,
+          "recuo_s": 111720,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1520",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. VEREADOR ANGELO RONCHESEL",
+      "municipio": "Jaú",
+      "secoes_catalogo": 4,
+      "local": "SP-66079-63-1520",
+      "secao": 329,
+      "recuos": 1,
+      "max_s": 111424,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "b6e8e63bc66666c53c3719b37fdd0aa867f4787bb8aa3a3925fb86a8efac4bc5",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 138142,
+          "seguinte_s": 26718,
+          "recuo_s": 111424,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66877-170-1236",
+      "uf": "SP",
+      "mun": "66877",
+      "zona": 170,
+      "nome": "EE ERNESTO MASSELANI",
+      "municipio": "Matão",
+      "secoes_catalogo": 10,
+      "local": "SP-66877-170-1236",
+      "secao": 182,
+      "recuos": 1,
+      "max_s": 111345,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "4f82f40315c9b89389b77963ed3bfe25855f109b88e62de3fc8cb9622023586d",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 137418,
+          "seguinte_s": 26073,
+          "recuo_s": 111345,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "26/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "PB-19810-17-1180",
+      "uf": "PB",
+      "mun": "19810",
+      "zona": 17,
+      "nome": "ESCOLA MUNICIPAL ADALGISA AMORIM",
+      "municipio": "Campina Grande",
+      "secoes_catalogo": 5,
+      "local": "PB-19810-17-1180",
+      "secao": 69,
+      "recuos": 1,
+      "max_s": 111261,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "abf1b03f3e6f5ef5dbccf62715f6553b45830ffc63ed97be5b2765aa1f2f246e",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 137486,
+          "seguinte_s": 26225,
+          "recuo_s": 111261,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 96,
+      "recuos": 1,
+      "max_s": 110896,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "8d85453d3d2a30708f8e1f75273a0bada91704893f99924fde68f8550726982c",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 137190,
+          "seguinte_s": 26294,
+          "recuo_s": 110896,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 94,
+      "recuos": 1,
+      "max_s": 110603,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "64335307ddf4fa2cf07428135da442a3919ce5990ee2390185a878936a99fb58",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 136695,
+          "seguinte_s": 26092,
+          "recuo_s": 110603,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1180",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª HELENA DE CASTRO PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1180",
+      "secao": 143,
+      "recuos": 1,
+      "max_s": 110000,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1179bcb8864809616deeba91d74582c48fe3f995e1f9a5b2ccebf8722c2d45c1",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 136129,
+          "seguinte_s": 26129,
+          "recuo_s": 110000,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 93,
+      "recuos": 1,
+      "max_s": 109893,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "21a844ac7d95ff8c8677377375a30bcf7eee070c4fe46572bdcf8ae7a6641356",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 135853,
+          "seguinte_s": 25960,
+          "recuo_s": 109893,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1279",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº ANTÔNIO TERÉZIO MENDES PEIXOTO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1279",
+      "secao": 327,
+      "recuos": 1,
+      "max_s": 109688,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a6f01d20b5a332a2a73f340c24c92b5fcdbf073b424b68378d62a256c515bad2",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 135902,
+          "seguinte_s": 26214,
+          "recuo_s": 109688,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 92,
+      "recuos": 1,
+      "max_s": 109057,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "e03d22ac1b292bf08e4bb51216fe6e70a1fdb3471cf6c449cb336a0bf3365a18",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 135506,
+          "seguinte_s": 26449,
+          "recuo_s": 109057,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1279",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº ANTÔNIO TERÉZIO MENDES PEIXOTO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1279",
+      "secao": 319,
+      "recuos": 1,
+      "max_s": 109034,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "8e6b04301a1ed210e5e8d98598e8beae7c0e850b9721ed17855dd28a2cbd69dc",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 135551,
+          "seguinte_s": 26517,
+          "recuo_s": 109034,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1279",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº ANTÔNIO TERÉZIO MENDES PEIXOTO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1279",
+      "secao": 312,
+      "recuos": 1,
+      "max_s": 108985,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "72137a03dc8a97f272b58e58e69ded1827e622737a71cf4f1dacfa52980d0094",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 135066,
+          "seguinte_s": 26081,
+          "recuo_s": 108985,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1155",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. ÁLVARO FRAGA MOREIRA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1155",
+      "secao": 131,
+      "recuos": 1,
+      "max_s": 108835,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a94fe2f20f453133e4929c29195decf3043eb446366d282af0d5f5bc9c2a2369",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 136927,
+          "seguinte_s": 28092,
+          "recuo_s": 108835,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1279",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº ANTÔNIO TERÉZIO MENDES PEIXOTO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1279",
+      "secao": 308,
+      "recuos": 1,
+      "max_s": 107534,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "081761f7f4086d1f3fd1cd39c5e1a41747a03c0e79b9322b941a40c9d91baffd",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 134864,
+          "seguinte_s": 27330,
+          "recuo_s": 107534,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1279",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº ANTÔNIO TERÉZIO MENDES PEIXOTO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1279",
+      "secao": 259,
+      "recuos": 1,
+      "max_s": 107452,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "225fbbc71693ff20c066578f17edf70efa630f23b9e38e03ec2108a196a908fe",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 132923,
+          "seguinte_s": 25471,
+          "recuo_s": 107452,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1279",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº ANTÔNIO TERÉZIO MENDES PEIXOTO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1279",
+      "secao": 283,
+      "recuos": 1,
+      "max_s": 106356,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "7c7f5e65ac32ba91480317c1414a2adb2fcf9832fffd1d1d7b01ff20d8dbb180",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 133890,
+          "seguinte_s": 27534,
+          "recuo_s": 106356,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1040",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "ETEC JOAQUIM FERREIRA DO AMARAL - INDUSTRIAL",
+      "municipio": "Jaú",
+      "secoes_catalogo": 14,
+      "local": "SP-66079-63-1040",
+      "secao": 235,
+      "recuos": 1,
+      "max_s": 104348,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "96b7747527a556211364b729866262beca2a725a6b74c53a6f3c657cfc64bda9",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 130530,
+          "seguinte_s": 26182,
+          "recuo_s": 104348,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1040",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "ETEC JOAQUIM FERREIRA DO AMARAL - INDUSTRIAL",
+      "municipio": "Jaú",
+      "secoes_catalogo": 14,
+      "local": "SP-66079-63-1040",
+      "secao": 209,
+      "recuos": 1,
+      "max_s": 103978,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1113b2e0fd2e49d81167e6f93c6b46b5451e1d5fa9b30825086d02bb1cffc8bb",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 129833,
+          "seguinte_s": 25855,
+          "recuo_s": 103978,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1104",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. FREI GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1104",
+      "secao": 132,
+      "recuos": 1,
+      "max_s": 100508,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "b386db4e672c17698366d7c27e04f5290c1668f2272466683418a8ff0cbbd3fb",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 127162,
+          "seguinte_s": 26654,
+          "recuo_s": 100508,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1104",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. FREI GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1104",
+      "secao": 106,
+      "recuos": 1,
+      "max_s": 99231,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "9a0275b531c09b2123e00558d2c4cc2b582398399b333f438e48cff47a3cd54c",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 126288,
+          "seguinte_s": 27057,
+          "recuo_s": 99231,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 282,
+      "recuos": 1,
+      "max_s": 98951,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "f681dc4ee7dc213fd1e28d823632d9d556549cf9439c963ff86666cff02313ee",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 125112,
+          "seguinte_s": 26161,
+          "recuo_s": 98951,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 236,
+      "recuos": 1,
+      "max_s": 98592,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "bd8fc27249e2280c34c9632c51ee14cd53f15470da99d4ef5713a173a16d07af",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 124724,
+          "seguinte_s": 26132,
+          "recuo_s": 98592,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 195,
+      "recuos": 1,
+      "max_s": 98399,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "0c572b7885f9a0e62824e624b53e20f0bbd46eb7126c3c09f1e7e7d973f32ab3",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 124250,
+          "seguinte_s": 25851,
+          "recuo_s": 98399,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 218,
+      "recuos": 1,
+      "max_s": 98010,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "c3c349dd2c33fd6c9b7ab848eafe4e561732ea34cf4d2dc97f3c05b258c7bc95",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 124325,
+          "seguinte_s": 26315,
+          "recuo_s": 98010,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 177,
+      "recuos": 1,
+      "max_s": 97469,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "c16ff2795617dfd5aecd591c7c0ef8760df07ac46f729e3d330a54a6959abece",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 124018,
+          "seguinte_s": 26549,
+          "recuo_s": 97469,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 134,
+      "recuos": 1,
+      "max_s": 97395,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "65814e7d4e58dbe1ef70aaae86b467e719047e1186488ff768cbf16d1537f5c1",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 122900,
+          "seguinte_s": 25505,
+          "recuo_s": 97395,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 144,
+      "recuos": 1,
+      "max_s": 97319,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "281a3df479906efa940896b8c2604b2e682d25095663ef53589eb9982b016086",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 123015,
+          "seguinte_s": 25696,
+          "recuo_s": 97319,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1228",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª LUCIA SAMPAIO GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1228",
+      "secao": 170,
+      "recuos": 1,
+      "max_s": 97160,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "972ba7dc243f671e377eb17a8eb33bff85b8c20894ec6ba64732d233f7dd0fe9",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 123637,
+          "seguinte_s": 26477,
+          "recuo_s": 97160,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1120",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª MARIA DE LOURDES CAMARGO MELLO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1120",
+      "secao": 81,
+      "recuos": 1,
+      "max_s": 96982,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "6284329255ca38d62a4c2083eff047f80bfe9f0608cbf0cadf0819c63dcb0e77",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 123878,
+          "seguinte_s": 26896,
+          "recuo_s": 96982,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 233,
+      "recuos": 1,
+      "max_s": 96310,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "8685acb96b33cc30e56ead8dd13de98a5b1d958d2feaff42dc0093ad9f57ea55",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 122005,
+          "seguinte_s": 25695,
+          "recuo_s": 96310,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "PB-19810-17-1244",
+      "uf": "PB",
+      "mun": "19810",
+      "zona": 17,
+      "nome": "COLÉGIO PANORAMA",
+      "municipio": "Campina Grande",
+      "secoes_catalogo": 22,
+      "local": "PB-19810-17-1244",
+      "secao": 88,
+      "recuos": 1,
+      "max_s": 95658,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "f7adecf448c62dd804ba0f458970674ec0cd2b20d701226108ddd2488a4ea1dc",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 121334,
+          "seguinte_s": 25676,
+          "recuo_s": 95658,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 219,
+      "recuos": 1,
+      "max_s": 95287,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "b16771e82bfd74b9b75ce86ce4cda3d9de8045874fcc804d644a3537669aa35e",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 121332,
+          "seguinte_s": 26045,
+          "recuo_s": 95287,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 199,
+      "recuos": 1,
+      "max_s": 95275,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "79cc4bf7ec9f5b107c1eee9eb367fdc44182be77c3a62b371a6d2770dbd25959",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 120927,
+          "seguinte_s": 25652,
+          "recuo_s": 95275,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 192,
+      "recuos": 1,
+      "max_s": 94845,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a0ee782a71c967b8fd8f9ab291e0354e269559afe774c5eb45c585e36d23a024",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 120676,
+          "seguinte_s": 25831,
+          "recuo_s": 94845,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 184,
+      "recuos": 1,
+      "max_s": 94699,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "11b6cdd688dc4a1b505896ab3dd5ffc3d3e1f317ae9d654707bcd4143ca7a739",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 120493,
+          "seguinte_s": 25794,
+          "recuo_s": 94699,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1252",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFº JAYME DE OLIVEIRA E SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1252",
+      "secao": 165,
+      "recuos": 1,
+      "max_s": 94541,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "66d4197f6247de1e10e69d5f0aeae4457c251f5ce4c832923ff4df370791cf34",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 120751,
+          "seguinte_s": 26210,
+          "recuo_s": 94541,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 210,
+      "recuos": 1,
+      "max_s": 94487,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "e6c741565fc99e97bfe1f140ec04c358761ecdc7bc3ba51323ce76107108ac22",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 121265,
+          "seguinte_s": 26778,
+          "recuo_s": 94487,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 290,
+      "recuos": 1,
+      "max_s": 94251,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "fdf34b9d58482a829a82bb22c7d7dc8a8a14dcb3cab1bb6f8e674f50eed39890",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 120283,
+          "seguinte_s": 26032,
+          "recuo_s": 94251,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 176,
+      "recuos": 1,
+      "max_s": 94075,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "d2646bd8af9380026e658a5f170a275f1e814835b4ce5d67fef4451773ee8a30",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 120046,
+          "seguinte_s": 25971,
+          "recuo_s": 94075,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 136,
+      "recuos": 1,
+      "max_s": 93155,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "49bdc28a9461518d87de9d1b7766450304d296703283bf00eb6ae952a54e6940",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 119486,
+          "seguinte_s": 26331,
+          "recuo_s": 93155,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 171,
+      "recuos": 1,
+      "max_s": 93133,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "085bbff29c756267063d9c8f992688f8b27017826306c1df55284e072a9f351a",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 119616,
+          "seguinte_s": 26483,
+          "recuo_s": 93133,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 145,
+      "recuos": 1,
+      "max_s": 92858,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "7d366303b90d542de630ac2924105d2cd29afe025c9496a7b088d151598ede68",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 119637,
+          "seguinte_s": 26779,
+          "recuo_s": 92858,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 265,
+      "recuos": 1,
+      "max_s": 92824,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "6667762148611e98942ee496999287e9223dcb9de388148d69cb9dba9e045b76",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 119816,
+          "seguinte_s": 26992,
+          "recuo_s": 92824,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1023",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. DR. DOMINGOS DE MAGALHÃES",
+      "municipio": "Jaú",
+      "secoes_catalogo": 15,
+      "local": "SP-66079-63-1023",
+      "secao": 14,
+      "recuos": 1,
+      "max_s": 92656,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "4b065551bb544627810e63f558e72b3508d99c4ed334782f3eb3e59e986557b8",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 118140,
+          "seguinte_s": 25484,
+          "recuo_s": 92656,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1210",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. COMENDADOR JOSÉ MARIA DE ALMEIDA PRADO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1210",
+      "secao": 130,
+      "recuos": 1,
+      "max_s": 91813,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "5efc0bee0e4c0cee3de4c4620321b338ceb217bd03c1ee7e294275f8f17c9d21",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 118890,
+          "seguinte_s": 27077,
+          "recuo_s": 91813,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1201",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. ALVARINA BIZARRO SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1201",
+      "secao": 178,
+      "recuos": 1,
+      "max_s": 90274,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "bc466932c781652dc2aa63e5664d9380f36f8640acdcf52342df3ab768a41cb5",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 115945,
+          "seguinte_s": 25671,
+          "recuo_s": 90274,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1201",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. ALVARINA BIZARRO SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1201",
+      "secao": 162,
+      "recuos": 1,
+      "max_s": 89809,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "c25d3d59e9a185b8523a276de90792a72962a73623c1861caaed376787f914a3",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 115531,
+          "seguinte_s": 25722,
+          "recuo_s": 89809,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1201",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. ALVARINA BIZARRO SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1201",
+      "secao": 203,
+      "recuos": 1,
+      "max_s": 89320,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "87d90fd6ec16d56dc8f68386845fc838f6565ae72f583dc22fe94d264699067a",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 115993,
+          "seguinte_s": 26673,
+          "recuo_s": 89320,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "PR-75353-174-1155",
+      "uf": "PR",
+      "mun": "75353",
+      "zona": 174,
+      "nome": "COLÉGIO ESTADUAL LUCIA BASTOS",
+      "municipio": "Curitiba",
+      "secoes_catalogo": 12,
+      "local": "PR-75353-174-1155",
+      "secao": 107,
+      "recuos": 1,
+      "max_s": 77825,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "47816601cf4265bc9f9b814e35adcd0b4aa24aef0aab622439eff4f0a032a7c6",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 103471,
+          "seguinte_s": 25646,
+          "recuo_s": 77825,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "26/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "PA-04014-7-1520",
+      "uf": "PA",
+      "mun": "04014",
+      "zona": 7,
+      "nome": "EMEIF SANTO ANDRÉ",
+      "municipio": "Abaetetuba",
+      "secoes_catalogo": 4,
+      "local": "PA-04014-7-1520",
+      "secao": 102,
+      "recuos": 1,
+      "max_s": 49106,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "b10de70dbfc4116721ba1f57cac2592330654714414f32055606a045d1fe500c",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 74932,
+          "seguinte_s": 25826,
+          "recuo_s": 49106,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "GO-93335-8-1015",
+      "uf": "GO",
+      "mun": "93335",
+      "zona": 8,
+      "nome": "COLEGIO ESTADUAL GETULIO EVANGELISTA DA ROCHA - UE-EST",
+      "municipio": "Cumari",
+      "secoes_catalogo": 12,
+      "local": "GO-93335-8-1015",
+      "secao": 295,
+      "recuos": 1,
+      "max_s": 37462,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "abd2b90071854d5a953c3b2b9bc63fa129c854f6cb533b507de1aa4d2d547bb2",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 65048,
+          "seguinte_s": 27586,
+          "recuo_s": 37462,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1112",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. LAUDELINO DE ABREU",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1112",
+      "secao": 80,
+      "recuos": 1,
+      "max_s": 34152,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "04d4f5b6cd07010070f4e2842cec809d8f1626c2f2bcc59731694a6c3d50ea63",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 60245,
+          "seguinte_s": 26093,
+          "recuo_s": 34152,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "24/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 227,
+      "recuos": 1,
+      "max_s": 33572,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "89c04296f0df7be3d29f5d5e755a03b2417e6b6ccf961b655a22aba5cda7f70e",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 58959,
+          "seguinte_s": 25387,
+          "recuo_s": 33572,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1481",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFº ANTÔNIO WALDOMIRO DE OLIVEIRA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 4,
+      "local": "SP-66079-63-1481",
+      "secao": 250,
+      "recuos": 1,
+      "max_s": 32970,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "cdcddbf4fb1f916491979c0b668fe87aa666896d1d098615a4cb40557978dedd",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 59290,
+          "seguinte_s": 26320,
+          "recuo_s": 32970,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 188,
+      "recuos": 1,
+      "max_s": 32555,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "ac92f91990e2ae7164afc936d298ff0b23ecb6c8e29254abab47138bb6ee10e0",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 58345,
+          "seguinte_s": 25790,
+          "recuo_s": 32555,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 220,
+      "recuos": 1,
+      "max_s": 32414,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "686587ca4d50e0ee0169472c779b8797bde2c434eb8a84786b84fbd91e0a45d7",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 58923,
+          "seguinte_s": 26509,
+          "recuo_s": 32414,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1260",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFº MÁRIO ROMEU PELEGRINO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 9,
+      "local": "SP-66079-63-1260",
+      "secao": 272,
+      "recuos": 1,
+      "max_s": 31967,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "99293e6ad6327cf251fc4d13a568c9992323e070de5361d40252dfc0f7a71ea1",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 58153,
+          "seguinte_s": 26186,
+          "recuo_s": 31967,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 174,
+      "recuos": 1,
+      "max_s": 31953,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "e99263afdf75edb57049e3624f5fe79a3ab6388a3ea6da7892ca8e59b6be53c2",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 58372,
+          "seguinte_s": 26419,
+          "recuo_s": 31953,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 133,
+      "recuos": 1,
+      "max_s": 31763,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "ecea8d8c2971aef476c6893bd790ef7601e75486d610d196f9aa61d750ae4097",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 57702,
+          "seguinte_s": 25939,
+          "recuo_s": 31763,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 146,
+      "recuos": 1,
+      "max_s": 31121,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "42251ee10d6e48792b54f3912f125dcc0e14ab2f87d4e5620a244ea23df03bfc",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 57940,
+          "seguinte_s": 26819,
+          "recuo_s": 31121,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 120,
+      "recuos": 1,
+      "max_s": 30989,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "3a2960bdd6ab5da1048fe8a1cc00351e49bd02deaff67e8de79ce32629d0f40d",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 56584,
+          "seguinte_s": 25595,
+          "recuo_s": 30989,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "PB-19810-17-1686",
+      "uf": "PB",
+      "mun": "19810",
+      "zona": 17,
+      "nome": "EEEF MAJOR VENEZIANO VITAL DO REGO",
+      "municipio": "Campina Grande",
+      "secoes_catalogo": 14,
+      "local": "PB-19810-17-1686",
+      "secao": 85,
+      "recuos": 1,
+      "max_s": 30409,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a5e3da0ed403efd220160958f340e759c17f250849f60096c8c867f3444812ee",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 55698,
+          "seguinte_s": 25289,
+          "recuo_s": 30409,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1163",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº JOSÉ NICOLAU PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1163",
+      "secao": 114,
+      "recuos": 1,
+      "max_s": 29465,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a07f7d48228acee8f8d6b6f89728b31cd2af389137a8581a1fb274fee955ef21",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 56349,
+          "seguinte_s": 26884,
+          "recuo_s": 29465,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "23/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1198",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª CARLOTA MEIRA MARSIGLIO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1198",
+      "secao": 185,
+      "recuos": 1,
+      "max_s": 29046,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "b1594c9e1ec9c94ef7b34246f370d4b145e41a4d41dd08ff11d65092e5b461d1",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 54885,
+          "seguinte_s": 25839,
+          "recuo_s": 29046,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1198",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª CARLOTA MEIRA MARSIGLIO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1198",
+      "secao": 158,
+      "recuos": 1,
+      "max_s": 28026,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "f942f782970102c41a8cd0dfa7dc0df89a953070a06b7adf6cace34bb53f1947",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 54499,
+          "seguinte_s": 26473,
+          "recuo_s": 28026,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1147",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº TÚLIO ESPÍNDOLA DE CASTRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 18,
+      "local": "SP-66079-63-1147",
+      "secao": 124,
+      "recuos": 1,
+      "max_s": 25045,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "db4b3c954ba2d58261221f0998e51429691c7419af702a4031e48bff62f73d98",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 52363,
+          "seguinte_s": 27318,
+          "recuo_s": 25045,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1180",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª HELENA DE CASTRO PIRAGINE",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1180",
+      "secao": 117,
+      "recuos": 1,
+      "max_s": 23886,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "3ec18de1ee0ccd524947c2d9439cb070929c414fde3a6dd022d9e5793655ae8b",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 49680,
+          "seguinte_s": 25794,
+          "recuo_s": 23886,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1120",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª MARIA DE LOURDES CAMARGO MELLO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1120",
+      "secao": 214,
+      "recuos": 1,
+      "max_s": 20553,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "2950def5592fc83b88c3fbe0c241e24f527415da6bb1051e5723b7accf055156",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 47308,
+          "seguinte_s": 26755,
+          "recuo_s": 20553,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "RJ-58017-116-1074",
+      "uf": "RJ",
+      "mun": "58017",
+      "zona": 116,
+      "nome": "CAIXA ECONÔMICA FEDERAL",
+      "municipio": "Angra dos Reis",
+      "secoes_catalogo": 3,
+      "local": "RJ-58017-116-1074",
+      "secao": 154,
+      "recuos": 1,
+      "max_s": 15983,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "0b80bb953cee08eea689d0cc611da901f7e96d6362ea6d4e1a2ca4a65718bad0",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 39706,
+          "seguinte_s": 23723,
+          "recuo_s": 15983,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1104",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. FREI GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1104",
+      "secao": 148,
+      "recuos": 1,
+      "max_s": 15240,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "ed77ce86e699ee94e16f967a7209b793e565ea1669851bf41c0f1735a9836a38",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 41847,
+          "seguinte_s": 26607,
+          "recuo_s": 15240,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "RJ-58017-116-1236",
+      "uf": "RJ",
+      "mun": "58017",
+      "zona": 116,
+      "nome": "ESCOLA MUNICIPAL ALEXINA LOWNDES",
+      "municipio": "Angra dos Reis",
+      "secoes_catalogo": 4,
+      "local": "RJ-58017-116-1236",
+      "secao": 46,
+      "recuos": 1,
+      "max_s": 12542,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "dbad1140ba232ef1ced9924c9f498d92f58eae68435d2d3da05d72d463ceca72",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 37956,
+          "seguinte_s": 25414,
+          "recuo_s": 12542,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1040",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "ETEC JOAQUIM FERREIRA DO AMARAL - INDUSTRIAL",
+      "municipio": "Jaú",
+      "secoes_catalogo": 14,
+      "local": "SP-66079-63-1040",
+      "secao": 27,
+      "recuos": 1,
+      "max_s": 12294,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1e4fb6d93b9d0392caaba35f92aa8310c5b13250886c1df20d56b24eb3702b10",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 38128,
+          "seguinte_s": 25834,
+          "recuo_s": 12294,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1104",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. FREI GALVÃO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 12,
+      "local": "SP-66079-63-1104",
+      "secao": 68,
+      "recuos": 1,
+      "max_s": 12176,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "46aa23811bc7f5b6771d727f8d3c978593e855851b0a901e877cb34f0b4008d9",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 38146,
+          "seguinte_s": 25970,
+          "recuo_s": 12176,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 296,
+      "recuos": 1,
+      "max_s": 11148,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "37426cb08ae137852f7cdce73766503de6e69d14830c6ba64bfcad403e669036",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 37263,
+          "seguinte_s": 26115,
+          "recuo_s": 11148,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 228,
+      "recuos": 1,
+      "max_s": 10958,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "9ade94c8f69bf0e4e5ee4997760a352a4fb4ea6f788145250369832dd6de6eab",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 36856,
+          "seguinte_s": 25898,
+          "recuo_s": 10958,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 215,
+      "recuos": 1,
+      "max_s": 10176,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "a917744e96a670cfdc1bdc4762ebe8d511d9d4eec87945a207115da802718494",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 36091,
+          "seguinte_s": 25915,
+          "recuo_s": 10176,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 149,
+      "recuos": 1,
+      "max_s": 9374,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "51858f047f720c9c0e091a6ca79650eba45f898b6cc799e63a61491055229b48",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 35388,
+          "seguinte_s": 26014,
+          "recuo_s": 9374,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 66,
+      "recuos": 1,
+      "max_s": 9189,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1fe036995ebd0ec9e86dbc351d77faea5240832d8f16b8ad4d9739750e5b9624",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 35108,
+          "seguinte_s": 25919,
+          "recuo_s": 9189,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 65,
+      "recuos": 1,
+      "max_s": 8728,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "d7129683d39712ffdae8b0e51b9848a680b3a666ce113d68e3cbf3fa3f3e8029",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 34823,
+          "seguinte_s": 26095,
+          "recuo_s": 8728,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1252",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFº JAYME DE OLIVEIRA E SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1252",
+      "secao": 194,
+      "recuos": 1,
+      "max_s": 7915,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "d8aaac550ac6462cdeed367a57cb9aa7207cf9e5eb06439f2c944e7352d098c5",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 34665,
+          "seguinte_s": 26750,
+          "recuo_s": 7915,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "RJ-60011-245-1198",
+      "uf": "RJ",
+      "mun": "60011",
+      "zona": 245,
+      "nome": "CAIC - NAÇÕES UNIDAS",
+      "municipio": "Rio de Janeiro",
+      "secoes_catalogo": 6,
+      "local": "RJ-60011-245-1198",
+      "secao": 165,
+      "recuos": 1,
+      "max_s": 7210,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "bea9cff509e5a612b72cfb4d658bf06efc2ec27026a8cd94ff9bcd81354a107f",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 33070,
+          "seguinte_s": 25860,
+          "recuo_s": 7210,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1082",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. PROFº BENEDICTO MONTENEGRO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1082",
+      "secao": 150,
+      "recuos": 1,
+      "max_s": 7200,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "7357e87714878072e9f2c56c9c2b402db54192f67b75e160b714dcc204ba2734",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 33210,
+          "seguinte_s": 26010,
+          "recuo_s": 7200,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 244,
+      "recuos": 1,
+      "max_s": 6850,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "33c4bb44e0f3f46facca7aea2a2deff4228b29b867ddb46964f4a740b1bb11c9",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 32813,
+          "seguinte_s": 25963,
+          "recuo_s": 6850,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 63,
+      "recuos": 1,
+      "max_s": 6848,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "74988d5a2724040c70205a2f0430d523edee8c1e89ceb3ee5f73734214b30b12",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 33996,
+          "seguinte_s": 27148,
+          "recuo_s": 6848,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1023",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. DR. DOMINGOS DE MAGALHÃES",
+      "municipio": "Jaú",
+      "secoes_catalogo": 15,
+      "local": "SP-66079-63-1023",
+      "secao": 17,
+      "recuos": 1,
+      "max_s": 6843,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "c2a9f43821fbb594d0e16c0765f672c2df7e8d229c7191c641ff75a3dbb5a353",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 33206,
+          "seguinte_s": 26363,
+          "recuo_s": 6843,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 217,
+      "recuos": 1,
+      "max_s": 6221,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "086bc9be27dbe32fc8cc78b055a6b6bf8787ccfcf3e68d2b46f3261c2fab8a44",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 31963,
+          "seguinte_s": 25742,
+          "recuo_s": 6221,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1511",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. EIDMAR SANCINETTI MOMESSO",
+      "municipio": "Jaú",
+      "secoes_catalogo": 3,
+      "local": "SP-66079-63-1511",
+      "secao": 288,
+      "recuos": 1,
+      "max_s": 6195,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1b1a9d8f9c71687fbd5510520ba738f68ade1cbc9bc7f80d3e0ecc43c41393e8",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 32706,
+          "seguinte_s": 26511,
+          "recuo_s": 6195,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "26/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1503",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª ISA ROSA MEIRELES NAME",
+      "municipio": "Jaú",
+      "secoes_catalogo": 8,
+      "local": "SP-66079-63-1503",
+      "secao": 322,
+      "recuos": 1,
+      "max_s": 6021,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "8bea9a216e06053841cfba9269f3c2a42596cc2a679003014cf0a1460a6f1564",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 32549,
+          "seguinte_s": 26528,
+          "recuo_s": 6021,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "26/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1090",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. CAETANO PERLATTI",
+      "municipio": "Jaú",
+      "secoes_catalogo": 10,
+      "local": "SP-66079-63-1090",
+      "secao": 61,
+      "recuos": 1,
+      "max_s": 5585,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "f3ec21d0605dd57b2cd9e1e57cc9192f68a4e4b76ee52908eebe049eb823ccdc",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 32187,
+          "seguinte_s": 26602,
+          "recuo_s": 5585,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 191,
+      "recuos": 1,
+      "max_s": 5582,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "2829cca746fda198a8d50fc1d982963967a85076421172e839e7464163996b5f",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 31418,
+          "seguinte_s": 25836,
+          "recuo_s": 5582,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1023",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. DR. DOMINGOS DE MAGALHÃES",
+      "municipio": "Jaú",
+      "secoes_catalogo": 15,
+      "local": "SP-66079-63-1023",
+      "secao": 12,
+      "recuos": 1,
+      "max_s": 5310,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "bcbacbdcd69007ed47bde640dc19d7c5bcd42798db761234daa3027691617f03",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 31300,
+          "seguinte_s": 25990,
+          "recuo_s": 5310,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 173,
+      "recuos": 1,
+      "max_s": 5265,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "35a9490c8238d1c23dacc433f859854a98a9b14f44a56314b7bafcba2d280850",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 30623,
+          "seguinte_s": 25358,
+          "recuo_s": 5265,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 179,
+      "recuos": 1,
+      "max_s": 5116,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "ffd2d84c75950973ae4cda367fea825755211bcfb73c1f7cd0184ebe0b073c09",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 31111,
+          "seguinte_s": 25995,
+          "recuo_s": 5116,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1023",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EE. DR. DOMINGOS DE MAGALHÃES",
+      "municipio": "Jaú",
+      "secoes_catalogo": 15,
+      "local": "SP-66079-63-1023",
+      "secao": 11,
+      "recuos": 1,
+      "max_s": 5086,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "24a16acc6625eef131069f5609e6d7455b6c27e6020f470abdf019b36645c920",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 30877,
+          "seguinte_s": 25791,
+          "recuo_s": 5086,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1503",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª ISA ROSA MEIRELES NAME",
+      "municipio": "Jaú",
+      "secoes_catalogo": 8,
+      "local": "SP-66079-63-1503",
+      "secao": 284,
+      "recuos": 1,
+      "max_s": 4989,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "fbcfdd6efd3e1bfb24465ac8328de1c79aebda843a121020fff2f10e0d64f20f",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 30896,
+          "seguinte_s": 25907,
+          "recuo_s": 4989,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "26/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1503",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª ISA ROSA MEIRELES NAME",
+      "municipio": "Jaú",
+      "secoes_catalogo": 8,
+      "local": "SP-66079-63-1503",
+      "secao": 279,
+      "recuos": 1,
+      "max_s": 4530,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "e166638602d3403f0451099f8eadc8847bc8f5231532764b209524e9fa7d2087",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 30569,
+          "seguinte_s": 26039,
+          "recuo_s": 4530,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "26/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1201",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. ALVARINA BIZARRO SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1201",
+      "secao": 237,
+      "recuos": 1,
+      "max_s": 4009,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "4e38355d6319dcb9a43ae54fa098120a2326375278552e50bd0eb3801b81c0c4",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 30200,
+          "seguinte_s": 26191,
+          "recuo_s": 4009,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1201",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. ALVARINA BIZARRO SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1201",
+      "secao": 135,
+      "recuos": 1,
+      "max_s": 3949,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "0f11839389a34043bf34a507fe90bb028d3069aa3ac8a626bbd0b3ce21c056fa",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 29342,
+          "seguinte_s": 25393,
+          "recuo_s": 3949,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1503",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª ISA ROSA MEIRELES NAME",
+      "municipio": "Jaú",
+      "secoes_catalogo": 8,
+      "local": "SP-66079-63-1503",
+      "secao": 311,
+      "recuos": 1,
+      "max_s": 3760,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "e044644aeed0b33c1c194f2e1e6d501ece91181f92635332fc74a4257fc77304",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 31775,
+          "seguinte_s": 28015,
+          "recuo_s": 3760,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "26/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "RJ-60011-214-1414",
+      "uf": "RJ",
+      "mun": "60011",
+      "zona": 214,
+      "nome": "ESCOLA MUNICIPAL SENEGAL",
+      "municipio": "Rio de Janeiro",
+      "secoes_catalogo": 6,
+      "local": "RJ-60011-214-1414",
+      "secao": 279,
+      "recuos": 1,
+      "max_s": 3625,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "4eae180b7234e3fd89003f0a0ed4bbd5cf2ad0b7478e4d9432e6aff7896c1b07",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 31285,
+          "seguinte_s": 27660,
+          "recuo_s": 3625,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1244",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. PROFª NORMA BOTELHO - CAIC",
+      "municipio": "Jaú",
+      "secoes_catalogo": 11,
+      "local": "SP-66079-63-1244",
+      "secao": 166,
+      "recuos": 1,
+      "max_s": 3539,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "be41f3a8b5abef0fbcc93dcaf7df6fad88f0ad48f6cdbc87cdd97946249af7cc",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 30817,
+          "seguinte_s": 27278,
+          "recuo_s": 3539,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "SP-62090-21-1252",
+      "uf": "SP",
+      "mun": "62090",
+      "zona": 21,
+      "nome": "EE VALOIS SCORTECCI",
+      "municipio": "Barretos",
+      "secoes_catalogo": 5,
+      "local": "SP-62090-21-1252",
+      "secao": 131,
+      "recuos": 1,
+      "max_s": 2975,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "cff41b5ceb8ce390960dc1782a2ef06b37f514a085a865f60b71b5ef1ef79ac7",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 27455,
+          "seguinte_s": 24480,
+          "recuo_s": 2975,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-66354-188-1031",
+      "uf": "SP",
+      "mun": "66354",
+      "zona": 188,
+      "nome": "EE. NEWTON PRADO",
+      "municipio": "Leme",
+      "secoes_catalogo": 13,
+      "local": "SP-66354-188-1031",
+      "secao": 174,
+      "recuos": 1,
+      "max_s": 2783,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "c120e53c593ded0277011e21fabef2dfe1aa7be31817a6a5447076c0070429cf",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 29243,
+          "seguinte_s": 26460,
+          "recuo_s": 2783,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-69698-305-1074",
+      "uf": "SP",
+      "mun": "69698",
+      "zona": 305,
+      "nome": "EE. PROF. ALPHEU DOMINIGHETTI",
+      "municipio": "Ribeirão Preto",
+      "secoes_catalogo": 10,
+      "local": "SP-69698-305-1074",
+      "secao": 136,
+      "recuos": 1,
+      "max_s": 2541,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "debc251cf085dc6f1617e70a78454920aaafc5d0c901381183d790f71b27ee9c",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 28941,
+          "seguinte_s": 26400,
+          "recuo_s": 2541,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "RJ-60011-162-1210",
+      "uf": "RJ",
+      "mun": "60011",
+      "zona": 162,
+      "nome": "COLÉGIO FORÇA MÁXIMA (ANTIGO VIP BRÁS DE PINA)",
+      "municipio": "Rio de Janeiro",
+      "secoes_catalogo": 7,
+      "local": "RJ-60011-162-1210",
+      "secao": 1,
+      "recuos": 1,
+      "max_s": 2494,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "ab12db1f6cee302efc025b8760f27218f57db170d357c79bf28f0d561300834d",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 29158,
+          "seguinte_s": 26664,
+          "recuo_s": 2494,
+          "app_anterior": "ADH",
+          "app_seguinte": "LOGD",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-71510-181-1384",
+      "uf": "SP",
+      "mun": "71510",
+      "zona": 181,
+      "nome": "E.E. PROFESSOR ANTONIO JOSE CAMPOS DE MENEZES",
+      "municipio": "Suzano",
+      "secoes_catalogo": 6,
+      "local": "SP-71510-181-1384",
+      "secao": 418,
+      "recuos": 1,
+      "max_s": 2472,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "846803df39a49cb8f36f87153173d072d6f51c7fe01ac09c9b44d586df04b607",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 29052,
+          "seguinte_s": 26580,
+          "recuo_s": 2472,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-64750-212-1090",
+      "uf": "SP",
+      "mun": "64750",
+      "zona": 212,
+      "nome": "EE. IGNÁCIO MIGUEL ESTEFNO",
+      "municipio": "Guarujá",
+      "secoes_catalogo": 13,
+      "local": "SP-64750-212-1090",
+      "secao": 86,
+      "recuos": 1,
+      "max_s": 2411,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "3aab60b89467be768c8332ad185bef14c8a95573f7647346f2956240765a593e",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 28691,
+          "seguinte_s": 26280,
+          "recuo_s": 2411,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-62219-24-1961",
+      "uf": "SP",
+      "mun": "62219",
+      "zona": 24,
+      "nome": "E.M. JOÃO PEREIRA PINHO",
+      "municipio": "Bebedouro",
+      "secoes_catalogo": 9,
+      "local": "SP-62219-24-1961",
+      "secao": 140,
+      "recuos": 1,
+      "max_s": 2367,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "519f179539215b0770b0e53445b39a1df29d2a9e04b024bee3218641a7ced840",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 25287,
+          "seguinte_s": 22920,
+          "recuo_s": 2367,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "PI-12190-63-2933",
+      "uf": "PI",
+      "mun": "12190",
+      "zona": 63,
+      "nome": "CRAS - SUDESTE II (ANTIGO NAI)",
+      "municipio": "Teresina",
+      "secoes_catalogo": 7,
+      "local": "PI-12190-63-2933",
+      "secao": 345,
+      "recuos": 1,
+      "max_s": 2352,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "3aa3f0957faf4e664d1eeb4438685b14f6c450a31cb65f33370ff29ecd5f964f",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 29712,
+          "seguinte_s": 27360,
+          "recuo_s": 2352,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-66079-63-1201",
+      "uf": "SP",
+      "mun": "66079",
+      "zona": 63,
+      "nome": "EMEF. ALVARINA BIZARRO SOUZA",
+      "municipio": "Jaú",
+      "secoes_catalogo": 6,
+      "local": "SP-66079-63-1201",
+      "secao": 129,
+      "recuos": 1,
+      "max_s": 2327,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "ccdb2da84a03994a5445a9d11185cfe85addf4be0dcc9733b5f9a8befd61d3b9",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 28866,
+          "seguinte_s": 26539,
+          "recuo_s": 2327,
+          "app_anterior": "SCUE",
+          "app_seguinte": "LOGD",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": "25/09/2026"
+        }
+      ]
+    },
+    {
+      "id": "RJ-58696-156-1554",
+      "uf": "RJ",
+      "mun": "58696",
+      "zona": 156,
+      "nome": "ESCOLA MUNICIPAL  ANA MARIA RAMALHO",
+      "municipio": "Nova Iguaçu",
+      "secoes_catalogo": 9,
+      "local": "RJ-58696-156-1554",
+      "secao": 342,
+      "recuos": 1,
+      "max_s": 2265,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "36413e413847c17e7af790a55bdfc354ac7aaf0961dbd9be8301eb8514e58225",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 31845,
+          "seguinte_s": 29580,
+          "recuo_s": 2265,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-69698-305-1058",
+      "uf": "SP",
+      "mun": "69698",
+      "zona": 305,
+      "nome": "EE. PROF. CID DE OLIVEIRA LEITE",
+      "municipio": "Ribeirão Preto",
+      "secoes_catalogo": 18,
+      "local": "SP-69698-305-1058",
+      "secao": 38,
+      "recuos": 1,
+      "max_s": 2216,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "87d56d686737f10f89af91f6f101fc1c9401cc160b19023bb85d5f9fee8b64bf",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 28916,
+          "seguinte_s": 26700,
+          "recuo_s": 2216,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "intersecta_votacao",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-71072-404-1546",
+      "uf": "SP",
+      "mun": "71072",
+      "zona": 404,
+      "nome": "EMEF CÉU ALTO ALEGRE",
+      "municipio": "São Paulo",
+      "secoes_catalogo": 9,
+      "local": "SP-71072-404-1546",
+      "secao": 555,
+      "recuos": 1,
+      "max_s": 2188,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "360d778c0d82abac34ff24eb8ad0e36856e1b4771b6be52e4a4a579aa1c5e95a",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 27268,
+          "seguinte_s": 25080,
+          "recuo_s": 2188,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-71072-408-1112",
+      "uf": "SP",
+      "mun": "71072",
+      "zona": 408,
+      "nome": "EMEF PROCÓPIO FERREIRA",
+      "municipio": "São Paulo",
+      "secoes_catalogo": 22,
+      "local": "SP-71072-408-1112",
+      "secao": 154,
+      "recuos": 1,
+      "max_s": 2155,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "85877ea2a49de50fb49673bc99b2328d2da10d4ed6f87fff214a7d928ba34de8",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 28855,
+          "seguinte_s": 26700,
+          "recuo_s": 2155,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-61654-14-1074",
+      "uf": "SP",
+      "mun": "61654",
+      "zona": 14,
+      "nome": "ETE. PREFEITO ALBERTO FÉRES",
+      "municipio": "Araras",
+      "secoes_catalogo": 14,
+      "local": "SP-61654-14-1074",
+      "secao": 78,
+      "recuos": 1,
+      "max_s": 2141,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1e8b1ee4282a377b3c6974a68df54f3d416e0e19b98edff2bc430eb349d70d65",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 28421,
+          "seguinte_s": 26280,
+          "recuo_s": 2141,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-69698-108-1066",
+      "uf": "SP",
+      "mun": "69698",
+      "zona": 108,
+      "nome": "COLÉGIO MARISTA",
+      "municipio": "Ribeirão Preto",
+      "secoes_catalogo": 26,
+      "local": "SP-69698-108-1066",
+      "secao": 72,
+      "recuos": 1,
+      "max_s": 1993,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "54d833c6747c5b9dd869710b9474ce0eb85b0f4156b3e46d1b8e0ec5436fb321",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 28453,
+          "seguinte_s": 26460,
+          "recuo_s": 1993,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-71072-371-1953",
+      "uf": "SP",
+      "mun": "71072",
+      "zona": 371,
+      "nome": "EMEF. PLINIO SALGADO",
+      "municipio": "São Paulo",
+      "secoes_catalogo": 15,
+      "local": "SP-71072-371-1953",
+      "secao": 533,
+      "recuos": 1,
+      "max_s": 1761,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "ada58ec32ab2bc67ef6f87aa659a2942c2990983dd2fbd08fd5277988fbf6684",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 27681,
+          "seguinte_s": 25920,
+          "recuo_s": 1761,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-72354-180-1023",
+      "uf": "SP",
+      "mun": "72354",
+      "zona": 180,
+      "nome": "EMEF PROF. ANTONIO ANDRADE GUIMARAES",
+      "municipio": "Vera Cruz",
+      "secoes_catalogo": 6,
+      "local": "SP-72354-180-1023",
+      "secao": 26,
+      "recuos": 1,
+      "max_s": 729,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "284cae63873e956c664681035b6f113b6e2f4e655c14ab17f467a1516cd780ec",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 27069,
+          "seguinte_s": 26340,
+          "recuo_s": 729,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "MT-91537-3-1147",
+      "uf": "MT",
+      "mun": "91537",
+      "zona": 3,
+      "nome": "E.E. CEL ARTUR BORGES",
+      "municipio": "Rosário Oeste",
+      "secoes_catalogo": 7,
+      "local": "MT-91537-3-1147",
+      "secao": 47,
+      "recuos": 1,
+      "max_s": 335,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "53c28f66c3c5f7fdeeff8d0fd9a95ae48535c68abd590507c4de5a87de384546",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 26795,
+          "seguinte_s": 26460,
+          "recuo_s": 335,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "BA-35653-173-1325",
+      "uf": "BA",
+      "mun": "35653",
+      "zona": 173,
+      "nome": "COLEGIO MUNICIPAL CENTRO DA ESPERANCA",
+      "municipio": "Ibotirama",
+      "secoes_catalogo": 3,
+      "local": "BA-35653-173-1325",
+      "secao": 235,
+      "recuos": 1,
+      "max_s": 57,
+      "ajustes": 0,
+      "contagem_confere": false,
+      "log_sha256": "b42498759ba5dd4aa65c475fa00c47c6d45a691f67fb181aedd71a984c12f4cd",
+      "eventos": [
+        {
+          "arquivo_indice": 1,
+          "anterior_s": 32945,
+          "seguinte_s": 32888,
+          "recuo_s": 57,
+          "app_anterior": "SCUE",
+          "app_seguinte": "SCUE",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "SP-61816-16-1589",
+      "uf": "SP",
+      "mun": "61816",
+      "zona": 16,
+      "nome": "EMEF NELSON JOSÉ PEDROSO",
+      "municipio": "Atibaia",
+      "secoes_catalogo": 4,
+      "local": "SP-61816-16-1589",
+      "secao": 436,
+      "recuos": 1,
+      "max_s": 45,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "8961b6625e3894c3057e39c7ab80ce55279664aa26815904804569aec917ecc9",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 28753,
+          "seguinte_s": 28708,
+          "recuo_s": 45,
+          "app_anterior": "SCUE",
+          "app_seguinte": "SCUE",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "PR-75833-43-1775",
+      "uf": "PR",
+      "mun": "75833",
+      "zona": 43,
+      "nome": "CENTRO COMUNITÁRIO AFONSO CAMARGO",
+      "municipio": "Guarapuava",
+      "secoes_catalogo": 1,
+      "local": "PR-75833-43-1775",
+      "secao": 397,
+      "recuos": 1,
+      "max_s": 25,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "63af92df6b099ac2bec281834c9b652c58b01b417cf4803e8a8f92cf15f49bce",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 36300,
+          "seguinte_s": 36275,
+          "recuo_s": 25,
+          "app_anterior": "SCUE",
+          "app_seguinte": "SCUE",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "MS-90514-8-1384",
+      "uf": "MS",
+      "mun": "90514",
+      "zona": 8,
+      "nome": "E.M. ANTONIO JOSÉ  PANIAGO",
+      "municipio": "Campo Grande",
+      "secoes_catalogo": 13,
+      "local": "MS-90514-8-1384",
+      "secao": 486,
+      "recuos": 1,
+      "max_s": 20,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "68babc724950f969f2d9f4e83b45fc821f0649e55085057f707d076b3b5163fa",
+      "eventos": [
+        {
+          "arquivo_indice": 2,
+          "anterior_s": 28571,
+          "seguinte_s": 28551,
+          "recuo_s": 20,
+          "app_anterior": "SCUE",
+          "app_seguinte": "SCUE",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    },
+    {
+      "id": "MT-90603-21-1139",
+      "uf": "MT",
+      "mun": "90603",
+      "zona": 21,
+      "nome": "ESCOLA MUNICIPAL VINÍCIUS DE MORAES",
+      "municipio": "Lucas do Rio Verde",
+      "secoes_catalogo": 13,
+      "local": "MT-90603-21-1139",
+      "secao": 198,
+      "recuos": 1,
+      "max_s": 6,
+      "ajustes": 0,
+      "contagem_confere": true,
+      "log_sha256": "1da294329f89fd11d51bcca634eae7d7d307b512b51d0cdcd2307ad3f69a1309",
+      "eventos": [
+        {
+          "arquivo_indice": 3,
+          "anterior_s": 29826,
+          "seguinte_s": 29820,
+          "recuo_s": 6,
+          "app_anterior": "ADH",
+          "app_seguinte": "ADH",
+          "fase": "antes_primeiro",
+          "antes_computo_na_escrita": true,
+          "data_anterior_informada": null
+        }
+      ]
+    }
+  ],
+  "eventos_antes_computo_na_escrita": 141,
+  "eventos_com_data_anterior_informada": 113,
+  "sinalizadas_contagem_confere": 140
+}
