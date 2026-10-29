@@ -91,6 +91,7 @@
       el('details',{},el('summary',{},'O que conferir nos casos de maior atenção'),el('p',{},'Cortes exploratórios: atenção acima de 4h e muita atenção acima de 5h. O maior intervalo não representa todas as seções do local. Compare a mediana e os carimbos das demais seções.'),
         el('p',{},'Peça a ata da seção, horários de coleta e entrega da mídia, ponto e registros do Transportador/JE-Connect, ocorrências de conectividade, contingência e eventuais reenvios. Compare o BU impresso na seção com o BU publicado. Essas evidências permitem investigar o intervalo; os carimbos sozinhos não o explicam.'),
         el('a',{href:BASE+'indice.json'},'Critérios, cobertura e fontes'), ' · ',el('a',{href:BASE+'locais.csv',download:''},'Baixar todos os locais')),
+      el('p',{class:'transmissao-nota'},el('a',{href:'assets/encerramento_2t_2026/supertimeline-2t-2026.png',download:''},'Timeline completa: votos, encerramentos e recebimentos (PNG)'), ' · ', el('a',{href:'assets/encerramento_2t_2026/supertimeline-2t-2026.pdf',download:''},'PDF da timeline')),
       el('p',{class:'transmissao-nota'},el('a',{href:BASE+'encerramento-recebimento-2t-2026.png',download:''},'Gráfico nacional (PNG)'), ' · ',
         el('a',{href:BASE+'encerramento-recebimento-2t-2026.pdf',download:''},'PDF'), ' · ',el('a',{href:'assets/encerramento_2t_2026/encerramento-2t-2026.png',download:''},'Encerramentos e votos por horário')));
     return box;
