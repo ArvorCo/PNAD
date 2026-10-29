@@ -1,9 +1,11 @@
+import { criarVisoes } from './visoes.js?v=20261028-movimento1';
+import { criarCompartilhar } from './compartilhar.js?v=20261028-movimento1';
 import { criarRelatos } from './relatos.js?v=20261028';
 // Politize-se: aplicativo estático, escrito à mão, sem framework e sem build.
 // Cópia adaptada do aplicativo do Politize sua vizinhança (busca por seção, CEP, cidade e
 // localização), sem importar nada dele: o antigo segue intacto como arquivo.
 // Lê os JSON de docs/assets/politize_se/dados/ (contrato em analysis/politize_se/CONTRATO.md).
-// Não calcula métrica eleitoral: lê, ordena por distância e formata. A seção digitada, o CEP e a
+// As fichas leem os totais publicados; visoes.js soma os locais para a zona. A seção digitada, o CEP e a
 // coordenada não saem do aparelho e não vão para o endereço da página.
 
 const HOST = location.hostname;
@@ -288,6 +290,7 @@ async function porCep(d) {
   return porLocal(escolhido.local_id, { aoRedor: maisPerto(todos, escolhido).slice(1, N_AO_REDOR + 1), nota: aprox ? 'O CEP digitado não é de um local de votação; mostramos o local com CEP mais parecido.' : null });
 }
 async function porCidade(m, bairro) {
+  if (!bairro) return V.municipio(m);
   const { locais } = await carregarMun(m);
   const cand = bairro ? locais.filter((l) => (l.bairro || '') === bairro) : locais;
   if (!cand.length) throw new ErroUsuario('Esse bairro não tem local de votação nos dados.');
@@ -545,6 +548,8 @@ function linksFim(uf, local) {
 
 const { blocoRelato } = criarRelatos({ h, f0, aviso });
 
+const V = criarVisoes({ h, E, f0, pc, caixa, tabela, carregarZona, carregarMun, executar, ErroUsuario });
+
 /* ------------------------------------------------------------------ fichas */
 
 function renderSecao(uf, zd, s, extra) {
@@ -564,6 +569,7 @@ function renderSecao(uf, zd, s, extra) {
     h('p', { class: 'kicker' }, `Seção ${s.secao} · Zona ${zd.zona} · ${uf === 'ZZ' ? 'Exterior' : uf}`),
     h('h2', { id: 'ficha-titulo' }, `O que aconteceu na seção ${s.secao}`),
     local ? cabecalhoLocal(uf, zd, local) : h('p', { class: 'local-end' }, mun.nome || ''),
+    V.nav({uf, zona: zd.zona, mun: s.mun_tse, local: local?.local_id, secao: s.secao}, 'secao'),
     h('div', { class: 'selos' }, selos),
     local ? window.PolitizeTerritorio.atalho(local.local_id) : null,
     extra.agregada ? aviso(`A seção ${extra.agregada} é agregada à seção ${s.secao}: as duas votam na mesma urna, e os números abaixo são da seção principal.`, 'Seção agregada') : null,
@@ -572,6 +578,7 @@ function renderSecao(uf, zd, s, extra) {
     h('h3', {}, 'Os dois turnos'),
     h('div', { class: 'turnos' }, blocoTurno(1, s), blocoTurno(2, s)),
     tabelaTurnos(s),
+    local ? window.PolitizeMovimento.painel({uf, local: local.local_id, secao: s.secao}, `Seção ${s.secao} · Zona ${zd.zona}`) : null,
     h('h3', {}, 'Como quem votou foi identificado'),
     h('div', { class: 'turnos' }, blocoBio(1, s), blocoBio(2, s)),
     h('h3', {}, 'Urna, sinais e registros'),
@@ -599,6 +606,8 @@ function renderLocal(uf, zd, local, extra = {}) {
     h('p', { class: 'kicker' }, `Local de votação · Zona ${zd.zona} · ${uf === 'ZZ' ? 'Exterior' : uf}`),
     h('h2', { id: 'ficha-titulo' }, 'O que aconteceu neste local de votação'),
     cabecalhoLocal(uf, zd, local),
+    V.nav({uf, zona: zd.zona, mun: local.mun_tse, local: local.local_id}, 'local'),
+    window.PolitizeMovimento.painel({uf, local: local.local_id, escolherSecao:true}, caixa(local.nome)),
     window.PolitizeTerritorio.atalho(local.local_id),
     extra.nota ? aviso(extra.nota, 'Aproximação') : null,
     h('p', { class: 'leitura' }, frase(local.frases)),
@@ -617,114 +626,7 @@ function renderLocal(uf, zd, local, extra = {}) {
 
 /* ------------------------------------------------------------------ compartilhar */
 
-function linkDe(uf, zona, secao) {
-  return `${URL_PUBLICA}#uf=${uf}&z=${zona}&s=${secao}`;
-}
-function textoCompartilhar({ uf, zona, s, mun }) {
-  const lugar = `seção ${s.secao}, zona ${zona}, ${mun.nome || ''} (${uf === 'ZZ' ? 'Exterior' : uf})`;
-  if (s.pequena || !s.bu2 || num(s.fatia_f2) === null) return `Veja o que aconteceu na ${lugar}, no 1º e no 2º turno: ${linkDe(uf, zona, s.secao)}`;
-  const ml = s.ml_anomalo ? ' Pela estatística dos dois turnos, a seção está no grupo atípico do país: pede explicação, não prova irregularidade.' : '';
-  return `Na ${lugar}, o 2º turno deu Flávio ${pc(s.fatia_f2)} e Lula ${pc(100 - s.fatia_f2)} dos válidos; no 1º turno, entre os dois, Flávio tinha ${pc(s.fatia_f1)}. Comparecimento: ${pc(s.comp_pct1)} no 1º turno, ${pc(s.comp_pct2)} no 2º.${ml} Leitura agregada por seção, TSE. ${linkDe(uf, zona, s.secao)}`;
-}
-async function desenharCard(cv, { uf, zona, s, mun }) {
-  const W = 1080;
-  cv.width = W;
-  cv.height = W;
-  const c = cv.getContext('2d');
-  try {
-    if (document.fonts && document.fonts.load) await Promise.all([document.fonts.load('900 90px Fraunces'), document.fonts.load('600 34px "IBM Plex Sans Condensed"'), document.fonts.load('500 26px "IBM Plex Mono"')]);
-  } catch {
-    // sem a fonte da casa, o card sai com a de reserva
-  }
-  const FD = 'Fraunces, Georgia, serif';
-  const FS = '"IBM Plex Sans Condensed", Arial, sans-serif';
-  const FM = '"IBM Plex Mono", ui-monospace, monospace';
-  c.fillStyle = '#f6f4ee';
-  c.fillRect(0, 0, W, W);
-  c.fillStyle = '#1d2a33';
-  c.fillRect(0, 0, W, 250);
-  c.fillStyle = '#f0c36a';
-  c.font = `500 26px ${FM}`;
-  c.fillText('POLITIZE-SE · ELEIÇÕES 2026', 70, 80);
-  c.fillStyle = '#ffffff';
-  c.font = `900 76px ${FD}`;
-  c.fillText(`Seção ${s.secao} · Zona ${zona}`, 70, 165);
-  c.font = `600 34px ${FS}`;
-  c.fillStyle = '#dde3e8';
-  c.fillText(`${mun.nome || ''} (${uf === 'ZZ' ? 'Exterior' : uf})`.slice(0, 48), 70, 215);
-  const barra = (y, rot, f, l) => {
-    c.fillStyle = '#16191c';
-    c.font = `500 26px ${FM}`;
-    c.fillText(rot, 70, y);
-    if (num(f) === null) {
-      c.font = `600 34px ${FS}`;
-      c.fillText('sem dado', 70, y + 56);
-      return;
-    }
-    const x0 = 70;
-    const w = W - 140;
-    c.fillStyle = '#1f5f9e';
-    c.fillRect(x0, y + 18, (w * f) / 100, 64);
-    c.fillStyle = '#b23a2a';
-    c.fillRect(x0 + (w * f) / 100, y + 18, w - (w * f) / 100, 64);
-    c.fillStyle = '#ffffff';
-    c.font = `700 36px ${FS}`;
-    if (f >= 18) c.fillText(`Flávio ${nf1.format(f)}%`, x0 + 18, y + 63);
-    const tl = `Lula ${nf1.format(l)}%`;
-    if (l >= 18) c.fillText(tl, x0 + w - 18 - c.measureText(tl).width, y + 63);
-  };
-  const ok2 = !s.pequena && s.bu2 && num(s.fatia_f2) !== null;
-  barra(330, '2º TURNO · VOTOS VÁLIDOS', ok2 ? s.fatia_f2 : null, ok2 ? 100 - s.fatia_f2 : null);
-  const ok1 = !s.pequena && num(s.fatia_f1) !== null;
-  barra(500, '1º TURNO · ENTRE OS DOIS', ok1 ? s.fatia_f1 : null, ok1 ? 100 - s.fatia_f1 : null);
-  c.fillStyle = '#16191c';
-  c.font = `500 26px ${FM}`;
-  c.fillText('COMPARECIMENTO', 70, 680);
-  c.font = `900 64px ${FD}`;
-  c.fillText(s.pequena ? 'seção pequena' : `${pc(s.comp_pct1)} → ${pc(s.comp_pct2)}`, 70, 755);
-  c.font = `600 32px ${FS}`;
-  c.fillStyle = '#4f5862';
-  const sin = !s.bu2 ? '2º turno ainda não lido' : num(s.escore) > 0 ? `${s.escore} ${s.escore === 1 ? 'sinal pede' : 'sinais pedem'} explicação, sem provar irregularidade` : 'Nenhum sinal da régua da casa';
-  c.fillText(sin, 70, 830);
-  if (s.bu2 && s.ml_anomalo) {
-    // selo do grupo atípico da mistura estatística dos dois turnos
-    c.font = `600 26px ${FS}`;
-    c.fillStyle = '#6b4a92';
-    c.fillText('Grupo atípico na estatística dos dois turnos: pede explicação, não prova nada', 70, 872);
-  }
-  c.fillStyle = '#1d2a33';
-  c.fillRect(0, 920, W, 160);
-  c.fillStyle = '#ffffff';
-  c.font = `600 32px ${FS}`;
-  c.fillText('brasil.arvor.co/politizese.html', 70, 985);
-  c.fillStyle = '#c4ccd3';
-  c.font = `500 22px ${FM}`;
-  c.fillText('LEITURA AGREGADA POR SEÇÃO, TSE · O VOTO É SECRETO', 70, 1035);
-}
-function blocoCompartilhar(dados) {
-  const cv = h('canvas', { width: '1080', height: '1080', role: 'img', 'aria-label': 'Card para compartilhar com o resultado da seção nos dois turnos' });
-  const status = h('p', { class: 'ajuda', role: 'status' });
-  const copiar = async (texto, ok) => {
-    try {
-      await navigator.clipboard.writeText(texto);
-      status.textContent = ok;
-    } catch {
-      status.textContent = texto;
-    }
-  };
-  const art = h('article', { class: 'ficha' },
-    h('p', { class: 'kicker' }, 'Compartilhar'),
-    h('h2', {}, 'Leve a sua seção'),
-    h('div', { class: 'compartilhar' }, cv, h('div', {},
-      h('p', {}, 'O card e o link são montados no seu aparelho, só quando você pede. O link leva direto a esta seção.'),
-      h('div', { class: 'botoes' },
-        h('button', { type: 'button', class: 'btn btn-prim', onclick: () => { const a = h('a', { href: cv.toDataURL('image/png'), download: `politizese-${dados.uf}-${dados.zona}-${dados.s.secao}.png` }); document.body.append(a); a.click(); a.remove(); } }, 'Baixar imagem'),
-        h('button', { type: 'button', class: 'btn btn-sec', onclick: () => copiar(textoCompartilhar(dados), 'Texto copiado.') }, 'Copiar texto'),
-        h('button', { type: 'button', class: 'btn btn-sec', onclick: () => copiar(linkDe(dados.uf, dados.zona, dados.s.secao), 'Link copiado.') }, 'Copiar link')),
-      status)));
-  desenharCard(cv, dados);
-  return art;
-}
+const { blocoCompartilhar } = criarCompartilhar({ h, num, pc, nf1, URL_PUBLICA });
 
 /* ------------------------------------------------------------------ página fixa */
 
@@ -941,6 +843,7 @@ function configurarLimpar() {
 // a página nunca escreve a seção no endereço.
 function abrirHash() {
   const p = new URLSearchParams(location.hash.replace(/^#/, ''));
+  if (V.hash(p)) return;
   const uf = (p.get('uf') || '').toUpperCase();
   const z = Number(p.get('z'));
   const s = Number(p.get('s'));
@@ -960,6 +863,7 @@ async function iniciar() {
   if (location.protocol === 'file:') return;
   configurarAbas();
   configurarSecao();
+  V.configurar();
   configurarCep();
   configurarCidade();
   configurarGeo();

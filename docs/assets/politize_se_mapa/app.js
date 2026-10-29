@@ -12,7 +12,7 @@
 
   const BASE = 'assets/politize_se_mapa/';
   const SECOES = 'assets/politize_se/dados/zona/';
-  const VERSAO = '20261028';
+  const VERSAO = '20261028-horarios';
   const FORMATO = 3;
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
@@ -115,44 +115,14 @@
   }
   const tabela = (t) => (t && t.colunas ? t.linhas.map((ln) => Object.fromEntries(t.colunas.map((c, i) => [c, ln[i] === undefined ? null : ln[i]]))) : []);
 
+  const H = window.criarHorariosPolitize({ S, buscar, h, nf0 });
+  const M = window.criarMovimentoMapa({ S, COR, h });
+
   /* ------------------------------------------------------------ geodésia */
 
   // Fórmula inversa de Vincenty no elipsoide WGS84; distância em km. Sem convergência
   // (pontos quase antípodas), usa o grande círculo.
-  function distanciaKm(lat1, lon1, lat2, lon2) {
-    const a = 6378137, f = 1 / 298.257223563, b = a * (1 - f);
-    const rad = Math.PI / 180;
-    const L = (lon2 - lon1) * rad;
-    const U1 = Math.atan((1 - f) * Math.tan(lat1 * rad));
-    const U2 = Math.atan((1 - f) * Math.tan(lat2 * rad));
-    const sinU1 = Math.sin(U1), cosU1 = Math.cos(U1), sinU2 = Math.sin(U2), cosU2 = Math.cos(U2);
-    let lambda = L, it = 0, sinS, cosS, sigma, sinAlpha, cos2Alpha, cos2SigmaM, lambdaP;
-    do {
-      const sinL = Math.sin(lambda), cosL = Math.cos(lambda);
-      sinS = Math.sqrt(Math.pow(cosU2 * sinL, 2) + Math.pow(cosU1 * sinU2 - sinU1 * cosU2 * cosL, 2));
-      if (sinS === 0) return 0;
-      cosS = sinU1 * sinU2 + cosU1 * cosU2 * cosL;
-      sigma = Math.atan2(sinS, cosS);
-      sinAlpha = cosU1 * cosU2 * sinL / sinS;
-      cos2Alpha = 1 - sinAlpha * sinAlpha;
-      cos2SigmaM = cos2Alpha !== 0 ? cosS - 2 * sinU1 * sinU2 / cos2Alpha : 0;
-      const C = f / 16 * cos2Alpha * (4 + f * (4 - 3 * cos2Alpha));
-      lambdaP = lambda;
-      lambda = L + (1 - C) * f * sinAlpha * (sigma + C * sinS * (cos2SigmaM + C * cosS * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
-    } while (Math.abs(lambda - lambdaP) > 1e-12 && ++it < 200);
-    if (it >= 200) return haversineKm(lat1, lon1, lat2, lon2);
-    const u2 = cos2Alpha * (a * a - b * b) / (b * b);
-    const A = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
-    const B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
-    const dS = B * sinS * (cos2SigmaM + B / 4 * (cosS * (-1 + 2 * cos2SigmaM * cos2SigmaM) - B / 6 * cos2SigmaM * (-3 + 4 * sinS * sinS) * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
-    return b * A * (sigma - dS) / 1000;
-  }
-  function haversineKm(lat1, lon1, lat2, lon2) {
-    const rad = Math.PI / 180, dp = (lat2 - lat1) * rad, dl = (lon2 - lon1) * rad;
-    const x = Math.pow(Math.sin(dp / 2), 2) + Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.pow(Math.sin(dl / 2), 2);
-    return 2 * 6371.0088 * Math.asin(Math.min(1, Math.sqrt(x)));
-  }
-  const coordOk = (l) => typeof l.lat === 'number' && typeof l.lon === 'number' && isFinite(l.lat) && isFinite(l.lon);
+  const { distanciaKm, haversineKm, coordOk } = window.GeoPolitize;
 
   /* ------------------------------------------------------------ cores */
 
@@ -203,6 +173,7 @@
   // parcela dos prédios com o atributo (sinais, urna trocada e mudança de endereço).
   function corGrupo(filhos) {
     const k = S.camada, c = camada();
+    if (k === 'pico') return corValor(M.picoGrupo(filhos));
     const validos = filhos.filter((l) => !semDadoLocal(l, c));
     if (!validos.length) return COR.semDado;
     if (c.tipo === 'categoria') {
@@ -262,6 +233,8 @@
         if (!f.uf && seq === S.requisicao) setStatus('Carregando os locais de votação do país inteiro (' + feitos + ' de ' + faltam.length + ' estados)…');
       })));
     }
+    await H.carregar(pedidas);
+    await M.carregar(pedidas);
     if (seq !== S.requisicao) return false;
     S.locais = [].concat(...pedidas.map((u) => S.porUf.get(u) || []));
     return true;
@@ -324,6 +297,7 @@
     f.mun = $('#f-mun').value;
     f.texto = $('#f-texto').value.trim();
     f.chuva = $('#f-chuva').checked;
+    if (H.lerControles()) { fecharPainel(); if (S.mapa) S.mapa.closePopup(); }
     const zonaTxt = so($('#f-zona').value);
     const cep = f.uf === 'ZZ' ? '' : so($('#q-cep').value);
     if (zonaTxt && !f.uf) { setStatus('Escolha o estado para buscar a zona: o número da zona se repete entre os estados.', true); $('#f-uf').focus(); return; }
@@ -398,14 +372,14 @@
       m = L.circleMarker([l.lat, l.lon], { renderer: S.canvas, radius: raioPonto(l), color: '#ffffff', weight: 1.5, fillOpacity: 0.95, fillColor: corLocal(l), local: l });
       if (telaPequena()) {
         // No celular a ficha é um painel fixo fora do mapa: um popup maior que a tela empurraria o ponto.
-        m.on('click', (ev) => { L.DomEvent.stop(ev); abrirPainel(l, m); });
+        m.on('click', (ev) => { L.DomEvent.stop(ev); abrirPainel(m.options.local, m); });
       } else {
-        m.bindPopup(() => ficha(l), { maxWidth: 560, minWidth: 320, autoPanPadding: [24, 24], className: 'popup-ficha' });
-        m.on('popupopen', () => { S.aberto = l.id; carregarSecoes(l, m.getPopup().getElement()); gravarHash(); });
+        m.bindPopup(() => ficha(m.options.local), { maxWidth: 560, minWidth: 320, autoPanPadding: [24, 24], className: 'popup-ficha' });
+        m.on('popupopen', () => { S.aberto = l.id; carregarSecoes(m.options.local, m.getPopup().getElement()); gravarHash(); });
         m.on('popupclose', () => { if (S.aberto === l.id) { S.aberto = null; gravarHash(); } });
       }
       S.marcadores.set(l.id, m);
-    } else m.setStyle({ fillColor: corLocal(l) });
+    } else { m.options.local = l; m.setStyle({ fillColor: corLocal(l), radius: raioPonto(l) }); }
     return m;
   }
 
@@ -435,6 +409,7 @@
     const nums = l.secoes;
     const txt = nums.slice(0, MAX_ROTULO).join(', ') + (nums.length > MAX_ROTULO ? ' +' + (nums.length - MAX_ROTULO) : '');
     const label = h('span', {}, (nums.length === 1 ? 'Seção ' : 'Seções ') + txt);
+    if (S.camada === 'pico') label.append(h('small', {}, vazio(l.pico_hora) ? 'Sem horário utilizável' : 'Pico: ' + S.meta.camadas.pico.nomes[l.pico_hora]));
     if (camada().grupo) {
       const v = valor(l);
       label.append(h('small', {}, S.camada === 'renda' ? window.PolitizeTerritorio.reais(v) : S.camada === 'renda_ate2' ? window.PolitizeTerritorio.perc(v) + ' até 2 salários' : window.PolitizeTerritorio.fmt(v, 2) + '/100 mil · município'));
@@ -531,7 +506,11 @@
   }
 
   // Troca de camada: só recolore, sem recarregar nem reagrupar os pontos.
-  function recolorir() {
+  async function recolorir() {
+    if (S.camada === 'pico') {
+      try { await M.carregar(); atualizar(false); }
+      catch { setStatus('Os horários não carregaram. Selecione a camada novamente para tentar.', true); return; }
+    }
     S.marcadores.forEach((m) => m.setStyle({ fillColor: corLocal(m.options.local) }));
     if (S.cluster) S.cluster.refreshClusters();
     atualizarRotulos();
@@ -544,7 +523,7 @@
 
   /* ------------------------------------------------------------ ficha do prédio */
 
-  const { ficha, carregarSecoes, textoModelo, linkPolitize, nomeNivel, predominante } = window.criarFichaPolitize({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar });
+  const { ficha, carregarSecoes, textoModelo, linkPolitize, nomeNivel, predominante } = window.criarFichaPolitize({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H });
 
   function copiar(texto, botao) {
     const ok = () => { const t = botao.textContent; botao.textContent = 'Link copiado'; setTimeout(() => { botao.textContent = t; }, 1500); };
@@ -573,6 +552,7 @@
     document.querySelectorAll('[data-lente]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lente === k)));
     const faixa = $('#mapa-escala');
     faixa.replaceChildren(...[h('b', {}, c.nome), c.tipo === 'sequencial' || c.tipo === 'divergente' ? [h('span', { class: 'mapa-mini-escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + par[1] + ')', 'aria-hidden': 'true' }), h('span', {}, c.baixo + ' → ' + c.alto)] : null, h('small', {}, c.agregacao === 'municipios' ? 'Dado municipal · 2024 · cinza: sem dado' : c.grupo ? 'Estimativa PNAD · cinza: sem dado' : 'Cinza: sem dado aplicável')].flat().filter(Boolean));
+    if (k === 'pico') faixa.append(M.escala());
     const itens = [];
     if (c.tipo === 'divergente') {
       itens.push(h('div', { class: 'escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + COR.neutro + ',' + par[1] + ')', role: 'img', 'aria-label': c.baixo + ' à esquerda, ' + c.alto + ' à direita' }));
@@ -580,6 +560,8 @@
     } else if (c.tipo === 'sequencial') {
       itens.push(h('div', { class: 'escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + par[1] + ')', role: 'img', 'aria-label': c.baixo + ' a ' + c.alto }));
       itens.push(h('div', { class: 'escala-rot' }, h('span', {}, c.baixo), h('span', {}, c.alto)));
+    } else if (k === 'pico') {
+      itens.push(M.legenda());
     } else if (k === 'log2') {
       const lg = S.meta.logs_2t || {};
       const pn = lg.predios_por_nivel || {};
@@ -604,12 +586,13 @@
       itens.push(h('p', { class: 'ajuda' }, ml.rotulo_casa || 'Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada.'));
     }
     const cinza = c.precisa_ml ? 'Cinza: a análise estatística ainda não cobre o prédio, ou ainda sem boletim do 2º turno.' : c.precisa_log2 ? 'Cinza: registro da urna do 2º turno ainda não lido.' : c.precisa_bu2 ? 'Cinza: ainda sem boletim do 2º turno, ou prédio com menos de 30 eleitores.' : 'Cinza: sem dado.';
-    const grupo = c.agregacao === 'municipios' ? 'Nos grupos de pontos, a cor é a média simples das taxas dos municípios representados, contados uma vez cada. Não é uma taxa regional.' : c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
+    const grupo = k === 'pico' ? 'Nos grupos, a cor mostra o pico da soma dos votos por hora de todas as seções cobertas.' : c.agregacao === 'municipios' ? 'Nos grupos de pontos, a cor é a média simples das taxas dos municípios representados, contados uma vez cada. Não é uma taxa regional.' : c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
     if (c.grupo) {
-      const lista = [...S.porUf.values()].flat().filter(passaFiltro);
+      const lista = H.filtrar(S.locais.filter(passaFiltro));
       const cobertos = lista.filter((l) => !vazio(valor(l))).length;
       itens.push(h('p', { class: 'territorio-cobertura' }, plural(cobertos, 'prédio com dado', 'prédios com dado') + ' de ' + nf0.format(lista.length) + ' no recorte selecionado.'));
     }
+    if (H.ativo()) itens.push(h('p', { class: 'ajuda' }, 'As contagens nacionais desta legenda são a referência completa, sem o filtro de horários. Os pontos e seus placares consideram só as seções selecionadas.'));
     $('#legenda').replaceChildren(...itens, h('p', {}, c.explica), h('ul', { class: 'legenda-itens' }, h('li', {}, h('span', { class: 'bolinha bolinha-cinza' }), cinza)), h('p', { class: 'ajuda' }, grupo + ' O tamanho do ponto cresce com o número de eleitores.'));
   }
 
@@ -617,6 +600,7 @@
 
   // Valor ausente vai sempre para o fim da lista, nas duas direções.
   function valorOrdem(l, col, dir) {
+    if (col === 'pico_hora') return vazio(l.pico_hora) ? dir * 1e12 : l.pico_hora === 'empate' ? 24 : Number(l.pico_hora);
     if (col === 'secoes') return l.n_secoes || 0;
     if (col === 'acoes') return coordOk(l) ? 0 : 1;
     const v = col === 'dist' ? l.dist : l[col];
@@ -650,7 +634,8 @@
     const pag = todas.slice(ini, ini + S.porPagina);
     const semCoord = todas.filter((l) => !coordOk(l)).length;
     $('#l-resumo').textContent = plural(n, 'local de votação', 'locais de votação') + (S.centro && S.listaRaio ? ' até ' + S.raio + ' km ' + S.centro.de : ' pela busca, sem limite de distância') + (semCoord ? ', ' + nf0.format(semCoord) + ' sem coordenada' : '') + '.';
-    $('#tabela thead').replaceChildren(h('tr', {}, COLS_LISTA.map((c) => {
+    const cols = S.camada === 'pico' ? [['pico_hora', 'Pico de votação, Brasília'], ...COLS_LISTA] : COLS_LISTA;
+    $('#tabela thead').replaceChildren(h('tr', {}, cols.map((c) => {
       const ativo = S.ordem.col === c[0];
       return h('th', { scope: 'col', 'aria-sort': ativo ? (S.ordem.dir === 1 ? 'ascending' : 'descending') : 'none' },
         h('button', { type: 'button', class: 'ord', onclick: () => {
@@ -659,6 +644,7 @@
         } }, c[1], h('span', { class: 'seta', 'aria-hidden': 'true' }, ativo ? (S.ordem.dir === 1 ? ' ▲' : ' ▼') : '')));
     })));
     $('#tabela tbody').replaceChildren(...pag.map((l) => h('tr', {},
+      S.camada === 'pico' ? h('td', {}, S.meta.camadas.pico.nomes[l.pico_hora] || 'Sem horário utilizável', h('small', {}, l.mov_cobertas + ' de ' + l.mov_total + ' seções')) : null,
       h('td', {}, l.uf), h('td', {}, caixa(l.municipio)), h('td', { class: 'num' }, String(l.zona)),
       h('td', {}, caixa(l.nome), h('small', {}, [caixa(l.endereco), caixa(l.bairro)].filter(Boolean).join(' · '))),
       h('td', { class: 'num' }, String(l.n_secoes || 0), h('small', {}, l.n_bu2 ? l.n_bu2 + ' com 2º turno' : 'sem 2º turno')),
@@ -679,7 +665,7 @@
       h('td', {},
         h('a', { href: linkPolitize(l, l.secao_link) }, 'Politize-se'),
         coordOk(l) ? h('small', {}, h('a', { href: '#', onclick: (ev) => { ev.preventDefault(); S.abrir = l.id; trocarModo('mapa'); } }, 'Ver no mapa')) : h('small', { class: 'sem' }, 'sem coordenada')))));
-    if (!pag.length) $('#tabela tbody').replaceChildren(h('tr', {}, h('td', { colspan: String(COLS_LISTA.length) }, 'Nenhum local de votação com essa busca.')));
+    if (!pag.length) $('#tabela tbody').replaceChildren(h('tr', {}, h('td', { colspan: String(cols.length) }, 'Nenhum local de votação com essa busca.')));
     desenharPaginas(paginas);
   }
 
@@ -699,17 +685,23 @@
     $('#paginas').replaceChildren(...botoes);
   }
 
-  function exportarCsv() {
+  async function exportarCsv() {
+    const seq = S.requisicao;
+    try { await H.carregar([...new Set(S.listaAtual.map((l) => l.uf))], true); }
+    catch (e) { setStatus('Não foi possível carregar os horários para a planilha. Tente de novo.', true); return; }
+    if (seq !== S.requisicao) return;
     const cab = ['uf', 'cidade', 'zona', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'secoes', 'secoes_com_2o_turno', 'eleitores', 'flavio_entre_os_dois_2t_pct', 'flavio_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_pontos', 'comparecimento_2t_pct', 'mudanca_comparecimento_pontos', 'abstencao_2t_pct', 'maior_numero_de_sinais_numa_secao', 'secoes_com_sinal', 'registro_urna_1t_nivel_max', 'registro_urna_2t_nivel_max', 'registro_urna_secoes_que_subiram', 'modelo_urna_predominante', 'modelos_urna_no_predio', 'urnas_trocadas', 'secoes_que_mudaram_de_endereco', 'secoes_no_grupo_atipico_estatistica', 'renda_domiciliar_mediana_estimada_brl_202607', 'renda_domiciliar_ate2sm_estimada_pct', 'homicidios_municipio_por100mil_2024', 'politize_se', 'google_maps'];
     const dec = (v, c) => (vazio(v) ? '' : typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v));
     const esc = (v) => { const s = vazio(v) ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    cab.push(...H.colunasCsv);
+    if (S.camada === 'pico') cab.push(...M.colunasCsv);
     const linhas = [cab.join(';')];
     (S.listaAtual || []).forEach((l) => {
       linhas.push([l.uf, l.municipio, l.zona, l.nome, l.endereco, l.bairro, l.cep, coordOk(l) ? dec(l.lat, 5) : '', coordOk(l) ? dec(l.lon, 5) : '', dec(l.dist, 2),
         l.n_secoes, l.n_bu2, l.aptos2 || l.aptos1, dec(l.fatia_f2, 1), dec(l.fatia_f1_par, 1), dec(l.d_fatia_pp, 1), dec(l.comp_pct2, 1), dec(l.d_comp_pp, 1), dec(l.abst_pct2, 1),
         l.n_bu2 ? l.escore_max : '', l.secoes_sinal, l.log1_max, l.log2_max, l.log_subiu, predominante(l), (l.modelos || []).map((m) => m[0] + ':' + m[1]).join('|'), l.urnas_trocadas, l.secoes_mudaram, l.secoes_anomalas,
         dec(l.renda_mediana_brl, 0), dec(l.renda_ate2, 1), dec(l.homicidios_taxa_100mil, 2),
-        'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : ''].map(esc).join(';'));
+        'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : '', ...H.csv(l), ...M.csv(l)].map(esc).join(';'));
     });
     const blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const a = h('a', { href: URL.createObjectURL(blob), download: 'locais_de_votacao_' + new Date().toISOString().slice(0, 10) + '.csv' });
@@ -728,7 +720,9 @@
 
   function atualizar(enquadrar) {
     if (!S.meta) return;
-    const ls = comDistancia(S.locais.filter(passaFiltro));
+    const ls = comDistancia(M.aplicar(H.filtrar(S.locais.filter(passaFiltro))));
+    H.resumo(ls);
+    desenharLegenda();
     const semCoord = ls.filter((l) => !coordOk(l)).length;
     if (S.modo === 'mapa') {
       const res = desenharMapa(ls, enquadrar);
@@ -801,6 +795,7 @@
     if (f.zona) p.push('zona=' + f.zona);
     if (f.texto) p.push('q=' + encodeURIComponent(f.texto));
     if (f.chuva) p.push('chuva=1');
+    H.gravarHash(p);
     if (S.camada !== S.meta.camada_padrao) p.push('camada=' + S.camada);
     if (S.raio !== RAIO_PADRAO) p.push('raio=' + S.raio);
     if (S.modo === 'lista') p.push('modo=lista');
@@ -827,6 +822,7 @@
     $('#q-cep').disabled = uf === 'ZZ';
     $('#f-texto').value = q.get('q') || '';
     $('#f-chuva').checked = q.get('chuva') === '1';
+    H.lerHash(q);
     S.camada = S.meta.camadas[q.get('camada')] ? q.get('camada') : S.meta.camada_padrao;
     const r = Number(q.get('raio'));
     S.raio = RAIOS.indexOf(r) >= 0 ? r : RAIO_PADRAO;
@@ -843,7 +839,7 @@
     $('#q-cep').disabled = false;
     montarMunicipios();
     S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', chuva: false };
-    $('#f-chuva').checked = false;
+    $('#f-chuva').checked = false; H.limpar();
     S.centro = null; S.buscaLista = ''; S.pagina = 1; S.abrir = ''; S.ordemManual = false;
     if (S.modo === 'lista') trocarModo('mapa'); else aplicarBusca();
   }
@@ -877,6 +873,7 @@
     });
     $('#b-limpar').addEventListener('click', limpar);
     $('#f-chuva').addEventListener('change', () => { S.pagina = 1; aplicarBusca(); });
+    ['#f-encerramento', '#f-ultimo'].forEach((id) => $(id).addEventListener('change', () => aplicarBusca()));
     const geo = $('#b-geo');
     if (!navigator.geolocation) geo.hidden = true;
     geo.addEventListener('click', () => {
@@ -939,6 +936,7 @@
     }
     if (d.formato !== FORMATO) { setStatus('Os dados do mapa estão numa versão diferente da página. Recarregue em alguns minutos.', true); return; }
     S.meta = d;
+    M.instalar();
     montarResumo();
     montarUfs();
     iniciarMapa();

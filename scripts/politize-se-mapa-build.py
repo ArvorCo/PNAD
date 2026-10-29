@@ -24,10 +24,28 @@ from politize_se import mapa_dados, mapa_saida
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--uf", action="append", help="só estas UFs (mescla no índice)")
+    ap.add_argument(
+        "--horarios",
+        action="store_true",
+        help="reexporta também os horários nacionais dos bancos locais de boletins e logs",
+    )
+    ap.add_argument(
+        "--movimento",
+        action="store_true",
+        help="atualiza histogramas por hora para os dois aplicativos",
+    )
     a = ap.parse_args()
     ufs = {u.upper() for u in a.uf} if a.uf else None
     lido = mapa_dados.ler(ufs=ufs)
     ind = mapa_saida.gravar(lido, mesclar=bool(ufs))
+    if a.horarios:
+        from politize_se.horarios import publicar
+
+        publicar()
+    if a.movimento:
+        from politize_se.movimento import publicar as publicar_movimento
+
+        publicar_movimento()
     r = ind["resumo"]
     cob = ind["cobertura"].get("nacional", {})
     print(

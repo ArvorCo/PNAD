@@ -356,3 +356,134 @@ pede explicação e não prova irregularidade; nenhum texto é citado sem revis�
   2º turno", 0 a 40 mm), filtro "Só prédios com chuva forte no dia do 2º turno" (`chuva_dia_mm ≥ 20`, `#chuva=1`),
   bloco "No dia do 2º turno" na ficha e `indice.clima2`/`indice.chuva_forte_mm`. Sem `observado_2t.json` os campos
   ficam nulos e o mapa segue.
+
+## Economia e segurança compartilhadas (28/10/2026)
+
+`python3 scripts/politize-se-mapa-build.py` também publica `contexto/<UF>.json` e
+`contexto/indice.json` no diretório do mapa. `politize_se/territorio.py` lê os fragmentos
+municipais do Politize anterior e `data/outputs/fiscais_risco_municipios.csv`, somente
+para leitura. A junção usa o `local_id` completo para renda/escolaridade e UF + código
+TSE com zeros à esquerda para segurança. Prédio novo sem perfil conserva renda nula;
+exterior não recebe as bases brasileiras. Não transporta índices de campanha.
+
+- Renda: valores já publicados pelo modelo PNADC anual 2025 × escolaridade TSE ×
+  situação do setor, preços de julho/2026. Mediana estimada e faixas domiciliares
+  até 2, 2–5 e mais de 5 salários de R$ 1.621. Não é renda medida no bairro nem
+  renda por pessoa. As barras acomodam o arredondamento sem mudar os números.
+- Escolaridade: perfil do eleitorado; origem por seção, zona ou combinação de ambas
+  registrada no município. Não apresentar o fallback por zona como medição do prédio.
+- Homicídios: Atlas da Violência/SIM 2024, óbitos por residência, contagem, taxa por
+  100 mil e quintil entre municípios com dado. Nulo permanece nulo, nunca zero.
+- Crime organizado: documentação municipal com fonte e período originais. Sem registro
+  positivo não comprova ausência. Não usar favela, terra indígena ou quilombo como
+  indicador de criminalidade; não transportar o escore territorial editorial para esta régua.
+
+Mapa: camadas `renda`, `renda_ate2`, `homicidios`, legenda visível também no celular,
+valores nos rótulos dos pontos no zoom de quarteirão e colunas no CSV. Na camada de
+homicídios, agrupamentos usam média simples das taxas dos municípios distintos, sem
+repetir uma cidade pelo número de prédios; é resumo das taxas, não taxa regional.
+Renda usa a média das estimativas dos prédios ponderada pelo eleitorado, declarada na
+legenda. Não condiciona contexto à presença do boletim do 2º turno.
+
+`assets/politize_se/territorio.{js,css}` renderiza ambas as páginas, carregando contexto
+por UF sob demanda. Fichas mostram distribuições de renda/escolaridade, régua municipal
+de homicídios, contagem, ano, fontes e limites. Erro de carga oferece nova tentativa
+sem impedir os dados eleitorais. `relatos.js` e `politize_se_mapa/ficha.js` separam as
+interfaces antigas para manter os arquivos abaixo de mil linhas.
+
+Validação: `tests/test_politize_se_territorio.py` confere os novos campos de todos os
+prédios contra os fragmentos de contexto e a fonte municipal, além de nulos, zeros,
+exterior e prédios novos. Testes de navegador em `tmp/politize-territorio/` (rascunhos
+locais, fora da publicação) cobrem desktop, celular, camadas e ligação prédio/seção.
+
+## Filtros de horário no mapa (28/10/2026)
+
+`politizese_mapa.html` tem seletores independentes para encerramento no boletim e
+último voto computado no log do 2º turno. Cada um aceita qualquer horário, até
+17:15:00 inclusive, após 17:15:00 ou sem horário utilizável. O cruzamento é uma
+interseção na mesma seção; o prédio só aparece se alguma seção passar. O placar
+soma todos os votos do dia dessas seções, sem atribuir candidato a voto individual.
+O último voto não equivale ao encerramento formal.
+
+- Fonte dos segundos: bancos locais `secoes_2t_2026.sqlite` e
+  `logs_urnas_2t_2026.sqlite`. Não usar os horários arredondados a minuto nos
+  fragmentos anteriores. Conversão municipal para Brasília por `deslocamentos`,
+  conferida contra a hora modal de abertura dos boletins. Inclui Acre (+2 h) e
+  Fernando de Noronha (−1 h). Data dos boletins: 25/10/2026.
+- Último voto exige log processado, relógio válido, identidade/carga confirmadas e
+  contagem igual ao comparecimento do boletim. Exterior não é classificado nesse
+  corte nacional. Dados ausentes ou inconsistentes não entram em “até”.
+- Exportador `scripts/politize-se-horarios-build.py`, motor
+  `scripts/politize_se/horarios.py`; arquivos compactos por UF em
+  `docs/assets/politize_se_mapa/horarios/`, com colunas explícitas, índice, hashes,
+  contagens e identificação dos bancos de origem. Atualizar após a coleta e o
+  build do Politize-se. Alternativa conjunta: `politize-se-mapa-build.py --horarios`.
+- Foto de 28/10: encerramento até/após = 488.813/9.084 seções; último voto até/após
+  = 494.959/2.790. Dos 1.499 registros sem último voto classificável no mapa,
+  1.310 são exterior, 41 não têm boletim do 2º turno, 141 têm inconsistência de
+  relógio, cinco de contagem e dois não têm log. Todos os boletins estão no mapa.
+- `horarios.js` seleciona e recompõe os valores eleitorais, sinais, modelos e
+  seções do prédio. Mudanças entre turnos usam as mesmas seções e agregação
+  compatível. Não modifica o objeto original. Proteção de seções pequenas
+  mantida na exportação e na recomposição. Contexto de renda, chuva e homicídios
+  continua do prédio/município; referência eleitoral da cidade é completa.
+- Hash: `enc=ate|apos|sem` e `ultimo=ate|apos|sem`. CSV mantém as colunas anteriores
+  e acrescenta critérios, números das seções e os dois horários com segundos.
+  A ficha só lista as seções selecionadas e mostra os dois horários em Brasília.
+- Testes em `tests/test_politize_se_horarios.py`: fronteira de um segundo, fusos,
+  exclusões, ausência versus zero, privacidade, cruzamento, recomposição, hashes
+  e correspondência integral entre seções do mapa e arquivos de horários.
+- Validação desta implementação: 32 testes do mapa, horários e território passaram;
+  lint e sintaxe JavaScript aprovados. Playwright conferiu desktop, celular,
+  ficha de prédio com seleção parcial, CSV, restauração do link, limpeza e
+  contagens nacionais (494.959 até/2.790 após pelo último voto; 9.084 após pelo
+  encerramento), sem erros JavaScript. Capturas locais em `tmp/horarios-mapa/`.
+
+## Movimento horário e visões de zona/município (28/10/2026)
+
+- `python3 scripts/politize-se-movimento-build.py` lê o histograma horário do
+  banco de métricas dos logs do 2º turno. Pode ser chamado junto aos builds
+  principais com `politize-se-build.py --movimento` ou
+  `politize-se-mapa-build.py --movimento`. Não reabre microdados nem persiste
+  identificadores de eleitores. Saída compacta por UF em
+  `docs/assets/politize_se/movimento/`; índice com hashes, cobertura e totais.
+- Faixas de uma hora, em Brasília, dia 25/10/2026. Fuso municipal derivado pela
+  mesma regra de `logs_cadencia.deslocamentos` usada nos filtros de encerramento
+  (inclui +2 no Acre e −1 em Fernando de Noronha). Cada seção exige relógio e
+  histograma válidos, contagem reconciliada e pelo menos 30 aptos nos turnos
+  publicados. O exportador confirma a soma contra o comparecimento do fragmento
+  público. Exterior fica sem gráfico comparável. `null` não é uma hora com zero.
+- Foto desta versão: 497.668 de 499.248 seções, 127.816.305 cômputos nos gráficos.
+  Exclusões disjuntas: 81 seções pequenas, 141 relógios inconsistentes, cinco
+  contagens inconsistentes, dois logs ausentes e 1.351 registros do exterior
+  (incluindo 41 sem boletim do 2º turno). O índice registra esses motivos.
+- `movimento.js` é compartilhado por mapa e Politize-se. Soma contagens antes
+  de obter pico e percentuais. Declara todos os empates; não escolhe uma hora
+  arbitrária. O total e a cobertura do gráfico dizem respeito aos logs
+  utilizáveis, enquanto o placar eleitoral da ficha mantém seu universo de BUs.
+  Gráfico interativo por toque/foco, tabela das 24 horas e opção de escolher
+  uma seção dentro do local. As barras são relativas ao pico do próprio recorte.
+- Mede eventos de voto computado, não fila, ocupação do local, intenção de voto
+  nem previsão de movimento. A barra das 17h engloba 17:00–17:59; não representa
+  o corte exato de 17h15. A visualização horária é exclusivamente do 2º turno,
+  explicitado no cabeçalho, mesmo quando a ficha eleitoral compara dois turnos.
+- Mapa: camada `pico`, atalho “Horários”, legenda e rótulo no ponto. Nos grupos,
+  o pico vem da soma dos histogramas das seções representadas, nunca da média
+  das horas dos prédios. `enc`/`ultimo` filtram as seções antes da agregação.
+  Horários são carregados sob demanda; cerca de 6,5 MB gzip para todo o país.
+  Na lista, a camada inclui coluna ordenável de pico e cobertura; o CSV exporta
+  pico, seções cobertas, seções do recorte e contagens das 24 horas em Brasília.
+- Politize-se: `visoes.js` implementa zona e município com placar dos dois
+  turnos, cobertura, movimento, lista pesquisável de locais e links relacionados.
+  Município usa seus totais publicados; zona soma as contagens dos locais do
+  seu fragmento, sem somar percentuais nem repetir totais municipais inteiros.
+  Zona e município não formam uma árvore: os links abrem recortes inteiros e
+  explicam que podem se cruzar. Seção e local têm navegação para ambos.
+- Rotas: `#uf=CE&z=26&visao=zona` e
+  `#uf=CE&mun=14672&visao=municipio`. Links antigos de seção/local preservados.
+  Busca por cidade sem bairro agora abre o resumo municipal; com bairro mantém
+  a aproximação por local. Botão “Ver a zona” exige UF/zona, sem exigir seção.
+- Código reorganizado para manter arquivos abaixo de 1.000 linhas:
+  `compartilhar.js` contém o card da seção; `geodesia.js` contém a distância do
+  mapa, com a fórmula anterior preservada. Testes em
+  `tests/test_politize_se_movimento.py`; capturas em `tmp/movimento/`.

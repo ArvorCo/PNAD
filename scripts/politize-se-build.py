@@ -155,6 +155,11 @@ def main() -> None:
     ap.add_argument(
         "--uf", help="UFs separadas por vírgula (amostra; mescla no índice)"
     )
+    ap.add_argument(
+        "--movimento",
+        action="store_true",
+        help="reexporta histogramas horários nacionais depois dos fragmentos",
+    )
     args = ap.parse_args()
     t0 = time.time()
     todas = fontes.ufs_politize()
@@ -306,6 +311,10 @@ def main() -> None:
         "escopo": "Brasil e exterior" if not args.uf else ", ".join(sorted(cob)),
     }
     saida.gravar(saida.SAIDA / "indice.json", indice)
+    if args.movimento:
+        from politize_se.movimento import publicar
+
+        publicar()
     print(
         f"pronto em {time.time() - t0:.0f}s: {soma_b} de {soma_s} seções com BU do 2º turno; "
         f"zona {bytes_tot['zona'] / 1e6:.1f} MB, mun {bytes_tot['mun'] / 1e6:.1f} MB",

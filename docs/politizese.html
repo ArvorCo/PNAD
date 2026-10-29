@@ -37,9 +37,11 @@
 <link rel="stylesheet" href="assets/politize_se/app.css?v=20261026-relatos2">
 <link rel="stylesheet" href="assets/politize_se/territorio.css?v=20261028">
 <script defer src="assets/politize_se/territorio.js?v=20261028"></script>
+<link rel="stylesheet" href="assets/politize_se/movimento.css?v=20261028-movimento1">
+<script defer src="assets/politize_se/movimento.js?v=20261028-movimento1"></script>
 <script>document.documentElement.classList.add('js')</script>
 <script src="assets/totalizacao/config.js?v=20261026-relatos2"></script>
-<script type="module" src="assets/politize_se/app.js?v=20261028"></script>
+<script type="module" src="assets/politize_se/app.js?v=20261028-movimento1"></script>
 </head>
 <body>
 <a class="skip" href="#busca">Pular para a busca</a>
@@ -49,7 +51,7 @@
     <div class="marca"><a href="index.html"><img src="img/arvor_logo.png" alt="" width="26" height="26">Arvor Intelligence · Utilidade pública</a></div>
     <p class="eyebrow">Eleições 2026 · 1º e 2º turno</p>
     <h1>Politize-se</h1>
-    <p class="deck">Entenda o que aconteceu na sua seção e no seu local de votação. Os dois turnos lado a lado: votos, comparecimento, biometria, horário do último voto, a urna e os sinais que pedem explicação. Conheça também a região: clima, renda estimada, escolaridade e segurança pública.</p>
+    <p class="deck">Explore seção, local de votação, zona e município. Veja em quais horários os votos foram computados. Os dois turnos lado a lado: votos, comparecimento, biometria, horário do último voto, a urna e os sinais que pedem explicação. Conheça também a região: clima, renda estimada, escolaridade e segurança pública.</p>
     <p class="topo-mapa"><a class="btn btn-sec" href="politizese_mapa.html">Ver no mapa do Brasil</a></p>
     <dl class="numeros" id="numeros" aria-live="off"></dl>
     <p class="cobertura" id="cobertura" role="status"></p>
@@ -112,7 +114,7 @@
               <label for="s-secao" class="rot">Seção</label>
               <input id="s-secao" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" aria-describedby="titulo-ajuda">
             </div>
-            <div class="acoes-form"><button type="submit" class="btn btn-prim">Ver a seção</button><button type="button" class="btn btn-sec" data-limpar>Limpar</button></div>
+            <div class="acoes-form"><button type="submit" class="btn btn-prim">Ver a seção</button><button type="button" class="btn btn-sec" id="ver-zona">Ver a zona</button><button type="button" class="btn btn-sec" data-limpar>Limpar</button></div>
           </form>
           <p id="titulo-ajuda" class="ajuda"><b>Está no título de eleitor e no e-Título.</b> Se a sua seção é agregada a outra, mostramos a seção onde ela votou. Os números digitados não saem do seu aparelho.</p>
         </div>
@@ -137,9 +139,9 @@
               <label for="bairro" class="rot">Bairro</label>
               <select id="bairro" disabled><option value="">Escolha a cidade primeiro</option></select>
             </div>
-            <div class="acoes-form"><button type="submit" class="btn btn-prim" id="btn-cidade" disabled>Ver o local</button><button type="button" class="btn btn-sec" data-limpar>Limpar</button></div>
+            <div class="acoes-form"><button type="submit" class="btn btn-prim" id="btn-cidade" disabled>Explorar cidade ou bairro</button><button type="button" class="btn btn-sec" data-limpar>Limpar</button></div>
           </form>
-          <p id="cidade-ajuda" class="ajuda">Digite sem se preocupar com acento; use as setas e Enter. O bairro é o do cadastro de locais de votação do TSE.</p>
+          <p id="cidade-ajuda" class="ajuda">Digite sem se preocupar com acento; use as setas e Enter. Sem bairro, abre o município inteiro. Com bairro, abre um local de votação da região.</p>
         </div>
 
         <div role="tabpanel" id="p-geo" aria-labelledby="aba-geo" class="aba-painel" hidden>
