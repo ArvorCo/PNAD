@@ -487,3 +487,30 @@ O último voto não equivale ao encerramento formal.
   `compartilhar.js` contém o card da seção; `geodesia.js` contém a distância do
   mapa, com a fórmula anterior preservada. Testes em
   `tests/test_politize_se_movimento.py`; capturas em `tmp/movimento/`.
+
+### Encerramento e último voto em destaque (29/10/2026)
+
+- Dois filtros independentes, sempre visíveis acima do mapa, selecionam seções
+  pelo encerramento do BU (`enc`) e último cômputo do log (`ultimo`). Cada um
+  aceita até, após, sem horário ou qualquer horário; o corte é editável em HH:MM,
+  no horário de Brasília. Até inclui HH:MM:00; após exige segundo maior.
+- Links antigos conservam o corte 17:15. Cortes novos usam `enc_h`/`ultimo_h`,
+  por exemplo `#uf=CE&camada=ultimo_voto&ultimo=apos&ultimo_h=17%3A00`.
+  Horários inválidos no link voltam ao padrão explícito 17:15. O CSV registra
+  os dois cortes além dos horários exatos por seção. As contagens do índice de
+  dados continuam sendo a referência original de 17:15, não um recálculo do filtro.
+- `ultimos.js` acrescenta as camadas `ultimo_voto` e `encerramento`. Cada ponto
+  usa o horário mais tardio **utilizável** das seções representadas; grupos também
+  usam o mais tardio conhecido, nunca média nem categoria modal. Ausências não
+  viram zero. A ficha e a lista mostram cobertura por relógio e deixam claro que
+  o horário resumido não pertence necessariamente a todas as seções do prédio.
+- Faixas de cor: até 16h; depois de 16h até 16h30; depois de 16h30 até 17h;
+  depois de 17h até 17h15; depois de 17h15 até 17h30; depois de 17h30 até 18h;
+  após 18h. A legenda e os rótulos declaram o critério. Filtros são aplicados
+  antes do máximo, da cor e da recomposição dos votos do prédio.
+- A antiga lente “Horários” passa a se chamar “Pico de votos”. Sua distribuição
+  permanece na ficha, em um painel expansível, após a tabela com os horários
+  individuais. Último voto e encerramento são apresentados separadamente.
+- Conferência no Ceará: 955 seções com último cômputo >17:00:00; oito >17:15:00.
+  Com último cômputo >17:00:00 e encerramento <=17:30:00, restam 950. São seções,
+  não quantidades de votos após esses horários. QA em `tmp/ultimos-mapa/`.

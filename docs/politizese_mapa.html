@@ -36,7 +36,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/politize_se_mapa/app.css?v=20261028-horarios">
+<link rel="stylesheet" href="assets/politize_se_mapa/app.css?v=20261029-cortes">
 <link rel="stylesheet" href="assets/politize_se/territorio.css?v=20261028">
 <script defer src="assets/politize_se/territorio.js?v=20261028"></script>
 <script>document.documentElement.classList.add('js')</script>
@@ -46,9 +46,10 @@
 <script defer src="assets/politize_se/movimento.js?v=20261028-movimento1"></script>
 <script defer src="assets/politize_se_mapa/geodesia.js?v=20261028-movimento1"></script>
 <script defer src="assets/politize_se_mapa/movimento.js?v=20261028-movimento1"></script>
-<script defer src="assets/politize_se_mapa/horarios.js?v=20261028-horarios"></script>
-<script defer src="assets/politize_se_mapa/ficha.js?v=20261028-movimento1"></script>
-<script defer src="assets/politize_se_mapa/app.js?v=20261028-movimento1"></script>
+<script defer src="assets/politize_se_mapa/horarios.js?v=20261029-cortes"></script>
+<script defer src="assets/politize_se_mapa/ultimos.js?v=20261029-cortes"></script>
+<script defer src="assets/politize_se_mapa/ficha.js?v=20261029-cortes"></script>
+<script defer src="assets/politize_se_mapa/app.js?v=20261029-cortes"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -94,16 +95,7 @@
       <label for="f-texto" class="rot">Escola, rua ou bairro</label>
       <input id="f-texto" type="search" placeholder="Qualquer palavra do nome ou do endereço">
       <label class="caixa-chuva"><input type="checkbox" id="f-chuva"> Só prédios com chuva forte no dia do 2º turno (20 mm ou mais em 25/10)</label>
-      <fieldset class="horarios-filtros">
-        <legend>Horários do 2º turno</legend>
-        <label for="f-encerramento" class="rot">Encerramento no boletim</label>
-        <select id="f-encerramento"><option value="">Qualquer horário</option><option value="ate">Até 17h15</option><option value="apos">Após 17h15</option><option value="sem">Sem horário utilizável</option></select>
-        <label for="f-ultimo" class="rot">Último voto no log</label>
-        <select id="f-ultimo"><option value="">Qualquer horário</option><option value="ate">Até 17h15</option><option value="apos">Após 17h15</option><option value="sem">Sem horário utilizável</option></select>
-        <p class="ajuda">Brasília, 25/10. Até 17:15:00, inclusive, ou depois. Os dois filtros se combinam na mesma seção. Último voto e encerramento formal são momentos distintos. O placar soma todos os votos do dia nas seções selecionadas.</p>
-        <p class="ajuda">Exterior fica sem horário comparável. No log, inconsistências de relógio, identidade ou contagem também ficam sem classificação.</p>
-        <p id="horario-resumo" class="horario-resumo" aria-live="polite" hidden></p>
-      </fieldset>
+
       <div class="acoes">
         <button type="submit" class="btn btn-prim">Buscar</button>
         <button type="button" class="btn btn-sec" id="b-limpar">Limpar</button>
@@ -137,9 +129,27 @@
       <button type="button" data-lente="resultado" aria-pressed="true">Votos</button>
       <button type="button" data-lente="renda" aria-pressed="false">Renda estimada</button>
       <button type="button" data-lente="homicidios" aria-pressed="false">Homicídios municipais</button>
-      <button type="button" data-lente="pico" aria-pressed="false">Horários</button>
+      <button type="button" data-lente="ultimo_voto" aria-pressed="false">Último voto</button>
+      <button type="button" data-lente="encerramento" aria-pressed="false">Encerramento</button>
+      <button type="button" data-lente="pico" aria-pressed="false">Pico de votos</button>
         <button type="button" data-lente="chuva2" aria-pressed="false">Chuva</button>
     </nav>
+
+    <fieldset class="horarios-filtros" id="filtros-horarios">
+      <legend>Filtrar seções pelo horário · 2º turno</legend>
+      <div class="horarios-grade">
+        <div><label for="f-ultimo" class="rot">Último voto computado no log</label><div class="horario-controles">
+          <select id="f-ultimo"><option value="">Qualquer horário</option><option value="ate">Até o horário, inclusive</option><option value="apos">Após o horário</option><option value="sem">Sem horário utilizável</option></select>
+          <input id="f-ultimo-corte" type="time" value="17:15" step="60" aria-label="Horário de corte do último voto, Brasília">
+        </div></div>
+        <div><label for="f-encerramento" class="rot">Encerramento no boletim de urna</label><div class="horario-controles">
+          <select id="f-encerramento"><option value="">Qualquer horário</option><option value="ate">Até o horário, inclusive</option><option value="apos">Após o horário</option><option value="sem">Sem horário utilizável</option></select>
+          <input id="f-enc-corte" type="time" value="17:15" step="60" aria-label="Horário de corte do encerramento, Brasília">
+        </div></div>
+      </div>
+      <p class="ajuda">Brasília, 25/10/2026. Escolha o corte em cada filtro (ex.: 17:00 ou 17:15). “Até” inclui o segundo exato; “após” começa no segundo seguinte. Os filtros se combinam na mesma seção. O placar soma os votos do dia inteiro dessas seções.</p>
+      <p id="horario-resumo" class="horario-resumo" aria-live="polite" hidden></p>
+    </fieldset>
     <div id="mapa-escala" class="mapa-escala" aria-live="polite"></div>
     <div id="mapa" class="mapa" role="region" aria-label="Mapa dos locais de votação"></div>
     <div id="painel" class="painel" role="dialog" aria-label="Ficha do local de votação" hidden>

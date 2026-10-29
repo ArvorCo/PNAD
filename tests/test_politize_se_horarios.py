@@ -113,6 +113,30 @@ def test_motor_js():
     assert.equal(H.grupo(null), 'sem'); assert.equal(H.grupo(0), 'ate');
     assert.equal(H.grupo(62100), 'ate'); assert.equal(H.grupo(62101), 'apos');
     assert.equal(H.hora(62101), '17:15:01');
+    assert.equal(H.segundos('17:00'),61200); assert.equal(H.segundos('00:00'),0);
+    assert.equal(H.segundos('25:00'),62100); assert.equal(H.segundos(''),62100);
+    assert.equal(H.grupo(61200,61200),'ate'); assert.equal(H.grupo(61201,61200),'apos');
+    assert.equal(H.passa({enc:62101,ultimo:61200},{enc:'apos',enc_corte:62100,ultimo:'ate',ultimo_corte:61200}),true);
+    assert.equal(H.passa({enc:62101,ultimo:61201},{enc:'apos',enc_corte:62100,ultimo:'ate',ultimo_corte:61200}),false);
+    assert.equal(H.passa({enc:null,ultimo:null},{enc:'sem',ultimo:'apos'}),false);
+    assert.equal(H.passa({enc:0,ultimo:1},{enc:'ate',enc_corte:0,ultimo:'apos',ultimo_corte:0}),true);
+    const controls=Object.fromEntries(['#f-encerramento','#f-ultimo','#f-enc-corte','#f-ultimo-corte'].map(k=>[k,{value:''}]));
+    global.document={querySelector:k=>controls[k]};const S={filtro:{}};
+    const manager=window.criarHorariosPolitize({S});
+    manager.lerHash(new URLSearchParams('enc=apos&ultimo=ate&ultimo_h=17%3A00'));manager.lerControles();
+    assert.equal(S.filtro.enc_corte,62100);assert.equal(S.filtro.ultimo_corte,61200);
+    let hash=[];manager.gravarHash(hash);assert(hash.includes('ultimo_h=17%3A00'));assert(!hash.some(v=>v.startsWith('enc_h=')));
+    manager.limpar();manager.lerControles();assert.equal(S.filtro.ultimo,'');assert.equal(S.filtro.ultimo_corte,62100);
+    require('./docs/assets/politize_se_mapa/ultimos.js');
+    const state={camada:'ultimo_voto',meta:{camadas:{}}},COR={};
+    const clocks=window.criarUltimosMapa({S:state,COR,H:{secoes:()=>[{secao:1,enc:62101,ultimo:61200},{secao:2,enc:63001,ultimo:63000},{secao:3,enc:null,ultimo:null}]}});
+    clocks.instalar();let all=clocks.aplicar([{id:'A',n_secoes:3,secoes:[1,2,3]}])[0];
+    assert.equal(all.ultimo_mais_tarde,63000);assert.equal(all.ultimo_cobertos,2);assert.equal(all.horarios_total,3);
+    assert.equal(clocks.faixa(62100),'3');assert.equal(clocks.faixa(62101),'4');assert.equal(clocks.faixa(null),null);
+    let part=clocks.aplicar([{id:'A',horario:true,n_secoes:1,secoes:[1]}])[0];
+    assert.equal(part.ultimo_mais_tarde,61200);assert.equal(part.horarios_total,1);
+    assert.equal(clocks.grupo([all,part]),clocks.faixa(63000));
+
     const a = {secao:1, enc:62101, ultimo:62099, bu2:1, agreg_igual:1,
       aptos1:100,comp1:70,flavio1:30,lula1:40,aptos2:100,comp2:90,flavio2:60,lula2:30,bn2:0};
     const b = {...a,secao:2,ultimo:62101,flavio2:10,lula2:80};

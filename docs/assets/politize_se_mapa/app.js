@@ -12,7 +12,7 @@
 
   const BASE = 'assets/politize_se_mapa/';
   const SECOES = 'assets/politize_se/dados/zona/';
-  const VERSAO = '20261028-horarios';
+  const VERSAO = '20261029-cortes';
   const FORMATO = 3;
   const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   const RAIO_PADRAO = 10;
@@ -117,6 +117,7 @@
 
   const H = window.criarHorariosPolitize({ S, buscar, h, nf0 });
   const M = window.criarMovimentoMapa({ S, COR, h });
+  const T = window.criarUltimosMapa({ S, COR, H, h });
 
   /* ------------------------------------------------------------ geodésia */
 
@@ -174,6 +175,7 @@
   function corGrupo(filhos) {
     const k = S.camada, c = camada();
     if (k === 'pico') return corValor(M.picoGrupo(filhos));
+    if (T.ativo()) return corValor(T.grupo(filhos));
     const validos = filhos.filter((l) => !semDadoLocal(l, c));
     if (!validos.length) return COR.semDado;
     if (c.tipo === 'categoria') {
@@ -410,6 +412,7 @@
     const txt = nums.slice(0, MAX_ROTULO).join(', ') + (nums.length > MAX_ROTULO ? ' +' + (nums.length - MAX_ROTULO) : '');
     const label = h('span', {}, (nums.length === 1 ? 'Seção ' : 'Seções ') + txt);
     if (S.camada === 'pico') label.append(h('small', {}, vazio(l.pico_hora) ? 'Sem horário utilizável' : 'Pico: ' + S.meta.camadas.pico.nomes[l.pico_hora]));
+    if (T.ativo()) label.append(T.rotulo(l));
     if (camada().grupo) {
       const v = valor(l);
       label.append(h('small', {}, S.camada === 'renda' ? window.PolitizeTerritorio.reais(v) : S.camada === 'renda_ate2' ? window.PolitizeTerritorio.perc(v) + ' até 2 salários' : window.PolitizeTerritorio.fmt(v, 2) + '/100 mil · município'));
@@ -492,14 +495,14 @@
     const alvo = S.abrir ? S.porId.get(S.abrir) : null;
     if (enquadrar) {
       if (alvo && coordOk(alvo)) S.mapa.setView([alvo.lat, alvo.lon], ZOOM_ROTULOS + 2, { animate: false });
-      else if (S.centro) S.mapa.fitBounds(S.circulo.getBounds(), { padding: [24, 24], maxZoom: 16 });
+      else if (S.centro) S.mapa.fitBounds(S.circulo.getBounds(), { animate: false, padding: [24, 24], maxZoom: 16 });
       else if (noRaio.length) {
         // Sem estado escolhido, o quadro é o Brasil; o exterior segue no mapa, fora do quadro inicial.
         const br = noRaio.filter((l) => l.uf !== 'ZZ');
         const base = br.length ? br : noRaio;
         let s = 90, w = 180, n = -90, e = -180;
         base.forEach((l) => { s = Math.min(s, l.lat); n = Math.max(n, l.lat); w = Math.min(w, l.lon); e = Math.max(e, l.lon); });
-        S.mapa.fitBounds([[s, w], [n, e]], { padding: [30, 30], maxZoom: 15 });
+        S.mapa.fitBounds([[s, w], [n, e]], { animate: false, padding: [30, 30], maxZoom: 15 });
       }
     }
     return { locais: lista.length, semBu: noRaio.filter((l) => !l.n_bu2).length };
@@ -507,8 +510,13 @@
 
   // Troca de camada: só recolore, sem recarregar nem reagrupar os pontos.
   async function recolorir() {
-    if (S.camada === 'pico') {
-      try { await M.carregar(); atualizar(false); }
+    const req = S.requisicao, tipo = S.camada, troca = S.trocaCor = (S.trocaCor || 0) + 1;
+    if (S.camada === 'pico' || T.ativo()) {
+      try {
+        await H.carregar(S.filtro.uf ? [S.filtro.uf] : Object.keys(S.meta.ufs)); await M.carregar();
+        if (req !== S.requisicao || tipo !== S.camada || troca !== S.trocaCor) return;
+        atualizar(false);
+      }
       catch { setStatus('Os horários não carregaram. Selecione a camada novamente para tentar.', true); return; }
     }
     S.marcadores.forEach((m) => m.setStyle({ fillColor: corLocal(m.options.local) }));
@@ -523,7 +531,7 @@
 
   /* ------------------------------------------------------------ ficha do prédio */
 
-  const { ficha, carregarSecoes, textoModelo, linkPolitize, nomeNivel, predominante } = window.criarFichaPolitize({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H });
+  const { ficha, carregarSecoes, textoModelo, linkPolitize, nomeNivel, predominante } = window.criarFichaPolitize({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H, T });
 
   function copiar(texto, botao) {
     const ok = () => { const t = botao.textContent; botao.textContent = 'Link copiado'; setTimeout(() => { botao.textContent = t; }, 1500); };
@@ -549,10 +557,12 @@
 
   function desenharLegenda() {
     const c = camada(), k = S.camada, par = COR[k];
+    document.querySelectorAll('input[name=camada]').forEach((b) => { b.checked = b.value === k; });
     document.querySelectorAll('[data-lente]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lente === k)));
     const faixa = $('#mapa-escala');
     faixa.replaceChildren(...[h('b', {}, c.nome), c.tipo === 'sequencial' || c.tipo === 'divergente' ? [h('span', { class: 'mapa-mini-escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + par[1] + ')', 'aria-hidden': 'true' }), h('span', {}, c.baixo + ' → ' + c.alto)] : null, h('small', {}, c.agregacao === 'municipios' ? 'Dado municipal · 2024 · cinza: sem dado' : c.grupo ? 'Estimativa PNAD · cinza: sem dado' : 'Cinza: sem dado aplicável')].flat().filter(Boolean));
     if (k === 'pico') faixa.append(M.escala());
+    if (T.ativo()) faixa.append(T.escala());
     const itens = [];
     if (c.tipo === 'divergente') {
       itens.push(h('div', { class: 'escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + COR.neutro + ',' + par[1] + ')', role: 'img', 'aria-label': c.baixo + ' à esquerda, ' + c.alto + ' à direita' }));
@@ -560,6 +570,8 @@
     } else if (c.tipo === 'sequencial') {
       itens.push(h('div', { class: 'escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + par[1] + ')', role: 'img', 'aria-label': c.baixo + ' a ' + c.alto }));
       itens.push(h('div', { class: 'escala-rot' }, h('span', {}, c.baixo), h('span', {}, c.alto)));
+    } else if (T.ativo()) {
+      itens.push(T.escala());
     } else if (k === 'pico') {
       itens.push(M.legenda());
     } else if (k === 'log2') {
@@ -586,7 +598,7 @@
       itens.push(h('p', { class: 'ajuda' }, ml.rotulo_casa || 'Atipicidade estatística não é irregularidade: o grupo pede explicação, não prova nada.'));
     }
     const cinza = c.precisa_ml ? 'Cinza: a análise estatística ainda não cobre o prédio, ou ainda sem boletim do 2º turno.' : c.precisa_log2 ? 'Cinza: registro da urna do 2º turno ainda não lido.' : c.precisa_bu2 ? 'Cinza: ainda sem boletim do 2º turno, ou prédio com menos de 30 eleitores.' : 'Cinza: sem dado.';
-    const grupo = k === 'pico' ? 'Nos grupos, a cor mostra o pico da soma dos votos por hora de todas as seções cobertas.' : c.agregacao === 'municipios' ? 'Nos grupos de pontos, a cor é a média simples das taxas dos municípios representados, contados uma vez cada. Não é uma taxa regional.' : c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
+    const grupo = T.ativo() ? 'Nos grupos, a cor mostra o horário mais tardio conhecido nas seções representadas.' : k === 'pico' ? 'Nos grupos, a cor mostra o pico da soma dos votos por hora de todas as seções cobertas.' : c.agregacao === 'municipios' ? 'Nos grupos de pontos, a cor é a média simples das taxas dos municípios representados, contados uma vez cada. Não é uma taxa regional.' : c.tipo === 'categoria' ? 'Nos grupos de pontos, a cor é a categoria mais comum entre os prédios do grupo.' : TETO_PARCELA[k] !== undefined ? 'Nos grupos de pontos, a cor é a parcela dos prédios do grupo com o atributo.' : 'Nos grupos de pontos, a cor é a média dos prédios do grupo, ponderada pelos eleitores.';
     if (c.grupo) {
       const lista = H.filtrar(S.locais.filter(passaFiltro));
       const cobertos = lista.filter((l) => !vazio(valor(l))).length;
@@ -634,7 +646,7 @@
     const pag = todas.slice(ini, ini + S.porPagina);
     const semCoord = todas.filter((l) => !coordOk(l)).length;
     $('#l-resumo').textContent = plural(n, 'local de votação', 'locais de votação') + (S.centro && S.listaRaio ? ' até ' + S.raio + ' km ' + S.centro.de : ' pela busca, sem limite de distância') + (semCoord ? ', ' + nf0.format(semCoord) + ' sem coordenada' : '') + '.';
-    const cols = S.camada === 'pico' ? [['pico_hora', 'Pico de votação, Brasília'], ...COLS_LISTA] : COLS_LISTA;
+    const cols = S.camada === 'pico' ? [['pico_hora', 'Pico de votação, Brasília'], ...COLS_LISTA] : T.ativo() ? [...T.colunasLista, ...COLS_LISTA] : COLS_LISTA;
     $('#tabela thead').replaceChildren(h('tr', {}, cols.map((c) => {
       const ativo = S.ordem.col === c[0];
       return h('th', { scope: 'col', 'aria-sort': ativo ? (S.ordem.dir === 1 ? 'ascending' : 'descending') : 'none' },
@@ -644,7 +656,7 @@
         } }, c[1], h('span', { class: 'seta', 'aria-hidden': 'true' }, ativo ? (S.ordem.dir === 1 ? ' ▲' : ' ▼') : '')));
     })));
     $('#tabela tbody').replaceChildren(...pag.map((l) => h('tr', {},
-      S.camada === 'pico' ? h('td', {}, S.meta.camadas.pico.nomes[l.pico_hora] || 'Sem horário utilizável', h('small', {}, l.mov_cobertas + ' de ' + l.mov_total + ' seções')) : null,
+      S.camada === 'pico' ? h('td', {}, S.meta.camadas.pico.nomes[l.pico_hora] || 'Sem horário utilizável', h('small', {}, l.mov_cobertas + ' de ' + l.mov_total + ' seções')) : T.ativo() ? [T.celula(l,'ultimo'), T.celula(l,'enc')] : null,
       h('td', {}, l.uf), h('td', {}, caixa(l.municipio)), h('td', { class: 'num' }, String(l.zona)),
       h('td', {}, caixa(l.nome), h('small', {}, [caixa(l.endereco), caixa(l.bairro)].filter(Boolean).join(' · '))),
       h('td', { class: 'num' }, String(l.n_secoes || 0), h('small', {}, l.n_bu2 ? l.n_bu2 + ' com 2º turno' : 'sem 2º turno')),
@@ -720,7 +732,7 @@
 
   function atualizar(enquadrar) {
     if (!S.meta) return;
-    const ls = comDistancia(M.aplicar(H.filtrar(S.locais.filter(passaFiltro))));
+    const ls = comDistancia(T.aplicar(M.aplicar(H.filtrar(S.locais.filter(passaFiltro)))));
     H.resumo(ls);
     desenharLegenda();
     const semCoord = ls.filter((l) => !coordOk(l)).length;
@@ -867,13 +879,12 @@
       const modo = lerHash();
       Object.assign(S.filtro, { uf: $('#f-uf').value, mun: $('#f-mun').value, zona: so($('#f-zona').value), texto: $('#f-texto').value.trim(), cep: '', chuva: $('#f-chuva').checked });
       S.centro = null;
-      recolorir();
       if (modo !== S.modo) trocarModo(modo, true);
       aplicarBusca(true);
     });
     $('#b-limpar').addEventListener('click', limpar);
     $('#f-chuva').addEventListener('change', () => { S.pagina = 1; aplicarBusca(); });
-    ['#f-encerramento', '#f-ultimo'].forEach((id) => $(id).addEventListener('change', () => aplicarBusca()));
+    ['#f-encerramento', '#f-ultimo', '#f-enc-corte', '#f-ultimo-corte'].forEach((id) => $(id).addEventListener('change', () => aplicarBusca()));
     const geo = $('#b-geo');
     if (!navigator.geolocation) geo.hidden = true;
     geo.addEventListener('click', () => {
@@ -936,7 +947,7 @@
     }
     if (d.formato !== FORMATO) { setStatus('Os dados do mapa estão numa versão diferente da página. Recarregue em alguns minutos.', true); return; }
     S.meta = d;
-    M.instalar();
+    M.instalar(); T.instalar();
     montarResumo();
     montarUfs();
     iniciarMapa();

@@ -1,5 +1,5 @@
 /* Ficha do prédio e tabela de seções do mapa. */
-window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H }) {
+window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H, T }) {
   function linhaCmp(rotulo, a, b) {
     return h('tr', {}, h('td', {}, rotulo), h('td', {}, vazio(a) ? 'sem dado' : a), h('td', {}, vazio(b) ? 'sem dado' : b));
   }
@@ -14,7 +14,7 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
     const m = S.muni.get(l.uf + '-' + l.mun) || {};
     const dist = S.centro && coordOk(l) ? distanciaKm(S.centro.lat, S.centro.lon, l.lat, l.lon) : null;
     const gmaps = coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : null;
-    const params = ['uf=' + l.uf, 'l=' + encodeURIComponent(l.id)]; H.gravarHash(params);
+    const params = ['uf=' + l.uf, 'l=' + encodeURIComponent(l.id), 'camada=' + S.camada]; H.gravarHash(params);
     const link = location.origin + location.pathname + '#' + params.join('&');
     S.secaoSel = l.secao_link;
     const selos = [
@@ -33,6 +33,7 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       h('p', { class: 'ficha-end' }, [caixa(l.endereco), caixa(l.bairro), caixa(l.municipio) + (l.uf === 'ZZ' ? ' (exterior)' : '/' + l.uf), l.cep ? 'CEP ' + cepFmt(l.cep) : ''].filter(Boolean).join(' · ')),
       h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + ' · ' + plural(l.n_secoes, 'seção', 'seções') + (l.aptos2 || l.aptos1 ? ' · ' + nf0.format(l.aptos2 || l.aptos1) + ' eleitores' : '') + (dist !== null ? ' · ' + km(dist) + ' em linha reta ' + S.centro.de : '')),
       l.aprox ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado: é a cidade do consulado, não o prédio.') : null,
+      T.ficha(l),
       tematica ? contexto : h('p', { class: 'ficha-contexto-resumo' }, window.PolitizeTerritorio.resumo(l)),
       h('table', { class: 'cmp' },
         h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, ''), h('th', { scope: 'col' }, l.horario ? 'Seções selecionadas' : 'Este prédio'), h('th', { scope: 'col' }, 'A cidade'))),
@@ -48,9 +49,11 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       h('p', { class: 'ficha-meta' }, 'Flávio entre os dois: parcela de Flávio nos votos dados a Flávio e a Lula. A coluna da cidade soma só as seções com boletim do 2º turno lido. Grupo atípico: mistura estatística sobre as frações do eleitorado nos dois turnos; pede explicação, não prova nada.'),
       tematica ? null : contexto,
       blocoChuva(l),
-      window.PolitizeMovimento.painel({uf:l.uf,local:l.id,escolherSecao:true,...(l.horario ? {secoes:l.secoes} : {})}, l.horario ? 'Seções selecionadas deste local' : caixa(l.nome)),
+
       h('nav', {class:'visoes-nav','aria-label':'Explorar zona e município'}, h('a',{href:`politizese.html#uf=${l.uf}&z=${l.zona}&visao=zona`},'Ver a zona inteira'),h('a',{href:`politizese.html#uf=${l.uf}&mun=${l.mun}&visao=municipio`},'Ver o município inteiro')),
       h('div', { class: 'ficha-secoes' }, h('p', { class: 'ficha-meta' }, 'Carregando as seções do prédio…')),
+      h('details', {class:'ficha-distribuicao'}, h('summary',{},'Ver distribuição de votos por hora'),
+        window.PolitizeMovimento.painel({uf:l.uf,local:l.id,escolherSecao:true,...(l.horario ? {secoes:l.secoes} : {})}, l.horario ? 'Seções selecionadas deste local' : caixa(l.nome))),
       h('a', { class: 'btn-politize', href: linkPolitize(l, l.secao_link), 'data-politize': '1' }, 'Entenda esta seção no Politize-se (seção ' + l.secao_link + ')'),
       h('p', { class: 'ficha-rotulo' }, 'Sinal pede explicação, não prova irregularidade. Leitura agregada por seção: o voto é secreto e nenhum número descreve uma pessoa.'),
       h('p', { class: 'ficha-links' },

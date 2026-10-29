@@ -3,8 +3,9 @@
   'use strict';
   const CORTE = 62100;
   const presente = (x) => typeof x === 'number' && Number.isFinite(x);
-  const grupo = (x) => !presente(x) ? 'sem' : x <= CORTE ? 'ate' : 'apos';
-  const passa = (s, f) => (!f.enc || grupo(s.enc) === f.enc) && (!f.ultimo || grupo(s.ultimo) === f.ultimo);
+  const grupo = (x, corte = CORTE) => !presente(x) ? 'sem' : x <= corte ? 'ate' : 'apos';
+  const segundos = (s) => /^([01]\d|2[0-3]):[0-5]\d$/.test(s || '') ? Number(s.slice(0, 2)) * 3600 + Number(s.slice(3)) * 60 : CORTE;
+  const passa = (s, f) => (!f.enc || grupo(s.enc, f.enc_corte ?? CORTE) === f.enc) && (!f.ultimo || grupo(s.ultimo, f.ultimo_corte ?? CORTE) === f.ultimo);
   const hora = (s) => !presente(s) ? 'Sem horário utilizável' : [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map((x) => String(x).padStart(2, '0')).join(':');
   const motivos = { exterior: 'Exterior: fora do recorte de Brasília', sem_log: 'Sem log processado', relogio: 'Relógio com inconsistência', sem_horario: 'Sem horário no log', contagem: 'Contagem do log difere do boletim', identidade: 'Identidade não confirmada', horario: 'Horário inconsistente', sem_boletim: 'Sem boletim do 2º turno' };
   const soma = (ss, k) => ss.length && ss.every((s) => presente(s[k])) ? ss.reduce((a, s) => a + s[k], 0) : null;
@@ -39,22 +40,34 @@
     return l;
   }
 
-  root.HorariosPolitize = { grupo, passa, hora, agregar };
+  root.HorariosPolitize = { grupo, passa, hora, segundos, agregar };
   root.criarHorariosPolitize = function ({ S, buscar, h, nf0 }) {
     const base = 'assets/politize_se_mapa/horarios/', dados = new Map(), projections = new Map();
     const select = (k) => document.querySelector(k === 'enc' ? '#f-encerramento' : '#f-ultimo');
+    const corte = (k) => document.querySelector('#f-' + k + '-corte');
     const ativo = () => Boolean(S.filtro.enc || S.filtro.ultimo);
-    const limpar = () => { ['enc', 'ultimo'].forEach((k) => { select(k).value = ''; }); };
+    const limpar = () => { ['enc', 'ultimo'].forEach((k) => { select(k).value = ''; corte(k).value = '17:15'; }); };
     const lerControles = () => {
-      const mudou = ['enc', 'ultimo'].some((k) => (S.filtro[k] || '') !== select(k).value);
-      ['enc', 'ultimo'].forEach((k) => { S.filtro[k] = select(k).value; });
+      const mudou = ['enc', 'ultimo'].some((k) => (S.filtro[k] || '') !== select(k).value || (S.filtro[k + '_corte'] ?? CORTE) !== segundos(corte(k).value));
+      ['enc', 'ultimo'].forEach((k) => {
+        S.filtro[k] = select(k).value; S.filtro[k + '_corte'] = segundos(corte(k).value);
+        corte(k).value = hora(S.filtro[k + '_corte']).slice(0, 5);
+        corte(k).disabled = !['ate', 'apos'].includes(select(k).value);
+      });
       if (mudou) projections.clear();
       return mudou;
     };
-    const lerHash = (q) => ['enc', 'ultimo'].forEach((k) => { select(k).value = ['ate', 'apos', 'sem'].includes(q.get(k)) ? q.get(k) : ''; });
-    const gravarHash = (p) => ['enc', 'ultimo'].forEach((k) => { if (S.filtro[k]) p.push(k + '=' + S.filtro[k]); });
+    const lerHash = (q) => ['enc', 'ultimo'].forEach((k) => {
+      select(k).value = ['ate', 'apos', 'sem'].includes(q.get(k)) ? q.get(k) : '';
+      corte(k).value = hora(segundos(q.get(k + '_h'))).slice(0, 5);
+    });
+    const gravarHash = (p) => ['enc', 'ultimo'].forEach((k) => {
+      if (!S.filtro[k]) return;
+      p.push(k + '=' + S.filtro[k]);
+      if (S.filtro[k] !== 'sem' && (S.filtro[k + '_corte'] ?? CORTE) !== CORTE) p.push(k + '_h=' + encodeURIComponent(hora(S.filtro[k + '_corte']).slice(0, 5)));
+    });
     async function carregar(ufs, forcar = false) {
-      if (!ativo() && !forcar) return;
+      if (!ativo() && !forcar && !['ultimo_voto', 'encerramento'].includes(S.camada)) return;
       await Promise.all(ufs.filter((uf) => !dados.has(uf)).map(async (uf) => {
         const d = await buscar(base + uf + '.json.gz');
         if (d.formato !== 1 || d.uf !== uf) throw new Error('formato');
@@ -79,7 +92,7 @@
       box.hidden = !ativo();
       if (!ativo()) return;
       const n = ls.reduce((a, l) => a + l.n_secoes, 0);
-      box.textContent = nf0.format(n) + ' seções em ' + nf0.format(ls.length) + ' locais pelos filtros, antes do raio e da busca adicional da lista. Placares e sinais usam só as seções selecionadas. Contexto territorial continua sendo do prédio ou município inteiro.';
+      box.textContent = nf0.format(n) + ' seções em ' + nf0.format(ls.length) + ' locais selecionados, antes do raio e da busca da lista. O placar soma o dia inteiro dessas seções.';
     }
     function aviso(l) {
       if (!l.horario) return null;
@@ -93,12 +106,13 @@
       if (!s) return h('small', {}, 'Horário indisponível');
       return h('span', {}, hora(s[kind]), kind === 'ultimo' && s.motivo ? h('small', {}, motivos[s.motivo] || 'Horário não classificável') : null);
     }
-    const colunasCsv = ['filtro_encerramento_2t', 'filtro_ultimo_voto_2t', 'secoes_selecionadas', 'encerramento_brt_por_secao', 'ultimo_voto_brt_por_secao'];
+    const colunasCsv = ['filtro_encerramento_2t', 'filtro_ultimo_voto_2t', 'secoes_selecionadas', 'encerramento_brt_por_secao', 'ultimo_voto_brt_por_secao', 'corte_encerramento_brt', 'corte_ultimo_voto_brt'];
     function csv(l) {
       const ss = secoes(l).filter((s) => !ativo() || passa(s, S.filtro));
       return [S.filtro.enc || '', S.filtro.ultimo || '', l.secoes.join('|'),
-        ss.map((s) => s.secao + ':' + hora(s.enc)).join('|'), ss.map((s) => s.secao + ':' + hora(s.ultimo)).join('|')];
+        ss.map((s) => s.secao + ':' + hora(s.enc)).join('|'), ss.map((s) => s.secao + ':' + hora(s.ultimo)).join('|'),
+        S.filtro.enc && S.filtro.enc !== 'sem' ? hora(S.filtro.enc_corte ?? CORTE) : '', S.filtro.ultimo && S.filtro.ultimo !== 'sem' ? hora(S.filtro.ultimo_corte ?? CORTE) : ''];
     }
-    return { ativo, limpar, lerControles, lerHash, gravarHash, carregar, filtrar, resumo, aviso, paraFicha, celula, colunasCsv, csv };
+    return { ativo, limpar, lerControles, lerHash, gravarHash, carregar, filtrar, resumo, aviso, paraFicha, celula, colunasCsv, csv, secoes };
   };
 })(window);
