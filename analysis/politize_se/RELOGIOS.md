@@ -42,7 +42,9 @@ Os logs inconsistentes não possuem último voto utilizável no filtro de horár
 
 `python3 scripts/politize-se-relogios-modelos.py` grava
 `analysis/politize_se/relogios-modelos.json`, cruzando os sinais com o modelo do
-BU e usando como denominador as seções principais com log verificável:
+equipamento vinculado ao BU e usando como denominador as seções principais com
+log verificável. Nos 141 casos, `modelo_fonte=log_mesma_urna`: o modelo vem do
+log da mesma urna associada ao boletim, e não de inferência pelo ano da eleição:
 
 | Modelo | Seções verificáveis | Com sinal | Taxa |
 | --- | ---: | ---: | ---: |

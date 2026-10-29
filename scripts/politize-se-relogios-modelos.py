@@ -15,18 +15,18 @@ def main():
     indice = json.loads(fonte.read_text())
     sinais = {(r["uf"], r["mun"], r["zona"], r["secao"]): r for r in indice["sinais"]}
     base, cobertas, casos = Counter(), Counter(), Counter()
-    municipios = Counter()
+    municipios, fontes_modelos = Counter(), Counter()
     banco = ROOT / "apuracao/data/secoes_2t_2026.sqlite"
     metricas = ROOT / "data/outputs/logs_urnas_2t_2026.sqlite"
     with sqlite3.connect(f"file:{banco}?mode=ro", uri=True) as con:
         con.execute("ATTACH DATABASE ? AS logs", (f"file:{metricas}?mode=ro",))
-        query = """SELECT s.uf,s.mun,s.zona,s.secao,b.modelo_urna,
+        query = """SELECT s.uf,s.mun,s.zona,s.secao,b.modelo_urna,b.modelo_fonte,
             m.status='ok' AND s.log_sha256=m.sha256 AND s.log_sha256 IS NOT NULL
             FROM secao s LEFT JOIN bu b USING(uf,mun,zona,secao)
             LEFT JOIN logs.metricas m USING(uf,mun,zona,secao)
             WHERE upper(s.uf)!='ZZ' AND (s.nsp IS NULL OR s.nsp=0 OR s.nsp=s.secao)
             ORDER BY s.uf,s.mun,s.zona,s.secao"""
-        for uf, mun, zona, secao, modelo, ok in con.execute(query):
+        for uf, mun, zona, secao, modelo, modelo_fonte, ok in con.execute(query):
             key = (uf.upper(), mun, zona, secao)
             sinal = sinais.get(key)
             recortes = [
@@ -40,13 +40,15 @@ def main():
                 casos[grupo] += bool(sinal)
             if sinal:
                 assert ok, key
+                fontes_modelos[modelo_fonte] += 1
                 municipios[(uf, mun, sinal["municipio"], modelo)] += 1
     assert sum(v for (r, _), v in casos.items() if r == "Brasil") == 141
     assert sum(v for (r, _), v in cobertas.items() if r == "Brasil") == 497871
     resultado = {
         "fonte": str(fonte.relative_to(ROOT)),
         "fonte_sha256": hashlib.sha256(fonte.read_bytes()).hexdigest(),
-        "metodo": "Seções principais domésticas; modelo do BU. Taxa usa logs com vínculo de hash verificado. Recorte sem Jaú é diagnóstico geográfico exploratório, não ajuste causal.",
+        "metodo": "Seções principais domésticas; modelo do equipamento vinculado ao BU, com origem registrada em fontes_modelos_sinalizados. Taxa usa logs com vínculo de hash verificado. Recorte sem Jaú é diagnóstico geográfico exploratório, não ajuste causal.",
+        "fontes_modelos_sinalizados": dict(fontes_modelos),
         "grupos": [
             {
                 "recorte": r,
