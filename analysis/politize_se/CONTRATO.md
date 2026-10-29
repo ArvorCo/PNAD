@@ -514,3 +514,45 @@ O último voto não equivale ao encerramento formal.
 - Conferência no Ceará: 955 seções com último cômputo >17:00:00; oito >17:15:00.
   Com último cômputo >17:00:00 e encerramento <=17:30:00, restam 950. São seções,
   não quantidades de votos após esses horários. QA em `tmp/ultimos-mapa/`.
+
+## Grupos armados e cartografia territorial (29/10/2026)
+
+- `python3 scripts/politize-se-seguranca-build.py` exporta o conjunto independente
+  `docs/assets/politize_se/seguranca/`, sem regravar votos, chuva ou horários.
+  O cliente compartilhado `seguranca.js` aparece nas fichas de seção, prédio,
+  zona e município. O mapa oferece `crime`, `controle` e `influencia`, com links
+  compartilháveis, legenda, lista e colunas documentais no CSV.
+- Presença municipal: 367 municípios, com fontes individuais; 343 nomes
+  associados ao TSE entre os 344 do FBSP/Instituto Mãe Crioula, Cartografias
+  da Violência na Amazônia 2025, quadros 3.2–3.10. Amanã/AM permanece sem
+  correspondência, conforme a auditoria da base anterior. Não interpretar os
+  demais municípios como ausência de grupos, nem pintar polígonos municipais
+  como domínio territorial. As fontes de imprensa são registros distintos do
+  levantamento do FBSP e mantêm suas datas.
+- Revisão da transposição: `ctx-034`, Diário do Nordeste de 29/09/2026, cita
+  Sobral e Juazeiro do Norte como sedes de gabinetes de segurança. Essas duas
+  cidades não recebem presença positiva só por essa referência. Permanecem os
+  quatro municípios com relatos de extorsão no contexto descrito. `ctx-033`,
+  Gazeta do Povo de 24/09/2026, relaciona vinte municípios do RJ. Ambas as páginas
+  foram relidas em 29/10/2026; o acervo anterior é preservado, a correção aplica-se
+  à nova camada. Temas genéricos de violência/coerção não entram automaticamente.
+- Controle e influência: imagens originais GENI/UFF e Fogo Cruzado, território
+  de 2024, relatório publicado em dezembro de 2025. Fonte e widget preservados
+  em `data/originals/analise_realidade_eleicao/`. As imagens PNG são extraídas
+  sem alteração; seus hashes coincidem com o manifesto original. A sobreposição
+  Leaflet usa os limites Web Mercator publicados, a mesma projeção da interseção.
+  Não é um levantamento territorial nacional nem atualização da situação de 2026.
+- Interseções apenas em pontos cadastrais do RJ cuja coordenada coincide com a
+  base-fonte. Não exigir BU completo para contexto geográfico. Resolução próxima
+  de 34 × 37 m; classe `Sem marcação` distinta de `null` (fora da janela ou sem
+  coordenada confirmada). Controle e influência são separados, nunca somados.
+  Grupos de pontos com categorias diferentes usam cor neutra, sem atribuir ao
+  conjunto a categoria majoritária. Pontos próximos da borda recebem ressalva.
+- Os filtros de horários selecionam seções e placares; não recortam a cartografia
+  original. Escola não identifica residência de eleitores nem demonstra vínculo
+  com grupo, coação, fraude ou causa do voto. Fontes, datas e limites aparecem
+  junto aos resultados. Proveniência e hashes ficam no conjunto público.
+- Validação: `tests/test_politize_se_seguranca.py` confere fontes, as duas exclusões,
+  cobertura FBSP, hashes, paridade com as interseções auditadas e categorias
+  ausentes/mistas no cliente. QA de ambas as páginas, quatro níveis geográficos,
+  sobreposição, troca de camadas e telas móveis em `tmp/seguranca-politize/`.

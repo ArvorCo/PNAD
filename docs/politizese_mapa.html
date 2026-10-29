@@ -38,7 +38,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
 <link rel="stylesheet" href="assets/politize_se_mapa/app.css?v=20261029-cortes">
 <link rel="stylesheet" href="assets/politize_se/territorio.css?v=20261028">
-<script defer src="assets/politize_se/territorio.js?v=20261028"></script>
+<link rel="stylesheet" href="assets/politize_se/seguranca.css?v=20261029-seguranca">
+<script defer src="assets/politize_se/seguranca.js?v=20261029-seguranca"></script>
+<script defer src="assets/politize_se/territorio.js?v=20261029-seguranca"></script>
 <script>document.documentElement.classList.add('js')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
@@ -49,7 +51,8 @@
 <script defer src="assets/politize_se_mapa/horarios.js?v=20261029-cortes"></script>
 <script defer src="assets/politize_se_mapa/ultimos.js?v=20261029-cortes"></script>
 <script defer src="assets/politize_se_mapa/ficha.js?v=20261029-cortes"></script>
-<script defer src="assets/politize_se_mapa/app.js?v=20261029-cortes"></script>
+<script defer src="assets/politize_se_mapa/seguranca.js?v=20261029-seguranca"></script>
+<script defer src="assets/politize_se_mapa/app.js?v=20261029-seguranca"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -129,6 +132,9 @@
       <button type="button" data-lente="resultado" aria-pressed="true">Votos</button>
       <button type="button" data-lente="renda" aria-pressed="false">Renda estimada</button>
       <button type="button" data-lente="homicidios" aria-pressed="false">Homicídios municipais</button>
+      <button type="button" data-lente="crime" aria-pressed="false">Grupos armados</button>
+      <button type="button" data-lente="controle" aria-pressed="false">Controle territorial · RJ</button>
+      <button type="button" data-lente="influencia" aria-pressed="false">Influência · RJ</button>
       <button type="button" data-lente="ultimo_voto" aria-pressed="false">Último voto</button>
       <button type="button" data-lente="encerramento" aria-pressed="false">Encerramento</button>
       <button type="button" data-lente="pico" aria-pressed="false">Pico de votos</button>

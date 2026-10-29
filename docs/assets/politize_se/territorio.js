@@ -76,16 +76,6 @@
       el('h3', {}, 'Escolaridade'),
       barras([['Fundamental incompleto', l.fund_inc], ['Fundamental completo / médio incompleto', l.fund_med], ['Médio completo / superior incompleto', l.med_sup_inc], ['Superior completo', l.superior]], 'territorio-escola'),
       el('p', { class: 'territorio-nota' }, 'Fonte do perfil no município: ' + ({ secao: 'por seção, agregado ao prédio', zona: 'por zona eleitoral (não exclusivo deste prédio)', misto: 'combinação de seções e zonas eleitorais' }[l.perfil_fonte] || 'não disponível') + '. Cadastro TSE, que pode estar desatualizado. Situação do setor censitário do ponto: ' + (l.setor_situacao || 'não disponível') + '.'));
-    const registro = el('section', { class: 'territorio-card territorio-registros' },
-      el('p', { class: 'territorio-eyebrow' }, '04 / Segurança · documentação'),
-      el('h3', {}, 'Crime organizado'),
-      el('p', { class: 'territorio-documentado' }, m.crime_organizado === 'mapeamento público' ? 'Há mapeamento público no município' : 'Sem mapeamento positivo nesta base'),
-      el('p', { class: 'territorio-nota' }, 'Não indica controle deste local, ocorrência na seção ou envolvimento de moradores. A falta de registro não comprova ausência de crime.'),
-      m.crime_organizado_fontes ? el('details', { class: 'territorio-citacao' }, el('summary', {}, 'Referência do registro'), el('p', {}, m.crime_organizado_fontes)) : el('p', { class: 'territorio-nota' }, 'Cobertura documental limitada; não é um cadastro nacional completo.'));
-    if (m.crime_organizado_fontes) {
-      const urls = m.crime_organizado_fontes.match(/https:\/\/[^\s,)]+/g) || [];
-      for (const url of new Set(urls)) registro.append(el('a', { href: url, target: '_blank', rel: 'noopener' }, 'Abrir documento citado'));
-    }
     const content = el('div', { class: 'territorio-conteudo' },
       el('header', { class: 'territorio-cab' },
         el('p', { class: 'territorio-eyebrow' }, 'O lugar além da urna'),
@@ -93,11 +83,11 @@
         el('p', {}, 'Contexto de ' + (m.municipio || 'este local') + '. As seções deste prédio compartilham este contexto; ele não descreve cada pessoa nem explica sozinho o voto.')),
       el('div', { class: 'territorio-grade' }, renda, seguranca));
     if (compact) {
-      content.append(el('details', { class: 'territorio-mais' }, el('summary', {}, 'Ver escolaridade e registros de segurança'), el('div', { class: 'territorio-grade' }, social, registro)));
+      content.append(el('details', { class: 'territorio-mais' }, el('summary', {}, 'Ver escolaridade'), el('div', { class: 'territorio-grade' }, social)));
       const [uf, , z] = localId.split('-');
       content.append(el('a', { class: 'territorio-abrir', href: `politizese.html#uf=${uf}&z=${z}&l=${encodeURIComponent(localId)}` }, 'Explorar este contexto no Politize-se ↗'));
-    } else content.append(el('div', { class: 'territorio-grade' }, social, registro));
-    content.append(fontes(m, meta));
+    } else content.append(el('div', { class: 'territorio-grade' }, social));
+    content.append(window.PolitizeSeguranca.painel({ uf: localId.split('-')[0], local: localId }), fontes(m, meta));
     return content;
   }
   function painel(localId, { compact = false } = {}) {

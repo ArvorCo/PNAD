@@ -1,4 +1,4 @@
-import { criarVisoes } from './visoes.js?v=20261028-movimento1';
+import { criarVisoes } from './visoes.js?v=20261029-seguranca';
 import { criarCompartilhar } from './compartilhar.js?v=20261028-movimento1';
 import { criarRelatos } from './relatos.js?v=20261028';
 // Politize-se: aplicativo estático, escrito à mão, sem framework e sem build.
