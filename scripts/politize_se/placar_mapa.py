@@ -31,7 +31,12 @@ def publicar(ufs=None, origem=ORIGEM, destino=DESTINO):
             for r in d["linhas"]:
                 local = dict(zip(d["colunas"], r, strict=True))
                 locais[local["local_id"]] = par(local)
-        payload = {"formato": 1, "uf": pasta.name, "colunas": ["flavio2", "lula2"], "locais": locais}
+        payload = {
+            "formato": 1,
+            "uf": pasta.name,
+            "colunas": ["flavio2", "lula2"],
+            "locais": locais,
+        }
         raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
         (destino / f"{pasta.name}.json.gz").write_bytes(gzip.compress(raw, mtime=0))
         total += len(locais)

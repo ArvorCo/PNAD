@@ -71,7 +71,9 @@ def main():
         )
         item = {"coordenada_cadastral": cadastral}
         for key, layer in layers.items():
-            grupo, margem = classificar(layer, r["lat"], r["lon"]) if cadastral else (None, None)
+            grupo, margem = (
+                classificar(layer, r["lat"], r["lon"]) if cadastral else (None, None)
+            )
             item[key] = grupo
             item[key + "_borda_m"] = round(margem, 1) if margem is not None else None
         locais[r["id"]] = item
@@ -96,15 +98,32 @@ def main():
         "nota": "Presença municipal não delimita área controlada. GENI/UFF e Fogo Cruzado: controle e influência em 2024, publicados em 2025; não são situação verificada em 2026. Interseção pontual em Web Mercator com raster de aproximadamente 34×37 m, só coordenadas cadastrais coincidentes. Sem marcação não comprova ausência. Nenhuma camada identifica voto, coação ou vínculo de moradores com grupos.",
         "contagens": {
             "municipios_documentados": len(muns),
-            "municipios_fbsp": sum("fbsp-cartografias-amazonia-2025" in " ".join(m["fontes"]) for m in muns.values()),
-            "controle_rj": dict(Counter(r["controle"] or "Sem cobertura" for r in locais.values())),
+            "municipios_fbsp": sum(
+                "fbsp-cartografias-amazonia-2025" in " ".join(m["fontes"])
+                for m in muns.values()
+            ),
+            "controle_rj": dict(
+                Counter(r["controle"] or "Sem cobertura" for r in locais.values())
+            ),
         },
     }
-    (DEST / "dados.json").write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n")
-    (DEST / "proveniencia.json").write_text(json.dumps({
-        "fontes": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in fontes},
-        "widget": meta,
-    }, ensure_ascii=False, indent=2) + "\n")
+    (DEST / "dados.json").write_text(
+        json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n"
+    )
+    (DEST / "proveniencia.json").write_text(
+        json.dumps(
+            {
+                "fontes": {
+                    str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+                    for p in fontes
+                },
+                "widget": meta,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n"
+    )
     print(json.dumps(out["contagens"], ensure_ascii=False))
 
 

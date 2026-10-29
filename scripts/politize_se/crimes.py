@@ -183,9 +183,9 @@ def publicar() -> dict:
             completo = len(d["meses"]) == 12 and not d["faltantes"]
             inds[k] = {
                 "n": d["soma"] if d["meses"] else None,
-                "taxa": round(100000 * d["soma"] / p["populacao"], 4)
-                if completo
-                else None,
+                "taxa": (
+                    round(100000 * d["soma"] / p["populacao"], 4) if completo else None
+                ),
                 "meses": len(d["meses"]),
                 "linhas_sem_valor": d["faltantes"],
                 "completo": completo,

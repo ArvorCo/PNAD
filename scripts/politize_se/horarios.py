@@ -138,9 +138,11 @@ def linha(s: dict, horario: tuple) -> list:
         enc=enc,
         ultimo=ultimo,
         motivo=motivo,
-        bn2=None
-        if s.get("brancos2") is None or s.get("nulos2") is None
-        else s["brancos2"] + s["nulos2"],
+        bn2=(
+            None
+            if s.get("brancos2") is None or s.get("nulos2") is None
+            else s["brancos2"] + s["nulos2"]
+        ),
         modelo=s.get("modelo2") if s.get("bu2") else s.get("modelo1"),
         trocada=int(
             bool(s.get("bu2"))
