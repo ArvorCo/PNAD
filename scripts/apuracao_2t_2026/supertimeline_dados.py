@@ -11,7 +11,7 @@ from collections import Counter
 from datetime import datetime, timedelta
 
 from .encerramento_dados import BANCO, CAMPOS, CORTES, SAIDA, deslocamento
-from .encerramento_logs import P, elegibilidade, fontes
+from .encerramento_logs import P, elegibilidade, fontes, horarios_reconferidos
 
 BASE = datetime(2026, 10, 25)
 VERSAO = 1
@@ -105,8 +105,48 @@ def cortes(ultimo_s):
     return (
         [h * 3600 - 1 for h in range(8, 18)]
         + CORTES
-        + list(range(20 * 3600, fim + 1, 3600))
+        + [19 * 3600 + m * 60 for m in (5, 10, 15, 20, 30)]
+        + list(range(20 * 3600, 86401, 1800))
+        + list(range(25 * 3600, fim + 1, 3600))
     )
+
+
+def cauda_logs(logs, esperado):
+    """Reabre somente logs elegíveis que registram cômputos após 19h Brasília."""
+    arquivos = fontes()
+    if arquivos != logs["arquivos"]:
+        raise ValueError("Fontes divergem do histograma horário")
+    segundos, relidos = Counter(), []
+    with sqlite3.connect(f"file:{BANCO}?mode=ro", uri=True) as con:
+        con.execute("ATTACH DATABASE ? AS logs", (f"file:{P.metricas}?mode=ro",))
+        query = """SELECT s.uf,s.mun,s.zona,s.secao,s.log_sha256,
+            b.comparecimento,m.sha256,m.status,m.resumo FROM secao s
+            JOIN bu b USING(uf,mun,zona,secao)
+            JOIN logs.metricas m USING(uf,mun,zona,secao)
+            WHERE upper(s.uf)!='ZZ' AND (s.nsp IS NULL OR s.nsp=0 OR s.nsp=s.secao)
+            ORDER BY s.uf,s.mun,s.zona,s.secao"""
+        for uf, mun, z, s, hash_bu, comp, sha, status, txt in con.execute(query):
+            r = json.loads(txt) if txt else {}
+            off = deslocamento(uf, mun)
+            if elegibilidade(status, r, sha, hash_bu, comp, off):
+                continue
+            if r["ultimo_computo_s"] + off * 3600 <= 19 * 3600:
+                continue
+            key = (uf, mun, z, s)
+            hs = horarios_reconferidos((key, sha, r, off))
+            segundos.update({t: n for t, n in hs.items() if t > 19 * 3600})
+            relidos.append({"secao": list(key), "sha256_zip": sha})
+    if fontes() != arquivos:
+        raise ValueError("Fontes alteradas durante a releitura da cauda")
+    if sum(segundos.values()) != esperado or max(segundos, default=0) != (
+        logs["ultimo_s"] if esperado else 0
+    ):
+        raise ValueError("Cauda relida diverge do agregado publicado")
+    return {
+        "regra": "Segundos após 19h relidos dos originais elegíveis, com hash e métricas reconciliados; sem interpolação.",
+        "logs_relidos": relidos,
+        "segundos": [[t, n] for t, n in sorted(segundos.items())],
+    }
 
 
 def agregado(c, ufs, total, acumulado):
@@ -290,10 +330,10 @@ def gerar(refazer=False):
         raise ValueError("Ponte de 17h não recompõe os dois agregados")
     votos = [sum(logs["horas"][:8]), *logs["horas"][8:17], no17]
     votos.extend(legado["logs"]["intervalos"][1:-1])
-    # O último cômputo está antes das 20h neste extrato; não imputar outra base.
-    if logs["ultimo_s"] >= 20 * 3600:
-        raise ValueError("Nova cauda após 20h: reler logs para os cortes adicionais")
-    votos.extend([legado["logs"]["intervalos"][-1]] + [0] * (len(cs) - len(votos) - 1))
+    cauda = cauda_logs(logs, legado["logs"]["intervalos"][-1])
+    votos.extend([0] * (len(cs) - len(votos)))
+    for segundo, n in cauda["segundos"]:
+        votos[bisect.bisect_left(cs, segundo)] += n
     assert len(votos) == len(cs) and sum(votos) == logs["computados"]
     acumulado, linhas = 0, []
     for i, (s, v) in enumerate(zip(cs, votos, strict=True)):
@@ -323,6 +363,7 @@ def gerar(refazer=False):
         "total": legado["total"],
         "logs_cobertura": legado["logs"],
         "logs_dia": logs,
+        "logs_cauda": cauda,
         "linhas": linhas,
         "apos19_subtotal": legado["linhas"][-1],
         "trilhas": {

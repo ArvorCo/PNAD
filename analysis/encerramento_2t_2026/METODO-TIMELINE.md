@@ -50,14 +50,23 @@ contado duas vezes. Os cortes da imagem anterior de 17h00 até 19h00 são preser
 com os mesmos limites inclusivos. A primeira linha antiga aparece agora como o
 acumulado de todos os cômputos até 17h00, não como um novo lote de 127 milhões.
 
-Após 19h, os cortes são 20h, 21h, 22h, 23h e 00h de 26/10, sempre (início, fim].
-Há 11 cômputos depois das 19h e o último é 19:06:21; portanto todos pertencem à
-primeira dessas faixas. Se uma nova fonte trouxer cômputos a partir das 20h, o
-agregador aborta e exige releitura da cauda em vez de distribuir valores por
-hipótese. Datas de recebimento aceitam o dia seguinte e estendem os cortes até
-a hora que inclui o último evento. Nesta publicação não há recebimentos de 26/10:
-o último é 25/10 às 23:21:40. A linha 00h de 26/10 contém a faixa 23h–00h, não
-atribui esses eventos ao dia seguinte.
+Após 19h, os cortes são **19h05, 19h10, 19h15, 19h20, 19h30, 20h,
+20h30, 21h, 21h30, 22h, 22h30, 23h, 23h30 e 00h de 26/10**, sempre
+(início, fim]. O primeiro recebimento após a pausa, às 19:03:37, pertence à
+faixa 19h–19h05; 19h05 é o limite da faixa, não o carimbo do primeiro pacote.
+
+Os 11 cômputos após as 19h são distribuídos pelos segundos dos logs originais,
+relidos apenas nas seções elegíveis cujo último cômputo excede 19h em Brasília.
+A releitura confere hash do arquivo, total, histograma horário e primeiro/último
+cômputo com as métricas arquivadas. Os segundos e hashes relidos ficam em
+`logs_cauda`; sua soma deve coincidir com o subtotal publicado. Não há
+interpolação nem atribuição de toda a hora à primeira faixa. O último cômputo
+continua às 19:06:21.
+
+Datas de recebimento aceitam o dia seguinte e estendem os cortes até a hora que
+inclui o último evento. Nesta publicação não há recebimentos de 26/10: o último
+é 25/10 às 23:21:40 e entra na faixa 23h–23h30. A linha 00h de 26/10 contém a
+faixa 23h30–00h, sem novos recebimentos; não atribui eventos ao dia seguinte.
 
 O subtotal literal “após 19h” da imagem anterior é conservado no final e claramente
 rotulado como subtotal das linhas finais. Não é somado novamente aos totais.

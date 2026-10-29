@@ -260,6 +260,152 @@
     "ultimo_s": 68781,
     "regra": "Hora civil em Brasília: [HH:00:00, HH:59:59], sem interpolação. Mesmos logs elegíveis do gráfico publicado."
   },
+  "logs_cauda": {
+    "regra": "Segundos após 19h relidos dos originais elegíveis, com hash e métricas reconciliados; sem interpolação.",
+    "logs_relidos": [
+      {
+        "secao": [
+          "ba",
+          "38490",
+          5,
+          449
+        ],
+        "sha256_zip": "2576e446d9e4924b43d7ffd1e7072f4fdd2fb2c8f3d8bee22b2ba41c905dfa7f"
+      },
+      {
+        "secao": [
+          "ba",
+          "38490",
+          10,
+          909
+        ],
+        "sha256_zip": "03bf1e4053d72d70ef8a79568dfdc5d81be0b9b300ec3832318385d2cb5d3092"
+      },
+      {
+        "secao": [
+          "rj",
+          "60011",
+          17,
+          397
+        ],
+        "sha256_zip": "3af539c41e82213a8d40ee9f9cfb54fc71d0a5fd6a252329443414297d643428"
+      },
+      {
+        "secao": [
+          "rj",
+          "60011",
+          234,
+          5
+        ],
+        "sha256_zip": "f1826dd2e26d2b2f10cdbe6644ba7cebb92397f6b7e7c5fa8b4f97d645bdc0ca"
+      },
+      {
+        "secao": [
+          "rj",
+          "60011",
+          238,
+          183
+        ],
+        "sha256_zip": "937e4761fa56fe6efe3c24a22ef09588c339b04df2ca8e8e04feef9ebf8e3e02"
+      },
+      {
+        "secao": [
+          "rj",
+          "60011",
+          245,
+          223
+        ],
+        "sha256_zip": "87674f15e1ec31634e0e3c4a34a7c0c24ae1a36c189363de1e0226059cc026b3"
+      },
+      {
+        "secao": [
+          "sp",
+          "71072",
+          1,
+          247
+        ],
+        "sha256_zip": "50e8012c2a8c6ccc8c75fc8248a821562b410dcea609f1ea665ab011e6ab041f"
+      },
+      {
+        "secao": [
+          "sp",
+          "71072",
+          1,
+          405
+        ],
+        "sha256_zip": "5a9ab35d44d67dee9d130b80fb257903c25453657091f0ec529c48a450b66b3a"
+      },
+      {
+        "secao": [
+          "sp",
+          "71072",
+          2,
+          37
+        ],
+        "sha256_zip": "f08503e4aacf46dafea69da1ca5fdc2724d6e1b0a8f93cae0db0f37676f25f30"
+      },
+      {
+        "secao": [
+          "sp",
+          "71072",
+          350,
+          604
+        ],
+        "sha256_zip": "e0decb88c0f033d110f82ef8814422c5ad7cfc5be0763e59b4aca37464fc2438"
+      },
+      {
+        "secao": [
+          "sp",
+          "71072",
+          375,
+          734
+        ],
+        "sha256_zip": "fd86f4cc9e267c0dcb76880e1b1b8eca358e6d85c7fd04423a703f63fb6a3b9c"
+      }
+    ],
+    "segundos": [
+      [
+        68408,
+        2
+      ],
+      [
+        68418,
+        1
+      ],
+      [
+        68425,
+        1
+      ],
+      [
+        68453,
+        1
+      ],
+      [
+        68457,
+        1
+      ],
+      [
+        68490,
+        1
+      ],
+      [
+        68508,
+        1
+      ],
+      [
+        68516,
+        1
+      ],
+      [
+        68714,
+        1
+      ],
+      [
+        68781,
+        1
+      ]
+    ]
+  },
   "linhas": [
     {
       "fim_inclusivo_s": 28799,
@@ -4391,277 +4537,1418 @@
       }
     },
     {
-      "fim_inclusivo_s": 72000,
+      "fim_inclusivo_s": 68700,
       "inicio_exclusivo_s": 68400,
-      "data_hora": "25/10 20:00:00",
+      "data_hora": "25/10 19:05:00",
       "logs": {
-        "intervalo": 11,
-        "acumulado": 127812804,
-        "acumulado_pct": 100.0
+        "intervalo": 9,
+        "acumulado": 127812802,
+        "acumulado_pct": 99.99999843521155
       },
       "fecho": {
-        "secoes": 6334,
-        "aptos": 2302268,
-        "comparecimento": 1855933,
-        "validos": 1788782,
-        "flavio": 801636,
-        "lula": 987146,
-        "brancos": 21019,
-        "nulos": 46132,
-        "parcela_secoes_pct": 1.272150665699934,
-        "encerradas_acumuladas": 497895,
-        "encerradas_pct": 99.99959831049394,
-        "restantes": 2,
-        "restantes_pct": 0.00040168950606249887,
-        "comparecimento_pct": 80.61324745859301,
-        "flavio_pct": 44.81462805417318,
-        "lula_pct": 55.18537194582682,
+        "secoes": 5569,
+        "aptos": 2015956,
+        "comparecimento": 1625417,
+        "validos": 1566546,
+        "flavio": 713305,
+        "lula": 853241,
+        "brancos": 18554,
+        "nulos": 40317,
+        "parcela_secoes_pct": 1.118504429631028,
+        "encerradas_acumuladas": 497130,
+        "encerradas_pct": 99.84595207442503,
+        "restantes": 767,
+        "restantes_pct": 0.15404792557496833,
+        "comparecimento_pct": 80.62760298339845,
+        "flavio_pct": 45.53361344001389,
+        "lula_pct": 54.46638655998611,
         "ufs": [
           {
             "uf": "RJ",
-            "secoes": 2798,
-            "pct": 44.17429744237449
+            "secoes": 2477,
+            "pct": 44.478362363081345
           },
           {
             "uf": "SP",
-            "secoes": 1567,
-            "pct": 24.739501105146825
+            "secoes": 1454,
+            "pct": 26.10881666367391
           },
           {
             "uf": "BA",
-            "secoes": 933,
-            "pct": 14.730028418061258
+            "secoes": 662,
+            "pct": 11.887232896390735
           },
           {
             "uf": "PE",
-            "secoes": 657,
-            "pct": 10.372592358699084
+            "secoes": 606,
+            "pct": 10.881666367390913
           },
           {
             "uf": "PB",
-            "secoes": 272,
-            "pct": 4.294284812125039
+            "secoes": 266,
+            "pct": 4.776441012749147
           },
           {
             "uf": "SE",
-            "secoes": 51,
-            "pct": 0.805178402273445
+            "secoes": 50,
+            "pct": 0.897827258035554
           },
           {
             "uf": "DF",
-            "secoes": 17,
-            "pct": 0.26839280075781496
+            "secoes": 16,
+            "pct": 0.2873047225713773
           },
           {
             "uf": "MT",
             "secoes": 9,
-            "pct": 0.1420903062835491
+            "pct": 0.16160890644639972
           },
           {
             "uf": "PA",
             "secoes": 8,
-            "pct": 0.12630249447426586
+            "pct": 0.14365236128568865
           },
           {
             "uf": "PI",
             "secoes": 7,
-            "pct": 0.11051468266498263
+            "pct": 0.12569581612497754
           },
           {
             "uf": "MA",
             "secoes": 3,
-            "pct": 0.0473634354278497
+            "pct": 0.053869635482133235
           },
           {
             "uf": "RN",
             "secoes": 3,
-            "pct": 0.0473634354278497
+            "pct": 0.053869635482133235
           },
           {
             "uf": "AL",
             "secoes": 2,
-            "pct": 0.031575623618566466
-          },
-          {
-            "uf": "ES",
-            "secoes": 2,
-            "pct": 0.031575623618566466
+            "pct": 0.03591309032142216
           },
           {
             "uf": "RS",
             "secoes": 2,
-            "pct": 0.031575623618566466
+            "pct": 0.03591309032142216
           },
           {
             "uf": "AC",
             "secoes": 1,
-            "pct": 0.015787811809283233
+            "pct": 0.01795654516071108
+          },
+          {
+            "uf": "ES",
+            "secoes": 1,
+            "pct": 0.01795654516071108
           },
           {
             "uf": "GO",
             "secoes": 1,
-            "pct": 0.015787811809283233
+            "pct": 0.01795654516071108
           },
           {
             "uf": "PR",
             "secoes": 1,
-            "pct": 0.015787811809283233
+            "pct": 0.01795654516071108
           }
         ],
         "cronologia_divergente": 0
       },
       "recebido": {
-        "secoes": 105247,
-        "aptos": 33076838,
-        "comparecimento": 26865425,
-        "validos": 26057307,
-        "flavio": 13198039,
-        "lula": 12859268,
-        "brancos": 276798,
-        "nulos": 531320,
-        "parcela_secoes_pct": 21.138307722279908,
+        "secoes": 2380,
+        "aptos": 718456,
+        "comparecimento": 579573,
+        "validos": 561512,
+        "flavio": 278258,
+        "lula": 283254,
+        "brancos": 5698,
+        "nulos": 12363,
+        "parcela_secoes_pct": 0.47801051221437363,
+        "encerradas_acumuladas": 3864,
+        "encerradas_pct": 0.7760641257127479,
+        "restantes": 494033,
+        "restantes_pct": 99.22393587428725,
+        "comparecimento_pct": 80.66924070506754,
+        "flavio_pct": 49.55512972118138,
+        "lula_pct": 50.44487027881862,
+        "ufs": [
+          {
+            "uf": "PR",
+            "secoes": 628,
+            "pct": 26.386554621848738
+          },
+          {
+            "uf": "MG",
+            "secoes": 359,
+            "pct": 15.084033613445378
+          },
+          {
+            "uf": "DF",
+            "secoes": 314,
+            "pct": 13.193277310924369
+          },
+          {
+            "uf": "MA",
+            "secoes": 214,
+            "pct": 8.991596638655462
+          },
+          {
+            "uf": "AM",
+            "secoes": 195,
+            "pct": 8.193277310924369
+          },
+          {
+            "uf": "TO",
+            "secoes": 166,
+            "pct": 6.974789915966387
+          },
+          {
+            "uf": "MT",
+            "secoes": 101,
+            "pct": 4.243697478991597
+          },
+          {
+            "uf": "AC",
+            "secoes": 77,
+            "pct": 3.235294117647059
+          },
+          {
+            "uf": "BA",
+            "secoes": 77,
+            "pct": 3.235294117647059
+          },
+          {
+            "uf": "RS",
+            "secoes": 76,
+            "pct": 3.19327731092437
+          },
+          {
+            "uf": "RN",
+            "secoes": 68,
+            "pct": 2.857142857142857
+          },
+          {
+            "uf": "PE",
+            "secoes": 50,
+            "pct": 2.100840336134454
+          },
+          {
+            "uf": "SC",
+            "secoes": 20,
+            "pct": 0.8403361344537815
+          },
+          {
+            "uf": "SP",
+            "secoes": 19,
+            "pct": 0.7983193277310925
+          },
+          {
+            "uf": "ES",
+            "secoes": 10,
+            "pct": 0.42016806722689076
+          },
+          {
+            "uf": "CE",
+            "secoes": 3,
+            "pct": 0.12605042016806722
+          },
+          {
+            "uf": "RJ",
+            "secoes": 3,
+            "pct": 0.12605042016806722
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 69000,
+      "inicio_exclusivo_s": 68700,
+      "data_hora": "25/10 19:10:00",
+      "logs": {
+        "intervalo": 2,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 673,
+        "aptos": 253077,
+        "comparecimento": 204787,
+        "validos": 197471,
+        "flavio": 77789,
+        "lula": 119682,
+        "brancos": 2130,
+        "nulos": 5186,
+        "parcela_secoes_pct": 0.13516851879003086,
+        "encerradas_acumuladas": 497803,
+        "encerradas_pct": 99.98112059321507,
+        "restantes": 94,
+        "restantes_pct": 0.018879406784937446,
+        "comparecimento_pct": 80.91885078454384,
+        "flavio_pct": 39.392619675800496,
+        "lula_pct": 60.607380324199504,
+        "ufs": [
+          {
+            "uf": "RJ",
+            "secoes": 269,
+            "pct": 39.9702823179792
+          },
+          {
+            "uf": "BA",
+            "secoes": 253,
+            "pct": 37.59286775631501
+          },
+          {
+            "uf": "SP",
+            "secoes": 101,
+            "pct": 15.0074294205052
+          },
+          {
+            "uf": "PE",
+            "secoes": 44,
+            "pct": 6.537890044576523
+          },
+          {
+            "uf": "PB",
+            "secoes": 5,
+            "pct": 0.7429420505200595
+          },
+          {
+            "uf": "SE",
+            "secoes": 1,
+            "pct": 0.1485884101040119
+          }
+        ],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 1330,
+        "aptos": 430509,
+        "comparecimento": 350794,
+        "validos": 340768,
+        "flavio": 168674,
+        "lula": 172094,
+        "brancos": 3432,
+        "nulos": 6594,
+        "parcela_secoes_pct": 0.26712352153156177,
+        "encerradas_acumuladas": 5194,
+        "encerradas_pct": 1.0431876472443096,
+        "restantes": 492703,
+        "restantes_pct": 98.95681235275569,
+        "comparecimento_pct": 81.48354622086879,
+        "flavio_pct": 49.498192318527565,
+        "lula_pct": 50.501807681472435,
+        "ufs": [
+          {
+            "uf": "PA",
+            "secoes": 303,
+            "pct": 22.781954887218046
+          },
+          {
+            "uf": "PR",
+            "secoes": 269,
+            "pct": 20.225563909774436
+          },
+          {
+            "uf": "AM",
+            "secoes": 147,
+            "pct": 11.052631578947368
+          },
+          {
+            "uf": "PB",
+            "secoes": 147,
+            "pct": 11.052631578947368
+          },
+          {
+            "uf": "DF",
+            "secoes": 122,
+            "pct": 9.172932330827068
+          },
+          {
+            "uf": "RO",
+            "secoes": 53,
+            "pct": 3.9849624060150375
+          },
+          {
+            "uf": "MT",
+            "secoes": 47,
+            "pct": 3.5338345864661656
+          },
+          {
+            "uf": "SC",
+            "secoes": 42,
+            "pct": 3.1578947368421053
+          },
+          {
+            "uf": "MG",
+            "secoes": 41,
+            "pct": 3.082706766917293
+          },
+          {
+            "uf": "TO",
+            "secoes": 26,
+            "pct": 1.9548872180451127
+          },
+          {
+            "uf": "MA",
+            "secoes": 24,
+            "pct": 1.8045112781954886
+          },
+          {
+            "uf": "AL",
+            "secoes": 16,
+            "pct": 1.2030075187969924
+          },
+          {
+            "uf": "PI",
+            "secoes": 14,
+            "pct": 1.0526315789473684
+          },
+          {
+            "uf": "AP",
+            "secoes": 13,
+            "pct": 0.9774436090225563
+          },
+          {
+            "uf": "RS",
+            "secoes": 13,
+            "pct": 0.9774436090225563
+          },
+          {
+            "uf": "CE",
+            "secoes": 11,
+            "pct": 0.8270676691729323
+          },
+          {
+            "uf": "PE",
+            "secoes": 10,
+            "pct": 0.7518796992481203
+          },
+          {
+            "uf": "RN",
+            "secoes": 10,
+            "pct": 0.7518796992481203
+          },
+          {
+            "uf": "BA",
+            "secoes": 9,
+            "pct": 0.6766917293233082
+          },
+          {
+            "uf": "AC",
+            "secoes": 4,
+            "pct": 0.3007518796992481
+          },
+          {
+            "uf": "GO",
+            "secoes": 3,
+            "pct": 0.22556390977443608
+          },
+          {
+            "uf": "MS",
+            "secoes": 2,
+            "pct": 0.15037593984962405
+          },
+          {
+            "uf": "RR",
+            "secoes": 2,
+            "pct": 0.15037593984962405
+          },
+          {
+            "uf": "ES",
+            "secoes": 1,
+            "pct": 0.07518796992481203
+          },
+          {
+            "uf": "SP",
+            "secoes": 1,
+            "pct": 0.07518796992481203
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 69300,
+      "inicio_exclusivo_s": 69000,
+      "data_hora": "25/10 19:15:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 58,
+        "aptos": 22009,
+        "comparecimento": 17371,
+        "validos": 16723,
+        "flavio": 6732,
+        "lula": 9991,
+        "brancos": 223,
+        "nulos": 425,
+        "parcela_secoes_pct": 0.011648995675812467,
+        "encerradas_acumuladas": 497861,
+        "encerradas_pct": 99.99276958889088,
+        "restantes": 36,
+        "restantes_pct": 0.00723041110912498,
+        "comparecimento_pct": 78.92680267163433,
+        "flavio_pct": 40.25593493990313,
+        "lula_pct": 59.74406506009687,
+        "ufs": [
+          {
+            "uf": "RJ",
+            "secoes": 29,
+            "pct": 50.0
+          },
+          {
+            "uf": "BA",
+            "secoes": 15,
+            "pct": 25.862068965517242
+          },
+          {
+            "uf": "SP",
+            "secoes": 8,
+            "pct": 13.793103448275861
+          },
+          {
+            "uf": "PE",
+            "secoes": 4,
+            "pct": 6.896551724137931
+          },
+          {
+            "uf": "DF",
+            "secoes": 1,
+            "pct": 1.7241379310344827
+          },
+          {
+            "uf": "PB",
+            "secoes": 1,
+            "pct": 1.7241379310344827
+          }
+        ],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 2677,
+        "aptos": 852760,
+        "comparecimento": 697952,
+        "validos": 677568,
+        "flavio": 330855,
+        "lula": 346713,
+        "brancos": 6996,
+        "nulos": 13388,
+        "parcela_secoes_pct": 0.5376614038646548,
+        "encerradas_acumuladas": 7871,
+        "encerradas_pct": 1.5808490511089643,
+        "restantes": 490026,
+        "restantes_pct": 98.41915094889103,
+        "comparecimento_pct": 81.84624044279751,
+        "flavio_pct": 48.8297853499575,
+        "lula_pct": 51.1702146500425,
+        "ufs": [
+          {
+            "uf": "PA",
+            "secoes": 598,
+            "pct": 22.338438550616363
+          },
+          {
+            "uf": "PR",
+            "secoes": 459,
+            "pct": 17.14605902129249
+          },
+          {
+            "uf": "PB",
+            "secoes": 389,
+            "pct": 14.531191632424356
+          },
+          {
+            "uf": "DF",
+            "secoes": 291,
+            "pct": 10.870377288008966
+          },
+          {
+            "uf": "AM",
+            "secoes": 193,
+            "pct": 7.209562943593575
+          },
+          {
+            "uf": "RO",
+            "secoes": 140,
+            "pct": 5.229734777736272
+          },
+          {
+            "uf": "SC",
+            "secoes": 120,
+            "pct": 4.482629809488233
+          },
+          {
+            "uf": "MT",
+            "secoes": 88,
+            "pct": 3.287261860291371
+          },
+          {
+            "uf": "MG",
+            "secoes": 69,
+            "pct": 2.577512140455734
+          },
+          {
+            "uf": "MA",
+            "secoes": 65,
+            "pct": 2.428091146806126
+          },
+          {
+            "uf": "TO",
+            "secoes": 55,
+            "pct": 2.054538662682107
+          },
+          {
+            "uf": "MS",
+            "secoes": 36,
+            "pct": 1.3447889428464699
+          },
+          {
+            "uf": "PI",
+            "secoes": 29,
+            "pct": 1.0833022039596563
+          },
+          {
+            "uf": "AL",
+            "secoes": 25,
+            "pct": 0.9338812103100486
+          },
+          {
+            "uf": "AC",
+            "secoes": 21,
+            "pct": 0.7844602166604407
+          },
+          {
+            "uf": "AP",
+            "secoes": 20,
+            "pct": 0.7471049682480388
+          },
+          {
+            "uf": "RS",
+            "secoes": 15,
+            "pct": 0.5603287261860291
+          },
+          {
+            "uf": "RN",
+            "secoes": 14,
+            "pct": 0.5229734777736272
+          },
+          {
+            "uf": "BA",
+            "secoes": 13,
+            "pct": 0.48561822936122523
+          },
+          {
+            "uf": "CE",
+            "secoes": 11,
+            "pct": 0.4109077325364214
+          },
+          {
+            "uf": "RR",
+            "secoes": 10,
+            "pct": 0.3735524841240194
+          },
+          {
+            "uf": "GO",
+            "secoes": 7,
+            "pct": 0.2614867388868136
+          },
+          {
+            "uf": "PE",
+            "secoes": 7,
+            "pct": 0.2614867388868136
+          },
+          {
+            "uf": "ES",
+            "secoes": 2,
+            "pct": 0.07471049682480388
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 69600,
+      "inicio_exclusivo_s": 69300,
+      "data_hora": "25/10 19:20:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 13,
+        "aptos": 4303,
+        "comparecimento": 3266,
+        "validos": 3145,
+        "flavio": 1392,
+        "lula": 1753,
+        "brancos": 40,
+        "nulos": 81,
+        "parcela_secoes_pct": 0.0026109817894062427,
+        "encerradas_acumuladas": 497874,
+        "encerradas_pct": 99.99538057068028,
+        "restantes": 23,
+        "restantes_pct": 0.004619429319718737,
+        "comparecimento_pct": 75.90053451080641,
+        "flavio_pct": 44.26073131955485,
+        "lula_pct": 55.73926868044515,
+        "ufs": [
+          {
+            "uf": "RJ",
+            "secoes": 7,
+            "pct": 53.84615384615385
+          },
+          {
+            "uf": "SP",
+            "secoes": 4,
+            "pct": 30.76923076923077
+          },
+          {
+            "uf": "BA",
+            "secoes": 1,
+            "pct": 7.6923076923076925
+          },
+          {
+            "uf": "PE",
+            "secoes": 1,
+            "pct": 7.6923076923076925
+          }
+        ],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 3266,
+        "aptos": 1041610,
+        "comparecimento": 846607,
+        "validos": 820606,
+        "flavio": 408588,
+        "lula": 412018,
+        "brancos": 8800,
+        "nulos": 17201,
+        "parcela_secoes_pct": 0.6559589634000607,
+        "encerradas_acumuladas": 11137,
+        "encerradas_pct": 2.236808014509025,
+        "restantes": 486760,
+        "restantes_pct": 97.76319198549098,
+        "comparecimento_pct": 81.27869356092971,
+        "flavio_pct": 49.79100810864166,
+        "lula_pct": 50.20899189135834,
+        "ufs": [
+          {
+            "uf": "PR",
+            "secoes": 652,
+            "pct": 19.96325780771586
+          },
+          {
+            "uf": "PA",
+            "secoes": 439,
+            "pct": 13.441518677281078
+          },
+          {
+            "uf": "DF",
+            "secoes": 355,
+            "pct": 10.869565217391305
+          },
+          {
+            "uf": "PB",
+            "secoes": 318,
+            "pct": 9.736680955296999
+          },
+          {
+            "uf": "MG",
+            "secoes": 270,
+            "pct": 8.266993263931415
+          },
+          {
+            "uf": "TO",
+            "secoes": 176,
+            "pct": 5.388854868340478
+          },
+          {
+            "uf": "AM",
+            "secoes": 166,
+            "pct": 5.082669932639314
+          },
+          {
+            "uf": "MT",
+            "secoes": 148,
+            "pct": 4.53153704837722
+          },
+          {
+            "uf": "MA",
+            "secoes": 137,
+            "pct": 4.19473361910594
+          },
+          {
+            "uf": "RO",
+            "secoes": 91,
+            "pct": 2.7862829148805877
+          },
+          {
+            "uf": "SC",
+            "secoes": 78,
+            "pct": 2.3882424984690753
+          },
+          {
+            "uf": "RS",
+            "secoes": 72,
+            "pct": 2.204531537048377
+          },
+          {
+            "uf": "AC",
+            "secoes": 61,
+            "pct": 1.8677281077770973
+          },
+          {
+            "uf": "BA",
+            "secoes": 54,
+            "pct": 1.653398652786283
+          },
+          {
+            "uf": "RN",
+            "secoes": 49,
+            "pct": 1.5003061849357011
+          },
+          {
+            "uf": "AL",
+            "secoes": 45,
+            "pct": 1.3778322106552359
+          },
+          {
+            "uf": "PE",
+            "secoes": 45,
+            "pct": 1.3778322106552359
+          },
+          {
+            "uf": "MS",
+            "secoes": 42,
+            "pct": 1.2859767299448868
+          },
+          {
+            "uf": "SP",
+            "secoes": 18,
+            "pct": 0.5511328842620943
+          },
+          {
+            "uf": "GO",
+            "secoes": 17,
+            "pct": 0.5205143906919779
+          },
+          {
+            "uf": "CE",
+            "secoes": 14,
+            "pct": 0.4286589099816289
+          },
+          {
+            "uf": "RR",
+            "secoes": 7,
+            "pct": 0.21432945499081446
+          },
+          {
+            "uf": "AP",
+            "secoes": 5,
+            "pct": 0.15309246785058175
+          },
+          {
+            "uf": "ES",
+            "secoes": 5,
+            "pct": 0.15309246785058175
+          },
+          {
+            "uf": "PI",
+            "secoes": 2,
+            "pct": 0.0612369871402327
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 70200,
+      "inicio_exclusivo_s": 69600,
+      "data_hora": "25/10 19:30:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 5,
+        "aptos": 1834,
+        "comparecimento": 1359,
+        "validos": 1319,
+        "flavio": 571,
+        "lula": 748,
+        "brancos": 20,
+        "nulos": 20,
+        "parcela_secoes_pct": 0.0010042237651562472,
+        "encerradas_acumuladas": 497879,
+        "encerradas_pct": 99.99638479444543,
+        "restantes": 18,
+        "restantes_pct": 0.00361520555456249,
+        "comparecimento_pct": 74.10032715376227,
+        "flavio_pct": 43.290371493555725,
+        "lula_pct": 56.709628506444275,
+        "ufs": [
+          {
+            "uf": "PE",
+            "secoes": 2,
+            "pct": 40.0
+          },
+          {
+            "uf": "RJ",
+            "secoes": 2,
+            "pct": 40.0
+          },
+          {
+            "uf": "BA",
+            "secoes": 1,
+            "pct": 20.0
+          }
+        ],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 14508,
+        "aptos": 4618542,
+        "comparecimento": 3765411,
+        "validos": 3652845,
+        "flavio": 1812221,
+        "lula": 1840624,
+        "brancos": 38097,
+        "nulos": 74469,
+        "parcela_secoes_pct": 2.913855676977367,
+        "encerradas_acumuladas": 25645,
+        "encerradas_pct": 5.1506636914863915,
+        "restantes": 472252,
+        "restantes_pct": 94.84933630851361,
+        "comparecimento_pct": 81.52813160516891,
+        "flavio_pct": 49.61122084293201,
+        "lula_pct": 50.38877915706799,
+        "ufs": [
+          {
+            "uf": "PR",
+            "secoes": 2716,
+            "pct": 18.72070581748001
+          },
+          {
+            "uf": "PB",
+            "secoes": 1739,
+            "pct": 11.986490212296664
+          },
+          {
+            "uf": "PA",
+            "secoes": 1504,
+            "pct": 10.36669423766198
+          },
+          {
+            "uf": "MG",
+            "secoes": 1354,
+            "pct": 9.332781913427075
+          },
+          {
+            "uf": "DF",
+            "secoes": 1219,
+            "pct": 8.402260821615661
+          },
+          {
+            "uf": "TO",
+            "secoes": 733,
+            "pct": 5.052384891094569
+          },
+          {
+            "uf": "MT",
+            "secoes": 722,
+            "pct": 4.976564653984009
+          },
+          {
+            "uf": "AM",
+            "secoes": 698,
+            "pct": 4.811138682106424
+          },
+          {
+            "uf": "MA",
+            "secoes": 676,
+            "pct": 4.659498207885305
+          },
+          {
+            "uf": "RS",
+            "secoes": 404,
+            "pct": 2.7846705266060106
+          },
+          {
+            "uf": "SC",
+            "secoes": 379,
+            "pct": 2.612351805900193
+          },
+          {
+            "uf": "RO",
+            "secoes": 344,
+            "pct": 2.3711055969120487
+          },
+          {
+            "uf": "PE",
+            "secoes": 285,
+            "pct": 1.9644334160463193
+          },
+          {
+            "uf": "RN",
+            "secoes": 237,
+            "pct": 1.6335814722911497
+          },
+          {
+            "uf": "BA",
+            "secoes": 235,
+            "pct": 1.6197959746346844
+          },
+          {
+            "uf": "MS",
+            "secoes": 213,
+            "pct": 1.468155500413565
+          },
+          {
+            "uf": "SP",
+            "secoes": 189,
+            "pct": 1.3027295285359801
+          },
+          {
+            "uf": "AC",
+            "secoes": 173,
+            "pct": 1.192445547284257
+          },
+          {
+            "uf": "AL",
+            "secoes": 157,
+            "pct": 1.0821615660325339
+          },
+          {
+            "uf": "GO",
+            "secoes": 119,
+            "pct": 0.8202371105596912
+          },
+          {
+            "uf": "CE",
+            "secoes": 112,
+            "pct": 0.7719878687620623
+          },
+          {
+            "uf": "PI",
+            "secoes": 108,
+            "pct": 0.7444168734491315
+          },
+          {
+            "uf": "ES",
+            "secoes": 91,
+            "pct": 0.6272401433691757
+          },
+          {
+            "uf": "RR",
+            "secoes": 39,
+            "pct": 0.26881720430107525
+          },
+          {
+            "uf": "RJ",
+            "secoes": 38,
+            "pct": 0.26192445547284254
+          },
+          {
+            "uf": "AP",
+            "secoes": 24,
+            "pct": 0.1654259718775848
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 72000,
+      "inicio_exclusivo_s": 70200,
+      "data_hora": "25/10 20:00:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 16,
+        "aptos": 5089,
+        "comparecimento": 3733,
+        "validos": 3578,
+        "flavio": 1847,
+        "lula": 1731,
+        "brancos": 52,
+        "nulos": 103,
+        "parcela_secoes_pct": 0.003213516048499991,
+        "encerradas_acumuladas": 497895,
+        "encerradas_pct": 99.99959831049394,
+        "restantes": 2,
+        "restantes_pct": 0.00040168950606249887,
+        "comparecimento_pct": 73.3542935743761,
+        "flavio_pct": 51.62101732811627,
+        "lula_pct": 48.37898267188373,
+        "ufs": [
+          {
+            "uf": "RJ",
+            "secoes": 14,
+            "pct": 87.5
+          },
+          {
+            "uf": "BA",
+            "secoes": 1,
+            "pct": 6.25
+          },
+          {
+            "uf": "ES",
+            "secoes": 1,
+            "pct": 6.25
+          }
+        ],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 81086,
+        "aptos": 25414961,
+        "comparecimento": 20625088,
+        "validos": 20004008,
+        "flavio": 10199443,
+        "lula": 9804565,
+        "brancos": 213775,
+        "nulos": 407305,
+        "parcela_secoes_pct": 16.28569764429189,
         "encerradas_acumuladas": 106731,
         "encerradas_pct": 21.436361335778283,
         "restantes": 391166,
         "restantes_pct": 78.56363866422171,
-        "comparecimento_pct": 81.22126123422076,
-        "flavio_pct": 50.65004990730623,
-        "lula_pct": 49.34995009269377,
+        "comparecimento_pct": 81.15333326696822,
+        "flavio_pct": 50.98699720575996,
+        "lula_pct": 49.01300279424004,
         "ufs": [
           {
             "uf": "PR",
-            "secoes": 15599,
-            "pct": 14.821325073398766
-          },
-          {
-            "uf": "MG",
-            "secoes": 8692,
-            "pct": 8.258667705492794
-          },
-          {
-            "uf": "PA",
-            "secoes": 8258,
-            "pct": 7.846304407726586
-          },
-          {
-            "uf": "PB",
-            "secoes": 7425,
-            "pct": 7.054832916852737
+            "secoes": 10875,
+            "pct": 13.4116863576943
           },
           {
             "uf": "RS",
-            "secoes": 7245,
-            "pct": 6.883806664322973
+            "secoes": 6665,
+            "pct": 8.219668006807588
+          },
+          {
+            "uf": "MG",
+            "secoes": 6599,
+            "pct": 8.138272944774684
+          },
+          {
+            "uf": "PA",
+            "secoes": 5414,
+            "pct": 6.676861603729374
           },
           {
             "uf": "MA",
-            "secoes": 6493,
-            "pct": 6.169296987087518
+            "secoes": 5377,
+            "pct": 6.631231038650322
           },
           {
-            "uf": "DF",
-            "secoes": 6028,
-            "pct": 5.727479168052296
-          },
-          {
-            "uf": "AM",
-            "secoes": 5041,
-            "pct": 4.789685216680761
+            "uf": "PB",
+            "secoes": 4832,
+            "pct": 5.959105147621044
           },
           {
             "uf": "ES",
-            "secoes": 4530,
-            "pct": 4.30416068866571
+            "secoes": 4421,
+            "pct": 5.452235897688873
           },
           {
             "uf": "MS",
-            "secoes": 4131,
-            "pct": 3.9250524955580683
+            "secoes": 3838,
+            "pct": 4.733246183064894
           },
           {
-            "uf": "TO",
-            "secoes": 3594,
-            "pct": 3.4148241755109408
+            "uf": "DF",
+            "secoes": 3727,
+            "pct": 4.596354487827738
           },
           {
-            "uf": "MT",
-            "secoes": 3533,
-            "pct": 3.356865278820299
+            "uf": "AM",
+            "secoes": 3642,
+            "pct": 4.491527513997484
           },
           {
             "uf": "SP",
-            "secoes": 3490,
-            "pct": 3.3160090073826334
+            "secoes": 3263,
+            "pct": 4.024122536566115
+          },
+          {
+            "uf": "TO",
+            "secoes": 2438,
+            "pct": 3.0066842611548235
+          },
+          {
+            "uf": "MT",
+            "secoes": 2427,
+            "pct": 2.993118417482673
           },
           {
             "uf": "SC",
-            "secoes": 3028,
-            "pct": 2.877041625889574
+            "secoes": 2389,
+            "pct": 2.946254593887971
           },
           {
             "uf": "AL",
-            "secoes": 2469,
-            "pct": 2.34591009719992
-          },
-          {
-            "uf": "BA",
-            "secoes": 2456,
-            "pct": 2.3335582011838816
-          },
-          {
-            "uf": "RN",
-            "secoes": 2443,
-            "pct": 2.321206305167843
+            "secoes": 2226,
+            "pct": 2.7452334558370124
           },
           {
             "uf": "CE",
-            "secoes": 2317,
-            "pct": 2.201487928397009
+            "secoes": 2166,
+            "pct": 2.6712379448980097
+          },
+          {
+            "uf": "BA",
+            "secoes": 2068,
+            "pct": 2.5503786103643047
+          },
+          {
+            "uf": "RN",
+            "secoes": 2065,
+            "pct": 2.5466788348173544
           },
           {
             "uf": "PE",
-            "secoes": 2112,
-            "pct": 2.006708029682556
-          },
-          {
-            "uf": "RO",
-            "secoes": 1881,
-            "pct": 1.7872243389360267
+            "secoes": 1715,
+            "pct": 2.115038354339837
           },
           {
             "uf": "GO",
-            "secoes": 1494,
-            "pct": 1.4195178959970356
+            "secoes": 1348,
+            "pct": 1.6624324790962681
+          },
+          {
+            "uf": "RO",
+            "secoes": 1253,
+            "pct": 1.5452729201095134
           },
           {
             "uf": "AC",
-            "secoes": 1315,
-            "pct": 1.2494417893146599
+            "secoes": 979,
+            "pct": 1.2073600868213994
           },
           {
             "uf": "PI",
-            "secoes": 580,
-            "pct": 0.5510845914847929
+            "secoes": 427,
+            "pct": 0.5266013861825716
           },
           {
             "uf": "AP",
-            "secoes": 468,
-            "pct": 0.4446682565773846
+            "secoes": 406,
+            "pct": 0.5007029573539206
           },
           {
             "uf": "RR",
-            "secoes": 251,
-            "pct": 0.23848660769428107
+            "secoes": 193,
+            "pct": 0.23801889352045977
           },
           {
             "uf": "RJ",
-            "secoes": 229,
-            "pct": 0.21758339905175444
+            "secoes": 188,
+            "pct": 0.2318526009422095
           },
           {
             "uf": "SE",
             "secoes": 145,
-            "pct": 0.13777114787119824
+            "pct": 0.17882248476925733
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 73800,
+      "inicio_exclusivo_s": 72000,
+      "data_hora": "25/10 20:30:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 0,
+        "aptos": 0,
+        "comparecimento": 0,
+        "validos": 0,
+        "flavio": 0,
+        "lula": 0,
+        "brancos": 0,
+        "nulos": 0,
+        "parcela_secoes_pct": 0.0,
+        "encerradas_acumuladas": 497895,
+        "encerradas_pct": 99.99959831049394,
+        "restantes": 2,
+        "restantes_pct": 0.00040168950606249887,
+        "comparecimento_pct": null,
+        "flavio_pct": null,
+        "lula_pct": null,
+        "ufs": [],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 158930,
+        "aptos": 49857852,
+        "comparecimento": 40465665,
+        "validos": 39198379,
+        "flavio": 19286183,
+        "lula": 19912196,
+        "brancos": 446381,
+        "nulos": 820905,
+        "parcela_secoes_pct": 31.920256599256472,
+        "encerradas_acumuladas": 265661,
+        "encerradas_pct": 53.356617935034755,
+        "restantes": 232236,
+        "restantes_pct": 46.643382064965245,
+        "comparecimento_pct": 81.16207052000556,
+        "flavio_pct": 49.20148101022239,
+        "lula_pct": 50.79851898977761,
+        "ufs": [
+          {
+            "uf": "SP",
+            "secoes": 29460,
+            "pct": 18.536462593594663
+          },
+          {
+            "uf": "MG",
+            "secoes": 15848,
+            "pct": 9.971685647769458
+          },
+          {
+            "uf": "RS",
+            "secoes": 11577,
+            "pct": 7.284339017177373
+          },
+          {
+            "uf": "CE",
+            "secoes": 10655,
+            "pct": 6.704209400364941
+          },
+          {
+            "uf": "PR",
+            "secoes": 9775,
+            "pct": 6.150506512301013
+          },
+          {
+            "uf": "BA",
+            "secoes": 9343,
+            "pct": 5.878688730887812
+          },
+          {
+            "uf": "PE",
+            "secoes": 9293,
+            "pct": 5.8472283395205435
+          },
+          {
+            "uf": "SC",
+            "secoes": 8568,
+            "pct": 5.391052664695149
+          },
+          {
+            "uf": "MA",
+            "secoes": 7656,
+            "pct": 4.817215126156169
+          },
+          {
+            "uf": "GO",
+            "secoes": 7612,
+            "pct": 4.789529981752973
+          },
+          {
+            "uf": "PA",
+            "secoes": 7160,
+            "pct": 4.5051280437928645
+          },
+          {
+            "uf": "ES",
+            "secoes": 4786,
+            "pct": 3.0113886616749515
+          },
+          {
+            "uf": "RN",
+            "secoes": 3552,
+            "pct": 2.234946202730762
+          },
+          {
+            "uf": "RJ",
+            "secoes": 3320,
+            "pct": 2.0889699867866356
+          },
+          {
+            "uf": "MT",
+            "secoes": 3038,
+            "pct": 1.9115333794752407
+          },
+          {
+            "uf": "AL",
+            "secoes": 2810,
+            "pct": 1.7680739948404958
+          },
+          {
+            "uf": "MS",
+            "secoes": 2651,
+            "pct": 1.6680299502925817
+          },
+          {
+            "uf": "PI",
+            "secoes": 2463,
+            "pct": 1.5497388787516517
+          },
+          {
+            "uf": "PB",
+            "secoes": 1967,
+            "pct": 1.237651796388347
+          },
+          {
+            "uf": "AM",
+            "secoes": 1639,
+            "pct": 1.031271629019065
+          },
+          {
+            "uf": "RO",
+            "secoes": 1570,
+            "pct": 0.9878562889322343
+          },
+          {
+            "uf": "AP",
+            "secoes": 1239,
+            "pct": 0.7795884980809161
+          },
+          {
+            "uf": "RR",
+            "secoes": 635,
+            "pct": 0.3995469703643113
+          },
+          {
+            "uf": "AC",
+            "secoes": 632,
+            "pct": 0.3976593468822752
+          },
+          {
+            "uf": "DF",
+            "secoes": 575,
+            "pct": 0.361794500723589
+          },
+          {
+            "uf": "TO",
+            "secoes": 570,
+            "pct": 0.35864846158686214
+          },
+          {
+            "uf": "SE",
+            "secoes": 536,
+            "pct": 0.33725539545711947
           }
         ],
         "cronologia_divergente": 0
@@ -4669,7 +5956,7 @@
     },
     {
       "fim_inclusivo_s": 75600,
-      "inicio_exclusivo_s": 72000,
+      "inicio_exclusivo_s": 73800,
       "data_hora": "25/10 21:00:00",
       "logs": {
         "intervalo": 0,
@@ -4703,157 +5990,343 @@
         "cronologia_divergente": 0
       },
       "recebido": {
-        "secoes": 328357,
-        "aptos": 103588545,
-        "comparecimento": 84048635,
-        "validos": 81302679,
-        "flavio": 38922876,
-        "lula": 42379803,
-        "brancos": 953864,
-        "nulos": 1792092,
-        "parcela_secoes_pct": 65.94878057108197,
+        "secoes": 169427,
+        "aptos": 53730693,
+        "comparecimento": 43582970,
+        "validos": 42104300,
+        "flavio": 19636693,
+        "lula": 22467607,
+        "brancos": 507483,
+        "nulos": 971187,
+        "parcela_secoes_pct": 34.0285239718255,
         "encerradas_acumuladas": 435088,
         "encerradas_pct": 87.38514190686026,
         "restantes": 62809,
         "restantes_pct": 12.614858093139746,
-        "comparecimento_pct": 81.13699733884668,
-        "flavio_pct": 47.874038689426214,
-        "lula_pct": 52.125961310573786,
+        "comparecimento_pct": 81.1137314011565,
+        "flavio_pct": 46.638212724116066,
+        "lula_pct": 53.361787275883934,
         "ufs": [
           {
             "uf": "SP",
-            "secoes": 81966,
-            "pct": 24.96246463452888
+            "secoes": 52506,
+            "pct": 30.990338021684856
           },
           {
             "uf": "MG",
-            "secoes": 37528,
-            "pct": 11.429023897769806
+            "secoes": 21680,
+            "pct": 12.7960714644065
           },
           {
             "uf": "BA",
-            "secoes": 26644,
-            "pct": 8.11433896642983
-          },
-          {
-            "uf": "CE",
-            "secoes": 19368,
-            "pct": 5.89845808068657
-          },
-          {
-            "uf": "RS",
-            "secoes": 19356,
-            "pct": 5.894803521776603
+            "secoes": 17301,
+            "pct": 10.211477509487862
           },
           {
             "uf": "RJ",
-            "secoes": 18485,
-            "pct": 5.629543454228172
+            "secoes": 15165,
+            "pct": 8.95075755340058
+          },
+          {
+            "uf": "CE",
+            "secoes": 8713,
+            "pct": 5.142627798402852
           },
           {
             "uf": "PE",
-            "secoes": 17605,
-            "pct": 5.361542467497267
+            "secoes": 8312,
+            "pct": 4.9059476942872156
           },
           {
-            "uf": "SC",
-            "secoes": 13981,
-            "pct": 4.257865676687264
-          },
-          {
-            "uf": "GO",
-            "secoes": 13676,
-            "pct": 4.164978971058939
-          },
-          {
-            "uf": "MA",
-            "secoes": 11165,
-            "pct": 3.4002625191483657
-          },
-          {
-            "uf": "PR",
-            "secoes": 10977,
-            "pct": 3.343007762892218
-          },
-          {
-            "uf": "PA",
-            "secoes": 10294,
-            "pct": 3.1350024515999353
+            "uf": "RS",
+            "secoes": 7779,
+            "pct": 4.591357929963937
           },
           {
             "uf": "PI",
-            "secoes": 9008,
-            "pct": 2.7433555550818163
+            "secoes": 6545,
+            "pct": 3.863020651962202
           },
           {
-            "uf": "RN",
-            "secoes": 5445,
-            "pct": 1.658256105397479
+            "uf": "GO",
+            "secoes": 6064,
+            "pct": 3.5791225719631465
           },
           {
-            "uf": "ES",
-            "secoes": 5055,
-            "pct": 1.5394829408235549
+            "uf": "SC",
+            "secoes": 5413,
+            "pct": 3.194886293211826
           },
           {
-            "uf": "AL",
-            "secoes": 4518,
-            "pct": 1.3759414296025363
+            "uf": "MA",
+            "secoes": 3509,
+            "pct": 2.071098467186458
           },
           {
-            "uf": "MT",
-            "secoes": 4469,
-            "pct": 1.3610186473868382
+            "uf": "PA",
+            "secoes": 3134,
+            "pct": 1.8497642052329322
           },
           {
             "uf": "SE",
-            "secoes": 3101,
-            "pct": 0.944398931650612
+            "secoes": 2565,
+            "pct": 1.5139263517621158
           },
           {
-            "uf": "MS",
-            "secoes": 2937,
-            "pct": 0.8944532932143977
+            "uf": "RN",
+            "secoes": 1893,
+            "pct": 1.1172953543413977
+          },
+          {
+            "uf": "AL",
+            "secoes": 1708,
+            "pct": 1.0081037851109917
+          },
+          {
+            "uf": "MT",
+            "secoes": 1431,
+            "pct": 0.8446115436146541
+          },
+          {
+            "uf": "PR",
+            "secoes": 1202,
+            "pct": 0.7094500876483677
           },
           {
             "uf": "AM",
-            "secoes": 2653,
-            "pct": 0.8079620656785146
-          },
-          {
-            "uf": "PB",
-            "secoes": 2648,
-            "pct": 0.8064393327993616
+            "secoes": 1014,
+            "pct": 0.5984878443223335
           },
           {
             "uf": "RO",
-            "secoes": 2559,
-            "pct": 0.7793346875504406
+            "secoes": 989,
+            "pct": 0.5837322268587651
           },
           {
-            "uf": "AP",
-            "secoes": 1403,
-            "pct": 0.42727884589029624
+            "uf": "PB",
+            "secoes": 681,
+            "pct": 0.4019430197076027
           },
           {
             "uf": "RR",
-            "secoes": 1251,
-            "pct": 0.3809877663640489
+            "secoes": 616,
+            "pct": 0.3635784143023249
+          },
+          {
+            "uf": "MS",
+            "secoes": 286,
+            "pct": 0.16880426378322227
           },
           {
             "uf": "AC",
-            "secoes": 908,
-            "pct": 0.2765282908541618
+            "secoes": 276,
+            "pct": 0.16290201679779492
+          },
+          {
+            "uf": "ES",
+            "secoes": 269,
+            "pct": 0.15877044390799577
+          },
+          {
+            "uf": "AP",
+            "secoes": 164,
+            "pct": 0.09679685056100858
           },
           {
             "uf": "TO",
-            "secoes": 689,
-            "pct": 0.20983259074726593
+            "secoes": 119,
+            "pct": 0.07023673912658548
           },
           {
             "uf": "DF",
-            "secoes": 668,
-            "pct": 0.20343711265482387
+            "secoes": 93,
+            "pct": 0.05489089696447438
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 77400,
+      "inicio_exclusivo_s": 75600,
+      "data_hora": "25/10 21:30:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 0,
+        "aptos": 0,
+        "comparecimento": 0,
+        "validos": 0,
+        "flavio": 0,
+        "lula": 0,
+        "brancos": 0,
+        "nulos": 0,
+        "parcela_secoes_pct": 0.0,
+        "encerradas_acumuladas": 497896,
+        "encerradas_pct": 99.99979915524698,
+        "restantes": 1,
+        "restantes_pct": 0.00020084475303124943,
+        "comparecimento_pct": null,
+        "flavio_pct": null,
+        "lula_pct": null,
+        "ufs": [],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 62183,
+        "aptos": 20518185,
+        "comparecimento": 16419578,
+        "validos": 15845104,
+        "flavio": 7309819,
+        "lula": 8535285,
+        "brancos": 190218,
+        "nulos": 384256,
+        "parcela_secoes_pct": 12.489129277742183,
+        "encerradas_acumuladas": 497271,
+        "encerradas_pct": 99.87427118460243,
+        "restantes": 626,
+        "restantes_pct": 0.12572881539756214,
+        "comparecimento_pct": 80.02451483890997,
+        "flavio_pct": 46.13298215019605,
+        "lula_pct": 53.86701784980395,
+        "ufs": [
+          {
+            "uf": "RJ",
+            "secoes": 18960,
+            "pct": 30.49064856954473
+          },
+          {
+            "uf": "SP",
+            "secoes": 18088,
+            "pct": 29.088336040396893
+          },
+          {
+            "uf": "BA",
+            "secoes": 6209,
+            "pct": 9.98504414389785
+          },
+          {
+            "uf": "MG",
+            "secoes": 5637,
+            "pct": 9.065178585787113
+          },
+          {
+            "uf": "SE",
+            "secoes": 2677,
+            "pct": 4.305035138221057
+          },
+          {
+            "uf": "CE",
+            "secoes": 2046,
+            "pct": 3.290288342473023
+          },
+          {
+            "uf": "PA",
+            "secoes": 1892,
+            "pct": 3.0426322306739784
+          },
+          {
+            "uf": "PE",
+            "secoes": 1627,
+            "pct": 2.6164707395912066
+          },
+          {
+            "uf": "RS",
+            "secoes": 931,
+            "pct": 1.4971937667851343
+          },
+          {
+            "uf": "PI",
+            "secoes": 635,
+            "pct": 1.0211794220285286
+          },
+          {
+            "uf": "PB",
+            "secoes": 521,
+            "pct": 0.8378495730344306
+          },
+          {
+            "uf": "GO",
+            "secoes": 507,
+            "pct": 0.8153353810526993
+          },
+          {
+            "uf": "MA",
+            "secoes": 355,
+            "pct": 0.5708955823939019
+          },
+          {
+            "uf": "PR",
+            "secoes": 299,
+            "pct": 0.4808388144669765
+          },
+          {
+            "uf": "MT",
+            "secoes": 259,
+            "pct": 0.41651255166202983
+          },
+          {
+            "uf": "AM",
+            "secoes": 257,
+            "pct": 0.4132962385217825
+          },
+          {
+            "uf": "ES",
+            "secoes": 255,
+            "pct": 0.41007992538153515
+          },
+          {
+            "uf": "RN",
+            "secoes": 222,
+            "pct": 0.3570107585674541
+          },
+          {
+            "uf": "SC",
+            "secoes": 207,
+            "pct": 0.3328884100155991
+          },
+          {
+            "uf": "RO",
+            "secoes": 173,
+            "pct": 0.27821108663139443
+          },
+          {
+            "uf": "DF",
+            "secoes": 154,
+            "pct": 0.24765611179904476
+          },
+          {
+            "uf": "AL",
+            "secoes": 110,
+            "pct": 0.1768972227136034
+          },
+          {
+            "uf": "TO",
+            "secoes": 80,
+            "pct": 0.12865252560989338
+          },
+          {
+            "uf": "AP",
+            "secoes": 31,
+            "pct": 0.049852853673833686
+          },
+          {
+            "uf": "MS",
+            "secoes": 27,
+            "pct": 0.04342022739333901
+          },
+          {
+            "uf": "AC",
+            "secoes": 21,
+            "pct": 0.033771287972597014
+          },
+          {
+            "uf": "RR",
+            "secoes": 3,
+            "pct": 0.004824469710371002
           }
         ],
         "cronologia_divergente": 0
@@ -4861,7 +6334,7 @@
     },
     {
       "fim_inclusivo_s": 79200,
-      "inicio_exclusivo_s": 75600,
+      "inicio_exclusivo_s": 77400,
       "data_hora": "25/10 22:00:00",
       "logs": {
         "intervalo": 0,
@@ -4889,157 +6362,168 @@
         "cronologia_divergente": 0
       },
       "recebido": {
-        "secoes": 62693,
-        "aptos": 20679559,
-        "comparecimento": 16552958,
-        "validos": 15973909,
-        "flavio": 7353196,
-        "lula": 8620713,
-        "brancos": 191580,
-        "nulos": 387469,
-        "parcela_secoes_pct": 12.59156010178812,
+        "secoes": 510,
+        "aptos": 161374,
+        "comparecimento": 133380,
+        "validos": 128805,
+        "flavio": 43377,
+        "lula": 85428,
+        "brancos": 1362,
+        "nulos": 3213,
+        "parcela_secoes_pct": 0.10243082404593722,
         "encerradas_acumuladas": 497781,
         "encerradas_pct": 99.97670200864837,
         "restantes": 116,
         "restantes_pct": 0.023297991351624935,
-        "comparecimento_pct": 80.04502417097,
-        "flavio_pct": 46.03253968706095,
-        "lula_pct": 53.96746031293905,
+        "comparecimento_pct": 82.65271976898386,
+        "flavio_pct": 33.676487713986255,
+        "lula_pct": 66.32351228601374,
         "ufs": [
           {
-            "uf": "RJ",
-            "secoes": 18960,
-            "pct": 30.24261081779465
+            "uf": "BA",
+            "secoes": 156,
+            "pct": 30.58823529411765
           },
           {
             "uf": "SP",
-            "secoes": 18200,
-            "pct": 29.03035426602651
-          },
-          {
-            "uf": "BA",
-            "secoes": 6365,
-            "pct": 10.152648621058173
-          },
-          {
-            "uf": "MG",
-            "secoes": 5699,
-            "pct": 9.09032906385083
-          },
-          {
-            "uf": "SE",
-            "secoes": 2677,
-            "pct": 4.270014196162251
-          },
-          {
-            "uf": "CE",
-            "secoes": 2073,
-            "pct": 3.306589252388624
-          },
-          {
-            "uf": "PA",
-            "secoes": 1923,
-            "pct": 3.0673280908554386
+            "secoes": 112,
+            "pct": 21.96078431372549
           },
           {
             "uf": "PE",
-            "secoes": 1699,
-            "pct": 2.7100314229658813
+            "secoes": 72,
+            "pct": 14.117647058823529
           },
           {
-            "uf": "RS",
-            "secoes": 932,
-            "pct": 1.4866093503261928
-          },
-          {
-            "uf": "PI",
-            "secoes": 635,
-            "pct": 1.0128722504904855
-          },
-          {
-            "uf": "PB",
-            "secoes": 522,
-            "pct": 0.8326288421354856
-          },
-          {
-            "uf": "GO",
-            "secoes": 508,
-            "pct": 0.8102978003923883
+            "uf": "MG",
+            "secoes": 62,
+            "pct": 12.156862745098039
           },
           {
             "uf": "MA",
-            "secoes": 393,
-            "pct": 0.6268642432169461
+            "secoes": 38,
+            "pct": 7.450980392156863
           },
           {
-            "uf": "PR",
-            "secoes": 299,
-            "pct": 0.4769272486561498
+            "uf": "PA",
+            "secoes": 31,
+            "pct": 6.078431372549019
+          },
+          {
+            "uf": "CE",
+            "secoes": 27,
+            "pct": 5.294117647058823
           },
           {
             "uf": "AM",
-            "secoes": 263,
-            "pct": 0.4195045698881853
-          },
-          {
-            "uf": "MT",
-            "secoes": 260,
-            "pct": 0.4147193466575216
+            "secoes": 6,
+            "pct": 1.1764705882352942
           },
           {
             "uf": "ES",
-            "secoes": 256,
-            "pct": 0.40833904901663665
+            "secoes": 1,
+            "pct": 0.19607843137254902
           },
           {
-            "uf": "RN",
-            "secoes": 222,
-            "pct": 0.35410651906911456
+            "uf": "GO",
+            "secoes": 1,
+            "pct": 0.19607843137254902
           },
           {
-            "uf": "SC",
-            "secoes": 207,
-            "pct": 0.33018040291579603
+            "uf": "MT",
+            "secoes": 1,
+            "pct": 0.19607843137254902
           },
           {
-            "uf": "RO",
-            "secoes": 173,
-            "pct": 0.27594787296827394
+            "uf": "PB",
+            "secoes": 1,
+            "pct": 0.19607843137254902
           },
           {
-            "uf": "DF",
-            "secoes": 154,
-            "pct": 0.24564145917407046
-          },
-          {
-            "uf": "AL",
-            "secoes": 110,
-            "pct": 0.17545818512433606
+            "uf": "RS",
+            "secoes": 1,
+            "pct": 0.19607843137254902
           },
           {
             "uf": "TO",
-            "secoes": 81,
-            "pct": 0.12920102722792018
+            "secoes": 1,
+            "pct": 0.19607843137254902
+          }
+        ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 81000,
+      "inicio_exclusivo_s": 79200,
+      "data_hora": "25/10 22:30:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 0,
+        "aptos": 0,
+        "comparecimento": 0,
+        "validos": 0,
+        "flavio": 0,
+        "lula": 0,
+        "brancos": 0,
+        "nulos": 0,
+        "parcela_secoes_pct": 0.0,
+        "encerradas_acumuladas": 497896,
+        "encerradas_pct": 99.99979915524698,
+        "restantes": 1,
+        "restantes_pct": 0.00020084475303124943,
+        "comparecimento_pct": null,
+        "flavio_pct": null,
+        "lula_pct": null,
+        "ufs": [],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 92,
+        "aptos": 26068,
+        "comparecimento": 19590,
+        "validos": 18918,
+        "flavio": 6189,
+        "lula": 12729,
+        "brancos": 186,
+        "nulos": 486,
+        "parcela_secoes_pct": 0.01847771727887495,
+        "encerradas_acumuladas": 497873,
+        "encerradas_pct": 99.99517972592724,
+        "restantes": 24,
+        "restantes_pct": 0.004820274072749987,
+        "comparecimento_pct": 75.14960871566672,
+        "flavio_pct": 32.71487472248652,
+        "lula_pct": 67.28512527751347,
+        "ufs": [
+          {
+            "uf": "MG",
+            "secoes": 80,
+            "pct": 86.95652173913044
           },
           {
-            "uf": "AP",
-            "secoes": 31,
-            "pct": 0.04944730671685834
+            "uf": "MA",
+            "secoes": 7,
+            "pct": 7.608695652173913
           },
           {
-            "uf": "MS",
-            "secoes": 27,
-            "pct": 0.0430670090759734
-          },
-          {
-            "uf": "AC",
-            "secoes": 21,
-            "pct": 0.033496562614645974
-          },
-          {
-            "uf": "RR",
+            "uf": "PA",
             "secoes": 3,
-            "pct": 0.00478522323066371
+            "pct": 3.260869565217391
+          },
+          {
+            "uf": "AM",
+            "secoes": 1,
+            "pct": 1.0869565217391304
+          },
+          {
+            "uf": "RJ",
+            "secoes": 1,
+            "pct": 1.0869565217391304
           }
         ],
         "cronologia_divergente": 0
@@ -5047,7 +6531,7 @@
     },
     {
       "fim_inclusivo_s": 82800,
-      "inicio_exclusivo_s": 79200,
+      "inicio_exclusivo_s": 81000,
       "data_hora": "25/10 23:00:00",
       "logs": {
         "intervalo": 0,
@@ -5075,56 +6559,41 @@
         "cronologia_divergente": 0
       },
       "recebido": {
-        "secoes": 114,
-        "aptos": 32678,
-        "comparecimento": 24865,
-        "validos": 24040,
-        "flavio": 7850,
-        "lula": 16190,
-        "brancos": 241,
-        "nulos": 584,
-        "parcela_secoes_pct": 0.022896301845562437,
+        "secoes": 22,
+        "aptos": 6610,
+        "comparecimento": 5275,
+        "validos": 5122,
+        "flavio": 1661,
+        "lula": 3461,
+        "brancos": 55,
+        "nulos": 98,
+        "parcela_secoes_pct": 0.0044185845666874874,
         "encerradas_acumuladas": 497895,
         "encerradas_pct": 99.99959831049394,
         "restantes": 2,
         "restantes_pct": 0.00040168950606249887,
-        "comparecimento_pct": 76.09094803843564,
-        "flavio_pct": 32.653910149750416,
-        "lula_pct": 67.34608985024958,
+        "comparecimento_pct": 79.80332829046898,
+        "flavio_pct": 32.428738773916436,
+        "lula_pct": 67.57126122608356,
         "ufs": [
           {
             "uf": "MG",
-            "secoes": 100,
-            "pct": 87.71929824561404
+            "secoes": 20,
+            "pct": 90.9090909090909
           },
           {
             "uf": "MA",
-            "secoes": 9,
-            "pct": 7.894736842105263
-          },
-          {
-            "uf": "PA",
-            "secoes": 3,
-            "pct": 2.6315789473684212
-          },
-          {
-            "uf": "AM",
-            "secoes": 1,
-            "pct": 0.8771929824561403
-          },
-          {
-            "uf": "RJ",
-            "secoes": 1,
-            "pct": 0.8771929824561403
+            "secoes": 2,
+            "pct": 9.090909090909092
           }
         ],
         "cronologia_divergente": 0
       }
     },
     {
-      "fim_inclusivo_s": 86400,
+      "fim_inclusivo_s": 84600,
       "inicio_exclusivo_s": 82800,
-      "data_hora": "26/10 00:00:00",
+      "data_hora": "25/10 23:30:00",
       "logs": {
         "intervalo": 0,
         "acumulado": 127812804,
@@ -5185,6 +6654,56 @@
             "pct": 50.0
           }
         ],
+        "cronologia_divergente": 0
+      }
+    },
+    {
+      "fim_inclusivo_s": 86400,
+      "inicio_exclusivo_s": 84600,
+      "data_hora": "26/10 00:00:00",
+      "logs": {
+        "intervalo": 0,
+        "acumulado": 127812804,
+        "acumulado_pct": 100.0
+      },
+      "fecho": {
+        "secoes": 0,
+        "aptos": 0,
+        "comparecimento": 0,
+        "validos": 0,
+        "flavio": 0,
+        "lula": 0,
+        "brancos": 0,
+        "nulos": 0,
+        "parcela_secoes_pct": 0.0,
+        "encerradas_acumuladas": 497897,
+        "encerradas_pct": 100.0,
+        "restantes": 0,
+        "restantes_pct": 0.0,
+        "comparecimento_pct": null,
+        "flavio_pct": null,
+        "lula_pct": null,
+        "ufs": [],
+        "cronologia_divergente": 0
+      },
+      "recebido": {
+        "secoes": 0,
+        "aptos": 0,
+        "comparecimento": 0,
+        "validos": 0,
+        "flavio": 0,
+        "lula": 0,
+        "brancos": 0,
+        "nulos": 0,
+        "parcela_secoes_pct": 0.0,
+        "encerradas_acumuladas": 497897,
+        "encerradas_pct": 100.0,
+        "restantes": 0,
+        "restantes_pct": 0.0,
+        "comparecimento_pct": null,
+        "flavio_pct": null,
+        "lula_pct": null,
+        "ufs": [],
         "cronologia_divergente": 0
       }
     }

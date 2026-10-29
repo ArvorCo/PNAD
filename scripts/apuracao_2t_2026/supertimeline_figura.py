@@ -292,14 +292,14 @@ def desenhar(d: dict, saida: Path):
     y = topo
     for r in visiveis:
         s = r["fim_inclusivo_s"]
-        if s in {9 * 3600 - 1, 17 * 3600, 20 * 3600}:
+        if s in {9 * 3600 - 1, 17 * 3600, 19 * 3600 + 5 * 60}:
             fase = (
                 "25 OUT · VOTAÇÃO · HORA A HORA"
                 if s < 17 * 3600
                 else (
                     "25 OUT · ENCERRAMENTOS · MINUTOS EM DETALHE"
                     if s == 17 * 3600
-                    else "25 → 26 OUT · RECEBIMENTO · ATÉ O FIM DO EXTRATO"
+                    else "25 → 26 OUT · RECEBIMENTO · INTERVALOS EM DETALHE"
                 )
             )
             rect(80, y, W - 160, 56, "#e7e9df")
@@ -309,8 +309,6 @@ def desenhar(d: dict, saida: Path):
             h = (s + 1) // 3600
             label = f"{h-1:02d}–{h:02d}h" if h > 8 else "Antes 08h"
             detalhe = "hora completa" if h > 8 else "antes das 8h"
-        elif s == 86400:
-            label, detalhe = "00h00", "23:00 → 00:00"
         else:
             label = f"{s//3600%24:02d}h{s%3600//60:02d}"
             prev = r["inicio_exclusivo_s"]

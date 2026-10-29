@@ -62,7 +62,8 @@ def elegibilidade(status, r, sha, esperado, comp, off):
     return None
 
 
-def reler(tarefa):
+def horarios_reconferidos(tarefa):
+    """Relê o original e reconcilia cada segundo com as métricas arquivadas."""
     key, sha, r, off = tarefa
     with sqlite3.connect(f"file:{P.raw}?mode=ro", uri=True) as con:
         pacote = ler_compacto(con, key)
@@ -89,6 +90,11 @@ def reler(tarefa):
         or max(hs) != r["ultimo_computo_s"] + off * 3600
     ):
         raise ValueError(f"Releitura não recompõe as métricas: {key}")
+    return hs
+
+
+def reler(tarefa):
+    hs = horarios_reconferidos(tarefa)
     bins = [0] * (len(CORTES) + 1)
     for s, n in hs.items():
         bins[faixa(s)] += n

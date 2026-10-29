@@ -2,7 +2,7 @@
 
 Uma mesma régua organiza processos diferentes sem fundi-los. O tempo conduz o olhar de cima para baixo; três trilhas conservam seus próprios denominadores e passam da quietude ao preenchimento. O cuidado meticuloso com alinhamentos permite comparar eventos sem precisar traduzir cada número.
 
-O panorama inicial usa tempo proporcional. Na sequência detalhada, o ritmo se expande em torno do encerramento: horas cedem lugar a minutos e depois voltam às horas. Essa mudança é declarada, nunca disfarçada. O espaço vazio comunica ausência de novos registros, com a mesma dignidade visual dada aos grandes volumes.
+O panorama inicial usa tempo proporcional. Na sequência detalhada, o ritmo se expande em torno do encerramento: horas cedem lugar a minutos no encerramento e no início do recebimento, depois passam a intervalos de meia hora. Os limites de cada faixa ficam explícitos; o trecho 19h30–20h continua com trinta minutos, preservando os cortes solicitados. Essa mudança é declarada, nunca disfarçada. O espaço vazio comunica ausência de novos registros, com a mesma dignidade visual dada aos grandes volumes.
 
 Papel quente, tinta profunda e três cores contidas separam cômputo, encerramento e recebimento. Cores dos candidatos permanecem exclusivamente junto aos seus resultados. A execução precisa da tipografia e das escalas mantém o caráter documental sem transformar a imagem em uma planilha ornamentada.
 

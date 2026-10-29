@@ -29,7 +29,22 @@ def test_cortes_preservam_segundos_e_detalhe_publicado():
     assert cs[:10] == [h * 3600 - 1 for h in range(8, 18)]
     assert cs[10:30] == CORTES
     assert all(a < b for a, b in pairwise(cs))
-    assert cs[30:] == [h * 3600 for h in range(20, 25)]
+    assert [rotulo(s)[6:11] for s in cs[30:]] == [
+        "19:05",
+        "19:10",
+        "19:15",
+        "19:20",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00",
+        "21:30",
+        "22:00",
+        "22:30",
+        "23:00",
+        "23:30",
+        "00:00",
+    ]
 
 
 def test_todos_os_dados_anteriores_permanecem(dados):
@@ -90,7 +105,8 @@ def test_recebimentos_inconsistentes_nao_sao_apagados(dados):
     assert primeira["recebido"]["cronologia_divergente"] == 1
     assert dados["trilhas"]["recebido"]["ultimo_s"] == 84100
     assert dados["linhas"][-1]["data_hora"] == "26/10 00:00:00"
-    assert dados["linhas"][-1]["recebido"]["secoes"] == 2
+    assert dados["linhas"][-2]["recebido"]["secoes"] == 2
+    assert dados["linhas"][-1]["recebido"]["secoes"] == 0
 
 
 def test_cada_trilha_e_distribuicao_segundo_recompoe(dados):
@@ -116,3 +132,21 @@ def test_csv_uma_linha_por_faixa_nao_duplica_logs(dados):
     )
     for k in ("fecho", "recebido"):
         assert sum(int(r[f"{k}_secoes"]) for r in rows) == dados["total"]["secoes"]
+
+
+def test_cauda_logs_relida_recompoe_intervalos(dados):
+    segundos = dados["logs_cauda"]["segundos"]
+    assert sum(n for _, n in segundos) == dados["logs_cobertura"]["intervalos"][-1]
+    assert segundos[-1][0] == dados["logs_dia"]["ultimo_s"]
+    for r in dados["linhas"][30:]:
+        assert r["logs"]["intervalo"] == sum(
+            n
+            for t, n in segundos
+            if r["inicio_exclusivo_s"] < t <= r["fim_inclusivo_s"]
+        )
+    assert dados["logs_cauda"]["logs_relidos"]
+    for campo in CAMPOS:
+        assert (
+            sum(r["fecho"][campo] for r in dados["linhas"][30:])
+            == dados["apos19_subtotal"][campo]
+        )
