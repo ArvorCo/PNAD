@@ -34,6 +34,8 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + ' · ' + plural(l.n_secoes, 'seção', 'seções') + (l.aptos2 || l.aptos1 ? ' · ' + nf0.format(l.aptos2 || l.aptos1) + ' eleitores' : '') + (dist !== null ? ' · ' + km(dist) + ' em linha reta ' + S.centro.de : '')),
       l.aprox ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado: é a cidade do consulado, não o prédio.') : null,
       T.ficha(l),
+      h('details', {class:'ficha-distribuicao',open:['mulheres','jovens','idosos'].includes(S.camada)}, h('summary',{},'Idade e sexo · pirâmide etária'),
+        window.PolitizePerfil.painel({uf:l.uf,local:l.id,escolherSecao:true,...(l.horario?{secoes:l.secoes}:{})},l.horario?'Seções selecionadas deste local':caixa(l.nome))),
       h('p', { class: 'placar-contagens' }, h('span', { class: 'tf' }, 'Flávio: ' + (vazio(l.flavio2) ? 'sem contagem publicável' : nf0.format(l.flavio2) + ' votos')), ' · ', h('span', { class: 'tl' }, 'Lula: ' + (vazio(l.lula2) ? 'sem contagem publicável' : nf0.format(l.lula2) + ' votos')), ' · 2º turno'),
       tematica ? contexto : h('p', { class: 'ficha-contexto-resumo' }, window.PolitizeTerritorio.resumo(l)),
       h('table', { class: 'cmp' },

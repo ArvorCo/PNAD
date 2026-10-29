@@ -1,4 +1,4 @@
-import { criarVisoes } from './visoes.js?v=20261029-seguranca';
+import { criarVisoes } from './visoes.js?v=20261029-perfil1';
 import { criarCompartilhar } from './compartilhar.js?v=20261028-movimento1';
 import { criarRelatos } from './relatos.js?v=20261028';
 // Politize-se: aplicativo estático, escrito à mão, sem framework e sem build.
@@ -578,6 +578,7 @@ function renderSecao(uf, zd, s, extra) {
     h('h3', {}, 'Os dois turnos'),
     h('div', { class: 'turnos' }, blocoTurno(1, s), blocoTurno(2, s)),
     tabelaTurnos(s),
+    window.PolitizePerfil.painel({uf,mun:s.mun_tse,zona:zd.zona,secao:extra.agregada||s.secao},`Seção cadastral ${extra.agregada||s.secao} · Zona ${zd.zona}`),
     local ? window.PolitizeMovimento.painel({uf, local: local.local_id, secao: s.secao}, `Seção ${s.secao} · Zona ${zd.zona}`) : null,
     h('h3', {}, 'Como quem votou foi identificado'),
     h('div', { class: 'turnos' }, blocoBio(1, s), blocoBio(2, s)),
@@ -607,6 +608,7 @@ function renderLocal(uf, zd, local, extra = {}) {
     h('h2', { id: 'ficha-titulo' }, 'O que aconteceu neste local de votação'),
     cabecalhoLocal(uf, zd, local),
     V.nav({uf, zona: zd.zona, mun: local.mun_tse, local: local.local_id}, 'local'),
+    window.PolitizePerfil.painel({uf,local:local.local_id,escolherSecao:true},caixa(local.nome)),
     window.PolitizeMovimento.painel({uf, local: local.local_id, escolherSecao:true}, caixa(local.nome)),
     window.PolitizeTerritorio.atalho(local.local_id),
     extra.nota ? aviso(extra.nota, 'Aproximação') : null,

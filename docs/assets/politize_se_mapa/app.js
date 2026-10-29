@@ -120,6 +120,7 @@
   const Q = window.criarSegurancaMapa({ S, COR, h });
   const P = window.criarPlacarMapa({ S, buscar });
   const T = window.criarUltimosMapa({ S, COR, H, h });
+  const I = window.criarIndicadoresMapa({ S, COR, H, h, nf0 });
 
   /* ------------------------------------------------------------ geodésia */
 
@@ -177,6 +178,7 @@
   // parcela dos prédios com o atributo (sinais, urna trocada e mudança de endereço).
   function corGrupo(filhos) {
     const k = S.camada, c = camada();
+    if (I.ativo()) return corValor(I.grupo(filhos));
     if (k === 'resultado') return corValor(window.PlacarMapa.resumo(filhos).pf);
     if (Q.ativo()) return corValor(Q.grupo(filhos));
     if (k === 'pico') return corValor(M.picoGrupo(filhos));
@@ -243,6 +245,7 @@
     await P.carregar(pedidas);
     await H.carregar(pedidas);
     await M.carregar(pedidas);
+    await I.carregar(pedidas);
     if (seq !== S.requisicao) return false;
     S.locais = [].concat(...pedidas.map((u) => S.porUf.get(u) || []));
     return true;
@@ -416,7 +419,8 @@
     const label = h('span', {}, (nums.length === 1 ? 'Seção ' : 'Seções ') + txt, h('small', {}, P.descricao(l)));
     if (S.camada === 'pico') label.append(h('small', {}, vazio(l.pico_hora) ? 'Sem horário utilizável' : 'Pico: ' + S.meta.camadas.pico.nomes[l.pico_hora]));
     if (T.ativo()) label.append(T.rotulo(l));
-    if (Q.ativo()) label.append(h('small', {}, Q.texto(l)));
+    if (I.ativo()) label.append(h('small', {}, I.texto(l)));
+    else if (Q.ativo()) label.append(h('small', {}, Q.texto(l)));
     else if (camada().grupo) {
       const v = valor(l);
       label.append(h('small', {}, S.camada === 'renda' ? window.PolitizeTerritorio.reais(v) : S.camada === 'renda_ate2' ? window.PolitizeTerritorio.perc(v) + ' até 2 salários' : window.PolitizeTerritorio.fmt(v, 2) + '/100 mil · município'));
@@ -552,14 +556,14 @@
       if (!grupos.has(grupo)) grupos.set(grupo, []);
       grupos.get(grupo).push(h('option', { value: k }, c.nome));
     });
-    seletor.replaceChildren(...['Economia e segurança', 'Clima', 'Eleição e urnas'].filter((g) => grupos.has(g)).map((g) => h('optgroup', { label: g }, grupos.get(g))));
+    seletor.replaceChildren(...['Perfil do eleitorado', 'Economia e segurança', 'Crimes registrados · UF', 'Clima', 'Eleição e urnas'].filter((g) => grupos.has(g)).map((g) => h('optgroup', { label: g }, grupos.get(g))));
     seletor.onchange = () => { S.camada = seletor.value; recolorir(); };
   }
 
   function desenharLegenda() {
     const c = camada(), k = S.camada, par = COR[k];
     $('#camada-seletor').value = k;
-    if (Q.legenda()) return;
+    if (Q.legenda() || I.legenda()) return;
     const faixa = $('#mapa-escala');
     faixa.replaceChildren(...[h('b', {}, c.nome), c.tipo === 'sequencial' || c.tipo === 'divergente' ? [h('span', { class: 'mapa-mini-escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + par[1] + ')', 'aria-hidden': 'true' }), h('span', {}, c.baixo + ' → ' + c.alto)] : null, h('small', {}, c.agregacao === 'municipios' ? 'Dado municipal · 2024 · cinza: sem dado' : c.grupo ? 'Estimativa PNAD · cinza: sem dado' : 'Cinza: sem dado aplicável')].flat().filter(Boolean));
     if (window.RendaMapa.ativa(k)) window.RendaMapa.legenda(faixa, k);
@@ -649,7 +653,7 @@
     const pag = todas.slice(ini, ini + S.porPagina);
     const semCoord = todas.filter((l) => !coordOk(l)).length;
     $('#l-resumo').textContent = plural(n, 'local de votação', 'locais de votação') + (S.centro && S.listaRaio ? ' até ' + S.raio + ' km ' + S.centro.de : ' pela busca, sem limite de distância') + (semCoord ? ', ' + nf0.format(semCoord) + ' sem coordenada' : '') + '.';
-    const cols = Q.ativo() ? [...Q.colunas(), ...COLS_LISTA] : S.camada === 'pico' ? [['pico_hora', 'Pico de votação, Brasília'], ...COLS_LISTA] : T.ativo() ? [...T.colunasLista, ...COLS_LISTA] : COLS_LISTA;
+    const cols = I.ativo() ? [...I.colunas(), ...COLS_LISTA] : Q.ativo() ? [...Q.colunas(), ...COLS_LISTA] : S.camada === 'pico' ? [['pico_hora', 'Pico de votação, Brasília'], ...COLS_LISTA] : T.ativo() ? [...T.colunasLista, ...COLS_LISTA] : COLS_LISTA;
     $('#tabela thead').replaceChildren(h('tr', {}, cols.map((c) => {
       const ativo = S.ordem.col === c[0];
       return h('th', { scope: 'col', 'aria-sort': ativo ? (S.ordem.dir === 1 ? 'ascending' : 'descending') : 'none' },
@@ -659,7 +663,7 @@
         } }, c[1], h('span', { class: 'seta', 'aria-hidden': 'true' }, ativo ? (S.ordem.dir === 1 ? ' ▲' : ' ▼') : '')));
     })));
     $('#tabela tbody').replaceChildren(...pag.map((l) => h('tr', {},
-      Q.ativo() ? Q.celula(l) : S.camada === 'pico' ? h('td', {}, S.meta.camadas.pico.nomes[l.pico_hora] || 'Sem horário utilizável', h('small', {}, l.mov_cobertas + ' de ' + l.mov_total + ' seções')) : T.ativo() ? [T.celula(l,'ultimo'), T.celula(l,'enc')] : null,
+      I.ativo() ? I.celula(l) : Q.ativo() ? Q.celula(l) : S.camada === 'pico' ? h('td', {}, S.meta.camadas.pico.nomes[l.pico_hora] || 'Sem horário utilizável', h('small', {}, l.mov_cobertas + ' de ' + l.mov_total + ' seções')) : T.ativo() ? [T.celula(l,'ultimo'), T.celula(l,'enc')] : null,
       h('td', {}, l.uf), h('td', {}, caixa(l.municipio)), h('td', { class: 'num' }, String(l.zona)),
       h('td', {}, caixa(l.nome), h('small', {}, [caixa(l.endereco), caixa(l.bairro)].filter(Boolean).join(' · '))),
       h('td', { class: 'num' }, String(l.n_secoes || 0), h('small', {}, l.n_bu2 ? l.n_bu2 + ' com 2º turno' : 'sem 2º turno')),
@@ -709,7 +713,7 @@
     const cab = ['uf', 'cidade', 'zona', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'secoes', 'secoes_com_2o_turno', 'eleitores', 'flavio_entre_os_dois_2t_pct', 'flavio_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_pontos', 'comparecimento_2t_pct', 'mudanca_comparecimento_pontos', 'abstencao_2t_pct', 'maior_numero_de_sinais_numa_secao', 'secoes_com_sinal', 'registro_urna_1t_nivel_max', 'registro_urna_2t_nivel_max', 'registro_urna_secoes_que_subiram', 'modelo_urna_predominante', 'modelos_urna_no_predio', 'urnas_trocadas', 'secoes_que_mudaram_de_endereco', 'secoes_no_grupo_atipico_estatistica', 'renda_domiciliar_mediana_estimada_brl_202607', 'renda_domiciliar_ate2sm_estimada_pct', 'homicidios_municipio_por100mil_2024', 'politize_se', 'google_maps'];
     const dec = (v, c) => (vazio(v) ? '' : typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v));
     const esc = (v) => { const s = vazio(v) ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
-    cab.push('lula_entre_os_dois_2t_pct', 'lula_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_lula_pontos', 'flavio_votos_2t', 'lula_votos_2t', ...H.colunasCsv, ...Q.colunasCsv);
+    cab.push('lula_entre_os_dois_2t_pct', 'lula_entre_os_dois_1t_mesmas_secoes_pct', 'mudanca_lula_pontos', 'flavio_votos_2t', 'lula_votos_2t', ...H.colunasCsv, ...Q.colunasCsv, ...I.colunasCsv);
     if (S.camada === 'pico') cab.push(...M.colunasCsv);
     const linhas = [cab.join(';')];
     (S.listaAtual || []).forEach((l) => {
@@ -717,7 +721,7 @@
         l.n_secoes, l.n_bu2, l.aptos2 || l.aptos1, dec(l.fatia_f2, 1), dec(l.fatia_f1_par, 1), dec(l.d_fatia_pp, 1), dec(l.comp_pct2, 1), dec(l.d_comp_pp, 1), dec(l.abst_pct2, 1),
         l.n_bu2 ? l.escore_max : '', l.secoes_sinal, l.log1_max, l.log2_max, l.log_subiu, predominante(l), (l.modelos || []).map((m) => m[0] + ':' + m[1]).join('|'), l.urnas_trocadas, l.secoes_mudaram, l.secoes_anomalas,
         dec(l.renda_mediana_brl, 0), dec(l.renda_ate2, 1), dec(l.homicidios_taxa_100mil, 2),
-        'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : '', dec(l.fatia_l2, 1), dec(vazio(l.fatia_f1_par) ? null : 100 - l.fatia_f1_par, 1), dec(l.d_lula_pp, 1), l.flavio2, l.lula2, ...H.csv(l), ...Q.csv(l), ...M.csv(l)].map(esc).join(';'));
+        'https://brasil.arvor.co/' + linkPolitize(l, l.secao_link), coordOk(l) ? 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon : '', dec(l.fatia_l2, 1), dec(vazio(l.fatia_f1_par) ? null : 100 - l.fatia_f1_par, 1), dec(l.d_lula_pp, 1), l.flavio2, l.lula2, ...H.csv(l), ...Q.csv(l), ...I.csv(l), ...M.csv(l)].map(esc).join(';'));
     });
     const blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const a = h('a', { href: URL.createObjectURL(blob), download: 'locais_de_votacao_' + new Date().toISOString().slice(0, 10) + '.csv' });
@@ -736,7 +740,7 @@
 
   function atualizar(enquadrar) {
     if (!S.meta) return;
-    const ls = comDistancia(P.aplicar(T.aplicar(M.aplicar(H.filtrar(S.locais.filter(passaFiltro))))));
+    const ls = comDistancia(I.aplicar(P.aplicar(T.aplicar(M.aplicar(H.filtrar(S.locais.filter(passaFiltro)))))));
     H.resumo(ls);
     desenharLegenda();
     const semCoord = ls.filter((l) => !coordOk(l)).length;
@@ -947,7 +951,7 @@
     }
     if (d.formato !== FORMATO) { setStatus('Os dados do mapa estão numa versão diferente da página. Recarregue em alguns minutos.', true); return; }
     S.meta = d;
-    M.instalar(); T.instalar(); await Q.instalar();
+    M.instalar(); T.instalar(); await Q.instalar(); await I.instalar();
     montarResumo();
     montarUfs();
     iniciarMapa();

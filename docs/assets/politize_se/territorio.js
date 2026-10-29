@@ -87,6 +87,7 @@
       const [uf, , z] = localId.split('-');
       content.append(el('a', { class: 'territorio-abrir', href: `politizese.html#uf=${uf}&z=${z}&l=${encodeURIComponent(localId)}` }, 'Explorar este contexto no Politize-se ↗'));
     } else content.append(el('div', { class: 'territorio-grade' }, social));
+    content.append(compact ? el('details', {class:'territorio-mais'}, el('summary',{},'Outros crimes e índice · estado inteiro'), window.PolitizeCrimes.painel(localId.split('-')[0])) : window.PolitizeCrimes.painel(localId.split('-')[0]));
     content.append(window.PolitizeSeguranca.painel({ uf: localId.split('-')[0], local: localId }), fontes(m, meta));
     return content;
   }

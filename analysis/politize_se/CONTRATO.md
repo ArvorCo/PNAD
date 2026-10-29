@@ -586,3 +586,59 @@ O último voto não equivale ao encerramento formal.
   todas as UFs, proteção de tamanho, simetria, soma ponderada por votos, recorte
   horário e ausências. QA desktop/móvel, CSV, tabelas e anéis Canvas/CSS em
   `tmp/placar-mapa/`. O recorte CE após 17h continua com 955 seções.
+
+## Idade, sexo e registros criminais (29/10/2026)
+
+- `PYTHONPATH=scripts python3 -m politize_se.perfil` lê os 28 ZIPs oficiais
+  `data/raw/tse_eleitorado/perfil_eleitor_secao/perfil_eleitor_secao_2026_<UF>.zip`
+  em lotes Arrow, sem extrair CSVs grandes. `--uf CE` atualiza uma UF.
+  Saída: `docs/assets/politize_se/perfil/`, vetores por seção e resumos por local.
+  São 516.785 seções cadastrais e 158.745.463 inscritos, incluindo ZZ.
+  A chave completa é UF + município + zona + seção; local é o número cadastral.
+  Os 93.053 locais com correspondência, entre 94.305 pontos do mapa, recebem
+  perfil próprio; os demais continuam sem perfil. Não há fallback demográfico
+  por zona. Esses totais não substituem os aptos dos boletins: cadastro,
+  transferências e agregações de seções são universos distintos.
+- Histograma: 16–17, 18–24, 25–34, 35–44, 45–54, 55–59, 60–64, 65–74,
+  75–84 e 85+, mais idade desconhecida. Cada faixa preserva masculino,
+  feminino e sexo não informado (`CD_GENERO`, não identidade de gênero).
+  Contagens e percentuais por faixa, não densidade por ano de idade; faixas
+  têm larguras diferentes. Os percentuais usam todos os inscritos, incluindo
+  desconhecidos. Zona e município são somas independentes, pois se cruzam.
+- `perfil.js` compartilha pirâmide, tabela acessível e seleção de recortes nas
+  duas páginas. No mapa, proporção feminina, 16–24 e 60+ têm cores próprias;
+  grupos somam numeradores e denominadores antes da divisão. Filtros de horário
+  recompõem o cadastro das seções selecionadas, sem atribuir idade/sexo a quem
+  votou após o corte. As bordas eleitorais continuam independentes do perfil.
+- `PYTHONPATH=scripts python3 -m politize_se.crimes` usa os arquivos preservados
+  em `data/originals/sinesp_2026/`: `bancovde-2025.xlsx`, `notas.html`,
+  `fonte.json` e `populacao_uf_2025.json`. URLs e SHA-256 ficam no payload
+  `docs/assets/politize_se/crimes/dados.json`. População: SIDRA 6579, variável
+  9324, UFs, 2025. Sinesp consultado em 29/10/2026, notas atualizadas em 26/10.
+- Usar apenas abrangência **Estadual**, sem adicionar registros da PF/PRF.
+  Homicídios dolosos e feminicídios têm linhas municipais; tráfico, estupro,
+  roubos e furtos de veículos têm município não informado nesta publicação.
+  Todos os novos indicadores são apresentados como **UF · 2025**. Homicídios
+  municipais do Atlas/SIM 2024 permanecem separados. Roubo/furto de veículos
+  nunca recebem rótulo de todos os roubos/furtos. Zero explícito é zero;
+  mês ou valor ausente impede taxa anual e índice, sem imputação.
+- Somar as linhas por evento/mês, inclusive duplicatas de estupro previstas
+  na nota oficial; preservar estupro de vulnerável como série separada, sem
+  somá-lo a estupro, devido a diferenças de classificação documentadas.
+  Contagens distinguem vítimas (`total_vitima`) de ocorrências (`total`).
+- Índice **experimental, não oficial**, estadual: média de cinco postos
+  percentuais (homicídio doloso, tráfico, roubo de veículo, furto de veículo,
+  estupro), peso 20% cada. Posto `100 × (menores + (empatados−1)/2)/(N−1)`,
+  empate integral recebe 50. Universo: UFs com os 12 meses completos nos cinco
+  indicadores (27 nesta versão). Taxas por 100 mil habitantes do mesmo ano.
+  Não é soma de crimes, gravidade validada, probabilidade ou risco do bairro;
+  atuação policial, subnotificação e classificação influenciam os registros.
+  Feminicídio e estupro de vulnerável não entram como dimensões adicionais
+  para evitar sobreposição e ampliação implícita do peso desses eixos.
+- Nos grupos do mapa, taxas criminais somam contagens e população uma vez por
+  UF; índice é média simples dos índices das UFs distintas. Sem cobertura é
+  cinza. A exportação identifica explicitamente UF, ano e denominador.
+- Validação: `tests/test_politize_se_perfil_crimes.py` confere conservação de
+  todos os vetores e resumos, incógnitas, recortes cruzados, taxas, cobertura e
+  índices. Verificação no navegador inclui os quatro níveis, celular,
+  filtros de horário e CSV retangular; dados não mudam voto nem totalização.

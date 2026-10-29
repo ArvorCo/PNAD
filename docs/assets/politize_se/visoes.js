@@ -54,7 +54,7 @@ export function criarVisoes({ h, E, f0, pc, caixa, carregarZona, carregarMun, ex
       h('p', { class: 'kicker' }, 'Visão de ' + (tipo === 'zona' ? 'zona eleitoral' : 'município') + ' · ' + uf), h('h2', {}, titulo), nav(ref, tipo),
       h('div', { class: 'visoes-resumo' }, [[totais.n_secoes, 'seções'], [locais.length, 'locais de votação'], [totais.n_bu2, 'seções com boletim do 2º turno']].map(([n, nome]) => h('div', {}, h('b', {}, f0(n)), nome))),
       h('p', { class: 'ajuda' }, 'Boletins dos dois turnos, somados neste recorte. Percentuais calculados depois da soma dos votos. A cobertura pode diferir entre turnos.'),
-      placar(totais), window.PolitizeSeguranca.painel({ ...ref, locais: locais.map((l) => l.local_id) }), mov.painel(ref, titulo),
+      placar(totais), window.PolitizePerfil.painel(ref,titulo), window.PolitizeCrimes.painel(uf), window.PolitizeSeguranca.painel({ ...ref, locais: locais.map((l) => l.local_id) }), mov.painel(ref, titulo),
       h('p', { class: 'visoes-aviso' }, 'Zona eleitoral e município são recortes que se cruzam: uma zona pode atender vários municípios e um município pode ter várias zonas. Os links abaixo abrem cada recorte inteiro.'),
       h('h3', {}, tipo === 'zona' ? 'Municípios atendidos por esta zona' : 'Zonas que atendem este município'), relacionados,
       h('p', { class: 'ajuda' }, '2º turno: ' + f0(totais.secoes_sinal) + ' seções com sinais · ' + f0(totais.urnas_trocadas) + ' urnas trocadas entre turnos. Sinais pedem explicação, não provam irregularidade.'),
