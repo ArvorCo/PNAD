@@ -54,7 +54,10 @@
 <script defer src="assets/politize_se_mapa/seguranca.js?v=20261029-placar"></script>
 <link rel="stylesheet" href="assets/politize_se_mapa/placar.css?v=20261029-placar">
 <script defer src="assets/politize_se_mapa/placar.js?v=20261029-placar"></script>
-<script defer src="assets/politize_se_mapa/app.js?v=20261029-placar"></script>
+<script defer src="assets/politize_se_mapa/renda.js?v=20261029-mapa-amplo"></script>
+<script defer src="assets/politize_se_mapa/app.js?v=20261029-mapa-amplo"></script>
+<link rel="stylesheet" href="assets/politize_se_mapa/layout.css?v=20261029-mapa-amplo">
+<script defer src="assets/politize_se_mapa/layout.js?v=20261029-mapa-amplo"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -63,29 +66,13 @@
     <a class="marca" href="index.html"><img src="img/arvor_logo.png" alt="" width="24" height="24">Arvor Intelligence</a>
     <div class="topo-t">
       <h1>Politize-se: o mapa do Brasil</h1>
-      <p>Todos os locais de votação do país. Toque num prédio para ver as seções e abrir cada uma no <a href="politizese.html">Politize-se</a> · <a href="apuracao_2T_2026.html">Dossiê do 2º turno</a>.</p>
+      <p><a href="politizese.html">Politize-se</a> · <a href="apuracao_2T_2026.html">Dossiê do 2º turno</a></p>
     </div>
   </div>
 </header>
 
-<section class="intro" aria-label="O que o mapa mostra">
-  <div class="intro-in">
-    <div class="intro-txt">
-      <p class="kicker">1º e 2º turno · 4 e 25 de outubro de 2026</p>
-      <h2>O centro mostra a camada. A borda e o tamanho mostram o placar.</h2>
-      <p>Renda domiciliar estimada, homicídios do município, clima e o resultado do 2º turno no prédio, a mudança contra o 1º turno nas mesmas seções, o comparecimento, a abstenção, os sinais que pedem explicação, o modelo da urna, as urnas trocadas e as mudanças de endereço. <strong>Sinal pede explicação, não prova irregularidade.</strong> Leitura agregada por seção, como o TSE publica: o voto é secreto e nenhum número descreve uma pessoa.</p>
-      <p id="cobertura" class="cobertura" role="status"></p>
-    </div>
-    <dl class="intro-num" aria-label="Números do mapa">
-      <div><dd id="n-locais">…</dd><dt>locais de votação, com o exterior</dt></div>
-      <div><dd id="n-bu2">…</dd><dt>prédios com o boletim do 2º turno já lido</dt></div>
-      <div><dd id="n-secoes">…</dd><dt>seções com os dois turnos lado a lado</dt></div>
-    </dl>
-  </div>
-</section>
 
 <main class="app">
-  <button type="button" class="filtros-toggle" id="filtros-toggle" aria-expanded="false" aria-controls="controles">Buscar, filtrar e trocar a cor</button>
   <aside class="controles" id="controles" aria-label="Busca, camada e filtros">
     <form class="bloco" id="f-busca" autocomplete="off">
       <h2>Onde fica?</h2>
@@ -106,45 +93,11 @@
         <button type="button" class="btn btn-sec" id="b-limpar">Limpar</button>
       </div>
       <button type="button" class="btn btn-sec btn-geo" id="b-geo">Usar minha localização</button>
-      <p class="ajuda">O CEP centra o mapa no local de votação com o mesmo CEP. A zona está no título de eleitor e pede o estado. O CEP e a localização não saem do seu aparelho nem vão para o endereço da página.</p>
+      <details class="detalhe"><summary>Sobre a busca</summary><p class="ajuda">O CEP centra o mapa no local de votação com o mesmo CEP. A zona está no título de eleitor e pede o estado. O CEP e a localização não saem do seu aparelho nem vão para o endereço da página.</p></details>
     </form>
 
-    <section class="bloco" aria-labelledby="t-camada">
-      <h2 id="t-camada">Cor dos pontos</h2>
-      <div id="camadas" class="camadas" role="radiogroup" aria-labelledby="t-camada"></div>
-      <div id="legenda" class="legenda-camada" aria-live="polite"></div>
-    </section>
-
-    <section class="bloco" id="bloco-raio" aria-label="Distância">
-      <h2>Até que distância?</h2>
-      <div class="raios" role="radiogroup" aria-label="Raio em quilômetros" id="raios"></div>
-      <p class="ajuda">Distância em linha reta, não pelas ruas, a partir do CEP, da zona ou da sua localização. Sem busca, o mapa mostra tudo; na lista dá para desligar o raio.</p>
-    </section>
-
-    <div class="modo" role="group" aria-label="Modo de exibição">
-      <button type="button" class="btn-modo" id="m-mapa" aria-pressed="true">Mapa</button>
-      <button type="button" class="btn-modo" id="m-lista" aria-pressed="false">Ver em lista</button>
-    </div>
-    <p class="status" id="status" role="status">Carregando o mapa.</p>
-  </aside>
-
-  <section class="palco" id="palco" aria-label="Resultado">
-    <nav class="lentes-territorio" aria-label="Leitura rápida do mapa">
-      <span>Olhar o território</span>
-      <button type="button" data-lente="resultado" aria-pressed="true">Votos</button>
-      <button type="button" data-lente="renda" aria-pressed="false">Renda estimada</button>
-      <button type="button" data-lente="homicidios" aria-pressed="false">Homicídios municipais</button>
-      <button type="button" data-lente="crime" aria-pressed="false">Grupos armados</button>
-      <button type="button" data-lente="controle" aria-pressed="false">Controle territorial · RJ</button>
-      <button type="button" data-lente="influencia" aria-pressed="false">Influência · RJ</button>
-      <button type="button" data-lente="ultimo_voto" aria-pressed="false">Último voto</button>
-      <button type="button" data-lente="encerramento" aria-pressed="false">Encerramento</button>
-      <button type="button" data-lente="pico" aria-pressed="false">Pico de votos</button>
-        <button type="button" data-lente="chuva2" aria-pressed="false">Chuva</button>
-    </nav>
-
     <fieldset class="horarios-filtros" id="filtros-horarios">
-      <legend>Filtrar seções pelo horário · 2º turno</legend>
+      <legend>Horários · 2º turno</legend>
       <div class="horarios-grade">
         <div><label for="f-ultimo" class="rot">Último voto computado no log</label><div class="horario-controles">
           <select id="f-ultimo"><option value="">Qualquer horário</option><option value="ate">Até o horário, inclusive</option><option value="apos">Após o horário</option><option value="sem">Sem horário utilizável</option></select>
@@ -155,11 +108,35 @@
           <input id="f-enc-corte" type="time" value="17:15" step="60" aria-label="Horário de corte do encerramento, Brasília">
         </div></div>
       </div>
-      <p class="ajuda">Brasília, 25/10/2026. Escolha o corte em cada filtro (ex.: 17:00 ou 17:15). “Até” inclui o segundo exato; “após” começa no segundo seguinte. Os filtros se combinam na mesma seção. O placar soma os votos do dia inteiro dessas seções.</p>
+      <details class="detalhe"><summary>Como funciona o corte</summary><p class="ajuda">Brasília, 25/10/2026. Escolha o corte em cada filtro (ex.: 17:00 ou 17:15). “Até” inclui o segundo exato; “após” começa no segundo seguinte. Os filtros se combinam na mesma seção. O placar soma os votos do dia inteiro dessas seções.</p></details>
       <p id="horario-resumo" class="horario-resumo" aria-live="polite" hidden></p>
     </fieldset>
+    <section class="bloco" aria-labelledby="t-camada">
+      <details class="detalhe"><summary id="t-camada">Sobre a camada e as cores</summary>
+      <div id="legenda" class="legenda-camada" aria-live="polite"></div>
+      <p>Borda: proporção dos votos de Flávio e Lula. Tamanho: vantagem absoluta em pontos percentuais. Nos grupos, somamos os votos dos locais cobertos; o número conta prédios. Borda cinza: sem placar. Tracejado: cobertura parcial.</p></details>
+    </section>
+
+    <section class="bloco" id="bloco-raio" aria-label="Distância">
+      <h2>Até que distância?</h2>
+      <div class="raios" role="radiogroup" aria-label="Raio em quilômetros" id="raios"></div>
+      <p class="ajuda">Distância em linha reta, não pelas ruas, a partir do CEP, da zona ou da sua localização. Sem busca, o mapa mostra tudo; na lista dá para desligar o raio.</p>
+    </section>
+
+    <p class="status" id="status" role="status">Carregando o mapa.</p>
+  </aside>
+
+  <section class="palco" id="palco" aria-label="Resultado">
+    <nav class="mapa-ferramentas" aria-label="Controles do mapa">
+      <button type="button" class="filtros-toggle" id="filtros-toggle" aria-expanded="false" aria-controls="controles">Buscar e filtrar <span id="filtros-ativos"></span></button>
+      <label class="camada-seletor" for="camada-seletor"><span>Centro</span><select id="camada-seletor" aria-label="Camada do mapa"><option>Carregando camadas…</option></select></label>
+      <div class="modo" role="group" aria-label="Modo de exibição">
+        <button type="button" class="btn-modo" id="m-mapa" aria-pressed="true">Mapa</button>
+        <button type="button" class="btn-modo" id="m-lista" aria-pressed="false">Lista</button>
+      </div>
+    </nav>
     <div id="mapa-escala" class="mapa-escala" aria-live="polite"></div>
-    <div class="placar-chave"><div class="placar-exemplos" aria-hidden="true"><span style="--anel:conic-gradient(#1f5f9e 50%,#c8412f 0);--tam:22px"></span>50 × 50<span style="--anel:conic-gradient(#1f5f9e 70%,#c8412f 0);--tam:29px"></span>70 × 30<span style="--anel:conic-gradient(#1f5f9e 30%,#c8412f 0);--tam:29px"></span>30 × 70</div><p><b>Borda: <span class="tf">Flávio azul</span> e <span class="tl">Lula vermelho</span>, na proporção dos votos entre os dois.</b> Quanto maior a vantagem em pontos percentuais, maior o círculo; empate usa o tamanho mínimo. O centro mostra a camada escolhida. Nos grupos, somamos os votos antes de calcular; a contagem indica prédios. Anel cinza: sem placar publicável. Contorno tracejado: cobertura parcial. Os filtros recompõem o placar das seções selecionadas.</p></div>
+    <div class="placar-chave" aria-label="Legenda dos votos"><span class="anel-mini" aria-hidden="true"></span><span>Borda: <b class="tf">Flávio</b> / <b class="tl">Lula</b></span><span class="tamanho-chave"><i></i><i></i> Maior vantagem, maior círculo</span></div>
     <div id="mapa" class="mapa" role="region" aria-label="Mapa dos locais de votação"></div>
     <div id="painel" class="painel" role="dialog" aria-label="Ficha do local de votação" hidden>
       <button type="button" class="painel-fechar" id="painel-fechar">Fechar ficha</button>
@@ -185,6 +162,23 @@
   </section>
 </main>
 
+<details class="sobre-mapa"><summary>Sobre o mapa, cobertura e fontes</summary>
+<section class="intro" aria-label="O que o mapa mostra">
+  <div class="intro-in">
+    <div class="intro-txt">
+      <p class="kicker">1º e 2º turno · 4 e 25 de outubro de 2026</p>
+      <h2>O centro mostra a camada. A borda e o tamanho mostram o placar.</h2>
+      <p>Renda domiciliar estimada, homicídios do município, clima e o resultado do 2º turno no prédio, a mudança contra o 1º turno nas mesmas seções, o comparecimento, a abstenção, os sinais que pedem explicação, o modelo da urna, as urnas trocadas e as mudanças de endereço. <strong>Sinal pede explicação, não prova irregularidade.</strong> Leitura agregada por seção, como o TSE publica: o voto é secreto e nenhum número descreve uma pessoa.</p>
+      <p id="cobertura" class="cobertura" role="status"></p>
+    </div>
+    <dl class="intro-num" aria-label="Números do mapa">
+      <div><dd id="n-locais">…</dd><dt>locais de votação, com o exterior</dt></div>
+      <div><dd id="n-bu2">…</dd><dt>prédios com o boletim do 2º turno já lido</dt></div>
+      <div><dd id="n-secoes">…</dd><dt>seções com os dois turnos lado a lado</dt></div>
+    </dl>
+  </div>
+</section>
+
 <section class="limites" aria-labelledby="t-limites">
   <div class="limites-in">
     <h2 id="t-limites">O que o mapa não diz</h2>
@@ -203,6 +197,7 @@
   <p id="gerado-em"></p>
   <p>Arvor Intelligence · <a href="index.html">brasil.arvor.co</a> · <a href="assets/politize_se_mapa/indice.json">Dados (JSON)</a></p>
 </footer>
+</details>
 <noscript><p class="sem-js">Esta página precisa de JavaScript para o mapa e a lista. Os dados estão em <a href="assets/politize_se_mapa/indice.json">JSON</a>.</p></noscript>
 </body>
 </html>

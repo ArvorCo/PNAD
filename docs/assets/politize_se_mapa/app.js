@@ -136,11 +136,10 @@
     const v = hex(c).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
     return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
   }
-  // Miolo do grupo: a cor do grupo clareada até o número escuro passar no contraste mínimo (4,5:1);
-  // a cor pura fica no anel.
+  // Clareia apenas o necessário para manter o número legível (contraste 4,8:1).
   function fundoLegivel(cor) {
     const tinta = luminancia('#151812') + 0.05;
-    for (let t = 0.3; t < 1; t += 0.05) {
+    for (let t = 0; t < 1; t += 0.05) {
       const c = misturar(cor, '#ffffff', t);
       if ((luminancia(c) + 0.05) / tinta >= 4.8) return c;
     }
@@ -154,6 +153,7 @@
     const c = S.meta.camadas[k || S.camada];
     const par = COR[k || S.camada];
     if (vazio(v)) return COR.semDado;
+    if (window.RendaMapa.ativa(k || S.camada)) return window.RendaMapa.cor(v, k || S.camada);
     if (c.tipo === 'divergente') {
       const t = Math.max(-1, Math.min(1, (v - c.centro) / c.limite));
       return t >= 0 ? misturar(COR.neutro, par[1], Math.pow(t, 0.8)) : misturar(COR.neutro, par[0], Math.pow(-t, 0.8));
@@ -546,26 +546,23 @@
   /* ------------------------------------------------------------ legenda e camadas */
 
   function montarCamadas() {
-    const box = $('#camadas');
-    const grupos = new Map();
+    const seletor = $('#camada-seletor'), grupos = new Map();
     Object.entries(S.meta.camadas).forEach(([k, c]) => {
       const grupo = c.grupo || (k === 'chuva2' ? 'Clima' : 'Eleição e urnas');
       if (!grupos.has(grupo)) grupos.set(grupo, []);
-      grupos.get(grupo).push(h('label', { class: 'camada' },
-        h('input', { type: 'radio', name: 'camada', value: k, checked: k === S.camada, onchange: () => { S.camada = k; recolorir(); } }),
-        h('span', {}, c.nome)));
+      grupos.get(grupo).push(h('option', { value: k }, c.nome));
     });
-    box.replaceChildren(...['Economia e segurança', 'Clima', 'Eleição e urnas'].filter((g) => grupos.has(g)).map((g) =>
-      h('fieldset', { class: 'camada-grupo' }, h('legend', {}, g), grupos.get(g))));
+    seletor.replaceChildren(...['Economia e segurança', 'Clima', 'Eleição e urnas'].filter((g) => grupos.has(g)).map((g) => h('optgroup', { label: g }, grupos.get(g))));
+    seletor.onchange = () => { S.camada = seletor.value; recolorir(); };
   }
 
   function desenharLegenda() {
     const c = camada(), k = S.camada, par = COR[k];
-    document.querySelectorAll('input[name=camada]').forEach((b) => { b.checked = b.value === k; });
-    document.querySelectorAll('[data-lente]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lente === k)));
+    $('#camada-seletor').value = k;
     if (Q.legenda()) return;
     const faixa = $('#mapa-escala');
     faixa.replaceChildren(...[h('b', {}, c.nome), c.tipo === 'sequencial' || c.tipo === 'divergente' ? [h('span', { class: 'mapa-mini-escala', style: 'background:linear-gradient(90deg,' + par[0] + ',' + par[1] + ')', 'aria-hidden': 'true' }), h('span', {}, c.baixo + ' → ' + c.alto)] : null, h('small', {}, c.agregacao === 'municipios' ? 'Dado municipal · 2024 · cinza: sem dado' : c.grupo ? 'Estimativa PNAD · cinza: sem dado' : 'Cinza: sem dado aplicável')].flat().filter(Boolean));
+    if (window.RendaMapa.ativa(k)) window.RendaMapa.legenda(faixa, k);
     if (k === 'pico') faixa.append(M.escala());
     if (T.ativo()) faixa.append(T.escala());
     const itens = [];
@@ -610,6 +607,7 @@
       itens.push(h('p', { class: 'territorio-cobertura' }, plural(cobertos, 'prédio com dado', 'prédios com dado') + ' de ' + nf0.format(lista.length) + ' no recorte selecionado.'));
     }
     if (H.ativo()) itens.push(h('p', { class: 'ajuda' }, 'As contagens nacionais desta legenda são a referência completa, sem o filtro de horários. Os pontos e seus placares consideram só as seções selecionadas.'));
+    if (window.RendaMapa.ativa(k)) itens.splice(0, 2, h('p', {}, window.RendaMapa.explicacao(k)));
     $('#legenda').replaceChildren(...itens, h('p', {}, c.explica), h('ul', { class: 'legenda-itens' }, h('li', {}, h('span', { class: 'bolinha bolinha-cinza' }), cinza)), h('p', { class: 'ajuda' }, grupo + ' A borda mostra Flávio e Lula; o tamanho cresce com a vantagem absoluta em pontos percentuais.'));
   }
 
@@ -863,10 +861,6 @@
   }
 
   function ligar() {
-    document.querySelectorAll('[data-lente]').forEach((b) => b.addEventListener('click', () => {
-      if (!S.meta?.camadas[b.dataset.lente]) return;
-      S.camada = b.dataset.lente; recolorir();
-    }));
     if (typeof ResizeObserver !== 'undefined') {
       new ResizeObserver(() => {
         document.documentElement.style.setProperty('--altura-topo', $('.topo').offsetHeight + 'px');
