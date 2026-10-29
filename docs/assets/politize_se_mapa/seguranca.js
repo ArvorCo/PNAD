@@ -1,7 +1,7 @@
 /* Lentes documentais: presença municipal e cartografia territorial, separadas. */
 window.criarSegurancaMapa = function ({ S, COR, h }) {
   const api = window.PolitizeSeguranca;
-  const nomes = { crime: 'Presença de grupos no município', controle: 'Controle territorial · RJ · 2024', influencia: 'Influência territorial · RJ · 2024' };
+  const nomes = { crime: 'Presença de facções no município', controle: 'Controle territorial · RJ · 2024', influencia: 'Influência territorial · RJ · 2024' };
   let d, erro, overlay, tipoOverlay;
   const ativo = () => Object.hasOwn(nomes, S.camada);
   const campo = () => 'seg_' + S.camada;
