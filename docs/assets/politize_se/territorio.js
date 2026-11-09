@@ -81,7 +81,7 @@
         el('p', { class: 'territorio-eyebrow' }, 'O lugar além da urna'),
         el('h2', {}, 'Economia e segurança da região'),
         el('p', {}, 'Contexto de ' + (m.municipio || 'este local') + '. As seções deste prédio compartilham este contexto; ele não descreve cada pessoa nem explica sozinho o voto.')),
-      el('div', { class: 'territorio-grade' }, renda, seguranca));
+      window.PolitizePopulacao.painel({local:localId,compact}), el('div', { class: 'territorio-grade' }, renda, seguranca));
     if (compact) {
       content.append(el('details', { class: 'territorio-mais' }, el('summary', {}, 'Ver escolaridade'), el('div', { class: 'territorio-grade' }, social)));
       const [uf, , z] = localId.split('-');

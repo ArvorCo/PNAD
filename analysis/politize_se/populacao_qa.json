@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "layers": 6,
+  "municipios_nacional": 5571,
+  "municipios_ac": 22,
+  "errors": [],
+  "mobile_width": 390,
+  "screenshots": 8,
+  "tests": {
+    "command": "pytest -q tests/test_politize_se*.py tests/test_sitemap.py",
+    "passed": 108
+  },
+  "metodo": "Censo 2022 × total IBGE 2026; PNAD 1T/2026 somente por UF",
+  "validated_state": "canonical_and_isolated_publication",
+  "publication_tests": {
+    "passed": 97,
+    "command": "pytest -q tests/test_politize_se*.py tests/test_sitemap.py"
+  }
+}

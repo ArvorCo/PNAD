@@ -1,5 +1,5 @@
 /* Ficha do prédio e tabela de seções do mapa. */
-window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H, T, D, R }) {
+window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFmt, plural, nf0, nf1, km, pct, pp, vazio, buscar, SECOES, tabela, copiar, H, T, X, D, R }) {
   function linhaCmp(rotulo, a, b) {
     return h('tr', {}, h('td', {}, rotulo), h('td', {}, vazio(a) ? 'sem dado' : a), h('td', {}, vazio(b) ? 'sem dado' : b));
   }
@@ -34,8 +34,10 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       h('p', { class: 'ficha-end' }, [caixa(l.endereco), caixa(l.bairro), caixa(l.municipio) + (l.uf === 'ZZ' ? ' (exterior)' : '/' + l.uf), l.cep ? 'CEP ' + cepFmt(l.cep) : ''].filter(Boolean).join(' · ')),
       h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + ' · ' + plural(l.n_secoes, 'seção', 'seções') + (l.aptos2 || l.aptos1 ? ' · ' + nf0.format(l.aptos2 || l.aptos1) + ' eleitores' : '') + (dist !== null ? ' · ' + km(dist) + ' em linha reta ' + S.centro.de : '')),
       l.aprox ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado: é a cidade do consulado, não o prédio.') : null,
+      h('div', { class: 'ficha-secoes' }, h('p', { class: 'ficha-meta' }, 'Carregando as seções do prédio…')),
       R.painel(l), D.painel(l),
       T.ficha(l),
+      X.painel(l),
       h('details', {class:'ficha-distribuicao',open:['mulheres','jovens','idosos'].includes(S.camada)}, h('summary',{},'Idade e sexo · pirâmide etária'),
         window.PolitizePerfil.painel({uf:l.uf,local:l.id,escolherSecao:true,...(l.horario?{secoes:l.secoes}:{})},l.horario?'Seções selecionadas deste local':caixa(l.nome))),
       h('p', { class: 'placar-contagens' }, h('span', { class: 'tf' }, 'Flávio: ' + (vazio(l.flavio2) ? 'sem contagem publicável' : nf0.format(l.flavio2) + ' votos')), ' · ', h('span', { class: 'tl' }, 'Lula: ' + (vazio(l.lula2) ? 'sem contagem publicável' : nf0.format(l.lula2) + ' votos')), ' · 2º turno'),
@@ -59,7 +61,6 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       blocoChuva(l),
 
       h('nav', {class:'visoes-nav','aria-label':'Explorar zona e município'}, h('a',{href:`politizese.html#uf=${l.uf}&z=${l.zona}&visao=zona`},'Ver a zona inteira'),h('a',{href:`politizese.html#uf=${l.uf}&mun=${l.mun}&visao=municipio`},'Ver o município inteiro')),
-      h('div', { class: 'ficha-secoes' }, h('p', { class: 'ficha-meta' }, 'Carregando as seções do prédio…')),
       h('details', {class:'ficha-distribuicao'}, h('summary',{},'Ver distribuição de votos por hora'),
         window.PolitizeMovimento.painel({uf:l.uf,local:l.id,escolherSecao:true,...(l.horario ? {secoes:l.secoes} : {})}, l.horario ? 'Seções selecionadas deste local' : caixa(l.nome))),
       h('a', { class: 'btn-politize', href: linkPolitize(l, l.secao_link), 'data-politize': '1' }, 'Entenda esta seção no Politize-se (seção ' + l.secao_link + ')'),
@@ -154,7 +155,7 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       const voto = (s, k) => {
         const share = (v) => vazio(v) ? null : k === 'flavio' ? v : 100 - v;
         const delta = vazio(s.d_fatia_pp) ? null : k === 'flavio' ? s.d_fatia_pp : -s.d_fatia_pp;
-        return h('td', { class: 'voto-candidato ' + (k === 'flavio' ? 'tf' : 'tl') }, h('b', {}, ida(share(s.fatia_f1), s.bu2 ? share(s.fatia_f2) : null, pct)), h('small', {}, ida(s[k + '1'], s.bu2 ? s[k + '2'] : null, (n) => nf0.format(n)) + ' votos'), h('small', {}, vazio(delta) ? 'Sem variação comparável' : 'Δ ' + pp(delta)));
+        return h('td', { class: 'voto-candidato ' + (k === 'flavio' ? 'tf' : 'tl') }, h('b', {}, ida(s[k + '1'], s.bu2 ? s[k + '2'] : null, (n) => nf0.format(n)) + ' votos'), h('small', {}, ida(share(s.fatia_f1), s.bu2 ? share(s.fatia_f2) : null, pct)), h('small', {}, vazio(delta) ? 'Sem variação comparável' : 'Δ ' + pp(delta)));
       };
       const linhas = secs.map((s) => {
         const pequena = Boolean(s.pequena);
@@ -168,17 +169,24 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
           h('td', { class: 'hora' }, H.celula(tempos.get(s.secao), 'ultimo')),
           pequena ? h('td', { colspan: '2' }, 'Não publicado')
             : [h('td', {}, ida(s.comp_pct1, s.bu2 ? s.comp_pct2 : null, pct)), h('td', {}, ida(s.sem_bio_pct1, s.bu2 ? s.sem_bio_pct2 : null, pct))],
-          h('td', { class: 'txt' }, celulaLog(s)),
+          h('td', { class: 'txt' }, celulaLog(s)), X.celulaSecao(l, s.secao),
           h('td', { class: 'txt' }, !s.bu2 ? h('small', {}, 'Ainda sem boletim do 2º turno') : [sinais.length
             ? [h('b', {}, plural(sinais.length, 'sinal', 'sinais')), h('ul', { class: 'sinal-lista' }, sinais.map((t) => h('li', {}, t))), exps.length ? h('small', {}, 'Explicação provável: ' + exps.join('; ') + '.') : null]
             : h('small', {}, 'Nenhum sinal'), s.ml_anomalo ? h('small', {}, 'Grupo atípico pela estatística dos dois turnos.') : null]));
       });
+      const votoRows = secs.map((s) => h('tr', { 'data-secao': String(s.secao), class: s.secao === S.secaoSel ? 'sel' : null },
+        h('td', {}, h('button', {type:'button', 'aria-pressed':String(s.secao === S.secaoSel), onclick:()=>selecionarSecao(el,l,s.secao)}, String(s.secao))),
+        s.pequena ? h('td',{colspan:'2'},'Menos de 30 eleitores: não publicado') : [voto(s,'flavio'),voto(s,'lula')]));
+      const principal = h('div',{class:'secoes-rolagem',tabindex:'0',role:'region','aria-label':'Votos por seção'},
+        h('table',{class:'secoes-tab secoes-votos'},h('thead',{},h('tr',{},['Seção','Flávio · 1º → 2º','Lula · 1º → 2º'].map(t=>h('th',{scope:'col'},t)))),h('tbody',{},votoRows)));
       caixaSec.replaceChildren(
+        h('h4', {}, 'Votos por seção'),
         h('p', { class: 'ficha-meta' }, 'Flávio e Lula lado a lado: votos e percentuais do 1º → 2º turno, mais a mudança em pontos percentuais. Os percentuais consideram só os votos entre os dois; no 1º turno excluem as demais candidaturas. Toque na seção para explorá-la.'),
+        principal, h('details', {class:'ficha-distribuicao'}, h('summary',{},'Comparecimento, horários, urnas e sinais por seção'),
         h('div', { class: 'secoes-rolagem', tabindex: '0', role: 'region', 'aria-label': 'Seções do prédio' },
           h('table', { class: 'secoes-tab' },
-            h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, 'Seção'), h('th', { scope: 'col', class: 'tf' }, 'Flávio · 1º → 2º'), h('th', { scope: 'col', class: 'tl' }, 'Lula · 1º → 2º'), h('th', { scope: 'col', class: 'txt' }, 'Urna'), h('th', { scope: 'col' }, 'Encerramento 2º (Brasília)'), h('th', { scope: 'col' }, 'Último voto 2º (Brasília)'), h('th', { scope: 'col' }, 'Comparecimento'), h('th', { scope: 'col' }, 'Sem digital'), h('th', { scope: 'col', class: 'txt' }, 'Registro da urna'), h('th', { scope: 'col', class: 'txt' }, 'Sinais no 2º turno'))),
-            h('tbody', {}, linhas))));
+            h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, 'Seção'), h('th', { scope: 'col', class: 'tf' }, 'Flávio · 1º → 2º'), h('th', { scope: 'col', class: 'tl' }, 'Lula · 1º → 2º'), h('th', { scope: 'col', class: 'txt' }, 'Urna'), h('th', { scope: 'col' }, 'Encerramento 2º (Brasília)'), h('th', { scope: 'col' }, 'Último voto 2º (Brasília)'), h('th', { scope: 'col' }, 'Comparecimento'), h('th', { scope: 'col' }, 'Sem digital'), h('th', { scope: 'col', class: 'txt' }, 'Registro da urna'), h('th', { scope: 'col', class: 'txt' }, 'Isolation Forest · seção'), h('th', { scope: 'col', class: 'txt' }, 'Sinais no 2º turno'))),
+            h('tbody', {}, linhas)))));
     } catch (e) {
       caixaSec.replaceChildren(h('p', { class: 'ficha-meta' }, e && e.message === 'navegador sem gzip' ? 'Este navegador não abre o arquivo das seções; use o botão abaixo para ver a seção no Politize-se.' : 'As seções não carregaram agora; o botão abaixo abre a seção no Politize-se.'));
     }
