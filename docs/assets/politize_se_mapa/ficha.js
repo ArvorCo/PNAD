@@ -35,6 +35,7 @@ window.criarFichaPolitize = function ({ S, h, caixa, distanciaKm, coordOk, cepFm
       h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + ' · ' + plural(l.n_secoes, 'seção', 'seções') + (l.aptos2 || l.aptos1 ? ' · ' + nf0.format(l.aptos2 || l.aptos1) + ' eleitores' : '') + (dist !== null ? ' · ' + km(dist) + ' em linha reta ' + S.centro.de : '')),
       l.aprox ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado: é a cidade do consulado, não o prédio.') : null,
       h('div', { class: 'ficha-secoes' }, h('p', { class: 'ficha-meta' }, 'Carregando as seções do prédio…')),
+      window.PolitizeAuditoria.painel({uf:l.uf, local:l.id, ...(l.horario ? {secoes:l.secoes} : {})}),
       R.painel(l), D.painel(l),
       T.ficha(l),
       X.painel(l),

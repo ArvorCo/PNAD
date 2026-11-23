@@ -38,9 +38,29 @@ jobs:
           print(f'{len(documents)} public PDF files verified')
           PY
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
+      - id: upload
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docs
       - name: Deploy site
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/github-script@v8
+        env:
+          ARTIFACT_ID: ${{ steps.upload.outputs.artifact_id }}
+        with:
+          script: |
+            const repo = context.repo;
+            const artifact = Number(process.env.ARTIFACT_ID);
+            if (!Number.isSafeInteger(artifact) || artifact <= 0) throw Error('Missing Pages artifact ID');
+            // Use the finalized upload directly. Listing by name can lag behind finalization.
+            const {data} = await github.request('POST /repos/{owner}/{repo}/pages/deployments', {
+              ...repo, artifact_id: artifact, pages_build_version: context.sha, oidc_token: await core.getIDToken()
+            });
+            const deploymentId = data.id || data.status_url.split('/').pop();
+            for (let attempt = 0; attempt < 120; attempt++) {
+              await new Promise(resolve => setTimeout(resolve, 5000));
+              const {data: state} = await github.request('GET /repos/{owner}/{repo}/pages/deployments/{deploymentId}', {...repo, deploymentId});
+              if (state.status === 'succeed') { core.setOutput('page_url', data.page_url); return; }
+              if (['deployment_failed', 'deployment_content_failed', 'deployment_cancelled', 'deployment_lost'].includes(state.status)) throw Error('Pages deployment: ' + state.status);
+            }
+            throw Error('Pages deployment confirmation timed out');
