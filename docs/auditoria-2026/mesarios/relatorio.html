@@ -1,0 +1,481 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Um mesmo número de título em seções diferentes · Arvor</title><link rel="stylesheet" href="../relatorio.css"><main class="integra"><nav aria-label="Navegação do relatório"><a href="../../auditoria_urnas_2026.html#mesarios">← Relatório de mesários e urnas</a> · <a href="mapa.html">Abrir mapa</a> · <a href="../../auditoria_urnas_2026.html#dados">Baixar dados</a></nav><h1 id="um-mesmo-número-de-título-em-seções-diferentes">Um mesmo número
+de título em seções diferentes</h1>
+<p><strong>Eleições presidenciais de 2026 · Brasil sem exterior ·
+conferência de 23 de novembro de 2026</strong></p>
+<p>A denúncia se confirma no sentido literal. No primeiro turno, três
+números de título aparecem como mesário registrado em duas UFs no mesmo
+dia. No segundo, quatro outros números apresentam o mesmo padrão. São
+<strong>sete números distintos, 14 seções e 14 locais</strong>. A
+conferência de causa permanece aberta. O material permite identificar
+onde o mesmo número foi registrado, mas a presença física de uma pessoa,
+a intenção de quem fez o registro e eventual impacto eleitoral exigem
+outras evidências.</p>
+<p><a href="mapa.html">Abrir o mapa por local</a> · <a
+href="lista_mesarios.csv">Lista por identificador</a> · <a
+href="pares_municipios.csv">Pares entre municípios</a> · <a
+href="conferencia_tse.csv">Conferência nos ZIPs do TSE</a></p>
+<h2 id="o-que-se-espera-encontrar">O que se espera encontrar</h2>
+<p>A mesa tem presidente, primeiro e segundo mesários e secretário. O
+manual orienta digitar e confirmar o título de cada integrante presente.
+Admite registro durante a votação e exige presença em ata. Há também
+registro ao fim dos trabalhos, substituições e remanejamentos. Uma única
+seção pode, portanto, registrar várias pessoas, e um número pode
+aparecer várias vezes. A função e o tipo de evento importam. <a
+href="https://www.justicaeleitoral.jus.br/eleicoes/mesario/assets/arquivos/manual_do_mesario.pdf#page=15">Manual
+do Mesário 2026, p. 15</a> · <a
+href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026">Resolução
+TSE 23.751/2026, arts. 9, 125–127</a></p>
+<p>Quatro identificadores distintos apareceram em 435.331 logs no
+primeiro turno (87,4%) e em 438.617 no segundo (88,1%). Em 204 e 89
+logs, respectivamente, a triagem não encontrou a mensagem de registro. A
+distribuição completa, de zero a dez identificadores por seção, está no
+<a href="resumo.json">resumo</a>.</p>
+<h2 id="contagens-no-mesmo-turno">Contagens no mesmo turno</h2>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Maior alcance de cada número repetido</th>
+<th style="text-align: right;">Números 1º T</th>
+<th style="text-align: right;">Locais 1º T</th>
+<th style="text-align: right;">Números 2º T</th>
+<th style="text-align: right;">Locais 2º T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seções do mesmo local cadastrado</td>
+<td style="text-align: right;">6.727</td>
+<td style="text-align: right;">4.413</td>
+<td style="text-align: right;">4.441</td>
+<td style="text-align: right;">2.407</td>
+</tr>
+<tr>
+<td>Locais distintos do mesmo município</td>
+<td style="text-align: right;">342</td>
+<td style="text-align: right;">451</td>
+<td style="text-align: right;">313</td>
+<td style="text-align: right;">358</td>
+</tr>
+<tr>
+<td>Municípios distintos na mesma UF</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr>
+<td>UFs distintas</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td><strong>Total distinto por turno</strong></td>
+<td style="text-align: right;"><strong>7.092</strong></td>
+<td style="text-align: right;"><strong>4.851</strong></td>
+<td style="text-align: right;"><strong>4.774</strong></td>
+<td style="text-align: right;"><strong>2.772</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Cada número entra em uma só classe por turno. Um local pode receber
+números de várias classes. O total deduplicado corresponde a 10.713
+seções no primeiro turno e 6.035 no segundo. Considerando as chaves
+cadastrais de local nos dois turnos, são 6.917 locais distintos. As
+ocorrências restritas ao mesmo local representam 94,9% e 93,0% dos
+números repetidos. Uma verificação de remanejamento interno começa pela
+ata da mesa.</p>
+<h2 id="quantas-vezes-cada-número-se-repete">Quantas vezes cada número
+se repete</h2>
+<p>A lista contém <strong>11.585 identificadores distintos</strong>.
+Desses, 281 repetiram em ambos os turnos. Somando apenas as seções
+adicionais dentro de cada turno, houve 7.257 repetições no primeiro e
+4.901 no segundo. Para 11.106 identificadores houve só uma repetição no
+total.</p>
+<p>A maior contagem pertence ao código de auditoria
+<strong>M-2D3BB916DE19</strong> neste snapshot. Aparece em dez seções e
+dez locais de votação da zona 254 de São Paulo no primeiro turno e em
+uma dessas seções no segundo. A conta é nove repetições no primeiro e
+zero no segundo. A aba <strong>Seções</strong> permite conferir cada
+local, o número de eventos de registro e as habilitações atribuídas. <a
+href="mesarios_por_secao.xlsx">Planilha filtrável</a> · <a
+href="lista_mesarios.csv">Lista em CSV</a></p>
+<h2 id="quanto-voto-foi-depositado-nessas-seções">Quanto voto foi
+depositado nessas seções?</h2>
+<p>No primeiro turno, 10.713 seções concentram 2.791.092 votos para
+presidente. No segundo, 6.035 seções concentram 1.602.448. As chaves UF,
+município TSE, zona e seção se repetem nos dois recortes em 811 casos. A
+união tem <strong>15.937 chaves de seção</strong>. Os <strong>4.393.540
+votos</strong> somam duas eleições sucessivas e podem incluir a mesma
+eleitora ou eleitor em ambas.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Turno</th>
+<th style="text-align: right;">Seções</th>
+<th style="text-align: right;">Lula</th>
+<th style="text-align: right;">Flávio Bolsonaro</th>
+<th style="text-align: right;">Outros nominais no BU</th>
+<th style="text-align: right;">Brancos</th>
+<th style="text-align: right;">Nulos no BU</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1º</td>
+<td style="text-align: right;">10.713</td>
+<td style="text-align: right;">1.181.192</td>
+<td style="text-align: right;">1.252.409</td>
+<td style="text-align: right;">223.461</td>
+<td style="text-align: right;">52.859</td>
+<td style="text-align: right;">81.171</td>
+<td style="text-align: right;">2.791.092</td>
+</tr>
+<tr>
+<td>2º</td>
+<td style="text-align: right;">6.035</td>
+<td style="text-align: right;">820.082</td>
+<td style="text-align: right;">730.243</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">17.886</td>
+<td style="text-align: right;">34.237</td>
+<td style="text-align: right;">1.602.448</td>
+</tr>
+</tbody>
+</table></div>
+<p>A planilha detalha todos os candidatos e separa os 119 votos nominais
+que o BU atribui ao nº 28 no primeiro turno. O banco de candidaturas da
+eleição 6257 contém 12 nomes, sem o nº 28. Preservamos o número e a
+classificação do boletim para permitir a reprodução.</p>
+<p>Na aba <strong>Por identificador</strong>, cada uma das 11.866 linhas
+representa um dos 11.585 números em um turno em que ele se repetiu. Cada
+linha soma uma vez o BU de cada seção do identificador. Para totalizar o
+conjunto, a aba <strong>Por seção</strong> deduplica as seções entre
+identificadores. A seção inteira inclui eleitores atendidos por toda a
+equipe. Os logs atribuem 9.010 eventos de habilitação aos números
+repetidos no primeiro turno e 5.460 no segundo. O voto é secreto. <a
+href="mesarios_votos_e_equipes.xlsx">Planilha filtrável por
+identificador e turno</a> · <a href="votos_por_identificador.csv">CSV
+por identificador</a> · <a href="votos_por_secao.csv">CSV por seção com
+URLs e hashes dos BUs</a></p>
+<p>Todos os 16.748 BUs do recorte foram descompactados do arquivo
+original preservado no acervo e decodificados novamente com a
+especificação ASN.1. Em cada um, conferiram o SHA-256, a identidade da
+seção, a fase oficial, o pleito, as contagens por número e tipo de voto,
+a soma do cargo e o comparecimento presidencial. A verificação de hash
+compara os bytes com o acervo e não substitui o exame da assinatura
+digital.</p>
+<h2 id="os-quatro-números-são-exclusivos-da-seção">Os quatro números são
+exclusivos da seção?</h2>
+<p>Relemos nacionalmente os 497.895 logs de cada turno com o critério de
+fase e identidade da urna aplicado também aos números que só aparecem
+uma vez. A contagem estrita de seções com exatamente quatro números no
+dia é 434.663 e 438.133. Os valores maiores na primeira parte do
+relatório (435.331 e 438.617) pertencem à triagem anterior a esse
+filtro. As 10.713 e 6.035 seções com duplicidades foram integralmente
+reproduzidas nessa nova leitura.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Entre as seções com exatamente quatro títulos registrados no
+dia</th>
+<th style="text-align: right;">1º turno</th>
+<th style="text-align: right;">2º turno</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nenhum dos quatro registrado em outra seção do país</td>
+<td style="text-align: right;">430.504</td>
+<td style="text-align: right;">436.191</td>
+</tr>
+<tr>
+<td>Exatamente um dos quatro em outra seção</td>
+<td style="text-align: right;">4.008</td>
+<td style="text-align: right;">1.848</td>
+</tr>
+<tr>
+<td>Exatamente dois</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">43</td>
+</tr>
+<tr>
+<td>Exatamente três</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>Todos os quatro aparecem em pelo menos uma outra seção, que pode ser
+diferente para cada um</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">41</td>
+</tr>
+</tbody>
+</table></div>
+<p>A proporção com alguma repetição foi <strong>0,96%</strong> e
+<strong>0,44%</strong> entre as equipes de tamanho quatro. O teste de
+qualquer duplicidade inclui também seções que registraram mais ou menos
+de quatro pessoas. A matriz guarda todos os tamanhos, inclusive zero. <a
+href="unicidade_por_equipe.csv">Matriz nacional de unicidade</a></p>
+<p>Comparando duas seções específicas, <strong>230 pares</strong> no
+primeiro turno e <strong>264</strong> no segundo compartilham quatro ou
+mais títulos, inclusive equipes maiores. Nenhum desses pares atravessa
+municípios. O teste mais restrito, em que as duas seções registram
+exatamente os mesmos quatro números durante o dia inteiro, encontra um
+único par no primeiro turno e zero no segundo.</p>
+<p>O par é a Escola Municipal São Domingos, Buritis/MG, zona 324, seções
+30 e 36. Na seção 30 os quatro aparecem na etapa anterior à votação. Na
+seção 36 os mesmos quatro aparecem na etapa posterior. A menor diferença
+entre registros correspondentes foi <strong>10 h 47 min 10 s</strong>.
+Nenhum dos quatro recebeu atribuição de habilitação nos dois lados. As
+duas seções tiveram 511 votos presidenciais no total.</p>
+<p>Contando somente a etapa de abertura, as duas seções de um par
+registraram exatamente os mesmos quatro títulos em 12 pares no primeiro
+turno e 18 no segundo. Em 28 dos 30 pares o código de local coincide. Os
+outros dois ocorreram em Sobral/CE, zona 24, seções 420 e 501, e em
+Glaucilândia/MG, zona 184, seções 501 e 506. Ao longo do dia, nos dois
+casos, uma seção acumulou quatro títulos e a outra oito.</p>
+<p>Há também <strong>36 e 62 pares</strong> nos quais dois quartetos
+distintos aparecem em ordem invertida. Os quatro da abertura de A
+aparecem no fechamento de B, e vice-versa. São 97 no mesmo local
+cadastrado e um em locais distintos de Pirenópolis/GO, zona 26, seções 6
+e 8. Esse padrão faz da troca da seção usada para registrar presença uma
+hipótese concreta a confrontar com as atas. Os marcadores de antes e
+depois são mensagens explícitas do VOTA no mesmo fragmento, dia e urna.
+Horário isolado não determina a etapa. Nenhum dos 9.345 pares de seções
+compartilha o hash do ZIP ou uma série de urna associada ao mesmo número
+repetido. <a href="pares_de_secoes.csv">Pares, horários relativos e
+etapas</a> · <a href="totais_por_recorte.csv">Votos em cada
+recorte</a></p>
+<h2 id="o-código-de-auditoria-identifica-o-mesmo-número-original">O
+código de auditoria identifica o mesmo número original?</h2>
+<p>Sim, <strong>neste acervo</strong>. Na linha de registro o log contém
+o número digitado com os seus 12 algarismos. Reabrimos os pacotes de
+todas as seções que sustentam as repetições, recalculamos o HMAC com o
+segredo local e comparamos diretamente os 12 dígitos preservando os
+zeros iniciais. Os <strong>11.585 IDs da lista correspondem um a um a
+11.585 sequências diferentes</strong>. Também não houve colisão dos
+primeiros 12 caracteres hexadecimais usados na exibição entre os
+<strong>2.063.000 identificadores internos distintos</strong>
+registrados nos dois turnos.</p>
+<p>No teste aritmético de estrutura, 11.018 números passaram pela regra
+geral de módulo 11 implementada pelo validate-docbr. Os outros 567
+passaram pela variante de SP/MG documentada pelo Brazilian Utils. A
+resolução do TSE especifica a composição e o módulo 11. Os testes
+aritméticos não consultam o cadastro de inscrições e não confirmam
+emissão, situação cadastral ou quem digitou o número. <a
+href="conferencia_ids.json">Conferência dos IDs</a> · <a
+href="https://www.tse.jus.br/legislacao/compilada/res/2021/resolucao-no-23-659-de-26-de-outubro-de-2021">Resolução
+TSE 23.659/2021, art. 36</a> · <a
+href="https://raw.githubusercontent.com/alvarofpp/validate-docbr/master/validate_docbr/TituloEleitoral.py">Regra
+geral no validate-docbr</a> · <a
+href="https://brazilian-utils.com.br/pt-br/utils/voter-id/">Variante
+documentada pelo Brazilian Utils</a></p>
+<p>Para apurar autoria e possível repercussão, o confronto prioritário é
+entre as atas, o Boletim de Identificação dos Mesários, a designação e
+os registros de remanejamento ou substituição no módulo de convocação do
+ELO. Priorizar números com habilitação nos dois lados e
+incompatibilidade geográfica ou temporal, além de quartetos coincidentes
+em locais diferentes na abertura. Os votos totais da seção não estimam
+quantos votos dependem de eventual irregularidade. <a
+href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026">Resolução
+TSE 23.751/2026, arts. 125 a 127</a></p>
+<h2 id="os-sete-pares-interestaduais">Os sete pares interestaduais</h2>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Turno</th>
+<th>Município e UF</th>
+<th>Município e UF</th>
+<th style="text-align: right;">Distância</th>
+<th style="text-align: right;">Menor intervalo entre registros¹</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1º</td>
+<td>Ribeira do Pombal/BA</td>
+<td>Rio de Janeiro/RJ</td>
+<td style="text-align: right;">1.441,6 km</td>
+<td style="text-align: right;">2 min 42 s</td>
+</tr>
+<tr>
+<td>1º</td>
+<td>Goianésia/GO</td>
+<td>Ataléia/MG</td>
+<td style="text-align: right;">905,4 km</td>
+<td style="text-align: right;">7 min 43 s</td>
+</tr>
+<tr>
+<td>1º</td>
+<td>Petrópolis/RJ</td>
+<td>Mogi Mirim/SP</td>
+<td style="text-align: right;">389,9 km</td>
+<td style="text-align: right;">16 min 56 s</td>
+</tr>
+<tr>
+<td>2º</td>
+<td>Barrocas/BA</td>
+<td>Patrocínio Paulista/SP</td>
+<td style="text-align: right;">1.333,8 km</td>
+<td style="text-align: right;">27 min 53 s</td>
+</tr>
+<tr>
+<td>2º</td>
+<td>Uibaí/BA</td>
+<td>Anápolis/GO</td>
+<td style="text-align: right;">921,4 km</td>
+<td style="text-align: right;">54 min</td>
+</tr>
+<tr>
+<td>2º</td>
+<td>Quatro Pontes/PR</td>
+<td>São Paulo/SP</td>
+<td style="text-align: right;">748,6 km</td>
+<td style="text-align: right;">47 s</td>
+</tr>
+<tr>
+<td>2º</td>
+<td>Cidade Ocidental/GO</td>
+<td>Palmas/TO</td>
+<td style="text-align: right;">645,9 km</td>
+<td style="text-align: right;">48 min 28 s</td>
+</tr>
+</tbody>
+</table></div>
+<p>¹ Menor diferença entre duas mensagens de registro para o número, uma
+de cada lado, após conversão dos relógios locais para UTC. Não mede
+permanência nem deslocamento. A distância é em linha reta entre as
+coordenadas do cadastro. Para a zona, a seção e o ZIP de cada ponta,
+consulte as <a href="fontes_municipios.csv">fontes por seção</a>.</p>
+<p>Em todos os 43 pares entre municípios os ZIPs e as séries de urna dos
+eventos diferem entre os lados. Baixamos os 86 ZIPs novamente dos
+endereços oficiais. Todos os SHA-256 coincidiram com o acervo. Uma
+leitura independente dos ZIPs confirmou os 12 dígitos completos em ambos
+os arquivos de cada par. Nos sete pares interestaduais, quatro tiveram
+habilitação atribuída ao número em apenas um lado e três em nenhum
+lado.</p>
+<h2 id="onde-o-número-também-habilitou-eleitores-nos-dois-lados">Onde o
+número também habilitou eleitores nos dois lados</h2>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Turno</th>
+<th>Municípios</th>
+<th style="text-align: right;">Distância</th>
+<th style="text-align: right;">Habilitações atribuídas, na ordem dos
+municípios</th>
+<th style="text-align: right;">Menor intervalo entre habilitações</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1º</td>
+<td>Birigui/SP e Mauá/SP</td>
+<td style="text-align: right;">475,7 km</td>
+<td style="text-align: right;">8 e 4</td>
+<td style="text-align: right;">2 h 34 min 51 s</td>
+</tr>
+<tr>
+<td>1º</td>
+<td>Palmas/TO e Porto Nacional/TO</td>
+<td style="text-align: right;">61,8 km</td>
+<td style="text-align: right;">3 e 6</td>
+<td style="text-align: right;">3 h 23 min 10 s</td>
+</tr>
+<tr>
+<td>1º</td>
+<td>Itanhaém/SP e Peruíbe/SP</td>
+<td style="text-align: right;">27,7 km</td>
+<td style="text-align: right;">12 e 4</td>
+<td style="text-align: right;">2 min 40 s</td>
+</tr>
+<tr>
+<td>2º</td>
+<td>Campo Largo/PR e Lapa/PR</td>
+<td style="text-align: right;">38,1 km</td>
+<td style="text-align: right;">1 e 1</td>
+<td style="text-align: right;">38 min 24 s</td>
+</tr>
+</tbody>
+</table></div>
+<p>Birigui e Mauá merecem confronto documental. As duas urnas mencionam
+biometria localizada nos arquivos coletados ao tratar do mesmo número.
+Essa mensagem descreve a fonte usada pela urna. Os logs públicos não
+trazem uma comparação das duas impressões digitais. Em Itanhaém e
+Peruíbe, o intervalo de 160 segundos entre habilitações atribuídas ao
+número também torna especialmente importante verificar quem estava em
+cada mesa. <a href="conferencia_tse.csv">Mensagens de origem e contagens
+por par</a></p>
+<p>Comparei ainda as mesmas seções no outro turno. Em 37 dos 43 pares, o
+número aparece novamente em uma das duas seções. Nos seis restantes ele
+não reaparece em nenhuma das duas. Nos sete interestaduais a divisão é
+seis e um. Esse padrão ajuda o cartório a localizar o registro
+destoante. Conferi também se outro número registrado em qualquer dos
+turnos nas mesmas seções diferia por apenas um dígito ou pela troca de
+posição de dois dígitos. Isso aconteceu em três dos 43 pares e em nenhum
+dos sete interestaduais. O teste não descarta outras formas de erro de
+entrada ou associação. <a href="contraste_turnos.csv">Contraste por
+par</a></p>
+<h2 id="método-alcance-e-conferência">Método, alcance e conferência</h2>
+<ul>
+<li>Foram lidos 497.895 pacotes de seções principais em cada turno, de
+497.897 chaves domésticas no catálogo de cada pleito. O exterior ficou
+fora do recorte. A unidade é a seção dentro do turno. Seções agregadas e
+cópias de linhas não contam como ocorrências independentes.</li>
+<li>O critério principal exige a mensagem positiva do aplicativo VOTA,
+<code>Mesário [12 dígitos] registrado</code>. Zeros à esquerda fazem
+parte da chave. Habilitação exige
+<code>Mesário [12 dígitos] habilitou o eleitor</code>. Pedidos de
+biometria, tentativas rejeitadas e digitação para encerramento ficam
+fora do critério. O cruzamento não usa votos ou dados de
+candidatos.</li>
+<li>Primeiro foi feita uma triagem por turno, com o dia eleitoral e o
+dia seguinte previsto pelo leitor para encerramentos tardios. No pacote
+do segundo turno o histórico do primeiro fica fora da janela. Para as
+coincidências houve releitura com descarte de fragmentos identificados
+como preparação, conferência de fase oficial e compatibilidade de
+município, zona e seção ou série com o BU. Os casos intermunicipais
+passaram também pela comparação direta dos números nos downloads
+oficiais.</li>
+<li>Os identificadores de consulta usam HMAC com segredo local. A lista
+conserva o vínculo entre turnos no mesmo acervo. A planilha inclui as
+aparições isoladas do outro turno dos identificadores selecionados. A
+repetição é calculada separadamente em cada turno, descontando a
+primeira seção.</li>
+<li>Local é a chave UF, município TSE, zona e número do local nos
+cadastros de 2 e 18 de outubro. Dois códigos podem representar
+instalações próximas ou até o mesmo endereço físico. Vinte e uma linhas
+de local/classe no primeiro turno e oito no segundo ficaram sem
+coordenadas válidas. Todas continuam nas tabelas. Todos os pares entre
+municípios tinham coordenadas nos dois lados. <a
+href="locais.csv">Locais e seções</a> · <a href="resumo.json">Versões e
+hashes</a></li>
+<li>Para estabelecer a causa, confrontar as atas e os Boletins de
+Identificação dos Mesários de cada par com as designações, substituições
+e remanejamentos do juízo eleitoral. Eventual divergência entre
+documentos e log exige examinar o procedimento de registro com os
+cartórios e o TRE. A análise não atribui autoria, adulteração de dados
+ou voto a qualquer pessoa. <a
+href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026">Resolução
+TSE 23.751/2026, art. 127</a></li>
+</ul>
+<h2 id="reprodução">Reprodução</h2>
+<p>Na raiz do projeto, executar na sequência os scripts abaixo com o
+Python do ambiente do projeto. O extrator usa os dois bancos originais
+em modo de leitura. Os intermediários pseudonimizados ficam em
+<code>data/outputs/mesarios_2026/</code>. O segredo local precisa ser
+preservado para reproduzir os mesmos rótulos individuais.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-extrair.py</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-analisar.py</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-fontes.py</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-contexto.py</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-lista.py</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-votos.py</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-equipes-extrair.py</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-equipes.py</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-conferir-ids.py</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/mesarios-2026-mapa.py</span></code></pre></div>
+<nav aria-label="Navegação do relatório"><a href="../../auditoria_urnas_2026.html#mesarios">← Relatório de mesários e urnas</a> · <a href="mapa.html">Abrir mapa</a> · <a href="../../auditoria_urnas_2026.html#dados">Baixar dados</a></nav></main></html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mesários e urnas em mais de uma seção · Eleições 2026 · Arvor</title>
+  <meta name="description" content="Auditoria dos dois turnos de 2026. Sete números de título foram registrados em UFs distintas. Dois pares de seções compartilham trechos de log de urna. Explore os mapas e baixe os dados.">
+  <meta property="og:title" content="Mesários e urnas em mais de uma seção">
+  <meta property="og:description" content="Dois mapas, as conferências nos arquivos do TSE e os dados públicos por seção.">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="pt_BR">
+  <link rel="canonical" href="https://brasil.arvor.co/auditoria_urnas_2026.html">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="auditoria-2026/relatorio.css">
+</head>
+<body>
+<header class="mast"><a href="./"><img src="img/favicon.svg" width="24" height="24" alt=""> Arvor Intelligence</a><span>Auditoria eleitoral</span></header>
+<main class="report">
+  <div class="hero">
+    <div><p class="date">Eleições presidenciais de 2026 · 23 de novembro</p>
+    <h1>Mesários e urnas em mais de uma seção</h1>
+    <p class="lead">Sete números de título foram registrados por mesas de estados diferentes no mesmo turno. Em outra conferência, encontramos dois pares de seções com trechos idênticos nos logs de urna. O que esses registros permitem concluir?</p>
+    <nav class="actions" aria-label="Mapas da auditoria"><a href="auditoria-2026/mesarios/mapa.html">Mapa dos mesários ↗</a><a href="auditoria-2026/urnas/mapa.html">Mapa das urnas ↗</a></nav></div>
+    <figure><a href="auditoria-2026/urnas/mapa.html"><img src="auditoria-2026/municipios.svg" width="575" height="500" alt="Mapa do Brasil com Teixeira de Freitas, na Bahia, e Santa Maria de Jetibá, no Espírito Santo."></a><figcaption>Os dois municípios em que um mesmo trecho de cômputo apareceu em logs de seções diferentes.</figcaption></figure>
+  </div>
+  <nav class="contents" aria-label="Neste relatório"><a href="#mesarios">Registros de mesários</a><a href="#urnas">Arquivos das urnas</a><a href="#dados">Dados e planilhas ↓</a></nav>
+  <article id="mesarios">
+    <h2>O mesmo número de título em duas mesas</h2>
+    <p>O log da urna registra os 12 algarismos digitados quando o aplicativo confirma o registro de um mesário. Contamos em quantas seções distintas cada número apareceu <strong>dentro do mesmo turno</strong>. Nos downloads, cada número recebe um código de consulta. Conferimos a correspondência com os registros originais e cada um dos 11.585 códigos publicados corresponde a uma única sequência digitada.</p>
+    <div class="scroll"><table><caption>Seções com ao menos um número repetido em outra seção do turno</caption><thead><tr><th>Turno</th><th>Números repetidos</th><th>Seções</th><th>Votos para presidente nessas seções</th></tr></thead><tbody><tr><td>1º turno</td><td>7.092</td><td>10.713</td><td>2.791.092</td></tr><tr><td>2º turno</td><td>4.774</td><td>6.035</td><td>1.602.448</td></tr></tbody></table></div>
+    <p>Em 94,9% dos números repetidos no primeiro turno e 93,0% no segundo, as seções ficavam no <strong>mesmo local de votação</strong>. Uma substituição ou um remanejamento de equipe pode ser conferido na ata. Cada seção entra uma única vez na coluna de votos, mesmo quando há vários números repetidos. A coluna mede toda a votação da seção.</p>
+    <h3>Sete números atravessam divisas estaduais</h3>
+    <p>Três no primeiro turno e quatro no segundo, em 14 seções. A releitura dos arquivos publicados pelo TSE confirmou os números completos nas duas pontas. Nos sete pares, houve habilitação de eleitor atribuída ao número em apenas uma das pontas em quatro casos e em nenhuma delas nos outros três. O registro do número, por si só, não identifica quem o digitou nem comprova presença física em dois locais.</p>
+    <p>Quatro pares dentro do mesmo estado tiveram habilitações atribuídas ao número nas duas pontas. Em <strong>Itanhaém e Peruíbe (SP)</strong>, o menor intervalo foi de 2 min 40 s. As atas, as designações e os boletins de identificação das mesas podem esclarecer a ocorrência. O relatório completo traz os municípios, horários, fusos e fontes.</p>
+    <p class="links"><a href="auditoria-2026/mesarios/mapa.html">Explorar os locais no mapa →</a><a href="auditoria-2026/mesarios/relatorio.html">Ler a auditoria de mesários →</a></p>
+  </article>
+  <article id="urnas">
+    <h2>Quando dois logs contêm os mesmos cômputos</h2>
+    <p>Comparamos <strong>497.897 pares de boletim de urna (BU) e registro digital do voto (RDV) em cada turno</strong>, nos 26 estados e no Distrito Federal. A série física da urna, a carga e a identificação efetiva da seção coincidiram em todos os pares. A série final do BU foi única entre seções de cada turno. Ao incluir também as máquinas que registraram votos antes de uma troca ou recuperação, apareceram dois pares de logs com linhas idênticas.</p>
+    <div class="scroll"><table><caption>Votação presidencial das quatro seções com trechos de log em comum</caption><thead><tr><th>Turno e município</th><th>Seção</th><th>Lula</th><th>Flávio</th><th>Outros</th><th>Brancos</th><th>Nulos</th><th>Total</th></tr></thead><tbody>
+    <tr><td>1º · Teixeira de Freitas, BA</td><td>175</td><td>88</td><td>160</td><td>6</td><td>7</td><td>11</td><td>272</td></tr>
+    <tr><td>1º · Teixeira de Freitas, BA</td><td>181</td><td>102</td><td>143</td><td>9</td><td>3</td><td>6</td><td>263</td></tr>
+    <tr><td>2º · Santa Maria de Jetibá, ES</td><td>85</td><td>80</td><td>218</td><td>0</td><td>5</td><td>5</td><td>308</td></tr>
+    <tr><td>2º · Santa Maria de Jetibá, ES</td><td>112</td><td>60</td><td>229</td><td>0</td><td>1</td><td>14</td><td>304</td></tr></tbody></table></div>
+    <h3>Bahia · uma lacuna de 136 eventos</h3>
+    <p>As seções 175 e 181 da 183ª zona funcionaram na mesma escola. O pacote da 175 traz 236 linhas de cômputo. Dessas, 100 são idênticas a linhas da urna que declara a seção 181. Sobram <strong>136 linhas atribuíveis à 175</strong>, para 272 votos no BU, no RDV e na totalização. O log registra uma contingência às 14h24. A origem da diferença de 136 eventos continua em aberto. Para esclarecê-la, são relevantes a mídia anterior à contingência, as atas e o registro da troca de equipamento.</p>
+    <h3>Espírito Santo · a separação dos trechos fecha a conta</h3>
+    <p>O pacote da seção 85 inclui as 304 linhas da máquina que declara a seção 112. Inclui também 308 linhas da máquina que declara a 85. Separados os trechos, os dois totais coincidem com os respectivos BUs e RDVs. Ambos os BUs foram gerados pelo recuperador de dados da urna.</p>
+    <p>Conferimos os votos por candidato, brancos e nulos nas quatro seções e nas demais selecionadas por diferença entre a série que computou e a série que gerou o BU. Nas <strong>29 seções-turno</strong> da conferência aprofundada, os placares coincidem no BU, no RDV e na votação por seção publicada pelo TSE. Nenhuma das quatro seções dos dois pares apareceu na lista de títulos de mesário repetidos.</p>
+    <p class="links"><a href="auditoria-2026/urnas/mapa.html">Ver as 29 seções no mapa →</a><a href="auditoria-2026/urnas/relatorio.html">Ler a auditoria das urnas →</a></p>
+  </article>
+  <section id="dados"><h2>Dados para conferência</h2>
+    <p>Os mapas usam coordenadas de locais de votação. As planilhas permitem filtrar por identificador e seção. Para somar votos de várias seções, use a base por seção, que já elimina a sobreposição entre identificadores. O exterior ficou fora das duas análises.</p>
+    <div class="downloads">
+      <section><h3>Mesários</h3><ul>
+        <li><a href="auditoria-2026/mesarios/mesarios_votos_e_equipes.xlsx">Votos e equipes por seção e identificador · Excel</a></li>
+        <li><a href="auditoria-2026/mesarios/mesarios_por_secao.xlsx">Repetições e locais de votação · Excel</a></li>
+        <li><a href="auditoria-2026/mesarios/lista_mesarios.csv">Lista de identificadores e repetições · CSV</a></li>
+        <li><a href="auditoria-2026/mesarios/votos_por_secao.csv">Votos por seção, com links aos BUs · CSV</a></li>
+        <li><a href="auditoria-2026/mesarios/pares_de_secoes.csv">Pares de seções e horários relativos · CSV</a></li>
+        <li><a href="auditoria-2026/mesarios/dados.zip" download>Baixar todos os dados de mesários · ZIP</a></li>
+      </ul></section>
+      <section><h3>Urnas</h3><ul>
+        <li><a href="auditoria-2026/urnas/casos_conferidos.csv">Seções, votos por candidato e BUs · CSV</a></li>
+        <li><a href="auditoria-2026/urnas/repeticoes.csv">Séries e cargas repetidas · CSV</a></li>
+        <li><a href="auditoria-2026/urnas/cronologia_pares.csv">Horários e contagens nos dois pares · CSV</a></li>
+        <li><a href="auditoria-2026/urnas/testes.csv">Resultados dos testes nacionais · CSV</a></li>
+        <li><a href="auditoria-2026/urnas/logs_rebaixados.csv">Logs oficiais e hashes de conferência · CSV</a></li>
+        <li><a href="auditoria-2026/urnas/dados.zip" download>Baixar todos os dados de urnas · ZIP</a></li>
+      </ul></section>
+    </div>
+    <p class="source">Fontes primárias · <a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026-arquivos-transmitidos-para-totalizacao">Arquivos transmitidos para totalização</a> · <a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026">Resultados por seção do TSE</a> · <a href="https://www.justicaeleitoral.jus.br/eleicoes/mesario/assets/arquivos/manual_do_mesario.pdf">Manual do Mesário</a></p>
+  </section>
+</main><footer><a href="./">Voltar ao acervo da Arvor</a></footer>
+</body></html>

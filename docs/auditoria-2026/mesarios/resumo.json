@@ -1,0 +1,144 @@
+{
+  "turnos": {
+    "3220": {
+      "catalogo": 497897,
+      "logs": 497895,
+      "sha256_lista": "9b068695d30dde70928f4d7470080dd5084376509f3a66e109cfd16af4f8fe75",
+      "registros": 3739891,
+      "pares_registro_secao": 1989541,
+      "identificadores": 1982235,
+      "distribuicao_por_secao": {
+        "0": 204,
+        "1": 238,
+        "2": 2582,
+        "3": 30574,
+        "4": 435331,
+        "5": 23944,
+        "6": 4134,
+        "7": 565,
+        "8": 296,
+        "9": 24,
+        "10": 3
+      },
+      "classes": {
+        "Mesmo local cadastrado": {
+          "identificadores": 6727,
+          "secoes": 10224,
+          "locais": 4413
+        },
+        "Locais distintos no município": {
+          "identificadores": 342,
+          "secoes": 471,
+          "locais": 451
+        },
+        "Municípios distintos na UF": {
+          "identificadores": 20,
+          "secoes": 40,
+          "locais": 40
+        },
+        "UFs distintas": {
+          "identificadores": 3,
+          "secoes": 6,
+          "locais": 6
+        },
+        "Local indeterminado": {
+          "identificadores": 0,
+          "secoes": 0,
+          "locais": 0
+        }
+      },
+      "secoes_distintas": 10713,
+      "locais_distintos": 4851,
+      "habilitacao_em_multiplas_secoes": {
+        "Mesmo local cadastrado": 105,
+        "Locais distintos no município": 9,
+        "Municípios distintos na UF": 3
+      },
+      "repeticao_apenas_no_criterio_ampliado": {}
+    },
+    "3221": {
+      "catalogo": 497897,
+      "logs": 497895,
+      "sha256_lista": "623826bd4bbf49640e0cb343e7167a81bf8906d9d4b7684289fa3357e980dcb7",
+      "registros": 3796753,
+      "pares_registro_secao": 1988598,
+      "identificadores": 1983681,
+      "distribuicao_por_secao": {
+        "0": 89,
+        "1": 169,
+        "2": 1881,
+        "3": 30963,
+        "4": 438617,
+        "5": 20945,
+        "6": 4420,
+        "7": 450,
+        "8": 338,
+        "9": 19,
+        "10": 4
+      },
+      "classes": {
+        "Mesmo local cadastrado": {
+          "identificadores": 4441,
+          "secoes": 5643,
+          "locais": 2407
+        },
+        "Locais distintos no município": {
+          "identificadores": 313,
+          "secoes": 373,
+          "locais": 358
+        },
+        "Municípios distintos na UF": {
+          "identificadores": 16,
+          "secoes": 32,
+          "locais": 32
+        },
+        "UFs distintas": {
+          "identificadores": 4,
+          "secoes": 8,
+          "locais": 8
+        },
+        "Local indeterminado": {
+          "identificadores": 0,
+          "secoes": 0,
+          "locais": 0
+        }
+      },
+      "secoes_distintas": 6035,
+      "locais_distintos": 2772,
+      "habilitacao_em_multiplas_secoes": {
+        "Mesmo local cadastrado": 52,
+        "Locais distintos no município": 6,
+        "Municípios distintos na UF": 1
+      },
+      "repeticao_apenas_no_criterio_ampliado": {}
+    }
+  },
+  "cadastros": [
+    {
+      "chave": "cadastro_1t",
+      "descricao": "Eleitorado por local de votação, 1º turno (TSE, arquivo de 02/10/2026)",
+      "caminho": "data/raw/tse_eleitorado/eleitorado_local_votacao_2026.zip",
+      "bytes": 88044650,
+      "sha256": "045df0a517be35490bcdfdbaf91ed2224122efec9b0d2ab199836e15f8b0805c",
+      "sha256_confere": true,
+      "gerado_tse": [
+        "02/10/2026 06:29:09"
+      ],
+      "linhas": 517179,
+      "modificado_em": "2026-10-03T05:37:07+00:00"
+    },
+    {
+      "chave": "cadastro_2t",
+      "descricao": "Eleitorado por local de votação, linhas do 2º turno (TSE, arquivo de 18/10/2026)",
+      "caminho": "data/raw/tse_eleitorado/locais_2t/eleitorado_local_votacao_2026_20261018.zip",
+      "bytes": 167433047,
+      "sha256": "a948d3e587d7116ffe003fb07a083b2d1d64ce9a236f703f92d36e168f1b5adb",
+      "sha256_confere": true,
+      "gerado_tse": [
+        "18/10/2026 20:27:31"
+      ],
+      "linhas": 517179,
+      "modificado_em": "2026-10-19T05:55:05+00:00"
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Auditoria de identificadores das urnas de 2026 · Arvor</title><link rel="stylesheet" href="../relatorio.css"><main class="integra"><nav aria-label="Navegação do relatório"><a href="../../auditoria_urnas_2026.html#urnas">← Relatório de mesários e urnas</a> · <a href="mapa.html">Abrir mapa</a> · <a href="../../auditoria_urnas_2026.html#dados">Baixar dados</a></nav><h1 id="auditoria-de-identificadores-das-urnas-de-2026">Auditoria de
+identificadores das urnas de 2026</h1>
+<p><strong>Em quatro seções, a mesma série física e o mesmo código de
+carga aparecem registrando votos em dois logs do mesmo turno.</strong>
+São dois pares, um na Bahia e outro no Espírito Santo, em três locais.
+Todas as linhas de cômputo da série repetida em cada par coincidem,
+inclusive horário e código de verificação. Os quatro resultados
+presidenciais conferem, candidato por candidato, entre boletim de urna
+(BU), registro digital do voto (RDV) e tabela de votação por seção da
+totalização. <strong>A seção 175 de Teixeira de Freitas ficou com uma
+lacuna de 136 cômputos no log atribuível à própria seção.</strong> <a
+href="mapa.html">Mapa</a> · <a href="pares_serie_ativa.csv">Pares de
+seções</a> · <a href="cronologia_pares.csv">Cronologia dos arquivos</a>
+· <a href="totalizacao.csv">Totalização</a></p>
+<h2 id="onde-ocorreu-e-quantos-votos-as-seções-registraram">Onde ocorreu
+e quantos votos as seções registraram</h2>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Turno</th>
+<th>Município e zona</th>
+<th style="text-align: right;">Seção</th>
+<th>Série final no BU</th>
+<th style="text-align: right;">Lula</th>
+<th style="text-align: right;">Flávio</th>
+<th style="text-align: right;">Outros candidatos</th>
+<th style="text-align: right;">Brancos</th>
+<th style="text-align: right;">Nulos</th>
+<th style="text-align: right;">Total presidencial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1º</td>
+<td>Teixeira de Freitas, BA · 183</td>
+<td style="text-align: right;">175</td>
+<td>02429118</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;"><strong>272</strong></td>
+</tr>
+<tr>
+<td>1º</td>
+<td>Teixeira de Freitas, BA · 183</td>
+<td style="text-align: right;">181</td>
+<td>02293617</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"><strong>263</strong></td>
+</tr>
+<tr>
+<td>2º</td>
+<td>Santa Maria de Jetibá, ES · 9</td>
+<td style="text-align: right;">85</td>
+<td>01841837</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;"><strong>308</strong></td>
+</tr>
+<tr>
+<td>2º</td>
+<td>Santa Maria de Jetibá, ES · 9</td>
+<td style="text-align: right;">112</td>
+<td>01758779</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"><strong>304</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>As duas seções baianas funcionaram na Escola Municipal Clélia das
+Graças Figueiredo Pinto, local 1392. No Espírito Santo, a seção 85
+funcionou na EEEFM Graça Aranha, local 1031, e a 112 na Comunidade
+Martim Lutero, local 1406. Os pares somam <strong>535 votos no primeiro
+turno e 612 no segundo</strong>. A soma de 1.147 mede a votação das
+quatro seções nos dois turnos. As linhas técnicas repetidas não contêm a
+escolha de candidato. Nenhuma dessas quatro seções integrou a lista
+anterior de títulos de mesário repetidos. <a
+href="casos_conferidos.csv">Votos por candidato, locais e BUs</a> · <a
+href="../mesarios/relatorio.html">Auditoria dos mesários</a></p>
+<h3 id="teixeira-de-freitas--4-de-outubro">Teixeira de Freitas · 4 de
+outubro</h3>
+<p>A série <strong>02423907</strong> declara seção <strong>181</strong>.
+Suas 100 linhas de cômputo entre 08h06 e 12h23 estão tanto no pacote da
+181 quanto no da 175. Na 181, as 100 linhas mais 163 da série 02293617
+somam os 263 votos do BU. Na 175, o pacote traz 236 linhas de cômputo.
+Excluídas as 100 da 181, restam 24 da série 02424441 e 112 da série
+02429118, ambas declarando a 175. O BU, o RDV e a totalização registram
+272 na 175. <strong>272 − (24 + 112) = 136</strong> é a diferença que a
+trilha da própria seção deixa em aberto.</p>
+<p>O log da 175 registra contingência bem-sucedida às 14h24. O histórico
+do primeiro turno preservado nos pacotes do segundo turno contém as
+mesmas sequências. A operação de contingência está documentada. A causa
+de o pacote incluir o trecho da 181 e a origem da lacuna na 175
+permanecem abertas. Para esclarecer o caso, as peças mais específicas
+são as atas das duas mesas, o registro de troca de urna ou mídia da 183ª
+zona e a mídia ou o log da 175 anterior à contingência. O primeiro
+cômputo disponível que declara a 175 é das 13h29. <a
+href="cronologia_pares.csv">Cronologia e hashes das sequências</a> · <a
+href="logs_rebaixados.csv">Logs oficiais</a></p>
+<h3 id="santa-maria-de-jetibá--25-de-outubro">Santa Maria de Jetibá · 25
+de outubro</h3>
+<p>A série <strong>01750820</strong> declara seção <strong>112</strong>.
+Suas 304 linhas entre 08h01 e 16h40 estão nos dois pacotes, inclusive em
+membro interno de mesmo nome. No pacote da 85, há também 308 linhas de
+outra série, <strong>01841837</strong>, que declara seção 85. A soma
+bruta no pacote da 85 dá 612. Atribuir os trechos às seções declaradas
+reproduz <strong>308 na 85 e 304 na 112</strong>. Ambos os BUs têm tipo
+de arquivo RED, o Recuperador de Dados da urna. A sequência operacional
+que levou o trecho aos dois pacotes depende dos registros de recuperação
+da 9ª zona. <a href="pares_serie_ativa.csv">Comparação das linhas</a> ·
+<a
+href="https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/formato-arquivos-de-bu-rdv-e-assinatura-digital">Tipos
+de arquivo na especificação do TSE</a></p>
+<h2 id="resultado-nacional">Resultado nacional</h2>
+<p>O recorte inclui os 26 estados e o Distrito Federal e exclui o
+exterior. A unidade é turno, UF, município TSE, zona e seção com arquivo
+próprio de resultado. Seções agregadas sem BU próprio não geram uma
+segunda contagem. No primeiro turno, dois pacotes de Minas Gerais contêm
+log do Sistema de Apuração e BU com comparecimento informado como zero.
+Em ambos falta o evento de cômputo do aplicativo VOTA. <a
+href="cobertura.json">Cobertura</a> · <a href="testes.csv">Todos os
+resultados, inclusive divergências literais e dados ausentes</a></p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Conferência</th>
+<th style="text-align: right;">1º turno</th>
+<th style="text-align: right;">2º turno</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pares BU × RDV com os dois arquivos conferidos pelo tamanho e
+SHA-512 no manifesto da seção</td>
+<td style="text-align: right;">497.897</td>
+<td style="text-align: right;">497.897</td>
+</tr>
+<tr>
+<td>Divergências entre BU e RDV na série física, mídias de carga e
+votação, código/data da carga, gerador de mídia, versão, tipo de urna ou
+tipo de arquivo</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Divergências entre BU e RDV na seção efetiva (inclusive local),
+pleito, fase oficial, conjunto de eleições e cargos ou lista ordenada de
+cargas</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Séries físicas ou códigos de carga do BU final repetidos entre
+seções</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>BUs, RDVs ou arquivos inteiros de log com SHA-256 repetido entre
+seções</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Logs com evento de cômputo no turno</td>
+<td style="text-align: right;">497.895</td>
+<td style="text-align: right;">497.897</td>
+</tr>
+<tr>
+<td>Seções com mais de uma série emitindo cômputos no próprio
+pacote</td>
+<td style="text-align: right;">2.100</td>
+<td style="text-align: right;">1.414</td>
+</tr>
+<tr>
+<td>Seções com cômputo no log em que a série final do BU não emitiu
+nenhum desses eventos</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr>
+<td>Pares entre seções com repetição de série ativa e código de
+carga</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table></div>
+<p>A busca de repetição inclui <strong>todas as máquinas que emitiram a
+mensagem de voto computado</strong>, inclusive as anteriores à
+substituição ou recuperação. Cada série ou carga conta uma vez por
+seção. As quatro séries finais dos BUs dos dois pares são distintas. A
+comparação dos identificadores no log usa a última declaração da própria
+máquina até o instante do cômputo e preserva declarações conflitantes no
+mesmo segundo. O intervalo inclui o dia de votação e o seguinte para
+captar encerramentos após a meia-noite. <a
+href="repeticoes.csv">Identificadores repetidos e número de seções</a> ·
+<a href="ocorrencias.csv">Ocorrências por seção e valores
+observados</a></p>
+<h3 id="diferenças-de-significado-entre-campos">Diferenças de
+significado entre campos</h3>
+<ul>
+<li><strong>Carga de contingência.</strong> Em 3.004 seções no primeiro
+turno e 5.672 no segundo, o bloco completo da urna difere literalmente
+entre BU e RDV. Em todas, o BU traz a identificação da carga de
+contingência e o RDV informa a seção efetiva no campo correspondente. A
+série, as mídias, o código e o histórico de carga coincidem. Em 581 e
+1.172 seções, respectivamente, o município ou a zona de preparação da
+carga difere do destino efetivo. A identificação principal da seção de
+votação coincide em todos os pares BU × RDV.</li>
+<li><strong>Local de votação.</strong> No BU, o campo de local dentro da
+identificação da carga vale 1 em todos os registros em que essa
+alternativa contém um local. O local efetivo está na identificação
+principal da seção. Nos logs com reserva há declarações de local zero.
+Nas divergências literais de local no log, apenas a seção 85 do ES traz
+outro código efetivo distinto de zero e do próprio local. Esse código
+corresponde à 112.</li>
+<li><strong>Envelope do BU.</strong> Os dois BUs mineiros de Sistema de
+Apuração no primeiro turno usam a alternativa de contingência no
+envelope, com município e zona. O corpo identifica a seção. Fase,
+município, zona e identificador eleitoral são compatíveis. <a
+href="contexto_carga.csv">Distribuições dos campos</a></li>
+<li><strong>Mídias e certificados.</strong> Um gerador de mídias e uma
+flash de carga podem servir a várias urnas. Identificadores de flash de
+votação e de memória de resultado têm quatro bytes. A auditoria anterior
+separou colisões de valores curtos, agrupamentos de MR dentro da zona e
+equipamentos de apuração compartilhados. No recorte anterior, que inclui
+o exterior, a série e o certificado de urna trocaram juntos entre
+turnos, sem caso de mesma série com certificado diferente ou do inverso.
+<a href="metadados.md">Auditoria de certificados, mídias e respectivos
+denominadores</a></li>
+</ul>
+<h3 id="as-29-seções-da-conferência-aprofundada">As 29 seções da
+conferência aprofundada</h3>
+<p>As quatro seções dos pares e as 26 em que a série final do BU não
+emitiu cômputos têm uma seção em comum, a 112 do ES. A união abrange
+<strong>29 seções-turno e 28 locais</strong>. Nas 26, a série final
+aparece em outras mensagens do log e todos os códigos de carga
+observados nas máquinas com cômputo constam do histórico do BU. Em onze,
+a série final também emite a confirmação de encerramento. Os 29 logs
+foram baixados novamente e conferidos contra o SHA-256 do material
+analisado e o SHA-512 do manifesto da seção. <a
+href="logs_rebaixados.csv">URLs dos logs e hashes verificados</a></p>
+<p>Os 29 casos somam <strong>3.551 votos presidenciais no primeiro turno
+e 3.287 no segundo</strong>. Os votos de cada candidato, os brancos e os
+nulos batem em <strong>29 de 29</strong> entre os dois binários e o
+arquivo de votação por seção publicado após a totalização. As três
+fontes são produtos da Justiça Eleitoral. A concordância testa a
+consistência entre publicações. A ata e as mídias locais são necessárias
+para atribuir causa à lacuna da Bahia. <a
+href="casos_conferidos.csv">Seções, motivos e placares</a> · <a
+href="totalizacao.csv">Conferência da totalização</a></p>
+<h2 id="fontes-cobertura-criptográfica-e-reprodução">Fontes, cobertura
+criptográfica e reprodução</h2>
+<p>A auditoria lê os identificadores diretamente dos arquivos conforme
+os esquemas ASN.1 do TSE. O teste nacional preserva a alternativa de
+identificação, o local efetivo e a ordem do histórico de cargas, pulando
+as folhas com votos individuais. A releitura dos 29 casos decodifica as
+listas integrais e recompõe a votação presidencial por candidato. O
+teste nacional de eleições e cargos compara conjuntos de
+identificadores. <a
+href="https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/formato-arquivos-de-bu-rdv-e-assinatura-digital">Formato
+oficial</a> · <a
+href="https://dadosabertos.tse.jus.br/dataset/resultados-2026-arquivos-transmitidos-para-totalizacao">Arquivos
+transmitidos</a> · <a
+href="https://dadosabertos.tse.jus.br/dataset/resultados-2026">Resultados
+por seção</a></p>
+<p>A leitura dos ZIPs estaduais verificou CRC, tamanho e nome dos
+membros selecionados. Recalculamos o SHA-512 do BU e do RDV em
+<strong>995.794 pares</strong> e comparamos com o mesmo manifesto de
+cada seção. A auditoria anterior verificou a cadeia de certificados e a
+assinatura de hardware. No processamento nacional dos logs, havia bytes
+do ZIP original para conferência direta do SHA-512 em <strong>497.897
+seções no 1º turno e 11.673 no 2º</strong>. Para os demais logs do 2º
+turno, a cópia local usa armazenamento compacto com reconstrução dos
+textos e verificação dos hashes dos membros. Os 29 logs de interesse
+tiveram também a conferência direta do ZIP publicado. No segundo turno,
+os ZIPs estaduais forneceram dois RDVs e dois logs de votação ausentes
+dos índices locais. <a href="fontes.json">Proveniência, URLs e
+hashes</a></p>
+<p>A partir da raiz do repositório, com os bancos de origem locais, os
+comandos abaixo reproduzem os testes e os arquivos de evidência. Os
+intermediários ficam em data/outputs/auditoria_ids_2026/.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-pacotes.py</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-binarios.py <span class="at">--turno</span> 1</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-binarios.py <span class="at">--turno</span> 2</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-complementos.py</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-binarios.py <span class="at">--turno</span> 2</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-logs.py</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-resumo.py</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-casos.py</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-originais.py</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-cronologia.py</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-totalizacao.py</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/auditoria-ids-2026-mapa.py</span></code></pre></div>
+<nav aria-label="Navegação do relatório"><a href="../../auditoria_urnas_2026.html#urnas">← Relatório de mesários e urnas</a> · <a href="mapa.html">Abrir mapa</a> · <a href="../../auditoria_urnas_2026.html#dados">Baixar dados</a></nav></main></html>
