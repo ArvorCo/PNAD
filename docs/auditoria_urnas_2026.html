@@ -24,10 +24,10 @@
     <nav class="actions" aria-label="Mapas da auditoria"><a href="auditoria-2026/mesarios/mapa.html">Mapa dos mesários ↗</a><a href="auditoria-2026/urnas/mapa.html">Mapa das urnas ↗</a></nav></div>
     <figure><a href="auditoria-2026/urnas/mapa.html"><img src="auditoria-2026/municipios.svg" width="575" height="500" alt="Mapa do Brasil com Teixeira de Freitas, na Bahia, e Santa Maria de Jetibá, no Espírito Santo."></a><figcaption>Os dois municípios em que um mesmo trecho de cômputo apareceu em logs de seções diferentes.</figcaption></figure>
   </div>
-  <nav class="contents" aria-label="Neste relatório"><a href="#mesarios">Registros de mesários</a><a href="#explicacoes-oficiais">Explicações oficiais</a><a href="#urnas">Arquivos das urnas</a><a href="#dados">Dados e planilhas ↓</a></nav>
+  <nav class="contents" aria-label="Neste relatório"><a href="#mesarios">Registros de mesários</a><a href="#lista-de-identificadores">Lista de identificadores</a><a href="#explicacoes-oficiais">Explicações oficiais</a><a href="#urnas">Arquivos das urnas</a><a href="#dados">Dados e planilhas ↓</a></nav>
   <article id="mesarios">
     <h2>O mesmo número de título em duas mesas</h2>
-    <p>O log da urna registra os 12 algarismos digitados quando o aplicativo confirma o registro de um mesário. Contamos em quantas seções distintas cada número apareceu <strong>dentro do mesmo turno</strong>. Nos downloads, cada número recebe um código de consulta. Conferimos a correspondência com os registros originais e cada um dos 11.585 códigos publicados corresponde a uma única sequência digitada.</p>
+    <p>O log da urna registra os 12 algarismos digitados quando o aplicativo confirma o registro de um mesário. Contamos em quantas seções distintas cada número apareceu <strong>dentro do mesmo turno</strong>. A lista pública usa um pseudônimo para cada número digitado.</p>
     <div class="scroll"><table><caption>Seções com ao menos um número repetido em outra seção do turno</caption><thead><tr><th>Turno</th><th>Números repetidos</th><th>Seções</th><th>Votos para presidente nessas seções</th></tr></thead><tbody><tr><td>1º turno</td><td>7.092</td><td>10.713</td><td>2.791.092</td></tr><tr><td>2º turno</td><td>4.774</td><td>6.035</td><td>1.602.448</td></tr></tbody></table></div>
     <p>Em 94,9% dos números repetidos no primeiro turno e 93,0% no segundo, as seções ficavam no <strong>mesmo local de votação</strong>. Uma substituição ou um remanejamento de equipe pode ser conferido na ata. Cada seção entra uma única vez na coluna de votos, mesmo quando há vários números repetidos. A coluna mede toda a votação da seção.</p>
     <h3>Sete números atravessam divisas estaduais</h3>
@@ -39,6 +39,94 @@
   <p>Segundo a mesma nota, se o mesário vota naquela seção e há biometria disponível, a urna compara a digital apresentada com a cadastrada. Se o mesário é eleitor de outra seção, a urna armazena a digital coletada para posterior verificação pela Justiça Eleitoral. <a href="https://www.justicaeleitoral.jus.br/fato-ou-boato/checagens/2026/repeticao-de-titulo-em-logs-de-urnas-nao-comprova-existencia-de-mesarios-virtuais">Checagem da Justiça Eleitoral de 23/11/2026</a>.</p>
   <p>Para conferir quem trabalhou em cada mesa, o art. 127, incisos VI e VIII, prevê a assinatura do Boletim de Identificação do Mesário e o registro de presenças, substituições e remanejamentos na ata. A checagem pública não identifica as seções do vídeo nem apresenta a conferência individual dos sete pares entre UFs deste relatório. A causa de cada um desses pares continua em aberto. <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026">Resolução TSE nº 23.751/2026, art. 127</a>.</p>
 </aside>
+<h3 id="frequencia">Em quantas seções o mesmo número apareceu?</h3>
+<p>Dos <strong>11.585 identificadores</strong> com repetição, <strong>11.106 (95,9%)</strong> tiveram uma única repetição e <strong>479 (4,1%)</strong> tiveram duas ou mais. Cada seção adicional no mesmo turno conta uma vez. Duas seções no primeiro turno e duas no segundo somam duas repetições. Várias digitações na mesma seção e turno contam como uma única aparição.</p>
+<details><summary>Distribuição completa por turno</summary><div class="scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">Repetições por identificador</th>
+<th style="text-align: right;">IDs no 1º turno</th>
+<th style="text-align: right;">IDs no 2º turno</th>
+<th style="text-align: right;">IDs pela soma das repetições nos dois turnos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6.957</td>
+<td style="text-align: right;">4.668</td>
+<td style="text-align: right;">11.106</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">416</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>IDs com repetição</strong></td>
+<td style="text-align: right;"><strong>7.092</strong></td>
+<td style="text-align: right;"><strong>4.774</strong></td>
+<td style="text-align: right;"><strong>11.585</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Os 281 códigos com repetição nos dois turnos entram uma vez na última coluna.</p>
+</details>
+<p><strong>São Paulo (SP), zona 254.</strong> O código <strong>M-2D3BB916DE19</strong> apareceu em <strong>dez seções de dez locais</strong> no primeiro turno. São nove repetições. Os logs registraram o número 12 vezes em 4 de outubro. Houve um registro às 7h17min46s na seção 307 e os outros 11 entre 17h01min27s e 17h12min26s, nas dez seções. Os logs não atribuem a esse código nenhuma habilitação de eleitor nessas seções. No segundo turno, o número apareceu em uma única seção. Em Gravataí (RS), outro código apareceu em oito seções no primeiro turno, todas no mesmo local de votação. <a href="auditoria-2026/mesarios/registros_sp_zona_254.csv">Conferir os horários e as fontes das dez seções de São Paulo</a>.</p>
+<p>A frequência e os horários ajudam a escolher quais atas e boletins de identificação conferir. Por si só, a contagem não permite atribuir o caso paulista a erro de digitação ou determinar quem fez os registros.</p>
+<h3 id="lista-de-identificadores">Lista de identificadores repetidos</h3>
+<p>Para proteger a privacidade dos mesários, a Arvor substituiu cada número de título de 12 algarismos digitado no log por um <strong>ID de auditoria</strong> com prefixo <strong>M-</strong>. O mesmo número recebe o mesmo código nos dois turnos. Conferimos nos logs a correspondência entre os 11.585 códigos e 11.585 números distintos. A lista permite contar registros sem divulgar nomes ou títulos originais, em atenção ao princípio da necessidade da <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">LGPD, art. 6º, III</a>. Para saber quem trabalhou na seção é preciso conferir a documentação da mesa.</p>
+<section id="consulta-ids" aria-label="Lista de identificadores">
+<p><a href="auditoria-2026/mesarios/lista_mesarios.csv" download>Baixar a lista completa em CSV</a> · <a href="auditoria-2026/mesarios/mesarios_votos_e_equipes.xlsx">Ver seções e votos por candidato na planilha</a></p>
+<fieldset disabled><legend>Consultar por ID de auditoria</legend><label for="busca-id">Código completo ou parcial</label> <input id="busca-id" type="search" placeholder="M-2D3BB916DE19" autocomplete="off" maxlength="14"></fieldset>
+<p role="status" aria-live="polite">Para consultar todos os identificadores, baixe o CSV ou habilite o JavaScript.</p>
+<div class="scroll"><table><caption>Identificadores por número de repetições</caption><thead><tr><th>ID de auditoria</th><th>Seções 1º T</th><th>Repetições 1º T</th><th>Seções 2º T</th><th>Repetições 2º T</th><th>Total de repetições</th></tr></thead><tbody></tbody></table></div>
+<button type="button" disabled>Anterior</button> <button type="button" disabled>Próxima</button>
+</section>
+<script defer src="auditoria-2026/mesarios/lista.js"></script>
     <p class="links"><a href="auditoria-2026/mesarios/mapa.html">Explorar os locais no mapa →</a><a href="auditoria-2026/mesarios/relatorio.html">Ler a auditoria de mesários →</a></p>
   </article>
   <article id="urnas">

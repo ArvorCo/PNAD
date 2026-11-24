@@ -94,19 +94,84 @@ números repetidos. Uma verificação de remanejamento interno começa pela
 ata da mesa.</p>
 <h2 id="quantas-vezes-cada-número-se-repete">Quantas vezes cada número
 se repete</h2>
-<p>A lista contém <strong>11.585 identificadores distintos</strong>.
-Desses, 281 repetiram em ambos os turnos. Somando apenas as seções
-adicionais dentro de cada turno, houve 7.257 repetições no primeiro e
-4.901 no segundo. Para 11.106 identificadores houve só uma repetição no
-total.</p>
-<p>A maior contagem pertence ao código de auditoria
-<strong>M-2D3BB916DE19</strong> neste snapshot. Aparece em dez seções e
-dez locais de votação da zona 254 de São Paulo no primeiro turno e em
-uma dessas seções no segundo. A conta é nove repetições no primeiro e
-zero no segundo. A aba <strong>Seções</strong> permite conferir cada
-local, o número de eventos de registro e as habilitações atribuídas. <a
-href="mesarios_por_secao.xlsx">Planilha filtrável</a> · <a
-href="lista_mesarios.csv">Lista em CSV</a></p>
+<p>Dos <strong>11.585 identificadores</strong> com repetição, <strong>11.106 (95,9%)</strong> tiveram uma única repetição e <strong>479 (4,1%)</strong> tiveram duas ou mais. Cada seção adicional no mesmo turno conta uma vez. Duas seções no primeiro turno e duas no segundo somam duas repetições. Várias digitações na mesma seção e turno contam como uma única aparição.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">Repetições por identificador</th>
+<th style="text-align: right;">IDs no 1º turno</th>
+<th style="text-align: right;">IDs no 2º turno</th>
+<th style="text-align: right;">IDs pela soma das repetições nos dois turnos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6.957</td>
+<td style="text-align: right;">4.668</td>
+<td style="text-align: right;">11.106</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">416</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>IDs com repetição</strong></td>
+<td style="text-align: right;"><strong>7.092</strong></td>
+<td style="text-align: right;"><strong>4.774</strong></td>
+<td style="text-align: right;"><strong>11.585</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Os 281 códigos que tiveram repetição nos dois turnos entram uma vez na última coluna.</p>
+<p><strong>São Paulo (SP), zona 254.</strong> O código <strong>M-2D3BB916DE19</strong> apareceu em <strong>dez seções de dez locais</strong> no primeiro turno. São nove repetições. Os logs registraram o número 12 vezes em 4 de outubro. Houve um registro às 7h17min46s na seção 307 e os outros 11 entre 17h01min27s e 17h12min26s, nas dez seções. Os logs não atribuem a esse código nenhuma habilitação de eleitor nessas seções. No segundo turno, o número apareceu em uma única seção. Em Gravataí (RS), outro código apareceu em oito seções no primeiro turno, todas no mesmo local de votação. <a href="registros_sp_zona_254.csv">Conferir os horários e as fontes das dez seções de São Paulo</a>.</p>
+<p>A frequência e os horários ajudam a escolher quais atas e boletins de identificação conferir. Por si só, a contagem não permite atribuir o caso paulista a erro de digitação ou determinar quem fez os registros.</p>
+<p>Para proteger a privacidade dos mesários, a Arvor substituiu cada número de título de 12 algarismos digitado no log por um <strong>ID de auditoria</strong> com prefixo <strong>M-</strong>. O mesmo número recebe o mesmo código nos dois turnos. Conferimos nos logs a correspondência entre os 11.585 códigos e 11.585 números distintos. A lista permite contar registros sem divulgar nomes ou títulos originais, em atenção ao princípio da necessidade da <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">LGPD, art. 6º, III</a>. Para saber quem trabalhou na seção é preciso conferir a documentação da mesa.</p>
+<p><a href="../../auditoria_urnas_2026.html#lista-de-identificadores">Consultar a lista completa por ID</a> · <a href="lista_mesarios.csv">Baixar a lista completa em CSV</a></p>
 <h2 id="quanto-voto-foi-depositado-nessas-seções">Quanto voto foi
 depositado nessas seções?</h2>
 <p>No primeiro turno, 10.713 seções concentram 2.791.092 votos para
