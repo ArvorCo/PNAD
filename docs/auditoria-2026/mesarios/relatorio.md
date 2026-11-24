@@ -104,6 +104,18 @@ No teste aritmético de estrutura, 11.018 números passaram pela regra geral de 
 
 Para apurar autoria e possível repercussão, o confronto prioritário é entre as atas, o Boletim de Identificação dos Mesários, a designação e os registros de remanejamento ou substituição no módulo de convocação do ELO. Priorizar números com habilitação nos dois lados e incompatibilidade geográfica ou temporal, além de quartetos coincidentes em locais diferentes na abertura. Os votos totais da seção não estimam quantos votos dependem de eventual irregularidade. [Resolução TSE 23.751/2026, arts. 125 a 127](https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026)
 
+## Um número na Bahia e no Rio, com 2 minutos e 42 segundos de intervalo
+
+No primeiro turno, em 4 de outubro, o terminal da Escola Maria Souza Borges, em Ribeira do Pombal (BA), registrou às **7h40min05s** o número que publicamos como **M-4D897AE7BA69**. Às **7h42min47s**, o mesmo número apareceu na seção 53 do Rio de Janeiro (RJ), na Igreja Assembleia de Deus. Os relógios das duas cidades seguem o horário de Brasília. Pelas coordenadas dos locais, são **1.441,6 km em linha reta**, a maior distância entre os 43 pares de seções de municípios diferentes encontrados pela auditoria.
+
+O que aconteceu depois ajuda a interpretar a coincidência. Na Bahia, a urna atribuiu uma habilitação de eleitor ao número. No Rio, o número voltou a ser registrado às 17h08min21s, sem habilitações atribuídas a ele naquele dia. No segundo turno, o número reapareceu na seção carioca. Esses horários são de eventos em duas urnas. Para saber quem registrou a presença em cada mesa, faltam as atas e os boletins de identificação das duas seções.
+
+**Entre municípios, o menor intervalo entre registros ocorreu no Pará.** As urnas de Bragança e Rio Maria registraram o mesmo número com **três segundos** de diferença e **786,1 km** entre os locais. Já em Itanhaém e Peruíbe (SP), a distância foi de **27,7 km**. Ali houve **12 e quatro habilitações** atribuídas ao mesmo número, respectivamente. O menor intervalo entre duas dessas habilitações foi **2 min 40 s**. A diferença entre os registros de presença foi de **10 min 41 s**.
+
+**Por que um número pode reaparecer?** Em seções de um mesmo prédio, a ata pode documentar um remanejamento. Em dois estados, a explicação da Justiça Eleitoral aponta outra possibilidade. Quem registra a presença pode digitar por engano um número válido. Procuramos, entre os demais números registrados nas mesmas seções nos dois turnos, algum que diferisse por um dígito ou por uma troca de posição entre dois dígitos. O teste encontrou números com essa semelhança em três dos 43 pares intermunicipais e em nenhum dos sete interestaduais. Esse teste só alcança números presentes nos logs consultados. A documentação de cada mesa é que permite distinguir as hipóteses.
+
+[Distâncias dos 43 pares](pares_municipios.csv) · [Registros e habilitações](conferencia_tse.csv) · [Conferência no outro turno](contraste_turnos.csv) · [Arquivos do TSE por seção](fontes_municipios.csv)
+
 ## Os sete pares interestaduais
 
 | Turno | Município e UF | Município e UF | Distância | Menor intervalo entre registros¹ |
