@@ -18,13 +18,13 @@
 <header class="mast"><a href="./"><img src="img/favicon.svg" width="24" height="24" alt=""> Arvor Intelligence</a><span>Auditoria eleitoral</span></header>
 <main class="report">
   <div class="hero">
-    <div><p class="date">Eleições presidenciais de 2026 · 23 de novembro</p>
+    <div><p class="date">Eleições presidenciais de 2026 · Publicado em 23/11 · Atualizado em 24/11</p>
     <h1>Mesários e urnas em mais de uma seção</h1>
     <p class="lead">Sete números de título foram registrados por mesas de estados diferentes no mesmo turno. Em outra conferência, encontramos dois pares de seções com trechos idênticos nos logs de urna. O que esses registros permitem concluir?</p>
     <nav class="actions" aria-label="Mapas da auditoria"><a href="auditoria-2026/mesarios/mapa.html">Mapa dos mesários ↗</a><a href="auditoria-2026/urnas/mapa.html">Mapa das urnas ↗</a></nav></div>
     <figure><a href="auditoria-2026/urnas/mapa.html"><img src="auditoria-2026/municipios.svg" width="575" height="500" alt="Mapa do Brasil com Teixeira de Freitas, na Bahia, e Santa Maria de Jetibá, no Espírito Santo."></a><figcaption>Os dois municípios em que um mesmo trecho de cômputo apareceu em logs de seções diferentes.</figcaption></figure>
   </div>
-  <nav class="contents" aria-label="Neste relatório"><a href="#mesarios">Registros de mesários</a><a href="#urnas">Arquivos das urnas</a><a href="#dados">Dados e planilhas ↓</a></nav>
+  <nav class="contents" aria-label="Neste relatório"><a href="#mesarios">Registros de mesários</a><a href="#explicacoes-oficiais">Explicações oficiais</a><a href="#urnas">Arquivos das urnas</a><a href="#dados">Dados e planilhas ↓</a></nav>
   <article id="mesarios">
     <h2>O mesmo número de título em duas mesas</h2>
     <p>O log da urna registra os 12 algarismos digitados quando o aplicativo confirma o registro de um mesário. Contamos em quantas seções distintas cada número apareceu <strong>dentro do mesmo turno</strong>. Nos downloads, cada número recebe um código de consulta. Conferimos a correspondência com os registros originais e cada um dos 11.585 códigos publicados corresponde a uma única sequência digitada.</p>
@@ -33,6 +33,12 @@
     <h3>Sete números atravessam divisas estaduais</h3>
     <p>Três no primeiro turno e quatro no segundo, em 14 seções. A releitura dos arquivos publicados pelo TSE confirmou os números completos nas duas pontas. Nos sete pares, houve habilitação de eleitor atribuída ao número em apenas uma das pontas em quatro casos e em nenhuma delas nos outros três. O registro do número, por si só, não identifica quem o digitou nem comprova presença física em dois locais.</p>
     <p>Quatro pares dentro do mesmo estado tiveram habilitações atribuídas ao número nas duas pontas. Em <strong>Itanhaém e Peruíbe (SP)</strong>, o menor intervalo foi de 2 min 40 s. As atas, as designações e os boletins de identificação das mesas podem esclarecer a ocorrência. O relatório completo traz os municípios, horários, fusos e fontes.</p>
+<aside class="explicacoes" id="explicacoes-oficiais" aria-labelledby="explicacoes-titulo">
+  <h3 id="explicacoes-titulo">Explicações oficiais</h3>
+  <p>Em 23 de novembro de 2026, a Justiça Eleitoral atribuiu a erro de digitação a repetição de título mostrada em um vídeo. Segundo a checagem, o mesário pode digitar por engano uma sequência que corresponda a um título válido. A urna guarda o número informado e funciona sem consultar as demais urnas. A nota não descreve substituição automática do número pelo sistema.</p>
+  <p>Segundo a mesma nota, se o mesário vota naquela seção e há biometria disponível, a urna compara a digital apresentada com a cadastrada. Se o mesário é eleitor de outra seção, a urna armazena a digital coletada para posterior verificação pela Justiça Eleitoral. <a href="https://www.justicaeleitoral.jus.br/fato-ou-boato/checagens/2026/repeticao-de-titulo-em-logs-de-urnas-nao-comprova-existencia-de-mesarios-virtuais">Checagem da Justiça Eleitoral de 23/11/2026</a>.</p>
+  <p>Para conferir quem trabalhou em cada mesa, o art. 127, incisos VI e VIII, prevê a assinatura do Boletim de Identificação do Mesário e o registro de presenças, substituições e remanejamentos na ata. A checagem pública não identifica as seções do vídeo nem apresenta a conferência individual dos sete pares entre UFs deste relatório. A causa de cada um desses pares continua em aberto. <a href="https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026">Resolução TSE nº 23.751/2026, art. 127</a>.</p>
+</aside>
     <p class="links"><a href="auditoria-2026/mesarios/mapa.html">Explorar os locais no mapa →</a><a href="auditoria-2026/mesarios/relatorio.html">Ler a auditoria de mesários →</a></p>
   </article>
   <article id="urnas">

@@ -6,6 +6,14 @@ A denúncia se confirma no sentido literal. No primeiro turno, três números de
 
 [Abrir o mapa por local](mapa.html) · [Lista por identificador](lista_mesarios.csv) · [Pares entre municípios](pares_municipios.csv) · [Conferência nos ZIPs do TSE](conferencia_tse.csv)
 
+## Explicações oficiais
+
+Em 23 de novembro de 2026, a Justiça Eleitoral atribuiu a erro de digitação a repetição de título mostrada em um vídeo. Segundo a checagem, o mesário pode digitar por engano uma sequência que corresponda a um título válido. A urna guarda o número informado e funciona sem consultar as demais urnas. A nota não descreve substituição automática do número pelo sistema.
+
+Segundo a mesma nota, se o mesário vota naquela seção e há biometria disponível, a urna compara a digital apresentada com a cadastrada. Se o mesário é eleitor de outra seção, a urna armazena a digital coletada para posterior verificação pela Justiça Eleitoral. [Checagem da Justiça Eleitoral de 23/11/2026](https://www.justicaeleitoral.jus.br/fato-ou-boato/checagens/2026/repeticao-de-titulo-em-logs-de-urnas-nao-comprova-existencia-de-mesarios-virtuais).
+
+Para conferir quem trabalhou em cada mesa, o art. 127, incisos VI e VIII, prevê a assinatura do Boletim de Identificação do Mesário e o registro de presenças, substituições e remanejamentos na ata. A checagem pública não identifica as seções do vídeo nem apresenta a conferência individual dos sete pares entre UFs deste relatório. A causa de cada um desses pares continua em aberto. [Resolução TSE nº 23.751/2026, art. 127](https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026).
+
 ## O que se espera encontrar
 
 A mesa tem presidente, primeiro e segundo mesários e secretário. O manual orienta digitar e confirmar o título de cada integrante presente. Admite registro durante a votação e exige presença em ata. Há também registro ao fim dos trabalhos, substituições e remanejamentos. Uma única seção pode, portanto, registrar várias pessoas, e um número pode aparecer várias vezes. A função e o tipo de evento importam. [Manual do Mesário 2026, p. 15](https://www.justicaeleitoral.jus.br/eleicoes/mesario/assets/arquivos/manual_do_mesario.pdf#page=15) · [Resolução TSE 23.751/2026, arts. 9, 125–127](https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026)
