@@ -1,7 +1,6 @@
 <!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Um mesmo número de título em seções diferentes · Arvor</title><link rel="stylesheet" href="../relatorio.css"><main class="integra"><nav aria-label="Navegação do relatório"><a href="../../auditoria_urnas_2026.html#mesarios">← Relatório de mesários e urnas</a> · <a href="mapa.html">Abrir mapa</a> · <a href="../../auditoria_urnas_2026.html#dados">Baixar dados</a></nav><h1 id="um-mesmo-número-de-título-em-seções-diferentes">Um mesmo número
 de título em seções diferentes</h1>
-<p><strong>Eleições presidenciais de 2026 · Brasil sem exterior ·
-conferência de 23 de novembro de 2026</strong></p>
+<p><strong>Eleições de 2026 · Repetições entre seções no Brasil · Dígitos e suspensões no Brasil e no exterior · Atualizado em 25 de novembro de 2026</strong></p>
 <p>A denúncia se confirma no sentido literal. No primeiro turno, três
 números de título aparecem como mesário registrado em duas UFs no mesmo
 dia. No segundo, quatro outros números apresentam o mesmo padrão. São
@@ -10,7 +9,7 @@ conferência de causa permanece aberta. O material permite identificar
 onde o mesmo número foi registrado, mas a presença física de uma pessoa,
 a intenção de quem fez o registro e eventual impacto eleitoral exigem
 outras evidências.</p>
-<p><a href="mapa.html">Abrir o mapa por local</a> · <a
+<p><a href="#probabilidade-digitacao">Erro de digitação e probabilidade</a> · <a href="#suspensao">Suspensão do voto</a> · <a href="mapa.html">Abrir o mapa por local</a> · <a
 href="lista_mesarios.csv">Lista por identificador</a> · <a
 href="pares_municipios.csv">Pares entre municípios</a> · <a
 href="conferencia_tse.csv">Conferência nos ZIPs do TSE</a></p>
@@ -344,6 +343,107 @@ href="https://raw.githubusercontent.com/alvarofpp/validate-docbr/master/validate
 geral no validate-docbr</a> · <a
 href="https://brazilian-utils.com.br/pt-br/utils/voter-id/">Variante
 documentada pelo Brazilian Utils</a></p>
+<h3 id="conferência-nacional-dos-dígitos-nos-dois-turnos-incluindo-o-exterior">Conferência nacional dos dígitos nos dois turnos, incluindo o exterior</h3>
+<p><strong>Os 2.068.633 números distintos que o aplicativo VOTA identificou como mesário registrado passaram no teste de UF e dígitos verificadores.</strong> O universo ampliado inclui quem apareceu em uma só seção. Foram lidos 499.207 pacotes de seção por turno, com correspondência de chave a todas as seções com resultado próprio em 2026, incluindo 1.310 no exterior. As 41 seções não instaladas por turno ficam fora. A releitura incluiu os 31 pacotes complementares de cada turno. Sessenta dos 998.414 pacotes continham log do Sistema de Apuração e nenhuma das mensagens pesquisadas. <a href="digitos_cobertura.csv">Cobertura por UF e turno</a> · <a href="digitos_complementos.csv">Pacotes complementares e hashes</a></p>
+<div class="scroll"><table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>Mensagem do log</th>
+<th style="text-align: right;">Ocorrências no 1º turno</th>
+<th style="text-align: right;">Ocorrências no 2º turno</th>
+<th style="text-align: right;">Ocorrências com número fora das duas regras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mesário registrado</td>
+<td style="text-align: right;">3.748.481</td>
+<td style="text-align: right;">3.805.492</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Mesário habilitou o eleitor</td>
+<td style="text-align: right;">5.124.656</td>
+<td style="text-align: right;">5.842.009</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Título informado para encerramento, seguido de confirmação</td>
+<td style="text-align: right;">497.993</td>
+<td style="text-align: right;">498.126</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Título considerado válido para suspender o voto em curso</td>
+<td style="text-align: right;">82.403</td>
+<td style="text-align: right;">8.498</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Título considerado inválido para suspender o voto em curso</td>
+<td style="text-align: right;">55.959</td>
+<td style="text-align: right;">4.990</td>
+<td style="text-align: right;">13.424</td>
+</tr>
+<tr>
+<td>Título inválido na tentativa de registro de mesário, sem número exibido</td>
+<td style="text-align: right;">722.022</td>
+<td style="text-align: right;">536.476</td>
+<td style="text-align: right;">Número indisponível</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Onde aparecem os números incompatíveis.</strong> Em 12.061 mensagens do primeiro turno e 1.363 do segundo, a urna recusou o título informado para suspender o voto em curso. Os dois turnos somam 10.876 números distintos. As recusas com esses números ocorreram em 9.372 seções no primeiro turno e 1.119 no segundo, abrangendo 10.437 seções distintas. Das 13.424 mensagens, 6.839 trazem código de UF fora da faixa e 6.585 trazem UF admitida com dígitos incompatíveis. A urna também recusou números que passam na conta. A operação pede o título da pessoa que preside a mesa. A mensagem de recusa não especifica qual condição falhou. Baixamos novamente um original de cada turno e reconferimos o hash e o teor da recusa. <a href="digitos_eventos.csv">Contagens por operação</a> · <a href="digitos_originais.csv">Duas conferências no original</a> · <a href="https://www.justicaeleitoral.jus.br/mesario/cursos/mesarios-brasil/m3-o-que-fazer-durante-a-votacao/a5-situacoes-especificas-no-fluxo-de-votacao/index.html">Curso da Justiça Eleitoral sobre suspensão do voto</a></p>
+<p><strong>Como foram conferidos os dígitos.</strong> O art. 36 estabelece até 12 algarismos, UF de origem de 01 a 28 e dois verificadores por módulo 11. Completamos os zeros omitidos à esquerda. Para o primeiro verificador, multiplicamos os oito algarismos sequenciais pelos pesos 2 a 9 e calculamos o resto da soma por 11. Para o segundo, aplicamos os pesos 7, 8 e 9 aos dois algarismos da UF e ao primeiro verificador. Resto 10 dá zero. A regra descrita pela OBMEP converte resto zero em 1 para SP e MG. Dos números registrados, 116.124 precisam dessa particularidade, e todos passaram pela regra que a aplica. Para apontar incompatibilidades, adotamos o critério conservador de falhar tanto nessa regra quanto na geral. Com a regra da OBMEP isoladamente, aparecem mais seis números, em oito mensagens, todos igualmente recusados na suspensão. <a href="https://www.tse.jus.br/legislacao/compilada/res/2021/resolucao-no-23-659-de-26-de-outubro-de-2021?texto=compilado">Resolução TSE 23.659/2021, art. 36</a> · <a href="https://clubes.obmep.org.br/blog/a-matematica-nos-documentos-titulo-de-eleitor/">Cálculo publicado pela OBMEP</a> · <a href="digitos_classes.csv">Resultados por regra e comprimento</a></p>
+<p><strong>O que foi contado.</strong> Usamos as mensagens do VOTA no dia de cada turno e no dia seguinte, removendo a mesma linha quando repetida no mesmo pacote. As contagens descrevem o que cada pacote publicado contém, inclusive se ele preservou trechos de outra urna. O encerramento seguido de confirmação exige a mensagem de confirmação como próxima mensagem VOTA daquela série no mesmo membro e dia, numa janela de leitura de 16 KiB. Houve outras 12.025 mensagens de título para encerramento fora desse critério de associação, também sem incompatibilidade aritmética. No conjunto, 81.224.275 mensagens exibiram um identificador nos campos analisados. Identificadores digitados por eleitores comuns e tentativas de registro recusadas sem os algarismos não permitem recalcular os dígitos. O teste não consulta o cadastro de emissão e não identifica a pessoa presente. Os dados de saída trazem contagens e referências de origem, sem os números originais. <a href="https://www.justicaeleitoral.jus.br/fato-ou-boato/checagens/2026/repeticao-de-titulo-em-logs-de-urnas-nao-comprova-existencia-de-mesarios-virtuais">Explicação da Justiça Eleitoral sobre erro de digitação</a></p>
+<h3 id="probabilidade-digitacao">Qual a chance de um erro de digitação passar pelos verificadores?</h3>
+<p>Se alguém pretendia digitar seu título e errou <strong>um algarismo</strong>, estimamos que <strong>1,35%</strong> dessas alterações ainda passam nos verificadores, cerca de <strong>1 em 74</strong>. Se inverteu <strong>dois algarismos vizinhos diferentes</strong>, a estimativa é <strong>1,12%</strong>, cerca de <strong>1 em 90</strong>. As taxas valem para os dois modelos de erro abaixo. Copiar por engano o título inteiro de outro documento é uma situação diferente: a cópia fiel conserva os dois dígitos corretos, mesmo que o documento seja de outra pessoa.</p>
+<div class="scroll"><table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>Erro simulado sobre o número de origem</th>
+<th style="text-align: right;">Alterações que mudaram o número</th>
+<th style="text-align: right;">Passaram na regra com SP/MG</th>
+<th style="text-align: right;">Coincidiram com outro número registrado como mesário nos logs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Substituir um dos 12 algarismos por outro</td>
+<td style="text-align: right;">857.628</td>
+<td style="text-align: right;">11.603 (1,353%)</td>
+<td style="text-align: right;">129 (0,0150%)</td>
+</tr>
+<tr>
+<td>Inverter um par de algarismos vizinhos</td>
+<td style="text-align: right;">79.076</td>
+<td style="text-align: right;">883 (1,117%)</td>
+<td style="text-align: right;">12 (0,0152%)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>De onde vêm os denominadores.</strong> Selecionamos 7.941 dos 2.068.633 números distintos registrados pelo primeiro byte de seu identificador HMAC, com chance de inclusão de 1/256 por número. Relemos os números originais nos pacotes. No primeiro cenário, cada posição e cada uma das nove substituições têm o mesmo peso. No segundo, cada uma das 11 posições de início do par tem o mesmo peso antes de excluir inversões de algarismos iguais. Preservamos os zeros à esquerda. A coluna de coincidências procura outro número no conjunto completo dos dois turnos, em qualquer seção do Brasil ou do exterior. Ela inclui somente inscrições <em>observadas como número de mesário</em> e não cobre todo o cadastro eleitoral. <a href="probabilidade_digitacao.json">Contagens e erros-padrão</a> · <a href="probabilidade_distribuicao.csv">Distribuição agregada para refazer as contas</a></p>
+<p>O intervalo amostral aproximado de 95% é de 1,30% a 1,41% para a substituição e de 1,03% a 1,20% para a inversão. Foi calculado tomando o título como unidade amostral, pois todas as alterações derivadas de um título são relacionadas. Esses intervalos cobrem a escolha da amostra. A frequência real de cada erro humano continua desconhecida. Usamos a regra com a particularidade de SP/MG porque ela reproduziu todos os números registrados. Se a conferência admitir qualquer das duas regras aritméticas do laudo, as taxas sobem para 1,58% e 1,32%, respectivamente. <a href="https://clubes.obmep.org.br/blog/a-matematica-nos-documentos-titulo-de-eleitor/">Regra dos dígitos na OBMEP</a> · <a href="probabilidade_digitacao.json">Resultados das duas regras</a></p>
+<p><strong>E os sete casos entre estados?</strong> Passar pelos dígitos, coincidir com algum mesário do país e coincidir com uma pessoa específica em outra seção do mesmo turno são perguntas sucessivamente mais restritas. A tabela mede as duas primeiras. Nos sete pares interestaduais, procuramos outro número registrado nas mesmas seções e turnos examinados que explicasse a coincidência por uma alteração de um algarismo ou uma troca de posição. Não encontramos. O título que a pessoa pretendia informar pode estar ausente dos logs. Para estimar a causa de cada caso, faltam as designações, os boletins de identificação e as atas das duas mesas. Aplicar 1,35% a todas as presenças pressuporia que toda digitação teve um erro, hipótese que os dados não sustentam. <a href="contraste_turnos.csv">Conferência por par</a> · <a href="https://www.justicaeleitoral.jus.br/fato-ou-boato/checagens/2026/repeticao-de-titulo-em-logs-de-urnas-nao-comprova-existencia-de-mesarios-virtuais">Explicação da Justiça Eleitoral</a></p>
+<h3 id="suspensao">O que foi cancelado ou suspenso?</h3>
+<p><strong>Cancelamento da habilitação.</strong> Uma mensagem como “Habilitação cancelada durante a captura de digital do mesário” descreve uma etapa de identificação. Ela não exibe o título digitado. Na base operacional de 499.176 seções medidas por turno, contamos 1.078.017 mensagens de cancelamento de habilitação no primeiro turno e 708.972 no segundo. A mesma seção ou atendimento pode gerar várias mensagens. Esses totais contam interrupções na identificação. <a href="cancelamentos_habilitacao.csv">Contagem de cancelamentos por turno</a></p>
+<p><strong>Suspensão do voto em curso.</strong> O manual orienta que a presidência informe o próprio título. Se o eleitor ainda não iniciou a votação, ele pode voltar para votar. Se saiu após confirmar votos para alguns cargos, esses votos são preservados e os cargos restantes recebem votos nulos. A linha em que o sistema avalia o título identifica a decisão sobre aquela operação. <a href="https://www.justicaeleitoral.jus.br/mesario/cursos/mesarios-brasil/m3-o-que-fazer-durante-a-votacao/a5-situacoes-especificas-no-fluxo-de-votacao/index.html">Curso oficial sobre suspensão do voto</a></p>
+<p><strong>Um título inexistente conseguiu autorizar a suspensão?</strong> Os logs públicos não informam se cada número foi emitido no cadastro nacional. Nas 90.901 mensagens que qualificam um título como válido para a suspensão, todos passaram na conta. Em 76.352 delas, o mesmo número também apareceu em um registro de mesário no pacote da seção. Dentro desse grupo, houve 48.844 mensagens associadas a um número que o log indicava ser de fora da seção. Nas 14.549 restantes, não encontramos registro positivo de mesário para o mesmo número naquele pacote. O cruzamento considera todo o período analisado, inclusive registros posteriores à suspensão. Ausência no pacote ou no eleitorado local é compatível com a existência de uma inscrição em outro local. <a href="suspensao_contexto.csv">Cruzamento no mesmo pacote e turno</a></p>
+<p><strong>O que aconteceu logo depois?</strong> Reabrimos os pacotes de todas as seções com uma decisão de suspensão. Das 90.901 mensagens que aceitaram o título para essa operação, em <strong>90.885</strong> a próxima mensagem do VOTA na mesma urna registrou que o eleitor foi suspenso. Nos 16 casos restantes, uma informou retomada da digitação pelo eleitor e 15 registraram outro evento. Entre as <strong>60.949 recusas</strong>, nenhuma teve a suspensão como mensagem seguinte. Houve 42.835 novas digitações do título, 16.135 desistências pelo operador, 844 retomadas pelo eleitor e 1.135 outras mensagens. A leitura verifica a sequência imediata no mesmo arquivo, série e dia, em até 16 KiB de log. Uma nova tentativa pode ter tido outro desfecho depois. <a href="suspensao_desfechos.csv">Desfechos por turno</a></p>
+<p>Das 60.949 recusas, 47.525 passaram em pelo menos uma das regras aritméticas e 13.424 falharam em ambas. Para verificar se houve autorização com inscrição nunca emitida, a Justiça Eleitoral pode confrontar os números dos eventos autorizados com o cadastro na data do pleito e informar, por turno, quantos tinham inscrição existente, quantos nunca foram emitidos e quantos ficaram inconclusivos. A situação cadastral e a designação para presidir a mesa são verificações distintas. Esse confronto agregado responderia à pergunta preservando os números individuais. <a href="digitos_eventos.csv">Contagens de recusas e autorizações</a></p>
+<p>Para reproduzir com o acervo local, executar em sequência <code>python scripts/mesarios-2026-digitos.py</code>, <code>python scripts/mesarios-2026-digitos-complementos.py</code>, <code>python scripts/mesarios-2026-digitos-resumo.py</code> e <code>python scripts/mesarios-2026-probabilidade.py</code>. O sorteio de números depende da chave privada já usada no laudo. A distribuição publicada permite recalcular cada percentual e seu erro-padrão sem essa chave.</p>
 <p>Para apurar autoria e possível repercussão, o confronto prioritário é
 entre as atas, o Boletim de Identificação dos Mesários, a designação e
 os registros de remanejamento ou substituição no módulo de convocação do

@@ -1,0 +1,48 @@
+{
+  "universo": 2068633,
+  "amostra": 7941,
+  "criterio": "primeiro byte do HMAC igual a zero",
+  "regras": [
+    "regional_OBMEP",
+    "uniao_geral_regional",
+    "coincide_com_outro_registro"
+  ],
+  "cenarios": {
+    "substituicao": {
+      "erros": 857628,
+      "regional_OBMEP": {
+        "quantidade": 11603,
+        "pct": 1.3529175819819317,
+        "ep_amostral_pp": 0.029239855155256796
+      },
+      "uniao_geral_regional": {
+        "quantidade": 13547,
+        "pct": 1.579589285797572,
+        "ep_amostral_pp": 0.030708097180434032
+      },
+      "coincide_com_outro_registro": {
+        "quantidade": 129,
+        "pct": 0.015041486518630454,
+        "ep_amostral_pp": 0.0013643856099278147
+      }
+    },
+    "transposicao_vizinha": {
+      "erros": 79076,
+      "regional_OBMEP": {
+        "quantidade": 883,
+        "pct": 1.1166472760382418,
+        "ep_amostral_pp": 0.04389021980691631
+      },
+      "uniao_geral_regional": {
+        "quantidade": 1044,
+        "pct": 1.3202488745004806,
+        "ep_amostral_pp": 0.04720794314693205
+      },
+      "coincide_com_outro_registro": {
+        "quantidade": 12,
+        "pct": 0.015175274419545755,
+        "ep_amostral_pp": 0.004728854865833127
+      }
+    }
+  }
+}
