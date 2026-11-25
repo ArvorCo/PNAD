@@ -23,7 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Fetch public documents from Git LFS
-        run: git lfs pull --include="docs/**"
+        env:
+          LFS_INCLUDE: "docs/**"
+        run: |
+          git lfs pull --include="$LFS_INCLUDE" || python3 scripts/ci-lfs-recover.py --include="$LFS_INCLUDE"
       - name: Verify documents contain PDF bytes, not LFS pointers
         run: |
           python3 - <<'PY'
